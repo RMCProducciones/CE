@@ -1,0 +1,10 @@
+<select id="{{ formulario }}_{{ campo }}" name="{{ formulario }}[{{ campo }}]" {{atributos}}>
+	<option value="">Seleccione...</option>
+	{% for elemento in elementos %}
+		{% if elemento.id == idElemento %}
+			<option value="{{ elemento.id }}" selected>{{ elemento.nombre }}</option>
+		{% else %}
+			<option value="{{ elemento.id }}">{{ elemento.nombre }}</option>
+		{% endif %}
+	{% endfor %}
+</select>
