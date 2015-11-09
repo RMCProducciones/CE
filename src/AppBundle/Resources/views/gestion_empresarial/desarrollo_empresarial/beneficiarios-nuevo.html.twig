@@ -1,6 +1,6 @@
 {% extends 'AppBundle::frontend.html.twig' %}
 
-{% block title %}Grupos{% endblock %}
+{% block title %}Beneficiarios{% endblock %}
 
 {% block breadcrumb_ul %}
 
@@ -15,7 +15,10 @@
         Formacion de capital social asociativo y desarrollo empresarial
       </li>
       <li>
-        Grupos
+        <a href="{{ path('gruposGestion') }}">Grupos</a>
+      </li>
+      <li>
+        <a href="{{ path('beneficiariosGestion') }}">Beneficiarios</a>
       </li>
       <li class="active">Nuevo</li>
     </ul>
@@ -32,7 +35,7 @@
 
     
     {#{ form_start(form) }#}
-    <form name="grupo" method="post" action="" class="form-horizontal" role="form">
+    <form name="beneficiario" method="post" action="" class="form-horizontal" role="form">
 
     <div class="section">
       <div class="container">
@@ -275,7 +278,7 @@
 
 
 {#{ form_row(form.zona) }#}
-<input type="email" id="grupo_correo_electronico" name="grupo[correo_electronico]" class="alert alert-success">
+
 
     {{ form_end(form) }}
 

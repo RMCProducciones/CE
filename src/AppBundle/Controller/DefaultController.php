@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 use AppBundle\Entity\Grupo;
 use AppBundle\Form\gesion_empresarial\GrupoType;
+use AppBundle\Entity\Beneficiario;
+use AppBundle\Form\gesion_empresarial\BeneficiarioType;
 
 class DefaultController extends Controller
 {
@@ -127,4 +129,63 @@ class DefaultController extends Controller
         
         return $this->render('AppBundle:gestion_empresarial/desarrollo_empresarial:grupos-nuevo.html.twig', array('form' => $form->createView()));
     }
+
+
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/beneficiarios/{idGrupo}", name="beneficiariosGestion")
+     */
+    public function beneficiariosGestionAction($idGrupo)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('active' => '1', 'grupo' => $idGrupo),
+            array('primer_apellido' => 'ASC')
+        );
+
+        return $this->render('AppBundle:gestion_empresarial/desarrollo_empresarial:beneficiarios-gestion.html.twig', array( 'beneficiarios' => $beneficiarios));
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/beneficiarios/nuevo", name="beneficiariosNuevo")
+     */
+    public function beneficiariosNuevoAction(Request $request)
+    {      
+        $em = $this->getDoctrine()->getManager();
+        $beneficiarios = new Beneficiario();
+        
+        $form = $this->createForm(new GrupoType(), $grupo);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $beneficiarios = $form->getData();
+
+            $beneficiarios->setActive('true');
+
+
+            
+            $em->persist($beneficiarios);
+            $em->flush();
+
+            return $this->redirectToRoute('beneficiariosGestion');
+        }
+        
+        return $this->render('AppBundle:gestion_empresarial/desarrollo_empresarial:beneficiarios-nuevo.html.twig', array('form' => $form->createView()));
+    }
+
+
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/", name="CLEARGestion")
+     */
+    public function CLEARGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $grupos = $em->getRepository('AppBundle:Grupo')->findAll(); 
+
+        return $this->render('AppBundle:gestion_empresarial/desarrollo_empresarial:grupos-gestion.html.twig', array( 'grupos' => $grupos));
+    }
+
 }

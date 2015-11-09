@@ -21,7 +21,8 @@ tipo_cuenta:integer
 
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
-php app/console doctrine:generate:entity --entity="AppBundle:Beneficiario" --fields="grupo:integer 
+php app/console doctrine:generate:entity --entity="AppBundle:Beneficiario" --fields="
+grupo:integer 
 tipo_documento:integer
 numero_documento:string
 primer_apellido:string
