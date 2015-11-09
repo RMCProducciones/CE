@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form\gesion_empresarial;
+namespace AppBundle\Form\GesionEmpresarial;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

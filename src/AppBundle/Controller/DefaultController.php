@@ -7,9 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use AppBundle\Entity\Grupo;
-use AppBundle\Form\gesion_empresarial\GrupoType;
+use AppBundle\Form\GesionEmpresarial\GrupoType;
 use AppBundle\Entity\Beneficiario;
-use AppBundle\Form\gesion_empresarial\BeneficiarioType;
+use AppBundle\Form\GesionEmpresarial\BeneficiarioType;
 
 class DefaultController extends Controller
 {
@@ -98,11 +98,11 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $grupos = $em->getRepository('AppBundle:Grupo')->findAll(); 
 
-        return $this->render('AppBundle:gestion_empresarial/desarrollo_empresarial:grupos-gestion.html.twig', array( 'grupos' => $grupos));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupos-gestion.html.twig', array( 'grupos' => $grupos));
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/nuevo", name="gruposNuevo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/nuevo", name="gruposNuevo")
      */
     public function gruposNuevoAction(Request $request)
     {
@@ -127,7 +127,7 @@ class DefaultController extends Controller
             return $this->redirectToRoute('gruposGestion');
         }
         
-        return $this->render('AppBundle:gestion_empresarial/desarrollo_empresarial:grupos-nuevo.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupos-nuevo.html.twig', array('form' => $form->createView()));
     }
 
 
@@ -143,18 +143,18 @@ class DefaultController extends Controller
             array('primer_apellido' => 'ASC')
         );
 
-        return $this->render('AppBundle:gestion_empresarial/desarrollo_empresarial:beneficiarios-gestion.html.twig', array( 'beneficiarios' => $beneficiarios));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiarios-gestion.html.twig', array( 'beneficiarios' => $beneficiarios));
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/beneficiarios/nuevo", name="beneficiariosNuevo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/beneficiario/nuevo", name="beneficiariosNuevo")
      */
     public function beneficiariosNuevoAction(Request $request)
     {      
         $em = $this->getDoctrine()->getManager();
         $beneficiarios = new Beneficiario();
         
-        $form = $this->createForm(new GrupoType(), $grupo);
+        $form = $this->createForm(new BeneficiarioType(), $beneficiarios);
 
         $form->handleRequest($request);
 
@@ -171,8 +171,8 @@ class DefaultController extends Controller
 
             return $this->redirectToRoute('beneficiariosGestion');
         }
-        
-        return $this->render('AppBundle:gestion_empresarial/desarrollo_empresarial:beneficiarios-nuevo.html.twig', array('form' => $form->createView()));
+        die("aja");
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiarios-nuevo.html.twig', array('form' => $form->createView()));
     }
 
 
@@ -185,7 +185,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $grupos = $em->getRepository('AppBundle:Grupo')->findAll(); 
 
-        return $this->render('AppBundle:gestion_empresarial/desarrollo_empresarial:grupos-gestion.html.twig', array( 'grupos' => $grupos));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupos-gestion.html.twig', array( 'grupos' => $grupos));
     }
 
 }
