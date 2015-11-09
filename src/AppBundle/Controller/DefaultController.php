@@ -16,7 +16,7 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->render('default/index.html.twig', array(
+        return $this->render('AppBundle:default:index.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
         ));
     }
@@ -26,7 +26,7 @@ class DefaultController extends Controller
      */
     public function navAction()
     {
-        return $this->render('default/nav.html.twig');
+        return $this->render('AppBundle:default:nav.html.twig');
     }
 
 
@@ -42,7 +42,7 @@ class DefaultController extends Controller
             array('nombre' => 'ASC')
         );
 
-        return $this->render('listas/options.html.twig', array('elementos'=>$elementos, 'idElemento'=>'0'));
+        return $this->render('AppBundle:listas:options.html.twig', array('elementos'=>$elementos, 'idElemento'=>'0'));
     }
 
     /**
@@ -57,7 +57,7 @@ class DefaultController extends Controller
             array('nombre' => 'ASC')
         );
 
-        return $this->render('listas/options.html.twig', array('elementos'=>$elementos, 'idElemento'=>'0'));
+        return $this->render('AppBundle:listas:options.html.twig', array('elementos'=>$elementos, 'idElemento'=>'0'));
     }
 
     /**
@@ -84,13 +84,8 @@ class DefaultController extends Controller
         $query->setParameter('departamentoId', $departamentoId);
 
         $municipios = $query->getResult();*/
-        return $this->render('listas/options.html.twig', array('elementos'=>$elementos, 'idElemento'=>$idElemento));
+        return $this->render('AppBundle:listas:options.html.twig', array('elementos'=>$elementos, 'idElemento'=>$idElemento));
     }
-
-
-
-
-
 
 
     /**
@@ -101,7 +96,8 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $grupos = $em->getRepository('AppBundle:Grupo')->findAll(); 
 
-        return $this->render('gestion_empresarial/desarrollo_empresarial/grupos-gestion.html.twig', array( 'grupos' => $grupos));
+//        return $this->render('AppBundle:gestion_empresarial/desarrollo_empresarial/grupos-gestion.html.twig', array( 'grupos' => $grupos));
+        return $this->render('AppBundle:gestion_empresarial/desarrollo_empresarial:grupos-gestion.html.twig', array( 'grupos' => $grupos));
     }
 
     /**
@@ -130,6 +126,6 @@ class DefaultController extends Controller
             return $this->redirectToRoute('gruposGestion');
         }
         
-        return $this->render('gestion_empresarial/desarrollo_empresarial/grupos-nuevo.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:gestion_empresarial/desarrollo_empresarial:grupos-nuevo.html.twig', array('form' => $form->createView()));
     }
 }
