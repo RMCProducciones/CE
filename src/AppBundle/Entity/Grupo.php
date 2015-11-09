@@ -118,14 +118,14 @@ class Grupo
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_constitucion_legal", type="datetime")
+     * @ORM\Column(name="fecha_constitucion_legal", type="datetime", nullable=true)
      */
     private $fecha_constitucion_legal;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="telefono_fijo", type="string")
+     * @ORM\Column(name="telefono_fijo", type="string", nullable=true)
      */
     private $telefono_fijo;
 
