@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * integrantesCLEAR
+ * IntegrantesCLEAR
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\integrantesCLEARRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\IntegrantesCLEARRepository")
  */
-class integrantesCLEAR
+class IntegrantesCLEAR
 {
     /**
      * @var integer
@@ -191,7 +191,7 @@ class integrantesCLEAR
      *
      * @param integer $clear
      *
-     * @return integrantesCLEAR
+     * @return IntegrantesCLEAR
      */
     public function setClear($clear)
     {
@@ -215,7 +215,7 @@ class integrantesCLEAR
      *
      * @param integer $tipoDocumento
      *
-     * @return integrantesCLEAR
+     * @return IntegrantesCLEAR
      */
     public function setTipoDocumento($tipoDocumento)
     {
@@ -239,7 +239,7 @@ class integrantesCLEAR
      *
      * @param string $numeroDocumento
      *
-     * @return integrantesCLEAR
+     * @return IntegrantesCLEAR
      */
     public function setNumeroDocumento($numeroDocumento)
     {
@@ -263,7 +263,7 @@ class integrantesCLEAR
      *
      * @param string $primerApellido
      *
-     * @return integrantesCLEAR
+     * @return IntegrantesCLEAR
      */
     public function setPrimerApellido($primerApellido)
     {
@@ -287,7 +287,7 @@ class integrantesCLEAR
      *
      * @param string $segundoApellido
      *
-     * @return integrantesCLEAR
+     * @return IntegrantesCLEAR
      */
     public function setSegundoApellido($segundoApellido)
     {
@@ -311,7 +311,7 @@ class integrantesCLEAR
      *
      * @param string $primerNombre
      *
-     * @return integrantesCLEAR
+     * @return IntegrantesCLEAR
      */
     public function setPrimerNombre($primerNombre)
     {
@@ -335,7 +335,7 @@ class integrantesCLEAR
      *
      * @param string $segundoNombre
      *
-     * @return integrantesCLEAR
+     * @return IntegrantesCLEAR
      */
     public function setSegundoNombre($segundoNombre)
     {
@@ -359,7 +359,7 @@ class integrantesCLEAR
      *
      * @param integer $genero
      *
-     * @return integrantesCLEAR
+     * @return IntegrantesCLEAR
      */
     public function setGenero($genero)
     {
@@ -383,7 +383,7 @@ class integrantesCLEAR
      *
      * @param \DateTime $fechaNacimiento
      *
-     * @return integrantesCLEAR
+     * @return IntegrantesCLEAR
      */
     public function setFechaNacimiento($fechaNacimiento)
     {
@@ -407,7 +407,7 @@ class integrantesCLEAR
      *
      * @param integer $pertenenciaEtnica
      *
-     * @return integrantesCLEAR
+     * @return IntegrantesCLEAR
      */
     public function setPertenenciaEtnica($pertenenciaEtnica)
     {
@@ -431,7 +431,7 @@ class integrantesCLEAR
      *
      * @param integer $nivelEstudios
      *
-     * @return integrantesCLEAR
+     * @return IntegrantesCLEAR
      */
     public function setNivelEstudios($nivelEstudios)
     {
@@ -455,7 +455,7 @@ class integrantesCLEAR
      *
      * @param integer $grupoIndigena
      *
-     * @return integrantesCLEAR
+     * @return IntegrantesCLEAR
      */
     public function setGrupoIndigena($grupoIndigena)
     {
@@ -479,7 +479,7 @@ class integrantesCLEAR
      *
      * @param string $entidadRepresenta
      *
-     * @return integrantesCLEAR
+     * @return IntegrantesCLEAR
      */
     public function setEntidadRepresenta($entidadRepresenta)
     {
@@ -503,7 +503,7 @@ class integrantesCLEAR
      *
      * @param string $cargoEntidad
      *
-     * @return integrantesCLEAR
+     * @return IntegrantesCLEAR
      */
     public function setCargoEntidad($cargoEntidad)
     {
@@ -527,7 +527,7 @@ class integrantesCLEAR
      *
      * @param string $telefonoFijo
      *
-     * @return integrantesCLEAR
+     * @return IntegrantesCLEAR
      */
     public function setTelefonoFijo($telefonoFijo)
     {
@@ -551,7 +551,7 @@ class integrantesCLEAR
      *
      * @param string $telefonoCelular
      *
-     * @return integrantesCLEAR
+     * @return IntegrantesCLEAR
      */
     public function setTelefonoCelular($telefonoCelular)
     {
@@ -575,7 +575,7 @@ class integrantesCLEAR
      *
      * @param string $correoElectronico
      *
-     * @return integrantesCLEAR
+     * @return IntegrantesCLEAR
      */
     public function setCorreoElectronico($correoElectronico)
     {
@@ -599,7 +599,7 @@ class integrantesCLEAR
      *
      * @param boolean $active
      *
-     * @return integrantesCLEAR
+     * @return IntegrantesCLEAR
      */
     public function setActive($active)
     {
@@ -623,7 +623,7 @@ class integrantesCLEAR
      *
      * @param integer $usuarioModificacion
      *
-     * @return integrantesCLEAR
+     * @return IntegrantesCLEAR
      */
     public function setUsuarioModificacion($usuarioModificacion)
     {
@@ -647,7 +647,7 @@ class integrantesCLEAR
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return integrantesCLEAR
+     * @return IntegrantesCLEAR
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -671,7 +671,7 @@ class integrantesCLEAR
      *
      * @param integer $usuarioCreacion
      *
-     * @return integrantesCLEAR
+     * @return IntegrantesCLEAR
      */
     public function setUsuarioCreacion($usuarioCreacion)
     {
@@ -695,7 +695,7 @@ class integrantesCLEAR
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return integrantesCLEAR
+     * @return IntegrantesCLEAR
      */
     public function setFechaCreacion($fechaCreacion)
     {
