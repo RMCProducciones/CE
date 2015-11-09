@@ -7,9 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use AppBundle\Entity\Grupo;
-use AppBundle\Form\GesionEmpresarial\GrupoType;
+use AppBundle\Form\GestionEmpresarial\GrupoType;
 use AppBundle\Entity\Beneficiario;
-use AppBundle\Form\GesionEmpresarial\BeneficiarioType;
+use AppBundle\Form\GestionEmpresarial\BeneficiarioType;
 
 class DefaultController extends Controller
 {
@@ -143,13 +143,13 @@ class DefaultController extends Controller
             array('primer_apellido' => 'ASC')
         );
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiarios-gestion.html.twig', array( 'beneficiarios' => $beneficiarios));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiarios-gestion.html.twig', array( 'idGrupo' => $idGrupo, 'beneficiarios' => $beneficiarios));
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/beneficiario/nuevo", name="beneficiariosNuevo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/beneficiario/{idGrupo}/nuevo/", name="beneficiariosNuevo")
      */
-    public function beneficiariosNuevoAction(Request $request)
+    public function beneficiariosNuevoAction(Request $request, $idGrupo)
     {      
         $em = $this->getDoctrine()->getManager();
         $beneficiarios = new Beneficiario();
@@ -169,10 +169,10 @@ class DefaultController extends Controller
             $em->persist($beneficiarios);
             $em->flush();
 
-            return $this->redirectToRoute('beneficiariosGestion');
+            return $this->redirectToRoute('beneficiariosGestion', array( 'idGrupo' => $idGrupo));
         }
-        die("aja");
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiarios-nuevo.html.twig', array('form' => $form->createView()));
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiarios-nuevo.html.twig', array('form' => $form->createView(),'idGrupo' => $idGrupo));
     }
 
 
