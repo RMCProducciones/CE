@@ -48,7 +48,7 @@ class Beneficiario
     /**
      * @var string
      *
-     * @ORM\Column(name="segundo_apellido", type="string")
+     * @ORM\Column(name="segundo_apellido", type="string", nullable=true)
      */
     private $segundo_apellido;
 
@@ -62,7 +62,7 @@ class Beneficiario
     /**
      * @var string
      *
-     * @ORM\Column(name="segundo_nombre", type="string")
+     * @ORM\Column(name="segundo_nombre", type="string", nullable=true)
      */
     private $segundo_nombre;
 
@@ -88,21 +88,21 @@ class Beneficiario
     /**
      * @var boolean
      *
-     * @ORM\Column(name="joven_rural", type="boolean")
+     * @ORM\Column(name="joven_rural", type="boolean", nullable=true)
      */
     private $joven_rural;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="corte_sisben", type="decimal")
+     * @ORM\Column(name="corte_sisben", type="decimal", nullable=true)
      */
     private $corte_sisben;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="puntaje_sisben", type="decimal")
+     * @ORM\Column(name="puntaje_sisben", type="decimal", nullable=true)
      */
     private $puntaje_sisben;
 
@@ -119,14 +119,14 @@ class Beneficiario
     /**
      * @var boolean
      *
-     * @ORM\Column(name="desplazado", type="boolean")
+     * @ORM\Column(name="desplazado", type="boolean", nullable=true)
      */
     private $desplazado;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="red_unidos", type="boolean")
+     * @ORM\Column(name="red_unidos", type="boolean", nullable=true)
      */
     private $red_unidos;
 
@@ -153,14 +153,14 @@ class Beneficiario
     /**
      * @var boolean
      *
-     * @ORM\Column(name="sabe_leer", type="boolean")
+     * @ORM\Column(name="sabe_leer", type="boolean", nullable=true)
      */
     private $sabe_leer;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="sabe_escribir", type="boolean")
+     * @ORM\Column(name="sabe_escribir", type="boolean", nullable=true)
      */
     private $sabe_escribir;
 
@@ -178,14 +178,6 @@ class Beneficiario
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $tipo_vivienda;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="telefono_fijo", type="string")
-     */
-    private $telefono_fijo;
-
 	
 	/**
      * @var string
@@ -229,7 +221,13 @@ class Beneficiario
      */
     private $cacerio;
 	
-	
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="telefono_fijo", type="string", nullable=true)
+     */
+    private $telefono_fijo;
+
     /**
      * @var string
      *
@@ -240,7 +238,7 @@ class Beneficiario
     /**
      * @var string
      *
-     * @ORM\Column(name="correo_electronico", type="string")
+     * @ORM\Column(name="correo_electronico", type="string", nullable=true)
      */
     private $correo_electronico;
 
@@ -252,77 +250,73 @@ class Beneficiario
     /**
      * @var string
      *
-     * @ORM\Column(name="numero_documento_conyugue", type="string")
+     * @ORM\Column(name="numero_documento_conyugue", type="string", nullable=true)
      */
     private $numero_documento_conyugue;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="primer_apellido_conyugue", type="string")
+     * @ORM\Column(name="primer_apellido_conyugue", type="string", nullable=true)
      */
     private $primer_apellido_conyugue;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="segundo_apellido_conyugue", type="string")
+     * @ORM\Column(name="segundo_apellido_conyugue", type="string", nullable=true)
      */
     private $segundo_apellido_conyugue;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="primer_nombre_conyugue", type="string")
+     * @ORM\Column(name="primer_nombre_conyugue", type="string", nullable=true)
      */
     private $primer_nombre_conyugue;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="segundo_nombre_conyugue", type="string")
+     * @ORM\Column(name="segundo_nombre_conyugue", type="string", nullable=true)
      */
     private $segundo_nombre_conyugue;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="telefono_fijo_conyugue", type="string")
+     * @ORM\Column(name="telefono_fijo_conyugue", type="string", nullable=true)
      */
     private $telefono_fijo_conyugue;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="telefono_celular_conyugue", type="string")
+     * @ORM\Column(name="telefono_celular_conyugue", type="string", nullable=true)
      */
     private $telefono_celular_conyugue;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="active", type="boolean")
+     * @ORM\Column(name="active", type="boolean", nullable=true)
      */
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
      */
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -1384,11 +1378,11 @@ class Beneficiario
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return Beneficiario
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -1398,7 +1392,7 @@ class Beneficiario
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -1432,11 +1426,11 @@ class Beneficiario
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return Beneficiario
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -1446,7 +1440,7 @@ class Beneficiario
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {

@@ -96,7 +96,6 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $grupos = $em->getRepository('AppBundle:Grupo')->findAll(); 
 
-//        return $this->render('AppBundle:gestion_empresarial/desarrollo_empresarial/grupos-gestion.html.twig', array( 'grupos' => $grupos));
         return $this->render('AppBundle:gestion_empresarial/desarrollo_empresarial:grupos-gestion.html.twig', array( 'grupos' => $grupos));
     }
 

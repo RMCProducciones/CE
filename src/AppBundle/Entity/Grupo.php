@@ -32,9 +32,7 @@ class Grupo
     private $municipio;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="tipo", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $tipo;
 
@@ -48,7 +46,7 @@ class Grupo
     /**
      * @var string
      *
-     * @ORM\Column(name="codigo", type="string")
+     * @ORM\Column(name="codigo", type="string", unique=true )
      */
     private $codigo;
 
@@ -76,42 +74,40 @@ class Grupo
     /**
      * @var string
      *
-     * @ORM\Column(name="barrio", type="string")
+     * @ORM\Column(name="barrio", type="string", nullable=true)
      */
     private $barrio;
 
 	 /**
      * @var string
      *
-     * @ORM\Column(name="corregimiento", type="string")
+     * @ORM\Column(name="corregimiento", type="string", nullable=true)
      */
     private $corregimiento;
 	
 	/**
      * @var string
      *
-     * @ORM\Column(name="vereda", type="string")
+     * @ORM\Column(name="vereda", type="string", nullable=true)
      */
     private $vereda;
 	
 	/**
      * @var string
      *
-     * @ORM\Column(name="cacerio", type="string")
+     * @ORM\Column(name="cacerio", type="string", nullable=true)
      */
     private $cacerio;
 	
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="figura_legal_constitucion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $figura_legal_constitucion;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="numero_identificacion_tributaria", type="string")
+     * @ORM\Column(name="numero_identificacion_tributaria", type="string", nullable=true)
      */
     private $numero_identificacion_tributaria;
 
@@ -144,30 +140,24 @@ class Grupo
     private $correo_electronico;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="entidad_financiera_cuenta", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $entidad_financiera_cuenta;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="tipo_cuenta", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $tipo_cuenta;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="active", type="boolean")
+     * @ORM\Column(name="active", type="boolean", nullable=true)
      */
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
@@ -179,9 +169,7 @@ class Grupo
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -260,11 +248,11 @@ class Grupo
     /**
      * Set tipo
      *
-     * @param integer $tipo
+     * @param AppBundle\Entity\Listas $tipo
      *
      * @return Grupo
      */
-    public function setTipo($tipo)
+    public function setTipo(\AppBundle\Entity\Listas $tipo)
     {
         $this->tipo = $tipo;
 
@@ -274,7 +262,7 @@ class Grupo
     /**
      * Get tipo
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getTipo()
     {
@@ -500,11 +488,11 @@ class Grupo
     /**
      * Set figuraLegalConstitucion
      *
-     * @param integer $figuraLegalConstitucion
+     * @param AppBundle\Entity\Listas $figuraLegalConstitucion
      *
      * @return Grupo
      */
-    public function setFiguraLegalConstitucion($figuraLegalConstitucion)
+    public function setFiguraLegalConstitucion(\AppBundle\Entity\Listas $figuraLegalConstitucion)
     {
         $this->figura_legal_constitucion = $figuraLegalConstitucion;
 
@@ -514,7 +502,7 @@ class Grupo
     /**
      * Get figuraLegalConstitucion
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getFiguraLegalConstitucion()
     {
@@ -644,11 +632,11 @@ class Grupo
     /**
      * Set entidadFinancieraCuenta
      *
-     * @param integer $entidadFinancieraCuenta
+     * @param AppBundle\Entity\Listas $entidadFinancieraCuenta
      *
      * @return Grupo
      */
-    public function setEntidadFinancieraCuenta($entidadFinancieraCuenta)
+    public function setEntidadFinancieraCuenta(\AppBundle\Entity\Listas $entidadFinancieraCuenta)
     {
         $this->entidad_financiera_cuenta = $entidadFinancieraCuenta;
 
@@ -658,7 +646,7 @@ class Grupo
     /**
      * Get entidadFinancieraCuenta
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getEntidadFinancieraCuenta()
     {
@@ -668,11 +656,11 @@ class Grupo
     /**
      * Set tipoCuenta
      *
-     * @param integer $tipoCuenta
+     * @param AppBundle\Entity\Listas $tipoCuenta
      *
      * @return Grupo
      */
-    public function setTipoCuenta($tipoCuenta)
+    public function setTipoCuenta(\AppBundle\Entity\Listas $tipoCuenta)
     {
         $this->tipo_cuenta = $tipoCuenta;
 
@@ -682,7 +670,7 @@ class Grupo
     /**
      * Get tipoCuenta
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getTipoCuenta()
     {
@@ -716,11 +704,11 @@ class Grupo
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return Grupo
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -730,7 +718,7 @@ class Grupo
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -764,11 +752,11 @@ class Grupo
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return Grupo
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -778,7 +766,7 @@ class Grupo
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
