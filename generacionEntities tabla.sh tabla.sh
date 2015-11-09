@@ -21,8 +21,7 @@ tipo_cuenta:integer
 
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
-php app/console doctrine:generate:entity --entity="AppBundle:Beneficiario" --fields="
-grupo:integer 
+php app/console doctrine:generate:entity --entity="AppBundle:Beneficiario" --fields="grupo:integer 
 tipo_documento:integer
 numero_documento:string
 primer_apellido:string
@@ -62,7 +61,34 @@ telefono_fijo_conyugue:string
 telefono_celular_conyugue:string
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
+php app/console doctrine:generate:entity --entity="AppBundle:CLEAR" --fields="CLEAR:integer 
+tipo_CLEAR:integer
+fecha_inicio:datetime
+fecha_finalizacion:datetime
+zona:integer
+departamento:integer
+municipio:integer
+lugar_realizacion_CLEAR:integer
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
+php app/console doctrine:generate:entity --entity="AppBundle:integrantesCLEAR" --fields="integrantesCLEAR:integer 
+tipo_documento:integer
+numero_documento:string
+primer_apellido:string
+segundo_apellido:string
+primer_nombre:string
+segundo_nombre:string
+genero:integer
+fecha_nacimiento:datetime
+pertenencia_etnica:integer
+nivel_estudios:integer
+grupo_indigena:integer
+entidad_representa:string
+cargo_entidad:string
+telefono_fijo:string
+telefono_celular:string
+correo_electronico:string
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 
 php app/console doctrine:generate:entity --entity="AppBundle:Usuario" --fields="usuario:string(255) password:string(80) salt:string(255) nombres:string(255) apellidos:string(255) 
