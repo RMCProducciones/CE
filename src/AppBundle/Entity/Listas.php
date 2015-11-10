@@ -56,10 +56,10 @@ class Listas
      */
     private $active;
 
-    /**
-     * @var integer
+     /**
+     * @var string
      *
-     * @ORM\Column(name="usuario_modificacion", type="integer", nullable=true)
+     * @ORM\Column(name="descripcion", type="string")
      */
     private $usuario_modificacion;
 
@@ -70,10 +70,10 @@ class Listas
      */
     private $fecha_modificacion;
 
-    /**
-     * @var integer
+  /**
+     * @var string
      *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\Column(name="descripcion", type="string")
      */
     private $usuario_creacion;
 
