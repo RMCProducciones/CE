@@ -12,6 +12,8 @@ use AppBundle\Entity\Beneficiario;
 use AppBundle\Form\GestionEmpresarial\BeneficiarioType;
 use AppBundle\Entity\POA;
 use AppBundle\Form\GestionAdministrativa\POAType;
+use AppBundle\Entity\Convocatoria;
+use AppBundle\Form\GestionAdministrativa\ConvocatoriaType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -251,22 +253,23 @@ class DefaultController extends Controller
     public function convocatoriaGestionAction($idPOA)
     {
         $em = $this->getDoctrine()->getManager();
-        $convocatorias = $em->getRepository('AppBundle:convocatoria')->findBy(
- 
+        $convocatorias = $em->getRepository('AppBundle:Convocatoria')->findBY(
+			array('poa' => $idPOA),
+            array('numero' => 'ASC')
         );
 
-        return $this->render('AppBundle:Gestion-Administrativa/poa/{idPOA}/convocatoria:convocatoria-gestion.html.twig', array( 'idPOA' => $idPOA, 'convocatorias' => $convocatorias));
+        return $this->render('AppBundle:GestionAdministrativa/GestionPOA:convocatoria-gestion.html.twig', array( 'idPOA' => $idPOA, 'convocatorias' => $convocatorias));
     }
 
     /**
      * @Route("/gestion-administrativa/gestion-POA/POA/{idPOA}/convocatoria/nuevo/", name="convocatoriaNuevo")
      */
-    public function convocatroaiaNuevoAction(Request $request, $idPOA)
+    public function convocatoriaNuevoAction(Request $request, $idPOA)
     {      
         $em = $this->getDoctrine()->getManager();
-        $convocatorias = new convocatoria();
+        $convocatorias = new Convocatoria();
         
-        $form = $this->createForm(new BeneficiarioType(), $convocatorias);
+        $form = $this->createForm(new ConvocatoriaType(), $convocatorias);
 
         $form->handleRequest($request);
 
@@ -282,10 +285,10 @@ class DefaultController extends Controller
             $em->persist($convocatorias);
             $em->flush();
 
-            return $this->redirectToRoute('convocatoriasGestion', array( 'idPOA' => $idPOA));
+            return $this->redirectToRoute('convocatoriaGestion', array( 'idPOA' => $idPOA));
         }
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:convocatorias-nuevo.html.twig', array('form' => $form->createView(),'idGrupo' => $idGrupo));
+        return $this->render('AppBundle:GestionAdministrativa/GestionPOA:convocatoria-nuevo.html.twig', array('form' => $form->createView(),'idPOA' => $idPOA));
     }                                                                                                                                                                                                                              
 	
 	
