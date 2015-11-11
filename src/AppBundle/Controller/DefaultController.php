@@ -244,4 +244,50 @@ class DefaultController extends Controller
         }
 		 return $this->render('AppBundle:GestionAdministrativa/GestionPOA:POA-nuevo.html.twig', array('form' => $form->createView()));
     }
+	
+	/**
+     * @Route("/gestion-administrativa/gestion-POA/POA/{idPOA}/convocatoria/", name="convocatoriaGestion")
+     */
+    public function convocatoriaGestionAction($idPOA)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $convocatorias = $em->getRepository('AppBundle:convocatoria')->findBy(
+ 
+        );
+
+        return $this->render('AppBundle:Gestion-Administrativa/poa/{idPOA}/convocatoria:convocatoria-gestion.html.twig', array( 'idPOA' => $idPOA, 'convocatorias' => $convocatorias));
+    }
+
+    /**
+     * @Route("/gestion-administrativa/gestion-POA/POA/{idPOA}/convocatoria/nuevo/", name="convocatoriaNuevo")
+     */
+    public function convocatroaiaNuevoAction(Request $request, $idPOA)
+    {      
+        $em = $this->getDoctrine()->getManager();
+        $convocatorias = new convocatoria();
+        
+        $form = $this->createForm(new BeneficiarioType(), $convocatorias);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $convocatorias = $form->getData();
+
+            $convocatorias->setActive(true);
+            $convocatorias->setFechaCreacion(new \DateTime());
+
+
+            
+            $em->persist($convocatorias);
+            $em->flush();
+
+            return $this->redirectToRoute('convocatoriasGestion', array( 'idPOA' => $idPOA));
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:convocatorias-nuevo.html.twig', array('form' => $form->createView(),'idGrupo' => $idGrupo));
+    }                                                                                                                                                                                                                              
+	
+	
+	
 }
