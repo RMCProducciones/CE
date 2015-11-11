@@ -25,6 +25,13 @@ class Convocatoria
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\POA")
      */
     private $poa;
+	
+	/**
+     * @var integer
+     *
+     * @ORM\Column(name="numero", type="integer")
+     */
+    private $numero;
 
     /**
      * @var \DateTime
@@ -40,39 +47,7 @@ class Convocatoria
      */
     private $fecha_cierre;
 
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="mot", type="boolean")
-     */
-    private $mot;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="iea", type="boolean")
-     */
-    private $iea;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="pi", type="boolean")
-     */
-    private $pi;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="pn", type="boolean")
-     */
-    private $pn;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="active", type="boolean")
-     */
+    
     private $active;
 
     /**
@@ -139,6 +114,30 @@ class Convocatoria
     {
         return $this->poa;
     }
+	
+	    /**
+     * Set numero
+     *
+     * @param \DateTime $numero
+     *
+     * @return Convocatoria
+     */
+    public function setNumero($numero)
+    {
+        $this->numero = $numero;
+
+        return $this;
+    }
+
+    /**
+     * Get numero
+     *
+     * @return \DateTime
+     */
+    public function getNumero()
+    {
+        return $this->numero;
+    }
 
     /**
      * Set fechaInicio
@@ -188,101 +187,7 @@ class Convocatoria
         return $this->fecha_cierre;
     }
 
-    /**
-     * Set mot
-     *
-     * @param boolean $mot
-     *
-     * @return Convocatoria
-     */
-    public function setMot($mot)
-    {
-        $this->mot = $mot;
-
-        return $this;
-    }
-
-    /**
-     * Get mot
-     *
-     * @return boolean
-     */
-    public function getMot()
-    {
-        return $this->mot;
-    }
-
-    /**
-     * Set iea
-     *
-     * @param boolean $iea
-     *
-     * @return Convocatoria
-     */
-    public function setIea($iea)
-    {
-        $this->iea = $iea;
-
-        return $this;
-    }
-
-    /**
-     * Get iea
-     *
-     * @return boolean
-     */
-    public function getIea()
-    {
-        return $this->iea;
-    }
-
-    /**
-     * Set pi
-     *
-     * @param boolean $pi
-     *
-     * @return Convocatoria
-     */
-    public function setPi($pi)
-    {
-        $this->pi = $pi;
-
-        return $this;
-    }
-
-    /**
-     * Get pi
-     *
-     * @return boolean
-     */
-    public function getPi()
-    {
-        return $this->pi;
-    }
-
-    /**
-     * Set pn
-     *
-     * @param boolean $pn
-     *
-     * @return Convocatoria
-     */
-    public function setPn($pn)
-    {
-        $this->pn = $pn;
-
-        return $this;
-    }
-
-    /**
-     * Get pn
-     *
-     * @return boolean
-     */
-    public function getPn()
-    {
-        return $this->pn;
-    }
+    
 
     /**
      * Set active
