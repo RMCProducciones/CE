@@ -113,7 +113,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/nuevo", name="gruposNuevo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/nuevo", name="gruposNuevo")
      */
     public function gruposNuevoAction(Request $request)
     {
@@ -145,7 +145,7 @@ class DefaultController extends Controller
 
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/beneficiarios/{idGrupo}", name="beneficiariosGestion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/{idGrupo}/beneficiarios/", name="beneficiariosGestion")
      */
     public function beneficiariosGestionAction($idGrupo)
     {
@@ -159,7 +159,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/beneficiario/{idGrupo}/nuevo/", name="beneficiariosNuevo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/{idGrupo}/beneficiarios/nuevo/", name="beneficiariosNuevo")
      */
     public function beneficiariosNuevoAction(Request $request, $idGrupo)
     {      
