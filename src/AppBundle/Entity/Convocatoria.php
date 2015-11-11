@@ -78,7 +78,7 @@ class Convocatoria
     
     public function __toString()
     {
-        return $this->getNombre();
+        return $this->getPoa().":".$this->getNumero();
     }
 
     /**
