@@ -32,7 +32,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="btn-group">
-              <a href="{{ path('gruposNuevo') }}" class="btn btn-success">Guardar</a>
+              <a href="#" onclick="document.forms[0].submit();return false;" class="btn btn-success">Guardar</a>
               
               <a href="{{ path('gruposGestion') }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
             </div>
@@ -50,213 +50,207 @@
         <div class="row">
           <div class="col-md-12">
             <!--form class="form-horizontal" role="form"-->
+              
               <div class="form-group">
                 <div class="col-sm-2">
-                  <label for="inputEmail3" class="control-label">Departamento</label>
+                  {{ form_label(form.convocatoria) }}
                 </div>
                 <div class="col-sm-10">
-                  <input list="departamento" placeholder="Departamento..." class="form-control" type="text">
-                  <datalist id="departamento">
-                    <option value="Antioquia" class="form-control"></option>
-                    <option value="Amazonas"></option>
-                    <option value="Bolívar"></option>
-                    <option value="Caquetá"></option>
-                    <option value="Cundinamarca"></option>
-                  </datalist>
+                  {{ form_errors(form.convocatoria) }}
+                  {{ form_widget(form.convocatoria, { 'attr': {'class': 'form-control'} }) }}
                 </div>
               </div>
+
               <div class="form-group">
                 <div class="col-sm-2">
-                  <label for="inputEmail3" class="control-label">Municipio</label>
+                  {{ form_label(form.municipio) }}
                 </div>
                 <div class="col-sm-10">
-                  <input class="form-control" placeholder="Municipio..." list="municipio" type="text">
-                  <datalist id="municipio">
-                    <option value="Abrego"></option>
-                    <option value="Corinto"></option>
-                    <option value="Tambo"></option>
-                    <option value="Granada"></option>
-                    <option value="López"></option>
-                  </datalist>
+                  {{ form_errors(form.municipio) }}
+                  {{ form_widget(form.municipio, { 'attr': {'class': 'form-control'} }) }}
                 </div>
               </div>
+
               <div class="form-group">
                 <div class="col-sm-2">
-                  <label for="inputEmail3" class="control-label">Zona</label>
+                  {{ form_label(form.tipo) }}
                 </div>
                 <div class="col-sm-10">
-                  <input class="form-control" placeholder="Zona..." list="zona" type="text">
-                  <datalist id="zona">
-                    <option value="Nudo de Paramillo"></option>
-                    <option value="Cauca Costa Pacífica"></option>
-                    <option value="Cauca Andino"></option>
-                    <option value="Nariño Costa Pacífica"></option>
-                    <option value="Nariño Andino"></option>
-                  </datalist>
+                  {{ form_errors(form.tipo) }}
+                  {{ form_widget(form.tipo, { 'attr': {'class': 'form-control'} }) }}
                 </div>
               </div>
+
               <div class="form-group">
                 <div class="col-sm-2">
-                  <label for="inputEmail3" class="control-label">Tipo organización</label>
+                  {{ form_label(form.fecha_inscripcion) }}
                 </div>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" placeholder="Tipo organización..." list="tipoOrganizacion">
-                  <datalist id="tipoOrganizacion">
-                    <option value="Asociación"></option>
-                    <option value="Cooperativa"></option>
-                    <option value="Precooperativa"></option>
-                    <option value="Fundación"></option>
-                    <option value="Junta de Acción Comunal"></option>
-                  </datalist>
+                  {{ form_errors(form.fecha_inscripcion) }}
+                  {{ form_widget(form.fecha_inscripcion, { 'attr': {'class': 'form-control', 'placeholder': 'Fecha de inscripción...'} }) }}
                 </div>
               </div>
+
               <div class="form-group">
                 <div class="col-sm-2">
-                  <label for="inputEmail3" class="control-label">Tipo de grupo</label>
+                  {{ form_label(form.codigo) }}
                 </div>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" placeholder="Tipo grupo..." list="tipoGrupo">
-                  <datalist id="tipoGrupo">
-                    <option value="Grupo no formal sin negocio"></option>
-                    <option value="Grupo no formal con negocio"></option>
-                    <option value="Grupo formal sin negocio"></option>
-                    <option value="Grupo formal con negocio"></option>
-                  </datalist>
+                  {{ form_errors(form.codigo) }}
+                  {{ form_widget(form.codigo, { 'attr': {'class': 'form-control', 'placeholder': 'Código...'} }) }}
                 </div>
               </div>
+
               <div class="form-group">
                 <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">Código grupo</label>
+                  {{ form_label(form.nombre) }}
                 </div>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputPassword3" placeholder="Código del grupo..." disabled="disabled">
+                  {{ form_errors(form.nombre) }}
+                  {{ form_widget(form.nombre, { 'attr': {'class': 'form-control', 'placeholder': 'Nombre del grupo...'} }) }}
                 </div>
               </div>
+
               <div class="form-group">
                 <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">Nombre grupo</label>
+                  {{ form_label(form.direccion) }}
                 </div>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputPassword3" placeholder="Nombre grupo...">
+                  {{ form_errors(form.direccion) }}
+                  {{ form_widget(form.direccion, { 'attr': {'class': 'form-control', 'placeholder': 'Dirección...'} }) }}
                 </div>
               </div>
+
               <div class="form-group">
                 <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">Dirección</label>
-                </div>
-                <div class="col-sm-1">
-                  <label for="inputPassword3" class="control-label">Urbana</label>
-                </div>
-                <div class="col-sm-4">
-                  <input type="checkbox">
-                </div>
-                <div class="col-sm-1">
-                  <label for="inputPassword3" class="control-label">Rural</label>
-                </div>
-                <div class="col-sm-1">
-                  <input type="checkbox">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">Corregimiento</label>
+                  {{ form_label(form.rural) }}
                 </div>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputPassword3" placeholder="Corregimiento...">
+                  {{ form_errors(form.rural) }}
+                  {{ form_widget(form.rural, { 'attr': {'class': 'form-control'} }) }}
                 </div>
               </div>
+
               <div class="form-group">
                 <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">Vereda</label>
+                  {{ form_label(form.barrio) }}
                 </div>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" placeholder="Vereda..." id="inputPassword3">
+                  {{ form_errors(form.barrio) }}
+                  {{ form_widget(form.barrio, { 'attr': {'class': 'form-control', 'placeholder': 'Barrio...'} }) }}
                 </div>
               </div>
+
               <div class="form-group">
                 <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">Cacerio</label>
+                  {{ form_label(form.corregimiento) }}
                 </div>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" placeholder="Cacerio..." id="inputPassword3">
+                  {{ form_errors(form.corregimiento) }}
+                  {{ form_widget(form.corregimiento, { 'attr': {'class': 'form-control', 'placeholder': 'Corregimiento...'} }) }}
                 </div>
               </div>
+
               <div class="form-group">
                 <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">Nit</label>
-                </div>
-                <div class="col-sm-7">
-                  <input type="text" class="form-control" id="inputPassword3" placeholder="Nit de la organización...">
-                </div>
-                <div class="col-sm-3">
-                  <input type="text" class="form-control" id="inputPassword3" placeholder="Ultimo numero Nit...">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">Teléfono móvil</label>
+                  {{ form_label(form.vereda) }}
                 </div>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" placeholder="Teléfono móvil..." id="inputPassword3">
+                  {{ form_errors(form.vereda) }}
+                  {{ form_widget(form.vereda, { 'attr': {'class': 'form-control', 'placeholder': 'Vereda...'} }) }}
                 </div>
               </div>
+
               <div class="form-group">
                 <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">Teléfono fijo</label>
-                </div>
-                <div class="col-sm-1">
-                  <input type="text" class="form-control" placeholder="" id="inputPassword3">
-                </div>
-                <div class="col-sm-2">
-                  <input class="form-control" placeholder="Indicativo" type="text" id="inputPassword3">
-                </div>
-                <div class="col-sm-6">
-                  <input class="form-control" placeholder="Teléfono fijo..." type="text" id="inputPassword3">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">¿Cuenta bancaria?</label>
+                  {{ form_label(form.cacerio) }}
                 </div>
                 <div class="col-sm-10">
-                  <input type="checkbox">
+                  {{ form_errors(form.cacerio) }}
+                  {{ form_widget(form.cacerio, { 'attr': {'class': 'form-control', 'placeholder': 'Cacerío...'} }) }}
                 </div>
               </div>
+
               <div class="form-group">
                 <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">Número de cuenta</label>
+                  {{ form_label(form.figura_legal_constitucion) }}
                 </div>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" placeholder="Número de cuenta..." id="inputPassword3">
+                  {{ form_errors(form.figura_legal_constitucion) }}
+                  {{ form_widget(form.figura_legal_constitucion, { 'attr': {'class': 'form-control', 'placeholder': 'Figura legal de constitución...'} }) }}
                 </div>
               </div>
+
               <div class="form-group">
                 <div class="col-sm-2">
-                  <label for="inputEmail3" class="control-label">Tipo de cuenta</label>
+                  {{ form_label(form.numero_identificacion_tributaria) }}
                 </div>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" placeholder="Tipo de cuenta..." list="tipoCuenta">
-                  <datalist id="tipoCuenta">
-                    <option value="Ahorro"></option>
-                    <option value="Corriente"></option>
-                  </datalist>
+                  {{ form_errors(form.numero_identificacion_tributaria) }}
+                  {{ form_widget(form.numero_identificacion_tributaria, { 'attr': {'class': 'form-control', 'placeholder': 'Número de identificación tributaria...'} }) }}
                 </div>
               </div>
+
               <div class="form-group">
                 <div class="col-sm-2">
-                  <label for="inputEmail3" class="control-label">Banco</label>
+                  {{ form_label(form.fecha_constitucion_legal) }}
                 </div>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" placeholder="Banco..." list="banco">
-                  <datalist id="banco">
-                    <option value="Banco Agrario"></option>
-                    <option value="Bancolombia"></option>
-                    <option value="Banco de Bogotá"></option>
-                    <option value="Banco Popular"></option>
-                    <option value="Banco de Crédito"></option>
-                  </datalist>
+                  {{ form_errors(form.fecha_constitucion_legal) }}
+                  {{ form_widget(form.fecha_constitucion_legal, { 'attr': {'class': 'form-control'} }) }}
                 </div>
               </div>
+
+              <div class="form-group">
+                <div class="col-sm-2">
+                  {{ form_label(form.telefono_fijo) }}
+                </div>
+                <div class="col-sm-10">
+                  {{ form_errors(form.telefono_fijo) }}
+                  {{ form_widget(form.telefono_fijo, { 'attr': {'class': 'form-control', 'placeholder': 'Teléfono fijo...'} }) }}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-2">
+                  {{ form_label(form.telefono_celular) }}
+                </div>
+                <div class="col-sm-10">
+                  {{ form_errors(form.telefono_celular) }}
+                  {{ form_widget(form.telefono_celular, { 'attr': {'class': 'form-control', 'placeholder': 'Teléfono celular...'} }) }}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-2">
+                  {{ form_label(form.correo_electronico) }}
+                </div>
+                <div class="col-sm-10">
+                  {{ form_errors(form.correo_electronico) }}
+                  {{ form_widget(form.correo_electronico, { 'attr': {'class': 'form-control', 'placeholder': 'Correo electrónico...'} }) }}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-2">
+                  {{ form_label(form.entidad_financiera_cuenta) }}
+                </div>
+                <div class="col-sm-10">
+                  {{ form_errors(form.entidad_financiera_cuenta) }}
+                  {{ form_widget(form.entidad_financiera_cuenta, { 'attr': {'class': 'form-control', 'placeholder': 'Entidad financiera donde tiene la cuenta...'} }) }}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-2">
+                  {{ form_label(form.tipo_cuenta) }}
+                </div>
+                <div class="col-sm-10">
+                  {{ form_errors(form.tipo_cuenta) }}
+                  {{ form_widget(form.tipo_cuenta, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+
             <!--/form-->
           </div>
         </div>

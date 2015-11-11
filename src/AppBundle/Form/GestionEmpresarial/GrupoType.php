@@ -30,7 +30,6 @@ class GrupoType extends AbstractType
 			->add('correo_electronico', 'email')
 			->add('entidad_financiera_cuenta')
 			->add('tipo_cuenta')
-			->add('save', 'submit')
 		;
     }
     
