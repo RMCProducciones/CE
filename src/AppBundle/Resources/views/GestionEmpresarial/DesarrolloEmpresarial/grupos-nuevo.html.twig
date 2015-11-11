@@ -23,9 +23,9 @@
     <hr>
 
     
-    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+  {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
 
-      {{ form_errors(form) }}
+    {{ form_errors(form) }}
 
     <div class="section">
       <div class="container">
@@ -58,6 +58,16 @@
                 <div class="col-sm-10">
                   {{ form_errors(form.convocatoria) }}
                   {{ form_widget(form.convocatoria, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-2">
+                  {{ form_label(form.zona) }}
+                </div>
+                <div class="col-sm-10">
+                  {{ form_errors(form.zona) }}
+                  {{ form_widget(form.zona, { 'attr': {'class': 'form-control', 'onchange': 'alert("Ejecutar ajax para actualizar municipios...")'} }) }}
                 </div>
               </div>
 

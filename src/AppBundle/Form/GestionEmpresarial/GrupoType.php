@@ -4,16 +4,32 @@ namespace AppBundle\Form\GestionEmpresarial;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Doctrine\ORM\EntityRepository;
+use AppBundle\Entity\Zona;
+use Symfony\Component\Validator\Util\PropertyPath;
 
 class GrupoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-			->add('convocatoria')
-			->add('municipio')
-			->add('tipo')
-			->add('fecha_inscripcion')
+			->add('convocatoria', 'entity', array('class' => 'AppBundle:Convocatoria'))
+			->add('zona', 'entity', array('mapped' => false, 'class' => 'AppBundle:Zona',
+										    'query_builder' => function(EntityRepository $er) {
+										        return $er->createQueryBuilder('l')
+										        	->where('l.active = 1')
+										            ->orderBy('l.nombre', 'ASC');
+										    },))
+			->add('municipio', 'entity', array('class' => 'AppBundle:Municipio'))
+			->add('tipo', 'entity', array('class' => 'AppBundle:Listas',
+										    'query_builder' => function(EntityRepository $er) {
+										        return $er->createQueryBuilder('l')
+										        	->where('l.dominio = :dominio')
+										        	->andWhere('l.active = 1')
+										        	->setParameter('dominio', 'tipo_documento')
+										            ->orderBy('l.orden', 'ASC');
+										    },))
+			->add('fecha_inscripcion', 'date')
 			->add('codigo')
 			->add('nombre')
 			->add('direccion')
