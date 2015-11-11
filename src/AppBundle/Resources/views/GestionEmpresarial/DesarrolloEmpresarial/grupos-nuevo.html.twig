@@ -5,18 +5,10 @@
 {% block breadcrumb_ul %}
 
     <ul class="breadcrumb">
-      <li>
-        <a href="0-inicio.html">Inicio</a>
-      </li>
-      <li>
-        Gestión Empresarial
-      </li>
-      <li>
-        Formacion de capital social asociativo y desarrollo empresarial
-      </li>
-      <li>
-        Grupos
-      </li>
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Empresarial</li>
+      <li>Formacion de capital social asociativo y desarrollo empresarial</li>
+      <li><a href="{{ path('gruposGestion') }}">Grupos</a></li>
       <li class="active">Nuevo</li>
     </ul>
 
@@ -31,8 +23,9 @@
     <hr>
 
     
-    {#{ form_start(form) }#}
-    <form name="grupo" method="post" action="" class="form-horizontal" role="form">
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+      {{ form_errors(form) }}
 
     <div class="section">
       <div class="container">
@@ -41,7 +34,7 @@
             <div class="btn-group">
               <a href="{{ path('gruposNuevo') }}" class="btn btn-success">Guardar</a>
               
-              <a class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+              <a href="{{ path('gruposGestion') }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
             </div>
           </div>
         </div>
@@ -270,16 +263,7 @@
       </div>
     </div>
 
-
-    {{ form_errors(form) }}
-
-
-{#{ form_row(form.zona) }#}
-<input type="email" id="grupo_correo_electronico" name="grupo[correo_electronico]" class="alert alert-success">
-
-    {{ form_end(form) }}
-
-
+  {{ form_end(form) }}
                
 {% endblock %}
 

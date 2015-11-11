@@ -24,7 +24,7 @@ class POA
     /**
      * @var integer
      *
-     * @ORM\Column(name="anio", type="integer")
+     * @ORM\Column(name="anio", type="integer", unique=true)
      */
     private $anio;
 
@@ -50,7 +50,7 @@ class POA
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
      */
     private $fecha_modificacion;
 

@@ -1,23 +1,15 @@
 {% extends 'AppBundle::frontend.html.twig' %}
 
-{% block title %}Grupos{% endblock %}
+
+{% block title %}Beneficiarios{% endblock %}
 
 {% block breadcrumb_ul %}
 
     <ul class="breadcrumb">
-      <li>
-        <a href="0-inicio.html">Inicio</a>
-      </li>
-      <li>
-        Gestión Empresarial
-      </li>
-      <li>
-        Formacion de capital social asociativo y desarrollo empresarial
-      </li>
-      <li>
-        Grupos
-      </li>
-      <li class="active">Nuevo</li>
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Administrativa</li>
+      <li>Plan Operativo Anual - POA</li>
+      <li class="active">Gestión POA</li>
     </ul>
 
 {% endblock %}
@@ -26,22 +18,18 @@
 {% block section %}
 
      
-  	<br>
+    <br>
 
     <hr>
-
-    
-    {#{ form_start(form) }#}
-    <form name="grupo" method="post" action="" class="form-horizontal" role="form">
 
     <div class="section">
       <div class="container">
         <div class="row">
           <div class="col-md-6">
             <div class="btn-group">
-              <a href="{{ path('gruposNuevo') }}" class="btn btn-success">Guardar</a>
+              <a href="{{ path('POANuevo') }}" class="btn btn-success">Nuevo</a>
               
-              <a class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+              <a class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Eliminar</a>
             </div>
           </div>
         </div>
@@ -49,237 +37,88 @@
     </div>
     
     <br>
-        
-
 
     <div class="section">
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <!--form class="form-horizontal" role="form"-->
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <label for="inputEmail3" class="control-label">Departamento</label>
-                </div>
-                <div class="col-sm-10">
-                  <input list="departamento" placeholder="Departamento..." class="form-control" type="text">
-                  <datalist id="departamento">
-                    <option value="Antioquia" class="form-control"></option>
-                    <option value="Amazonas"></option>
-                    <option value="Bolívar"></option>
-                    <option value="Caquetá"></option>
-                    <option value="Cundinamarca"></option>
-                  </datalist>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <label for="inputEmail3" class="control-label">Municipio</label>
-                </div>
-                <div class="col-sm-10">
-                  <input class="form-control" placeholder="Municipio..." list="municipio" type="text">
-                  <datalist id="municipio">
-                    <option value="Abrego"></option>
-                    <option value="Corinto"></option>
-                    <option value="Tambo"></option>
-                    <option value="Granada"></option>
-                    <option value="López"></option>
-                  </datalist>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <label for="inputEmail3" class="control-label">Zona</label>
-                </div>
-                <div class="col-sm-10">
-                  <input class="form-control" placeholder="Zona..." list="zona" type="text">
-                  <datalist id="zona">
-                    <option value="Nudo de Paramillo"></option>
-                    <option value="Cauca Costa Pacífica"></option>
-                    <option value="Cauca Andino"></option>
-                    <option value="Nariño Costa Pacífica"></option>
-                    <option value="Nariño Andino"></option>
-                  </datalist>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <label for="inputEmail3" class="control-label">Tipo organización</label>
-                </div>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" placeholder="Tipo organización..." list="tipoOrganizacion">
-                  <datalist id="tipoOrganizacion">
-                    <option value="Asociación"></option>
-                    <option value="Cooperativa"></option>
-                    <option value="Precooperativa"></option>
-                    <option value="Fundación"></option>
-                    <option value="Junta de Acción Comunal"></option>
-                  </datalist>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <label for="inputEmail3" class="control-label">Tipo de grupo</label>
-                </div>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" placeholder="Tipo grupo..." list="tipoGrupo">
-                  <datalist id="tipoGrupo">
-                    <option value="Grupo no formal sin negocio"></option>
-                    <option value="Grupo no formal con negocio"></option>
-                    <option value="Grupo formal sin negocio"></option>
-                    <option value="Grupo formal con negocio"></option>
-                  </datalist>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">Código grupo</label>
-                </div>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputPassword3" placeholder="Código del grupo..." disabled="disabled">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">Nombre grupo</label>
-                </div>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputPassword3" placeholder="Nombre grupo...">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">Dirección</label>
-                </div>
-                <div class="col-sm-1">
-                  <label for="inputPassword3" class="control-label">Urbana</label>
-                </div>
-                <div class="col-sm-4">
-                  <input type="checkbox">
-                </div>
-                <div class="col-sm-1">
-                  <label for="inputPassword3" class="control-label">Rural</label>
-                </div>
-                <div class="col-sm-1">
-                  <input type="checkbox">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">Corregimiento</label>
-                </div>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputPassword3" placeholder="Corregimiento...">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">Vereda</label>
-                </div>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" placeholder="Vereda..." id="inputPassword3">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">Cacerio</label>
-                </div>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" placeholder="Cacerio..." id="inputPassword3">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">Nit</label>
-                </div>
-                <div class="col-sm-7">
-                  <input type="text" class="form-control" id="inputPassword3" placeholder="Nit de la organización...">
-                </div>
-                <div class="col-sm-3">
-                  <input type="text" class="form-control" id="inputPassword3" placeholder="Ultimo numero Nit...">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">Teléfono móvil</label>
-                </div>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" placeholder="Teléfono móvil..." id="inputPassword3">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">Teléfono fijo</label>
-                </div>
-                <div class="col-sm-1">
-                  <input type="text" class="form-control" placeholder="" id="inputPassword3">
-                </div>
-                <div class="col-sm-2">
-                  <input class="form-control" placeholder="Indicativo" type="text" id="inputPassword3">
-                </div>
-                <div class="col-sm-6">
-                  <input class="form-control" placeholder="Teléfono fijo..." type="text" id="inputPassword3">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">¿Cuenta bancaria?</label>
-                </div>
-                <div class="col-sm-10">
-                  <input type="checkbox">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <label for="inputPassword3" class="control-label">Número de cuenta</label>
-                </div>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" placeholder="Número de cuenta..." id="inputPassword3">
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <label for="inputEmail3" class="control-label">Tipo de cuenta</label>
-                </div>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" placeholder="Tipo de cuenta..." list="tipoCuenta">
-                  <datalist id="tipoCuenta">
-                    <option value="Ahorro"></option>
-                    <option value="Corriente"></option>
-                  </datalist>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-2">
-                  <label for="inputEmail3" class="control-label">Banco</label>
-                </div>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" placeholder="Banco..." list="banco">
-                  <datalist id="banco">
-                    <option value="Banco Agrario"></option>
-                    <option value="Bancolombia"></option>
-                    <option value="Banco de Bogotá"></option>
-                    <option value="Banco Popular"></option>
-                    <option value="Banco de Crédito"></option>
-                  </datalist>
-                </div>
-              </div>
-            <!--/form-->
+            <table class="table">
+              <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>
+                      <input type="checkbox">
+                    </th>
+                    <th>Año</th>
+                    <th>Presupuesto</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+             </thead>
+             <tbody>
+               
+                {% set consecutivo = 1 %}
+        
+                {% for poa in poas %}
+                  
+                  {% set consecutivo = consecutivo + 1 %}
+                  <tr>
+                    <td>{{ consecutivo }}</td>
+                    <td>
+                      <input type="checkbox">
+                    </td>
+                    <td>{{ poa.anio }}</td>
+                    <td>{{ poa.presupuesto }}</td>
+                    <td>{{ poa.active }}</td>
+                    <td>
+                      <a href="4-beneficiarios.html" alt="Beneficiarios" title="Beneficiarios"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> | </a>
+                      <a href="acta-subir-grupos.html" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span> | </a>
+                      <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> | </a>
+                      <a title="Editar" alt="Editar" href="3-grupos-editar.html"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> | </a>
+                      <a title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registro?"><span class="glyphicon glyphicon-trash"></span></a>
+                    </td>
+                  </tr>
+                  
+                  {% else %}
+                  
+                  <tr>
+                      <td colspan="7" class="info">No se encontraron registros.</td>
+                  </tr>
+                  
+                  {% endfor %}
+              
+               </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>  
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">NP-RIC-3-2014/05-001 | Andrés Carne de Res</h4>
+          </div>
+          <div class="modal-body">
+            <b>Departamento:Antioquia</b>
+            <br>
+            <b>Municipio: Rionegro</b>
+            <br>
+            <b>Zona: Oriente Antioqueño</b>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
     </div>
-
-
-    {{ form_errors(form) }}
-
-
-{#{ form_row(form.zona) }#}
-<input type="email" id="grupo_correo_electronico" name="grupo[correo_electronico]" class="alert alert-success">
-
-    {{ form_end(form) }}
-
-
                
 {% endblock %}
 

@@ -13,6 +13,11 @@ use AppBundle\Form\GestionEmpresarial\BeneficiarioType;
 use AppBundle\Entity\POA;
 use AppBundle\Form\GestionAdministrativa\POAType;
 
+/*Para autenticación por código*/
+use AppBundle\Entity\Usuario;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+
+
 class DefaultController extends Controller
 {
     /**
@@ -20,6 +25,10 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        /*$usuario = new Usuario(); 
+        $token = new UsernamePasswordToken($usuario, null, 'main', array('ROLE_USER'));
+        $this->get('security.context')->setToken($token);*/
+
         return $this->render('AppBundle:default:index.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
         ));
@@ -119,7 +128,8 @@ class DefaultController extends Controller
             // data is an array with "name", "email", and "message" keys
             $grupo = $form->getData();
 
-            $grupo->setActive('true');
+            $grupo->setActive(true);
+            $grupo->setFechaCreacion(new \DateTime());
 
 
             
@@ -164,7 +174,8 @@ class DefaultController extends Controller
             // data is an array with "name", "email", and "message" keys
             $beneficiarios = $form->getData();
 
-            $beneficiarios->setActive('true');
+            $beneficiarios->setActive(true);
+            $beneficiarios->setFechaCreacion(new \DateTime());
 
 
             
@@ -220,8 +231,10 @@ class DefaultController extends Controller
             // data is an array with "name", "email", and "message" keys
             $poa = $form->getData();
 
-            $poa->setActive('true');
-
+            $poa->setActive(true);
+            //$poa->setUsuarioCreacion( $this->get('security.token_storage')->getToken()->getUser() );
+            //$poa->setUsuarioCreacion($em->getRepository('AppBundle:Usuario')->findOneBy(array('id'=>'1')))
+            $poa->setFechaCreacion(new \DateTime());
 
             
             $em->persist($poa);
