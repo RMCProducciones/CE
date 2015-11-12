@@ -36,7 +36,7 @@ class BeneficiarioType extends AbstractType
 			->add('segundo_apellido', 'text', array('required' => false))
 			->add('primer_nombre')
 			->add('segundo_nombre', 'text', array('required' => false))
-			->add('genero', 'entity', array('class' => 'AppBundle:Listas',
+			->add('genero', 'entity', array('class' => 'AppBundle:Listas', 'expanded' => true, 
 										    'query_builder' => function(EntityRepository $er) {
 										        return $er->createQueryBuilder('l')
 										        	->where('l.dominio = :dominio')
@@ -44,8 +44,8 @@ class BeneficiarioType extends AbstractType
 										        	->setParameter('dominio', 'genero')
 										            ->orderBy('l.orden', 'ASC');
 										    },))
-			->add('fecha_nacimiento', 'date', array('label' => 'Fecha de nacimiento'))
-			->add('edad_inscripcion')
+			->add('fecha_nacimiento', 'date', array('label' => 'Fecha de nacimiento', 'widget' => 'single_text'))
+			->add('edad_inscripcion', 'text', array('label' => 'Edad al momento de la inscripción'))
 			->add('corte_sisben')
 			->add('puntaje_sisben')
 			->add('pertenencia_etnica', 'entity', array('class' => 'AppBundle:Listas',
@@ -62,10 +62,11 @@ class BeneficiarioType extends AbstractType
 										        	->where('l.dominio = :dominio')
 										        	->andWhere('l.active = 1')
 										        	->setParameter('dominio', 'grupo_indigena')
-										            ->orderBy('l.orden', 'ASC');
+										            ->orderBy('l.orden', 'ASC')
+										            ->addOrderBy('l.descripcion', 'ASC');
 										    },))
 			->add('desplazado', 'checkbox', array('required' => false))
-			->add('red_unidos', 'checkbox', array('required' => false))
+			->add('red_unidos', 'checkbox', array('label' => 'Pertenece a la Red Unidos', 'required' => false))
 			->add('rol_grupo_familiar', 'entity', array('class' => 'AppBundle:Listas',
 										    'query_builder' => function(EntityRepository $er) {
 										        return $er->createQueryBuilder('l')
