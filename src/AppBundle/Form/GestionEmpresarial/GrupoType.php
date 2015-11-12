@@ -5,8 +5,6 @@ namespace AppBundle\Form\GestionEmpresarial;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\ORM\EntityRepository;
-use AppBundle\Entity\Zona;
-use Symfony\Component\Validator\Util\PropertyPath;
 
 class GrupoType extends AbstractType
 {
@@ -20,13 +18,19 @@ class GrupoType extends AbstractType
 										        	->where('l.active = 1')
 										            ->orderBy('l.nombre', 'ASC');
 										    },))
+			->add('departamento', 'entity', array('mapped' => false, 'class' => 'AppBundle:Departamento',
+										    'query_builder' => function(EntityRepository $er) {
+										        return $er->createQueryBuilder('l')
+										        	->where('l.active = 1')
+										            ->orderBy('l.nombre', 'ASC');
+										    },))
 			->add('municipio', 'entity', array('class' => 'AppBundle:Municipio'))
 			->add('tipo', 'entity', array('class' => 'AppBundle:Listas',
 										    'query_builder' => function(EntityRepository $er) {
 										        return $er->createQueryBuilder('l')
 										        	->where('l.dominio = :dominio')
 										        	->andWhere('l.active = 1')
-										        	->setParameter('dominio', 'tipo_documento')
+										        	->setParameter('dominio', 'tipo_grupo')
 										            ->orderBy('l.orden', 'ASC');
 										    },))
 			->add('fecha_inscripcion', 'date')
