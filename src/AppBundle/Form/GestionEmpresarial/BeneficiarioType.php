@@ -10,6 +10,17 @@ class BeneficiarioType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+    	/*Ayuda demo para el query:
+	    	->createQueryBuilder('c')
+		    ->where('c.tags LIKE :tag')
+		    ->andWhere('c.reviewed = 1')
+		    ->andWhere('c.enabled = 1')
+		    ->setParameter('tag', "%{$tag}%")
+		    ->orderBy('c.clicks', 'DESC')
+		    ->addOrderBy('b.name', 'ASC');
+    	*/
+
         $builder
 			->add('tipo_documento', 'entity', array('label' => 'Tipo de documento', 
 											'class' => 'AppBundle:Listas',
