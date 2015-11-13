@@ -18,22 +18,24 @@
 
 {% block section %}
 
-<div class="section  ng-scope" ng-app="aplicationCE" ng-controller="controllerGrupo">
+<div class="section  ng-scope" ng-app="aplicationCE" ng-controller="buttonBuscarHerramientas">
       <div class="container">
         <div class="row">
           <div class="col-md-7">
             <div class="input-group">
               <input class="form-control" placeholder="Buscar..." ng-model="txtBuscar" type="text">
               <span class="input-group-btn">
-			  {% raw %}
-                {{txtBuscar}}<button class="btn btn-default" type="button">Buscar</button>
-			  {% endraw %}
+			  <button class="btn btn-default" type="button">Buscar</button>
               </span>
             </div>
+			
+                r:[[txtBuscar]]
+			  
           </div>
           <div class="col-md-3 text-center">
-            <div class="dropup">
-              <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" ng-click="count = count * (-1)"> Buscar herramientas <span class="caret"></span></a>
+		  
+            <div class="[[styleBuscarHerramientas]]">
+              <button class="btn btn-primary" ng-click="buttonBuscarHerramientas(count)"> Buscar herramientas <span class="caret"></span></button>
             </div>
           </div>
           <div class="col-md-2 text-center">
