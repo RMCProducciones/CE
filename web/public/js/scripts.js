@@ -1,9 +1,9 @@
 
 $('[data-toggle=confirmation]').confirmation();
 
-var app = angular.module('myApp', []);
+var app = angular.module('aplicationCE', []);
 
-app.controller('myCtrl', function($scope) {
+app.controller('controllerGrupo', function($scope) {
 	$scope.count = -1;
 });
 			

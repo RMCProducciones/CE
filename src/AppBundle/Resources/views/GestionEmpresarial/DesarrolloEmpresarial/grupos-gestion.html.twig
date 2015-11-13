@@ -14,9 +14,85 @@
 
 {% endblock %}
 
+	
 
 {% block section %}
 
+<div class="section  ng-scope" ng-app="aplicationCE" ng-controller="controllerGrupo">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <div class="input-group">
+              <input class="form-control" placeholder="Buscar..." ng-model="txtBuscar" type="text">
+              <span class="input-group-btn">
+			  {% raw %}
+                {{txtBuscar}}<button class="btn btn-default" type="button">Buscar</button>
+			  {% endraw %}
+              </span>
+            </div>
+          </div>
+          <div class="col-md-3 text-center">
+            <div class="dropup">
+              <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" ng-click="count = count * (-1)"> Buscar herramientas <span class="caret"></span></a>
+            </div>
+          </div>
+          <div class="col-md-2 text-center">
+            <a class="btn btn-default">Limpiar</a>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="container well" ng-show="count === 1">
+        <div class="row">
+          <div class="col-md-3">
+            <label>Departamento</label>
+            <br>
+            <input list="departamento" placeholder="Departamento..." class="form-control">
+            <datalist id="departamento">
+              <option value="Antioquia"></option>
+              <option value="Amazonas"></option>
+              <option value="Bolívar"></option>
+              <option value="Caquetá"></option>
+              <option value="Cundinamarca"></option>
+            </datalist>
+          </div>
+          <div class="col-md-3">
+            <label>Municipio</label>
+            <br>
+            <input list="municipio" placeholder="Municipio..." class="form-control">
+            <datalist id="municipio">
+              <option value="Abrego"></option>
+              <option value="Corinto"></option>
+              <option value="Tambo"></option>
+              <option value="Granada"></option>
+              <option value="López"></option>
+            </datalist>
+          </div>
+          <div class="col-md-3">
+            <label>Zona</label>
+            <br>
+            <input list="zona" placeholder="Zona..." class="form-control">
+            <datalist id="zona">
+              <option value="Nudo de Paramillo"></option>
+              <option value="Cauca Costa Pacífica"></option>
+              <option value="Cauca Andino"></option>
+              <option value="Nariño Costa Pacífica"></option>
+              <option value="Nariño Andino"></option>
+            </datalist>
+          </div>
+          <div class="col-md-3">
+            <label>Estado</label>
+            <br>
+            <input list="estado" placeholder="Estado..." class="form-control">
+            <datalist id="estado">
+              <option value="Activo"></option>
+              <option value="Inactivo"></option>
+            </datalist>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
      
   	<br>
 
