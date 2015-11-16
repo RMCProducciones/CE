@@ -77,7 +77,7 @@ class DefaultController extends Controller
             array('active' => '1'),
             array('nombre' => 'ASC')
         );
-
+		
 		$encoders = array(new XmlEncoder(), new JsonEncoder());
 		$normalizers = array(new GetSetMethodNormalizer());
 

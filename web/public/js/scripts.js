@@ -24,4 +24,9 @@ app.controller('buttonBuscarHerramientas', ['$scope', 'styleBuscarHerramientas',
     }
 	
 }]);
+
+app.controller('lstDepartamentoFiltro', function($scope, $http) {
+    $http.get("http://127.0.0.1/RMC/CE/web/app_dev.php/departamentos")
+    .success(function (response) {$scope.departamentosFiltro = response});
+});
 			
