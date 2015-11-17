@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.0.2
+-- version 4.1.12
 -- http://www.phpmyadmin.net
 --
--- Servidor: localhost
--- Tiempo de generación: 11-11-2015 a las 15:27:18
--- Versión del servidor: 10.0.17-MariaDB
--- Versión de PHP: 5.6.14
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 17-11-2015 a las 22:32:50
+-- Versión del servidor: 5.6.16
+-- Versión de PHP: 5.5.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Base de datos: `ce`
@@ -26,8 +26,8 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `beneficiario`
 --
 
-CREATE TABLE `beneficiario` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `beneficiario` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `grupo_id` int(11) DEFAULT NULL,
   `tipo_documento_id` int(11) DEFAULT NULL,
   `genero_id` int(11) DEFAULT NULL,
@@ -75,8 +75,24 @@ CREATE TABLE `beneficiario` (
   `telefono_celular_conyugue` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `active` tinyint(1) DEFAULT NULL,
   `fecha_modificacion` datetime DEFAULT NULL,
-  `fecha_creacion` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `fecha_creacion` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_E8D0B6179C833003` (`grupo_id`),
+  KEY `IDX_E8D0B617F6939175` (`tipo_documento_id`),
+  KEY `IDX_E8D0B617BCE7B795` (`genero_id`),
+  KEY `IDX_E8D0B617DA995DEC` (`pertenencia_etnica_id`),
+  KEY `IDX_E8D0B6177AAA0F5A` (`grupo_indigena_id`),
+  KEY `IDX_E8D0B61775376D93` (`estado_civil_id`),
+  KEY `IDX_E8D0B617FFAE2092` (`rol_grupo_familiar_id`),
+  KEY `IDX_E8D0B6176313548C` (`hijos_menores_5_id`),
+  KEY `IDX_E8D0B61797F167E4` (`miembros_nucleo_familiar_id`),
+  KEY `IDX_E8D0B617378258DA` (`nivel_estudios_id`),
+  KEY `IDX_E8D0B617D8999C67` (`ocupacion_id`),
+  KEY `IDX_E8D0B617B4837970` (`tipo_vivienda_id`),
+  KEY `IDX_E8D0B617906677C2` (`tipo_documento_conyugue_id`),
+  KEY `IDX_E8D0B617DADD026` (`usuario_modificacion_id`),
+  KEY `IDX_E8D0B617AEADF654` (`usuario_creacion_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -84,8 +100,8 @@ CREATE TABLE `beneficiario` (
 -- Estructura de tabla para la tabla `clear`
 --
 
-CREATE TABLE `clear` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `clear` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `municipio_id` int(11) DEFAULT NULL,
   `usuario_modificacion_id` int(11) DEFAULT NULL,
   `usuario_creacion_id` int(11) DEFAULT NULL,
@@ -95,8 +111,12 @@ CREATE TABLE `clear` (
   `lugar_realizacion_CLEAR` int(11) NOT NULL,
   `active` tinyint(1) NOT NULL,
   `fecha_modificacion` datetime NOT NULL,
-  `fecha_creacion` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `fecha_creacion` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_E5B1F10658BC1BE0` (`municipio_id`),
+  KEY `IDX_E5B1F106DADD026` (`usuario_modificacion_id`),
+  KEY `IDX_E5B1F106AEADF654` (`usuario_creacion_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -104,21 +124,31 @@ CREATE TABLE `clear` (
 -- Estructura de tabla para la tabla `convocatoria`
 --
 
-CREATE TABLE `convocatoria` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `convocatoria` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `poa_id` int(11) DEFAULT NULL,
   `usuario_modificacion_id` int(11) DEFAULT NULL,
   `usuario_creacion_id` int(11) DEFAULT NULL,
   `fecha_inicio` datetime NOT NULL,
   `fecha_cierre` datetime NOT NULL,
-  `mot` tinyint(1) NOT NULL,
-  `iea` tinyint(1) NOT NULL,
-  `pi` tinyint(1) NOT NULL,
-  `pn` tinyint(1) NOT NULL,
-  `active` tinyint(1) NOT NULL,
   `fecha_modificacion` datetime DEFAULT NULL,
-  `fecha_creacion` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `fecha_creacion` datetime NOT NULL,
+  `numero` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_6D773021BB18C0BA` (`poa_id`),
+  KEY `IDX_6D773021DADD026` (`usuario_modificacion_id`),
+  KEY `IDX_6D773021AEADF654` (`usuario_creacion_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+
+--
+-- Volcado de datos para la tabla `convocatoria`
+--
+
+INSERT INTO `convocatoria` (`id`, `poa_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `fecha_inicio`, `fecha_cierre`, `fecha_modificacion`, `fecha_creacion`, `numero`) VALUES
+(1, 1, NULL, NULL, '2011-04-17 00:00:00', '2013-05-28 00:00:00', NULL, '2015-11-11 23:28:00', 1),
+(2, 1, NULL, NULL, '2011-04-17 00:00:00', '2013-05-28 00:00:00', NULL, '2015-11-11 23:29:25', 1),
+(3, 1, NULL, NULL, '2011-04-17 00:00:00', '2013-05-28 00:00:00', NULL, '2015-11-11 23:33:04', 1),
+(4, 1, NULL, NULL, '2011-04-17 00:00:00', '2013-05-28 00:00:00', NULL, '2015-11-11 23:34:56', 1);
 
 -- --------------------------------------------------------
 
@@ -126,15 +156,18 @@ CREATE TABLE `convocatoria` (
 -- Estructura de tabla para la tabla `departamento`
 --
 
-CREATE TABLE `departamento` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `departamento` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `usuario_modificacion_id` int(11) DEFAULT NULL,
   `usuario_creacion_id` int(11) DEFAULT NULL,
   `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `active` tinyint(1) NOT NULL,
   `fecha_modificacion` datetime NOT NULL,
-  `fecha_creacion` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `fecha_creacion` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_40E497EBDADD026` (`usuario_modificacion_id`),
+  KEY `IDX_40E497EBAEADF654` (`usuario_creacion_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=18 ;
 
 --
 -- Volcado de datos para la tabla `departamento`
@@ -142,7 +175,7 @@ CREATE TABLE `departamento` (
 
 INSERT INTO `departamento` (`id`, `usuario_modificacion_id`, `usuario_creacion_id`, `nombre`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
 (1, NULL, NULL, 'CAUCA', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(2, NULL, NULL, 'NARIÑO', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(2, NULL, NULL, 'NARI?O', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (3, NULL, NULL, 'ARAUCA', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (4, NULL, NULL, 'NTE DE SANTANDER', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (5, NULL, NULL, 'CESAR', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
@@ -165,8 +198,8 @@ INSERT INTO `departamento` (`id`, `usuario_modificacion_id`, `usuario_creacion_i
 -- Estructura de tabla para la tabla `grupo`
 --
 
-CREATE TABLE `grupo` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `grupo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `convocatoria_id` int(11) DEFAULT NULL,
   `municipio_id` int(11) DEFAULT NULL,
   `tipo_id` int(11) DEFAULT NULL,
@@ -191,17 +224,27 @@ CREATE TABLE `grupo` (
   `correo_electronico` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `active` tinyint(1) DEFAULT NULL,
   `fecha_modificacion` datetime DEFAULT NULL,
-  `fecha_creacion` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `fecha_creacion` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_8C0E9BD320332D99` (`codigo`),
+  KEY `IDX_8C0E9BD34EE93BE6` (`convocatoria_id`),
+  KEY `IDX_8C0E9BD358BC1BE0` (`municipio_id`),
+  KEY `IDX_8C0E9BD3A9276E6C` (`tipo_id`),
+  KEY `IDX_8C0E9BD3BE494C72` (`figura_legal_constitucion_id`),
+  KEY `IDX_8C0E9BD33771B82E` (`entidad_financiera_cuenta_id`),
+  KEY `IDX_8C0E9BD378814E56` (`tipo_cuenta_id`),
+  KEY `IDX_8C0E9BD3DADD026` (`usuario_modificacion_id`),
+  KEY `IDX_8C0E9BD3AEADF654` (`usuario_creacion_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
 -- Volcado de datos para la tabla `grupo`
 --
 
 INSERT INTO `grupo` (`id`, `convocatoria_id`, `municipio_id`, `tipo_id`, `figura_legal_constitucion_id`, `entidad_financiera_cuenta_id`, `tipo_cuenta_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `fecha_inscripcion`, `codigo`, `nombre`, `direccion`, `rural`, `barrio`, `corregimiento`, `vereda`, `cacerio`, `numero_identificacion_tributaria`, `fecha_constitucion_legal`, `telefono_fijo`, `telefono_celular`, `correo_electronico`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
-(1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2010-01-01 00:00:00', 'AAA111', 'ASDFSADF', 'ASDF', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3102343243', 'sdsdf@sdfsdf', 0, NULL, NULL),
-(2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2010-01-01 00:00:00', 'AAA112', 'werwer', 'asdfds', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '234324', 'asdfs@asdfdsf', 0, NULL, NULL),
-(3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2010-01-01 00:00:00', 'ASDFSD', 'ASDF', 'SADF', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '234234', 'asdf@asdf', 0, NULL, NULL);
+(1, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, '2010-01-01 00:00:00', 'AAA111', 'ASDFSADF', 'ASDF', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3102343243', 'sdsdf@sdfsdf', 0, NULL, NULL),
+(2, NULL, 6, NULL, NULL, NULL, NULL, NULL, NULL, '2010-01-01 00:00:00', 'AAA112', 'werwer', 'asdfds', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '234324', 'asdfs@asdfdsf', 0, NULL, NULL),
+(3, NULL, 23, NULL, NULL, NULL, NULL, NULL, NULL, '2010-01-01 00:00:00', 'ASDFSD', 'ASDF', 'SADF', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '234234', 'asdf@asdf', 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -209,8 +252,8 @@ INSERT INTO `grupo` (`id`, `convocatoria_id`, `municipio_id`, `tipo_id`, `figura
 -- Estructura de tabla para la tabla `integrantes_clear`
 --
 
-CREATE TABLE `integrantes_clear` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `integrantes_clear` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `clear_id` int(11) DEFAULT NULL,
   `tipo_documento_id` int(11) DEFAULT NULL,
   `genero_id` int(11) DEFAULT NULL,
@@ -232,8 +275,17 @@ CREATE TABLE `integrantes_clear` (
   `correo_electronico` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `active` tinyint(1) NOT NULL,
   `fecha_modificacion` datetime NOT NULL,
-  `fecha_creacion` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `fecha_creacion` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_952BF316D30DEA81` (`clear_id`),
+  KEY `IDX_952BF316F6939175` (`tipo_documento_id`),
+  KEY `IDX_952BF316BCE7B795` (`genero_id`),
+  KEY `IDX_952BF316DA995DEC` (`pertenencia_etnica_id`),
+  KEY `IDX_952BF316378258DA` (`nivel_estudios_id`),
+  KEY `IDX_952BF3167AAA0F5A` (`grupo_indigena_id`),
+  KEY `IDX_952BF316DADD026` (`usuario_modificacion_id`),
+  KEY `IDX_952BF316AEADF654` (`usuario_creacion_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -241,8 +293,8 @@ CREATE TABLE `integrantes_clear` (
 -- Estructura de tabla para la tabla `listas`
 --
 
-CREATE TABLE `listas` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `listas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `usuario_modificacion_id` int(11) DEFAULT NULL,
   `usuario_creacion_id` int(11) DEFAULT NULL,
   `dominio` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -251,8 +303,11 @@ CREATE TABLE `listas` (
   `orden` int(11) DEFAULT NULL,
   `active` tinyint(1) NOT NULL,
   `fecha_modificacion` datetime DEFAULT NULL,
-  `fecha_creacion` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `fecha_creacion` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_C54ECE20DADD026` (`usuario_modificacion_id`),
+  KEY `IDX_C54ECE20AEADF654` (`usuario_creacion_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=140 ;
 
 --
 -- Volcado de datos para la tabla `listas`
@@ -405,8 +460,8 @@ INSERT INTO `listas` (`id`, `usuario_modificacion_id`, `usuario_creacion_id`, `d
 -- Estructura de tabla para la tabla `municipio`
 --
 
-CREATE TABLE `municipio` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `municipio` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `departamento_id` int(11) DEFAULT NULL,
   `zona_id` int(11) DEFAULT NULL,
   `usuario_modificacion_id` int(11) DEFAULT NULL,
@@ -414,8 +469,13 @@ CREATE TABLE `municipio` (
   `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `active` tinyint(1) NOT NULL,
   `fecha_modificacion` datetime NOT NULL,
-  `fecha_creacion` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `fecha_creacion` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_FE98F5E05A91C08D` (`departamento_id`),
+  KEY `IDX_FE98F5E0104EA8FC` (`zona_id`),
+  KEY `IDX_FE98F5E0DADD026` (`usuario_modificacion_id`),
+  KEY `IDX_FE98F5E0AEADF654` (`usuario_creacion_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=101 ;
 
 --
 -- Volcado de datos para la tabla `municipio`
@@ -529,23 +589,28 @@ INSERT INTO `municipio` (`id`, `departamento_id`, `zona_id`, `usuario_modificaci
 -- Estructura de tabla para la tabla `poa`
 --
 
-CREATE TABLE `poa` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `poa` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `usuario_modificacion_id` int(11) DEFAULT NULL,
   `usuario_creacion_id` int(11) DEFAULT NULL,
   `anio` int(11) NOT NULL,
   `presupuesto` decimal(10,0) NOT NULL,
   `active` tinyint(1) NOT NULL,
   `fecha_modificacion` datetime DEFAULT NULL,
-  `fecha_creacion` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `fecha_creacion` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_736097E489A50577` (`anio`),
+  KEY `IDX_736097E4DADD026` (`usuario_modificacion_id`),
+  KEY `IDX_736097E4AEADF654` (`usuario_creacion_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
 -- Volcado de datos para la tabla `poa`
 --
 
 INSERT INTO `poa` (`id`, `usuario_modificacion_id`, `usuario_creacion_id`, `anio`, `presupuesto`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
-(1, NULL, NULL, 2014, '300000000', 1, NULL, '2015-11-11 14:25:53');
+(1, NULL, NULL, 2014, '300000000', 1, NULL, '2015-11-11 14:25:53'),
+(3, NULL, NULL, 2015, '30000000', 1, NULL, '2015-11-11 23:27:11');
 
 -- --------------------------------------------------------
 
@@ -553,8 +618,8 @@ INSERT INTO `poa` (`id`, `usuario_modificacion_id`, `usuario_creacion_id`, `anio
 -- Estructura de tabla para la tabla `usuario`
 --
 
-CREATE TABLE `usuario` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `usuario` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `usuario` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(80) COLLATE utf8_unicode_ci NOT NULL,
   `salt` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -567,8 +632,9 @@ CREATE TABLE `usuario` (
   `usuario_modificacion` int(11) NOT NULL,
   `fecha_modificacion` datetime NOT NULL,
   `usuario_creacion` int(11) NOT NULL,
-  `fecha_creacion` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `fecha_creacion` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 --
 -- Volcado de datos para la tabla `usuario`
@@ -583,15 +649,18 @@ INSERT INTO `usuario` (`id`, `usuario`, `password`, `salt`, `nombres`, `apellido
 -- Estructura de tabla para la tabla `zona`
 --
 
-CREATE TABLE `zona` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `zona` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `usuario_modificacion_id` int(11) DEFAULT NULL,
   `usuario_creacion_id` int(11) DEFAULT NULL,
   `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `active` tinyint(1) NOT NULL,
   `fecha_modificacion` datetime NOT NULL,
-  `fecha_creacion` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `fecha_creacion` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_A786041EDADD026` (`usuario_modificacion_id`),
+  KEY `IDX_A786041EAEADF654` (`usuario_creacion_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=19 ;
 
 --
 -- Volcado de datos para la tabla `zona`
@@ -617,186 +686,6 @@ INSERT INTO `zona` (`id`, `usuario_modificacion_id`, `usuario_creacion_id`, `nom
 (17, NULL, 1, 'Putumayo', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (18, NULL, 1, 'Rio Caguan', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00');
 
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `beneficiario`
---
-ALTER TABLE `beneficiario`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_E8D0B6179C833003` (`grupo_id`),
-  ADD KEY `IDX_E8D0B617F6939175` (`tipo_documento_id`),
-  ADD KEY `IDX_E8D0B617BCE7B795` (`genero_id`),
-  ADD KEY `IDX_E8D0B617DA995DEC` (`pertenencia_etnica_id`),
-  ADD KEY `IDX_E8D0B6177AAA0F5A` (`grupo_indigena_id`),
-  ADD KEY `IDX_E8D0B61775376D93` (`estado_civil_id`),
-  ADD KEY `IDX_E8D0B617FFAE2092` (`rol_grupo_familiar_id`),
-  ADD KEY `IDX_E8D0B6176313548C` (`hijos_menores_5_id`),
-  ADD KEY `IDX_E8D0B61797F167E4` (`miembros_nucleo_familiar_id`),
-  ADD KEY `IDX_E8D0B617378258DA` (`nivel_estudios_id`),
-  ADD KEY `IDX_E8D0B617D8999C67` (`ocupacion_id`),
-  ADD KEY `IDX_E8D0B617B4837970` (`tipo_vivienda_id`),
-  ADD KEY `IDX_E8D0B617906677C2` (`tipo_documento_conyugue_id`),
-  ADD KEY `IDX_E8D0B617DADD026` (`usuario_modificacion_id`),
-  ADD KEY `IDX_E8D0B617AEADF654` (`usuario_creacion_id`);
-
---
--- Indices de la tabla `clear`
---
-ALTER TABLE `clear`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_E5B1F10658BC1BE0` (`municipio_id`),
-  ADD KEY `IDX_E5B1F106DADD026` (`usuario_modificacion_id`),
-  ADD KEY `IDX_E5B1F106AEADF654` (`usuario_creacion_id`);
-
---
--- Indices de la tabla `convocatoria`
---
-ALTER TABLE `convocatoria`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_6D773021BB18C0BA` (`poa_id`),
-  ADD KEY `IDX_6D773021DADD026` (`usuario_modificacion_id`),
-  ADD KEY `IDX_6D773021AEADF654` (`usuario_creacion_id`);
-
---
--- Indices de la tabla `departamento`
---
-ALTER TABLE `departamento`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_40E497EBDADD026` (`usuario_modificacion_id`),
-  ADD KEY `IDX_40E497EBAEADF654` (`usuario_creacion_id`);
-
---
--- Indices de la tabla `grupo`
---
-ALTER TABLE `grupo`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_8C0E9BD320332D99` (`codigo`),
-  ADD KEY `IDX_8C0E9BD34EE93BE6` (`convocatoria_id`),
-  ADD KEY `IDX_8C0E9BD358BC1BE0` (`municipio_id`),
-  ADD KEY `IDX_8C0E9BD3A9276E6C` (`tipo_id`),
-  ADD KEY `IDX_8C0E9BD3BE494C72` (`figura_legal_constitucion_id`),
-  ADD KEY `IDX_8C0E9BD33771B82E` (`entidad_financiera_cuenta_id`),
-  ADD KEY `IDX_8C0E9BD378814E56` (`tipo_cuenta_id`),
-  ADD KEY `IDX_8C0E9BD3DADD026` (`usuario_modificacion_id`),
-  ADD KEY `IDX_8C0E9BD3AEADF654` (`usuario_creacion_id`);
-
---
--- Indices de la tabla `integrantes_clear`
---
-ALTER TABLE `integrantes_clear`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_952BF316D30DEA81` (`clear_id`),
-  ADD KEY `IDX_952BF316F6939175` (`tipo_documento_id`),
-  ADD KEY `IDX_952BF316BCE7B795` (`genero_id`),
-  ADD KEY `IDX_952BF316DA995DEC` (`pertenencia_etnica_id`),
-  ADD KEY `IDX_952BF316378258DA` (`nivel_estudios_id`),
-  ADD KEY `IDX_952BF3167AAA0F5A` (`grupo_indigena_id`),
-  ADD KEY `IDX_952BF316DADD026` (`usuario_modificacion_id`),
-  ADD KEY `IDX_952BF316AEADF654` (`usuario_creacion_id`);
-
---
--- Indices de la tabla `listas`
---
-ALTER TABLE `listas`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_C54ECE20DADD026` (`usuario_modificacion_id`),
-  ADD KEY `IDX_C54ECE20AEADF654` (`usuario_creacion_id`);
-
---
--- Indices de la tabla `municipio`
---
-ALTER TABLE `municipio`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_FE98F5E05A91C08D` (`departamento_id`),
-  ADD KEY `IDX_FE98F5E0104EA8FC` (`zona_id`),
-  ADD KEY `IDX_FE98F5E0DADD026` (`usuario_modificacion_id`),
-  ADD KEY `IDX_FE98F5E0AEADF654` (`usuario_creacion_id`);
-
---
--- Indices de la tabla `poa`
---
-ALTER TABLE `poa`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_736097E489A50577` (`anio`),
-  ADD KEY `IDX_736097E4DADD026` (`usuario_modificacion_id`),
-  ADD KEY `IDX_736097E4AEADF654` (`usuario_creacion_id`);
-
---
--- Indices de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `zona`
---
-ALTER TABLE `zona`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_A786041EDADD026` (`usuario_modificacion_id`),
-  ADD KEY `IDX_A786041EAEADF654` (`usuario_creacion_id`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `beneficiario`
---
-ALTER TABLE `beneficiario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de la tabla `clear`
---
-ALTER TABLE `clear`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de la tabla `convocatoria`
---
-ALTER TABLE `convocatoria`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de la tabla `departamento`
---
-ALTER TABLE `departamento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
---
--- AUTO_INCREMENT de la tabla `grupo`
---
-ALTER TABLE `grupo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT de la tabla `integrantes_clear`
---
-ALTER TABLE `integrantes_clear`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de la tabla `listas`
---
-ALTER TABLE `listas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
---
--- AUTO_INCREMENT de la tabla `municipio`
---
-ALTER TABLE `municipio`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
---
--- AUTO_INCREMENT de la tabla `poa`
---
-ALTER TABLE `poa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT de la tabla `usuario`
---
-ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT de la tabla `zona`
---
-ALTER TABLE `zona`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- Restricciones para tablas volcadas
 --
