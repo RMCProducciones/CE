@@ -12,8 +12,8 @@ class ConvocatoriaType extends AbstractType
         $builder
 			->add('poa')
 			->add('numero')
-			->add('fecha_inicio', 'date')
-			->add('fecha_cierre', 'date')
+			->add('fecha_inicio', 'date', array('label' => 'Fecha de Inicio', 'widget' => 'single_text'))
+			->add('fecha_cierre', 'date', array('label' => 'Fecha de Cierre', 'widget' => 'single_text'))
 		;
     }
     

@@ -33,7 +33,7 @@ class GrupoType extends AbstractType
 										        	->setParameter('dominio', 'tipo_grupo')
 										            ->orderBy('l.orden', 'ASC');
 										    },))
-			->add('fecha_inscripcion', 'date')
+			->add('fecha_inscripcion', 'date', array('label' => 'Fecha de Inscripción', 'widget' => 'single_text'))
 			->add('codigo')
 			->add('nombre')
 			->add('direccion')
