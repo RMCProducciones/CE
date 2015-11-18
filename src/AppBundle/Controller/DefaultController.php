@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -72,11 +73,14 @@ class DefaultController extends Controller
     public function departamentosAction()
     {
         $em = $this->getDoctrine()->getManager();
+<<<<<<< HEAD
 
         $elementos = $em->getRepository('AppBundle:Departamento')->findBy(
             array('active' => '1'),
             array('nombre' => 'ASC')
         );
+=======
+>>>>>>> f8248b0ab6b8983f067a292adf7eaf95ef536af8
 		
         /*$query = $em->createQuery(
             'SELECT d.id, d.nombre
@@ -92,12 +96,35 @@ class DefaultController extends Controller
 
 		return new Response($serializer->serialize($elementos, 'json'));
 
+    }
+
+    /**
+     * @Route("/{idDepartamento}/municipios", name="municipios")
+     */
+    public function municipiosAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+		
+        $elementos = $em->getRepository('AppBundle:Municipio')->findBy(
+            array('departamento' => $idDepartamento, 'active' => '1'),
+            array('nombre' => 'ASC')
+        );
+
+		$encoders = array(new XmlEncoder(), new JsonEncoder());
+		$normalizers = array(new GetSetMethodNormalizer());
+
+		$serializer = new Serializer($normalizers, $encoders);
+		$response = new Response($serializer->serialize($elementos, 'json'));
+		$response->headers->set('Content-Type', 'application/json');		
+		
+		return $response;
+
 	}
 
     /**
-     * @Route("/municipios/{idZona}/{idDepartamento}/{idElemento}", defaults={"idElemento" = 0}, name="municipios")
+     * @Route("/municipios/{idZona}/{idDepartamento}/{idElemento}", defaults={"idElemento" = 0}, name="municipiosa")
      */
-    public function municipiosAction($idZona, $idDepartamento, $idElemento)
+    public function municipiosaAction($idZona, $idDepartamento, $idElemento)
     {
         $em = $this->getDoctrine()->getManager();
 

@@ -51,7 +51,11 @@
             <br>
             <input list="departamento" placeholder="Departamento..." class="form-control">
             <datalist id="departamento">
+<<<<<<< HEAD
               <option ng-repeat="x in departamentosFiltro" id="[[x.id]]">[[x.nombre]]</option>
+=======
+              <option ng-repeat="departamento in departamentosFiltro" value="[[departamento.nombre]]"></option>
+>>>>>>> f8248b0ab6b8983f067a292adf7eaf95ef536af8
             </datalist>
 
           </div>
@@ -60,11 +64,7 @@
             <br>
             <input list="municipio" placeholder="Municipio..." class="form-control">
             <datalist id="municipio">
-              <option value="Abrego"></option>
-              <option value="Corinto"></option>
-              <option value="Tambo"></option>
-              <option value="Granada"></option>
-              <option value="López"></option>
+              <option value="Hola"></option>
             </datalist>
           </div>
           <div class="col-md-3">
