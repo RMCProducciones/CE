@@ -44,7 +44,7 @@ class GrupoType extends AbstractType
 			->add('cacerio', 'text', array('required' => false))
 			->add('figura_legal_constitucion', 'text', array('required' => false))
 			->add('numero_identificacion_tributaria', 'text', array('required' => false))
-			->add('fecha_constitucion_legal', 'date', array('required' => false))
+			->add('fecha_constitucion_legal', 'date', array('label' => 'Fecha de constitucion legal del grupo', 'widget' => 'single_text'))
 			->add('telefono_fijo', 'text', array('required' => false))
 			->add('telefono_celular')
 			->add('correo_electronico', 'email')

@@ -10,7 +10,7 @@ class ConvocatoriaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-			->add('poa')
+			->add('poa', 'text')
 			->add('numero')
 			->add('fecha_inicio', 'date', array('label' => 'Fecha de Inicio', 'widget' => 'single_text'))
 			->add('fecha_cierre', 'date', array('label' => 'Fecha de Cierre', 'widget' => 'single_text'))

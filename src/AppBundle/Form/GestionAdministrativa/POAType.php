@@ -10,8 +10,8 @@ class POAType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-			->add('anio')
-			->add('presupuesto')		
+			->add('anio', 'text', array('label' => 'Año para el que esta el presupuesto'))
+			->add('presupuesto', 'text', array('label' => 'Presupuesto que se tiene '))		
 		;
     }
     
