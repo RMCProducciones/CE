@@ -49,22 +49,18 @@
           <div class="col-md-3" ng-controller="lstDepartamentoFiltro">
             <label>Departamento</label>
             <br>
-            <input list="departamento" placeholder="Departamento..." class="form-control">
+            <input list="departamento" placeholder="Departamento..." ng-model="lstMunicipioFiltro" class="form-control">
             <datalist id="departamento">
-              <option ng-repeat="x in departamentosFiltro">[[x.nombre]]</option>
+              <option ng-repeat="departamento in departamentosFiltro" value="[[departamento.nombre]]"></option>
             </datalist>
 
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3" ng-controller="lstMunicipioFiltro">
             <label>Municipio</label>
             <br>
             <input list="municipio" placeholder="Municipio..." class="form-control">
             <datalist id="municipio">
-              <option value="Abrego"></option>
-              <option value="Corinto"></option>
-              <option value="Tambo"></option>
-              <option value="Granada"></option>
-              <option value="López"></option>
+              <option ng-repeat="municipio in municipiosFiltro" value="[[municipio.nombre]]"></option>
             </datalist>
           </div>
           <div class="col-md-3">

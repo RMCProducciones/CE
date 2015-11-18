@@ -72,11 +72,6 @@ class DefaultController extends Controller
     public function departamentosAction()
     {
         $em = $this->getDoctrine()->getManager();
-
-        /*$elementos = $em->getRepository('AppBundle:Departamento')->findBy(
-            array('active' => '1'),
-            array('nombre' => 'ASC')
-        );*/
 		
         $query = $em->createQuery(
             'SELECT d.id, d.nombre
@@ -85,19 +80,40 @@ class DefaultController extends Controller
         );
         $elementos = $query->getResult();
 
-		$encoders = array(new XmlEncoder(), new JsonEncoder());
-		$normalizers = array(new GetSetMethodNormalizer());
+	$encoders = array(new XmlEncoder(), new JsonEncoder());
+	$normalizers = array(new GetSetMethodNormalizer());
 
-		$serializer = new Serializer($normalizers, $encoders);
+	$serializer = new Serializer($normalizers, $encoders);
 
-		return new Response($serializer->serialize($elementos, 'json'));
+	return new Response($serializer->serialize($elementos, 'json'));
 
-	}
+    }
 
     /**
-     * @Route("/municipios/{idZona}/{idDepartamento}/{idElemento}", defaults={"idElemento" = 0}, name="municipios")
+     * @Route("/{idDepartamento}/municipios", name="municipios")
      */
-    public function municipiosAction($idZona, $idDepartamento, $idElemento)
+    public function municipiosAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+		
+        $elementos = $em->getRepository('AppBundle:Municipio')->findBy(
+            array('departamento' => $idDepartamento, 'active' => '1'),
+            array('nombre' => 'ASC')
+        );
+
+	$encoders = array(new XmlEncoder(), new JsonEncoder());
+	$normalizers = array(new GetSetMethodNormalizer());
+
+	$serializer = new Serializer($normalizers, $encoders);
+
+	return new Response($serializer->serialize($elementos, 'json'));
+
+    }
+
+    /**
+     * @Route("/municipios/{idZona}/{idDepartamento}/{idElemento}", defaults={"idElemento" = 0}, name="municipiosa")
+     */
+    public function municipiosaAction($idZona, $idDepartamento, $idElemento)
     {
         $em = $this->getDoctrine()->getManager();
 

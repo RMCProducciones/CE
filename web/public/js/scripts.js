@@ -26,7 +26,12 @@ app.controller('buttonBuscarHerramientas', ['$scope', 'styleBuscarHerramientas',
 }]);
 
 app.controller('lstDepartamentoFiltro', function($scope, $http) {
-    $http.get("http://127.0.0.1/RMC/CE/web/app_dev.php/departamentos")
+    $http.get("http://ce.local/app_dev.php/departamentos")
+    .success(function (response) {$scope.departamentosFiltro = response});
+});
+
+app.controller('lstMunicipioFiltro', function($scope, $http) {
+    $http.get("http://ce.local/app_dev.php/" + 1 + "/municipios")
     .success(function (response) {$scope.departamentosFiltro = response});
 });
 			
