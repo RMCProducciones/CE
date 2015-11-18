@@ -78,7 +78,9 @@ class DefaultController extends Controller
             'SELECT departamento.id, departamento.nombre
             FROM AppBundle:Departamento departamento
             ORDER BY departamento.nombre ASC'
-        $elementos = $query->getResult();
+		);
+        
+		$elementos = $query->getResult();
 
 		$encoders = array(new XmlEncoder(), new JsonEncoder());
 		$normalizers = array(new GetSetMethodNormalizer());
