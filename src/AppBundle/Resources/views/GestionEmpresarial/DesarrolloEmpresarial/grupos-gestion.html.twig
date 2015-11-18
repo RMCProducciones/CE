@@ -14,12 +14,10 @@
 
 {% endblock %}
 
-	
-
 {% block section %}
 
-<div class="section  ng-scope" ng-app="aplicationCE" ng-controller="buttonBuscarHerramientas">
-      <div class="container">
+<div class="section  ng-scope" ng-app="aplicationCE">
+      <div class="container" ng-controller="buscarHerramientasCtrl">
         <div class="row">
           <div class="col-md-7">
             <div class="input-group">
@@ -46,22 +44,23 @@
       <br>
       <div class="container well" ng-show="count === 1">
         <div class="row">
-          <div class="col-md-3" ng-controller="lstDepartamentoFiltro">
+          <div class="col-md-3">
             <label>Departamento</label>
             <br>
-            <input list="departamento" placeholder="Departamento..." class="form-control">
-            <datalist id="departamento">
-              <option ng-repeat="departamento in departamentosFiltro" value="[[departamento.nombre]]"></option>
-            </datalist>
+			<select class="form-control"></select>
+            <!--input list="dlDepartamento" id="lstDepartamentoFiltro" placeholder="Departamento..." class="form-control">
+            <datalist id="dlDepartamento">
+              <option></option>
+            </datalist-->
 
           </div>
           <div class="col-md-3">
             <label>Municipio</label>
             <br>
-            <input list="municipio" placeholder="Municipio..." class="form-control">
-            <datalist id="municipio">
-              <option value="Hola"></option>
-            </datalist>
+            <!--input list="dlMunicipio" placeholder="Municipio..." class="form-control">
+            <datalist id="dlMunicipio">
+              <option ></option>
+            </datalist-->
           </div>
           <div class="col-md-3">
             <label>Zona</label>

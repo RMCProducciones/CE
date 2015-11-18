@@ -75,9 +75,9 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
 		
         $query = $em->createQuery(
-            'SELECT d.id, d.nombre
-            FROM AppBundle:Departamento d
-            ORDER BY d.nombre ASC'
+            'SELECT departamento.id, departamento.nombre
+            FROM AppBundle:Departamento departamento
+            ORDER BY departamento.nombre ASC'
         );
         $elementos = $query->getResult();
 
@@ -85,23 +85,28 @@ class DefaultController extends Controller
 		$normalizers = array(new GetSetMethodNormalizer());
 
 		$serializer = new Serializer($normalizers, $encoders);
-
-		return new Response($serializer->serialize($elementos, 'json'));
+		
+		return new Response('{"departamentos": ' . $serializer->serialize($elementos, 'json') . '}');
 
     }
 
     /**
      * @Route("/{idDepartamento}/municipios", name="municipios")
      */
-    public function municipiosAction()
+    public function municipiosAction($idDepartamento)
     {
         $em = $this->getDoctrine()->getManager();
 		
-        $elementos = $em->getRepository('AppBundle:Municipio')->findBy(
-            array('departamento' => $idDepartamento, 'active' => '1'),
-            array('nombre' => 'ASC')
+		$query = $em->createQuery(
+            'SELECT municipio.id, municipio.nombre
+            FROM AppBundle:Municipio municipio
+			WHERE municipio.departamento = :idDepartamento
+            ORDER BY municipio.nombre ASC'
         );
-
+		$query->setParameter('idDepartamento', $idDepartamento);
+		
+        $elementos = $query->getResult();
+		
 		$encoders = array(new XmlEncoder(), new JsonEncoder());
 		$normalizers = array(new GetSetMethodNormalizer());
 
