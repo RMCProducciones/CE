@@ -50,9 +50,10 @@
             <label>Departamento</label>
             <br>
             <input list="departamento" placeholder="Departamento..." class="form-control">
-            <datalist id="departamento"  ng-repeat="x in departamentosFiltro">
-              <option value="[[x]]"></option>
+            <datalist id="departamento">
+              <option ng-repeat="x in departamentosFiltro">[[x.nombre]]</option>
             </datalist>
+
           </div>
           <div class="col-md-3">
             <label>Municipio</label>

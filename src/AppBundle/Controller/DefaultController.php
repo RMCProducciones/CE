@@ -73,11 +73,18 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $elementos = $em->getRepository('AppBundle:Departamento')->findBy(
+        /*$elementos = $em->getRepository('AppBundle:Departamento')->findBy(
             array('active' => '1'),
             array('nombre' => 'ASC')
-        );
+        );*/
 		
+        $query = $em->createQuery(
+            'SELECT d.id, d.nombre
+            FROM AppBundle:Departamento d
+            ORDER BY d.nombre ASC'
+        );
+        $elementos = $query->getResult();
+
 		$encoders = array(new XmlEncoder(), new JsonEncoder());
 		$normalizers = array(new GetSetMethodNormalizer());
 
@@ -85,7 +92,7 @@ class DefaultController extends Controller
 
 		return new Response($serializer->serialize($elementos, 'json'));
 
-		}
+	}
 
     /**
      * @Route("/municipios/{idZona}/{idDepartamento}/{idElemento}", defaults={"idElemento" = 0}, name="municipios")
