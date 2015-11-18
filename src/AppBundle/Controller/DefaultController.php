@@ -73,17 +73,17 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        /*$elementos = $em->getRepository('AppBundle:Departamento')->findBy(
+        $elementos = $em->getRepository('AppBundle:Departamento')->findBy(
             array('active' => '1'),
             array('nombre' => 'ASC')
-        );*/
+        );
 		
-        $query = $em->createQuery(
+        /*$query = $em->createQuery(
             'SELECT d.id, d.nombre
             FROM AppBundle:Departamento d
             ORDER BY d.nombre ASC'
         );
-        $elementos = $query->getResult();
+        $elementos = $query->getResult();*/
 
 		$encoders = array(new XmlEncoder(), new JsonEncoder());
 		$normalizers = array(new GetSetMethodNormalizer());
@@ -210,20 +210,34 @@ class DefaultController extends Controller
     }
 
 
-
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/", name="CLEARGestion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/", name="CLEARGestion")
      */
     public function CLEARGestionAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $grupos = $em->getRepository('AppBundle:Grupo')->findAll(); 
+        $cleares = $em->getRepository('AppBundle:CLEAR')->findBY(
+            array('active' => 1),
+            array('fecha_inicio' => 'ASC')
+        ); 
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupos-gestion.html.twig', array( 'grupos' => $grupos));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:clear-gestion.html.twig', array( 'cleares' => $cleares));
     }
+    
+
+
 
 	
 	
+
+
+
+
+
+
+
+
+    
 	
 	/**
      * @Route("/gestion-administrativa/gestion-POA/POA/", name="POAGestion")
@@ -310,6 +324,7 @@ class DefaultController extends Controller
         return $this->render('AppBundle:GestionAdministrativa/GestionPOA:convocatoria-nuevo.html.twig', array('form' => $form->createView(),'idPOA' => $idPOA));
     }                                                                                                                                                                                                                              
 	
-	
+
+   
 	
 }

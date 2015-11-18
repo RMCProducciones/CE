@@ -9,7 +9,7 @@
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
       <li>Formacion de capital social asociativo y desarrollo empresarial</li>
-      <li class="active">Grupos</li>
+      <li class="active">CLEAR</li>
     </ul>
 
 {% endblock %}
@@ -135,21 +135,21 @@
                
                 {% set consecutivo = 1 %}
 	    	
-	    		{% for grupo in grupos %}
+	    		{% for clear in cleares %}
 	                
 	                <tr>
 	                  <td>1</td>
 	                  <td>
 	                    <input type="checkbox">
 	                  </td>
-	                  <td>{{ grupo.codigo }}</td>
-	                  <td>{{ grupo.nombre }}</td>
+	                  <td>{{ clear.codigo }}</td>
+	                  <td>{{ clear.fechaInicio |  date('d - m - Y') }}</td>
 	                  <td>
-	                    <b>M</b> {{ grupo.municipio }}
+	                    <b>M</b> {{ clear.municipio }}
 	                    <br>
-	                    <b>D</b> {{ grupo.municipio.departamento }}
+	                    <b>D</b> {{ clear.municipio.departamento }}
 	                    <br>
-	                    <b>Z</b> {{ grupo.municipio.zona }}
+	                    <b>Z</b> {{ clear.municipio.zona }}
 	                    <br>
 	                  </td>
 	                  <td>Habilitado</td>
