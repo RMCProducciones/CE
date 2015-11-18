@@ -59,13 +59,22 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $elementos = $em->getRepository('AppBundle:Zona')->findBy(
-            array('active' => '1'),
-            array('nombre' => 'ASC')
-        );
+        $query = $em->createQuery(
+            'SELECT zona.id, zona.nombre
+            FROM AppBundle:Zona zona
+            ORDER BY zona.nombre ASC'
+		);
+        
+		$elementos = $query->getResult();
 
-        return $this->render('AppBundle:listas:options.html.twig', array('elementos'=>$elementos, 'idElemento'=>'0'));
-    }
+		$encoders = array(new XmlEncoder(), new JsonEncoder());
+		$normalizers = array(new GetSetMethodNormalizer());
+
+		$serializer = new Serializer($normalizers, $encoders);
+		
+		return new Response('{"zonas": ' . $serializer->serialize($elementos, 'json') . '}');
+
+		}
 
     /**
      * @Route("/departamentos", name="departamentos")
@@ -92,19 +101,23 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/{idDepartamento}/municipios", name="municipios")
+     * @Route("/{idDepartamento}/{idZona}/municipios", name="municipios")
      */
-    public function municipiosAction($idDepartamento)
+    public function municipiosAction($idDepartamento, $idZona)
     {
         $em = $this->getDoctrine()->getManager();
 		
 		$query = $em->createQuery(
             'SELECT municipio.id, municipio.nombre
             FROM AppBundle:Municipio municipio
-			WHERE municipio.departamento = :idDepartamento
+			WHERE 
+			municipio.departamento = :idDepartamento
+			AND 
+			municipio.zona = :idZona
             ORDER BY municipio.nombre ASC'
         );
 		$query->setParameter('idDepartamento', $idDepartamento);
+		$query->setParameter('idZona', $idDepartamento);
 		
         $elementos = $query->getResult();
 		
@@ -112,10 +125,8 @@ class DefaultController extends Controller
 		$normalizers = array(new GetSetMethodNormalizer());
 
 		$serializer = new Serializer($normalizers, $encoders);
-		$response = new Response($serializer->serialize($elementos, 'json'));
-		$response->headers->set('Content-Type', 'application/json');		
-		
-		return $response;
+
+		return new Response('{"municipios": ' . $serializer->serialize($elementos, 'json') . '}');
 
 	}
 
