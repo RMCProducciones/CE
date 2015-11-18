@@ -21,6 +21,8 @@ use AppBundle\Entity\POA;
 use AppBundle\Form\GestionAdministrativa\POAType;
 use AppBundle\Entity\Convocatoria;
 use AppBundle\Form\GestionAdministrativa\ConvocatoriaType;
+use AppBundle\Entity\CLEAR;
+use AppBundle\Form\GestionEmpresarial\CLEARType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -248,7 +250,35 @@ class DefaultController extends Controller
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:clear-gestion.html.twig', array( 'cleares' => $cleares));
     }
-    
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/nuevo", name="clearNuevo")
+     */
+    public function clearNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $clear = new Clear();
+        
+        $form = $this->createForm(new CLEARType(), $clear);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $clear = $form->getData();
+
+            $clear->setActive(true);
+            $clear->setFechaCreacion(new \DateTime());
+
+
+            
+            $em->persist($clear);
+            $em->flush();
+
+            return $this->redirectToRoute('clearGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:clear-nuevo.html.twig', array('form' => $form->createView()));
+    }
 
 
 
@@ -259,6 +289,21 @@ class DefaultController extends Controller
 
 
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 
