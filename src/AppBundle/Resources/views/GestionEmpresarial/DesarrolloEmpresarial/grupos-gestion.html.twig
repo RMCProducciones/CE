@@ -16,8 +16,8 @@
 
 {% block section %}
 
-<div class="section  ng-scope" ng-app="aplicationCE">
-      <div class="container" ng-controller="buscarHerramientasCtrl">
+<div class="section  ng-scope" ng-app="aplicationCE" ng-controller="buscarHerramientasCtrl">
+      <div class="container" >
         <div class="row">
           <div class="col-md-7">
             <div class="input-group">
@@ -43,36 +43,21 @@
       </div>
       <br>
       <div class="container well" ng-show="count === 1">
-        <div class="row">
+        <div class="row" >
           <div class="col-md-3">
             <label>Departamento</label>
             <br>
-			<select class="form-control"></select>
-            <!--input list="dlDepartamento" id="lstDepartamentoFiltro" placeholder="Departamento..." class="form-control">
-            <datalist id="dlDepartamento">
-              <option></option>
-            </datalist-->
-
-          </div>
-          <div class="col-md-3">
-            <label>Municipio</label>
-            <br>
-            <!--input list="dlMunicipio" placeholder="Municipio..." class="form-control">
-            <datalist id="dlMunicipio">
-              <option ></option>
-            </datalist-->
+			<select ng-model="selDepartamento" class="form-control" ng-change="cargarMunicipios()" ng-options="departamento.id as departamento.nombre for departamento in JSONDepartamento"></select>
           </div>
           <div class="col-md-3">
             <label>Zona</label>
             <br>
-            <input list="zona" placeholder="Zona..." class="form-control">
-            <datalist id="zona">
-              <option value="Nudo de Paramillo"></option>
-              <option value="Cauca Costa Pacífica"></option>
-              <option value="Cauca Andino"></option>
-              <option value="Nariño Costa Pacífica"></option>
-              <option value="Nariño Andino"></option>
-            </datalist>
+			<select ng-model="selZona" class="form-control" ng-change="cargarMunicipios()" ng-options="zona.id as zona.nombre for zona in JSONZona"></select>
+          </div>
+          <div class="col-md-3">
+            <label>Municipio</label>
+            <br>
+			<select ng-model="selMunicipio" class="form-control" ng-options="municipio.id as municipio.nombre for municipio in JSONMunicipio"></select>           
           </div>
           <div class="col-md-3">
             <label>Estado</label>
