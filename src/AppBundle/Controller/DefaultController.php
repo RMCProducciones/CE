@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -83,9 +84,18 @@ class DefaultController extends Controller
 
 		$serializer = new Serializer($normalizers, $encoders);
 
-		return new Response($serializer->serialize($elementos, 'json'));
+		//$response = new Response(array('records' => $serializer->serialize($elementos, 'json')));
+		//$response->headers->set('Content-Type', 'application/json');		
+		
+		//return new JsonResponse(array('records' => $elementos));
+		//return new Response(array('records' => $elementos));
 
-		}
+		$response = new Response($serializer->serialize($elementos, 'json'));
+		$response->headers->set('Content-Type', 'application/json');		
+		
+		return $response;
+
+	}
 
     /**
      * @Route("/municipios/{idZona}/{idDepartamento}/{idElemento}", defaults={"idElemento" = 0}, name="municipios")
