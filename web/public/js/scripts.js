@@ -16,7 +16,7 @@ app.controller('buscarHerramientasCtrl', ['$scope', '$http', 'styleBuscarHerrami
 	$scope.JSONZona         = [ ];
 
 	obtenerDepartamento($http,$scope);
-	obtenerZona($http,$scope);
+	//obtenerZona($http,$scope);
 	
 	$scope.buttonBuscarHerramientas = function(count){
 		$scope.count = count * (-1);
@@ -31,6 +31,11 @@ app.controller('buscarHerramientasCtrl', ['$scope', '$http', 'styleBuscarHerrami
 		
     }
 	
+	$scope.cargarZonas = function() { 
+		obtenerZona($http,$scope,$scope.selDepartamento)
+		obtenerMunicipio($http,$scope,$scope.selDepartamento,$scope.selZona)
+	};
+
 	$scope.cargarMunicipios = function() { 
 		obtenerMunicipio($http,$scope,$scope.selDepartamento,$scope.selZona)
 	};
@@ -50,8 +55,11 @@ function obtenerDepartamento($http,$scope){
 	});    
 }
 
-function obtenerZona($http,$scope){
-	$http.get("http://localhost/rmc/ce/web/zonas")
+function obtenerZona($http,$scope, idDepartamento){
+
+	if(Object.prototype.toString.call(idDepartamento) === "[object Array]") idDepartamento = 0;
+	
+	$http.get("http://localhost/rmc/ce/web/" + idDepartamento + "/zonas")
 	.success(function(data) {
 		var array = data == null ? [] : (data.zonas instanceof Array ? data.zonas : [data.zonas]);
 		$scope.JSONZona  = array;

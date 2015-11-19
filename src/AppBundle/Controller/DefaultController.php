@@ -53,31 +53,6 @@ class DefaultController extends Controller
         return $this->render('AppBundle:default:nav.html.twig');
     }
 
-
-    /**
-     * @Route("/zonas", name="zonas")
-     */
-    public function zonasAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $query = $em->createQuery(
-            'SELECT zona.id, zona.nombre
-            FROM AppBundle:Zona zona
-            ORDER BY zona.nombre ASC'
-		);
-        
-		$elementos = $query->getResult();
-
-		$encoders = array(new XmlEncoder(), new JsonEncoder());
-		$normalizers = array(new GetSetMethodNormalizer());
-
-		$serializer = new Serializer($normalizers, $encoders);
-		
-		return new Response('{"zonas": ' . $serializer->serialize($elementos, 'json') . '}');
-
-		}
-
     /**
      * @Route("/departamentos", name="departamentos")
      */
@@ -103,23 +78,76 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/{idDepartamento}/zonas", name="zonas")
+     */
+    public function zonasAction($idDepartamento)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em->createQuery('
+			SELECT zona.id, zona.nombre
+            FROM AppBundle:Zona zona
+			INNER JOIN AppBundle:Municipio municipio WITH zona.id = municipio.zona
+			WHERE municipio.departamento = :idDepartamento
+            GROUP BY zona.id
+			ORDER BY zona.nombre ASC			
+		');
+		$query->setParameter('idDepartamento', $idDepartamento);
+        
+		$elementos = $query->getResult();
+
+		$encoders = array(new XmlEncoder(), new JsonEncoder());
+		$normalizers = array(new GetSetMethodNormalizer());
+
+		$serializer = new Serializer($normalizers, $encoders);
+		
+		return new Response('{"zonas": ' . $serializer->serialize($elementos, 'json') . '}');
+
+	}
+	
+    /**
      * @Route("/{idDepartamento}/{idZona}/municipios", name="municipios")
      */
     public function municipiosAction($idDepartamento, $idZona)
     {
         $em = $this->getDoctrine()->getManager();
 		
-		$query = $em->createQuery(
-            'SELECT municipio.id, municipio.nombre
-            FROM AppBundle:Municipio municipio
-			WHERE 
-			municipio.departamento = :idDepartamento
-			AND 
-			municipio.zona = :idZona
-            ORDER BY municipio.nombre ASC'
-        );
-		$query->setParameter('idDepartamento', $idDepartamento);
-		$query->setParameter('idZona', $idDepartamento);
+		if($idDepartamento == 0 && $idZona == 0){
+
+			$query = $em->createQuery('
+				SELECT municipio.id, municipio.nombre
+				FROM AppBundle:Municipio municipio
+				ORDER BY municipio.nombre ASC
+			');
+			
+		}else if($idDepartamento > 0 && $idZona == 0){
+			$query = $em->createQuery('
+				SELECT municipio.id, municipio.nombre
+				FROM AppBundle:Municipio municipio
+				WHERE municipio.departamento = :idDepartamento
+				ORDER BY municipio.nombre ASC
+			');
+			$query->setParameter('idDepartamento', $idDepartamento);
+			
+		}else if($idDepartamento == 0 && $idZona > 0){
+			$query = $em->createQuery('
+				SELECT municipio.id, municipio.nombre
+				FROM AppBundle:Municipio municipio
+				WHERE municipio.zona = :idZona
+				ORDER BY municipio.nombre ASC
+			');
+			$query->setParameter('idZona', $idZona);			
+		}else{
+			$query = $em->createQuery('
+				SELECT municipio.id, municipio.nombre
+				FROM AppBundle:Municipio municipio
+				WHERE municipio.departamento = :idDepartamento
+				AND municipio.zona = :idZona
+				ORDER BY municipio.nombre ASC
+			');
+			$query->setParameter('idDepartamento', $idDepartamento);
+			$query->setParameter('idZona', $idZona);			
+		}		
 		
         $elementos = $query->getResult();
 		
@@ -131,34 +159,6 @@ class DefaultController extends Controller
 		return new Response('{"municipios": ' . $serializer->serialize($elementos, 'json') . '}');
 
 	}
-
-    /**
-     * @Route("/municipios/{idZona}/{idDepartamento}/{idElemento}", defaults={"idElemento" = 0}, name="municipiosa")
-     */
-    public function municipiosaAction($idZona, $idDepartamento, $idElemento)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $elementos = $em->getRepository('AppBundle:Municipio')->findBy(
-            array('zona' => $idZona, 'departamento' => $idDepartamento, 'active' => '1'),
-            array('nombre' => 'ASC')
-        );
-
-        /*$query = $em->createQuery(
-            'SELECT m
-            FROM AppBundle:Municipios m
-            WHERE z.zona = :zonaId
-            AND m.departamento = :departamentoId
-            GROUP BY c.nombre
-            ORDER BY c.nombre ASC'
-        );
-        $query->setParameter('zonaId', $zonaId);
-        $query->setParameter('departamentoId', $departamentoId);
-
-        $municipios = $query->getResult();*/
-        return $this->render('AppBundle:listas:options.html.twig', array('elementos'=>$elementos, 'idElemento'=>$idElemento));
-    }
-
 
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/", name="gruposGestion")
