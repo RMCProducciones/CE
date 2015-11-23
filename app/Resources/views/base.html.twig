@@ -8,7 +8,7 @@
 		{% block scriptshead %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
-    <body>
+    <body class="ng-scope" ng-app="aplicationCE" ng-controller="rutaServidorCtrl">
 		{% block body %}{% endblock %}
 
         {% block javascripts %}{% endblock %}

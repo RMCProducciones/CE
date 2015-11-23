@@ -62,37 +62,41 @@
                   {{ form_widget(form.convocatoria, { 'attr': {'class': 'form-control'} }) }}
                 </div>
               </div>
+			
+			<div ng-controller="ListasLocalizacionCtrl">
+				
+				<div class="form-group">
+					<div class="col-sm-2">
+					  {{ form_label(form.departamento) }}
+					</div>
+					<div class="col-sm-10">
+					  {{ form_errors(form.departamento) }}
+					  {{ form_widget(form.departamento, { 'attr': {'class': 'form-control', 'ng-model': 'selDepartamento', 'ng-change': 'cargarZonas()', 'ng-options': 'departamento.id as departamento.nombre for departamento in JSONDepartamento'} }) }}
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-sm-2">
+					  {{ form_label(form.zona) }}
+					</div>
+					<div class="col-sm-10">
+					  {{ form_errors(form.zona) }}
+					  {{ form_widget(form.zona, { 'attr': {'class': 'form-control', 'ng-model': 'selZona', 'ng-change': 'cargarMunicipios()', 'ng-options': 'zona.id as zona.nombre for zona in JSONZona'} }) }} 
+					</div>
+				</div>
 
-              <div class="form-group">
-                <div class="col-sm-2">
-                  {{ form_label(form.zona) }}
-                </div>
-                <div class="col-sm-10">
-                  {{ form_errors(form.zona) }}
-                  {{ form_widget(form.zona, { 'attr': {'class': 'form-control', 'onchange': 'alert("Ejecutar ajax para actualizar municipios...")'} }) }}
-                </div>
-              </div>
+				<div class="form-group">
+					<div class="col-sm-2">
+					  {{ form_label(form.municipio) }}
+					</div>
+					<div class="col-sm-10">
+					  {{ form_errors(form.municipio) }}
+					  {{ form_widget(form.municipio, { 'attr': {'class': 'form-control', 'ng-model': 'selMunicipio', 'ng-options': 'municipio.id as municipio.nombre for municipio in JSONMunicipio'} }) }}
+					</div>
+				</div>
 
-              <div class="form-group">
-                <div class="col-sm-2">
-                  {{ form_label(form.departamento) }}
-                </div>
-                <div class="col-sm-10">
-                  {{ form_errors(form.departamento) }}
-                  {{ form_widget(form.departamento, { 'attr': {'class': 'form-control', 'onchange': 'alert("Ejecutar ajax para actualizar municipios...")'} }) }}
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-2">
-                  {{ form_label(form.municipio) }}
-                </div>
-                <div class="col-sm-10">
-                  {{ form_errors(form.municipio) }}
-                  {{ form_widget(form.municipio, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-
+			</div>
+			
               <div class="form-group">
                 <div class="col-sm-2">
                   {{ form_label(form.tipo) }}

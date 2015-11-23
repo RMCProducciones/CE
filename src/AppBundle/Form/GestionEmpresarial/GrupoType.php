@@ -12,19 +12,19 @@ class GrupoType extends AbstractType
     {
         $builder
 			->add('convocatoria', 'entity', array('class' => 'AppBundle:Convocatoria'))
-			->add('zona', 'entity', array('mapped' => false, 'class' => 'AppBundle:Zona',
-										    'query_builder' => function(EntityRepository $er) {
-										        return $er->createQueryBuilder('l')
-										        	->where('l.active = 1')
-										            ->orderBy('l.nombre', 'ASC');
-										    },))
-			->add('departamento', 'entity', array('mapped' => false, 'class' => 'AppBundle:Departamento',
-										    'query_builder' => function(EntityRepository $er) {
-										        return $er->createQueryBuilder('l')
-										        	->where('l.active = 1')
-										            ->orderBy('l.nombre', 'ASC');
-										    },))
-			->add('municipio', 'entity', array('class' => 'AppBundle:Municipio'))
+
+			->add('departamento', 'choice', array(
+				'mapped' => false, 
+			))
+
+			->add('zona', 'choice', array(
+				'mapped' => false,
+			))
+
+			->add('municipio', 'entity', array(
+				'class' => 'AppBundle:Municipio',	
+			))
+
 			->add('tipo', 'entity', array('class' => 'AppBundle:Listas',
 										    'query_builder' => function(EntityRepository $er) {
 										        return $er->createQueryBuilder('l')
@@ -33,6 +33,7 @@ class GrupoType extends AbstractType
 										        	->setParameter('dominio', 'tipo_grupo')
 										            ->orderBy('l.orden', 'ASC');
 										    },))
+											
 			->add('fecha_inscripcion', 'date', array('label' => 'Fecha de Inscripción', 'widget' => 'single_text'))
 			->add('codigo')
 			->add('nombre')
