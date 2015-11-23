@@ -104,6 +104,8 @@
   		{% render controller('AppBundle:Default:nav') %}
 	{% endblock %}
 	
+  <input type="text"
+
 	{% block breadcrumb %}
 	<div class="section">
       <div class="container">
@@ -120,7 +122,8 @@
 
 	{% block section %}{% endblock %}
 	
-	
+	<input type="hidden" id="path" value="{{ path('homepage') }}" />
+  
 	<DIV style="CLEAR: both"></DIV>
 
 	{% block footer %}
