@@ -17,10 +17,6 @@ use AppBundle\Entity\Grupo;
 use AppBundle\Form\GestionEmpresarial\GrupoType;
 use AppBundle\Entity\Beneficiario;
 use AppBundle\Form\GestionEmpresarial\BeneficiarioType;
-use AppBundle\Entity\POA;
-use AppBundle\Form\GestionAdministrativa\POAType;
-use AppBundle\Entity\Convocatoria;
-use AppBundle\Form\GestionAdministrativa\ConvocatoriaType;
 use AppBundle\Entity\CLEAR;
 use AppBundle\Form\GestionEmpresarial\CLEARType;
 
