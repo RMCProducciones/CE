@@ -22,13 +22,6 @@ class CLEAR
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="tipo_CLEAR", type="integer")
-     */
-    private $tipo_CLEAR;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="fecha_inicio", type="datetime")
@@ -69,7 +62,7 @@ class CLEAR
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
      */
     private $fecha_modificacion;
 
@@ -94,30 +87,6 @@ class CLEAR
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set tipoCLEAR
-     *
-     * @param integer $tipoCLEAR
-     *
-     * @return CLEAR
-     */
-    public function setTipoCLEAR($tipoCLEAR)
-    {
-        $this->tipo_CLEAR = $tipoCLEAR;
-
-        return $this;
-    }
-
-    /**
-     * Get tipoCLEAR
-     *
-     * @return integer
-     */
-    public function getTipoCLEAR()
-    {
-        return $this->tipo_CLEAR;
     }
 
     /**

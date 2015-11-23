@@ -52,15 +52,7 @@
         <div class="row">
           <div class="col-md-12">
             <!--form class="form-horizontal" role="form"-->
-			<div class="form-group">
-                <div class="col-sm-3">
-                  {{ form_label(form.tipo_CLEAR) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.tipo_CLEAR) }}
-                  {{ form_widget(form.tipo_CLEAR, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
+			
 			  <div class="form-group">
                 <div class="col-sm-3">
                   {{ form_label(form.fecha_inicio) }}
@@ -86,6 +78,25 @@
                 <div class="col-sm-9">
                   {{ form_errors(form.lugar_realizacion_CLEAR) }}
                   {{ form_widget(form.lugar_realizacion_CLEAR, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			  <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.zona) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.zona) }}
+                  {{ form_widget(form.zona, { 'attr': {'class': 'form-control', 'onchange': 'alert("Ejecutar ajax para actualizar municipios...")'} }) }}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.departamento) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.departamento) }}
+                  {{ form_widget(form.departamento, { 'attr': {'class': 'form-control', 'onchange': 'alert("Ejecutar ajax para actualizar municipios...")'} }) }}
                 </div>
               </div>
 			  
