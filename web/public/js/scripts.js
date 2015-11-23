@@ -7,7 +7,14 @@ var app = angular.module('aplicationCE', []).config(function($interpolateProvide
 
 app.constant('styleBuscarHerramientas', { dropdown: 'dropdown', dropup: 'dropup' });
 
-app.controller('ListasLocalizacionCtrl', ['$scope', '$http',function($scope, $http, styleBuscarHerramientas) {
+app.controller('rutaServidorCtrl', ['$scope', '$http',function($scope, $http) {
+
+	$scope.rutaServidor = $('#path').val();
+
+}]);
+
+
+app.controller('ListasLocalizacionCtrl', ['$scope', '$http',function($scope, $http) {
 	$scope.JSONDepartamento = [ ];
 	$scope.JSONMunicipio    = [ ];
 	$scope.JSONZona         = [ ];
@@ -28,7 +35,6 @@ app.controller('ListasLocalizacionCtrl', ['$scope', '$http',function($scope, $ht
 app.controller('FiltrosCtrl', ['$scope', '$http', 'styleBuscarHerramientas',function($scope, $http, styleBuscarHerramientas) {
 	$scope.count = -1;
 	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
-	$scope.rutaServidor = $('#path').val();
 	
 	$scope.buttonBuscarHerramientas = function(count){
 		$scope.count = count * (-1);
