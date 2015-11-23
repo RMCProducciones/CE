@@ -6,19 +6,29 @@ var app = angular.module('aplicationCE', []).config(function($interpolateProvide
 });
 
 app.constant('styleBuscarHerramientas', { dropdown: 'dropdown', dropup: 'dropup' });
-//app.constant('c_rutaServidor', {rutaServidor:$('#path').val()});
 
-app.controller('buscarHerramientasCtrl', ['$scope', '$http', 'styleBuscarHerramientas',function($scope, $http, styleBuscarHerramientas) {
-	$scope.count = -1;
-	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
-	$scope.rutaServidor = $('#path').val();//c_rutaServidor.rutaServidor;
-
+app.controller('ListasLocalizacionCtrl', ['$scope', '$http',function($scope, $http, styleBuscarHerramientas) {
 	$scope.JSONDepartamento = [ ];
 	$scope.JSONMunicipio    = [ ];
 	$scope.JSONZona         = [ ];
-
+	
 	obtenerDepartamento($http,$scope);
-	//obtenerZona($http,$scope);
+	
+	$scope.cargarZonas = function() { 
+		obtenerZona($http,$scope,$scope.selDepartamento)
+		obtenerMunicipio($http,$scope,$scope.selDepartamento,$scope.selZona)
+	};
+
+	$scope.cargarMunicipios = function() { 
+		obtenerMunicipio($http,$scope,$scope.selDepartamento,$scope.selZona)
+	};
+	
+}]);
+
+app.controller('FiltrosCtrl', ['$scope', '$http', 'styleBuscarHerramientas',function($scope, $http, styleBuscarHerramientas) {
+	$scope.count = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	$scope.rutaServidor = $('#path').val();
 	
 	$scope.buttonBuscarHerramientas = function(count){
 		$scope.count = count * (-1);
@@ -31,17 +41,7 @@ app.controller('buscarHerramientasCtrl', ['$scope', '$http', 'styleBuscarHerrami
 			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
 		}
 		
-    }
-	
-	$scope.cargarZonas = function() { 
-		obtenerZona($http,$scope,$scope.selDepartamento)
-		obtenerMunicipio($http,$scope,$scope.selDepartamento,$scope.selZona)
-	};
-
-	$scope.cargarMunicipios = function() { 
-		obtenerMunicipio($http,$scope,$scope.selDepartamento,$scope.selZona)
-	};
-	
+    }	
 		
 }]);
 

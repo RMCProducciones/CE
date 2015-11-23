@@ -16,8 +16,8 @@
 
 {% block section %}
 
-<div class="section  ng-scope" ng-app="aplicationCE" ng-controller="buscarHerramientasCtrl">
-      <div class="container" >
+	<div class="section  ng-scope" ng-app="aplicationCE" ng-controller="FiltrosCtrl">
+      <div class="container">
         <div class="row">
           <div class="col-md-7">
             <div class="input-group">
@@ -33,7 +33,7 @@
           <div class="col-md-3 text-center">
 		  
             <div class="[[styleBuscarHerramientas]]">
-              <button class="btn btn-primary" ng-click="buttonBuscarHerramientas(count)"> Buscar herramientas <span class="caret"></span></button>
+              <button class="btn btn-primary" ng-click="buttonBuscarHerramientas(count)">Fitros <span class="caret"></span></button>
             </div>
           </div>
           <div class="col-md-2 text-center">
@@ -42,7 +42,7 @@
         </div>
       </div>
       <br>
-      <div class="container well" ng-show="count === 1">
+      <div class="container well" ng-controller="ListasLocalizacionCtrl" ng-show="count === 1">
         <div class="row" >
           <div class="col-md-3">
             <label>Departamento</label>

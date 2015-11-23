@@ -18,7 +18,7 @@
 
 {% block section %}
 
-<div class="section  ng-scope" ng-app="aplicationCE" ng-controller="buttonBuscarHerramientas">
+	<div class="section  ng-scope" ng-app="aplicationCE" ng-controller="FiltrosCtrl">
       <div class="container">
         <div class="row">
           <div class="col-md-7">
@@ -35,7 +35,7 @@
           <div class="col-md-3 text-center">
 		  
             <div class="[[styleBuscarHerramientas]]">
-              <button class="btn btn-primary" ng-click="buttonBuscarHerramientas(count)"> Buscar herramientas <span class="caret"></span></button>
+              <button class="btn btn-primary" ng-click="buttonBuscarHerramientas(count)">Filtros <span class="caret"></span></button>
             </div>
           </div>
           <div class="col-md-2 text-center">
@@ -44,40 +44,22 @@
         </div>
       </div>
       <br>
-      <div class="container well" ng-show="count === 1">
-        <div class="row">
-          <div class="col-md-3" ng-controller="lstDepartamentoFiltro">
+      <div class="container well" ng-controller="ListasLocalizacionCtrl" ng-show="count === 1">
+        <div class="row" >
+          <div class="col-md-3">
             <label>Departamento</label>
             <br>
-            <input list="departamento" placeholder="Departamento..." class="form-control">
-            <datalist id="departamento">
-              <option ng-repeat="x in departamentosFiltro" id="[[x.id]]">[[x.nombre]]</option>
-            </datalist>
-
-          </div>
-          <div class="col-md-3">
-            <label>Municipio</label>
-            <br>
-            <input list="municipio" placeholder="Municipio..." class="form-control">
-            <datalist id="municipio">
-              <option value="Abrego"></option>
-              <option value="Corinto"></option>
-              <option value="Tambo"></option>
-              <option value="Granada"></option>
-              <option value="López"></option>
-            </datalist>
+			<select ng-model="selDepartamento" class="form-control" ng-change="cargarZonas()" ng-options="departamento.id as departamento.nombre for departamento in JSONDepartamento"></select>
           </div>
           <div class="col-md-3">
             <label>Zona</label>
             <br>
-            <input list="zona" placeholder="Zona..." class="form-control">
-            <datalist id="zona">
-              <option value="Nudo de Paramillo"></option>
-              <option value="Cauca Costa Pacífica"></option>
-              <option value="Cauca Andino"></option>
-              <option value="Nariño Costa Pacífica"></option>
-              <option value="Nariño Andino"></option>
-            </datalist>
+			<select ng-model="selZona" class="form-control" ng-change="cargarMunicipios()" ng-options="zona.id as zona.nombre for zona in JSONZona"></select>
+          </div>
+          <div class="col-md-3">
+            <label>Municipio</label>
+            <br>
+			<select ng-model="selMunicipio" class="form-control" ng-options="municipio.id as municipio.nombre for municipio in JSONMunicipio"></select>           
           </div>
           <div class="col-md-3">
             <label>Estado</label>
