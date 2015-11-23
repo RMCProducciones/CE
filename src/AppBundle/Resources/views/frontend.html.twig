@@ -103,8 +103,6 @@
 	{% block nav %}
   		{% render controller('AppBundle:Default:nav') %}
 	{% endblock %}
-	
-  <input type="text"
 
 	{% block breadcrumb %}
 	<div class="section">
@@ -122,7 +120,7 @@
 
 	{% block section %}{% endblock %}
 	
-	<input type="hidden" id="path" value="{{ path('homepage') }}" />
+	<input type="hidden" id="path" ng-model="rutaServidor" value="{{ path('homepage') }}" />
   
 	<DIV style="CLEAR: both"></DIV>
 
