@@ -44,7 +44,7 @@ app.controller('buscarHerramientasCtrl', ['$scope', '$http', 'styleBuscarHerrami
 }]);
 
 function obtenerDepartamento($http,$scope){
-	$http.get("http://localhost/rmc/ce/web/departamentos")
+	$http.get("http://localhost/ce/web/departamentos")
 	.success(function(data) {
 		var array = data == null ? [] : (data.departamentos instanceof Array ? data.departamentos : [data.departamentos]);
 		$scope.JSONDepartamento  = array;
@@ -59,7 +59,7 @@ function obtenerZona($http,$scope, idDepartamento){
 
 	if(Object.prototype.toString.call(idDepartamento) === "[object Array]") idDepartamento = 0;
 	
-	$http.get("http://localhost/rmc/ce/web/" + idDepartamento + "/zonas")
+	$http.get("http://localhost/ce/web/" + idDepartamento + "/zonas")
 	.success(function(data) {
 		var array = data == null ? [] : (data.zonas instanceof Array ? data.zonas : [data.zonas]);
 		$scope.JSONZona  = array;
@@ -75,7 +75,7 @@ function obtenerMunicipio($http,$scope, idDepartamento, idZona){
 	if(Object.prototype.toString.call(idZona) === "[object Array]") idZona = 0;
 	if(Object.prototype.toString.call(idDepartamento) === "[object Array]") idDepartamento = 0;
 	
-	$http.get("http://localhost/rmc/ce/web/" + idDepartamento + "/" + idZona + "/municipios")
+	$http.get("http://localhost/ce/web/" + idDepartamento + "/" + idZona + "/municipios")
 	.success(function(data) {
 		var array = data == null ? [] : (data.municipios instanceof Array ? data.municipios : [data.municipios]);
 		$scope.JSONMunicipio  = array;
