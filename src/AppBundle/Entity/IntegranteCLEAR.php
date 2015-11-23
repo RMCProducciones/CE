@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * IntegrantesCLEAR
+ * IntegranteCLEAR
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\IntegrantesCLEARRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\IntegranteCLEARRepository")
  */
-class IntegrantesCLEAR
+class IntegranteCLEAR
 {
     /**
      * @var integer
@@ -21,13 +21,10 @@ class IntegrantesCLEAR
      */
     private $id;
 
-     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CLEAR")
-     */
-    private $clear;
-
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
+     * @var integer
+     *
+     * @ORM\Column(name="tipo_documento", type="integer")
      */
     private $tipo_documento;
 
@@ -67,7 +64,9 @@ class IntegrantesCLEAR
     private $segundo_nombre;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
+     * @var integer
+     *
+     * @ORM\Column(name="genero", type="integer")
      */
     private $genero;
 
@@ -79,33 +78,32 @@ class IntegrantesCLEAR
     private $fecha_nacimiento;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
+     * @var string
+     *
+     * @ORM\Column(name="entidad", type="string")
      */
-    private $pertenencia_etnica;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
-     */
-    private $nivel_estudios;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
-     */
-    private $grupo_indigena;
+    private $entidad;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="entidad_representa", type="string")
+     * @ORM\Column(name="cargo", type="string")
      */
-    private $entidad_representa;
+    private $cargo;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="municipio", type="integer")
+     */
+    private $municipio;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="cargo_entidad", type="string")
+     * @ORM\Column(name="direccion", type="string")
      */
-    private $cargo_entidad;
+    private $direccion;
 
     /**
      * @var string
@@ -124,9 +122,37 @@ class IntegrantesCLEAR
     /**
      * @var string
      *
+     * @ORM\Column(name="telefono_celular2", type="string")
+     */
+    private $telefono_celular2;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="correo_electronico", type="string")
      */
     private $correo_electronico;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nivel_estudios", type="integer")
+     */
+    private $nivel_estudios;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="pertenencia_etnica", type="integer")
+     */
+    private $pertenencia_etnica;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="foto", type="string")
+     */
+    private $foto;
 
     /**
      * @var boolean
@@ -136,7 +162,9 @@ class IntegrantesCLEAR
     private $active;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
+     * @var integer
+     *
+     * @ORM\Column(name="usuario_modificacion", type="integer")
      */
     private $usuario_modificacion;
 
@@ -148,7 +176,9 @@ class IntegrantesCLEAR
     private $fecha_modificacion;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
+     * @var integer
+     *
+     * @ORM\Column(name="usuario_creacion", type="integer")
      */
     private $usuario_creacion;
 
@@ -171,37 +201,13 @@ class IntegrantesCLEAR
     }
 
     /**
-     * Set clear
-     *
-     * @param AppBundle\Entity\CLEAR $clear
-     *
-     * @return IntegrantesCLEAR
-     */
-    public function setClear(\AppBundle\Entity\CLEAR $clear)
-    {
-        $this->clear = $clear;
-
-        return $this;
-    }
-
-    /**
-     * Get clear
-     *
-     * @return AppBundle\Entity\CLEAR
-     */
-    public function getClear()
-    {
-        return $this->clear;
-    }
-
-    /**
      * Set tipoDocumento
      *
-     * @param AppBundle\Entity\Listas $tipoDocumento
+     * @param integer $tipoDocumento
      *
-     * @return IntegrantesCLEAR
+     * @return IntegranteCLEAR
      */
-    public function setTipoDocumento(\AppBundle\Entity\Listas $tipoDocumento)
+    public function setTipoDocumento($tipoDocumento)
     {
         $this->tipo_documento = $tipoDocumento;
 
@@ -211,7 +217,7 @@ class IntegrantesCLEAR
     /**
      * Get tipoDocumento
      *
-     * @return AppBundle\Entity\Listas
+     * @return integer
      */
     public function getTipoDocumento()
     {
@@ -223,7 +229,7 @@ class IntegrantesCLEAR
      *
      * @param string $numeroDocumento
      *
-     * @return IntegrantesCLEAR
+     * @return IntegranteCLEAR
      */
     public function setNumeroDocumento($numeroDocumento)
     {
@@ -247,7 +253,7 @@ class IntegrantesCLEAR
      *
      * @param string $primerApellido
      *
-     * @return IntegrantesCLEAR
+     * @return IntegranteCLEAR
      */
     public function setPrimerApellido($primerApellido)
     {
@@ -271,7 +277,7 @@ class IntegrantesCLEAR
      *
      * @param string $segundoApellido
      *
-     * @return IntegrantesCLEAR
+     * @return IntegranteCLEAR
      */
     public function setSegundoApellido($segundoApellido)
     {
@@ -295,7 +301,7 @@ class IntegrantesCLEAR
      *
      * @param string $primerNombre
      *
-     * @return IntegrantesCLEAR
+     * @return IntegranteCLEAR
      */
     public function setPrimerNombre($primerNombre)
     {
@@ -319,7 +325,7 @@ class IntegrantesCLEAR
      *
      * @param string $segundoNombre
      *
-     * @return IntegrantesCLEAR
+     * @return IntegranteCLEAR
      */
     public function setSegundoNombre($segundoNombre)
     {
@@ -341,11 +347,11 @@ class IntegrantesCLEAR
     /**
      * Set genero
      *
-     * @param AppBundle\Entity\Listas $genero
+     * @param integer $genero
      *
-     * @return IntegrantesCLEAR
+     * @return IntegranteCLEAR
      */
-    public function setGenero(\AppBundle\Entity\Listas $genero)
+    public function setGenero($genero)
     {
         $this->genero = $genero;
 
@@ -355,7 +361,7 @@ class IntegrantesCLEAR
     /**
      * Get genero
      *
-     * @return AppBundle\Entity\Listas
+     * @return integer
      */
     public function getGenero()
     {
@@ -367,7 +373,7 @@ class IntegrantesCLEAR
      *
      * @param \DateTime $fechaNacimiento
      *
-     * @return IntegrantesCLEAR
+     * @return IntegranteCLEAR
      */
     public function setFechaNacimiento($fechaNacimiento)
     {
@@ -387,123 +393,99 @@ class IntegrantesCLEAR
     }
 
     /**
-     * Set pertenenciaEtnica
+     * Set entidad
      *
-     * @param AppBundle\Entity\Listas $pertenenciaEtnica
+     * @param string $entidad
      *
-     * @return IntegrantesCLEAR
+     * @return IntegranteCLEAR
      */
-    public function setPertenenciaEtnica(\AppBundle\Entity\Listas $pertenenciaEtnica)
+    public function setEntidad($entidad)
     {
-        $this->pertenencia_etnica = $pertenenciaEtnica;
+        $this->entidad = $entidad;
 
         return $this;
     }
 
     /**
-     * Get pertenenciaEtnica
-     *
-     * @return AppBundle\Entity\Listas
-     */
-    public function getPertenenciaEtnica()
-    {
-        return $this->pertenencia_etnica;
-    }
-
-    /**
-     * Set nivelEstudios
-     *
-     * @param AppBundle\Entity\Listas $nivelEstudios
-     *
-     * @return IntegrantesCLEAR
-     */
-    public function setNivelEstudios(\AppBundle\Entity\Listas $nivelEstudios)
-    {
-        $this->nivel_estudios = $nivelEstudios;
-
-        return $this;
-    }
-
-    /**
-     * Get nivelEstudios
-     *
-     * @return AppBundle\Entity\Listas
-     */
-    public function getNivelEstudios()
-    {
-        return $this->nivel_estudios;
-    }
-
-    /**
-     * Set grupoIndigena
-     *
-     * @param AppBundle\Entity\Listas $grupoIndigena
-     *
-     * @return IntegrantesCLEAR
-     */
-    public function setGrupoIndigena(\AppBundle\Entity\Listas $grupoIndigena)
-    {
-        $this->grupo_indigena = $grupoIndigena;
-
-        return $this;
-    }
-
-    /**
-     * Get grupoIndigena
-     *
-     * @return AppBundle\Entity\Listas
-     */
-    public function getGrupoIndigena()
-    {
-        return $this->grupo_indigena;
-    }
-
-    /**
-     * Set entidadRepresenta
-     *
-     * @param string $entidadRepresenta
-     *
-     * @return IntegrantesCLEAR
-     */
-    public function setEntidadRepresenta($entidadRepresenta)
-    {
-        $this->entidad_representa = $entidadRepresenta;
-
-        return $this;
-    }
-
-    /**
-     * Get entidadRepresenta
+     * Get entidad
      *
      * @return string
      */
-    public function getEntidadRepresenta()
+    public function getEntidad()
     {
-        return $this->entidad_representa;
+        return $this->entidad;
     }
 
     /**
-     * Set cargoEntidad
+     * Set cargo
      *
-     * @param string $cargoEntidad
+     * @param string $cargo
      *
-     * @return IntegrantesCLEAR
+     * @return IntegranteCLEAR
      */
-    public function setCargoEntidad($cargoEntidad)
+    public function setCargo($cargo)
     {
-        $this->cargo_entidad = $cargoEntidad;
+        $this->cargo = $cargo;
 
         return $this;
     }
 
     /**
-     * Get cargoEntidad
+     * Get cargo
      *
      * @return string
      */
-    public function getCargoEntidad()
+    public function getCargo()
     {
-        return $this->cargo_entidad;
+        return $this->cargo;
+    }
+
+    /**
+     * Set municipio
+     *
+     * @param integer $municipio
+     *
+     * @return IntegranteCLEAR
+     */
+    public function setMunicipio($municipio)
+    {
+        $this->municipio = $municipio;
+
+        return $this;
+    }
+
+    /**
+     * Get municipio
+     *
+     * @return integer
+     */
+    public function getMunicipio()
+    {
+        return $this->municipio;
+    }
+
+    /**
+     * Set direccion
+     *
+     * @param string $direccion
+     *
+     * @return IntegranteCLEAR
+     */
+    public function setDireccion($direccion)
+    {
+        $this->direccion = $direccion;
+
+        return $this;
+    }
+
+    /**
+     * Get direccion
+     *
+     * @return string
+     */
+    public function getDireccion()
+    {
+        return $this->direccion;
     }
 
     /**
@@ -511,7 +493,7 @@ class IntegrantesCLEAR
      *
      * @param string $telefonoFijo
      *
-     * @return IntegrantesCLEAR
+     * @return IntegranteCLEAR
      */
     public function setTelefonoFijo($telefonoFijo)
     {
@@ -535,7 +517,7 @@ class IntegrantesCLEAR
      *
      * @param string $telefonoCelular
      *
-     * @return IntegrantesCLEAR
+     * @return IntegranteCLEAR
      */
     public function setTelefonoCelular($telefonoCelular)
     {
@@ -555,11 +537,35 @@ class IntegrantesCLEAR
     }
 
     /**
+     * Set telefonoCelular2
+     *
+     * @param string $telefonoCelular2
+     *
+     * @return IntegranteCLEAR
+     */
+    public function setTelefonoCelular2($telefonoCelular2)
+    {
+        $this->telefono_celular2 = $telefonoCelular2;
+
+        return $this;
+    }
+
+    /**
+     * Get telefonoCelular2
+     *
+     * @return string
+     */
+    public function getTelefonoCelular2()
+    {
+        return $this->telefono_celular2;
+    }
+
+    /**
      * Set correoElectronico
      *
      * @param string $correoElectronico
      *
-     * @return IntegrantesCLEAR
+     * @return IntegranteCLEAR
      */
     public function setCorreoElectronico($correoElectronico)
     {
@@ -579,11 +585,83 @@ class IntegrantesCLEAR
     }
 
     /**
+     * Set nivelEstudios
+     *
+     * @param integer $nivelEstudios
+     *
+     * @return IntegranteCLEAR
+     */
+    public function setNivelEstudios($nivelEstudios)
+    {
+        $this->nivel_estudios = $nivelEstudios;
+
+        return $this;
+    }
+
+    /**
+     * Get nivelEstudios
+     *
+     * @return integer
+     */
+    public function getNivelEstudios()
+    {
+        return $this->nivel_estudios;
+    }
+
+    /**
+     * Set pertenenciaEtnica
+     *
+     * @param integer $pertenenciaEtnica
+     *
+     * @return IntegranteCLEAR
+     */
+    public function setPertenenciaEtnica($pertenenciaEtnica)
+    {
+        $this->pertenencia_etnica = $pertenenciaEtnica;
+
+        return $this;
+    }
+
+    /**
+     * Get pertenenciaEtnica
+     *
+     * @return integer
+     */
+    public function getPertenenciaEtnica()
+    {
+        return $this->pertenencia_etnica;
+    }
+
+    /**
+     * Set foto
+     *
+     * @param string $foto
+     *
+     * @return IntegranteCLEAR
+     */
+    public function setFoto($foto)
+    {
+        $this->foto = $foto;
+
+        return $this;
+    }
+
+    /**
+     * Get foto
+     *
+     * @return string
+     */
+    public function getFoto()
+    {
+        return $this->foto;
+    }
+
+    /**
      * Set active
      *
      * @param boolean $active
      *
-     * @return IntegrantesCLEAR
+     * @return IntegranteCLEAR
      */
     public function setActive($active)
     {
@@ -605,11 +683,11 @@ class IntegrantesCLEAR
     /**
      * Set usuarioModificacion
      *
-     * @param AppBundle\Entity\Usuario $usuarioModificacion
+     * @param integer $usuarioModificacion
      *
-     * @return IntegrantesCLEAR
+     * @return IntegranteCLEAR
      */
-    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
+    public function setUsuarioModificacion($usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -619,7 +697,7 @@ class IntegrantesCLEAR
     /**
      * Get usuarioModificacion
      *
-     * @return AppBundle\Entity\Usuario
+     * @return integer
      */
     public function getUsuarioModificacion()
     {
@@ -631,7 +709,7 @@ class IntegrantesCLEAR
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return IntegrantesCLEAR
+     * @return IntegranteCLEAR
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -653,11 +731,11 @@ class IntegrantesCLEAR
     /**
      * Set usuarioCreacion
      *
-     * @param AppBundle\Entity\Usuario $usuarioCreacion
+     * @param integer $usuarioCreacion
      *
-     * @return IntegrantesCLEAR
+     * @return IntegranteCLEAR
      */
-    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
+    public function setUsuarioCreacion($usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -667,7 +745,7 @@ class IntegrantesCLEAR
     /**
      * Get usuarioCreacion
      *
-     * @return AppBundle\Entity\Usuario
+     * @return integer
      */
     public function getUsuarioCreacion()
     {
@@ -679,7 +757,7 @@ class IntegrantesCLEAR
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return IntegrantesCLEAR
+     * @return IntegranteCLEAR
      */
     public function setFechaCreacion($fechaCreacion)
     {
