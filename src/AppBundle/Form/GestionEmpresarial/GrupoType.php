@@ -51,8 +51,24 @@ class GrupoType extends AbstractType
 			->add('telefono_fijo', 'text', array('required' => false))
 			->add('telefono_celular')
 			->add('correo_electronico', 'email')
-			->add('entidad_financiera_cuenta')
-			->add('tipo_cuenta')
+			
+			->add('entidad_financiera_cuenta', 'entity', array('class' => 'AppBundle:Listas',
+										    'query_builder' => function(EntityRepository $er) {
+										        return $er->createQueryBuilder('l')
+										        	->where('l.dominio = :dominio')
+										        	->andWhere('l.active = 1')
+										        	->setParameter('dominio', 'entidad_financiera_cuenta')
+										            ->orderBy('l.orden', 'ASC');
+										    },))
+			
+			->add('tipo_cuenta', 'entity', array('class' => 'AppBundle:Listas',
+										    'query_builder' => function(EntityRepository $er) {
+										        return $er->createQueryBuilder('l')
+										        	->where('l.dominio = :dominio')
+										        	->andWhere('l.active = 1')
+										        	->setParameter('dominio', 'tipo_cuenta')
+										            ->orderBy('l.orden', 'ASC');
+										    },))
 		;
     }
     
