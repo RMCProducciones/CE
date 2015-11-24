@@ -33,6 +33,22 @@ class IntegrantesCLEARType extends AbstractType
 										            ->orderBy('l.orden', 'ASC');
 										    },))
 			->add('fecha_nacimiento', 'date', array('label' => 'Fecha de nacimiento', 'widget' => 'single_text'))
+			->add('entidad_Representa', 'text', array('label' => 'Entidad a la cual Representa'))
+			->add('cargo_entidad', 'text', array('label' => 'Cargo dentro de la entidad a la cual representa'))
+			->add('municipio', 'entity', array('class' => 'AppBundle:Municipio'))
+			->add('direccion')
+			->add('telefono_fijo',array('required' => false))
+			->add('telefono_movil')
+			->add('correo_electronico', 'email')
+			->add('nivel_estudios', 'entity', array('class' => 'AppBundle:Listas',
+										    'query_builder' => function(EntityRepository $er) {
+										        return $er->createQueryBuilder('l')
+										        	->where('l.dominio = :dominio')
+										        	->andWhere('l.active = 1')
+										        	->setParameter('dominio', 'nivel_estudios')
+										            ->orderBy('l.orden', 'ASC');
+										    },))
+			
 			->add('pertenencia_etnica', 'entity', array('class' => 'AppBundle:Listas',
 										    'query_builder' => function(EntityRepository $er) {
 										        return $er->createQueryBuilder('l')
@@ -50,19 +66,10 @@ class IntegrantesCLEARType extends AbstractType
 										            ->orderBy('l.orden', 'ASC')
 										            ->addOrderBy('l.descripcion', 'ASC');
 										    },))
-				->add('nivel_estudios', 'entity', array('class' => 'AppBundle:Listas',
-										    'query_builder' => function(EntityRepository $er) {
-										        return $er->createQueryBuilder('l')
-										        	->where('l.dominio = :dominio')
-										        	->andWhere('l.active = 1')
-										        	->setParameter('dominio', 'nivel_estudios')
-										            ->orderBy('l.orden', 'ASC');
-										    },))
-			->add('entidad_Representa', 'text', array('label' => 'Entidad a la cual Representa'))
-			->add('cargo_entidad', 'text', array('label' => 'Cargo dentro de la entidad a la cual representa'))
-			->add('telefono_fijo',array('required' => false))
-			->add('telefono_movil')
-			->add('correo_electronico', 'email')
+				
+			
+			
+			
 		;
     }
     
