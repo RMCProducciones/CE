@@ -22,9 +22,7 @@ class IntegranteCLEAR
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="tipo_documento", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $tipo_documento;
 
@@ -63,14 +61,12 @@ class IntegranteCLEAR
      */
     private $segundo_nombre;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="genero", type="integer")
+     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $genero;
 
-    /**
+   /**
      * @var \DateTime
      *
      * @ORM\Column(name="fecha_nacimiento", type="datetime")
@@ -92,9 +88,7 @@ class IntegranteCLEAR
     private $cargo;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="municipio", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Municipio")
      */
     private $municipio;
 
@@ -108,7 +102,7 @@ class IntegranteCLEAR
     /**
      * @var string
      *
-     * @ORM\Column(name="telefono_fijo", type="string")
+     * @ORM\Column(name="telefono_fijo", type="string", nullable=true)
      */
     private $telefono_fijo;
 
@@ -122,28 +116,24 @@ class IntegranteCLEAR
     /**
      * @var string
      *
-     * @ORM\Column(name="telefono_celular2", type="string")
+     * @ORM\Column(name="telefono_celular2", type="string", nullable=true)
      */
     private $telefono_celular2;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="correo_electronico", type="string")
+     * @ORM\Column(name="correo_electronico", type="string", nullable=true)
      */
     private $correo_electronico;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="nivel_estudios", type="integer")
+  /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $nivel_estudios;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="pertenencia_etnica", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $pertenencia_etnica;
 
@@ -161,10 +151,8 @@ class IntegranteCLEAR
      */
     private $active;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+  /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
@@ -175,10 +163,8 @@ class IntegranteCLEAR
      */
     private $fecha_modificacion;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -205,9 +191,9 @@ class IntegranteCLEAR
      *
      * @param integer $tipoDocumento
      *
-     * @return IntegranteCLEAR
+     * @return AppBundle\Entity\Listas
      */
-    public function setTipoDocumento($tipoDocumento)
+    public function setTipoDocumento(\AppBundle\Entity\Listas $tipoDocumento)
     {
         $this->tipo_documento = $tipoDocumento;
 
@@ -217,7 +203,7 @@ class IntegranteCLEAR
     /**
      * Get tipoDocumento
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getTipoDocumento()
     {
@@ -347,11 +333,11 @@ class IntegranteCLEAR
     /**
      * Set genero
      *
-     * @param integer $genero
+     * @param AppBundle\Entity\Listas $genero
      *
      * @return IntegranteCLEAR
      */
-    public function setGenero($genero)
+    public function setGenero(\AppBundle\Entity\Listas $genero)
     {
         $this->genero = $genero;
 
@@ -361,7 +347,7 @@ class IntegranteCLEAR
     /**
      * Get genero
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getGenero()
     {
@@ -443,11 +429,11 @@ class IntegranteCLEAR
     /**
      * Set municipio
      *
-     * @param integer $municipio
+     * @param AppBundle\Entity\Municipio $municipio
      *
      * @return IntegranteCLEAR
      */
-    public function setMunicipio($municipio)
+    public function setMunicipio(\AppBundle\Entity\Municipio $municipio)
     {
         $this->municipio = $municipio;
 
@@ -457,7 +443,7 @@ class IntegranteCLEAR
     /**
      * Get municipio
      *
-     * @return integer
+     * @return AppBundle\Entity\Municipio
      */
     public function getMunicipio()
     {
@@ -587,11 +573,11 @@ class IntegranteCLEAR
     /**
      * Set nivelEstudios
      *
-     * @param integer $nivelEstudios
+     * @param AppBundle\Entity\Listas $nivelEstudios
      *
      * @return IntegranteCLEAR
      */
-    public function setNivelEstudios($nivelEstudios)
+    public function setNivelEstudios(\AppBundle\Entity\Listas $nivelEstudios)
     {
         $this->nivel_estudios = $nivelEstudios;
 
@@ -601,7 +587,7 @@ class IntegranteCLEAR
     /**
      * Get nivelEstudios
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getNivelEstudios()
     {
@@ -611,11 +597,11 @@ class IntegranteCLEAR
     /**
      * Set pertenenciaEtnica
      *
-     * @param integer $pertenenciaEtnica
+     * @param AppBundle\Entity\Listas $pertenenciaEtnica
      *
      * @return IntegranteCLEAR
      */
-    public function setPertenenciaEtnica($pertenenciaEtnica)
+    public function setPertenenciaEtnica(\AppBundle\Entity\Listas $pertenenciaEtnica)
     {
         $this->pertenencia_etnica = $pertenenciaEtnica;
 
@@ -625,7 +611,7 @@ class IntegranteCLEAR
     /**
      * Get pertenenciaEtnica
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getPertenenciaEtnica()
     {
@@ -683,11 +669,11 @@ class IntegranteCLEAR
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return IntegranteCLEAR
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -697,7 +683,7 @@ class IntegranteCLEAR
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -731,11 +717,11 @@ class IntegranteCLEAR
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return IntegranteCLEAR
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -745,7 +731,7 @@ class IntegranteCLEAR
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
