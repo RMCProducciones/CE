@@ -157,7 +157,7 @@ class GestionEmpresarialController extends Controller
             $em->persist($clear);
             $em->flush();
 
-            return $this->redirectToRoute('clearGestion');
+            return $this->redirectToRoute('CLEARGestion');
         }
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:clear-nuevo.html.twig', array('form' => $form->createView()));
