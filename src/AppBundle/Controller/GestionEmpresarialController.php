@@ -20,6 +20,10 @@ use AppBundle\Form\GestionEmpresarial\BeneficiarioType;
 use AppBundle\Entity\CLEAR;
 use AppBundle\Form\GestionEmpresarial\CLEARType;
 
+use AppBundle\Entity\IntegranteCLEAR;
+use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
+
+
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -158,5 +162,35 @@ class GestionEmpresarialController extends Controller
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:clear-nuevo.html.twig', array('form' => $form->createView()));
     }   
+	
+	/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/integrantes/nuevo", name="integrantesNuevo")
+     */
+    public function integrantesNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $integranteCLEAR = new IntegranteCLEAR();
+        
+        $form = $this->createForm(new IntegranteCLEARType(), $integranteCLEAR);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $integranteCLEAR= $form->getData();
+
+            $integranteCLEAR->setActive(true);
+            $integranteCLEAR->setFechaCreacion(new \DateTime());
+
+
+            
+            $em->persist($integranteCLEAR);
+            $em->flush();
+
+            return $this->redirectToRoute('clearGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integranteCLEAR-nuevo.html.twig', array('form' => $form->createView()));
+    }
 	
 }
