@@ -13,12 +13,14 @@ class GrupoType extends AbstractType
         $builder
 			->add('convocatoria', 'entity', array('class' => 'AppBundle:Convocatoria'))
 
-			->add('departamento', 'choice', array(
+			->add('departamento', 'entity', array(
 				'mapped' => false, 
+				'class' => 'AppBundle:Departamento',	
 			))
 
-			->add('zona', 'choice', array(
+			->add('zona', 'entity', array(
 				'mapped' => false,
+				'class' => 'AppBundle:Zona',	
 			))
 
 			->add('municipio', 'entity', array(

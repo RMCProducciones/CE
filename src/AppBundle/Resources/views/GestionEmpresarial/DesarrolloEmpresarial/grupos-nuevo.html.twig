@@ -71,7 +71,7 @@
 					</div>
 					<div class="col-sm-10">
 					  {{ form_errors(form.departamento) }}
-					  {{ form_widget(form.departamento, { 'attr': {'class': 'form-control', 'ng-model': 'selDepartamento', 'ng-change': 'cargarZonas()', 'ng-options': 'departamento.id as departamento.nombre for departamento in JSONDepartamento'} }) }}
+					  {{ form_widget(form.departamento, { 'attr': {'class': 'form-control', 'ng-model': 'selDepartamento', 'ng-change': 'cargarZonas()', 'ng-options': 'departamento.nombre for departamento in JSONDepartamento track by departamento.id'} }) }}
 					</div>
 				</div>
 				
@@ -81,7 +81,7 @@
 					</div>
 					<div class="col-sm-10">
 					  {{ form_errors(form.zona) }}
-					  {{ form_widget(form.zona, { 'attr': {'class': 'form-control', 'ng-model': 'selZona', 'ng-change': 'cargarMunicipios()', 'ng-options': 'zona.id as zona.nombre for zona in JSONZona'} }) }} 
+					  {{ form_widget(form.zona, { 'attr': {'class': 'form-control', 'ng-model': 'selZona', 'ng-change': 'cargarMunicipios()', 'ng-options': 'zona.nombre for zona in JSONZona track by zona.id'} }) }} 
 					</div>
 				</div>
 
@@ -91,7 +91,7 @@
 					</div>
 					<div class="col-sm-10">
 					  {{ form_errors(form.municipio) }}
-					  {{ form_widget(form.municipio, { 'attr': {'class': 'form-control', 'ng-model': 'selMunicipio', 'ng-options': 'municipio.id as municipio.nombre for municipio in JSONMunicipio'} }) }}
+					  {{ form_widget(form.municipio, { 'attr': {'class': 'form-control', 'ng-model': 'selMunicipio', 'ng-options': 'municipio.nombre for municipio in JSONMunicipio track by municipio.id'} }) }}
 					</div>
 				</div>
 

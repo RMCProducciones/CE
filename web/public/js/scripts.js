@@ -13,26 +13,8 @@ app.controller('rutaServidorCtrl', ['$scope', '$http',function($scope, $http) {
 
 }]);
 
-
-app.controller('ListasLocalizacionCtrl', ['$scope', '$http',function($scope, $http) {
-	$scope.JSONDepartamento = [ ];
-	$scope.JSONMunicipio    = [ ];
-	$scope.JSONZona         = [ ];
-	
-	obtenerDepartamento($http,$scope);
-	
-	$scope.cargarZonas = function() { 
-		obtenerZona($http,$scope,$scope.selDepartamento)
-		obtenerMunicipio($http,$scope,$scope.selDepartamento,$scope.selZona)
-	};
-
-	$scope.cargarMunicipios = function() { 
-		obtenerMunicipio($http,$scope,$scope.selDepartamento,$scope.selZona)
-	};
-	
-}]);
-
 app.controller('FiltrosCtrl', ['$scope', '$http', 'styleBuscarHerramientas',function($scope, $http, styleBuscarHerramientas) {
+
 	$scope.count = -1;
 	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
 	
@@ -51,7 +33,24 @@ app.controller('FiltrosCtrl', ['$scope', '$http', 'styleBuscarHerramientas',func
 		
 }]);
 
-function obtenerDepartamento($http,$scope){
+app.controller('ListasLocalizacionCtrl', ['$scope', '$http', function($scope, $http) {
+	$scope.JSONDepartamento = [ ];
+	$scope.JSONMunicipio    = [ ];
+	$scope.JSONZona         = [ ];
+	
+	obtenerDepartamento($http, $scope);
+	
+	$scope.cargarZonas = function() { 
+		obtenerZona($http,$scope,$scope.selDepartamento)		
+	};
+
+	$scope.cargarMunicipios = function() { 
+		obtenerMunicipio($http,$scope,$scope.selDepartamento,$scope.selZona)
+	};
+	
+}]);
+
+function obtenerDepartamento($http, $scope){
 	
 	$http.get($scope.rutaServidor + "departamentos")
 	.success(function(data) {
@@ -64,9 +63,10 @@ function obtenerDepartamento($http,$scope){
 	});    
 }
 
-function obtenerZona($http,$scope,idDepartamento){
+function obtenerZona($http,$scope,lstDepartamento){
 
-	if(Object.prototype.toString.call(idDepartamento) === "[object Array]") idDepartamento = 0;
+	var idDepartamento = 0
+	if(!(Object.prototype.toString.call(lstDepartamento) === "[object Array]")) idDepartamento = lstDepartamento.id;
 	
 	$http.get($scope.rutaServidor + idDepartamento + "/zonas")
 	.success(function(data) {
@@ -79,10 +79,13 @@ function obtenerZona($http,$scope,idDepartamento){
 	});    
 }
 
-function obtenerMunicipio($http,$scope, idDepartamento, idZona){
+function obtenerMunicipio($http,$scope, lstDepartamento, lstZona){
 	
-	if(Object.prototype.toString.call(idZona) === "[object Array]") idZona = 0;
-	if(Object.prototype.toString.call(idDepartamento) === "[object Array]") idDepartamento = 0;
+	var idDepartamento = 0;
+	var idZona = 0;
+	
+	if(!(Object.prototype.toString.call(lstDepartamento) === "[object Array]")) idDepartamento = lstDepartamento.id;
+	if(!(Object.prototype.toString.call(lstZona) === "[object Array]")) idZona = lstZona.id;
 	
 	$http.get($scope.rutaServidor  + idDepartamento + "/" + idZona + "/municipios")
 	.success(function(data) {

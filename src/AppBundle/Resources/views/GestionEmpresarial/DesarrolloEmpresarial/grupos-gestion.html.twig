@@ -47,17 +47,19 @@
           <div class="col-md-3">
             <label>Departamento</label>
             <br>
-			<select ng-model="selDepartamento" class="form-control" ng-change="cargarZonas()" ng-options="departamento.id as departamento.nombre for departamento in JSONDepartamento"></select>
+			<select ng-model="selDepartamento" class="form-control" ng-change="cargarZonas()" ng-options="departamento.nombre for departamento in JSONDepartamento track by departamento.id">
+			
+			</select>
           </div>
           <div class="col-md-3">
             <label>Zona</label>
             <br>
-			<select ng-model="selZona" class="form-control" ng-change="cargarMunicipios()" ng-options="zona.id as zona.nombre for zona in JSONZona"></select>
+			<select ng-model="selZona" class="form-control" ng-change="cargarMunicipios()" ng-options="zona.nombre for zona in JSONZona track by zona.id"></select>
           </div>
           <div class="col-md-3">
             <label>Municipio</label>
             <br>
-			<select ng-model="selMunicipio" class="form-control" ng-options="municipio.id as municipio.nombre for municipio in JSONMunicipio"></select>           
+			<select ng-model="selMunicipio" class="form-control" ng-options="municipio.nombre for municipio in JSONMunicipio track by municipio.id"></select>           
           </div>
           <div class="col-md-3">
             <label>Estado</label>
