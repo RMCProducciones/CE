@@ -13,30 +13,26 @@ class GrupoType extends AbstractType
         $builder
 			->add('convocatoria', 'entity', array('class' => 'AppBundle:Convocatoria'))
 
-			->add('departamento', 'entity', array(
-				'mapped' => false, 
-				'class' => 'AppBundle:Departamento',	
-			))
-
-			->add('zona', 'entity', array(
-				'mapped' => false,
-				'class' => 'AppBundle:Zona',	
-			))
-
 			->add('municipio', 'entity', array(
-				'class' => 'AppBundle:Municipio',	
+				'class' => 'AppBundle:Municipio',
 			))
-
-			->add('tipo', 'entity', array('class' => 'AppBundle:Listas',
-										    'query_builder' => function(EntityRepository $er) {
-										        return $er->createQueryBuilder('l')
-										        	->where('l.dominio = :dominio')
-										        	->andWhere('l.active = 1')
-										        	->setParameter('dominio', 'tipo_grupo')
-										            ->orderBy('l.orden', 'ASC');
-										    },))
 											
-			->add('fecha_inscripcion', 'date', array('label' => 'Fecha de Inscripción', 'widget' => 'single_text'))
+			->add('tipo', 'entity', array(
+				'class' => 'AppBundle:Listas',
+				'query_builder' => function(EntityRepository $er) {
+					return $er->createQueryBuilder('l')
+						->where('l.dominio = :dominio')
+						->andWhere('l.active = 1')
+						->setParameter('dominio', 'tipo_grupo')
+						->orderBy('l.orden', 'ASC');
+				},
+			))
+											
+			->add('fecha_inscripcion', 'date', array(
+				'label' => 'Fecha de Inscripción', 
+				'widget' => 'single_text'
+			))
+			
 			->add('codigo')
 			->add('nombre')
 			->add('direccion')

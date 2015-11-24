@@ -52,6 +52,16 @@ class GestionEmpresarialController extends Controller
         $grupo = new Grupo();
         
         $form = $this->createForm(new GrupoType(), $grupo);
+		
+		$form->add(
+			'Guardar', 
+			'submit', 
+			array(
+				'attr' => array(
+					'style' => 'visibility:hidden'
+				),
+			)
+		);
 
         $form->handleRequest($request);
 
