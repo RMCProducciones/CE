@@ -15,12 +15,12 @@ app.controller('rutaServidorCtrl', ['$scope', '$http',function($scope, $http) {
 
 app.controller('FiltrosCtrl', ['$scope', '$http', 'styleBuscarHerramientas',function($scope, $http, styleBuscarHerramientas) {
 
-	$scope.count = -1;
+	$scope.CountBuscarHerramientas = -1;
 	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
 	
-	$scope.buttonBuscarHerramientas = function(count){
-		$scope.count = count * (-1);
-		if($scope.count== -1)
+	$scope.buttonBuscarHerramientas = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
 		{
 			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
 		}
@@ -48,6 +48,45 @@ app.controller('ListasLocalizacionCtrl', ['$scope', '$http', function($scope, $h
 		obtenerMunicipio($http,$scope,$scope.selDepartamento,$scope.selZona)
 	};
 	
+}]);
+
+app.controller('CamposDireccionCtrl', ['$scope', '$http', function($scope, $http) {
+	$scope.CountCamposRural = -1;
+	
+	$('#grupo_barrio').attr('required', 'required');
+	$('#grupo_corregimiento').removeAttr('required');
+	$('#grupo_vereda').removeAttr('required');
+	$('#grupo_cacerio').removeAttr('required');
+
+	$scope.mostrarCamposRural = function(CountCamposRural){
+		
+		$scope.CountCamposRural = CountCamposRural * (-1);	
+		
+		if($scope.CountCamposRural== -1)
+		{
+			$('#grupo_barrio').attr('required', 'required');
+			$('#grupo_corregimiento').removeAttr('required');
+			$('#grupo_vereda').removeAttr('required');
+			$('#grupo_cacerio').removeAttr('required');
+
+			$('#grupo_barrio').val('');
+			$('#grupo_corregimiento').val('');
+			$('#grupo_vereda').val('');
+			$('#grupo_cacerio').val('');
+		}
+		else
+		{
+			$('#grupo_barrio').removeAttr('required');
+			$('#grupo_corregimiento').attr('required', 'required');
+			$('#grupo_vereda').attr('required', 'required');
+			$('#grupo_cacerio').attr('required', 'required');
+		
+			$('#grupo_barrio').val('');
+			$('#grupo_corregimiento').val('');
+			$('#grupo_vereda').val('');
+			$('#grupo_cacerio').val('');
+		}		
+    }		
 }]);
 
 function obtenerDepartamento($http, $scope){

@@ -133,65 +133,69 @@
                 </div>
               </div>
 
-              <div class="form-group">
-                <div class="col-sm-2">
-                  {{ form_label(form.direccion) }}
-                </div>
-                <div class="col-sm-10">
-                  {{ form_errors(form.direccion) }}
-                  {{ form_widget(form.direccion, { 'attr': {'class': 'form-control', 'placeholder': 'Dirección...'} }) }}
-                </div>
-              </div>
+			  <div ng-controller = "CamposDireccionCtrl">
 
-              <div class="form-group">
-                <div class="col-sm-2">
-                  {{ form_label(form.rural) }}
-                </div>
-                <div class="col-sm-10">
-                  {{ form_errors(form.rural) }}
-                  {{ form_widget(form.rural, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
+				<div class="form-group">
+					<div class="col-sm-2">
+					  {{ form_label(form.direccion) }}
+					</div>
+					<div class="col-sm-10">
+					  {{ form_errors(form.direccion) }}
+					  {{ form_widget(form.direccion, { 'attr': {'class': 'form-control', 'placeholder': 'Dirección...'} }) }}
+					</div>
+				  </div>
 
-              <div class="form-group">
-                <div class="col-sm-2">
-                  {{ form_label(form.barrio) }}
-                </div>
-                <div class="col-sm-10">
-                  {{ form_errors(form.barrio) }}
-                  {{ form_widget(form.barrio, { 'attr': {'class': 'form-control', 'placeholder': 'Barrio...'} }) }}
-                </div>
-              </div>
+				  <div class="form-group">
+					<div class="col-sm-2">
+					  {{ form_label(form.rural) }}
+					</div>
+					<div class="col-sm-10">
+					  {{ form_errors(form.rural) }}
+					  {{ form_widget(form.rural, { 'attr': {'class': 'form-control', 'ng-click':'mostrarCamposRural(CountCamposRural)'} }) }}
+					</div>
+				  </div>
 
-              <div class="form-group">
-                <div class="col-sm-2">
-                  {{ form_label(form.corregimiento) }}
-                </div>
-                <div class="col-sm-10">
-                  {{ form_errors(form.corregimiento) }}
-                  {{ form_widget(form.corregimiento, { 'attr': {'class': 'form-control', 'placeholder': 'Corregimiento...'} }) }}
-                </div>
-              </div>
+				  <div class="form-group" ng-show="CountCamposRural === -1">
+					<div class="col-sm-2">
+					  {{ form_label(form.barrio) }}
+					</div>
+					<div class="col-sm-10">
+					  {{ form_errors(form.barrio) }}
+					  {{ form_widget(form.barrio, { 'attr': {'class': 'form-control', 'placeholder': 'Barrio...'} }) }}
+					</div>
+				  </div>
 
-              <div class="form-group">
-                <div class="col-sm-2">
-                  {{ form_label(form.vereda) }}
-                </div>
-                <div class="col-sm-10">
-                  {{ form_errors(form.vereda) }}
-                  {{ form_widget(form.vereda, { 'attr': {'class': 'form-control', 'placeholder': 'Vereda...'} }) }}
-                </div>
-              </div>
+				  <div class="form-group" ng-show="CountCamposRural === 1">
+					<div class="col-sm-2">
+					  {{ form_label(form.corregimiento) }}
+					</div>
+					<div class="col-sm-10">
+					  {{ form_errors(form.corregimiento) }}
+					  {{ form_widget(form.corregimiento, { 'attr': {'class': 'form-control', 'placeholder': 'Corregimiento...'} }) }}
+					</div>
+				  </div>
 
-              <div class="form-group">
-                <div class="col-sm-2">
-                  {{ form_label(form.cacerio) }}
-                </div>
-                <div class="col-sm-10">
-                  {{ form_errors(form.cacerio) }}
-                  {{ form_widget(form.cacerio, { 'attr': {'class': 'form-control', 'placeholder': 'Cacerío...'} }) }}
-                </div>
-              </div>
+				  <div class="form-group" ng-show="CountCamposRural === 1">
+					<div class="col-sm-2">
+					  {{ form_label(form.vereda) }}
+					</div>
+					<div class="col-sm-10">
+					  {{ form_errors(form.vereda) }}
+					  {{ form_widget(form.vereda, { 'attr': {'class': 'form-control', 'placeholder': 'Vereda...'} }) }}
+					</div>
+				  </div>
+
+				  <div class="form-group" ng-show="CountCamposRural === 1">
+					<div class="col-sm-2">
+					  {{ form_label(form.cacerio) }}
+					</div>
+					<div class="col-sm-10">
+					  {{ form_errors(form.cacerio) }}
+					  {{ form_widget(form.cacerio, { 'attr': {'class': 'form-control', 'placeholder': 'Cacerío...'} }) }}
+					</div>
+				  </div>
+
+			  </div>
 
               <div class="form-group">
                 <div class="col-sm-2">
