@@ -24,6 +24,8 @@ use AppBundle\Entity\IntegranteCLEAR;
 use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
 
 
+
+
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -202,5 +204,37 @@ class GestionEmpresarialController extends Controller
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integranteCLEAR-nuevo.html.twig', array('form' => $form->createView()));
     }
+	
+	/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/integrantes", name="integrantes")
+     */
+    public function integrantesAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $asignacionintegranteCLEAR = new AsignacionIntegranteCLEAR();
+        
+        $form = $this->createForm(new AsignacionIntegranteCLEARType(), $asignacionintegranteCLEAR);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $asignacionintegranteCLEAR= $form->getData();
+
+            $asignacionintegranteCLEAR->setActive(true);
+            $asignacionintegranteCLEAR->setFechaCreacion(new \DateTime());
+
+
+            
+            $em->persist($asignacionintegranteCLEAR);
+            $em->flush();
+
+            return $this->redirectToRoute('clearGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantesclear-gestion.html.twig', array('form' => $form->createView()));
+    }
+	
+	
 	
 }
