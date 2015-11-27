@@ -205,26 +205,26 @@ class GestionEmpresarialController extends Controller
             return $this->redirectToRoute('CLEARGestion');
         }
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integranteCLEAR-nuevo.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantes-clear-nuevo.html.twig', array('form' => $form->createView()));
     }
 	
 	/**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/integrantes", name="integrantesGestion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/integrantes", name="integrantesGestion")
      */
-    public function integrantesGestionAction(Request $request)
+    public function integrantesGestionAction($idCLEAR)
     {
         $em = $this->getDoctrine()->getManager();
         
-		$integranteCLEAR = $em->getRepository('AppBundle:IntegranteCLEAR')->findBy(
+		$integrantesCLEAR = $em->getRepository('AppBundle:IntegranteCLEAR')->findBy(
             array('active' => '1'),
             array('primer_apellido' => 'ASC')
         );	
 		$asignacionIntegrantesCLEAR = $em->getRepository('AppBundle:AsignacionIntegranteCLEAR')->findBy(
-            array('active' => '1', 'clear' => $idClear),
+            array('active' => '1', 'clear' => $idCLEAR),
             array()
         );	
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantesclear-gestion.html.twig', array('integrantesCLEAR' => $integrantesCLEAR, 'asignacionIntegrantesCLEAR' => $asignacionIntegrantesCLEAR ));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantes-clear-gestion-asignacion.html.twig', array('integrantesCLEAR' => $integrantesCLEAR, 'asignacionIntegrantesCLEAR' => $asignacionIntegrantesCLEAR ));
     }
 	
 	
