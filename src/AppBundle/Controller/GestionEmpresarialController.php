@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,25 +15,22 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 use AppBundle\Entity\Grupo;
-use AppBundle\Form\GestionEmpresarial\GrupoType;
+use AppBundle\Entity\GrupoSoporte;
 use AppBundle\Entity\Beneficiario;
-use AppBundle\Form\GestionEmpresarial\BeneficiarioType;
 use AppBundle\Entity\CLEAR;
-use AppBundle\Form\GestionEmpresarial\CLEARType;
-
 use AppBundle\Entity\IntegranteCLEAR;
-use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
-
 use AppBundle\Entity\AsignacionIntegranteCLEAR;
+
+use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
 use AppBundle\Form\GestionEmpresarial\AsignacionIntegranteCLEARType;
-
-
-
+use AppBundle\Form\GestionEmpresarial\GrupoType;
+use AppBundle\Form\GestionEmpresarial\GrupoSoporteType;
+use AppBundle\Form\GestionEmpresarial\BeneficiarioType;
+use AppBundle\Form\GestionEmpresarial\CLEARType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-
 
 class GestionEmpresarialController extends Controller
 {
@@ -88,7 +86,43 @@ class GestionEmpresarialController extends Controller
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupos-nuevo.html.twig', array('form' => $form->createView()));
     }
 
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/{idGrupo}/documentos-soporte", name="gruposSoporte")
+     */
+    public function gruposSoporteAction(Request $request, $idGrupo)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $grupoSoporte = new GrupoSoporte();
+        
+        $form = $this->createForm(new GrupoSoporteType(), $grupoSoporte);
+		
+		$form->add(
+			'Guardar', 
+			'submit', 
+			array(
+				'attr' => array(
+					'style' => 'visibility:hidden'
+				),
+			)
+		);
 
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+			//$grupo = $form->getData();
+
+            //$grupo->setActive(true);
+            //$grupo->setFechaCreacion(new \DateTime());
+
+            //$em->persist($grupo);
+            //$em->flush();
+
+            return $this->redirectToRoute('gruposGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupos-soporte.html.twig', array('form' => $form->createView()));
+    }
 
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/{idGrupo}/beneficiarios/", name="beneficiariosGestion")
