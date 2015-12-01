@@ -19,7 +19,10 @@ use AppBundle\Entity\GrupoSoporte;
 use AppBundle\Entity\Beneficiario;
 use AppBundle\Entity\CLEAR;
 use AppBundle\Entity\IntegranteCLEAR;
+use AppBundle\Entity\AsignacionIntegranteCLEAR;
 
+use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
+use AppBundle\Form\GestionEmpresarial\AsignacionIntegranteCLEARType;
 use AppBundle\Form\GestionEmpresarial\GrupoType;
 use AppBundle\Form\GestionEmpresarial\GrupoSoporteType;
 use AppBundle\Form\GestionEmpresarial\BeneficiarioType;
@@ -234,40 +237,29 @@ class GestionEmpresarialController extends Controller
             $em->persist($integranteCLEAR);
             $em->flush();
 
-            return $this->redirectToRoute('clearGestion');
+            return $this->redirectToRoute('CLEARGestion');
         }
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integranteCLEAR-nuevo.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantes-clear-nuevo.html.twig', array('form' => $form->createView()));
     }
 	
 	/**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/integrantes", name="integrantes")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/integrantes", name="integrantesGestion")
      */
-    public function integrantesAction(Request $request)
+    public function integrantesGestionAction($idCLEAR)
     {
         $em = $this->getDoctrine()->getManager();
-        $asignacionintegranteCLEAR = new AsignacionIntegranteCLEAR();
         
-        $form = $this->createForm(new AsignacionIntegranteCLEARType(), $asignacionintegranteCLEAR);
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            // data is an array with "name", "email", and "message" keys
-            $asignacionintegranteCLEAR= $form->getData();
-
-            $asignacionintegranteCLEAR->setActive(true);
-            $asignacionintegranteCLEAR->setFechaCreacion(new \DateTime());
-
-
-            
-            $em->persist($asignacionintegranteCLEAR);
-            $em->flush();
-
-            return $this->redirectToRoute('clearGestion');
-        }
+		$integrantesCLEAR = $em->getRepository('AppBundle:IntegranteCLEAR')->findBy(
+            array('active' => '1'),
+            array('primer_apellido' => 'ASC')
+        );	
+		$asignacionIntegrantesCLEAR = $em->getRepository('AppBundle:AsignacionIntegranteCLEAR')->findBy(
+            array('active' => '1', 'clear' => $idCLEAR),
+            array()
+        );	
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantesclear-gestion.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantes-clear-gestion-asignacion.html.twig', array('integrantesCLEAR' => $integrantesCLEAR, 'asignacionIntegrantesCLEAR' => $asignacionIntegrantesCLEAR ));
     }
 	
 	

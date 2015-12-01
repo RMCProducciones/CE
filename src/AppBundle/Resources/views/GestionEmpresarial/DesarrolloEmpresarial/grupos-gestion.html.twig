@@ -120,7 +120,7 @@
 	    		{% for grupo in grupos %}
 	                
 	                <tr>
-	                  <td>1</td>
+	                  <td>{{ consecutivo }}</td>
 	                  <td>
 	                    <input type="checkbox">
 	                  </td>
@@ -143,7 +143,7 @@
 	                    <a title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registro?"><span class="glyphicon glyphicon-trash"></span></a>
 	                  </td>
 	                </tr>
-	                
+	                {% set consecutivo = consecutivo + 1 %}
 	                {% else %}
 	                
 	                <tr>

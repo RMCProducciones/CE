@@ -1,0 +1,276 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+
+{% block title %}Integrantes CLEAR{% endblock %}
+
+{% block breadcrumb_ul %}
+
+    <ul class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Empresarial</li>
+      <li>Formacion de capital social asociativo y desarrollo empresarial</li>
+	   <li class="active">CLEAR</li>
+      <li class="active">Integrantes</li>
+    </ul>
+
+{% endblock %}
+
+{% block section %}
+
+	<div class="section" ng-controller="FiltrosCtrl">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7">
+            <div class="input-group">
+              <input class="form-control" placeholder="Buscar..." ng-model="txtBuscar" type="text">
+              <span class="input-group-btn">
+			  <button class="btn btn-default" type="button">Buscar</button>
+              </span>
+            </div>
+			
+                r:[[txtBuscar]]
+			  
+          </div>
+          <div class="col-md-3 text-center">
+		  
+            <div class="[[styleBuscarHerramientas]]">
+              <button class="btn btn-primary" ng-click="buttonBuscarHerramientas(CountBuscarHerramientas)">Fitros <span class="caret"></span></button>
+            </div>
+          </div>
+          <div class="col-md-2 text-center">
+            <a class="btn btn-default">Limpiar</a>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="container well" ng-controller="ListasLocalizacionCtrl" ng-show="CountBuscarHerramientas === 1">
+        <div class="row" >
+          <div class="col-md-3">
+            <label>Departamento</label>
+            <br>
+			<select ng-model="selDepartamento" class="form-control" ng-change="cargarZonas()" ng-options="departamento.nombre for departamento in JSONDepartamento track by departamento.id">
+			
+			</select>
+          </div>
+          <div class="col-md-3">
+            <label>Zona</label>
+            <br>
+			<select ng-model="selZona" class="form-control" ng-change="cargarMunicipios()" ng-options="zona.nombre for zona in JSONZona track by zona.id"></select>
+          </div>
+          <div class="col-md-3">
+            <label>Municipio</label>
+            <br>
+			<select ng-model="selMunicipio" class="form-control" ng-options="municipio.nombre for municipio in JSONMunicipio track by municipio.id"></select>           
+          </div>
+          <div class="col-md-3">
+            <label>Estado</label>
+            <br>
+            <input list="estado" placeholder="Estado..." class="form-control">
+            <datalist id="estado">
+              <option value="Activo"></option>
+              <option value="Inactivo"></option>
+            </datalist>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+     
+  	<br>
+
+    <hr>
+
+     <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-5 well">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input class="form-control" placeholder="Buscar..." type="text">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">Buscar</button>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-3 text-center">
+                <div class="btn-group">
+                  <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> Filtros <span class="fa fa-caret-down"></span></a>
+                </div>
+              </div>
+              <div class="col-md-3 text-center">
+                <a class="btn btn-default">Limpiar</a>
+              </div>
+            </div>
+            <br>
+            <div class="row well">
+              <div class="col-md-6">
+                <label>Cargo</label>
+                <br>
+                <input list="cargo" placeholder="Cargo..." class="form-control">
+                <datalist id="cargo">
+                  <option value="Funcionario"></option>
+                  <option value="Promotor"></option>
+                </datalist>
+              </div>
+              <div class="col-md-6">
+                <label>Entidad</label>
+                <br>
+                <input list="entidad" placeholder="Entidad..." class="form-control">
+                <datalist id="entidad">
+                  <option value=""></option>
+                </datalist>
+              </div>
+            </div>
+            <hr>
+            <div class="btn-group">
+              <a href="{{ path('integrantesNuevo') }}" class="btn btn-default">Nuevo</a>
+              <a href="#" class="btn btn-default">Eliminar</a>
+              <a href="#" class="btn btn-default">Asignar</a>
+            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>
+                    <input type="checkbox">
+                  </th>
+                  <th>Opcionado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+				 {% set consecutivo = 1 %}
+	    	
+	    		{% for integranteCLEAR in integrantesCLEAR %}
+				
+				<tr>
+                  <td>{{ consecutivo }}</td>
+                  <td>
+                    <input type="checkbox">
+                  </td>
+                  <td>{{ integranteCLEAR.nombre }}
+                    <br>{{ integranteCLEAR.codigo }}
+                    <br>Funcionario
+                    <br>Alcaldía</td>
+                  <td>
+                    <a href="#" alt="Detalles" title="Detalles"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                    <br>
+                    <a href="clear-integrantes-editar.html" title="Editar" alt="Editar"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                    <br>
+                    <a href="#" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
+                    <br>
+                    <a href="#" title="¿Eliminar registro?" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger"><span class="glyphicon glyphicon-trash"></span></a>
+                  </td>
+                </tr>
+				
+				    {% set consecutivo = consecutivo + 1 %}
+	                {% else %}
+					<tr>
+	                  	<td colspan="7" class="info">No se encontraron registros.</td>
+	                </tr>
+	                
+	                {% endfor %}
+				
+                
+              </tbody>
+            </table>
+            <div class="col-md-12 text-center">
+              <ul class="pagination">
+                <li>
+                  <a href="#">Anterior</a>
+                </li>
+                <li>
+                  <a href="#">1</a>
+                </li>
+                <li>
+                  <a href="#">2</a>
+                </li>
+                <li>
+                  <a href="#">3</a>
+                </li>
+                <li>
+                  <a href="#">4</a>
+                </li>
+                <li>
+                  <a href="#">5</a>
+                </li>
+                <li>
+                  <a href="#">Siguiente</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-1">
+            <ul class="pager">
+              <li>
+                <a href="#">Asignar  →</a>
+              </li>
+            </ul>
+            <ul class="pager">
+              <li>
+                <a href="#">←  Retirar</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-6 well">
+            <div class="btn-group">
+              <a href="#" class="btn btn-default">Retirar</a>
+              <a href="#" class="btn btn-default"></a>
+              <a href="#" class="btn btn-default"></a>
+              <a href="#" class="btn btn-default"></a>
+            </div>
+            <table class="table">
+              <thead>
+			  
+			  
+			  
+                <tr>
+                  <th>#</th>
+                  <th>
+                    <input type="checkbox">
+                  </th>
+                  <th>Integrante del CLEAR</th>
+                  <th>Rol (Comité)</th>
+                  <th>Acciones</th>
+                </tr>
+				
+              </thead>
+              <tbody>
+			  {% set consecutivo = 1 %}
+	    	
+	    		{% for integranteCLEAR in integrantesCLEAR %}
+                <tr>
+                  <td>{{ consecutivo }}</td>
+                  <td>
+                    <input type="checkbox">
+                  </td>
+                  <td>{{ integranteCLEAR.nombre }}
+                    <br>92544859
+                    <br>Funcionario
+                    <br>Alcaldía</td>
+                  <td>Vocero</td>
+                  <td>
+                    <a href="#" alt="Detalles" title="Detalles"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> | </a>
+                    <a href="#" title="Editar" alt="Editar"></a>
+                    <a href="#" title="¿Eliminar registro?" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger"><span class="glyphicon glyphicon-remove-circle"></span></a>
+                  </td>
+                </tr>
+				
+				 {% set consecutivo = consecutivo + 1 %}
+	                {% else %}
+					<tr>
+	                  	<td colspan="7" class="info">No se encontraron registros.</td>
+	                </tr>
+	                
+	                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+               
+{% endblock %}
+
