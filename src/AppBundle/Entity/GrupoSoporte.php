@@ -3,13 +3,16 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * GrupoSoporte
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\GrupoSoporteRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class GrupoSoporte
 {
@@ -23,17 +26,28 @@ class GrupoSoporte
     private $id;
 
     /**
-     * @var array
-     */
-    private $archivos;
-
-	/**
      * @var string
      *
-     * @ORM\Column(name="path", type="string", nullable=true)
+     * @ORM\Column(name="nombre", type="string", length=255)
+	 *
+	 * @Assert\NotBlank
      */
-    public $path;	
+    private $nombre;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="path", type="string", length=255, nullable=true)
+     */
+    private $path;
+
+	/**
+     * @Assert\File(maxSize="6000000")
+     */
+    private $file;
+	
+	private $temp;
+	
     /**
      * @var boolean
      *
@@ -69,10 +83,6 @@ class GrupoSoporte
      */
     private $fecha_creacion;
 
-    public function __construct()
-    {
-        $this->archivos = new ArrayCollection();
-    }	
 
     /**
      * Get id
@@ -85,44 +95,53 @@ class GrupoSoporte
     }
 
     /**
-     * Set archivos
+     * Set nombre
      *
-     * @param string $archivos
-     */
-    public function setArchivos($archivos)
-    {
-        $this->archivos = $archivos;
-    }	
-	
-    /**
-     * Get archivos
+     * @param string $nombre
      *
-     * @return string 
+     * @return GrupoSoporte
      */
-    public function getArchivos()
+    public function setNombre($nombre)
     {
-        return $this->archivos;
+        $this->nombre = $nombre;
+    
+        return $this;
     }
 
-  /**
+    /**
+     * Get nombre
+     *
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
      * Set path
      *
      * @param string $path
+     *
+     * @return GrupoSoporte
      */
     public function setPath($path)
     {
         $this->path = $path;
+    
+        return $this;
     }
+
     /**
      * Get path
      *
-     * @return string 
+     * @return string
      */
     public function getPath()
     {
         return $this->path;
     }
-	
+
     /**
      * Set active
      *
@@ -242,73 +261,109 @@ class GrupoSoporte
     {
         return $this->fecha_creacion;
     }
-		
-	public function uploadVarios()
-    {        
-        $mypath = unserialize($this->path);
-        foreach ($this->archivos as $key => $value) {
-            
-            if ($value){
-                /*
-                //Definir un nombre valido para el archivo
-                //Gedmo es una de las extensiones de Doctrine para Sluggable, Timestampable, etc
-                $nombre = \Gedmo\Sluggable\Util\Urlizer::urlize($value->getClientOriginalName(), '-');
-                
-                //Verificar la extension para guardar la imagen
-                $extension = $value->guessExtension();
-                
-                $extvalidas = array('JPG','JPEG','PNG','GIF','PDF');
-                
-                if ( !in_array(strtoupper($extension), $extvalidas)){
-                    return;
-                }
-                
-                //Quitar la extension del nombre generado
-                //caso contrario el nombre queda algo como:  miimagen-jpg
-                $nombre = str_replace('-'.$extension, '', $nombre);
-                //$nombreFinal = uniqid('vecinos-').'-foto.jpg';
-                
-                //Nombre final con extension
-                //Queda algo como: miimagen.jpg
-                $nombreFinal = $nombre.'.'.$extension;*/
-                $nombreFinal = $value->getClientOriginalName();
-                
-                //Verificar si la imagen ya esta almacenada
-                if (@in_array($nombreFinal, $mypath)){
-                    //si la imagen ya esta almacenada, se continua con el siguiente item    
-                    continue;
-                }
-                
-                //Almacenar la imagen en el servidor
-                $value->move($this->getUploadRootDir(), $nombreFinal);
-                //$value->move(__DIR__.'/../../../../web/uploads/images', $nombreFinal);
-            //Agregar el nuevo nombre al final del Array
-                $mypath[]= $nombreFinal;
-            }
-        }
-        $this->path = serialize($mypath);
-        $this->archivos = array();
-    } 
-    
-	protected function getUploadRootDir()
-    {
-       // return __DIR__.'/../../../../web/'.$this->getUploadDir();
-        return __DIR__.'/../../../../web/uploads/images';
-    }
 	
+	public function getAbsolutePath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadRootDir().'/'.$this->path;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadDir().'/'.$this->path;
+    }
+
+    protected function getUploadRootDir()
+    {
+        // la ruta absoluta del directorio donde se deben
+        // guardar los archivos cargados
+        return __DIR__.'/../../../web/'.$this->getUploadDir();
+    }
+
     protected function getUploadDir()
     {
-        return 'uploads/images';
+        // se deshace del __DIR__ para no meter la pata
+        // al mostrar el documento/imagen cargada en la vista.
+        return 'uploads/documents';
+    }	
+
+/**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+        // check if we have an old image path
+        if (isset($this->path)) {
+            // store the old name to delete after the update
+            $this->temp = $this->path;
+            $this->path = null;
+        } else {
+            $this->path = 'initial';
+        }
     }
 	
-    public function serialize()
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
     {
-        return serialize($this->getPath());
+        return $this->file;
+    }	
+	
+/**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
+    {
+        if (null !== $this->getFile()) {
+            // haz lo que quieras para generar un nombre único
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->path = $filename.'.'.$this->getFile()->guessExtension();
+        }
     }
-    
-    public function unserialize($data)
+	
+	/**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload()
     {
-        $this->path = unserialize($data);
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        // si hay un error al mover el archivo, move() automáticamente
+        // envía una excepción. This will properly prevent
+        // the entity from being persisted to the database on error
+        $this->getFile()->move($this->getUploadRootDir(), $this->path);
+
+        // check if we have an old image
+        if (isset($this->temp)) {
+            // delete the old image
+            unlink($this->getUploadRootDir().'/'.$this->temp);
+            // clear the temp image path
+            $this->temp = null;
+        }
+        $this->file = null;
+    }
+
+	/**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        if ($file = $this->getAbsolutePath()) {
+            unlink($file);
+        }
     }	
 }
 

@@ -91,11 +91,10 @@ class GestionEmpresarialController extends Controller
      */
     public function gruposSoporteAction(Request $request, $idGrupo)
     {
-        $em = $this->getDoctrine()->getManager();
         $grupoSoporte = new GrupoSoporte();
         
         $form = $this->createForm(new GrupoSoporteType(), $grupoSoporte);
-		
+
 		$form->add(
 			'Guardar', 
 			'submit', 
@@ -105,22 +104,26 @@ class GestionEmpresarialController extends Controller
 				),
 			)
 		);
+		
+        //$form->handleRequest($request);
+		if ($this->getRequest()->isMethod('POST')) {
+			$form->bind($this->getRequest());
+			if ($form->isValid()) {
+				$em = $this->getDoctrine()->getManager();
 
-        $form->handleRequest($request);
+				//$grupoSoporte->upload();
+				 
+				$grupoSoporte->setActive(true);
+				$grupoSoporte->setFechaCreacion(new \DateTime());
+				$grupoSoporte->setUsuarioCreacion(1);
 
-        if ($form->isValid()) {
+				$em->persist($grupoSoporte);
+				$em->flush();
 
-			//$grupo = $form->getData();
-
-            //$grupo->setActive(true);
-            //$grupo->setFechaCreacion(new \DateTime());
-
-            //$em->persist($grupo);
-            //$em->flush();
-
-            return $this->redirectToRoute('gruposGestion');
-        }
-        
+				//return $this->redirectToRoute('gruposGestion');
+			}
+		}		
+		
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupos-soporte.html.twig', array('form' => $form->createView()));
     }
 

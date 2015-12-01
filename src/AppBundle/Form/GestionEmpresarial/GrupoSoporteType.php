@@ -12,22 +12,9 @@ class GrupoSoporteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-			->add(
-				'archivos', 
-				'collection', 
-				array(
-					'type' => 'file',
-					'allow_add' => true,
-					'allow_delete' => true,
-					'prototype' => true,
-					'options'=>array(
-                    'required'  => false,
-                    'attr'  => array(
-						'class' => 'unidades'
-					),
-                )
-			)
-		);
+			->add('nombre')
+			->add('file')
+		;
     }
     
     public function getName()
