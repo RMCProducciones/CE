@@ -27,7 +27,6 @@ use AppBundle\Form\GestionEmpresarial\GrupoType;
 use AppBundle\Form\GestionEmpresarial\GrupoSoporteType;
 use AppBundle\Form\GestionEmpresarial\BeneficiarioType;
 use AppBundle\Form\GestionEmpresarial\CLEARType;
-use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
