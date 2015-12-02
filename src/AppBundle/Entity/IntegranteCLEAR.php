@@ -140,7 +140,7 @@ class IntegranteCLEAR
     /**
      * @var string
      *
-     * @ORM\Column(name="foto", type="string", nullable=true)
+     * @ORM\Column(name="foto", type="string")
      */
     private $foto;
 
@@ -159,7 +159,7 @@ class IntegranteCLEAR
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
+     * @ORM\Column(name="fecha_modificacion", type="datetime")
      */
     private $fecha_modificacion;
 
