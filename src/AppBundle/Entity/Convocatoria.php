@@ -96,7 +96,7 @@ class Convocatoria
      *
      * @param AppBundle\Entity\POA $poa
      *
-     * @return AppBundle\Entity\POA
+     * @return Convocatoria
      */
     public function setPoa(\AppBundle\Entity\POA $poa)
     {

@@ -370,9 +370,9 @@ class Beneficiario
     /**
      * Set tipoDocumento
      *
-     * @param integer $tipoDocumento
+     * @param AppBundle\Entity\Listas $tipoDocumento
      *
-     * @return AppBundle\Entity\Listas
+     * @return Beneficiario
      */
     public function setTipoDocumento(\AppBundle\Entity\Listas $tipoDocumento)
     {

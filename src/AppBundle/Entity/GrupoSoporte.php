@@ -96,7 +96,7 @@ class GrupoSoporte
      *
      * @param AppBundle\Entity\Grupo $grupo
      *
-     * @return AppBundle\Entity\Grupo
+     * @return GrupoSoporte
      */
     public function setGrupo(\AppBundle\Entity\Grupo $grupo)
     {
@@ -120,7 +120,7 @@ class GrupoSoporte
      *
      * @param AppBundle\Entity\Listas $tipoSoporte
      *
-     * @return AppBundle\Entity\Listas
+     * @return GrupoSoporte
      */
     public function setTipoSoporte(\AppBundle\Entity\Listas $tipoSoporte)
     {
@@ -190,11 +190,11 @@ class GrupoSoporte
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return GrupoSoporte
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
     
@@ -238,11 +238,11 @@ class GrupoSoporte
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return GrupoSoporte
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
     
