@@ -24,7 +24,7 @@ class IntegranteCLEARType extends AbstractType
 			->add('numero_documento', 'text', array('label' => 'Número de documento'))
 			->add('primer_apellido')
 			->add('segundo_apellido', 'text', array('required' => false))
-			->add('primer_nombre')
+			->add('primer_nombre', 'text',array('label' => 'Primer Nombre'))
 			->add('segundo_nombre', 'text', array('required' => false))
 			->add('genero', 'entity', array('class' => 'AppBundle:Listas', 'expanded' => true, 
 										    'query_builder' => function(EntityRepository $er) {

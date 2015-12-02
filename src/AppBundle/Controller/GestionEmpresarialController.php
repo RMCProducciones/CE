@@ -124,7 +124,7 @@ class GestionEmpresarialController extends Controller
 
 				//$grupoSoporte = $form->getData();
 				
-				$grupoSoporte->setGrupo($grupo);
+				//$grupoSoporte->setGrupo($grupo);
 				$grupoSoporte->setActive(true);
 				$grupoSoporte->setFechaCreacion(new \DateTime());
 				//$grupoSoporte->setUsuarioCreacion(1);
