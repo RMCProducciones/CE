@@ -3,13 +3,16 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * GrupoSoporte
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\GrupoSoporteRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class GrupoSoporte
 {
@@ -23,16 +26,28 @@ class GrupoSoporte
     private $id;
 
     /**
-     * @var array
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
      */
-    private $archivos;
+    private $grupo;
 
-	/**
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
+     */
+    private $tipo_soporte;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="path", type="string", nullable=true)
+     * @ORM\Column(name="path", type="string", length=255, nullable=true)
      */
-    public $path;	
+    private $path;
+
+	/**
+     * @Assert\File(maxSize="6000000")
+     */
+    private $file;
+	
+	private $temp;
 
     /**
      * @var boolean
@@ -42,9 +57,7 @@ class GrupoSoporte
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
@@ -56,9 +69,7 @@ class GrupoSoporte
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -69,10 +80,6 @@ class GrupoSoporte
      */
     private $fecha_creacion;
 
-    public function __construct()
-    {
-        $this->archivos = new ArrayCollection();
-    }	
 
     /**
      * Get id
@@ -85,44 +92,77 @@ class GrupoSoporte
     }
 
     /**
-     * Set archivos
+     * Set grupo
      *
-     * @param string $archivos
-     */
-    public function setArchivos($archivos)
-    {
-        $this->archivos = $archivos;
-    }	
-	
-    /**
-     * Get archivos
+     * @param AppBundle\Entity\Grupo $grupo
      *
-     * @return string 
+     * @return GrupoSoporte
      */
-    public function getArchivos()
+    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
     {
-        return $this->archivos;
+        $this->grupo = $grupo;
+    
+        return $this;
     }
 
-  /**
+    /**
+     * Get grupo
+     *
+     * @return AppBundle\Entity\Grupo
+     */
+    public function getGrupo()
+    {
+        return $this->grupo;
+    }
+
+    /**
+     * Set tipoSoporte
+     *
+     * @param AppBundle\Entity\Listas $tipoSoporte
+     *
+     * @return GrupoSoporte
+     */
+    public function setTipoSoporte(\AppBundle\Entity\Listas $tipoSoporte)
+    {
+        $this->tipo_soporte = $tipoSoporte;
+    
+        return $this;
+    }
+
+    /**
+     * Get tipoSoporte
+     *
+     * @return AppBundle\Entity\Listas
+     */
+	 public function getTipoSoporte()
+    {
+        return $this->tipo_soporte;
+    }
+
+    /**
      * Set path
      *
      * @param string $path
+     *
+     * @return GrupoSoporte
      */
     public function setPath($path)
     {
         $this->path = $path;
+    
+        return $this;
     }
+
     /**
      * Get path
      *
-     * @return string 
+     * @return string
      */
     public function getPath()
     {
         return $this->path;
     }
-	
+
     /**
      * Set active
      *
@@ -150,11 +190,11 @@ class GrupoSoporte
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return GrupoSoporte
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
     
@@ -164,7 +204,7 @@ class GrupoSoporte
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -198,11 +238,11 @@ class GrupoSoporte
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return GrupoSoporte
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
     
@@ -212,7 +252,7 @@ class GrupoSoporte
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
@@ -242,73 +282,122 @@ class GrupoSoporte
     {
         return $this->fecha_creacion;
     }
-		
-	public function uploadVarios()
-    {        
-        $mypath = unserialize($this->path);
-        foreach ($this->archivos as $key => $value) {
-            
-            if ($value){
-                /*
-                //Definir un nombre valido para el archivo
-                //Gedmo es una de las extensiones de Doctrine para Sluggable, Timestampable, etc
-                $nombre = \Gedmo\Sluggable\Util\Urlizer::urlize($value->getClientOriginalName(), '-');
-                
-                //Verificar la extension para guardar la imagen
-                $extension = $value->guessExtension();
-                
-                $extvalidas = array('JPG','JPEG','PNG','GIF','PDF');
-                
-                if ( !in_array(strtoupper($extension), $extvalidas)){
-                    return;
-                }
-                
-                //Quitar la extension del nombre generado
-                //caso contrario el nombre queda algo como:  miimagen-jpg
-                $nombre = str_replace('-'.$extension, '', $nombre);
-                //$nombreFinal = uniqid('vecinos-').'-foto.jpg';
-                
-                //Nombre final con extension
-                //Queda algo como: miimagen.jpg
-                $nombreFinal = $nombre.'.'.$extension;*/
-                $nombreFinal = $value->getClientOriginalName();
-                
-                //Verificar si la imagen ya esta almacenada
-                if (@in_array($nombreFinal, $mypath)){
-                    //si la imagen ya esta almacenada, se continua con el siguiente item    
-                    continue;
-                }
-                
-                //Almacenar la imagen en el servidor
-                $value->move($this->getUploadRootDir(), $nombreFinal);
-                //$value->move(__DIR__.'/../../../../web/uploads/images', $nombreFinal);
-            //Agregar el nuevo nombre al final del Array
-                $mypath[]= $nombreFinal;
-            }
-        }
-        $this->path = serialize($mypath);
-        $this->archivos = array();
-    } 
-    
-	protected function getUploadRootDir()
+	
+    public function getAbsolutePath()
     {
-       // return __DIR__.'/../../../../web/'.$this->getUploadDir();
-        return __DIR__.'/../../../../web/uploads/images';
+        return null === $this->path
+            ? null
+            : $this->getUploadRootDir().'/'.$this->id.'.'.$this->path;
     }
 	
+    public function getWebPath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadDir().'/'.$this->path;
+    }
+
+    protected function getUploadRootDir()
+    {
+        // la ruta absoluta del directorio donde se deben
+        // guardar los archivos cargados
+        return __DIR__.'/../../../web/'.$this->getUploadDir();
+    }
+
     protected function getUploadDir()
     {
-        return 'uploads/images';
+        // se deshace del __DIR__ para no meter la pata
+        // al mostrar el documento/imagen cargada en la vista.
+        return 'uploads/documents';
+    }	
+
+	/**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+        // check if we have an old image path
+        if (is_file($this->getAbsolutePath())) {
+            // store the old name to delete after the update
+            $this->temp = $this->getAbsolutePath();
+        } else {
+            $this->path = 'initial';
+        }
     }
 	
-    public function serialize()
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
     {
-        return serialize($this->getPath());
-    }
-    
-    public function unserialize($data)
-    {
-        $this->path = unserialize($data);
+        return $this->file;
     }	
+	
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
+    {
+        if (null !== $this->getFile()) {
+            $this->path = $this->getFile()->guessExtension();
+        }
+    }
+	
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload()
+    {
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        // check if we have an old image
+        if (isset($this->temp)) {
+            // delete the old image
+            unlink($this->temp);
+            // clear the temp image path
+            $this->temp = null;
+        }
+
+        // you must throw an exception here if the file cannot be moved
+        // so that the entity is not persisted to the database
+        // which the UploadedFile move() method does
+		echo $this->getUploadRootDir();
+		
+        $this->getFile()->move(
+            $this->getUploadRootDir(),
+            $this->id.'.'.$this->getFile()->guessExtension()
+        );
+
+        $this->setFile(null);
+    }
+
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function storeFilenameForRemove()
+    {
+        $this->temp = $this->getAbsolutePath();
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        if (isset($this->temp)) {
+            unlink($this->temp);
+        }
+    }
+	
 }
 

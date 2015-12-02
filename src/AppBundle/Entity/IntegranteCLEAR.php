@@ -189,9 +189,9 @@ class IntegranteCLEAR
     /**
      * Set tipoDocumento
      *
-     * @param integer $tipoDocumento
+     * @param AppBundle\Entity\Listas $tipoDocumento
      *
-     * @return AppBundle\Entity\Listas
+     * @return IntegranteCLEAR
      */
     public function setTipoDocumento(\AppBundle\Entity\Listas $tipoDocumento)
     {

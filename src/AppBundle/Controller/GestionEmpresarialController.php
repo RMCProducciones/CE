@@ -91,11 +91,12 @@ class GestionEmpresarialController extends Controller
      */
     public function gruposSoporteAction(Request $request, $idGrupo)
     {
-        $em = $this->getDoctrine()->getManager();
+		$em = $this->getDoctrine()->getManager();
+
         $grupoSoporte = new GrupoSoporte();
         
         $form = $this->createForm(new GrupoSoporteType(), $grupoSoporte);
-		
+
 		$form->add(
 			'Guardar', 
 			'submit', 
@@ -106,22 +107,36 @@ class GestionEmpresarialController extends Controller
 			)
 		);
 
-        $form->handleRequest($request);
+		$historialSoportesActivos = $em->getRepository('AppBundle:GrupoSoporte')->findBy(
+			array('active' => '1', 'grupo' => $idGrupo),
+			array('fecha_creacion' => 'ASC')
+		);
+		
+		$grupo = $em->getRepository('AppBundle:Grupo')->findBy(
+			array('id' => $idGrupo)
+		);
+		
+		
+        //$form->handleRequest($request);
+		if ($this->getRequest()->isMethod('POST')) {
+			$form->bind($this->getRequest());
+			if ($form->isValid()) {
 
-        if ($form->isValid()) {
+				//$grupoSoporte = $form->getData();
+				
+				$grupoSoporte->setGrupo($grupo);
+				$grupoSoporte->setActive(true);
+				$grupoSoporte->setFechaCreacion(new \DateTime());
+				//$grupoSoporte->setUsuarioCreacion(1);
 
-			//$grupo = $form->getData();
+				$em->persist($grupoSoporte);
+				$em->flush();
 
-            //$grupo->setActive(true);
-            //$grupo->setFechaCreacion(new \DateTime());
-
-            //$em->persist($grupo);
-            //$em->flush();
-
-            return $this->redirectToRoute('gruposGestion');
-        }
-        
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupos-soporte.html.twig', array('form' => $form->createView()));
+				return $this->redirectToRoute('gruposSoporte', array( 'idGrupo' => $idGrupo));
+			}
+		}		
+		
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupos-soporte.html.twig', array('form' => $form->createView(), 'historialSoportesActivos' => $historialSoportesActivos));
     }
 
     /**
