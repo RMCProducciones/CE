@@ -26,13 +26,14 @@ class GrupoSoporte
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="nombre", type="string", length=255)
-	 *
-	 * @Assert\NotBlank
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
      */
-    private $nombre;
+    private $grupo;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
+     */
+    private $tipo_soporte;
 
     /**
      * @var string
@@ -47,7 +48,7 @@ class GrupoSoporte
     private $file;
 	
 	private $temp;
-	
+
     /**
      * @var boolean
      *
@@ -56,9 +57,7 @@ class GrupoSoporte
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", nullable=true)
      */
     private $usuario_modificacion;
 
@@ -70,9 +69,7 @@ class GrupoSoporte
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -95,27 +92,51 @@ class GrupoSoporte
     }
 
     /**
-     * Set nombre
+     * Set grupo
      *
-     * @param string $nombre
+     * @param AppBundle\Entity\Grupo $grupo
      *
-     * @return GrupoSoporte
+     * @return AppBundle\Entity\Grupo
      */
-    public function setNombre($nombre)
+    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
     {
-        $this->nombre = $nombre;
+        $this->grupo = $grupo;
     
         return $this;
     }
 
     /**
-     * Get nombre
+     * Get grupo
      *
-     * @return string
+     * @return AppBundle\Entity\Grupo
      */
-    public function getNombre()
+    public function getGrupo()
     {
-        return $this->nombre;
+        return $this->grupo;
+    }
+
+    /**
+     * Set tipoSoporte
+     *
+     * @param AppBundle\Entity\Listas $tipoSoporte
+     *
+     * @return AppBundle\Entity\Listas
+     */
+    public function setTipoSoporte(\AppBundle\Entity\Listas $tipoSoporte)
+    {
+        $this->tipo_soporte = $tipoSoporte;
+    
+        return $this;
+    }
+
+    /**
+     * Get tipoSoporte
+     *
+     * @return AppBundle\Entity\Listas
+     */
+	 public function getTipoSoporte()
+    {
+        return $this->tipo_soporte;
     }
 
     /**
@@ -262,13 +283,13 @@ class GrupoSoporte
         return $this->fecha_creacion;
     }
 	
-	public function getAbsolutePath()
+    public function getAbsolutePath()
     {
         return null === $this->path
             ? null
-            : $this->getUploadRootDir().'/'.$this->path;
+            : $this->getUploadRootDir().'/'.$this->id.'.'.$this->path;
     }
-
+	
     public function getWebPath()
     {
         return null === $this->path
@@ -290,7 +311,7 @@ class GrupoSoporte
         return 'uploads/documents';
     }	
 
-/**
+	/**
      * Sets file.
      *
      * @param UploadedFile $file
@@ -299,10 +320,9 @@ class GrupoSoporte
     {
         $this->file = $file;
         // check if we have an old image path
-        if (isset($this->path)) {
+        if (is_file($this->getAbsolutePath())) {
             // store the old name to delete after the update
-            $this->temp = $this->path;
-            $this->path = null;
+            $this->temp = $this->getAbsolutePath();
         } else {
             $this->path = 'initial';
         }
@@ -318,20 +338,18 @@ class GrupoSoporte
         return $this->file;
     }	
 	
-/**
+    /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
      */
     public function preUpload()
     {
         if (null !== $this->getFile()) {
-            // haz lo que quieras para generar un nombre único
-            $filename = sha1(uniqid(mt_rand(), true));
-            $this->path = $filename.'.'.$this->getFile()->guessExtension();
+            $this->path = $this->getFile()->guessExtension();
         }
     }
 	
-	/**
+    /**
      * @ORM\PostPersist()
      * @ORM\PostUpdate()
      */
@@ -341,29 +359,43 @@ class GrupoSoporte
             return;
         }
 
-        // si hay un error al mover el archivo, move() automáticamente
-        // envía una excepción. This will properly prevent
-        // the entity from being persisted to the database on error
-        $this->getFile()->move($this->getUploadRootDir(), $this->path);
-
         // check if we have an old image
         if (isset($this->temp)) {
             // delete the old image
-            unlink($this->getUploadRootDir().'/'.$this->temp);
+            unlink($this->temp);
             // clear the temp image path
             $this->temp = null;
         }
-        $this->file = null;
+
+        // you must throw an exception here if the file cannot be moved
+        // so that the entity is not persisted to the database
+        // which the UploadedFile move() method does
+        $this->getFile()->move(
+            $this->getUploadRootDir(),
+            $this->id.'.'.$this->getFile()->guessExtension()
+        );
+
+        $this->setFile(null);
     }
 
-	/**
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function storeFilenameForRemove()
+    {
+        $this->temp = $this->getAbsolutePath();
+    }
+
+    /**
      * @ORM\PostRemove()
      */
     public function removeUpload()
     {
-        if ($file = $this->getAbsolutePath()) {
-            unlink($file);
+        if (isset($this->temp)) {
+            unlink($this->temp);
         }
-    }	
+    }
+	
 }
 
