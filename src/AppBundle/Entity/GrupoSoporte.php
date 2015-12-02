@@ -57,7 +57,7 @@ class GrupoSoporte
     private $active;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
@@ -204,7 +204,7 @@ class GrupoSoporte
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -252,7 +252,7 @@ class GrupoSoporte
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
@@ -370,6 +370,8 @@ class GrupoSoporte
         // you must throw an exception here if the file cannot be moved
         // so that the entity is not persisted to the database
         // which the UploadedFile move() method does
+		echo $this->getUploadRootDir();
+		
         $this->getFile()->move(
             $this->getUploadRootDir(),
             $this->id.'.'.$this->getFile()->guessExtension()

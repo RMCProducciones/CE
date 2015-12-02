@@ -91,6 +91,8 @@ class GestionEmpresarialController extends Controller
      */
     public function gruposSoporteAction(Request $request, $idGrupo)
     {
+		$em = $this->getDoctrine()->getManager();
+
         $grupoSoporte = new GrupoSoporte();
         
         $form = $this->createForm(new GrupoSoporteType(), $grupoSoporte);
@@ -104,27 +106,37 @@ class GestionEmpresarialController extends Controller
 				),
 			)
 		);
+
+		$historialSoportesActivos = $em->getRepository('AppBundle:GrupoSoporte')->findBy(
+			array('active' => '1', 'grupo' => $idGrupo),
+			array('fecha_creacion' => 'ASC')
+		);
+		
+		$grupo = $em->getRepository('AppBundle:Grupo')->findBy(
+			array('id' => $idGrupo)
+		);
+		
 		
         //$form->handleRequest($request);
 		if ($this->getRequest()->isMethod('POST')) {
 			$form->bind($this->getRequest());
 			if ($form->isValid()) {
-				$em = $this->getDoctrine()->getManager();
 
-				//$grupoSoporte->upload();
-				 
+				//$grupoSoporte = $form->getData();
+				
+				$grupoSoporte->setGrupo($grupo);
 				$grupoSoporte->setActive(true);
 				$grupoSoporte->setFechaCreacion(new \DateTime());
-				$grupoSoporte->setUsuarioCreacion(1);
+				//$grupoSoporte->setUsuarioCreacion(1);
 
 				$em->persist($grupoSoporte);
 				$em->flush();
 
-				//return $this->redirectToRoute('gruposGestion');
+				return $this->redirectToRoute('gruposSoporte', array( 'idGrupo' => $idGrupo));
 			}
 		}		
 		
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupos-soporte.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupos-soporte.html.twig', array('form' => $form->createView(), 'historialSoportesActivos' => $historialSoportesActivos));
     }
 
     /**
