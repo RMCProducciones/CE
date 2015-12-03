@@ -139,6 +139,7 @@ class GestionEmpresarialController extends Controller
 			
 				foreach ($actualizarGrupoSoportes as $actualizarGrupoSoporte){
 					echo $actualizarGrupoSoporte->getId()." ".$actualizarGrupoSoporte->getTipoSoporte()."<br />";
+					$actualizarGrupoSoporte->setFechaModificacion(new \DateTime());
 					$actualizarGrupoSoporte->setActive(0);
 					$em->flush();
 				}
@@ -165,6 +166,28 @@ class GestionEmpresarialController extends Controller
 		);
 		
     }
+	
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/{idGrupo}/documentos-soporte/{idGrupoSoporte}/borrar", name="gruposSoporteBorrar")
+     */
+    public function gruposSoporteBorrarAction(Request $request, $idGrupo, $idGrupoSoporte)
+    {
+		$em = $this->getDoctrine()->getManager();
+
+        $grupoSoporte = new GrupoSoporte();
+        
+		$grupoSoporte = $em->getRepository('AppBundle:GrupoSoporte')->findOneBy(
+			array('id' => $idGrupoSoporte)
+		);
+		
+		$grupoSoporte->setFechaModificacion(new \DateTime());
+		$grupoSoporte->setActive(0);
+		$em->flush();
+
+        return $this->redirectToRoute('gruposSoporte', array( 'idGrupo' => $idGrupo));
+		
+    }
+	
 
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/{idGrupo}/beneficiarios/", name="beneficiariosGestion")

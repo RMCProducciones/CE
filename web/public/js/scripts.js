@@ -1,8 +1,9 @@
 
-$('[data-toggle=confirmation]').confirmation();
 
-var app = angular.module('aplicationCE', []).config(function($interpolateProvider){
+
+var app = angular.module('aplicationCE', ['ui.bootstrap']).config(function($interpolateProvider){
     $interpolateProvider.startSymbol('[[').endSymbol(']]');
+	$('[data-toggle=confirmation]').confirmation();
 });
 
 app.constant('styleBuscarHerramientas', { dropdown: 'dropdown', dropup: 'dropup' });

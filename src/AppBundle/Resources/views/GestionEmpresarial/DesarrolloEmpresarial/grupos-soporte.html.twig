@@ -91,13 +91,10 @@
               <thead>
                 	<tr>
 	                  <th>#</th>
-	                  <th>
-	                    <input type="checkbox">
-	                  </th>
 	                  <th>Tipo soporte</th>
 	                  <th>Obligatorio</th>
 	                  <th>Estado</th>
-	                  <th>Fecha</th>
+	                  <th>Fecha Creación</th>
 	                  <th>Acciones</th>
 	                </tr>
 	           </thead>
@@ -109,15 +106,12 @@
 	                
 	                <tr>
 	                  <td>{{ consecutivo }}</td>
-	                  <td>
-	                    <input type="checkbox">
-	                  </td>
 	                  <td>{{ soporteActivo.tiposoporte }}</td>
 	                  <td>{% if soporteActivo.tiposoporte.abreviatura %}Si{% else %}No{% endif %}</td>
 	                  <td>{% if soporteActivo.active %}Activo{% else %}Inactivo{% endif %}</td>
 	                  <td>{{ soporteActivo.fechacreacion | date ('d/m/Y h:i:s', 'America/Bogota')}}</td>
 	                  <td>
-	                    <a href="#" alt="Anular" title="Anular"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>	 |   
+	                    <a href="{{ path('gruposSoporteBorrar', {'idGrupo': soporteActivo.grupo.id, 'idGrupoSoporte': soporteActivo.id}) }}" data-toggle="confirmation" alt="Anular" title="Anular"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>	 |   
 						<a href="{{ asset('../uploads/documents/'~ soporteActivo.path) }}" alt="Descargar" title="Descargar"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a> 	                  
 	                  </td>
 	                </tr>
@@ -125,7 +119,7 @@
 	                {% else %}
 	                
 	                <tr>
-	                  	<td colspan="7" class="info">No se encontraron registros.</td>
+	                  	<td colspan="6" class="info">No se encontraron registros.</td>
 	                </tr>
 	                
 	                {% endfor %}
@@ -147,13 +141,11 @@
               <thead>
                 	<tr>
 	                  <th>#</th>
-	                  <th>
-	                    <input type="checkbox">
-	                  </th>
 	                  <th>Tipo soporte</th>
 	                  <th>Obligatorio</th>
 	                  <th>Estado</th>
-	                  <th>Fecha</th>
+	                  <th>Fecha Creación</th>
+	                  <th>Fecha Modificación</th>
 	                  <th>Acciones</th>
 	                </tr>
 	           </thead>
@@ -165,13 +157,11 @@
 	                
 	                <tr>
 	                  <td>{{ consecutivo }}</td>
-	                  <td>
-	                    <input type="checkbox">
-	                  </td>
 	                  <td>{{ soporte.tiposoporte }}</td>
 	                  <td>{% if soporte.tiposoporte.abreviatura %}Si{% else %}No{% endif %}</td>
 	                  <td>{% if soporte.active %}Activo{% else %}Inactivo{% endif %}</td>
 	                  <td>{{ soporte.fechacreacion | date ('d/m/Y h:i:s', 'America/Bogota')}}</td>
+	                  <td>{{ soporte.fechamodificacion | date ('d/m/Y h:i:s', 'America/Bogota')}}</td>
 	                  <td>
 	                    <a href="{{ asset('../uploads/documents/'~ soporte.path) }}" alt="Descargar" title="Descargar"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a> 	                  
 	                  </td>
@@ -180,7 +170,7 @@
 	                {% else %}
 	                
 	                <tr>
-	                  	<td colspan="7" class="info">No se encontraron registros.</td>
+	                  	<td colspan="6" class="info">No se encontraron registros.</td>
 	                </tr>
 	                
 	                {% endfor %}
