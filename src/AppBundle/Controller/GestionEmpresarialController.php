@@ -107,24 +107,43 @@ class GestionEmpresarialController extends Controller
 			)
 		);
 
-		$historialSoportesActivos = $em->getRepository('AppBundle:GrupoSoporte')->findBy(
+		$soportesActivos = $em->getRepository('AppBundle:GrupoSoporte')->findBy(
 			array('active' => '1', 'grupo' => $idGrupo),
 			array('fecha_creacion' => 'ASC')
 		);
+
+		$histotialSoportes = $em->getRepository('AppBundle:GrupoSoporte')->findBy(
+			array('active' => '0', 'grupo' => $idGrupo),
+			array('fecha_creacion' => 'ASC')
+		);
 		
-		$grupo = $em->getRepository('AppBundle:Grupo')->findBy(
+		$grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
 			array('id' => $idGrupo)
 		);
 		
-		
-        //$form->handleRequest($request);
 		if ($this->getRequest()->isMethod('POST')) {
 			$form->bind($this->getRequest());
 			if ($form->isValid()) {
 
-				//$grupoSoporte = $form->getData();
+				$tipoSoporte = $em->getRepository('AppBundle:Listas')->findOneBy(
+					array('descripcion' => $grupoSoporte->getTipoSoporte()->getDescripcion(), 'dominio' => 'grupo_tipo_soporte')
+				);
 				
-				//$grupoSoporte->setGrupo($grupo);
+				$actualizarGrupoSoportes = $em->getRepository('AppBundle:GrupoSoporte')->findBy(
+					array(
+						'active' => '1' , 
+						'tipo_soporte' => $tipoSoporte->getId(), 
+						'grupo' => $idGrupo
+					)
+				);	
+			
+				foreach ($actualizarGrupoSoportes as $actualizarGrupoSoporte){
+					echo $actualizarGrupoSoporte->getId()." ".$actualizarGrupoSoporte->getTipoSoporte()."<br />";
+					$actualizarGrupoSoporte->setActive(0);
+					$em->flush();
+				}
+				
+				$grupoSoporte->setGrupo($grupo);
 				$grupoSoporte->setActive(true);
 				$grupoSoporte->setFechaCreacion(new \DateTime());
 				//$grupoSoporte->setUsuarioCreacion(1);
@@ -134,9 +153,17 @@ class GestionEmpresarialController extends Controller
 
 				return $this->redirectToRoute('gruposSoporte', array( 'idGrupo' => $idGrupo));
 			}
-		}		
+		}	
 		
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupos-soporte.html.twig', array('form' => $form->createView(), 'historialSoportesActivos' => $historialSoportesActivos));
+        return $this->render(
+			'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupos-soporte.html.twig', 
+			array(
+				'form' => $form->createView(), 
+				'soportesActivos' => $soportesActivos, 
+				'histotialSoportes' => $histotialSoportes
+			)
+		);
+		
     }
 
     /**
