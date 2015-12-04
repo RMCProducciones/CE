@@ -135,14 +135,3 @@ asignacion:boolean
 contraloria_social:boolean
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
-
-PENDIENTE POR GENERAR:
-
-php app/console doctrine:generate:entity --entity="AppBundle:Concurso" --fields="
-tipo:integer
-fecha_bases:string
-modalidad:integer
-tematica:string
-ambito:string
-
-active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
