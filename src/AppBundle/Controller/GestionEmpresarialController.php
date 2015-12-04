@@ -20,6 +20,7 @@ use AppBundle\Entity\Beneficiario;
 use AppBundle\Entity\CLEAR;
 use AppBundle\Entity\IntegranteCLEAR;
 use AppBundle\Entity\AsignacionIntegranteCLEAR;
+use AppBundle\Entity\Concurso;
 
 use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
 use AppBundle\Form\GestionEmpresarial\AsignacionIntegranteCLEARType;
@@ -27,6 +28,7 @@ use AppBundle\Form\GestionEmpresarial\GrupoType;
 use AppBundle\Form\GestionEmpresarial\GrupoSoporteType;
 use AppBundle\Form\GestionEmpresarial\BeneficiarioType;
 use AppBundle\Form\GestionEmpresarial\CLEARType;
+use AppBundle\Form\GestionEmpresarial\ConcursoType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -326,6 +328,51 @@ class GestionEmpresarialController extends Controller
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantes-clear-gestion-asignacion.html.twig', array('integrantesCLEAR' => $integrantesCLEAR, 'asignacionIntegrantesCLEAR' => $asignacionIntegrantesCLEAR ));
     }
 	
+	
+	
+	 /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/", name="concursoGestion")
+     */
+    public function concursoGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $concursos = $em->getRepository('AppBundle:Concurso')->findBY(
+            array('active' => 1),
+            array('fecha_inicio' => 'ASC')
+        ); 
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:concurso-gestion.html.twig', array( 'concursos' => $concursos));
+    }
+	
+	   /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/nuevo", name="concursoNuevo")
+     */
+    public function concursoNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $concurso = new Concurso();
+        
+        $form = $this->createForm(new ConcursoType(), $concurso);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $concurso = $form->getData();
+
+            $concurso->setActive(true);
+            $concurso->setFechaCreacion(new \DateTime());
+
+
+            
+            $em->persist($concurso);
+            $em->flush();
+
+            return $this->redirectToRoute('concursoGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:concurso-nuevo.html.twig', array('form' => $form->createView()));
+    }   
 	
 	
 }

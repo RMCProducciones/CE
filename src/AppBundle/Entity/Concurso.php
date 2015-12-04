@@ -22,9 +22,7 @@ class Concurso
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="tipo", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $tipo;
 
@@ -36,9 +34,7 @@ class Concurso
     private $fecha_bases;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="modalidad", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $modalidad;
 
@@ -126,10 +122,8 @@ class Concurso
      */
     private $active;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
@@ -140,10 +134,8 @@ class Concurso
      */
     private $fecha_modificacion;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -168,11 +160,11 @@ class Concurso
     /**
      * Set tipo
      *
-     * @param integer $tipo
+     * @param AppBundle\Entity\Listas $tipo
      *
      * @return Concurso
      */
-    public function setTipo($tipo)
+    public function setTipo(\AppBundle\Entity\Listas $tipo)
     {
         $this->tipo = $tipo;
 
@@ -182,7 +174,7 @@ class Concurso
     /**
      * Get tipo
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getTipo()
     {
@@ -216,11 +208,11 @@ class Concurso
     /**
      * Set modalidad
      *
-     * @param integer $modalidad
+     * @param AppBundle\Entity\Listas $modalidad
      *
      * @return Concurso
      */
-    public function setModalidad($modalidad)
+    public function setModalidad(\AppBundle\Entity\Listas $modalidad)
     {
         $this->modalidad = $modalidad;
 
@@ -230,7 +222,7 @@ class Concurso
     /**
      * Get modalidad
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getModalidad()
     {
@@ -528,11 +520,11 @@ class Concurso
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return Concurso
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -542,7 +534,7 @@ class Concurso
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -576,11 +568,11 @@ class Concurso
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return Concurso
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -590,7 +582,7 @@ class Concurso
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
