@@ -151,11 +151,12 @@
 					</div>
 					<div class="col-sm-10">
 					  {{ form_errors(form.rural) }}
-					  {{ form_widget(form.rural, { 'attr': {'class': 'form-control', 'ng-click':'mostrarCamposRural(CountCamposRural)'} }) }}
+					  <switch id="swRural" name="swRural" ng-model="swRural" class="green" on="Si" off="No"></switch>
+					  {{ form_widget(form.rural, { 'attr': {'style':'visibility:hidden'} }) }}
 					</div>
 				  </div>
 
-				  <div class="form-group" ng-show="CountCamposRural === -1">
+				  <div class="form-group" ng-show="swRural === false">
 					<div class="col-sm-2">
 					  {{ form_label(form.barrio) }}
 					</div>
@@ -165,7 +166,7 @@
 					</div>
 				  </div>
 
-				  <div class="form-group" ng-show="CountCamposRural === 1">
+				  <div class="form-group" ng-show="swRural === true">
 					<div class="col-sm-2">
 					  {{ form_label(form.corregimiento) }}
 					</div>
@@ -175,7 +176,7 @@
 					</div>
 				  </div>
 
-				  <div class="form-group" ng-show="CountCamposRural === 1">
+				  <div class="form-group" ng-show="swRural === true">
 					<div class="col-sm-2">
 					  {{ form_label(form.vereda) }}
 					</div>
@@ -185,7 +186,7 @@
 					</div>
 				  </div>
 
-				  <div class="form-group" ng-show="CountCamposRural === 1">
+				  <div class="form-group" ng-show="swRural === true">
 					<div class="col-sm-2">
 					  {{ form_label(form.cacerio) }}
 					</div>
