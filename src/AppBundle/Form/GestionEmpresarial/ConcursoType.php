@@ -13,12 +13,13 @@ class ConcursoType extends AbstractType
         $builder
 		
 			->add('tipo', 'entity', array(
+			
 				'class' => 'AppBundle:Listas',
 				'query_builder' => function(EntityRepository $er) {
 					return $er->createQueryBuilder('l')
 						->where('l.dominio = :dominio')
 						->andWhere('l.active = 1')
-						->setParameter('dominio', 'tipo_grupo')
+						->setParameter('dominio', 'tipo')
 						->orderBy('l.orden', 'ASC');
 				},
 			))
@@ -29,6 +30,7 @@ class ConcursoType extends AbstractType
 			))
 			
 			->add('modalidad', 'entity', array(
+			    
 				'class' => 'AppBundle:Listas',
 				'query_builder' => function(EntityRepository $er) {
 					return $er->createQueryBuilder('l')
@@ -53,6 +55,6 @@ class ConcursoType extends AbstractType
 	
     public function getName()
     {
-        return 'grupo';
+        return 'Concurso';
     }
 }

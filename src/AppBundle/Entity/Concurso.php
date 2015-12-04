@@ -27,9 +27,9 @@ class Concurso
     private $tipo;
 
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="fecha_bases", type="string")
+     * @ORM\Column(name="fecha_bases", type="datetime", nullable=true)
      */
     private $fecha_bases;
 
@@ -97,21 +97,21 @@ class Concurso
     /**
      * @var boolean
      *
-     * @ORM\Column(name="aprobacion", type="boolean")
+     * @ORM\Column(name="aprobacion", type="boolean", nullable=true)
      */
     private $aprobacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_inicio", type="datetime")
+     * @ORM\Column(name="fecha_inicio", type="datetime", nullable=true)
      */
     private $fecha_inicio;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_finalizacion", type="datetime")
+     * @ORM\Column(name="fecha_finalizacion", type="datetime", nullable=true)
      */
     private $fecha_finalizacion;
 
@@ -130,7 +130,7 @@ class Concurso
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime",nullable=true)
      */
     private $fecha_modificacion;
 
@@ -142,7 +142,7 @@ class Concurso
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_creacion", type="datetime")
+     * @ORM\Column(name="fecha_creacion", type="datetime",nullable=true)
      */
     private $fecha_creacion;
 
@@ -184,7 +184,7 @@ class Concurso
     /**
      * Set fechaBases
      *
-     * @param string $fechaBases
+     * @param \DateTime $fechaBases
      *
      * @return Concurso
      */
@@ -198,7 +198,7 @@ class Concurso
     /**
      * Get fechaBases
      *
-     * @return string
+     * @return \DateTime
      */
     public function getFechaBases()
     {

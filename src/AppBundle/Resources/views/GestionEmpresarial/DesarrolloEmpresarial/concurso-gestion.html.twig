@@ -110,6 +110,7 @@
 	                  <th>Fecha de las bases concurso</th>
 	                  <th>Tipo  </th>
 	                  <th>Tematica</th>
+					  <th>Modo Concurso</th>
 	                  <th>Acciones</th>
 	                </tr>
 	           </thead>
@@ -124,19 +125,24 @@
 	                  <td>
 	                    <input type="checkbox">
 	                  </td>
-	                  <td>{{ concurso.fecha_bases |  date('d - m - Y') }}</td>
-	                  <td>{{ concurso.fechaFinalizacion |  date('d - m - Y') }}</td>
 	                  <td>
-	                    <b>M</b> {{ concurso.municipio }}
-	                    <br>
-	                    <b>D</b> {{ concurso.municipio.departamento }}
-	                    <br>
-	                    <b>Z</b> {{ concurso.municipio.zona }}
-	                    <br>
+	                    {{concurso.fechainicio}}
+						{{concurso.fechafinalizacion}}
+	                  </td>
+					  <td>
+	                    {{concurso.tipo}}
+	                  </td>
+					  <td>
+	                    {{concurso.tematica}}
+	                  </td>
+					    <td>
+	                    {{concurso.modalidad}}
 	                  </td>
 	                  
+	         
+	                  
 	                  <td>
-	                    <a href="{{ path('integrantesGestion', {'idCLEAR': clear.id}) }}" alt="Integrantes CLEAR" title="Integrantes CLEAR"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> | </a>
+	                    <a href="#" alt="Asignacion Actividades" title="Asignacion Actividades"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> | </a>
 	                    <a href="#" alt="Asignacion Grupos" title="Asignacion Grupos"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> | </a>
 	                    <a href="acta-subir-grupos.html" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span> | </a>
 					    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> | </a>
