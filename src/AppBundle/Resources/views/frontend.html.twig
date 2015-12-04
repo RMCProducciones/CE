@@ -5,6 +5,7 @@
 	<link href="{{ asset('public/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('public/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('public/css/docs.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('public/css/angular-ui-switch.min.css') }}" rel="stylesheet" type="text/css">
 	
     <style type="text/css" media="screen">
       label.required:before {
@@ -82,16 +83,19 @@
 }
     </style>
 	
-	
 {% endblock %}
+
 
 {% block scriptshead %}
 	<script type="text/javascript" src="{{ asset('public/lib/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('public/lib/bootstrap.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('public/lib/angular.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('public/lib/ui-bootstrap-tpls-0.14.3.min.js') }}"></script>
-    <!--script type="text/javascript" src="{{ asset('public/lib/angular-bootstrap-confirm.js') }}"></script-->
-    <script type="text/javascript" src="{{ asset('public/lib/bootstrap-confirmation.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('public/lib/angular-sanitize.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('public/lib/angular-resource.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('public/lib/angular-route.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('public/lib/ui-bootstrap-tpls.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('public/lib/angular-bootstrap-confirm.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('public/lib/angular-ui-switch.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('public/lib/docs.min.js') }}"></script>
 	<script type="text/javascript">
 

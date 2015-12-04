@@ -87,7 +87,7 @@
 		<h2 class="page-header">Documentos soportes activos</h2>
         <div class="row">
           <div class="col-md-12">
-            <table class="table">
+            <table class="table" ng-controller="anularSoporteGrupoCtrl">
               <thead>
                 	<tr>
 	                  <th>#</th>
@@ -111,7 +111,7 @@
 	                  <td>{% if soporteActivo.active %}Activo{% else %}Inactivo{% endif %}</td>
 	                  <td>{{ soporteActivo.fechacreacion | date ('d/m/Y h:i:s', 'America/Bogota')}}</td>
 	                  <td>
-	                    <a href="{{ path('gruposSoporteBorrar', {'idGrupo': soporteActivo.grupo.id, 'idGrupoSoporte': soporteActivo.id}) }}" data-toggle="confirmation" alt="Anular" title="Anular"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>	 |   
+	                    <a class="ng-binding ng-isolate-scope" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="anularSoporteGrupo();" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true" ng-click="idGrupo = {{soporteActivo.grupo.id}}; idGrupoSoporteActivo = {{soporteActivo.id}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>	 |   
 						<a href="{{ asset('../uploads/documents/'~ soporteActivo.path) }}" alt="Descargar" title="Descargar"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a> 	                  
 	                  </td>
 	                </tr>
