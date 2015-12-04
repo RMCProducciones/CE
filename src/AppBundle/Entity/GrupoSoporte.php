@@ -43,7 +43,10 @@ class GrupoSoporte
     private $path;
 
 	/**
-     * @Assert\File(maxSize="6000000")
+     * @Assert\File(maxSize="5000000",
+	 * mimeTypes = {"application/pdf", "application/x-pdf", "image/jpeg", "image/gif", "image/png", "image/tiff"},
+	 * maxSizeMessage = "El tamaño máximo permitido es de 6MB.",
+	 * mimeTypesMessage = "Ingrese documentos con formato válido")
      */
     private $file;
 	
@@ -287,9 +290,9 @@ class GrupoSoporte
     {
         return null === $this->path
             ? null
-            : $this->getUploadRootDir().'/'.$this->id.'.'.$this->path;
+            : $this->getUploadRootDir().'/'.$this->path;
     }
-	
+
     public function getWebPath()
     {
         return null === $this->path
@@ -301,7 +304,7 @@ class GrupoSoporte
     {
         // la ruta absoluta del directorio donde se deben
         // guardar los archivos cargados
-        return __DIR__.'/../../../web/'.$this->getUploadDir();
+        return __DIR__.'/../../../'.$this->getUploadDir();
     }
 
     protected function getUploadDir()
@@ -310,8 +313,8 @@ class GrupoSoporte
         // al mostrar el documento/imagen cargada en la vista.
         return 'uploads/documents';
     }	
-
-	/**
+	
+    /**
      * Sets file.
      *
      * @param UploadedFile $file
@@ -320,9 +323,10 @@ class GrupoSoporte
     {
         $this->file = $file;
         // check if we have an old image path
-        if (is_file($this->getAbsolutePath())) {
+        if (isset($this->path)) {
             // store the old name to delete after the update
-            $this->temp = $this->getAbsolutePath();
+            $this->temp = $this->path;
+            $this->path = null;
         } else {
             $this->path = 'initial';
         }
@@ -336,8 +340,8 @@ class GrupoSoporte
     public function getFile()
     {
         return $this->file;
-    }	
-	
+    }
+
     /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
@@ -345,7 +349,9 @@ class GrupoSoporte
     public function preUpload()
     {
         if (null !== $this->getFile()) {
-            $this->path = $this->getFile()->guessExtension();
+            // haz lo que quieras para generar un nombre único
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->path = $filename.'.'.$this->getFile()->guessExtension();
         }
     }
 	
@@ -359,45 +365,32 @@ class GrupoSoporte
             return;
         }
 
+		//$this->getTipoSoporte();
+		//$this->getTipoSoporte();
+		
+        // si hay un error al mover el archivo, move() automáticamente
+        // envía una excepción. This will properly prevent
+        // the entity from being persisted to the database on error
+        $this->getFile()->move($this->getUploadRootDir(), $this->path);
+
         // check if we have an old image
         if (isset($this->temp)) {
             // delete the old image
-            unlink($this->temp);
+            unlink($this->getUploadRootDir().'/'.$this->temp);
             // clear the temp image path
             $this->temp = null;
         }
-
-        // you must throw an exception here if the file cannot be moved
-        // so that the entity is not persisted to the database
-        // which the UploadedFile move() method does
-		echo $this->getUploadRootDir();
-		
-        $this->getFile()->move(
-            $this->getUploadRootDir(),
-            $this->id.'.'.$this->getFile()->guessExtension()
-        );
-
-        $this->setFile(null);
+        $this->file = null;
     }
-
-
-    /**
-     * @ORM\PreRemove()
-     */
-    public function storeFilenameForRemove()
-    {
-        $this->temp = $this->getAbsolutePath();
-    }
-
+	
     /**
      * @ORM\PostRemove()
      */
     public function removeUpload()
     {
-        if (isset($this->temp)) {
-            unlink($this->temp);
+        if ($file = $this->getAbsolutePath()) {
+            unlink($file);
         }
-    }
-	
+    }	
 }
 

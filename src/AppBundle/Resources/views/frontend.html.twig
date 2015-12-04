@@ -5,6 +5,7 @@
 	<link href="{{ asset('public/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('public/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('public/css/docs.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('public/css/angular-ui-switch.min.css') }}" rel="stylesheet" type="text/css">
 	
     <style type="text/css" media="screen">
       label.required:before {
@@ -65,17 +66,37 @@
                   -moz-border-radius: 6px 0 6px 6px;
                   border-radius: 6px 0 6px 6px;
               }
+			  
+			  
+			  
+			  
+			  hr {
+  -moz-border-bottom-colors: none;
+  -moz-border-image: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  border-color: #EEEEEE -moz-use-text-color #FFFFFF;
+  border-style: solid none;
+  border-width: 2px 0;
+  margin: 18px 0;
+}
     </style>
 	
-	
 {% endblock %}
+
 
 {% block scriptshead %}
 	<script type="text/javascript" src="{{ asset('public/lib/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('public/lib/bootstrap.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('public/lib/bootstrap-confirmation.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('public/lib/docs.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('public/lib/angular.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('public/lib/angular-sanitize.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('public/lib/angular-resource.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('public/lib/angular-route.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('public/lib/ui-bootstrap-tpls.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('public/lib/angular-bootstrap-confirm.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('public/lib/angular-ui-switch.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('public/lib/docs.min.js') }}"></script>
 	<script type="text/javascript">
 
 	</script>

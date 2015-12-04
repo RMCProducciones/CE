@@ -1,19 +1,30 @@
 
-$('[data-toggle=confirmation]').confirmation();
-
-var app = angular.module('aplicationCE', []).config(function($interpolateProvider){
+var app = angular.module('aplicationCE', ['ngRoute','ngResource', 'mwl.confirm', 'uiSwitch']).config(function($interpolateProvider){
     $interpolateProvider.startSymbol('[[').endSymbol(']]');
 });
 
 app.constant('styleBuscarHerramientas', { dropdown: 'dropdown', dropup: 'dropup' });
 
-app.controller('rutaServidorCtrl', ['$scope', '$http',function($scope, $http) {
+app.controller('rutaServidorCtrl', ['$scope', '$http', function($scope, $http) {
 
 	$scope.rutaServidor = $('#path').val();
+	
+}]);
+
+app.controller('anularSoporteGrupoCtrl', ['$scope', '$location', function($scope, $location) {
+
+	$scope.idGrupo = 0;
+	$scope.idGrupoSoporteActivo = 0;
+
+	$scope.anularSoporteGrupo = function() { 
+	
+		window.location.replace($scope.rutaServidor  + "gestion-empresarial/desarrollo-empresarial/grupos/" + $scope.idGrupo + "/documentos-soporte/" + $scope.idGrupoSoporteActivo + "/borrar");
+		
+	};	
 
 }]);
 
-app.controller('FiltrosCtrl', ['$scope', '$http', 'styleBuscarHerramientas',function($scope, $http, styleBuscarHerramientas) {
+app.controller('FiltrosCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
 
 	$scope.CountBuscarHerramientas = -1;
 	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
@@ -51,18 +62,18 @@ app.controller('ListasLocalizacionCtrl', ['$scope', '$http', function($scope, $h
 }]);
 
 app.controller('CamposDireccionCtrl', ['$scope', '$http', function($scope, $http) {
-	$scope.CountCamposRural = -1;
 	
 	$('#grupo_barrio').attr('required', 'required');
 	$('#grupo_corregimiento').removeAttr('required');
 	$('#grupo_vereda').removeAttr('required');
 	$('#grupo_cacerio').removeAttr('required');
 
-	$scope.mostrarCamposRural = function(CountCamposRural){
+	$scope.swRural = false;	
+	
+	$scope.$watch('swRural', function() {
+		$('#grupo_rural').prop('checked', $scope.swRural);
 		
-		$scope.CountCamposRural = CountCamposRural * (-1);	
-		
-		if($scope.CountCamposRural== -1)
+		if($scope.swRural == false)
 		{
 			$('#grupo_barrio').attr('required', 'required');
 			$('#grupo_corregimiento').removeAttr('required');
@@ -86,6 +97,11 @@ app.controller('CamposDireccionCtrl', ['$scope', '$http', function($scope, $http
 			$('#grupo_vereda').val('');
 			$('#grupo_cacerio').val('');
 		}		
+	});
+	
+	$scope.mostrarCamposRural = function(){
+		
+		
     }		
 }]);
 

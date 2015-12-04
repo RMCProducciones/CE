@@ -21,7 +21,7 @@ class GrupoSoporteType extends AbstractType
 						->orderBy('l.orden', 'ASC');
 				},
 			))
-			->add('file')
+			->add('file', 'file', array('required' => true))
 		;
     }
     
