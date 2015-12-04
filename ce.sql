@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-11-2015 a las 22:32:50
+-- Tiempo de generación: 04-12-2015 a las 22:34:04
 -- Versión del servidor: 5.6.16
 -- Versión de PHP: 5.5.11
 
@@ -19,6 +19,69 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `ce`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `actividad_concurso`
+--
+
+CREATE TABLE IF NOT EXISTS `actividad_concurso` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `concurso` int(11) NOT NULL,
+  `actividad` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `mejoras` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `recursos` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `duracion` int(11) NOT NULL,
+  `semana_inicio` int(11) NOT NULL,
+  `semana_finalizacion` int(11) NOT NULL,
+  `active` tinyint(1) NOT NULL,
+  `usuario_modificacion` int(11) NOT NULL,
+  `fecha_modificacion` datetime NOT NULL,
+  `usuario_creacion` int(11) NOT NULL,
+  `fecha_creacion` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `asignacion_grupo_clear`
+--
+
+CREATE TABLE IF NOT EXISTS `asignacion_grupo_clear` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `grupo` int(11) NOT NULL,
+  `clear` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `habilitacion` tinyint(1) NOT NULL,
+  `asignacion` tinyint(1) NOT NULL,
+  `contraloria_social` tinyint(1) NOT NULL,
+  `active` tinyint(1) NOT NULL,
+  `usuario_modificacion` int(11) NOT NULL,
+  `fecha_modificacion` datetime NOT NULL,
+  `usuario_creacion` int(11) NOT NULL,
+  `fecha_creacion` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `asignacion_integrante_clear`
+--
+
+CREATE TABLE IF NOT EXISTS `asignacion_integrante_clear` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `integrante` int(11) NOT NULL,
+  `clear` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `rol` int(11) NOT NULL,
+  `active` tinyint(1) NOT NULL,
+  `usuario_modificacion` int(11) NOT NULL,
+  `fecha_modificacion` datetime NOT NULL,
+  `usuario_creacion` int(11) NOT NULL,
+  `fecha_creacion` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -105,18 +168,71 @@ CREATE TABLE IF NOT EXISTS `clear` (
   `municipio_id` int(11) DEFAULT NULL,
   `usuario_modificacion_id` int(11) DEFAULT NULL,
   `usuario_creacion_id` int(11) DEFAULT NULL,
-  `tipo_CLEAR` int(11) NOT NULL,
   `fecha_inicio` datetime NOT NULL,
   `fecha_finalizacion` datetime NOT NULL,
   `lugar_realizacion_CLEAR` int(11) NOT NULL,
   `active` tinyint(1) NOT NULL,
-  `fecha_modificacion` datetime NOT NULL,
-  `fecha_creacion` datetime NOT NULL,
+  `fecha_modificacion` datetime DEFAULT NULL,
+  `fecha_creacion` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_E5B1F10658BC1BE0` (`municipio_id`),
   KEY `IDX_E5B1F106DADD026` (`usuario_modificacion_id`),
   KEY `IDX_E5B1F106AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+
+--
+-- Volcado de datos para la tabla `clear`
+--
+
+INSERT INTO `clear` (`id`, `municipio_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `fecha_inicio`, `fecha_finalizacion`, `lugar_realizacion_CLEAR`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, 1, NULL, NULL, '2015-11-06 00:00:00', '2015-11-27 00:00:00', 0, 1, NULL, '2015-11-18 23:04:46'),
+(2, 1, NULL, NULL, '2015-11-14 00:00:00', '2015-11-21 00:00:00', 0, 1, NULL, '2015-11-23 21:38:38'),
+(3, 1, NULL, NULL, '2015-11-15 00:00:00', '2015-11-12 00:00:00', 0, 1, NULL, '2015-11-27 16:01:49'),
+(4, 1, NULL, NULL, '2015-12-22 00:00:00', '2015-12-13 00:00:00', 0, 1, NULL, '2015-12-02 15:43:43');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `concurso`
+--
+
+CREATE TABLE IF NOT EXISTS `concurso` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fecha_bases` datetime DEFAULT NULL,
+  `tematica` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `ambito` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `problematica` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `actividades` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `resultados` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `valor` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `distribucion` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `criterios` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `aprobacion` tinyint(1) DEFAULT NULL,
+  `fecha_inicio` datetime DEFAULT NULL,
+  `fecha_finalizacion` datetime DEFAULT NULL,
+  `active` tinyint(1) NOT NULL,
+  `fecha_modificacion` datetime DEFAULT NULL,
+  `fecha_creacion` datetime DEFAULT NULL,
+  `tipo_id` int(11) DEFAULT NULL,
+  `modalidad_id` int(11) DEFAULT NULL,
+  `usuario_modificacion_id` int(11) DEFAULT NULL,
+  `usuario_creacion_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_785F9DE6A9276E6C` (`tipo_id`),
+  KEY `IDX_785F9DE61E092B9F` (`modalidad_id`),
+  KEY `IDX_785F9DE6DADD026` (`usuario_modificacion_id`),
+  KEY `IDX_785F9DE6AEADF654` (`usuario_creacion_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+
+--
+-- Volcado de datos para la tabla `concurso`
+--
+
+INSERT INTO `concurso` (`id`, `fecha_bases`, `tematica`, `ambito`, `problematica`, `actividades`, `resultados`, `valor`, `distribucion`, `criterios`, `aprobacion`, `fecha_inicio`, `fecha_finalizacion`, `active`, `fecha_modificacion`, `fecha_creacion`, `tipo_id`, `modalidad_id`, `usuario_modificacion_id`, `usuario_creacion_id`) VALUES
+(1, '2015-12-20 00:00:00', 'dsfsdf', 'dsfsdf', 'dsfsd', 'dsfsdf', 'dsfsdf', 'dsfsdf', 'dsfsdf', 'dsfsdf', NULL, NULL, NULL, 1, NULL, '2015-12-04 20:35:21', NULL, NULL, NULL, NULL),
+(2, '2015-12-24 00:00:00', 'ESTA TEMATICA AEASDASDASD ASDASD ASDASD', 'SADFADSFASD', 'ASDFASDF', 'ADSFADSF', 'ASDFASDF', 'ADSFASDF', 'ADSFASDF', 'ADSFASDFASDF', NULL, NULL, NULL, 1, NULL, '2015-12-04 20:49:10', NULL, NULL, NULL, NULL),
+(3, '2015-12-18 00:00:00', 'dsfdasdasfasdf', 'asdfasdadsf', 'sdafa', 'adsfasd', 'adsfas', 'ADSfasdf', 'asdfasdf', 'dsafasdf', NULL, NULL, NULL, 1, NULL, '2015-12-04 22:11:03', NULL, 143, NULL, NULL),
+(4, '2015-12-13 00:00:00', 'czxcz<cxzx', 'czxvzxcv', 'xczvzxcv', 'zxcvzxcv', 'xzcvzxcv', 'xczvzxcv', 'zcxvzxcv', 'czxvzcxvczvzcv', NULL, NULL, NULL, 1, NULL, '2015-12-04 22:26:32', 144, 143, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -249,43 +365,85 @@ INSERT INTO `grupo` (`id`, `convocatoria_id`, `municipio_id`, `tipo_id`, `figura
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `integrantes_clear`
+-- Estructura de tabla para la tabla `grupo_soporte`
 --
 
-CREATE TABLE IF NOT EXISTS `integrantes_clear` (
+CREATE TABLE IF NOT EXISTS `grupo_soporte` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `clear_id` int(11) DEFAULT NULL,
+  `grupo_id` int(11) DEFAULT NULL,
+  `tipo_soporte_id` int(11) DEFAULT NULL,
+  `usuario_modificacion_id` int(11) DEFAULT NULL,
+  `usuario_creacion_id` int(11) DEFAULT NULL,
+  `path` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `active` tinyint(1) NOT NULL,
+  `fecha_modificacion` datetime DEFAULT NULL,
+  `fecha_creacion` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_5D2EB4619C833003` (`grupo_id`),
+  KEY `IDX_5D2EB461E24646FA` (`tipo_soporte_id`),
+  KEY `IDX_5D2EB461DADD026` (`usuario_modificacion_id`),
+  KEY `IDX_5D2EB461AEADF654` (`usuario_creacion_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+
+--
+-- Volcado de datos para la tabla `grupo_soporte`
+--
+
+INSERT INTO `grupo_soporte` (`id`, `grupo_id`, `tipo_soporte_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `path`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, NULL, 140, NULL, NULL, 'png', 1, NULL, '2015-12-02 15:29:34'),
+(2, 1, 141, NULL, NULL, 'd183559a00ef10833175f0dac6500ea275af3d81.png', 0, '2015-12-03 19:59:16', '2015-12-03 19:59:02'),
+(3, 1, 141, NULL, NULL, '8dda62cff36115848bf6f97e447b7bb1bede97b7.png', 1, NULL, '2015-12-03 19:59:16'),
+(4, 1, 140, NULL, NULL, '95db73dfd28a96042e46fd94aec6726b2a671d34.png', 0, '2015-12-03 20:00:23', '2015-12-03 20:00:10'),
+(5, 1, 140, NULL, NULL, '2f02b7c062f681ad3a0f7fc9c3fa236bbf83c8bd.png', 1, NULL, '2015-12-03 20:00:23');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `integrante_clear`
+--
+
+CREATE TABLE IF NOT EXISTS `integrante_clear` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `tipo_documento_id` int(11) DEFAULT NULL,
   `genero_id` int(11) DEFAULT NULL,
-  `pertenencia_etnica_id` int(11) DEFAULT NULL,
+  `municipio_id` int(11) DEFAULT NULL,
   `nivel_estudios_id` int(11) DEFAULT NULL,
-  `grupo_indigena_id` int(11) DEFAULT NULL,
+  `pertenencia_etnica_id` int(11) DEFAULT NULL,
   `usuario_modificacion_id` int(11) DEFAULT NULL,
   `usuario_creacion_id` int(11) DEFAULT NULL,
   `numero_documento` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `primer_apellido` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `segundo_apellido` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `segundo_apellido` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `primer_nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `segundo_nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `segundo_nombre` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `fecha_nacimiento` datetime NOT NULL,
-  `entidad_representa` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `cargo_entidad` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `telefono_fijo` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `entidad` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `cargo` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `direccion` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `telefono_fijo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `telefono_celular` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `correo_electronico` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `telefono_celular2` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `correo_electronico` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `foto` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `active` tinyint(1) NOT NULL,
-  `fecha_modificacion` datetime NOT NULL,
+  `fecha_modificacion` datetime DEFAULT NULL,
   `fecha_creacion` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `IDX_952BF316D30DEA81` (`clear_id`),
-  KEY `IDX_952BF316F6939175` (`tipo_documento_id`),
-  KEY `IDX_952BF316BCE7B795` (`genero_id`),
-  KEY `IDX_952BF316DA995DEC` (`pertenencia_etnica_id`),
-  KEY `IDX_952BF316378258DA` (`nivel_estudios_id`),
-  KEY `IDX_952BF3167AAA0F5A` (`grupo_indigena_id`),
-  KEY `IDX_952BF316DADD026` (`usuario_modificacion_id`),
-  KEY `IDX_952BF316AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+  KEY `IDX_380CDB55F6939175` (`tipo_documento_id`),
+  KEY `IDX_380CDB55BCE7B795` (`genero_id`),
+  KEY `IDX_380CDB5558BC1BE0` (`municipio_id`),
+  KEY `IDX_380CDB55378258DA` (`nivel_estudios_id`),
+  KEY `IDX_380CDB55DA995DEC` (`pertenencia_etnica_id`),
+  KEY `IDX_380CDB55DADD026` (`usuario_modificacion_id`),
+  KEY `IDX_380CDB55AEADF654` (`usuario_creacion_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
+
+--
+-- Volcado de datos para la tabla `integrante_clear`
+--
+
+INSERT INTO `integrante_clear` (`id`, `tipo_documento_id`, `genero_id`, `municipio_id`, `nivel_estudios_id`, `pertenencia_etnica_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `numero_documento`, `primer_apellido`, `segundo_apellido`, `primer_nombre`, `segundo_nombre`, `fecha_nacimiento`, `entidad`, `cargo`, `direccion`, `telefono_fijo`, `telefono_celular`, `telefono_celular2`, `correo_electronico`, `foto`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(10, 1, 6, 1, NULL, 50, NULL, NULL, '1022376577', 'cantor', 'forero', 'juan', 'Sebastian', '2015-12-19 00:00:00', 'RMC Producciones', 'Ingeniero Mecatronico', 'callek', '983484489', '893423894', NULL, 'juanchhh@hotmaaa.com', NULL, 1, NULL, '2015-12-02 19:36:13');
 
 -- --------------------------------------------------------
 
@@ -307,7 +465,7 @@ CREATE TABLE IF NOT EXISTS `listas` (
   PRIMARY KEY (`id`),
   KEY `IDX_C54ECE20DADD026` (`usuario_modificacion_id`),
   KEY `IDX_C54ECE20AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=140 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=149 ;
 
 --
 -- Volcado de datos para la tabla `listas`
@@ -452,7 +610,16 @@ INSERT INTO `listas` (`id`, `usuario_modificacion_id`, `usuario_creacion_id`, `d
 (136, NULL, NULL, 'pertenencia_etnica', 'Yuko', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (137, NULL, NULL, 'pertenencia_etnica', 'Yukuna', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (138, NULL, NULL, 'pertenencia_etnica', 'Yuri', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(139, NULL, NULL, 'pertenencia_etnica', 'Yurut', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00');
+(139, NULL, NULL, 'pertenencia_etnica', 'Yurut', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(140, NULL, 1, 'grupo_tipo_soporte', 'Acta de interés ', 'AI', 0, 1, NULL, '2015-12-02 00:00:00'),
+(141, NULL, 1, 'grupo_tipo_soporte', 'Formato de propuesta ', 'FP', 0, 1, NULL, '2015-12-02 00:00:00'),
+(142, NULL, NULL, 'modalidad', 'Grupal', NULL, 0, 1, NULL, '2015-12-04 00:00:00'),
+(143, NULL, NULL, 'modalidad', 'Familiar', NULL, NULL, 1, NULL, '2015-12-04 00:00:00'),
+(144, NULL, NULL, 'tipo', 'Mejoramiento de Condiciones Productivas', NULL, NULL, 1, NULL, '2015-12-04 00:00:00'),
+(145, NULL, NULL, 'tipo', 'Mejoramiento de Condiciones Ambientales', NULL, NULL, 1, NULL, '2015-12-04 00:00:00'),
+(146, NULL, NULL, 'tipo', 'Mejoramiento de la seguriad Alimentaria', NULL, NULL, 0, NULL, '2015-12-04 00:00:00'),
+(147, NULL, NULL, 'tipo', 'Mejoramiento del Capital Social', NULL, NULL, 1, NULL, '0000-00-00 00:00:00'),
+(148, NULL, NULL, 'tipo', 'Mejoramiento de la seguriad Alimentaria', NULL, 0, 1, NULL, '2015-12-04 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -719,6 +886,15 @@ ALTER TABLE `clear`
   ADD CONSTRAINT `FK_E5B1F106DADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`);
 
 --
+-- Filtros para la tabla `concurso`
+--
+ALTER TABLE `concurso`
+  ADD CONSTRAINT `FK_785F9DE61E092B9F` FOREIGN KEY (`modalidad_id`) REFERENCES `listas` (`id`),
+  ADD CONSTRAINT `FK_785F9DE6A9276E6C` FOREIGN KEY (`tipo_id`) REFERENCES `listas` (`id`),
+  ADD CONSTRAINT `FK_785F9DE6AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `FK_785F9DE6DADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`);
+
+--
 -- Filtros para la tabla `convocatoria`
 --
 ALTER TABLE `convocatoria`
@@ -747,17 +923,25 @@ ALTER TABLE `grupo`
   ADD CONSTRAINT `FK_8C0E9BD3DADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`);
 
 --
--- Filtros para la tabla `integrantes_clear`
+-- Filtros para la tabla `grupo_soporte`
 --
-ALTER TABLE `integrantes_clear`
-  ADD CONSTRAINT `FK_952BF316378258DA` FOREIGN KEY (`nivel_estudios_id`) REFERENCES `listas` (`id`),
-  ADD CONSTRAINT `FK_952BF3167AAA0F5A` FOREIGN KEY (`grupo_indigena_id`) REFERENCES `listas` (`id`),
-  ADD CONSTRAINT `FK_952BF316AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
-  ADD CONSTRAINT `FK_952BF316BCE7B795` FOREIGN KEY (`genero_id`) REFERENCES `listas` (`id`),
-  ADD CONSTRAINT `FK_952BF316D30DEA81` FOREIGN KEY (`clear_id`) REFERENCES `clear` (`id`),
-  ADD CONSTRAINT `FK_952BF316DA995DEC` FOREIGN KEY (`pertenencia_etnica_id`) REFERENCES `listas` (`id`),
-  ADD CONSTRAINT `FK_952BF316DADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`),
-  ADD CONSTRAINT `FK_952BF316F6939175` FOREIGN KEY (`tipo_documento_id`) REFERENCES `listas` (`id`);
+ALTER TABLE `grupo_soporte`
+  ADD CONSTRAINT `FK_5D2EB4619C833003` FOREIGN KEY (`grupo_id`) REFERENCES `grupo` (`id`),
+  ADD CONSTRAINT `FK_5D2EB461AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `FK_5D2EB461DADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `FK_5D2EB461E24646FA` FOREIGN KEY (`tipo_soporte_id`) REFERENCES `listas` (`id`);
+
+--
+-- Filtros para la tabla `integrante_clear`
+--
+ALTER TABLE `integrante_clear`
+  ADD CONSTRAINT `FK_380CDB55378258DA` FOREIGN KEY (`nivel_estudios_id`) REFERENCES `listas` (`id`),
+  ADD CONSTRAINT `FK_380CDB5558BC1BE0` FOREIGN KEY (`municipio_id`) REFERENCES `municipio` (`id`),
+  ADD CONSTRAINT `FK_380CDB55AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `FK_380CDB55BCE7B795` FOREIGN KEY (`genero_id`) REFERENCES `listas` (`id`),
+  ADD CONSTRAINT `FK_380CDB55DA995DEC` FOREIGN KEY (`pertenencia_etnica_id`) REFERENCES `listas` (`id`),
+  ADD CONSTRAINT `FK_380CDB55DADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `FK_380CDB55F6939175` FOREIGN KEY (`tipo_documento_id`) REFERENCES `listas` (`id`);
 
 --
 -- Filtros para la tabla `listas`
