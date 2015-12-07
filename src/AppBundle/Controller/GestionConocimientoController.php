@@ -15,9 +15,11 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 use AppBundle\Entity\ExperienciaExitosa;
 use AppBundle\Entity\Talento;
+use AppBundle\Entity\Beca;
 
 use AppBundle\Form\GestionConocimiento\ExperienciaExitosaType;
 use AppBundle\Form\GestionConocimiento\TalentoType;
+use AppBundle\Form\GestionConocimiento\BecaType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
