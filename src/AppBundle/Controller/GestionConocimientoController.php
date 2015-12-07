@@ -115,4 +115,48 @@ class GestionConocimientoController extends Controller
         
         return $this->render('AppBundle:GestionConocimiento:talento-nuevo.html.twig', array('form' => $form->createView()));
     } 
+	
+	 /**
+     * @Route("/gestion-conocimiento/becas", name="becaGestion")
+     */
+    public function becaGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $becas= $em->getRepository('AppBundle:Beca')->findBY(
+            array('active' => 1)
+            
+        ); 
+
+        return $this->render('AppBundle:GestionConocimiento:beca-gestion.html.twig', array( 'becas' => $becas));
+    }  
+	
+	 /**
+     * @Route("/gestion-conocimiento/becas/nuevo", name="becaNuevo")
+     */
+    public function becaNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $beca = new Beca();
+        
+        $form = $this->createForm(new BecaType(), $beca);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $beca = $form->getData();
+
+            $beca->setActive(true);
+            $beca->setFechaCreacion(new \DateTime());
+
+
+            
+            $em->persist($beca);
+            $em->flush();
+
+            return $this->redirectToRoute('becaGestion');
+        }
+        
+        return $this->render('AppBundle:GestionConocimiento:beca-nuevo.html.twig', array('form' => $form->createView()));
+    } 
 }
