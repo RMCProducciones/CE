@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Beca
+ * Capacitacion
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class Beca
+class Capacitacion
 {
     /**
      * @var integer
@@ -57,20 +57,9 @@ class Beca
     private $fecha_finalizacion;
 
     /**
-<<<<<<< HEAD
-     * @var string
-     *
-     * @ORM\Column(name="nombre", type="string")
-     */
-    private $nombre;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
-=======
      * @var integer
      *
      * @ORM\Column(name="tipo", type="integer")
->>>>>>> 144316ca0e33f6a8e783f5cada6e30c8bb13aaad
      */
     private $tipo;
 
@@ -139,7 +128,7 @@ class Beca
      *
      * @param string $entidad
      *
-     * @return Beca
+     * @return Capacitacion
      */
     public function setEntidad($entidad)
     {
@@ -163,7 +152,7 @@ class Beca
      *
      * @param string $nombre
      *
-     * @return Beca
+     * @return Capacitacion
      */
     public function setNombre($nombre)
     {
@@ -187,7 +176,7 @@ class Beca
      *
      * @param \DateTime $fechaPublicacion
      *
-     * @return Beca
+     * @return Capacitacion
      */
     public function setFechaPublicacion($fechaPublicacion)
     {
@@ -211,7 +200,7 @@ class Beca
      *
      * @param \DateTime $fechaInicio
      *
-     * @return Beca
+     * @return Capacitacion
      */
     public function setFechaInicio($fechaInicio)
     {
@@ -235,7 +224,7 @@ class Beca
      *
      * @param \DateTime $fechaFinalizacion
      *
-     * @return Beca
+     * @return Capacitacion
      */
     public function setFechaFinalizacion($fechaFinalizacion)
     {
@@ -257,11 +246,11 @@ class Beca
     /**
      * Set tipo
      *
-     * @param AppBundle\Entity\Listas $tipo
+     * @param integer $tipo
      *
-     * @return Beca
+     * @return Capacitacion
      */
-    public function setTipo(\AppBundle\Entity\Listas $tipo)
+    public function setTipo($tipo)
     {
         $this->tipo = $tipo;
 
@@ -271,7 +260,7 @@ class Beca
     /**
      * Get tipo
      *
-     * @return AppBundle\Entity\Listas
+     * @return integer
      */
     public function getTipo()
     {
@@ -283,7 +272,7 @@ class Beca
      *
      * @param integer $modalidad
      *
-     * @return Beca
+     * @return Capacitacion
      */
     public function setModalidad($modalidad)
     {
@@ -307,7 +296,7 @@ class Beca
      *
      * @param integer $municipio
      *
-     * @return Beca
+     * @return Capacitacion
      */
     public function setMunicipio($municipio)
     {
@@ -331,7 +320,7 @@ class Beca
      *
      * @param boolean $active
      *
-     * @return Beca
+     * @return Capacitacion
      */
     public function setActive($active)
     {
@@ -355,7 +344,7 @@ class Beca
      *
      * @param integer $usuarioModificacion
      *
-     * @return Beca
+     * @return Capacitacion
      */
     public function setUsuarioModificacion($usuarioModificacion)
     {
@@ -379,7 +368,7 @@ class Beca
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return Beca
+     * @return Capacitacion
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -403,7 +392,7 @@ class Beca
      *
      * @param integer $usuarioCreacion
      *
-     * @return Beca
+     * @return Capacitacion
      */
     public function setUsuarioCreacion($usuarioCreacion)
     {
@@ -427,7 +416,7 @@ class Beca
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return Beca
+     * @return Capacitacion
      */
     public function setFechaCreacion($fechaCreacion)
     {
