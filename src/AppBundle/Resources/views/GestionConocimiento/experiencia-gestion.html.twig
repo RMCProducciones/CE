@@ -1,15 +1,15 @@
 {% extends 'AppBundle::frontend.html.twig' %}
 
 
-{% block title %}Concursos{% endblock %}
+{% block title %}Experiencias Exitosas{% endblock %}
 
 {% block breadcrumb_ul %}
 
     <ul class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
-      <li>Gestión Empresarial</li>
-      <li>Formacion de capital social asociativo y desarrollo empresarial</li>
-      <li class="active">Concursos</li>
+      <li>Gestión Conocimientos</li>
+      <li>Experiencias Exitosas</li>
+      
     </ul>
 
 {% endblock %}
@@ -84,7 +84,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="btn-group">
-              <a href="{{ path('concursoNuevo') }}" class="btn btn-success">Nuevo</a>
+              <a href="{{ path('experienciaNuevo') }}" class="btn btn-success">Nuevo</a>
               
               <a class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Eliminar</a>
             </div>
@@ -107,46 +107,37 @@
 	                    <input type="checkbox">
 	                  </th>
 	                  
-	                  <th>Fecha de las bases concurso</th>
-	                  <th>Tipo  </th>
-	                  <th>Tematica</th>
-					  <th>Modo Concurso</th>
+	                  <th>Fecha de Registro Experiencia </th>
+	                  <th>Grupo </th>
+	                  <th>Calificacion </th>
 	                  <th>Acciones</th>
 	                </tr>
 	           </thead>
 	           <tbody>
-               
+                
               {% set consecutivo = 1 %}
 	    	
-	    		{% for concurso in concursos %}
+	    		{% for experienciaexitosa in experienciaexitosas %}
+	    		
 	                
 	                <tr>
 	                  <td>1</td>
 	                  <td>
 	                    <input type="checkbox">
 	                  </td>
+	                <td>
+	                   {{ experienciaexitosa.fecharegistro |  date('d - m - Y') }}
+	                  </td>
 	                  <td>
-	                    <b>FB</b>  {{ concurso.fechaBases |  date('d - m - Y') }}
-	                    <br>
-						<b>FF</b>  {{ concurso.fechaFinalizacion |  date('d - m - Y') }}
-	                    <br>
-						 <b>FI</b>  {{ concurso.fechaInicio |  date('d - m - Y') }}
-	                    <br>
+	                    
 	                  </td>
 					  <td>
-	                    {{concurso.tipo}}
-	                  </td>
-					  <td>
-	                    {{concurso.tematica}}
-	                  </td>
-					    <td>
-	                    {{concurso.modalidad}}
-	                  </td>
 	                  
+	                  </td>
 	         
 	                  
 	                  <td>
-	                    <a href="{{ path('actividadConcurso')}}" alt="Asignacion Actividades" title="Asignacion Actividades"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> | </a>
+	                    <a href="{{ path('actividadConcurso')}}" alt="Calificar" title="Calificar"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> | </a>
 	                    <a href="#" alt="Asignacion Grupos" title="Asignacion Grupos"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> | </a>
 	                    <a href="acta-subir-grupos.html" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span> | </a>
 					    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> | </a>
@@ -154,14 +145,15 @@
 	                    <a title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registro?"><span class="glyphicon glyphicon-trash"></span></a>
 	                  </td>
 	                </tr>
-	                
-	                {% else %}
+					
+	                  {% else %}
 	                
 	                <tr>
 	                  	<td colspan="7" class="info">No se encontraron registros.</td>
 	                </tr>
 	                
 	                {% endfor %}
+	             
                </tbody>
             </table>
           </div>
