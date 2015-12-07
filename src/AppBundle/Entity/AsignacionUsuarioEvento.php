@@ -22,16 +22,12 @@ class AsignacionUsuarioEvento
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="evento", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Evento")
      */
     private $evento;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario;
 
@@ -43,9 +39,7 @@ class AsignacionUsuarioEvento
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
@@ -57,9 +51,7 @@ class AsignacionUsuarioEvento
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -84,11 +76,11 @@ class AsignacionUsuarioEvento
     /**
      * Set evento
      *
-     * @param integer $evento
+     * @param AppBundle\Entity\Evento $evento
      *
      * @return AsignacionUsuarioEvento
      */
-    public function setEvento($evento)
+    public function setEvento(\AppBundle\Entity\Evento $evento)
     {
         $this->evento = $evento;
 
@@ -98,7 +90,7 @@ class AsignacionUsuarioEvento
     /**
      * Get evento
      *
-     * @return integer
+     * @return AppBundle\Entity\Evento
      */
     public function getEvento()
     {
@@ -108,11 +100,11 @@ class AsignacionUsuarioEvento
     /**
      * Set usuario
      *
-     * @param integer $usuario
+     * @param AppBundle\Entity\Usuario $usuario
      *
      * @return AsignacionUsuarioEvento
      */
-    public function setUsuario($usuario)
+    public function setUsuario(\AppBundle\Entity\Usuario $usuario)
     {
         $this->usuario = $usuario;
 
@@ -122,7 +114,7 @@ class AsignacionUsuarioEvento
     /**
      * Get usuario
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuario()
     {
@@ -156,11 +148,11 @@ class AsignacionUsuarioEvento
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return AsignacionUsuarioEvento
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -170,7 +162,7 @@ class AsignacionUsuarioEvento
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -204,11 +196,11 @@ class AsignacionUsuarioEvento
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return AsignacionUsuarioEvento
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -218,7 +210,7 @@ class AsignacionUsuarioEvento
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
