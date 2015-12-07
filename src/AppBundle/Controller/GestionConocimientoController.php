@@ -78,7 +78,7 @@ class GestionConocimientoController extends Controller
     public function talentoGestionAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $talento= $em->getRepository('AppBundle:Talento')->findBY(
+        $talentos= $em->getRepository('AppBundle:Talento')->findBY(
             array('active' => 1)
             
         ); 
