@@ -193,6 +193,15 @@ porcentaje_manejo_organizacional:integer
 porcentaje_manejo_financiero:integer
 porcentaje_ahorro_colectivo:integer
 porcentaje_enfoque_diferencial:integer
+niveles:string
+rubricas_generacion_ingresos:string
+rubricas_mejoramiento_productivo:string
+rubricas_generacion_empleo:string
+rubricas_conservacion_ambiental:string
+rubricas_manejo_organizacional:string
+rubricas_manejo_financiero:string
+rubricas_ahorro_colectivo:string
+rubricas_enfoque_diferencial:string
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 php app/console doctrine:generate:entity --entity="AppBundle:Talento" --fields="

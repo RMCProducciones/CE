@@ -232,6 +232,69 @@ class ExperienciaExitosa
     private $porcentaje_enfoque_diferencial;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="niveles", type="string")
+     */
+    private $niveles;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rubricas_generacion_ingresos", type="string")
+     */
+    private $rubricas_generacion_ingresos;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rubricas_mejoramiento_productivo", type="string")
+     */
+    private $rubricas_mejoramiento_productivo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rubricas_generacion_empleo", type="string")
+     */
+    private $rubricas_generacion_empleo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rubricas_conservacion_ambiental", type="string")
+     */
+    private $rubricas_conservacion_ambiental;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rubricas_manejo_organizacional", type="string")
+     */
+    private $rubricas_manejo_organizacional;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rubricas_manejo_financiero", type="string")
+     */
+    private $rubricas_manejo_financiero;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rubricas_ahorro_colectivo", type="string")
+     */
+    private $rubricas_ahorro_colectivo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rubricas_enfoque_diferencial", type="string")
+     */
+    private $rubricas_enfoque_diferencial;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="active", type="boolean")
@@ -995,6 +1058,222 @@ class ExperienciaExitosa
     public function getPorcentajeEnfoqueDiferencial()
     {
         return $this->porcentaje_enfoque_diferencial;
+    }
+
+    /**
+     * Set niveles
+     *
+     * @param string $niveles
+     *
+     * @return ExperienciaExitosa
+     */
+    public function setNiveles($niveles)
+    {
+        $this->niveles = $niveles;
+
+        return $this;
+    }
+
+    /**
+     * Get niveles
+     *
+     * @return string
+     */
+    public function getNiveles()
+    {
+        return $this->niveles;
+    }
+
+    /**
+     * Set rubricasGeneracionIngresos
+     *
+     * @param string $rubricasGeneracionIngresos
+     *
+     * @return ExperienciaExitosa
+     */
+    public function setRubricasGeneracionIngresos($rubricasGeneracionIngresos)
+    {
+        $this->rubricas_generacion_ingresos = $rubricasGeneracionIngresos;
+
+        return $this;
+    }
+
+    /**
+     * Get rubricasGeneracionIngresos
+     *
+     * @return string
+     */
+    public function getRubricasGeneracionIngresos()
+    {
+        return $this->rubricas_generacion_ingresos;
+    }
+
+    /**
+     * Set rubricasMejoramientoProductivo
+     *
+     * @param string $rubricasMejoramientoProductivo
+     *
+     * @return ExperienciaExitosa
+     */
+    public function setRubricasMejoramientoProductivo($rubricasMejoramientoProductivo)
+    {
+        $this->rubricas_mejoramiento_productivo = $rubricasMejoramientoProductivo;
+
+        return $this;
+    }
+
+    /**
+     * Get rubricasMejoramientoProductivo
+     *
+     * @return string
+     */
+    public function getRubricasMejoramientoProductivo()
+    {
+        return $this->rubricas_mejoramiento_productivo;
+    }
+
+    /**
+     * Set rubricasGeneracionEmpleo
+     *
+     * @param string $rubricasGeneracionEmpleo
+     *
+     * @return ExperienciaExitosa
+     */
+    public function setRubricasGeneracionEmpleo($rubricasGeneracionEmpleo)
+    {
+        $this->rubricas_generacion_empleo = $rubricasGeneracionEmpleo;
+
+        return $this;
+    }
+
+    /**
+     * Get rubricasGeneracionEmpleo
+     *
+     * @return string
+     */
+    public function getRubricasGeneracionEmpleo()
+    {
+        return $this->rubricas_generacion_empleo;
+    }
+
+    /**
+     * Set rubricasConservacionAmbiental
+     *
+     * @param string $rubricasConservacionAmbiental
+     *
+     * @return ExperienciaExitosa
+     */
+    public function setRubricasConservacionAmbiental($rubricasConservacionAmbiental)
+    {
+        $this->rubricas_conservacion_ambiental = $rubricasConservacionAmbiental;
+
+        return $this;
+    }
+
+    /**
+     * Get rubricasConservacionAmbiental
+     *
+     * @return string
+     */
+    public function getRubricasConservacionAmbiental()
+    {
+        return $this->rubricas_conservacion_ambiental;
+    }
+
+    /**
+     * Set rubricasManejoOrganizacional
+     *
+     * @param string $rubricasManejoOrganizacional
+     *
+     * @return ExperienciaExitosa
+     */
+    public function setRubricasManejoOrganizacional($rubricasManejoOrganizacional)
+    {
+        $this->rubricas_manejo_organizacional = $rubricasManejoOrganizacional;
+
+        return $this;
+    }
+
+    /**
+     * Get rubricasManejoOrganizacional
+     *
+     * @return string
+     */
+    public function getRubricasManejoOrganizacional()
+    {
+        return $this->rubricas_manejo_organizacional;
+    }
+
+    /**
+     * Set rubricasManejoFinanciero
+     *
+     * @param string $rubricasManejoFinanciero
+     *
+     * @return ExperienciaExitosa
+     */
+    public function setRubricasManejoFinanciero($rubricasManejoFinanciero)
+    {
+        $this->rubricas_manejo_financiero = $rubricasManejoFinanciero;
+
+        return $this;
+    }
+
+    /**
+     * Get rubricasManejoFinanciero
+     *
+     * @return string
+     */
+    public function getRubricasManejoFinanciero()
+    {
+        return $this->rubricas_manejo_financiero;
+    }
+
+    /**
+     * Set rubricasAhorroColectivo
+     *
+     * @param string $rubricasAhorroColectivo
+     *
+     * @return ExperienciaExitosa
+     */
+    public function setRubricasAhorroColectivo($rubricasAhorroColectivo)
+    {
+        $this->rubricas_ahorro_colectivo = $rubricasAhorroColectivo;
+
+        return $this;
+    }
+
+    /**
+     * Get rubricasAhorroColectivo
+     *
+     * @return string
+     */
+    public function getRubricasAhorroColectivo()
+    {
+        return $this->rubricas_ahorro_colectivo;
+    }
+
+    /**
+     * Set rubricasEnfoqueDiferencial
+     *
+     * @param string $rubricasEnfoqueDiferencial
+     *
+     * @return ExperienciaExitosa
+     */
+    public function setRubricasEnfoqueDiferencial($rubricasEnfoqueDiferencial)
+    {
+        $this->rubricas_enfoque_diferencial = $rubricasEnfoqueDiferencial;
+
+        return $this;
+    }
+
+    /**
+     * Get rubricasEnfoqueDiferencial
+     *
+     * @return string
+     */
+    public function getRubricasEnfoqueDiferencial()
+    {
+        return $this->rubricas_enfoque_diferencial;
     }
 
     /**
