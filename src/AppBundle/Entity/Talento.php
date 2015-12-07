@@ -21,17 +21,13 @@ class Talento
      */
     private $id;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="tipo", type="integer")
+     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $tipo;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="tipo_documento", type="integer")
+     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $tipo_documento;
 
@@ -70,10 +66,8 @@ class Talento
      */
     private $segundo_nombre;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="genero", type="integer")
+     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $genero;
 
@@ -98,31 +92,23 @@ class Talento
      */
     private $joven_rural;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="pertenencia_etnica", type="integer")
+     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $pertenencia_etnica;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="grupo_indigena", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $grupo_indigena;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="rol_grupo_familiar", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $rol_grupo_familiar;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="municipio", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Municipio")
      */
     private $municipio;
 
@@ -190,9 +176,7 @@ class Talento
     private $correo_electronico;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="estado_civil", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $estado_civil;
 
@@ -232,9 +216,7 @@ class Talento
     private $actividad_participado;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="nivel_estudios", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $nivel_estudios;
 
@@ -267,9 +249,7 @@ class Talento
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
@@ -281,9 +261,7 @@ class Talento
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -308,11 +286,11 @@ class Talento
     /**
      * Set tipo
      *
-     * @param integer $tipo
+     * @param AppBundle\Entity\Listas $tipo
      *
      * @return Talento
      */
-    public function setTipo($tipo)
+    public function setTipo(\AppBundle\Entity\Listas $tipo)
     {
         $this->tipo = $tipo;
 
@@ -322,7 +300,7 @@ class Talento
     /**
      * Get tipo
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getTipo()
     {
@@ -332,11 +310,11 @@ class Talento
     /**
      * Set tipoDocumento
      *
-     * @param integer $tipoDocumento
+     * @param AppBundle\Entity\Listas $tipoDocumento
      *
      * @return Talento
      */
-    public function setTipoDocumento($tipoDocumento)
+    public function setTipoDocumento(\AppBundle\Entity\Listas $tipoDocumento)
     {
         $this->tipo_documento = $tipoDocumento;
 
@@ -346,7 +324,7 @@ class Talento
     /**
      * Get tipoDocumento
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getTipoDocumento()
     {
@@ -476,11 +454,11 @@ class Talento
     /**
      * Set genero
      *
-     * @param integer $genero
+     * @param AppBundle\Entity\Listas $genero
      *
      * @return Talento
      */
-    public function setGenero($genero)
+    public function setGenero(\AppBundle\Entity\Listas $genero)
     {
         $this->genero = $genero;
 
@@ -490,7 +468,7 @@ class Talento
     /**
      * Get genero
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getGenero()
     {
@@ -572,11 +550,11 @@ class Talento
     /**
      * Set pertenenciaEtnica
      *
-     * @param integer $pertenenciaEtnica
+     * @param AppBundle\Entity\Listas $pertenenciaEtnica
      *
      * @return Talento
      */
-    public function setPertenenciaEtnica($pertenenciaEtnica)
+    public function setPertenenciaEtnica(\AppBundle\Entity\Listas $pertenenciaEtnica)
     {
         $this->pertenencia_etnica = $pertenenciaEtnica;
 
@@ -586,7 +564,7 @@ class Talento
     /**
      * Get pertenenciaEtnica
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getPertenenciaEtnica()
     {
@@ -596,11 +574,11 @@ class Talento
     /**
      * Set grupoIndigena
      *
-     * @param integer $grupoIndigena
+     * @param AppBundle\Entity\Listas $grupoIndigena
      *
      * @return Talento
      */
-    public function setGrupoIndigena($grupoIndigena)
+    public function setGrupoIndigena(\AppBundle\Entity\Listas $grupoIndigena)
     {
         $this->grupo_indigena = $grupoIndigena;
 
@@ -610,7 +588,7 @@ class Talento
     /**
      * Get grupoIndigena
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getGrupoIndigena()
     {
@@ -620,11 +598,11 @@ class Talento
     /**
      * Set rolGrupoFamiliar
      *
-     * @param integer $rolGrupoFamiliar
+     * @param AppBundle\Entity\Listas $rolGrupoFamiliar
      *
      * @return Talento
      */
-    public function setRolGrupoFamiliar($rolGrupoFamiliar)
+    public function setRolGrupoFamiliar(\AppBundle\Entity\Listas $rolGrupoFamiliar)
     {
         $this->rol_grupo_familiar = $rolGrupoFamiliar;
 
@@ -634,7 +612,7 @@ class Talento
     /**
      * Get rolGrupoFamiliar
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getRolGrupoFamiliar()
     {
@@ -644,11 +622,11 @@ class Talento
     /**
      * Set municipio
      *
-     * @param integer $municipio
+     * @param AppBundle\Entity\Municipio $municipio
      *
      * @return Talento
      */
-    public function setMunicipio($municipio)
+    public function setMunicipio(\AppBundle\Entity\Municipio $municipio)
     {
         $this->municipio = $municipio;
 
@@ -658,7 +636,7 @@ class Talento
     /**
      * Get municipio
      *
-     * @return integer
+     * @return AppBundle\Entity\Municipio
      */
     public function getMunicipio()
     {
@@ -884,11 +862,11 @@ class Talento
     /**
      * Set estadoCivil
      *
-     * @param integer $estadoCivil
+     * @param AppBundle\Entity\Listas $estadoCivil
      *
      * @return Talento
      */
-    public function setEstadoCivil($estadoCivil)
+    public function setEstadoCivil(\AppBundle\Entity\Listas $estadoCivil)
     {
         $this->estado_civil = $estadoCivil;
 
@@ -898,7 +876,7 @@ class Talento
     /**
      * Get estadoCivil
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getEstadoCivil()
     {
@@ -1028,11 +1006,11 @@ class Talento
     /**
      * Set nivelEstudios
      *
-     * @param integer $nivelEstudios
+     * @param AppBundle\Entity\Listas $nivelEstudios
      *
      * @return Talento
      */
-    public function setNivelEstudios($nivelEstudios)
+    public function setNivelEstudios(\AppBundle\Entity\Listas $nivelEstudios)
     {
         $this->nivel_estudios = $nivelEstudios;
 
@@ -1042,7 +1020,7 @@ class Talento
     /**
      * Get nivelEstudios
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getNivelEstudios()
     {
@@ -1148,11 +1126,11 @@ class Talento
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return Talento
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -1162,7 +1140,7 @@ class Talento
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -1196,11 +1174,11 @@ class Talento
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return Talento
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -1210,7 +1188,7 @@ class Talento
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
