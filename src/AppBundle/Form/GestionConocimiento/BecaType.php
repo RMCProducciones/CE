@@ -38,7 +38,7 @@ class BecaType extends AbstractType
 										        	->andWhere('l.active = 1')
 										        	->setParameter('dominio', 'modalidad_beca')
 										            ->orderBy('l.orden', 'ASC');
-										    },))	
+										    },));	
 
 											
 		
@@ -49,6 +49,6 @@ class BecaType extends AbstractType
 	
     public function getName()
     {
-        return 'Talento';
+        return 'Beca';
     }
 }
