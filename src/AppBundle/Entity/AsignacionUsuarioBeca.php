@@ -85,6 +85,7 @@ class AsignacionUsuarioBeca
     private $fecha_creacion;
 
 
+
     /**
      * Get id
      *
