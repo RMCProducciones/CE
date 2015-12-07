@@ -29,7 +29,7 @@ class Concurso
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_bases", type="datetime", nullable=true)
+     * @ORM\Column(name="fecha_bases", type="datetime")
      */
     private $fecha_bases;
 

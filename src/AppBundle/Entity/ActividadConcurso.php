@@ -21,10 +21,8 @@ class ActividadConcurso
      */
     private $id;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="concurso", type="integer")
+  /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Concurso")
      */
     private $concurso;
 
@@ -78,9 +76,7 @@ class ActividadConcurso
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
@@ -91,10 +87,8 @@ class ActividadConcurso
      */
     private $fecha_modificacion;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+   /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -119,11 +113,11 @@ class ActividadConcurso
     /**
      * Set concurso
      *
-     * @param integer $concurso
+     * @param AppBundle\Entity\Concurso $concurso
      *
      * @return ActividadConcurso
      */
-    public function setConcurso($concurso)
+    public function setConcurso(\AppBundle\Entity\Concurso $concurso)
     {
         $this->concurso = $concurso;
 
@@ -133,7 +127,7 @@ class ActividadConcurso
     /**
      * Get concurso
      *
-     * @return integer
+     * @return AppBundle\Entity\concurso
      */
     public function getConcurso()
     {
@@ -311,11 +305,11 @@ class ActividadConcurso
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return ActividadConcurso
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -325,7 +319,7 @@ class ActividadConcurso
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -359,11 +353,11 @@ class ActividadConcurso
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return ActividadConcurso
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -373,7 +367,7 @@ class ActividadConcurso
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {

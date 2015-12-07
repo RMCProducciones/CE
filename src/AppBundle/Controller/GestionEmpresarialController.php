@@ -21,6 +21,7 @@ use AppBundle\Entity\CLEAR;
 use AppBundle\Entity\IntegranteCLEAR;
 use AppBundle\Entity\AsignacionIntegranteCLEAR;
 use AppBundle\Entity\Concurso;
+use AppBundle\Entity\ActividadConcurso;
 
 use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
 use AppBundle\Form\GestionEmpresarial\AsignacionIntegranteCLEARType;
@@ -29,6 +30,7 @@ use AppBundle\Form\GestionEmpresarial\GrupoSoporteType;
 use AppBundle\Form\GestionEmpresarial\BeneficiarioType;
 use AppBundle\Form\GestionEmpresarial\CLEARType;
 use AppBundle\Form\GestionEmpresarial\ConcursoType;
+use AppBundle\Form\GestionEmpresarial\ActividadConcursoType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -373,6 +375,37 @@ class GestionEmpresarialController extends Controller
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:concurso-nuevo.html.twig', array('form' => $form->createView()));
     }   
+	
+	
+	 /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/actividades", name="actividadConcurso")
+     */
+    public function actividadConcursoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $actividadconcurso = new Actividadconcurso();
+        
+        $form = $this->createForm(new ActividadConcursoType(), $actividadconcurso);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $actividadconcurso = $form->getData();
+
+            $actividadconcurso->setActive(true);
+            $actividadconcurso->setFechaCreacion(new \DateTime());
+
+
+            
+            $em->persist($actividadconcurso);
+            $em->flush();
+
+            return $this->redirectToRoute('concursoGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:concurso-actividades.html.twig', array('form' => $form->createView()));
+    } 
 	
 	
 }
