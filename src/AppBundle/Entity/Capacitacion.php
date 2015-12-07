@@ -24,9 +24,9 @@ class Capacitacion
     /**
      * @var string
      *
-     * @ORM\Column(name="entidad", type="string")
+     * @ORM\Column(name="capacitador", type="string")
      */
-    private $entidad;
+    private $capacitador;
 
     /**
      * @var string
@@ -124,27 +124,27 @@ class Capacitacion
     }
 
     /**
-     * Set entidad
+     * Set capacitador
      *
-     * @param string $entidad
+     * @param string $capacitador
      *
      * @return Capacitacion
      */
-    public function setEntidad($entidad)
+    public function setCapacitador($capacitador)
     {
-        $this->entidad = $entidad;
+        $this->capacitador = $capacitador;
 
         return $this;
     }
 
     /**
-     * Get entidad
+     * Get capacitador
      *
      * @return string
      */
-    public function getEntidad()
+    public function getCapacitador()
     {
-        return $this->entidad;
+        return $this->capacitador;
     }
 
     /**
