@@ -48,7 +48,7 @@ class Talento
     /**
      * @var string
      *
-     * @ORM\Column(name="segundo_apellido", type="string")
+     * @ORM\Column(name="segundo_apellido", type="string", nullable=true)
      */
     private $segundo_apellido;
 
@@ -62,7 +62,7 @@ class Talento
     /**
      * @var string
      *
-     * @ORM\Column(name="segundo_nombre", type="string")
+     * @ORM\Column(name="segundo_nombre", type="string", nullable=true)
      */
     private $segundo_nombre;
 
@@ -115,42 +115,42 @@ class Talento
     /**
      * @var string
      *
-     * @ORM\Column(name="direccion", type="string")
+     * @ORM\Column(name="direccion", type="string", nullable=true)
      */
     private $direccion;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="rural", type="boolean")
+     * @ORM\Column(name="rural", type="boolean", nullable=true)
      */
     private $rural;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="barrio", type="string")
+     * @ORM\Column(name="barrio", type="string", nullable=true)
      */
     private $barrio;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="corregimiento", type="string")
+     * @ORM\Column(name="corregimiento", type="string", nullable=true)
      */
     private $corregimiento;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="vereda", type="string")
+     * @ORM\Column(name="vereda", type="string", nullable=true)
      */
     private $vereda;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="cacerio", type="string")
+     * @ORM\Column(name="cacerio", type="string", nullable=true)
      */
     private $cacerio;
 
@@ -171,7 +171,7 @@ class Talento
     /**
      * @var string
      *
-     * @ORM\Column(name="correo_electronico", type="string")
+     * @ORM\Column(name="correo_electronico", type="string", nullable=true)
      */
     private $correo_electronico;
 
@@ -230,14 +230,14 @@ class Talento
     /**
      * @var string
      *
-     * @ORM\Column(name="area_desempeno_secundario", type="string")
+     * @ORM\Column(name="area_desempeno_secundario", type="string", nullable=true)
      */
     private $area_desempeno_secundario;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="area_desempeno_terciario", type="string")
+     * @ORM\Column(name="area_desempeno_terciario", type="string", nullable=true)
      */
     private $area_desempeno_terciario;
 
@@ -256,7 +256,7 @@ class Talento
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
      */
     private $fecha_modificacion;
 
@@ -268,7 +268,7 @@ class Talento
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_creacion", type="datetime")
+     * @ORM\Column(name="fecha_creacion", type="datetime", nullable=true)
      */
     private $fecha_creacion;
 
