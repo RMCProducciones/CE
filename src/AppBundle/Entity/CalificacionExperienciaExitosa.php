@@ -22,9 +22,7 @@ class CalificacionExperienciaExitosa
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="experienciaExitosa", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ExperienciaExitosa")
      */
     private $experienciaExitosa;
 
@@ -50,9 +48,7 @@ class CalificacionExperienciaExitosa
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
@@ -64,9 +60,7 @@ class CalificacionExperienciaExitosa
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -91,11 +85,11 @@ class CalificacionExperienciaExitosa
     /**
      * Set experienciaExitosa
      *
-     * @param integer $experienciaExitosa
+     * @param AppBundle\Entity\ExperienciaExitosa $experienciaExitosa
      *
      * @return CalificacionExperienciaExitosa
      */
-    public function setExperienciaExitosa($experienciaExitosa)
+    public function setExperienciaExitosa(\AppBundle\Entity\ExperienciaExitosa $experienciaExitosa)
     {
         $this->experienciaExitosa = $experienciaExitosa;
 
@@ -105,7 +99,7 @@ class CalificacionExperienciaExitosa
     /**
      * Get experienciaExitosa
      *
-     * @return integer
+     * @return AppBundle\Entity\ExperienciaExitosa
      */
     public function getExperienciaExitosa()
     {
@@ -187,11 +181,11 @@ class CalificacionExperienciaExitosa
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return CalificacionExperienciaExitosa
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -201,7 +195,7 @@ class CalificacionExperienciaExitosa
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -235,11 +229,11 @@ class CalificacionExperienciaExitosa
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return CalificacionExperienciaExitosa
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -249,7 +243,7 @@ class CalificacionExperienciaExitosa
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
