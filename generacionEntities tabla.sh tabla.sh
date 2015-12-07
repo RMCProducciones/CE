@@ -194,3 +194,40 @@ porcentaje_manejo_financiero:integer
 porcentaje_ahorro_colectivo:integer
 porcentaje_enfoque_diferencial:integer
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:Talento" --fields="
+tipo:integer 
+tipo_documento:integer
+numero_documento:string
+primer_apellido:string
+segundo_apellido:string
+primer_nombre:string
+segundo_nombre:string
+genero:integer
+fecha_nacimiento:datetime
+edad_inscripcion:integer
+joven_rural:boolean
+pertenencia_etnica:integer
+grupo_indigena:integer
+rol_grupo_familiar:integer
+municipio:integer
+direccion:string
+rural:boolean
+barrio:string
+corregimiento:string
+vereda:string
+cacerio:string
+telefono_fijo:string
+telefono_celular:string
+correo_electronico:string
+estado_civil:integer
+organizacion:string
+fecha_inicio_talento:datetime
+talento_madr:boolean
+talento_otros_lugares:boolean
+actividad_participado:string
+nivel_estudios:integer
+area_desempeno_principal:string
+area_desempeno_secundario:string
+area_desempeno_terciario:string
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
