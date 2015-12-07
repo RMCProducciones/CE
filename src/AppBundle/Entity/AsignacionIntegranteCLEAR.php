@@ -22,9 +22,7 @@ class AsignacionIntegranteCLEAR
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="integrante", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\IntegranteCLEAR")
      */
     private $integrante;
 
@@ -36,9 +34,7 @@ class AsignacionIntegranteCLEAR
     private $clear;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="rol", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $rol;
 
@@ -50,9 +46,7 @@ class AsignacionIntegranteCLEAR
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
@@ -64,9 +58,7 @@ class AsignacionIntegranteCLEAR
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -91,11 +83,11 @@ class AsignacionIntegranteCLEAR
     /**
      * Set integrante
      *
-     * @param integer $integrante
+     * @param AppBundle\Entity\IntegranteCLEAR $integrante
      *
      * @return AsignacionIntegranteCLEAR
      */
-    public function setIntegrante($integrante)
+    public function setIntegrante(\AppBundle\Entity\IntegranteCLEAR $integrante)
     {
         $this->integrante = $integrante;
 
@@ -105,7 +97,7 @@ class AsignacionIntegranteCLEAR
     /**
      * Get integrante
      *
-     * @return integer
+     * @return AppBundle\Entity\IntegranteCLEAR
      */
     public function getIntegrante()
     {
@@ -139,11 +131,11 @@ class AsignacionIntegranteCLEAR
     /**
      * Set rol
      *
-     * @param integer $rol
+     * @param AppBundle\Entity\Listas $rol
      *
      * @return AsignacionIntegranteCLEAR
      */
-    public function setRol($rol)
+    public function setRol(\AppBundle\Entity\Listas $rol)
     {
         $this->rol = $rol;
 
@@ -153,7 +145,7 @@ class AsignacionIntegranteCLEAR
     /**
      * Get rol
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getRol()
     {
@@ -187,11 +179,11 @@ class AsignacionIntegranteCLEAR
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return AsignacionIntegranteCLEAR
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -201,7 +193,7 @@ class AsignacionIntegranteCLEAR
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -235,11 +227,11 @@ class AsignacionIntegranteCLEAR
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return AsignacionIntegranteCLEAR
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -249,7 +241,7 @@ class AsignacionIntegranteCLEAR
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
