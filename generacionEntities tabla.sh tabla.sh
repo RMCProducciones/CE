@@ -177,31 +177,12 @@ acciones_minimizacion_impacto_ambiental:string
 impacto_comunidad:string
 innovacion:string
 observaciones:string
-calificacion_generacion_ingresos:integer
-calificacion_mejoramiento_productivo:integer
-calificacion_generacion_empleo:integer
-calificacion_conservacion_ambiental:integer
-calificacion_manejo_organizacional:integer
-calificacion_manejo_financiero:integer
-calificacion_ahorro_colectivo:integer
-calificacion_enfoque_diferencial:integer
-porcentaje_generacion_ingresos:integer
-porcentaje_mejoramiento_productivo:integer
-porcentaje_generacion_empleo:integer
-porcentaje_conservacion_ambiental:integer
-porcentaje_manejo_organizacional:integer
-porcentaje_manejo_financiero:integer
-porcentaje_ahorro_colectivo:integer
-porcentaje_enfoque_diferencial:integer
-niveles:string
-rubricas_generacion_ingresos:string
-rubricas_mejoramiento_productivo:string
-rubricas_generacion_empleo:string
-rubricas_conservacion_ambiental:string
-rubricas_manejo_organizacional:string
-rubricas_manejo_financiero:string
-rubricas_ahorro_colectivo:string
-rubricas_enfoque_diferencial:string
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:CalificacionExperienciaExitosa" --fields="
+experienciaExitosa:integer
+categoria:integer
+calificacion:integer
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 php app/console doctrine:generate:entity --entity="AppBundle:Talento" --fields="
@@ -239,4 +220,28 @@ nivel_estudios:integer
 area_desempeno_principal:string
 area_desempeno_secundario:string
 area_desempeno_terciario:string
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
+
+PENDIENTE POR DEFINIR
+
+php app/console doctrine:generate:entity --entity="AppBundle:Configuracion" --fields="
+porcentaje_generacion_ingresos:integer
+porcentaje_mejoramiento_productivo:integer
+porcentaje_generacion_empleo:integer
+porcentaje_conservacion_ambiental:integer
+porcentaje_manejo_organizacional:integer
+porcentaje_manejo_financiero:integer
+porcentaje_ahorro_colectivo:integer
+porcentaje_enfoque_diferencial:integer
+niveles:string
+rubricas_generacion_ingresos:string
+rubricas_mejoramiento_productivo:string
+rubricas_generacion_empleo:string
+rubricas_conservacion_ambiental:string
+rubricas_manejo_organizacional:string
+rubricas_manejo_financiero:string
+rubricas_ahorro_colectivo:string
+rubricas_enfoque_diferencial:string
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
