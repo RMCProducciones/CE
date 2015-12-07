@@ -26,7 +26,7 @@ class TalentoType extends AbstractType
 										        return $er->createQueryBuilder('l')
 										        	->where('l.dominio = :dominio')
 										        	->andWhere('l.active = 1')
-										        	->setParameter('dominio', 'tipo')
+										        	->setParameter('dominio', 'tipo_talento')
 										            ->orderBy('l.orden', 'ASC');
 										    },))		
             ->add('numero_documento', 'text', array('label' => 'Número de documento'))											
