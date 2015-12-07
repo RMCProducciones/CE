@@ -24,6 +24,13 @@ class AsignacionUsuarioBeca
     /**
      * @var integer
      *
+     * @ORM\Column(name="beca", type="integer")
+     */
+    private $beca;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="usuario", type="integer")
      */
     private $usuario;
@@ -85,7 +92,6 @@ class AsignacionUsuarioBeca
     private $fecha_creacion;
 
 
-
     /**
      * Get id
      *
@@ -94,6 +100,30 @@ class AsignacionUsuarioBeca
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set beca
+     *
+     * @param integer $beca
+     *
+     * @return AsignacionUsuarioBeca
+     */
+    public function setBeca($beca)
+    {
+        $this->beca = $beca;
+
+        return $this;
+    }
+
+    /**
+     * Get beca
+     *
+     * @return integer
+     */
+    public function getBeca()
+    {
+        return $this->beca;
     }
 
     /**

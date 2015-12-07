@@ -234,12 +234,30 @@ municipio:integer
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 php app/console doctrine:generate:entity --entity="AppBundle:AsignacionUsuarioBeca" --fields="
+beca:integer 
 usuario:integer
 fecha_asignacion:datetime
 estado:integer
 observaciones:string
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
+
+
+php app/console doctrine:generate:entity --entity="AppBundle:Evento" --fields="
+organizador:string
+nombre:string
+descripcion:string
+fecha_publicacion:datetime
+fecha_inicio:datetime
+fecha_finalizacion:datetime
+tipo:integer
+municipio:integer
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:AsignacionUsuarioEvento" --fields="
+evento:integer
+usuario:integer
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 
 

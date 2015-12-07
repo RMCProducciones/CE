@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AsignacionUsuarioCapacitacion
+ * Evento
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class AsignacionUsuarioCapacitacion
+class Evento
 {
     /**
      * @var integer
@@ -22,39 +22,60 @@ class AsignacionUsuarioCapacitacion
     private $id;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="capacitacion", type="integer")
+     * @ORM\Column(name="organizador", type="string")
      */
-    private $capacitacion;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario", type="integer")
-     */
-    private $usuario;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="fecha_asignacion", type="datetime")
-     */
-    private $fecha_asignacion;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="estado", type="integer")
-     */
-    private $estado;
+    private $organizador;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="observaciones", type="string")
+     * @ORM\Column(name="nombre", type="string")
      */
-    private $observaciones;
+    private $nombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcion", type="string")
+     */
+    private $descripcion;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_publicacion", type="datetime")
+     */
+    private $fecha_publicacion;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_inicio", type="datetime")
+     */
+    private $fecha_inicio;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_finalizacion", type="datetime")
+     */
+    private $fecha_finalizacion;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="tipo", type="integer")
+     */
+    private $tipo;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="municipio", type="integer")
+     */
+    private $municipio;
 
     /**
      * @var boolean
@@ -103,123 +124,195 @@ class AsignacionUsuarioCapacitacion
     }
 
     /**
-     * Set capacitacion
+     * Set organizador
      *
-     * @param integer $capacitacion
+     * @param string $organizador
      *
-     * @return AsignacionUsuarioCapacitacion
+     * @return Evento
      */
-    public function setCapacitacion($capacitacion)
+    public function setOrganizador($organizador)
     {
-        $this->capacitacion = $capacitacion;
+        $this->organizador = $organizador;
 
         return $this;
     }
 
     /**
-     * Get capacitacion
-     *
-     * @return integer
-     */
-    public function getCapacitacion()
-    {
-        return $this->capacitacion;
-    }
-
-    /**
-     * Set usuario
-     *
-     * @param integer $usuario
-     *
-     * @return AsignacionUsuarioCapacitacion
-     */
-    public function setUsuario($usuario)
-    {
-        $this->usuario = $usuario;
-
-        return $this;
-    }
-
-    /**
-     * Get usuario
-     *
-     * @return integer
-     */
-    public function getUsuario()
-    {
-        return $this->usuario;
-    }
-
-    /**
-     * Set fechaAsignacion
-     *
-     * @param \DateTime $fechaAsignacion
-     *
-     * @return AsignacionUsuarioCapacitacion
-     */
-    public function setFechaAsignacion($fechaAsignacion)
-    {
-        $this->fecha_asignacion = $fechaAsignacion;
-
-        return $this;
-    }
-
-    /**
-     * Get fechaAsignacion
-     *
-     * @return \DateTime
-     */
-    public function getFechaAsignacion()
-    {
-        return $this->fecha_asignacion;
-    }
-
-    /**
-     * Set estado
-     *
-     * @param integer $estado
-     *
-     * @return AsignacionUsuarioCapacitacion
-     */
-    public function setEstado($estado)
-    {
-        $this->estado = $estado;
-
-        return $this;
-    }
-
-    /**
-     * Get estado
-     *
-     * @return integer
-     */
-    public function getEstado()
-    {
-        return $this->estado;
-    }
-
-    /**
-     * Set observaciones
-     *
-     * @param string $observaciones
-     *
-     * @return AsignacionUsuarioCapacitacion
-     */
-    public function setObservaciones($observaciones)
-    {
-        $this->observaciones = $observaciones;
-
-        return $this;
-    }
-
-    /**
-     * Get observaciones
+     * Get organizador
      *
      * @return string
      */
-    public function getObservaciones()
+    public function getOrganizador()
     {
-        return $this->observaciones;
+        return $this->organizador;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     *
+     * @return Evento
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
+    }
+
+    /**
+     * Set descripcion
+     *
+     * @param string $descripcion
+     *
+     * @return Evento
+     */
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcion
+     *
+     * @return string
+     */
+    public function getDescripcion()
+    {
+        return $this->descripcion;
+    }
+
+    /**
+     * Set fechaPublicacion
+     *
+     * @param \DateTime $fechaPublicacion
+     *
+     * @return Evento
+     */
+    public function setFechaPublicacion($fechaPublicacion)
+    {
+        $this->fecha_publicacion = $fechaPublicacion;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaPublicacion
+     *
+     * @return \DateTime
+     */
+    public function getFechaPublicacion()
+    {
+        return $this->fecha_publicacion;
+    }
+
+    /**
+     * Set fechaInicio
+     *
+     * @param \DateTime $fechaInicio
+     *
+     * @return Evento
+     */
+    public function setFechaInicio($fechaInicio)
+    {
+        $this->fecha_inicio = $fechaInicio;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaInicio
+     *
+     * @return \DateTime
+     */
+    public function getFechaInicio()
+    {
+        return $this->fecha_inicio;
+    }
+
+    /**
+     * Set fechaFinalizacion
+     *
+     * @param \DateTime $fechaFinalizacion
+     *
+     * @return Evento
+     */
+    public function setFechaFinalizacion($fechaFinalizacion)
+    {
+        $this->fecha_finalizacion = $fechaFinalizacion;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaFinalizacion
+     *
+     * @return \DateTime
+     */
+    public function getFechaFinalizacion()
+    {
+        return $this->fecha_finalizacion;
+    }
+
+    /**
+     * Set tipo
+     *
+     * @param integer $tipo
+     *
+     * @return Evento
+     */
+    public function setTipo($tipo)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return integer
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
+     * Set municipio
+     *
+     * @param integer $municipio
+     *
+     * @return Evento
+     */
+    public function setMunicipio($municipio)
+    {
+        $this->municipio = $municipio;
+
+        return $this;
+    }
+
+    /**
+     * Get municipio
+     *
+     * @return integer
+     */
+    public function getMunicipio()
+    {
+        return $this->municipio;
     }
 
     /**
@@ -227,7 +320,7 @@ class AsignacionUsuarioCapacitacion
      *
      * @param boolean $active
      *
-     * @return AsignacionUsuarioCapacitacion
+     * @return Evento
      */
     public function setActive($active)
     {
@@ -251,7 +344,7 @@ class AsignacionUsuarioCapacitacion
      *
      * @param integer $usuarioModificacion
      *
-     * @return AsignacionUsuarioCapacitacion
+     * @return Evento
      */
     public function setUsuarioModificacion($usuarioModificacion)
     {
@@ -275,7 +368,7 @@ class AsignacionUsuarioCapacitacion
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return AsignacionUsuarioCapacitacion
+     * @return Evento
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -299,7 +392,7 @@ class AsignacionUsuarioCapacitacion
      *
      * @param integer $usuarioCreacion
      *
-     * @return AsignacionUsuarioCapacitacion
+     * @return Evento
      */
     public function setUsuarioCreacion($usuarioCreacion)
     {
@@ -323,7 +416,7 @@ class AsignacionUsuarioCapacitacion
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return AsignacionUsuarioCapacitacion
+     * @return Evento
      */
     public function setFechaCreacion($fechaCreacion)
     {
