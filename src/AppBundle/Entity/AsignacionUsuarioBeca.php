@@ -22,16 +22,12 @@ class AsignacionUsuarioBeca
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="beca", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Beca")
      */
     private $beca;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario;
 
@@ -43,9 +39,7 @@ class AsignacionUsuarioBeca
     private $fecha_asignacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="estado", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $estado;
 
@@ -64,9 +58,7 @@ class AsignacionUsuarioBeca
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
@@ -78,9 +70,7 @@ class AsignacionUsuarioBeca
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -105,11 +95,11 @@ class AsignacionUsuarioBeca
     /**
      * Set beca
      *
-     * @param integer $beca
+     * @param AppBundle\Entity\Beca $beca
      *
      * @return AsignacionUsuarioBeca
      */
-    public function setBeca($beca)
+    public function setBeca(\AppBundle\Entity\Beca $beca)
     {
         $this->beca = $beca;
 
@@ -119,7 +109,7 @@ class AsignacionUsuarioBeca
     /**
      * Get beca
      *
-     * @return integer
+     * @return AppBundle\Entity\Beca
      */
     public function getBeca()
     {
@@ -129,11 +119,11 @@ class AsignacionUsuarioBeca
     /**
      * Set usuario
      *
-     * @param integer $usuario
+     * @param AppBundle\Entity\Usuario $usuario
      *
      * @return AsignacionUsuarioBeca
      */
-    public function setUsuario($usuario)
+    public function setUsuario(\AppBundle\Entity\Usuario $usuario)
     {
         $this->usuario = $usuario;
 
@@ -143,7 +133,7 @@ class AsignacionUsuarioBeca
     /**
      * Get usuario
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuario()
     {
@@ -177,11 +167,11 @@ class AsignacionUsuarioBeca
     /**
      * Set estado
      *
-     * @param integer $estado
+     * @param AppBundle\Entity\Listas $estado
      *
      * @return AsignacionUsuarioBeca
      */
-    public function setEstado($estado)
+    public function setEstado(\AppBundle\Entity\Listas $estado)
     {
         $this->estado = $estado;
 
@@ -191,7 +181,7 @@ class AsignacionUsuarioBeca
     /**
      * Get estado
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getEstado()
     {
@@ -249,11 +239,11 @@ class AsignacionUsuarioBeca
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return AsignacionUsuarioBeca
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -263,7 +253,7 @@ class AsignacionUsuarioBeca
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -297,11 +287,11 @@ class AsignacionUsuarioBeca
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return AsignacionUsuarioBeca
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -311,7 +301,7 @@ class AsignacionUsuarioBeca
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
