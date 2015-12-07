@@ -121,13 +121,13 @@ pertenencia_etnica:integer
 foto:string
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
-php app/console doctrine:generate:entity --entity="AppBundle:AsignacionIntegrantesCLEAR" --fields="
+php app/console doctrine:generate:entity --entity="AppBundle:AsignacionIntegranteCLEAR" --fields="
 integrante:integer
 clear:string
 rol:integer
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
-php app/console doctrine:generate:entity --entity="AppBundle:AsignacionGruposCLEAR" --fields="
+php app/console doctrine:generate:entity --entity="AppBundle:AsignacionGrupoCLEAR" --fields="
 grupo:integer
 clear:string
 habilitacion:boolean
@@ -222,6 +222,24 @@ area_desempeno_secundario:string
 area_desempeno_terciario:string
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
+php app/console doctrine:generate:entity --entity="AppBundle:Beca" --fields="
+fecha_publicacion:datetime
+fecha_inicio:datetime
+fecha_finalizacion:datetime
+nombre:string
+tipo:integer
+modalidad:integer
+municipio:integer
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:AsignacionUsuarioBeca" --fields="
+usuario:integer
+fecha_asignacion:datetime
+estado:integer
+observaciones:string
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
 
 
 PENDIENTE POR DEFINIR
@@ -245,3 +263,5 @@ rubricas_manejo_financiero:string
 rubricas_ahorro_colectivo:string
 rubricas_enfoque_diferencial:string
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
