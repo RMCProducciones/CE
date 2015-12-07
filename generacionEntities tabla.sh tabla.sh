@@ -223,10 +223,11 @@ area_desempeno_terciario:string
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 php app/console doctrine:generate:entity --entity="AppBundle:Beca" --fields="
+entidad:string
+nombre:string
 fecha_publicacion:datetime
 fecha_inicio:datetime
 fecha_finalizacion:datetime
-nombre:string
 tipo:integer
 modalidad:integer
 municipio:integer
