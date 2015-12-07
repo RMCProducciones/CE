@@ -161,3 +161,36 @@ duracion:integer
 semana_inicio:integer
 semana_finalizacion:integer
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:ExperienciaExitosa" --fields="
+grupo:integer
+fecha_registro:datetime
+numero_empleos:integer
+ventas_mes:integer
+produccion_mensual:string
+fuentes_financiacion:string
+valor_recursos_financiacion:decimal
+tipo_poblacion:string
+proceso_productivo:string
+testimonio_poblacion:string
+acciones_minimizacion_impacto_ambiental:string
+impacto_comunidad:string
+innovacion:string
+observaciones:string
+calificacion_generacion_ingresos:integer
+calificacion_mejoramiento_productivo:integer
+calificacion_generacion_empleo:integer
+calificacion_conservacion_ambiental:integer
+calificacion_manejo_organizacional:integer
+calificacion_manejo_financiero:integer
+calificacion_ahorro_colectivo:integer
+calificacion_enfoque_diferencial:integer
+porcentaje_generacion_ingresos:integer
+porcentaje_mejoramiento_productivo:integer
+porcentaje_generacion_empleo:integer
+porcentaje_conservacion_ambiental:integer
+porcentaje_manejo_organizacional:integer
+porcentaje_manejo_financiero:integer
+porcentaje_ahorro_colectivo:integer
+porcentaje_enfoque_diferencial:integer
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
