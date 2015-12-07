@@ -126,8 +126,12 @@
 	                    <input type="checkbox">
 	                  </td>
 	                  <td>
-	                    {{concurso.fechainicio}}
-						{{concurso.fechafinalizacion}}
+	                    <b>FB</b>  {{ concurso.fechaBases |  date('d - m - Y') }}
+	                    <br>
+						<b>FF</b>  {{ concurso.fechaFinalizacion |  date('d - m - Y') }}
+	                    <br>
+						 <b>FI</b>  {{ concurso.fechaInicio |  date('d - m - Y') }}
+	                    <br>
 	                  </td>
 					  <td>
 	                    {{concurso.tipo}}
@@ -142,7 +146,7 @@
 	         
 	                  
 	                  <td>
-	                    <a href="#" alt="Asignacion Actividades" title="Asignacion Actividades"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> | </a>
+	                    <a href="{{ path('actividadConcurso')}}" alt="Asignacion Actividades" title="Asignacion Actividades"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> | </a>
 	                    <a href="#" alt="Asignacion Grupos" title="Asignacion Grupos"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> | </a>
 	                    <a href="acta-subir-grupos.html" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span> | </a>
 					    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> | </a>
