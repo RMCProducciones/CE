@@ -14,9 +14,10 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 use AppBundle\Entity\ExperienciaExitosa;
+use AppBundle\Entity\Talento;
 
 use AppBundle\Form\GestionConocimiento\ExperienciaExitosaType;
-
+use AppBundle\Form\GestionConocimiento\TalentoType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -70,5 +71,48 @@ class GestionConocimientoController extends Controller
         return $this->render('AppBundle:GestionConocimiento:experiencia-nuevo.html.twig', array('form' => $form->createView()));
     } 
    
+   
+   /**
+     * @Route("/gestion-conocimiento/talento", name="talentoGestion")
+     */
+    public function talentoGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $talento= $em->getRepository('AppBundle:Talento')->findBY(
+            array('active' => 1)
+            
+        ); 
+
+        return $this->render('AppBundle:GestionConocimiento:talento-gestion.html.twig', array( 'talentos' => $talentos));
+    }       
 	
+	 /**
+     * @Route("/gestion-conocimiento/talento/nuevo", name="talentoNuevo")
+     */
+    public function talentoNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $talento = new Talento();
+        
+        $form = $this->createForm(new TalentoType(), $talento);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $talento = $form->getData();
+
+            $talento->setActive(true);
+            $talento->setFechaCreacion(new \DateTime());
+
+
+            
+            $em->persist($talento);
+            $em->flush();
+
+            return $this->redirectToRoute('talentoGestion');
+        }
+        
+        return $this->render('AppBundle:GestionConocimiento:talento-nuevo.html.twig', array('form' => $form->createView()));
+    } 
 }
