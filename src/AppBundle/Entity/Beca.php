@@ -22,6 +22,20 @@ class Beca
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="entidad", type="string")
+     */
+    private $entidad;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string")
+     */
+    private $nombre;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="fecha_publicacion", type="datetime")
@@ -41,13 +55,6 @@ class Beca
      * @ORM\Column(name="fecha_finalizacion", type="datetime")
      */
     private $fecha_finalizacion;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nombre", type="string")
-     */
-    private $nombre;
 
     /**
      * @var integer
@@ -114,6 +121,54 @@ class Beca
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set entidad
+     *
+     * @param string $entidad
+     *
+     * @return Beca
+     */
+    public function setEntidad($entidad)
+    {
+        $this->entidad = $entidad;
+
+        return $this;
+    }
+
+    /**
+     * Get entidad
+     *
+     * @return string
+     */
+    public function getEntidad()
+    {
+        return $this->entidad;
+    }
+
+    /**
+     * Set nombre
+     *
+     * @param string $nombre
+     *
+     * @return Beca
+     */
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get nombre
+     *
+     * @return string
+     */
+    public function getNombre()
+    {
+        return $this->nombre;
     }
 
     /**
@@ -186,30 +241,6 @@ class Beca
     public function getFechaFinalizacion()
     {
         return $this->fecha_finalizacion;
-    }
-
-    /**
-     * Set nombre
-     *
-     * @param string $nombre
-     *
-     * @return Beca
-     */
-    public function setNombre($nombre)
-    {
-        $this->nombre = $nombre;
-
-        return $this;
-    }
-
-    /**
-     * Get nombre
-     *
-     * @return string
-     */
-    public function getNombre()
-    {
-        return $this->nombre;
     }
 
     /**
