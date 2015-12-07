@@ -151,7 +151,8 @@
                 </div>
                 <div class="col-sm-9">
                   {{ form_errors(form.joven_rural) }}
-                  {{ form_widget(form.joven_rural, { 'attr': {'class': 'form-control'} }) }}
+				    <switch id="swRural" name="swRural" ng-model="swRural" class="green" on="Si" off="No"></switch>
+                 
                 </div>
               </div>
 			   <div class="form-group">
@@ -201,51 +202,59 @@
               </div>
              
 			 
-			 <div class="form-group">
-                <div class="col-sm-3">
-                  {{ form_label(form.rural) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.rural) }}
-                  {{ form_widget(form.rural, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-			   <div class="form-group">
-                <div class="col-sm-3">
-                  {{ form_label(form.barrio) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.barrio) }}
-                  {{ form_widget(form.barrio, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-			  <div class="form-group">
-                <div class="col-sm-3">
-                  {{ form_label(form.corregimiento) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.corregimiento) }}
-                  {{ form_widget(form.corregimiento, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-			  <div class="form-group">
-                <div class="col-sm-3">
-                  {{ form_label(form.vereda) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.vereda) }}
-                  {{ form_widget(form.vereda, { 'attr': {'class': 'form-control', 'onchange': 'alert("Ejecutar ajax para actualizar municipios...")'} }) }}
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-3">
-                  {{ form_label(form.cacerio) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.cacerio) }}
-                  {{ form_widget(form.cacerio, { 'attr': {'class': 'form-control', 'onchange': 'alert("Ejecutar ajax para actualizar municipios...")'} }) }}
-                </div>
-              </div>
+			<div ng-controller = "CamposDireccionCtrl">
+
+				
+				  <div class="form-group">
+					<div class="col-sm-3">
+					  {{ form_label(form.rural) }}
+					</div>
+					<div class="col-sm-9">
+					  {{ form_errors(form.rural) }}
+					  <switch id="swRural" name="swRural" ng-model="swRural" class="green" on="Si" off="No"></switch>
+					  {{ form_widget(form.rural, { 'attr': {'style':'visibility:hidden'} }) }}
+					</div>
+				  </div>
+
+				  <div class="form-group" ng-show="swRural === false">
+					<div class="col-sm-3">
+					  {{ form_label(form.barrio) }}
+					</div>
+					<div class="col-sm-9">
+					  {{ form_errors(form.barrio) }}
+					  {{ form_widget(form.barrio, { 'attr': {'class': 'form-control', 'placeholder': 'Barrio...'} }) }}
+					</div>
+				  </div>
+
+				  <div class="form-group" ng-show="swRural === true">
+					<div class="col-sm-3">
+					  {{ form_label(form.corregimiento) }}
+					</div>
+					<div class="col-sm-9">
+					  {{ form_errors(form.corregimiento) }}
+					  {{ form_widget(form.corregimiento, { 'attr': {'class': 'form-control', 'placeholder': 'Corregimiento...'} }) }}
+					</div>
+				  </div>
+
+				  <div class="form-group" ng-show="swRural === true">
+					<div class="col-sm-3">
+					  {{ form_label(form.vereda) }}
+					</div>
+					<div class="col-sm-9">
+					  {{ form_errors(form.vereda) }}
+					  {{ form_widget(form.vereda, { 'attr': {'class': 'form-control', 'placeholder': 'Vereda...'} }) }}
+					</div>
+				  </div>
+
+				  <div class="form-group" ng-show="swRural === true">
+					<div class="col-sm-3">
+					  {{ form_label(form.cacerio) }}
+					</div>
+					<div class="col-sm-9">
+					  {{ form_errors(form.cacerio) }}
+					  {{ form_widget(form.cacerio, { 'attr': {'class': 'form-control', 'placeholder': 'Cacerío...'} }) }}
+					</div>
+				  </div>
               <div class="form-group">
                 <div class="col-sm-3">
                   {{ form_label(form.telefono_fijo) }}
@@ -318,7 +327,7 @@
                 </div>
                 <div class="col-sm-9">
                   {{ form_errors(form.talento_madr) }}
-                  {{ form_widget(form.talento_madr, { 'attr': {'class': 'form-control'} }) }}
+                  <switch id="swtalento" name="swtalento" ng-model="swtalento" class="green" on="Si" off="No"></switch>
                 </div>
               </div>
 			   <div class="form-group">
@@ -327,7 +336,7 @@
                 </div>
                 <div class="col-sm-9">
                   {{ form_errors(form.talento_otros_lugares) }}
-                  {{ form_widget(form.talento_otros_lugares, { 'attr': {'class': 'form-control'} }) }}
+                  <switch id="swlugares" name="swlugares" ng-model="swlugares" class="green" on="Si" off="No"></switch>
                 </div>
               </div>
 			   <div class="form-group">
