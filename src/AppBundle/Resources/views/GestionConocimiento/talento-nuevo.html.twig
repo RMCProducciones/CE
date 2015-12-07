@@ -152,7 +152,7 @@
                 <div class="col-sm-9">
                   {{ form_errors(form.joven_rural) }}
 				    <switch id="swRural" name="swRural" ng-model="swRural" class="green" on="Si" off="No"></switch>
-                 
+					{{ form_widget(form.joven_rural, { 'attr': {'style':'visibility:hidden'} }) }}                 
                 </div>
               </div>
 			   <div class="form-group">
@@ -216,7 +216,7 @@
 					</div>
 				  </div>
 
-				  <div class="form-group" ng-show="swRural === false">
+				  <div class="form-group" ng-show="swRural === false">	
 					<div class="col-sm-3">
 					  {{ form_label(form.barrio) }}
 					</div>
@@ -255,6 +255,7 @@
 					  {{ form_widget(form.cacerio, { 'attr': {'class': 'form-control', 'placeholder': 'Cacerío...'} }) }}
 					</div>
 				  </div>
+			</div>  
               <div class="form-group">
                 <div class="col-sm-3">
                   {{ form_label(form.telefono_fijo) }}
@@ -328,6 +329,7 @@
                 <div class="col-sm-9">
                   {{ form_errors(form.talento_madr) }}
                   <switch id="swtalento" name="swtalento" ng-model="swtalento" class="green" on="Si" off="No"></switch>
+				  {{ form_widget(form.talento_madr, { 'attr': {'style':'visibility:hidden'} }) }}
                 </div>
               </div>
 			   <div class="form-group">
@@ -337,6 +339,7 @@
                 <div class="col-sm-9">
                   {{ form_errors(form.talento_otros_lugares) }}
                   <switch id="swlugares" name="swlugares" ng-model="swlugares" class="green" on="Si" off="No"></switch>
+				  {{ form_widget(form.talento_otros_lugares, { 'attr': {'style':'visibility:hidden'} }) }}
                 </div>
               </div>
 			   <div class="form-group">
