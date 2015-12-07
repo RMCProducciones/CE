@@ -57,9 +57,20 @@ class Beca
     private $fecha_finalizacion;
 
     /**
+<<<<<<< HEAD
+     * @var string
+     *
+     * @ORM\Column(name="nombre", type="string")
+     */
+    private $nombre;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
+=======
      * @var integer
      *
      * @ORM\Column(name="tipo", type="integer")
+>>>>>>> 144316ca0e33f6a8e783f5cada6e30c8bb13aaad
      */
     private $tipo;
 
@@ -246,11 +257,11 @@ class Beca
     /**
      * Set tipo
      *
-     * @param integer $tipo
+     * @param AppBundle\Entity\Listas $tipo
      *
      * @return Beca
      */
-    public function setTipo($tipo)
+    public function setTipo(\AppBundle\Entity\Listas $tipo)
     {
         $this->tipo = $tipo;
 
@@ -260,7 +271,7 @@ class Beca
     /**
      * Get tipo
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getTipo()
     {
