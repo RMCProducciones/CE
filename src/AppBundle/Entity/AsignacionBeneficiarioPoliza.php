@@ -22,16 +22,12 @@ class AsignacionBeneficiarioPoliza
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="poliza", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Poliza")
      */
     private $poliza;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="beneficiario", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Beneficiario")
      */
     private $beneficiario;
 
@@ -57,9 +53,7 @@ class AsignacionBeneficiarioPoliza
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
@@ -71,9 +65,7 @@ class AsignacionBeneficiarioPoliza
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -98,11 +90,11 @@ class AsignacionBeneficiarioPoliza
     /**
      * Set poliza
      *
-     * @param integer $poliza
+     * @param AppBundle\Entity\Poliza $poliza
      *
      * @return AsignacionBeneficiarioPoliza
      */
-    public function setPoliza($poliza)
+    public function setPoliza(\AppBundle\Entity\Poliza $poliza)
     {
         $this->poliza = $poliza;
 
@@ -112,7 +104,7 @@ class AsignacionBeneficiarioPoliza
     /**
      * Get poliza
      *
-     * @return integer
+     * @return AppBundle\Entity\Poliza
      */
     public function getPoliza()
     {
@@ -122,11 +114,11 @@ class AsignacionBeneficiarioPoliza
     /**
      * Set beneficiario
      *
-     * @param integer $beneficiario
+     * @param AppBundle\Entity\Beneficiario $beneficiario
      *
      * @return AsignacionBeneficiarioPoliza
      */
-    public function setBeneficiario($beneficiario)
+    public function setBeneficiario(\AppBundle\Entity\Beneficiario $beneficiario)
     {
         $this->beneficiario = $beneficiario;
 
@@ -136,7 +128,7 @@ class AsignacionBeneficiarioPoliza
     /**
      * Get beneficiario
      *
-     * @return integer
+     * @return AppBundle\Entity\Beneficiario
      */
     public function getBeneficiario()
     {
@@ -218,11 +210,11 @@ class AsignacionBeneficiarioPoliza
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return AsignacionBeneficiarioPoliza
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -232,7 +224,7 @@ class AsignacionBeneficiarioPoliza
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -266,11 +258,11 @@ class AsignacionBeneficiarioPoliza
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return AsignacionBeneficiarioPoliza
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -280,7 +272,7 @@ class AsignacionBeneficiarioPoliza
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {

@@ -123,6 +123,13 @@ class Beneficiario
      */
     private $desplazado;
 
+	 /**
+     * @var string
+     *
+     * @ORM\Column(name="discapacidad", type="string")
+     */
+    private $discapacidad;
+	
     /**
      * @var boolean
      *
@@ -725,6 +732,30 @@ class Beneficiario
     public function getDesplazado()
     {
         return $this->desplazado;
+    }
+	
+	/**
+     * Set discapacidad
+     *
+     * @param string $discapacidad
+     *
+     * @return Beneficiario
+     */
+    public function setDiscapacidad($discapacidad)
+    {
+        $this->discapacidad = $discapacidad;
+
+        return $this;
+    }
+
+    /**
+     * Get discapacidad
+     *
+     * @return string
+     */
+    public function getDiscapacidad()
+    {
+        return $this->discapacidad;
     }
 
     /**
