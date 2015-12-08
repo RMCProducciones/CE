@@ -22,7 +22,7 @@ class Ahorro
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
      */
     private $grupo;
 
@@ -97,11 +97,11 @@ class Ahorro
     /**
      * Set grupo
      *
-     * @param AppBundle\Entity\Listas $grupo
+     * @param AppBundle\Entity\Grupo $grupo
      *
      * @return Ahorro
      */
-    public function setGrupo(\AppBundle\Entity\Listas $grupo)
+    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
     {
         $this->grupo = $grupo;
 
@@ -111,7 +111,7 @@ class Ahorro
     /**
      * Get grupo
      *
-     * @return AppBundle\Entity\Listas
+     * @return AppBundle\Entity\Grupo
      */
     public function getGrupo()
     {
