@@ -70,7 +70,7 @@ class POA
 
     public function __toString()
     {
-        return $this->getPresupuesto();
+        return "".$this->getAnio();
     }
 
     /**

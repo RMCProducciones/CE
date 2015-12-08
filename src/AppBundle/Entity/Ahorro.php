@@ -60,26 +60,38 @@ class Ahorro
     private $active;
 
     /**
+<<<<<<< HEAD
+     * @var integer
+     *
+     * @ORM\Column(name="usuario_modificacion", type="integer", nullable=true)
+=======
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
+>>>>>>> 1e98ef851e65e4fec1a0aa9afd30545a7f3677e7
      */
     private $usuario_modificacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
      */
     private $fecha_modificacion;
 
     /**
+<<<<<<< HEAD
+     * @var integer
+     *
+     * @ORM\Column(name="usuario_creacion", type="integer", nullable=true)
+=======
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
+>>>>>>> 1e98ef851e65e4fec1a0aa9afd30545a7f3677e7
      */
     private $usuario_creacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_creacion", type="datetime")
+     * @ORM\Column(name="fecha_creacion", type="datetime", nullable=true)
      */
     private $fecha_creacion;
 

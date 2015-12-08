@@ -22,11 +22,9 @@ class SeguimientoBeneficiarioAhorro
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="beneficiario", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\AsignacionBeneficiarioAhorro")
      */
-    private $beneficiario;
+    private $asignacionBeneficiarioAhorro;
 
     /**
      * @var \DateTime
@@ -127,9 +125,7 @@ class SeguimientoBeneficiarioAhorro
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
@@ -141,9 +137,7 @@ class SeguimientoBeneficiarioAhorro
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -166,27 +160,27 @@ class SeguimientoBeneficiarioAhorro
     }
 
     /**
-     * Set beneficiario
+     * Set asignacionBeneficiarioAhorro
      *
-     * @param integer $beneficiario
+     * @param AppBundle\Entity\AsignacionBeneficiarioAhorro $asignacionBeneficiarioAhorro
      *
      * @return SeguimientoBeneficiarioAhorro
      */
-    public function setBeneficiario($beneficiario)
+    public function setBeneficiario(\AppBundle\Entity\AsignacionBeneficiarioAhorro $asignacionBeneficiarioAhorro)
     {
-        $this->beneficiario = $beneficiario;
+        $this->asignacion_beneficiario_ahorro = $asignacionBeneficiarioAhorro;
 
         return $this;
     }
 
     /**
-     * Get beneficiario
+     * Get asignacionBeneficiarioAhorro
      *
-     * @return integer
+     * @return AppBundle\Entity\AsignacionBeneficiarioAhorro
      */
     public function getBeneficiario()
     {
-        return $this->beneficiario;
+        return $this->asignacion_beneficiario_ahorro;
     }
 
     /**
@@ -528,11 +522,11 @@ class SeguimientoBeneficiarioAhorro
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return SeguimientoBeneficiarioAhorro
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -542,7 +536,7 @@ class SeguimientoBeneficiarioAhorro
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -576,11 +570,11 @@ class SeguimientoBeneficiarioAhorro
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return SeguimientoBeneficiarioAhorro
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -590,7 +584,7 @@ class SeguimientoBeneficiarioAhorro
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {

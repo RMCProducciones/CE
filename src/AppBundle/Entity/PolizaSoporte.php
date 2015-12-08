@@ -22,23 +22,17 @@ class PolizaSoporte
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="poliza", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Poliza")
      */
     private $poliza;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="tipo_soporte", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $tipo_soporte;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="estado", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $estado;
 
@@ -71,9 +65,7 @@ class PolizaSoporte
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
@@ -85,9 +77,7 @@ class PolizaSoporte
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -112,11 +102,11 @@ class PolizaSoporte
     /**
      * Set poliza
      *
-     * @param integer $poliza
+     * @param AppBundle\Entity\Poliza $poliza
      *
      * @return PolizaSoporte
      */
-    public function setPoliza($poliza)
+    public function setPoliza(\AppBundle\Entity\Poliza $poliza)
     {
         $this->poliza = $poliza;
 
@@ -126,7 +116,7 @@ class PolizaSoporte
     /**
      * Get poliza
      *
-     * @return integer
+     * @return AppBundle\Entity\Poliza
      */
     public function getPoliza()
     {
@@ -136,11 +126,11 @@ class PolizaSoporte
     /**
      * Set tipoSoporte
      *
-     * @param integer $tipoSoporte
+     * @param AppBundle\Entity\Listas $tipoSoporte
      *
      * @return PolizaSoporte
      */
-    public function setTipoSoporte($tipoSoporte)
+    public function setTipoSoporte(\AppBundle\Entity\Listas $tipoSoporte)
     {
         $this->tipo_soporte = $tipoSoporte;
 
@@ -150,7 +140,7 @@ class PolizaSoporte
     /**
      * Get tipoSoporte
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getTipoSoporte()
     {
@@ -160,11 +150,11 @@ class PolizaSoporte
     /**
      * Set estado
      *
-     * @param integer $estado
+     * @param AppBundle\Entity\Listas $estado
      *
      * @return PolizaSoporte
      */
-    public function setEstado($estado)
+    public function setEstado(\AppBundle\Entity\Listas $estado)
     {
         $this->estado = $estado;
 
@@ -174,7 +164,7 @@ class PolizaSoporte
     /**
      * Get estado
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getEstado()
     {
@@ -280,11 +270,11 @@ class PolizaSoporte
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return PolizaSoporte
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -294,7 +284,7 @@ class PolizaSoporte
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -328,11 +318,11 @@ class PolizaSoporte
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return PolizaSoporte
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -342,7 +332,7 @@ class PolizaSoporte
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
