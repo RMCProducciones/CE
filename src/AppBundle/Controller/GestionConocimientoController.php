@@ -17,11 +17,13 @@ use AppBundle\Entity\ExperienciaExitosa;
 use AppBundle\Entity\Talento;
 use AppBundle\Entity\Beca;
 use AppBundle\Entity\Capacitacion;
+use AppBundle\Entity\Evento;
 
 use AppBundle\Form\GestionConocimiento\ExperienciaExitosaType;
 use AppBundle\Form\GestionConocimiento\TalentoType;
 use AppBundle\Form\GestionConocimiento\BecaType;
 use AppBundle\Form\GestionConocimiento\CapacitacionType;
+use AppBundle\Form\GestionConocimiento\EventoType;
 
 
 /*Para autenticación por código*/
@@ -209,4 +211,50 @@ class GestionConocimientoController extends Controller
         
         return $this->render('AppBundle:GestionConocimiento:capacitacion-nuevo.html.twig', array('form' => $form->createView()));
     } 
+	
+	
+	/**
+     * @Route("/gestion-conocimiento/evento", name="eventoGestion")
+     */
+    public function eventoGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $eventos= $em->getRepository('AppBundle:Evento')->findBY(
+            array('active' => 1)
+            
+        ); 
+
+        return $this->render('AppBundle:GestionConocimiento:evento-gestion.html.twig', array( 'eventos' => $eventos));
+    }  
+	
+	 /**
+     * @Route("/gestion-conocimiento/evento/nuevo", name="eventoNuevo")
+     */
+    public function eventoNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $evento = new Evento();
+        
+        $form = $this->createForm(new EventoType(), $evento);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $evento = $form->getData();
+
+            $evento->setActive(true);
+            $evento->setFechaCreacion(new \DateTime());
+
+
+            
+            $em->persist($evento);
+            $em->flush();
+
+            return $this->redirectToRoute('eventoGestion');
+        }
+        
+        return $this->render('AppBundle:GestionConocimiento:evento-nuevo.html.twig', array('form' => $form->createView()));
+    } 
+	
 }
