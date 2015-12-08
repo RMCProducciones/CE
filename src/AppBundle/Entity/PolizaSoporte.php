@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Ahorro
+ * PolizaSoporte
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\AhorroRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\PolizaSoporteRepository")
  */
-class Ahorro
+class PolizaSoporte
 {
     /**
      * @var integer
@@ -22,35 +22,46 @@ class Ahorro
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
-     */
-    private $grupo;
-
-    /**
-     * @var \DateTime
+     * @var integer
      *
-     * @ORM\Column(name="fecha_registro", type="datetime")
+     * @ORM\Column(name="poliza", type="integer")
      */
-    private $fecha_registro;
+    private $poliza;
 
     /**
-     * @var \DateTime
+     * @var integer
      *
-     * @ORM\Column(name="fecha_inicio", type="datetime")
+     * @ORM\Column(name="tipo_soporte", type="integer")
      */
-    private $fecha_inicio;
+    private $tipo_soporte;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
+     * @var integer
+     *
+     * @ORM\Column(name="estado", type="integer")
      */
     private $estado;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="consecutivo", type="integer")
+     */
+    private $consecutivo;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="incentivo_ahorro_colectivo", type="decimal")
+     * @ORM\Column(name="cofinanciacion", type="decimal")
      */
-    private $incentivo_ahorro_colectivo;
+    private $cofinanciacion;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="path", type="string")
+     */
+    private $path;
 
     /**
      * @var boolean
@@ -60,38 +71,30 @@ class Ahorro
     private $active;
 
     /**
-<<<<<<< HEAD
      * @var integer
      *
-     * @ORM\Column(name="usuario_modificacion", type="integer", nullable=true)
-=======
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
->>>>>>> 1e98ef851e65e4fec1a0aa9afd30545a7f3677e7
+     * @ORM\Column(name="usuario_modificacion", type="integer")
      */
     private $usuario_modificacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
+     * @ORM\Column(name="fecha_modificacion", type="datetime")
      */
     private $fecha_modificacion;
 
     /**
-<<<<<<< HEAD
      * @var integer
      *
-     * @ORM\Column(name="usuario_creacion", type="integer", nullable=true)
-=======
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
->>>>>>> 1e98ef851e65e4fec1a0aa9afd30545a7f3677e7
+     * @ORM\Column(name="usuario_creacion", type="integer")
      */
     private $usuario_creacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_creacion", type="datetime", nullable=true)
+     * @ORM\Column(name="fecha_creacion", type="datetime")
      */
     private $fecha_creacion;
 
@@ -107,85 +110,61 @@ class Ahorro
     }
 
     /**
-     * Set grupo
+     * Set poliza
      *
-     * @param AppBundle\Entity\Grupo $grupo
+     * @param integer $poliza
      *
-     * @return Ahorro
+     * @return PolizaSoporte
      */
-    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
+    public function setPoliza($poliza)
     {
-        $this->grupo = $grupo;
+        $this->poliza = $poliza;
 
         return $this;
     }
 
     /**
-     * Get grupo
+     * Get poliza
      *
-     * @return AppBundle\Entity\Grupo
+     * @return integer
      */
-    public function getGrupo()
+    public function getPoliza()
     {
-        return $this->grupo;
+        return $this->poliza;
     }
 
     /**
-     * Set fechaRegistro
+     * Set tipoSoporte
      *
-     * @param \DateTime $fechaRegistro
+     * @param integer $tipoSoporte
      *
-     * @return Ahorro
+     * @return PolizaSoporte
      */
-    public function setFechaRegistro($fechaRegistro)
+    public function setTipoSoporte($tipoSoporte)
     {
-        $this->fecha_registro = $fechaRegistro;
+        $this->tipo_soporte = $tipoSoporte;
 
         return $this;
     }
 
     /**
-     * Get fechaRegistro
+     * Get tipoSoporte
      *
-     * @return \DateTime
+     * @return integer
      */
-    public function getFechaRegistro()
+    public function getTipoSoporte()
     {
-        return $this->fecha_registro;
-    }
-
-    /**
-     * Set fechaInicio
-     *
-     * @param \DateTime $fechaInicio
-     *
-     * @return Ahorro
-     */
-    public function setFechaInicio($fechaInicio)
-    {
-        $this->fecha_inicio = $fechaInicio;
-
-        return $this;
-    }
-
-    /**
-     * Get fechaInicio
-     *
-     * @return \DateTime
-     */
-    public function getFechaInicio()
-    {
-        return $this->fecha_inicio;
+        return $this->tipo_soporte;
     }
 
     /**
      * Set estado
      *
-     * @param AppBundle\Entity\Listas $estado
+     * @param integer $estado
      *
-     * @return Ahorro
+     * @return PolizaSoporte
      */
-    public function setEstado(\AppBundle\Entity\Listas $estado)
+    public function setEstado($estado)
     {
         $this->estado = $estado;
 
@@ -195,7 +174,7 @@ class Ahorro
     /**
      * Get estado
      *
-     * @return AppBundle\Entity\Listas
+     * @return integer
      */
     public function getEstado()
     {
@@ -203,27 +182,75 @@ class Ahorro
     }
 
     /**
-     * Set incentivoAhorroColectivo
+     * Set consecutivo
      *
-     * @param string $incentivoAhorroColectivo
+     * @param integer $consecutivo
      *
-     * @return Ahorro
+     * @return PolizaSoporte
      */
-    public function setIncentivoAhorroColectivo($incentivoAhorroColectivo)
+    public function setConsecutivo($consecutivo)
     {
-        $this->incentivo_ahorro_colectivo = $incentivoAhorroColectivo;
+        $this->consecutivo = $consecutivo;
 
         return $this;
     }
 
     /**
-     * Get incentivoAhorroColectivo
+     * Get consecutivo
+     *
+     * @return integer
+     */
+    public function getConsecutivo()
+    {
+        return $this->consecutivo;
+    }
+
+    /**
+     * Set cofinanciacion
+     *
+     * @param string $cofinanciacion
+     *
+     * @return PolizaSoporte
+     */
+    public function setCofinanciacion($cofinanciacion)
+    {
+        $this->cofinanciacion = $cofinanciacion;
+
+        return $this;
+    }
+
+    /**
+     * Get cofinanciacion
      *
      * @return string
      */
-    public function getIncentivoAhorroColectivo()
+    public function getCofinanciacion()
     {
-        return $this->incentivo_ahorro_colectivo;
+        return $this->cofinanciacion;
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     *
+     * @return PolizaSoporte
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
     }
 
     /**
@@ -231,7 +258,7 @@ class Ahorro
      *
      * @param boolean $active
      *
-     * @return Ahorro
+     * @return PolizaSoporte
      */
     public function setActive($active)
     {
@@ -253,11 +280,11 @@ class Ahorro
     /**
      * Set usuarioModificacion
      *
-     * @param AppBundle\Entity\Usuario $usuarioModificacion
+     * @param integer $usuarioModificacion
      *
-     * @return Ahorro
+     * @return PolizaSoporte
      */
-    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
+    public function setUsuarioModificacion($usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -267,7 +294,7 @@ class Ahorro
     /**
      * Get usuarioModificacion
      *
-     * @return AppBundle\Entity\Usuario
+     * @return integer
      */
     public function getUsuarioModificacion()
     {
@@ -279,7 +306,7 @@ class Ahorro
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return Ahorro
+     * @return PolizaSoporte
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -301,11 +328,11 @@ class Ahorro
     /**
      * Set usuarioCreacion
      *
-     * @param AppBundle\Entity\Usuario $usuarioCreacion
+     * @param integer $usuarioCreacion
      *
-     * @return Ahorro
+     * @return PolizaSoporte
      */
-    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
+    public function setUsuarioCreacion($usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -315,7 +342,7 @@ class Ahorro
     /**
      * Get usuarioCreacion
      *
-     * @return AppBundle\Entity\Usuario
+     * @return integer
      */
     public function getUsuarioCreacion()
     {
@@ -327,7 +354,7 @@ class Ahorro
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return Ahorro
+     * @return PolizaSoporte
      */
     public function setFechaCreacion($fechaCreacion)
     {
