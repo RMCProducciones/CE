@@ -22,3 +22,26 @@ php app/console doctrine:generate:entity --entity="AppBundle:IntegranteCLEAR" --
 php app/console doctrine:generate:entity --entity="AppBundle:AsignacionIntegranteCLEAR" --fields="integrante:integer clear:string rol:integer active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 php app/console doctrine:generate:entity --entity="AppBundle:AsignacionGrupoCLEAR" --fields=" grupo:integer clear:string habilitacion:boolean asignacion:boolean contraloria_social:boolean active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:Concurso" --fields="tipo:integer fecha_bases:string modalidad:integer tematica:string ambito:string problematica:string actividades:string resultados:string valor:string distribucion:string criterios:string aprobacion:boolean fecha_inicio:datetime fecha_finalizacion:datetime active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:ActividadConcurso" --fields="concurso:integer actividad:string mejoras:string recursos:string duracion:integer semana_inicio:integer semana_finalizacion:integer active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:ExperienciaExitosa" --fields="grupo:integer fecha_registro:datetime numero_empleos:integer ventas_mes:integer produccion_mensual:string fuentes_financiacion:string valor_recursos_financiacion:decimal tipo_poblacion:string proceso_productivo:string testimonio_poblacion:string acciones_minimizacion_impacto_ambiental:string impacto_comunidad:string innovacion:string observaciones:string active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:CalificacionExperienciaExitosa" --fields="experienciaExitosa:integer categoria:integer calificacion:integer active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:Talento" --fields="tipo:integer tipo_documento:integer numero_documento:string primer_apellido:string segundo_apellido:string primer_nombre:string segundo_nombre:string genero:integer fecha_nacimiento:datetime edad_inscripcion:integer joven_rural:boolean pertenencia_etnica:integer grupo_indigena:integer rol_grupo_familiar:integer municipio:integer direccion:string rural:boolean barrio:string corregimiento:string vereda:string cacerio:string telefono_fijo:string telefono_celular:string correo_electronico:string estado_civil:integer organizacion:string fecha_inicio_talento:datetime talento_madr:boolean talento_otros_lugares:boolean actividad_participado:string nivel_estudios:integer area_desempeno_principal:string area_desempeno_secundario:string area_desempeno_terciario:string active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:Beca" --fields="entidad:string nombre:string fecha_publicacion:datetime fecha_inicio:datetime fecha_finalizacion:datetime tipo:integer modalidad:integer municipio:integer active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:AsignacionUsuarioBeca" --fields="beca:integer usuario:integer fecha_asignacion:datetime estado:integer observaciones:string active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:Capacitacion" --fields="capacitador:string nombre:string fecha_publicacion:datetime fecha_inicio:datetime fecha_finalizacion:datetime tipo:integer modalidad:integer municipio:integer active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:AsignacionUsuarioCapacitacion" --fields="capacitacion:integer usuario:integer fecha_asignacion:datetime estado:integer observaciones:string active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:Evento" --fields="organizador:string nombre:string descripcion:string fecha_publicacion:datetime fecha_inicio:datetime fecha_finalizacion:datetime tipo:integer municipio:integer active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:AsignacionUsuarioEvento" --fields="evento:integer usuario:integer active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+

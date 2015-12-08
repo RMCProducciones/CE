@@ -1,0 +1,196 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+{% block title %}Experiencia Nuevo{% endblock %}
+
+{% block breadcrumb_ul %}
+
+    <ul class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Conocimiento</li>
+      
+      <li><a href="{{ path('experienciaGestion') }}">Experiencias Exitosas</a></li>
+	  <li>Nuevo</li>
+    </ul>
+
+{% endblock %}
+
+
+{% block section %}
+
+     
+  	<br>
+
+    <hr>
+
+    
+  {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+    {{ form_errors(form) }}
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="btn-group">
+  
+              <button name="grupo[Guardar]" id="grupo_Guardar" type="submit" class="btn btn-success">Guardar</button>
+              
+              <a href="{{ path('concursoNuevo') }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <br>
+        
+
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <!--form class="form-horizontal" role="form"-->
+			
+			   <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.fecha_registro) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.fecha_registro) }}
+                  {{ form_widget(form.fecha_registro, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			   <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.numero_empleos) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.numero_empleos) }}
+                  {{ form_widget(form.numero_empleos, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			  <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.ventas_mes) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.ventas_mes) }}
+                  {{ form_widget(form.ventas_mes, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			  <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.produccion_mensual) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.produccion_mensual) }}
+                  {{ form_widget(form.produccion_mensual, { 'attr': {'class': 'form-control', 'onchange': 'alert("Ejecutar ajax para actualizar municipios...")'} }) }}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.fuentes_financiacion) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.fuentes_financiacion) }}
+                  {{ form_widget(form.fuentes_financiacion, { 'attr': {'class': 'form-control', 'onchange': 'alert("Ejecutar ajax para actualizar municipios...")'} }) }}
+                </div>
+              </div>
+			  
+              <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.valor_recursos_financiacion) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.valor_recursos_financiacion) }}
+                  {{ form_widget(form.valor_recursos_financiacion, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			  
+			    <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.tipo_poblacion) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.tipo_poblacion) }}
+                  {{ form_widget(form.tipo_poblacion, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			  
+			    <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.proceso_productivo) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.proceso_productivo) }}
+                  {{ form_widget(form.proceso_productivo, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			  
+			  <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.testimonio_poblacion) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.testimonio_poblacion) }}
+                  {{ form_widget(form.testimonio_poblacion, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			  
+			  <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.acciones_minimizacion_impacto_ambiental) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.acciones_minimizacion_impacto_ambiental) }}
+                  {{ form_widget(form.acciones_minimizacion_impacto_ambiental, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			  
+			 
+			  
+			   <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.impacto_comunidad) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.impacto_comunidad) }}
+                  {{ form_widget(form.impacto_comunidad, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			   <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.innovacion) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.innovacion) }}
+                  {{ form_widget(form.innovacion, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+             <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.observaciones) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.observaciones) }}
+                  {{ form_widget(form.observaciones, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+             
+			  
+             
+             
+
+            <!--/form-->
+          </div>
+        </div>
+      </div>
+    </div>
+
+  {{ form_end(form) }}
+               
+{% endblock %}
+

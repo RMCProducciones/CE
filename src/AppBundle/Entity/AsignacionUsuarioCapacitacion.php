@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AsignacionGrupoCLEAR
+ * AsignacionUsuarioCapacitacion
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\AsignacionGrupoCLEARRepository")
+ * @ORM\Entity
  */
-class AsignacionGrupoCLEAR
+class AsignacionUsuarioCapacitacion
 {
     /**
      * @var integer
@@ -21,39 +21,34 @@ class AsignacionGrupoCLEAR
      */
     private $id;
 
-   
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Capacitacion")
      */
-    private $grupo;
+    private $capacitacion;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
+     */
+    private $usuario;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_asignacion", type="datetime")
+     */
+    private $fecha_asignacion;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
+     */
+    private $estado;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="clear", type="string")
+     * @ORM\Column(name="observaciones", type="string")
      */
-    private $clear;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="habilitacion", type="boolean")
-     */
-    private $habilitacion;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="asignacion", type="boolean")
-     */
-    private $asignacion;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="contraloria_social", type="boolean")
-     */
-    private $contraloria_social;
+    private $observaciones;
 
     /**
      * @var boolean
@@ -62,7 +57,7 @@ class AsignacionGrupoCLEAR
      */
     private $active;
 
-     /**
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
@@ -74,7 +69,7 @@ class AsignacionGrupoCLEAR
      */
     private $fecha_modificacion;
 
-     /**
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
@@ -98,123 +93,123 @@ class AsignacionGrupoCLEAR
     }
 
     /**
-     * Set grupo
+     * Set capacitacion
      *
-     * @param AppBundle\Entity\Grupo $grupo
+     * @param AppBundle\Entity\Capacitacion $capacitacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return AsignacionUsuarioCapacitacion
      */
-    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
+    public function setCapacitacion(\AppBundle\Entity\Capacitacion $capacitacion)
     {
-        $this->grupo = $grupo;
+        $this->capacitacion = $capacitacion;
 
         return $this;
     }
 
     /**
-     * Get grupo
+     * Get capacitacion
      *
-     * @return AppBundle\Entity\Grupo
+     * @return AppBundle\Entity\Capacitacion
      */
-    public function getGrupo()
+    public function getCapacitacion()
     {
-        return $this->grupo;
+        return $this->capacitacion;
     }
 
     /**
-     * Set clear
+     * Set usuario
      *
-     * @param string $clear
+     * @param AppBundle\Entity\Usuario $usuario
      *
-     * @return AsignacionGrupoCLEAR
+     * @return AsignacionUsuarioCapacitacion
      */
-    public function setClear($clear)
+    public function setUsuario(\AppBundle\Entity\Usuario $usuario)
     {
-        $this->clear = $clear;
+        $this->usuario = $usuario;
 
         return $this;
     }
 
     /**
-     * Get clear
+     * Get usuario
+     *
+     * @return AppBundle\Entity\Usuario
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+
+    /**
+     * Set fechaAsignacion
+     *
+     * @param \DateTime $fechaAsignacion
+     *
+     * @return AsignacionUsuarioCapacitacion
+     */
+    public function setFechaAsignacion($fechaAsignacion)
+    {
+        $this->fecha_asignacion = $fechaAsignacion;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaAsignacion
+     *
+     * @return \DateTime
+     */
+    public function getFechaAsignacion()
+    {
+        return $this->fecha_asignacion;
+    }
+
+    /**
+     * Set estado
+     *
+     * @param integer $estado
+     *
+     * @return AsignacionUsuarioCapacitacion
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return integer
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+
+    /**
+     * Set observaciones
+     *
+     * @param string $observaciones
+     *
+     * @return AsignacionUsuarioCapacitacion
+     */
+    public function setObservaciones($observaciones)
+    {
+        $this->observaciones = $observaciones;
+
+        return $this;
+    }
+
+    /**
+     * Get observaciones
      *
      * @return string
      */
-    public function getClear()
+    public function getObservaciones()
     {
-        return $this->clear;
-    }
-
-    /**
-     * Set habilitacion
-     *
-     * @param boolean $habilitacion
-     *
-     * @return AsignacionGrupoCLEAR
-     */
-    public function setHabilitacion($habilitacion)
-    {
-        $this->habilitacion = $habilitacion;
-
-        return $this;
-    }
-
-    /**
-     * Get habilitacion
-     *
-     * @return boolean
-     */
-    public function getHabilitacion()
-    {
-        return $this->habilitacion;
-    }
-
-    /**
-     * Set asignacion
-     *
-     * @param boolean $asignacion
-     *
-     * @return AsignacionGrupoCLEAR
-     */
-    public function setAsignacion($asignacion)
-    {
-        $this->asignacion = $asignacion;
-
-        return $this;
-    }
-
-    /**
-     * Get asignacion
-     *
-     * @return boolean
-     */
-    public function getAsignacion()
-    {
-        return $this->asignacion;
-    }
-
-    /**
-     * Set contraloriaSocial
-     *
-     * @param boolean $contraloriaSocial
-     *
-     * @return AsignacionGrupoCLEAR
-     */
-    public function setContraloriaSocial($contraloriaSocial)
-    {
-        $this->contraloria_social = $contraloriaSocial;
-
-        return $this;
-    }
-
-    /**
-     * Get contraloriaSocial
-     *
-     * @return boolean
-     */
-    public function getContraloriaSocial()
-    {
-        return $this->contraloria_social;
+        return $this->observaciones;
     }
 
     /**
@@ -222,7 +217,7 @@ class AsignacionGrupoCLEAR
      *
      * @param boolean $active
      *
-     * @return AsignacionGrupoCLEAR
+     * @return AsignacionUsuarioCapacitacion
      */
     public function setActive($active)
     {
@@ -246,7 +241,7 @@ class AsignacionGrupoCLEAR
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return AsignacionUsuarioCapacitacion
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
@@ -270,7 +265,7 @@ class AsignacionGrupoCLEAR
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return AsignacionUsuarioCapacitacion
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -294,7 +289,7 @@ class AsignacionGrupoCLEAR
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return AsignacionUsuarioCapacitacion
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
@@ -318,7 +313,7 @@ class AsignacionGrupoCLEAR
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return AsignacionUsuarioCapacitacion
      */
     public function setFechaCreacion($fechaCreacion)
     {

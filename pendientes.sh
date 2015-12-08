@@ -1,0 +1,3 @@
+php app/console doctrine:generate:entity --entity="AppBundle:AsignacionUsuarioBeca" --fields="beca:integer usuario:integer fecha_asignacion:datetime estado:integer observaciones:string active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:AsignacionUsuarioCapacitacion" --fields="capacitacion:integer usuario:integer fecha_asignacion:datetime estado:integer observaciones:string active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"

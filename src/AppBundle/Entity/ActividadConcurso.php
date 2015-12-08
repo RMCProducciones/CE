@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AsignacionGrupoCLEAR
+ * ActividadConcurso
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\AsignacionGrupoCLEARRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\ActividadConcursoRepository")
  */
-class AsignacionGrupoCLEAR
+class ActividadConcurso
 {
     /**
      * @var integer
@@ -21,39 +21,52 @@ class AsignacionGrupoCLEAR
      */
     private $id;
 
-   
-    /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
+  /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Concurso")
      */
-    private $grupo;
+    private $concurso;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="clear", type="string")
+     * @ORM\Column(name="actividad", type="string")
      */
-    private $clear;
+    private $actividad;
 
     /**
-     * @var boolean
+     * @var string
      *
-     * @ORM\Column(name="habilitacion", type="boolean")
+     * @ORM\Column(name="mejoras", type="string")
      */
-    private $habilitacion;
+    private $mejoras;
 
     /**
-     * @var boolean
+     * @var string
      *
-     * @ORM\Column(name="asignacion", type="boolean")
+     * @ORM\Column(name="recursos", type="string")
      */
-    private $asignacion;
+    private $recursos;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="contraloria_social", type="boolean")
+     * @ORM\Column(name="duracion", type="integer")
      */
-    private $contraloria_social;
+    private $duracion;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="semana_inicio", type="integer")
+     */
+    private $semana_inicio;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="semana_finalizacion", type="integer")
+     */
+    private $semana_finalizacion;
 
     /**
      * @var boolean
@@ -62,7 +75,7 @@ class AsignacionGrupoCLEAR
      */
     private $active;
 
-     /**
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
@@ -74,7 +87,7 @@ class AsignacionGrupoCLEAR
      */
     private $fecha_modificacion;
 
-     /**
+   /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
@@ -98,123 +111,171 @@ class AsignacionGrupoCLEAR
     }
 
     /**
-     * Set grupo
+     * Set concurso
      *
-     * @param AppBundle\Entity\Grupo $grupo
+     * @param AppBundle\Entity\Concurso $concurso
      *
-     * @return AsignacionGrupoCLEAR
+     * @return ActividadConcurso
      */
-    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
+    public function setConcurso(\AppBundle\Entity\Concurso $concurso)
     {
-        $this->grupo = $grupo;
+        $this->concurso = $concurso;
 
         return $this;
     }
 
     /**
-     * Get grupo
+     * Get concurso
      *
-     * @return AppBundle\Entity\Grupo
+     * @return AppBundle\Entity\concurso
      */
-    public function getGrupo()
+    public function getConcurso()
     {
-        return $this->grupo;
+        return $this->concurso;
     }
 
     /**
-     * Set clear
+     * Set actividad
      *
-     * @param string $clear
+     * @param string $actividad
      *
-     * @return AsignacionGrupoCLEAR
+     * @return ActividadConcurso
      */
-    public function setClear($clear)
+    public function setActividad($actividad)
     {
-        $this->clear = $clear;
+        $this->actividad = $actividad;
 
         return $this;
     }
 
     /**
-     * Get clear
+     * Get actividad
      *
      * @return string
      */
-    public function getClear()
+    public function getActividad()
     {
-        return $this->clear;
+        return $this->actividad;
     }
 
     /**
-     * Set habilitacion
+     * Set mejoras
      *
-     * @param boolean $habilitacion
+     * @param string $mejoras
      *
-     * @return AsignacionGrupoCLEAR
+     * @return ActividadConcurso
      */
-    public function setHabilitacion($habilitacion)
+    public function setMejoras($mejoras)
     {
-        $this->habilitacion = $habilitacion;
+        $this->mejoras = $mejoras;
 
         return $this;
     }
 
     /**
-     * Get habilitacion
+     * Get mejoras
      *
-     * @return boolean
+     * @return string
      */
-    public function getHabilitacion()
+    public function getMejoras()
     {
-        return $this->habilitacion;
+        return $this->mejoras;
     }
 
     /**
-     * Set asignacion
+     * Set recursos
      *
-     * @param boolean $asignacion
+     * @param string $recursos
      *
-     * @return AsignacionGrupoCLEAR
+     * @return ActividadConcurso
      */
-    public function setAsignacion($asignacion)
+    public function setRecursos($recursos)
     {
-        $this->asignacion = $asignacion;
+        $this->recursos = $recursos;
 
         return $this;
     }
 
     /**
-     * Get asignacion
+     * Get recursos
      *
-     * @return boolean
+     * @return string
      */
-    public function getAsignacion()
+    public function getRecursos()
     {
-        return $this->asignacion;
+        return $this->recursos;
     }
 
     /**
-     * Set contraloriaSocial
+     * Set duracion
      *
-     * @param boolean $contraloriaSocial
+     * @param integer $duracion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return ActividadConcurso
      */
-    public function setContraloriaSocial($contraloriaSocial)
+    public function setDuracion($duracion)
     {
-        $this->contraloria_social = $contraloriaSocial;
+        $this->duracion = $duracion;
 
         return $this;
     }
 
     /**
-     * Get contraloriaSocial
+     * Get duracion
      *
-     * @return boolean
+     * @return integer
      */
-    public function getContraloriaSocial()
+    public function getDuracion()
     {
-        return $this->contraloria_social;
+        return $this->duracion;
+    }
+
+    /**
+     * Set semanaInicio
+     *
+     * @param integer $semanaInicio
+     *
+     * @return ActividadConcurso
+     */
+    public function setSemanaInicio($semanaInicio)
+    {
+        $this->semana_inicio = $semanaInicio;
+
+        return $this;
+    }
+
+    /**
+     * Get semanaInicio
+     *
+     * @return integer
+     */
+    public function getSemanaInicio()
+    {
+        return $this->semana_inicio;
+    }
+
+    /**
+     * Set semanaFinalizacion
+     *
+     * @param integer $semanaFinalizacion
+     *
+     * @return ActividadConcurso
+     */
+    public function setSemanaFinalizacion($semanaFinalizacion)
+    {
+        $this->semana_finalizacion = $semanaFinalizacion;
+
+        return $this;
+    }
+
+    /**
+     * Get semanaFinalizacion
+     *
+     * @return integer
+     */
+    public function getSemanaFinalizacion()
+    {
+        return $this->semana_finalizacion;
     }
 
     /**
@@ -222,7 +283,7 @@ class AsignacionGrupoCLEAR
      *
      * @param boolean $active
      *
-     * @return AsignacionGrupoCLEAR
+     * @return ActividadConcurso
      */
     public function setActive($active)
     {
@@ -246,7 +307,7 @@ class AsignacionGrupoCLEAR
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return ActividadConcurso
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
@@ -270,7 +331,7 @@ class AsignacionGrupoCLEAR
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return ActividadConcurso
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -294,7 +355,7 @@ class AsignacionGrupoCLEAR
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return ActividadConcurso
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
@@ -318,7 +379,7 @@ class AsignacionGrupoCLEAR
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return ActividadConcurso
      */
     public function setFechaCreacion($fechaCreacion)
     {

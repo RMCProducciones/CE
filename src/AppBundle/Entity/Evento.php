@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AsignacionGrupoCLEAR
+ * Evento
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\AsignacionGrupoCLEARRepository")
+ * @ORM\Entity
  */
-class AsignacionGrupoCLEAR
+class Evento
 {
     /**
      * @var integer
@@ -21,39 +21,57 @@ class AsignacionGrupoCLEAR
      */
     private $id;
 
-   
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
+     * @var string
+     *
+     * @ORM\Column(name="organizador", type="string")
      */
-    private $grupo;
+    private $organizador;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="clear", type="string")
+     * @ORM\Column(name="nombre", type="string")
      */
-    private $clear;
+    private $nombre;
 
     /**
-     * @var boolean
+     * @var string
      *
-     * @ORM\Column(name="habilitacion", type="boolean")
+     * @ORM\Column(name="descripcion", type="string")
      */
-    private $habilitacion;
+    private $descripcion;
 
     /**
-     * @var boolean
+     * @var \DateTime
      *
-     * @ORM\Column(name="asignacion", type="boolean")
+     * @ORM\Column(name="fecha_publicacion", type="datetime")
      */
-    private $asignacion;
+    private $fecha_publicacion;
 
     /**
-     * @var boolean
+     * @var \DateTime
      *
-     * @ORM\Column(name="contraloria_social", type="boolean")
+     * @ORM\Column(name="fecha_inicio", type="datetime")
      */
-    private $contraloria_social;
+    private $fecha_inicio;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_finalizacion", type="datetime")
+     */
+    private $fecha_finalizacion;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
+     */
+    private $tipo;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Municipio")
+     */
+    private $municipio;
 
     /**
      * @var boolean
@@ -62,7 +80,7 @@ class AsignacionGrupoCLEAR
      */
     private $active;
 
-     /**
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
@@ -74,7 +92,7 @@ class AsignacionGrupoCLEAR
      */
     private $fecha_modificacion;
 
-     /**
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
@@ -98,123 +116,195 @@ class AsignacionGrupoCLEAR
     }
 
     /**
-     * Set grupo
+     * Set organizador
      *
-     * @param AppBundle\Entity\Grupo $grupo
+     * @param string $organizador
      *
-     * @return AsignacionGrupoCLEAR
+     * @return Evento
      */
-    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
+    public function setOrganizador($organizador)
     {
-        $this->grupo = $grupo;
+        $this->organizador = $organizador;
 
         return $this;
     }
 
     /**
-     * Get grupo
-     *
-     * @return AppBundle\Entity\Grupo
-     */
-    public function getGrupo()
-    {
-        return $this->grupo;
-    }
-
-    /**
-     * Set clear
-     *
-     * @param string $clear
-     *
-     * @return AsignacionGrupoCLEAR
-     */
-    public function setClear($clear)
-    {
-        $this->clear = $clear;
-
-        return $this;
-    }
-
-    /**
-     * Get clear
+     * Get organizador
      *
      * @return string
      */
-    public function getClear()
+    public function getOrganizador()
     {
-        return $this->clear;
+        return $this->organizador;
     }
 
     /**
-     * Set habilitacion
+     * Set nombre
      *
-     * @param boolean $habilitacion
+     * @param string $nombre
      *
-     * @return AsignacionGrupoCLEAR
+     * @return Evento
      */
-    public function setHabilitacion($habilitacion)
+    public function setNombre($nombre)
     {
-        $this->habilitacion = $habilitacion;
+        $this->nombre = $nombre;
 
         return $this;
     }
 
     /**
-     * Get habilitacion
+     * Get nombre
      *
-     * @return boolean
+     * @return string
      */
-    public function getHabilitacion()
+    public function getNombre()
     {
-        return $this->habilitacion;
+        return $this->nombre;
     }
 
     /**
-     * Set asignacion
+     * Set descripcion
      *
-     * @param boolean $asignacion
+     * @param string $descripcion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return Evento
      */
-    public function setAsignacion($asignacion)
+    public function setDescripcion($descripcion)
     {
-        $this->asignacion = $asignacion;
+        $this->descripcion = $descripcion;
 
         return $this;
     }
 
     /**
-     * Get asignacion
+     * Get descripcion
      *
-     * @return boolean
+     * @return string
      */
-    public function getAsignacion()
+    public function getDescripcion()
     {
-        return $this->asignacion;
+        return $this->descripcion;
     }
 
     /**
-     * Set contraloriaSocial
+     * Set fechaPublicacion
      *
-     * @param boolean $contraloriaSocial
+     * @param \DateTime $fechaPublicacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return Evento
      */
-    public function setContraloriaSocial($contraloriaSocial)
+    public function setFechaPublicacion($fechaPublicacion)
     {
-        $this->contraloria_social = $contraloriaSocial;
+        $this->fecha_publicacion = $fechaPublicacion;
 
         return $this;
     }
 
     /**
-     * Get contraloriaSocial
+     * Get fechaPublicacion
      *
-     * @return boolean
+     * @return \DateTime
      */
-    public function getContraloriaSocial()
+    public function getFechaPublicacion()
     {
-        return $this->contraloria_social;
+        return $this->fecha_publicacion;
+    }
+
+    /**
+     * Set fechaInicio
+     *
+     * @param \DateTime $fechaInicio
+     *
+     * @return Evento
+     */
+    public function setFechaInicio($fechaInicio)
+    {
+        $this->fecha_inicio = $fechaInicio;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaInicio
+     *
+     * @return \DateTime
+     */
+    public function getFechaInicio()
+    {
+        return $this->fecha_inicio;
+    }
+
+    /**
+     * Set fechaFinalizacion
+     *
+     * @param \DateTime $fechaFinalizacion
+     *
+     * @return Evento
+     */
+    public function setFechaFinalizacion($fechaFinalizacion)
+    {
+        $this->fecha_finalizacion = $fechaFinalizacion;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaFinalizacion
+     *
+     * @return \DateTime
+     */
+    public function getFechaFinalizacion()
+    {
+        return $this->fecha_finalizacion;
+    }
+
+    /**
+     * Set tipo
+     *
+     * @param AppBundle\Entity\Listas $tipo
+     *
+     * @return Evento
+     */
+    public function setTipo(\AppBundle\Entity\Listas $tipo)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return AppBundle\Entity\Listas
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
+     * Set municipio
+     *
+     * @param AppBundle\Entity\Municipio $municipio
+     *
+     * @return Evento
+     */
+    public function setMunicipio(\AppBundle\Entity\Municipio $municipio)
+    {
+        $this->municipio = $municipio;
+
+        return $this;
+    }
+
+    /**
+     * Get municipio
+     *
+     * @return AppBundle\Entity\Municipio
+     */
+    public function getMunicipio()
+    {
+        return $this->municipio;
     }
 
     /**
@@ -222,7 +312,7 @@ class AsignacionGrupoCLEAR
      *
      * @param boolean $active
      *
-     * @return AsignacionGrupoCLEAR
+     * @return Evento
      */
     public function setActive($active)
     {
@@ -246,7 +336,7 @@ class AsignacionGrupoCLEAR
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return Evento
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
@@ -270,7 +360,7 @@ class AsignacionGrupoCLEAR
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return Evento
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -294,7 +384,7 @@ class AsignacionGrupoCLEAR
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return Evento
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
@@ -318,7 +408,7 @@ class AsignacionGrupoCLEAR
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return Evento
      */
     public function setFechaCreacion($fechaCreacion)
     {

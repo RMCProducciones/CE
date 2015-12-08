@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AsignacionGrupoCLEAR
+ * CalificacionExperienciaExitosa
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\AsignacionGrupoCLEARRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\CalificacionExperienciaExitosaRepository")
  */
-class AsignacionGrupoCLEAR
+class CalificacionExperienciaExitosa
 {
     /**
      * @var integer
@@ -21,39 +21,24 @@ class AsignacionGrupoCLEAR
      */
     private $id;
 
-   
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ExperienciaExitosa")
      */
-    private $grupo;
+    private $experienciaExitosa;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="clear", type="string")
+     * @ORM\Column(name="categoria", type="integer")
      */
-    private $clear;
+    private $categoria;
 
     /**
-     * @var boolean
+     * @var integer
      *
-     * @ORM\Column(name="habilitacion", type="boolean")
+     * @ORM\Column(name="calificacion", type="integer")
      */
-    private $habilitacion;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="asignacion", type="boolean")
-     */
-    private $asignacion;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="contraloria_social", type="boolean")
-     */
-    private $contraloria_social;
+    private $calificacion;
 
     /**
      * @var boolean
@@ -62,7 +47,7 @@ class AsignacionGrupoCLEAR
      */
     private $active;
 
-     /**
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
@@ -74,7 +59,7 @@ class AsignacionGrupoCLEAR
      */
     private $fecha_modificacion;
 
-     /**
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
@@ -98,123 +83,75 @@ class AsignacionGrupoCLEAR
     }
 
     /**
-     * Set grupo
+     * Set experienciaExitosa
      *
-     * @param AppBundle\Entity\Grupo $grupo
+     * @param AppBundle\Entity\ExperienciaExitosa $experienciaExitosa
      *
-     * @return AsignacionGrupoCLEAR
+     * @return CalificacionExperienciaExitosa
      */
-    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
+    public function setExperienciaExitosa(\AppBundle\Entity\ExperienciaExitosa $experienciaExitosa)
     {
-        $this->grupo = $grupo;
+        $this->experienciaExitosa = $experienciaExitosa;
 
         return $this;
     }
 
     /**
-     * Get grupo
+     * Get experienciaExitosa
      *
-     * @return AppBundle\Entity\Grupo
+     * @return AppBundle\Entity\ExperienciaExitosa
      */
-    public function getGrupo()
+    public function getExperienciaExitosa()
     {
-        return $this->grupo;
+        return $this->experienciaExitosa;
     }
 
     /**
-     * Set clear
+     * Set categoria
      *
-     * @param string $clear
+     * @param integer $categoria
      *
-     * @return AsignacionGrupoCLEAR
+     * @return CalificacionExperienciaExitosa
      */
-    public function setClear($clear)
+    public function setCategoria($categoria)
     {
-        $this->clear = $clear;
+        $this->categoria = $categoria;
 
         return $this;
     }
 
     /**
-     * Get clear
+     * Get categoria
      *
-     * @return string
+     * @return integer
      */
-    public function getClear()
+    public function getCategoria()
     {
-        return $this->clear;
+        return $this->categoria;
     }
 
     /**
-     * Set habilitacion
+     * Set calificacion
      *
-     * @param boolean $habilitacion
+     * @param integer $calificacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return CalificacionExperienciaExitosa
      */
-    public function setHabilitacion($habilitacion)
+    public function setCalificacion($calificacion)
     {
-        $this->habilitacion = $habilitacion;
+        $this->calificacion = $calificacion;
 
         return $this;
     }
 
     /**
-     * Get habilitacion
+     * Get calificacion
      *
-     * @return boolean
+     * @return integer
      */
-    public function getHabilitacion()
+    public function getCalificacion()
     {
-        return $this->habilitacion;
-    }
-
-    /**
-     * Set asignacion
-     *
-     * @param boolean $asignacion
-     *
-     * @return AsignacionGrupoCLEAR
-     */
-    public function setAsignacion($asignacion)
-    {
-        $this->asignacion = $asignacion;
-
-        return $this;
-    }
-
-    /**
-     * Get asignacion
-     *
-     * @return boolean
-     */
-    public function getAsignacion()
-    {
-        return $this->asignacion;
-    }
-
-    /**
-     * Set contraloriaSocial
-     *
-     * @param boolean $contraloriaSocial
-     *
-     * @return AsignacionGrupoCLEAR
-     */
-    public function setContraloriaSocial($contraloriaSocial)
-    {
-        $this->contraloria_social = $contraloriaSocial;
-
-        return $this;
-    }
-
-    /**
-     * Get contraloriaSocial
-     *
-     * @return boolean
-     */
-    public function getContraloriaSocial()
-    {
-        return $this->contraloria_social;
+        return $this->calificacion;
     }
 
     /**
@@ -222,7 +159,7 @@ class AsignacionGrupoCLEAR
      *
      * @param boolean $active
      *
-     * @return AsignacionGrupoCLEAR
+     * @return CalificacionExperienciaExitosa
      */
     public function setActive($active)
     {
@@ -246,7 +183,7 @@ class AsignacionGrupoCLEAR
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return CalificacionExperienciaExitosa
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
@@ -270,7 +207,7 @@ class AsignacionGrupoCLEAR
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return CalificacionExperienciaExitosa
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -294,7 +231,7 @@ class AsignacionGrupoCLEAR
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return CalificacionExperienciaExitosa
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
@@ -318,7 +255,7 @@ class AsignacionGrupoCLEAR
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return CalificacionExperienciaExitosa
      */
     public function setFechaCreacion($fechaCreacion)
     {

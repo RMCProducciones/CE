@@ -1,0 +1,178 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+{% block title %}Concurso Nuevo{% endblock %}
+
+{% block breadcrumb_ul %}
+
+    <ul class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Empresarial</li>
+      <li>Formacion de capital social asociativo y desarrollo empresarial</li>
+      <li><a href="{{ path('concursoGestion') }}">Concursos</a></li>
+      <li class="active">Nuevo</li>
+    </ul>
+
+{% endblock %}
+
+
+{% block section %}
+
+     
+  	<br>
+
+    <hr>
+
+    
+  {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+    {{ form_errors(form) }}
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="btn-group">
+  
+              <button name="grupo[Guardar]" id="grupo_Guardar" type="submit" class="btn btn-success">Guardar</button>
+              
+              <a href="{{ path('concursoNuevo') }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <br>
+        
+
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <!--form class="form-horizontal" role="form"-->
+			
+			   <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.fecha_bases) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.fecha_bases) }}
+                  {{ form_widget(form.fecha_bases, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			   <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.tipo) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.tipo) }}
+                  {{ form_widget(form.tipo, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			  <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.modalidad) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.modalidad) }}
+                  {{ form_widget(form.modalidad, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			  <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.tematica) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.tematica) }}
+                  {{ form_widget(form.tematica, { 'attr': {'class': 'form-control', 'onchange': 'alert("Ejecutar ajax para actualizar municipios...")'} }) }}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.ambito) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.ambito) }}
+                  {{ form_widget(form.ambito, { 'attr': {'class': 'form-control', 'onchange': 'alert("Ejecutar ajax para actualizar municipios...")'} }) }}
+                </div>
+              </div>
+			  
+              <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.problematica) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.problematica) }}
+                  {{ form_widget(form.problematica, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			  
+			    <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.actividades) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.actividades) }}
+                  {{ form_widget(form.actividades, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			  
+			    <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.resultados) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.resultados) }}
+                  {{ form_widget(form.resultados, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			  
+			  <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.valor) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.valor) }}
+                  {{ form_widget(form.valor, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			  
+			  <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.distribucion) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.distribucion) }}
+                  {{ form_widget(form.distribucion, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			  
+			 
+			  
+			   <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.criterios) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.criterios) }}
+                  {{ form_widget(form.criterios, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+             
+			  
+             
+             
+
+            <!--/form-->
+          </div>
+        </div>
+      </div>
+    </div>
+
+  {{ form_end(form) }}
+               
+{% endblock %}
+
