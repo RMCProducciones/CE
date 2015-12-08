@@ -57,3 +57,7 @@ php app/console doctrine:generate:entity --entity="AppBundle:Ahorro" --fields="g
 php app/console doctrine:generate:entity --entity="AppBundle:AsignacionBeneficiarioAhorro" --fields="ahorro:integer beneficiario:integer beneficiario_ahorro_otro_programa:boolean telefono_celular:string meta_ahorro_activacion:decimal meta_ahorro_mensual:decimal plan_ahorro_individual:decimal active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 php app/console doctrine:generate:entity --entity="AppBundle:SeguimientoBeneficiarioAhorro" --fields="beneficiario:integer fecha_apertura:datetime saldo_apertura:decimal incentivo_apertura:decimal fecha_corte_1:datetime saldo_corte_1:decimal incentivo_corte_1:decimal fecha_corte_2:datetime saldo_corte_2:decimal incentivo_corte_2:decimal fecha_corte_final:datetime saldo_corte_final:decimal incentivo_corte_final:decimal numero_incumplimiento:integer active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
+php app/console doctrine:generate:entity --entity="AppBundle:PolizaSoporte" --fields="grupo:integer tipo_soporte:integer estado:integer consecutivo:integer cofinanciacion:decimal path:string active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
