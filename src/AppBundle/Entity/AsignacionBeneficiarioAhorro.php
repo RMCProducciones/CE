@@ -22,9 +22,7 @@ class AsignacionBeneficiarioAhorro
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="ahorro", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ahorro")
      */
     private $ahorro;
 
@@ -128,11 +126,11 @@ class AsignacionBeneficiarioAhorro
     /**
      * Set ahorro
      *
-     * @param integer $ahorro
+     * @param AppBundle\Entity\Ahorro $ahorro
      *
      * @return AsignacionBeneficiarioAhorro
      */
-    public function setAhorro($ahorro)
+    public function setAhorro(\AppBundle\Entity\Ahorro $ahorro)
     {
         $this->ahorro = $ahorro;
 
@@ -142,7 +140,7 @@ class AsignacionBeneficiarioAhorro
     /**
      * Get ahorro
      *
-     * @return integer
+     * @return AppBundle\Entity\Ahorro
      */
     public function getAhorro()
     {
