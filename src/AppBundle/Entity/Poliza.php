@@ -22,9 +22,7 @@ class Poliza
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="grupo", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
      */
     private $grupo;
 
@@ -36,30 +34,38 @@ class Poliza
     private $active;
 
     /**
+<<<<<<< HEAD
      * @var integer
      *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\Column(name="usuario_modificacion", type="integer", nullable=true)
+=======
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
+>>>>>>> 03ecc90e7b71b4ff05384fc5484e145b88ea867b
      */
     private $usuario_modificacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
      */
     private $fecha_modificacion;
 
     /**
+<<<<<<< HEAD
      * @var integer
      *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\Column(name="usuario_creacion", type="integer", nullable=true)
+=======
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
+>>>>>>> 03ecc90e7b71b4ff05384fc5484e145b88ea867b
      */
     private $usuario_creacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_creacion", type="datetime")
+     * @ORM\Column(name="fecha_creacion", type="datetime", nullable=true)
      */
     private $fecha_creacion;
 
@@ -77,11 +83,11 @@ class Poliza
     /**
      * Set grupo
      *
-     * @param integer $grupo
+     * @param AppBundle\Entity\Grupo $grupo
      *
      * @return Poliza
      */
-    public function setGrupo($grupo)
+    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
     {
         $this->grupo = $grupo;
 
@@ -91,7 +97,7 @@ class Poliza
     /**
      * Get grupo
      *
-     * @return integer
+     * @return AppBundle\Entity\Grupo
      */
     public function getGrupo()
     {
@@ -125,11 +131,11 @@ class Poliza
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return Poliza
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -139,7 +145,7 @@ class Poliza
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -173,11 +179,11 @@ class Poliza
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return Poliza
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -187,7 +193,7 @@ class Poliza
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
