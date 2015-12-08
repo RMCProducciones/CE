@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * PolizaSoporte
+ * Poliza
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\PolizaSoporteRepository")
+ * @ORM\Entity
  */
-class PolizaSoporte
+class Poliza
 {
     /**
      * @var integer
@@ -24,44 +24,9 @@ class PolizaSoporte
     /**
      * @var integer
      *
-     * @ORM\Column(name="poliza", type="integer")
+     * @ORM\Column(name="grupo", type="integer")
      */
-    private $poliza;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="tipo_soporte", type="integer")
-     */
-    private $tipo_soporte;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="estado", type="integer")
-     */
-    private $estado;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="consecutivo", type="integer")
-     */
-    private $consecutivo;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="cofinanciacion", type="decimal")
-     */
-    private $cofinanciacion;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="path", type="string")
-     */
-    private $path;
+    private $grupo;
 
     /**
      * @var boolean
@@ -110,147 +75,27 @@ class PolizaSoporte
     }
 
     /**
-     * Set poliza
+     * Set grupo
      *
-     * @param integer $poliza
+     * @param integer $grupo
      *
-     * @return PolizaSoporte
+     * @return Poliza
      */
-    public function setPoliza($poliza)
+    public function setGrupo($grupo)
     {
-        $this->poliza = $poliza;
+        $this->grupo = $grupo;
 
         return $this;
     }
 
     /**
-     * Get poliza
+     * Get grupo
      *
      * @return integer
      */
-    public function getPoliza()
+    public function getGrupo()
     {
-        return $this->poliza;
-    }
-
-    /**
-     * Set tipoSoporte
-     *
-     * @param integer $tipoSoporte
-     *
-     * @return PolizaSoporte
-     */
-    public function setTipoSoporte($tipoSoporte)
-    {
-        $this->tipo_soporte = $tipoSoporte;
-
-        return $this;
-    }
-
-    /**
-     * Get tipoSoporte
-     *
-     * @return integer
-     */
-    public function getTipoSoporte()
-    {
-        return $this->tipo_soporte;
-    }
-
-    /**
-     * Set estado
-     *
-     * @param integer $estado
-     *
-     * @return PolizaSoporte
-     */
-    public function setEstado($estado)
-    {
-        $this->estado = $estado;
-
-        return $this;
-    }
-
-    /**
-     * Get estado
-     *
-     * @return integer
-     */
-    public function getEstado()
-    {
-        return $this->estado;
-    }
-
-    /**
-     * Set consecutivo
-     *
-     * @param integer $consecutivo
-     *
-     * @return PolizaSoporte
-     */
-    public function setConsecutivo($consecutivo)
-    {
-        $this->consecutivo = $consecutivo;
-
-        return $this;
-    }
-
-    /**
-     * Get consecutivo
-     *
-     * @return integer
-     */
-    public function getConsecutivo()
-    {
-        return $this->consecutivo;
-    }
-
-    /**
-     * Set cofinanciacion
-     *
-     * @param string $cofinanciacion
-     *
-     * @return PolizaSoporte
-     */
-    public function setCofinanciacion($cofinanciacion)
-    {
-        $this->cofinanciacion = $cofinanciacion;
-
-        return $this;
-    }
-
-    /**
-     * Get cofinanciacion
-     *
-     * @return string
-     */
-    public function getCofinanciacion()
-    {
-        return $this->cofinanciacion;
-    }
-
-    /**
-     * Set path
-     *
-     * @param string $path
-     *
-     * @return PolizaSoporte
-     */
-    public function setPath($path)
-    {
-        $this->path = $path;
-
-        return $this;
-    }
-
-    /**
-     * Get path
-     *
-     * @return string
-     */
-    public function getPath()
-    {
-        return $this->path;
+        return $this->grupo;
     }
 
     /**
@@ -258,7 +103,7 @@ class PolizaSoporte
      *
      * @param boolean $active
      *
-     * @return PolizaSoporte
+     * @return Poliza
      */
     public function setActive($active)
     {
@@ -282,7 +127,7 @@ class PolizaSoporte
      *
      * @param integer $usuarioModificacion
      *
-     * @return PolizaSoporte
+     * @return Poliza
      */
     public function setUsuarioModificacion($usuarioModificacion)
     {
@@ -306,7 +151,7 @@ class PolizaSoporte
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return PolizaSoporte
+     * @return Poliza
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -330,7 +175,7 @@ class PolizaSoporte
      *
      * @param integer $usuarioCreacion
      *
-     * @return PolizaSoporte
+     * @return Poliza
      */
     public function setUsuarioCreacion($usuarioCreacion)
     {
@@ -354,7 +199,7 @@ class PolizaSoporte
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return PolizaSoporte
+     * @return Poliza
      */
     public function setFechaCreacion($fechaCreacion)
     {

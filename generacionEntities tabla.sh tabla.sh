@@ -296,13 +296,26 @@ incentivo_corte_final:decimal
 numero_incumplimiento:integer
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
-php app/console doctrine:generate:entity --entity="AppBundle:PolizaSoporte" --fields="
+
+
+php app/console doctrine:generate:entity --entity="AppBundle:Poliza" --fields="
 grupo:integer
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:PolizaSoporte" --fields="
+poliza:integer
 tipo_soporte:integer
 estado:integer
 consecutivo:integer
 cofinanciacion:decimal
 path:string
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:AsignacionBeneficiarioPoliza" --fields="
+poliza:integer
+beneficiario:integer
+beneficiario_poliza_otro_programa:boolean
+observaciones:string
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 

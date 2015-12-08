@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * PolizaSoporte
+ * AsignacionBeneficiarioPoliza
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\PolizaSoporteRepository")
+ * @ORM\Entity
  */
-class PolizaSoporte
+class AsignacionBeneficiarioPoliza
 {
     /**
      * @var integer
@@ -31,37 +31,23 @@ class PolizaSoporte
     /**
      * @var integer
      *
-     * @ORM\Column(name="tipo_soporte", type="integer")
+     * @ORM\Column(name="beneficiario", type="integer")
      */
-    private $tipo_soporte;
+    private $beneficiario;
 
     /**
-     * @var integer
+     * @var boolean
      *
-     * @ORM\Column(name="estado", type="integer")
+     * @ORM\Column(name="beneficiario_poliza_otro_programa", type="boolean")
      */
-    private $estado;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="consecutivo", type="integer")
-     */
-    private $consecutivo;
+    private $beneficiario_poliza_otro_programa;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="cofinanciacion", type="decimal")
+     * @ORM\Column(name="observaciones", type="string")
      */
-    private $cofinanciacion;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="path", type="string")
-     */
-    private $path;
+    private $observaciones;
 
     /**
      * @var boolean
@@ -114,7 +100,7 @@ class PolizaSoporte
      *
      * @param integer $poliza
      *
-     * @return PolizaSoporte
+     * @return AsignacionBeneficiarioPoliza
      */
     public function setPoliza($poliza)
     {
@@ -134,123 +120,75 @@ class PolizaSoporte
     }
 
     /**
-     * Set tipoSoporte
+     * Set beneficiario
      *
-     * @param integer $tipoSoporte
+     * @param integer $beneficiario
      *
-     * @return PolizaSoporte
+     * @return AsignacionBeneficiarioPoliza
      */
-    public function setTipoSoporte($tipoSoporte)
+    public function setBeneficiario($beneficiario)
     {
-        $this->tipo_soporte = $tipoSoporte;
+        $this->beneficiario = $beneficiario;
 
         return $this;
     }
 
     /**
-     * Get tipoSoporte
+     * Get beneficiario
      *
      * @return integer
      */
-    public function getTipoSoporte()
+    public function getBeneficiario()
     {
-        return $this->tipo_soporte;
+        return $this->beneficiario;
     }
 
     /**
-     * Set estado
+     * Set beneficiarioPolizaOtroPrograma
      *
-     * @param integer $estado
+     * @param boolean $beneficiarioPolizaOtroPrograma
      *
-     * @return PolizaSoporte
+     * @return AsignacionBeneficiarioPoliza
      */
-    public function setEstado($estado)
+    public function setBeneficiarioPolizaOtroPrograma($beneficiarioPolizaOtroPrograma)
     {
-        $this->estado = $estado;
+        $this->beneficiario_poliza_otro_programa = $beneficiarioPolizaOtroPrograma;
 
         return $this;
     }
 
     /**
-     * Get estado
+     * Get beneficiarioPolizaOtroPrograma
      *
-     * @return integer
+     * @return boolean
      */
-    public function getEstado()
+    public function getBeneficiarioPolizaOtroPrograma()
     {
-        return $this->estado;
+        return $this->beneficiario_poliza_otro_programa;
     }
 
     /**
-     * Set consecutivo
+     * Set observaciones
      *
-     * @param integer $consecutivo
+     * @param string $observaciones
      *
-     * @return PolizaSoporte
+     * @return AsignacionBeneficiarioPoliza
      */
-    public function setConsecutivo($consecutivo)
+    public function setObservaciones($observaciones)
     {
-        $this->consecutivo = $consecutivo;
+        $this->observaciones = $observaciones;
 
         return $this;
     }
 
     /**
-     * Get consecutivo
-     *
-     * @return integer
-     */
-    public function getConsecutivo()
-    {
-        return $this->consecutivo;
-    }
-
-    /**
-     * Set cofinanciacion
-     *
-     * @param string $cofinanciacion
-     *
-     * @return PolizaSoporte
-     */
-    public function setCofinanciacion($cofinanciacion)
-    {
-        $this->cofinanciacion = $cofinanciacion;
-
-        return $this;
-    }
-
-    /**
-     * Get cofinanciacion
+     * Get observaciones
      *
      * @return string
      */
-    public function getCofinanciacion()
+    public function getObservaciones()
     {
-        return $this->cofinanciacion;
-    }
-
-    /**
-     * Set path
-     *
-     * @param string $path
-     *
-     * @return PolizaSoporte
-     */
-    public function setPath($path)
-    {
-        $this->path = $path;
-
-        return $this;
-    }
-
-    /**
-     * Get path
-     *
-     * @return string
-     */
-    public function getPath()
-    {
-        return $this->path;
+        return $this->observaciones;
     }
 
     /**
@@ -258,7 +196,7 @@ class PolizaSoporte
      *
      * @param boolean $active
      *
-     * @return PolizaSoporte
+     * @return AsignacionBeneficiarioPoliza
      */
     public function setActive($active)
     {
@@ -282,7 +220,7 @@ class PolizaSoporte
      *
      * @param integer $usuarioModificacion
      *
-     * @return PolizaSoporte
+     * @return AsignacionBeneficiarioPoliza
      */
     public function setUsuarioModificacion($usuarioModificacion)
     {
@@ -306,7 +244,7 @@ class PolizaSoporte
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return PolizaSoporte
+     * @return AsignacionBeneficiarioPoliza
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -330,7 +268,7 @@ class PolizaSoporte
      *
      * @param integer $usuarioCreacion
      *
-     * @return PolizaSoporte
+     * @return AsignacionBeneficiarioPoliza
      */
     public function setUsuarioCreacion($usuarioCreacion)
     {
@@ -354,7 +292,7 @@ class PolizaSoporte
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return PolizaSoporte
+     * @return AsignacionBeneficiarioPoliza
      */
     public function setFechaCreacion($fechaCreacion)
     {
