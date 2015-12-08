@@ -27,9 +27,7 @@ class AsignacionBeneficiarioAhorro
     private $ahorro;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="beneficiario", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Beneficiario")
      */
     private $beneficiario;
 
@@ -85,9 +83,7 @@ class AsignacionBeneficiarioAhorro
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
@@ -99,9 +95,7 @@ class AsignacionBeneficiarioAhorro
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -150,11 +144,11 @@ class AsignacionBeneficiarioAhorro
     /**
      * Set beneficiario
      *
-     * @param integer $beneficiario
+     * @param AppBundle\Entity\Beneficiario $beneficiario
      *
      * @return AsignacionBeneficiarioAhorro
      */
-    public function setBeneficiario($beneficiario)
+    public function setBeneficiario(\AppBundle\Entity\Beneficiario $beneficiario)
     {
         $this->beneficiario = $beneficiario;
 
@@ -164,7 +158,7 @@ class AsignacionBeneficiarioAhorro
     /**
      * Get beneficiario
      *
-     * @return integer
+     * @return AppBundle\Entity\Beneficiario
      */
     public function getBeneficiario()
     {
@@ -343,11 +337,11 @@ public function setObservacion($observacion)
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return AsignacionBeneficiarioAhorro
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -357,7 +351,7 @@ public function setObservacion($observacion)
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -391,11 +385,11 @@ public function setObservacion($observacion)
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return AsignacionBeneficiarioAhorro
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -405,7 +399,7 @@ public function setObservacion($observacion)
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
