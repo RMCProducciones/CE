@@ -280,7 +280,7 @@ plan_ahorro_individual:decimal
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 php app/console doctrine:generate:entity --entity="AppBundle:SeguimientoBeneficiarioAhorro" --fields="
-beneficiario:integer
+asignacionBeneficiarioAhorro:integer
 fecha_apertura:datetime
 saldo_apertura:decimal
 incentivo_apertura:decimal
@@ -317,6 +317,66 @@ beneficiario:integer
 beneficiario_poliza_otro_programa:boolean
 observaciones:string
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
+
+
+
+php app/console doctrine:generate:entity --entity="AppBundle:ProgramaCapacitacionFinanciera" --fields="
+talento_financiero:integer
+estado:integer
+municipio:integer
+lugar:string
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:CapacitacionFinanciera" --fields="
+programaCapacitacionFinanciera:integer
+modulo:integer
+estado:integer
+fecha:datetime
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:AsignacionBeneficiarioProgramaCapacitacionFinanciera" --fields="
+programaCapacitacionFinanciera:integer
+beneficiario:integer
+participante:integer
+valoracion_inicial:integer
+valoracion_final:integer
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:Participante" --fields="
+beneficiario:integer
+relacion:integer
+tipo_documento:integer
+numero_documento:string
+primer_apellido:string
+segundo_apellido:string
+primer_nombre:string
+segundo_nombre:string
+genero:integer
+fecha_nacimiento:datetime
+edad_inscripcion:integer
+joven_rural:boolean
+pertenencia_etnica:integer
+grupo_indigena:integer
+desplazado:boolean
+discapacidad:string
+estado_civil:integer
+rol_grupo_familiar:integer
+hijos_menores_5:integer
+sabe_leer:boolean
+sabe_escribir:boolean
+nivel_estudios:integer
+ocupacion:integer
+tipo_vivienda:integer
+telefono_fijo:string
+telefono_celular:string
+correo_electronico:string
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
+
+
 
 
 PENDIENTE POR DEFINIR
