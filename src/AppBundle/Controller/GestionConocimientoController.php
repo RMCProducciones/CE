@@ -16,10 +16,13 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use AppBundle\Entity\ExperienciaExitosa;
 use AppBundle\Entity\Talento;
 use AppBundle\Entity\Beca;
+use AppBundle\Entity\Capacitacion;
 
 use AppBundle\Form\GestionConocimiento\ExperienciaExitosaType;
 use AppBundle\Form\GestionConocimiento\TalentoType;
 use AppBundle\Form\GestionConocimiento\BecaType;
+use AppBundle\Form\GestionConocimiento\CapacitacionType;
+
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -160,5 +163,50 @@ class GestionConocimientoController extends Controller
         }
         
         return $this->render('AppBundle:GestionConocimiento:beca-nuevo.html.twig', array('form' => $form->createView()));
+    } 
+	
+	
+	/**
+     * @Route("/gestion-conocimiento/capacitacion", name="capacitacionGestion")
+     */
+    public function capacitacionGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $capacitaciones= $em->getRepository('AppBundle:Capacitacion')->findBY(
+            array('active' => 1)
+            
+        ); 
+
+        return $this->render('AppBundle:GestionConocimiento:capacitacion-gestion.html.twig', array( 'capacitaciones' => $capacitaciones));
+    }  
+	
+	 /**
+     * @Route("/gestion-conocimiento/capacitacion/nuevo", name="capacitacionNuevo")
+     */
+    public function capacitacionNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $capacitacion = new Capacitacion();
+        
+        $form = $this->createForm(new CapacitacionType(), $capacitacion);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $capacitacion = $form->getData();
+
+            $capacitacion->setActive(true);
+            $capacitacion->setFechaCreacion(new \DateTime());
+
+
+            
+            $em->persist($capacitacion);
+            $em->flush();
+
+            return $this->redirectToRoute('capacitacionGestion');
+        }
+        
+        return $this->render('AppBundle:GestionConocimiento:capacitacion-nuevo.html.twig', array('form' => $form->createView()));
     } 
 }
