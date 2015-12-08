@@ -1,6 +1,6 @@
 {% extends 'AppBundle::frontend.html.twig' %}
 
-{% block title %}Beca Nuevo{% endblock %}
+{% block title %}Capacitacion Nuevo{% endblock %}
 
 {% block breadcrumb_ul %}
 
@@ -8,7 +8,7 @@
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Conocimiento</li>
       
-     <li><a href="{{ path('becaGestion') }}">Becas</a></li>
+      <li><a href="{{ path('capacitacionGestion') }}">Capacitacion</a></li>
 	  <li>Nuevo</li>
     </ul>
 
@@ -54,6 +54,24 @@
             <!--form class="form-horizontal" role="form"-->
 			<div class="form-group">
                 <div class="col-sm-3">
+                  {{ form_label(form.capacitador) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.capacitador) }}
+                  {{ form_widget(form.capacitador, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			   <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.nombre) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.nombre) }}
+                  {{ form_widget(form.nombre, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			  <div class="form-group">
+                <div class="col-sm-3">
                   {{ form_label(form.fecha_publicacion) }}
                 </div>
                 <div class="col-sm-9">
@@ -61,7 +79,7 @@
                   {{ form_widget(form.fecha_publicacion, { 'attr': {'class': 'form-control'} }) }}
                 </div>
               </div>
-			   <div class="form-group">
+			  <div class="form-group">
                 <div class="col-sm-3">
                   {{ form_label(form.fecha_inicio) }}
                 </div>
@@ -70,7 +88,7 @@
                   {{ form_widget(form.fecha_inicio, { 'attr': {'class': 'form-control'} }) }}
                 </div>
               </div>
-			  <div class="form-group">
+              <div class="form-group">
                 <div class="col-sm-3">
                   {{ form_label(form.fecha_finalizacion) }}
                 </div>
@@ -79,31 +97,13 @@
                   {{ form_widget(form.fecha_finalizacion, { 'attr': {'class': 'form-control'} }) }}
                 </div>
               </div>
-			  <div class="form-group">
+              <div class="form-group">
                 <div class="col-sm-3">
                   {{ form_label(form.tipo) }}
                 </div>
                 <div class="col-sm-9">
                   {{ form_errors(form.tipo) }}
                   {{ form_widget(form.tipo, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-3">
-                  {{ form_label(form.entidad) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.entidad) }}
-                  {{ form_widget(form.entidad, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-3">
-                  {{ form_label(form.nombre) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.nombre) }}
-                  {{ form_widget(form.nombre, { 'attr': {'class': 'form-control'} }) }}
                 </div>
               </div>
 			    <div class="form-group">
@@ -125,7 +125,8 @@
                   {{ form_widget(form.modalidad, { 'attr': {'class': 'form-control'} }) }}
                 </div>
               </div>
-			    
+
+                       
 
             <!--/form-->
           </div>

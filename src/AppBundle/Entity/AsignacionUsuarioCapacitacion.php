@@ -22,16 +22,12 @@ class AsignacionUsuarioCapacitacion
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="capacitacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Capacitacion")
      */
     private $capacitacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario;
 
@@ -43,9 +39,7 @@ class AsignacionUsuarioCapacitacion
     private $fecha_asignacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="estado", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $estado;
 
@@ -64,9 +58,7 @@ class AsignacionUsuarioCapacitacion
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
@@ -78,9 +70,7 @@ class AsignacionUsuarioCapacitacion
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -105,11 +95,11 @@ class AsignacionUsuarioCapacitacion
     /**
      * Set capacitacion
      *
-     * @param integer $capacitacion
+     * @param AppBundle\Entity\Capacitacion $capacitacion
      *
      * @return AsignacionUsuarioCapacitacion
      */
-    public function setCapacitacion($capacitacion)
+    public function setCapacitacion(\AppBundle\Entity\Capacitacion $capacitacion)
     {
         $this->capacitacion = $capacitacion;
 
@@ -119,7 +109,7 @@ class AsignacionUsuarioCapacitacion
     /**
      * Get capacitacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Capacitacion
      */
     public function getCapacitacion()
     {
@@ -129,11 +119,11 @@ class AsignacionUsuarioCapacitacion
     /**
      * Set usuario
      *
-     * @param integer $usuario
+     * @param AppBundle\Entity\Usuario $usuario
      *
      * @return AsignacionUsuarioCapacitacion
      */
-    public function setUsuario($usuario)
+    public function setUsuario(\AppBundle\Entity\Usuario $usuario)
     {
         $this->usuario = $usuario;
 
@@ -143,7 +133,7 @@ class AsignacionUsuarioCapacitacion
     /**
      * Get usuario
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuario()
     {
@@ -249,11 +239,11 @@ class AsignacionUsuarioCapacitacion
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return AsignacionUsuarioCapacitacion
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -263,7 +253,7 @@ class AsignacionUsuarioCapacitacion
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -297,11 +287,11 @@ class AsignacionUsuarioCapacitacion
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return AsignacionUsuarioCapacitacion
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -311,7 +301,7 @@ class AsignacionUsuarioCapacitacion
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {

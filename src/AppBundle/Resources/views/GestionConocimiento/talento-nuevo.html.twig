@@ -8,7 +8,7 @@
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Conocimiento</li>
       
-      <li>Experiencias Exitosas</li>
+      <li><a href="{{ path('talentoGestion') }}">Talentos</a></li>
 	  <li>Nuevo</li>
     </ul>
 
@@ -85,7 +85,7 @@
                 </div>
                 <div class="col-sm-9">
                   {{ form_errors(form.primer_apellido) }}
-                  {{ form_widget(form.primer_apellido, { 'attr': {'class': 'form-control', 'onchange': 'alert("Ejecutar ajax para actualizar municipios...")'} }) }}
+                  {{ form_widget(form.primer_apellido, { 'attr': {'class': 'form-control'} }) }} 
                 </div>
               </div>
               <div class="form-group">
@@ -94,7 +94,7 @@
                 </div>
                 <div class="col-sm-9">
                   {{ form_errors(form.segundo_apellido) }}
-                  {{ form_widget(form.segundo_apellido, { 'attr': {'class': 'form-control', 'onchange': 'alert("Ejecutar ajax para actualizar municipios...")'} }) }}
+                  {{ form_widget(form.segundo_apellido, { 'attr': {'class': 'form-control'} }) }}
                 </div>
               </div>
               <div class="form-group">
