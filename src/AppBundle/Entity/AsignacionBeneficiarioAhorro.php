@@ -69,7 +69,16 @@ class AsignacionBeneficiarioAhorro
      * @ORM\Column(name="plan_ahorro_individual", type="decimal")
      */
     private $plan_ahorro_individual;
-
+	
+	
+	/**
+     * @var string
+     *
+     * @ORM\Column(name="observacion", type="string")
+     */	 
+    private $observacion;
+	
+	
     /**
      * @var boolean
      *
@@ -273,6 +282,7 @@ class AsignacionBeneficiarioAhorro
 
         return $this;
     }
+	
 
     /**
      * Get planAhorroIndividual
@@ -282,6 +292,30 @@ class AsignacionBeneficiarioAhorro
     public function getPlanAhorroIndividual()
     {
         return $this->plan_ahorro_individual;
+    }
+	
+	/**
+     * Set observacion
+     *
+     * @param string $observacion
+     *
+     * @return AsignacionBeneficiarioAhorro
+     */
+public function setObservacion($observacion)
+    {
+        $this->observacion = $observacion;
+
+        return $this;
+    }
+
+    /**
+     * Get observacion
+     *
+     * @return string
+     */
+    public function getObservacion()
+    {
+        return $this->observacion;
     }
 
     /**
