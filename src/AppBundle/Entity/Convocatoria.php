@@ -46,8 +46,12 @@ class Convocatoria
      * @ORM\Column(name="fecha_cierre", type="datetime")
      */
     private $fecha_cierre;
-
     
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean")
+     */
     private $active;
 
     /**
@@ -78,7 +82,7 @@ class Convocatoria
     
     public function __toString()
     {
-        return $this->getPoa().":".$this->getNumero();
+        return "Convocatoria No. ".$this->getNumero();
     }
 
     /**
@@ -194,7 +198,7 @@ class Convocatoria
      *
      * @param boolean $active
      *
-     * @return Convocatoria
+     * @return Evento
      */
     public function setActive($active)
     {

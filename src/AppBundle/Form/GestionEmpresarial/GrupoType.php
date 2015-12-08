@@ -11,7 +11,24 @@ class GrupoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-			->add('convocatoria', 'entity', array('class' => 'AppBundle:Convocatoria'))
+			->add('poa', 'entity', array(
+					'mapped'=>false,
+					'class' => 'AppBundle:POA',
+					'query_builder' => function(EntityRepository $er) {
+						return $er->createQueryBuilder('poa')
+							->where('poa.active = 1');
+					},
+				)
+			)
+
+			->add('convocatoria', 'entity', array(
+					'class' => 'AppBundle:Convocatoria',
+					'query_builder' => function(EntityRepository $er) {
+						return $er->createQueryBuilder('convocatoria')
+							->where('convocatoria.active = 1');
+					},
+				)
+			)
 
 			->add('municipio', 'entity', array(
 				'class' => 'AppBundle:Municipio',
@@ -25,7 +42,7 @@ class GrupoType extends AbstractType
 						->andWhere('l.active = 1')
 						->setParameter('dominio', 'tipo_grupo')
 						->orderBy('l.orden', 'ASC');
-				},
+				}
 			))
 											
 			->add('fecha_inscripcion', 'date', array(
