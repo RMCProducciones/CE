@@ -22,9 +22,7 @@ class Ahorro
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="grupo", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
      */
     private $grupo;
 
@@ -43,9 +41,7 @@ class Ahorro
     private $fecha_inicio;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="estado", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $estado;
 
@@ -64,9 +60,7 @@ class Ahorro
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
@@ -78,9 +72,7 @@ class Ahorro
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -105,11 +97,11 @@ class Ahorro
     /**
      * Set grupo
      *
-     * @param integer $grupo
+     * @param AppBundle\Entity\Grupo $grupo
      *
      * @return Ahorro
      */
-    public function setGrupo($grupo)
+    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
     {
         $this->grupo = $grupo;
 
@@ -119,7 +111,7 @@ class Ahorro
     /**
      * Get grupo
      *
-     * @return integer
+     * @return AppBundle\Entity\Grupo
      */
     public function getGrupo()
     {
@@ -177,11 +169,11 @@ class Ahorro
     /**
      * Set estado
      *
-     * @param integer $estado
+     * @param AppBundle\Entity\Listas $estado
      *
      * @return Ahorro
      */
-    public function setEstado($estado)
+    public function setEstado(\AppBundle\Entity\Listas $estado)
     {
         $this->estado = $estado;
 
@@ -191,7 +183,7 @@ class Ahorro
     /**
      * Get estado
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getEstado()
     {
@@ -249,11 +241,11 @@ class Ahorro
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return Ahorro
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -263,7 +255,7 @@ class Ahorro
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -297,11 +289,11 @@ class Ahorro
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return Ahorro
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -311,7 +303,7 @@ class Ahorro
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
