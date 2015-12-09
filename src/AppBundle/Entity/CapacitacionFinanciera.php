@@ -22,9 +22,7 @@ class CapacitacionFinanciera
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="programaCapacitacionFinanciera", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProgramaCapacitacionFinanciera")
      */
     private $programaCapacitacionFinanciera;
 
@@ -36,9 +34,7 @@ class CapacitacionFinanciera
     private $modulo;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="estado", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $estado;
 
@@ -57,9 +53,7 @@ class CapacitacionFinanciera
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
@@ -71,9 +65,7 @@ class CapacitacionFinanciera
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -98,11 +90,11 @@ class CapacitacionFinanciera
     /**
      * Set programaCapacitacionFinanciera
      *
-     * @param integer $programaCapacitacionFinanciera
+     * @param AppBundle\Entity\ProgramaCapacitacionFinanciera $programaCapacitacionFinanciera
      *
      * @return CapacitacionFinanciera
      */
-    public function setProgramaCapacitacionFinanciera($programaCapacitacionFinanciera)
+    public function setProgramaCapacitacionFinanciera(\AppBundle\Entity\ProgramaCapacitacionFinanciera$programaCapacitacionFinanciera)
     {
         $this->programaCapacitacionFinanciera = $programaCapacitacionFinanciera;
 
@@ -112,7 +104,7 @@ class CapacitacionFinanciera
     /**
      * Get programaCapacitacionFinanciera
      *
-     * @return integer
+     * @return AppBundle\Entity\ProgramaCapacitacionFinanciera
      */
     public function getProgramaCapacitacionFinanciera()
     {
@@ -146,11 +138,11 @@ class CapacitacionFinanciera
     /**
      * Set estado
      *
-     * @param integer $estado
+     * @param AppBundle\Entity\Listas $estado
      *
      * @return CapacitacionFinanciera
      */
-    public function setEstado($estado)
+    public function setEstado(\AppBundle\Entity\Listas $estado)
     {
         $this->estado = $estado;
 
@@ -160,7 +152,7 @@ class CapacitacionFinanciera
     /**
      * Get estado
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getEstado()
     {
@@ -218,11 +210,11 @@ class CapacitacionFinanciera
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return CapacitacionFinanciera
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -232,7 +224,7 @@ class CapacitacionFinanciera
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -266,11 +258,11 @@ class CapacitacionFinanciera
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return CapacitacionFinanciera
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -280,7 +272,7 @@ class CapacitacionFinanciera
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
