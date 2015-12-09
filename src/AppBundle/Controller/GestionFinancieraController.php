@@ -78,7 +78,7 @@ class GestionFinancieraController extends Controller
     public function polizasGestionAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $polizas= $em->getRepository('AppBundle:Poliza')->findBY(
+        $polizas= $em->getRepository('AppBundle:ProgramaCapacitacionFinanciera')->findBY(
             array('active' => 1)
             
         ); 
@@ -114,6 +114,51 @@ class GestionFinancieraController extends Controller
         }
         
         return $this->render('AppBundle:GestionFinanciera:poliza-nuevo.html.twig', array('form' => $form->createView()));
+    } 
+	
+	
+	/**
+     * @Route("/gestion-financiera/capacitacion-financiera", name="capacitacionfinancieraGestion")
+     */
+    public function capacitacionfinancieraGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $capacitaciones= $em->getRepository('AppBundle:ProgramaCapacitacionFinanciera')->findBY(
+            array('active' => 1)
+            
+        ); 
+
+        return $this->render('AppBundle:GestionFinanciera:capacitacion-financiera-gestion.html.twig', array( 'capacitaciones' => $capacitaciones));
+    }  
+	
+	 /**
+     * @Route("/gestion-financiera/capacitacion-financiera/nuevo", name="capacitacionfinancieraNuevo")
+     */
+    public function capacitacionfinancieraNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $capacitacion = new Capacitacion();
+        
+        $form = $this->createForm(new PolizaType(), $capacitacion);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $capacitacion = $form->getData();
+
+            $capacitacion->setActive(true);
+            $capacitacion->setFechaCreacion(new \DateTime());
+
+
+            
+            $em->persist($capacitacion);
+            $em->flush();
+
+            return $this->redirectToRoute('capacitacionfinancieraGestion');
+        }
+        
+        return $this->render('AppBundle:GestionFinanciera:capacitacion-financiera-nuevo.html.twig', array('form' => $form->createView()));
     } 
 	
 }
