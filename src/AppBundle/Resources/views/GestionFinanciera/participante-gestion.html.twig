@@ -107,8 +107,10 @@
 	                    <input type="checkbox">
 	                  </th>
 	                  
-	                  <th>Grupo</th>
-	                  <th>Estado</th>
+	                  <th>Nombre</th>
+					  <th>Numero Documento</th>
+	                  <th>Relacion</th>
+					  
 	                  <th>Acciones</th>
 	                </tr>
 	           </thead>
@@ -124,14 +126,16 @@
 	                    <input type="checkbox">
 	                  </td>
 	                <td>
-	                {{participante.primernombre}}
+	                {{participante.primernombre}}{{participante.segundonombre}}{{participante.primerapellido}}{{participante.segundoapellido}}
 	                  </td>
 	                  <td>
-	                    
+	                    {{participante.numerodocumento}}
+	                  </td>
+					   <td>
+	                   {{participante.relacion}}
+	         
 	                  </td>
 					  
-	         
-	                  
 	                  <td>
 	                   
 	                    <a href="acta-subir-grupos.html" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span> | </a>
