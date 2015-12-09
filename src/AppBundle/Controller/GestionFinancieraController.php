@@ -16,9 +16,13 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 use AppBundle\Entity\Ahorro;
 use AppBundle\Entity\Poliza;
+use AppBundle\Entity\ProgramaCapacitacionFinanciera;
+use AppBundle\Entity\Participante;
 
 use AppBundle\Form\GestionFinanciera\AhorroType;
 use AppBundle\Form\GestionFinanciera\PolizaType;
+use AppBundle\Form\GestionFinanciera\ProgramaCapacitacionFinancieraType;
+use AppBundle\Form\GestionFinanciera\ParticipanteType;
 
 
 /*Para autenticación por código*/
@@ -78,7 +82,7 @@ class GestionFinancieraController extends Controller
     public function polizasGestionAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $polizas= $em->getRepository('AppBundle:ProgramaCapacitacionFinanciera')->findBY(
+        $polizas= $em->getRepository('AppBundle:Poliza')->findBY(
             array('active' => 1)
             
         ); 
@@ -118,47 +122,91 @@ class GestionFinancieraController extends Controller
 	
 	
 	/**
-     * @Route("/gestion-financiera/capacitacion-financiera", name="capacitacionfinancieraGestion")
+     * @Route("/gestion-financiera/capacitacion-financiera", name="programaCapacitacionFinancieraGestion")
      */
-    public function capacitacionfinancieraGestionAction()
+    public function programaCapacitacionFinancieraGestionAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $capacitaciones= $em->getRepository('AppBundle:ProgramaCapacitacionFinanciera')->findBY(
+        $programaCapacitacionFinancieras= $em->getRepository('AppBundle:ProgramaCapacitacionFinanciera')->findBY(
             array('active' => 1)
             
         ); 
 
-        return $this->render('AppBundle:GestionFinanciera:capacitacion-financiera-gestion.html.twig', array( 'capacitaciones' => $capacitaciones));
+        return $this->render('AppBundle:GestionFinanciera:capacitacion-financiera-gestion.html.twig', array( 'programaCapacitacionFinancieras' => $programaCapacitacionFinancieras));
     }  
 	
 	 /**
-     * @Route("/gestion-financiera/capacitacion-financiera/nuevo", name="capacitacionfinancieraNuevo")
+     * @Route("/gestion-financiera/capacitacion-financiera/nuevo", name="programaCapacitacionFinancieraNuevo")
      */
-    public function capacitacionfinancieraNuevoAction(Request $request)
+    public function programaCapacitacionFinancieraNuevoAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $capacitacion = new Capacitacion();
+        $programaCapacitacionFinanciera = new ProgramaCapacitacionFinanciera();
         
-        $form = $this->createForm(new PolizaType(), $capacitacion);
+        $form = $this->createForm(new ProgramaCapacitacionFinancieraType(), $programaCapacitacionFinanciera);
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             // data is an array with "name", "email", and "message" keys
-            $capacitacion = $form->getData();
+            $programaCapacitacionFinanciera = $form->getData();
 
-            $capacitacion->setActive(true);
-            $capacitacion->setFechaCreacion(new \DateTime());
+            $programaCapacitacionFinanciera->setActive(true);
+            $programaCapacitacionFinanciera->setFechaCreacion(new \DateTime());
 
 
             
-            $em->persist($capacitacion);
+            $em->persist($programaCapacitacionFinanciera);
             $em->flush();
 
-            return $this->redirectToRoute('capacitacionfinancieraGestion');
+            return $this->redirectToRoute('programaCapacitacionFinancieraGestion');
         }
         
         return $this->render('AppBundle:GestionFinanciera:capacitacion-financiera-nuevo.html.twig', array('form' => $form->createView()));
     } 
 	
+	
+	/**
+     * @Route("/gestion-financiera/participante", name="participanteGestion")
+     */
+    public function participanteGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $participantes= $em->getRepository('AppBundle:Participante')->findBY(
+            array('active' => 1)
+            
+        ); 
+
+        return $this->render('AppBundle:GestionFinanciera:participante-gestion.html.twig', array( 'participantes' => $participantes));
+    }  
+	
+	 /**
+     * @Route("/gestion-financiera/participante/nuevo", name="participanteNuevo")
+     */
+    public function participanteNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $participante = new Participante();
+        
+        $form = $this->createForm(new ParticipanteType(), $participante);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $participante = $form->getData();
+
+            $participante->setActive(true);
+            $participante->setFechaCreacion(new \DateTime());
+
+
+            
+            $em->persist($participante);
+            $em->flush();
+
+            return $this->redirectToRoute('participanteGestion');
+        }
+        
+        return $this->render('AppBundle:GestionFinanciera:participante-nuevo.html.twig', array('form' => $form->createView()));
+    } 
 }

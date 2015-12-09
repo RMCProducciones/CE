@@ -95,7 +95,7 @@ class Participante
     /**
      * @var boolean
      *
-     * @ORM\Column(name="joven_rural", type="boolean")
+     * @ORM\Column(name="joven_rural", type="boolean", nullable=true)
      */
     private $joven_rural;
 
@@ -203,7 +203,7 @@ class Participante
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
      */
     private $fecha_modificacion;
 
@@ -215,7 +215,7 @@ class Participante
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_creacion", type="datetime")
+     * @ORM\Column(name="fecha_creacion", type="datetime", nullable=true)
      */
     private $fecha_creacion;
 

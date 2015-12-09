@@ -1,6 +1,6 @@
 {% extends 'AppBundle::frontend.html.twig' %}
 
-{% block title %}Polizas Nuevo{% endblock %}
+{% block title %}Capacitacion Financiera Nuevo{% endblock %}
 
 {% block breadcrumb_ul %}
 
@@ -8,7 +8,7 @@
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Financiera</li>
       
-      <li><a href="{{ path('polizasGestion') }}">Polizas</a></li>
+      <li><a href="{{ path('polizasGestion') }}">Capacitacion Financiera</a></li>
 	  <li>Nuevo</li>
     </ul>
 
@@ -54,11 +54,38 @@
             <!--form class="form-horizontal" role="form"-->
 			<div class="form-group">
                 <div class="col-sm-3">
-                  {{ form_label(form.grupo) }}
+                  {{ form_label(form.talento_financiero) }}
                 </div>
                 <div class="col-sm-9">
-                  {{ form_errors(form.grupo) }}
-                  {{ form_widget(form.grupo, { 'attr': {'class': 'form-control'} }) }}
+                  {{ form_errors(form.talento_financiero) }}
+                  {{ form_widget(form.talento_financiero, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			  <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.lugar) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.lugar) }}
+                  {{ form_widget(form.lugar, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			  <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.estado) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.estado) }}
+                  {{ form_widget(form.estado, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+              </div>
+			  <div class="form-group">
+                <div class="col-sm-3">
+                  {{ form_label(form.municipio) }}
+                </div>
+                <div class="col-sm-9">
+                  {{ form_errors(form.municipio) }}
+                  {{ form_widget(form.municipio, { 'attr': {'class': 'form-control'} }) }}
                 </div>
               </div>
 			

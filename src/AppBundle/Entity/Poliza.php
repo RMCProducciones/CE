@@ -33,14 +33,8 @@ class Poliza
      */
     private $active;
 
-    /**
-<<<<<<< HEAD
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer", nullable=true)
-=======
+   /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
->>>>>>> 03ecc90e7b71b4ff05384fc5484e145b88ea867b
      */
     private $usuario_modificacion;
 
@@ -51,14 +45,8 @@ class Poliza
      */
     private $fecha_modificacion;
 
-    /**
-<<<<<<< HEAD
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer", nullable=true)
-=======
+  /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
->>>>>>> 03ecc90e7b71b4ff05384fc5484e145b88ea867b
      */
     private $usuario_creacion;
 

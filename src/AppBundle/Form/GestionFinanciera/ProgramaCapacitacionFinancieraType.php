@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\ORM\EntityRepository;
 
-class CapacitacionFinancieraType extends AbstractType
+class ProgramaCapacitacionFinancieraType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -36,6 +36,6 @@ class CapacitacionFinancieraType extends AbstractType
 	
     public function getName()
     {
-        return 'Beca';
+        return 'ProgramaCapacitacionFinanciera';
     }
 }

@@ -50,14 +50,8 @@ class ProgramaCapacitacionFinanciera
      */
     private $active;
 
-    /**
-<<<<<<< HEAD
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer", nullable=true)
-=======
+ /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
->>>>>>> 153ed3a80b20d6f05899480a329cdb202f3f2bc3
      */
     private $usuario_modificacion;
 
@@ -68,14 +62,8 @@ class ProgramaCapacitacionFinanciera
      */
     private $fecha_modificacion;
 
-    /**
-<<<<<<< HEAD
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer", nullable=true)
-=======
+   /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
->>>>>>> 153ed3a80b20d6f05899480a329cdb202f3f2bc3
      */
     private $usuario_creacion;
 
