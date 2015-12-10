@@ -272,6 +272,15 @@ class Talento
      */
     private $fecha_creacion;
 
+	
+	
+	 public function __toString()
+    {
+        return $this->getPrimerNombre().' '.$this->getSegundoNombre().' '.$this->getPrimerApellido().' '.$this->getSegundoApellido();
+    }
+	
+	
+	
 
     /**
      * Get id

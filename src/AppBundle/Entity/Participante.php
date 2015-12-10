@@ -22,9 +22,7 @@ class Participante
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="beneficiario", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Beneficiario")
      */
     private $beneficiario;
 
@@ -36,9 +34,7 @@ class Participante
     private $relacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="tipo_documento", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $tipo_documento;
 
@@ -78,9 +74,7 @@ class Participante
     private $segundo_nombre;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="genero", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $genero;
 
@@ -101,21 +95,17 @@ class Participante
     /**
      * @var boolean
      *
-     * @ORM\Column(name="joven_rural", type="boolean")
+     * @ORM\Column(name="joven_rural", type="boolean", nullable=true)
      */
     private $joven_rural;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="pertenencia_etnica", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $pertenencia_etnica;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="grupo_indigena", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $grupo_indigena;
 
@@ -134,23 +124,17 @@ class Participante
     private $discapacidad;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="estado_civil", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $estado_civil;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="rol_grupo_familiar", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $rol_grupo_familiar;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="hijos_menores_5", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $hijos_menores_5;
 
@@ -169,23 +153,17 @@ class Participante
     private $sabe_escribir;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="nivel_estudios", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $nivel_estudios;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="ocupacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $ocupacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="tipo_vivienda", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $tipo_vivienda;
 
@@ -218,30 +196,26 @@ class Participante
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
      */
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_creacion", type="datetime")
+     * @ORM\Column(name="fecha_creacion", type="datetime", nullable=true)
      */
     private $fecha_creacion;
 
@@ -259,11 +233,11 @@ class Participante
     /**
      * Set beneficiario
      *
-     * @param integer $beneficiario
+     * @param AppBundle\Entity\Beneficiario $beneficiario
      *
      * @return Participante
      */
-    public function setBeneficiario($beneficiario)
+    public function setBeneficiario(\AppBundle\Entity\Beneficiario $beneficiario)
     {
         $this->beneficiario = $beneficiario;
 
@@ -273,7 +247,7 @@ class Participante
     /**
      * Get beneficiario
      *
-     * @return integer
+     * @return AppBundle\Entity\Beneficiario
      */
     public function getBeneficiario()
     {
@@ -307,11 +281,11 @@ class Participante
     /**
      * Set tipoDocumento
      *
-     * @param integer $tipoDocumento
+     * @param AppBundle\Entity\Listas $tipoDocumento
      *
      * @return Participante
      */
-    public function setTipoDocumento($tipoDocumento)
+    public function setTipoDocumento(\AppBundle\Entity\Listas $tipoDocumento)
     {
         $this->tipo_documento = $tipoDocumento;
 
@@ -321,7 +295,7 @@ class Participante
     /**
      * Get tipoDocumento
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getTipoDocumento()
     {
@@ -451,11 +425,11 @@ class Participante
     /**
      * Set genero
      *
-     * @param integer $genero
+     * @param AppBundle\Entity\Listas $genero
      *
      * @return Participante
      */
-    public function setGenero($genero)
+    public function setGenero(\AppBundle\Entity\Listas $genero)
     {
         $this->genero = $genero;
 
@@ -465,7 +439,7 @@ class Participante
     /**
      * Get genero
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getGenero()
     {
@@ -547,11 +521,11 @@ class Participante
     /**
      * Set pertenenciaEtnica
      *
-     * @param integer $pertenenciaEtnica
+     * @param AppBundle\Entity\Listas $pertenenciaEtnica
      *
      * @return Participante
      */
-    public function setPertenenciaEtnica($pertenenciaEtnica)
+    public function setPertenenciaEtnica(\AppBundle\Entity\Listas $pertenenciaEtnica)
     {
         $this->pertenencia_etnica = $pertenenciaEtnica;
 
@@ -561,7 +535,7 @@ class Participante
     /**
      * Get pertenenciaEtnica
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getPertenenciaEtnica()
     {
@@ -571,11 +545,11 @@ class Participante
     /**
      * Set grupoIndigena
      *
-     * @param integer $grupoIndigena
+     * @param AppBundle\Entity\Listas $grupoIndigena
      *
      * @return Participante
      */
-    public function setGrupoIndigena($grupoIndigena)
+    public function setGrupoIndigena(\AppBundle\Entity\Listas $grupoIndigena)
     {
         $this->grupo_indigena = $grupoIndigena;
 
@@ -585,7 +559,7 @@ class Participante
     /**
      * Get grupoIndigena
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getGrupoIndigena()
     {
@@ -643,11 +617,11 @@ class Participante
     /**
      * Set estadoCivil
      *
-     * @param integer $estadoCivil
+     * @param AppBundle\Entity\Listas $estadoCivil
      *
      * @return Participante
      */
-    public function setEstadoCivil($estadoCivil)
+    public function setEstadoCivil(\AppBundle\Entity\Listas $estadoCivil)
     {
         $this->estado_civil = $estadoCivil;
 
@@ -657,7 +631,7 @@ class Participante
     /**
      * Get estadoCivil
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getEstadoCivil()
     {
@@ -667,11 +641,11 @@ class Participante
     /**
      * Set rolGrupoFamiliar
      *
-     * @param integer $rolGrupoFamiliar
+     * @param AppBundle\Entity\Listas $rolGrupoFamiliar
      *
      * @return Participante
      */
-    public function setRolGrupoFamiliar($rolGrupoFamiliar)
+    public function setRolGrupoFamiliar(\AppBundle\Entity\Listas $rolGrupoFamiliar)
     {
         $this->rol_grupo_familiar = $rolGrupoFamiliar;
 
@@ -681,7 +655,7 @@ class Participante
     /**
      * Get rolGrupoFamiliar
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getRolGrupoFamiliar()
     {
@@ -691,11 +665,11 @@ class Participante
     /**
      * Set hijosMenores5
      *
-     * @param integer $hijosMenores5
+     * @param AppBundle\Entity\Listas $hijosMenores5
      *
      * @return Participante
      */
-    public function setHijosMenores5($hijosMenores5)
+    public function setHijosMenores5(\AppBundle\Entity\Listas $hijosMenores5)
     {
         $this->hijos_menores_5 = $hijosMenores5;
 
@@ -705,7 +679,7 @@ class Participante
     /**
      * Get hijosMenores5
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getHijosMenores5()
     {
@@ -763,11 +737,11 @@ class Participante
     /**
      * Set nivelEstudios
      *
-     * @param integer $nivelEstudios
+     * @param AppBundle\Entity\Listas $nivelEstudios
      *
      * @return Participante
      */
-    public function setNivelEstudios($nivelEstudios)
+    public function setNivelEstudios(\AppBundle\Entity\Listas $nivelEstudios)
     {
         $this->nivel_estudios = $nivelEstudios;
 
@@ -777,7 +751,7 @@ class Participante
     /**
      * Get nivelEstudios
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas	
      */
     public function getNivelEstudios()
     {
@@ -787,11 +761,11 @@ class Participante
     /**
      * Set ocupacion
      *
-     * @param integer $ocupacion
+     * @param AppBundle\Entity\Listas $ocupacion
      *
      * @return Participante
      */
-    public function setOcupacion($ocupacion)
+    public function setOcupacion(\AppBundle\Entity\Listas$ocupacion)
     {
         $this->ocupacion = $ocupacion;
 
@@ -801,7 +775,7 @@ class Participante
     /**
      * Get ocupacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getOcupacion()
     {
@@ -811,11 +785,11 @@ class Participante
     /**
      * Set tipoVivienda
      *
-     * @param integer $tipoVivienda
+     * @param AppBundle\Entity\Listas $tipoVivienda
      *
      * @return Participante
      */
-    public function setTipoVivienda($tipoVivienda)
+    public function setTipoVivienda(\AppBundle\Entity\Listas $tipoVivienda)
     {
         $this->tipo_vivienda = $tipoVivienda;
 
@@ -825,7 +799,7 @@ class Participante
     /**
      * Get tipoVivienda
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getTipoVivienda()
     {
@@ -931,11 +905,11 @@ class Participante
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return Participante
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -945,7 +919,7 @@ class Participante
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -979,11 +953,11 @@ class Participante
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return Participante
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -993,7 +967,7 @@ class Participante
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
