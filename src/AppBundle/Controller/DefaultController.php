@@ -32,6 +32,14 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 class DefaultController extends Controller
 {
     /**
+     * @Route("/login", name="login")
+     */
+    public function loginAction()
+    {
+        return $this->render('AppBundle:default:login.html.twig');
+    }
+
+    /**
      * @Route("/", name="homepage")
      */
     public function indexAction(Request $request)
