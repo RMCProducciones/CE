@@ -49,7 +49,7 @@
 
     <div class="section">
       <div class="container">
-        <div class="row">
+        
 		
 			<div class="row">
 				<div class="col-md-12">
@@ -148,16 +148,18 @@
 							  {{ form_errors(form.barrio) }}
 							  {{ form_widget(form.barrio, { 'attr': {'class': 'form-control', 'placeholder': 'Barrio...'} }) }}
 							</div>
+							<div ng-show="swRural === true">							
+							  {{ form_label(form.corregimiento) }}
+							  {{ form_errors(form.corregimiento) }}
+							  {{ form_widget(form.corregimiento, { 'attr': {'class': 'form-control', 'placeholder': 'Corregimiento...'} }) }}							  
+						</div>
 						</div>
 				</div>	
 
 				<br/>
 	
 				<div class="row" ng-show="swRural === true">
-						<div class="col-md-4">
-							  {{ form_label(form.corregimiento) }}
-							  {{ form_errors(form.corregimiento) }}
-							  {{ form_widget(form.corregimiento, { 'attr': {'class': 'form-control', 'placeholder': 'Corregimiento...'} }) }}
+						<div class="col-md-4">							  
 						</div>
 
 						<div class="col-md-4">
@@ -260,9 +262,8 @@
                 </div>
 			</div>
 
-			<br/>
-				
-        </div>
+			<br/>				
+       
       </div>
     </div>
 

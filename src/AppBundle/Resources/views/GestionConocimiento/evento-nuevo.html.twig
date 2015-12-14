@@ -49,89 +49,70 @@
 
     <div class="section">
       <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <!--form class="form-horizontal" role="form"-->
-			<div class="form-group">
-                <div class="col-sm-3">
+	  <div class="row">
+			<div class="col-md-12">
+				<fieldset>
+					<legend>Datos del evento</legend>
+				</fieldset>            
+			</div>
+		</div>	
+        <!--form class="form-horizontal" role="form"-->
+		<div class="row">
+				<div class="col-md-4">
                   {{ form_label(form.organizador) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.organizador) }}
+				  {{ form_errors(form.organizador) }}
                   {{ form_widget(form.organizador, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-			   <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.nombre) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.nombre) }}
+				  {{ form_errors(form.nombre) }}
                   {{ form_widget(form.nombre, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-			  <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.descripcion) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.descripcion) }}
+				  {{ form_errors(form.descripcion) }}
                   {{ form_widget(form.descripcion, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-			  <div class="form-group">
-                <div class="col-sm-3">
+		</div>
+		
+		<br/>		
+                
+        <div class="row">
+				<div class="col-md-4">
                   {{ form_label(form.fecha_publicacion) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.fecha_publicacion) }}
+				  {{ form_errors(form.fecha_publicacion) }}
                   {{ form_widget(form.fecha_publicacion, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-			  <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.fecha_inicio) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.fecha_inicio) }}
+				  {{ form_errors(form.fecha_inicio) }}
                   {{ form_widget(form.fecha_inicio, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.fecha_finalizacion) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.fecha_finalizacion) }}
+				  {{ form_errors(form.fecha_finalizacion) }}
                   {{ form_widget(form.fecha_finalizacion, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-3">
+		</div>
+
+		<br/>
+		
+		<div class="row">
+				<div class="col-md-4">
                   {{ form_label(form.tipo) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.tipo) }}
+				  {{ form_errors(form.tipo) }}
                   {{ form_widget(form.tipo, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-			    <div class="form-group">
-                <div class="col-sm-3">
+				<div class="col-md-4">
                   {{ form_label(form.municipio) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.municipio) }}
+				  {{ form_errors(form.municipio) }}
                   {{ form_widget(form.municipio, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-			 
-
-                       
-
+                </div>	
+		</div> 
+		<br/>
+		<br/>
             <!--/form-->
-          </div>
         </div>
-      </div>
     </div>
 
   {{ form_end(form) }}
