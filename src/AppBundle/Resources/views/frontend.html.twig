@@ -6,7 +6,7 @@
     <link href="{{ asset('public/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('public/css/docs.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('public/css/angular-ui-switch.min.css') }}" rel="stylesheet" type="text/css">
-	 <link href="{{ asset('public/css/template.css') }}" rel="stylesheet" type="text/css">
+	<link href="{{ asset('public/css/template.css') }}" rel="stylesheet" type="text/css">
 	
 {% endblock %}
 
@@ -28,7 +28,12 @@
 {% endblock %}
 
 {% block javascripts %}
-	<script type="text/javascript" src="{{ asset('public/js/scripts.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('public/js/app.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('public/js/default.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('public/js/localizacion.js') }}"></script>
+	
+	<script type="text/javascript" src="{{ asset('public/js/grupo.js') }}"></script>
+
 {% endblock %}
 
 {% block body %}
