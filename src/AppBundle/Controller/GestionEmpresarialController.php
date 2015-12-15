@@ -75,7 +75,7 @@ class GestionEmpresarialController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/editar", name="grupoEditar")
      */
-    public function GrupoEditarAction($idGrupo)
+    public function GrupoEditarAction(Request $request, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();
         $grupo = new Grupo();
@@ -102,9 +102,26 @@ class GestionEmpresarialController extends Controller
 
             $grupo = $form->getData();
 
+            if($grupo->getRural() == true){
+                $grupo->setBarrio('');
+            }
+            else
+            {
+                $grupo->setCorregimiento(null);
+                $grupo->setVereda(null);
+                $grupo->setCacerio(null);
+            }
+
             $grupo->setFechaModificacion(new \DateTime());
 
-            //$em->persist($grupo);
+            $usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
+            
+            $grupo->setUsuarioModificacion($usuarioModificacion);
+
             $em->flush();
 
             return $this->redirectToRoute('gruposGestion');
@@ -145,14 +162,30 @@ class GestionEmpresarialController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            // data is an array with "name", "email", and "message" keys
+            
             $grupo = $form->getData();
+
+            if($grupo->getRural() == true){
+                $grupo->setBarrio('');
+            }
+            else
+            {
+                $grupo->setCorregimiento(null);
+                $grupo->setVereda(null);
+                $grupo->setCacerio(null);
+            }
 
             $grupo->setActive(true);
             $grupo->setFechaCreacion(new \DateTime());
 
-
+            $usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
             
+            $grupo->setUsuarioCreacion($usuarioCreacion);
+
             $em->persist($grupo);
             $em->flush();
 
