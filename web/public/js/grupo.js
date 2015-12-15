@@ -11,3 +11,16 @@ app.controller('anularSoporteGrupoCtrl', ['$scope', '$location', function($scope
 	};	
 
 }]);
+
+/*app.controller('GrupoCtrl', ['$scope', function($scope) {
+
+	$scope.idGrupo = 0;	
+
+	$scope.traerGrupoXID = function(idGrupo){
+		$scope.idGrupo = idGrupo;
+		alert($scope.idGrupo);
+		
+	};	
+
+}]);*/
+
