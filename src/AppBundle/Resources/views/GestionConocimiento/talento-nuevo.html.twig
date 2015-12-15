@@ -222,116 +222,80 @@
                 </div>		
 		</div>
 		
+		<br/>
 		
-			
-		
-				  
-			
-              
-                
-              
-			  
-			  <div class="form-group">
-                <div class="col-sm-3">
+		<div class="row">
+				<div class="col-md-4">
                   {{ form_label(form.estado_civil) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.estado_civil) }}
+				  {{ form_errors(form.estado_civil) }}
                   {{ form_widget(form.estado_civil, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-			  
-			  <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.organizacion) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.organizacion) }}
+				  {{ form_errors(form.organizacion) }}
                   {{ form_widget(form.organizacion, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-			   <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.fecha_inicio_talento) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.fecha_inicio_talento) }}
+				  {{ form_errors(form.fecha_inicio_talento) }}
                   {{ form_widget(form.fecha_inicio_talento, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-			   <div class="form-group">
-                <div class="col-sm-3">
+		</div>
+		
+		<br/>
+		
+		<div class="row">
+				<div class="col-md-4">
                   {{ form_label(form.nivel_estudios) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.nivel_estudios) }}
+				  {{ form_errors(form.nivel_estudios) }}
                   {{ form_widget(form.nivel_estudios, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-             <div class="form-group">
-                <div class="col-sm-3">
-                  {{ form_label(form.talento_madr) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.talento_madr) }}
+                </div> 
+                <div class="col-md-4">
+                  {{ form_label(form.talento_madr) }}<br/>
+				  {{ form_errors(form.talento_madr) }}
                   <switch id="swtalento" name="swtalento" ng-model="swtalento" class="green" on="Si" off="No"></switch>
 				  {{ form_widget(form.talento_madr, { 'attr': {'style':'visibility:hidden'} }) }}
                 </div>
-              </div>
-			   <div class="form-group">
-                <div class="col-sm-3">
-                  {{ form_label(form.talento_otros_lugares) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.talento_otros_lugares) }}
+                <div class="col-md-4">
+                  {{ form_label(form.talento_otros_lugares) }}<br/>
+				  {{ form_errors(form.talento_otros_lugares) }}
                   <switch id="swlugares" name="swlugares" ng-model="swlugares" class="green" on="Si" off="No"></switch>
 				  {{ form_widget(form.talento_otros_lugares, { 'attr': {'style':'visibility:hidden'} }) }}
-                </div>
-              </div>
-			   <div class="form-group">
-                <div class="col-sm-3">
+                </div> 
+		</div>
+
+		<br/>
+		
+		<div class="row">
+				<div class="col-md-4">
                   {{ form_label(form.actividad_participado) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.actividad_participado) }}
+				  {{ form_errors(form.actividad_participado) }}
                   {{ form_widget(form.actividad_participado, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-             <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.area_desempeno_principal) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.area_desempeno_principal) }}
+				  {{ form_errors(form.area_desempeno_principal) }}
                   {{ form_widget(form.area_desempeno_principal, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-			  <div class="form-group">
-                <div class="col-sm-3">
+                </div> 
+                <div class="col-md-4">
                   {{ form_label(form.area_desempeno_secundario) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.area_desempeno_secundario) }}
+				  {{ form_errors(form.area_desempeno_secundario) }}
                   {{ form_widget(form.area_desempeno_secundario, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-             <div class="form-group">
-                <div class="col-sm-3">
-                  {{ form_label(form.area_desempeno_terciario) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.area_desempeno_terciario) }}
-                  {{ form_widget(form.area_desempeno_terciario, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-             
-             
-			  
-             
-             
-
-            <!--/form-->
-
+                </div> 
+		</div>  
+			   
+        <br/>       
+              
+		<div class="row">
+            <div class="col-md-4">
+             {{ form_label(form.area_desempeno_terciario) }}
+			 {{ form_errors(form.area_desempeno_terciario) }}
+             {{ form_widget(form.area_desempeno_terciario, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+		
+		<br/>
+		<!--/form-->
       </div>
     </div>
 
