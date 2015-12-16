@@ -82,6 +82,7 @@ class GrupoType extends AbstractType
 										        	->setParameter('dominio', 'tipo_cuenta')
 										            ->orderBy('l.orden', 'ASC');
 										    },))
+			->add('numero_cuenta')
 		;
     }
     

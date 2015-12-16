@@ -148,6 +148,13 @@ class Grupo
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $tipo_cuenta;
+	
+	 /**
+     * @var string
+     *
+     * @ORM\Column(name="numero_cuenta", type="string")
+     */
+    private $numero_cuenta;
 
     /**
      * @var boolean
@@ -674,7 +681,31 @@ class Grupo
      */
     public function getTipoCuenta()
     {
-        return $this->tipo_cuenta;
+        return $this->tipo_cuenta;	
+    }
+	
+	/**
+     * Set numeroCuenta
+     *
+     * @param string $numeroCuenta
+     *
+     * @return Grupo
+     */
+    public function setNumeroCuenta($numeroCuenta)
+    {
+        $this->numero_cuenta = $numeroCuenta;
+
+        return $this;
+    }
+
+    /**
+     * Get numeroCuenta
+     *
+     * @return string
+     */
+    public function getNumeroCuenta()
+    {
+        return $this->numero_cuenta;
     }
 
     /**
