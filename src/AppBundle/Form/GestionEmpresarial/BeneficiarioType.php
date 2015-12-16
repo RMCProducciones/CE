@@ -65,8 +65,15 @@ class BeneficiarioType extends AbstractType
 										            ->orderBy('l.orden', 'ASC')
 										            ->addOrderBy('l.descripcion', 'ASC');
 										    },))
-			->add('desplazado', 'checkbox', array('required' => false))
-			->add('discapacidad', 'checkbox', array('required' => false))
+			->add('desplazado', 'checkbox', array('label' => 'Desplazado por la violencia' , 'required' => false))
+			->add('discapacidad', 'entity', array('class' => 'AppBundle:Listas',
+										    'query_builder' => function(EntityRepository $er) {
+										        return $er->createQueryBuilder('l')
+										        	->where('l.dominio = :dominio')
+										        	->andWhere('l.active = 1')
+										        	->setParameter('dominio', 'discapacidad')
+										            ->orderBy('l.orden', 'ASC');
+										    },))
 			->add('red_unidos', 'checkbox', array('label' => 'Pertenece a la Red Unidos', 'required' => false))
 			->add('rol_grupo_familiar', 'entity', array('class' => 'AppBundle:Listas',
 										    'query_builder' => function(EntityRepository $er) {
@@ -118,6 +125,12 @@ class BeneficiarioType extends AbstractType
 										        	->setParameter('dominio', 'tipo_vivienda')
 										            ->orderBy('l.orden', 'ASC');
 										    },))
+			->add('direccion')
+			->add('rural', 'checkbox', array('required' => false))
+			->add('barrio', 'text', array('required' => false))
+			->add('corregimiento', 'text', array('required' => false))
+			->add('vereda', 'text', array('required' => false))
+			->add('cacerio', 'text', array('required' => false))
 			->add('telefono_fijo')
 			->add('telefono_celular')
 			->add('correo_electronico', 'email')

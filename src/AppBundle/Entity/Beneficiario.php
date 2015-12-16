@@ -1,4 +1,4 @@
-	<?php
+<?php
 
 namespace AppBundle\Entity;
 
@@ -1066,6 +1066,30 @@ class Beneficiario
     public function getRural()
     {
         return $this->rural;
+    }
+	
+	/**
+     * Set barrio
+     *
+     * @param string $barrio
+     *
+     * @return Beneficiario
+     */
+    public function setBarrio($barrio)
+    {
+        $this->barrio = $barrio;
+
+        return $this;
+    }
+
+    /**
+     * Get barrio
+     *
+     * @return string
+     */
+    public function getBarrio()
+    {
+        return $this->barrio;
     }
 	
 	  /**
