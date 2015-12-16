@@ -9,11 +9,10 @@
       <li>Gestión Empresarial</li>
       <li>Formacion de capital social asociativo y desarrollo empresarial</li>
       <li><a href="{{ path('gruposGestion') }}">Grupos</a></li>
-      <li class="active">Nuevo</li>
+      <li class="active">Editar</li>
     </ul>
 
 {% endblock %}
-
 
 {% block section %}
 
@@ -80,7 +79,6 @@
 			<br/>
 
 			<div ng-controller="ListasLocalizacionCtrl">
-			
 			<div class="row">
 				<div class="col-md-4">
 					  <label>Departamento</label>
@@ -106,16 +104,16 @@
                   {{ form_errors(form.tipo) }}
                   {{ form_widget(form.tipo, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-				<div class="col-md-4">
-                  {{ form_label(form.nombre) }}
-                  {{ form_errors(form.nombre) }}
-                  {{ form_widget(form.nombre, { 'attr': {'class': 'form-control', 'placeholder': 'Nombre del grupo...'} }) }}
-                </div>
                 <div class="col-md-4">
                   {{ form_label(form.codigo) }}
                   {{ form_errors(form.codigo) }}
                   {{ form_widget(form.codigo, { 'attr': {'class': 'form-control', 'placeholder': 'Código...'} }) }}
-                </div>                
+                </div>
+                <div class="col-md-4">
+                  {{ form_label(form.nombre) }}
+                  {{ form_errors(form.nombre) }}
+                  {{ form_widget(form.nombre, { 'attr': {'class': 'form-control', 'placeholder': 'Nombre del grupo...'} }) }}
+                </div>
 			</div>	
 
 			<br/>
@@ -136,7 +134,7 @@
 						  {{ form_label(form.rural) }}<br/>
 						  {{ form_errors(form.rural) }}
 						  <switch id="swRural" name="swRural" ng-model="swRural" class="green" on="Si" off="No"></switch>
-						  {{ form_widget(form.rural, { 'attr': {'style':'visibility:visible'} }) }}
+						  {{ form_widget(form.rural, { 'attr': {'style':'visibility:hidden'} }) }}
 						</div>
 						<div class="col-md-4">
 						  {{ form_label(form.direccion) }}
@@ -219,28 +217,18 @@
 			</div>	
 
 			<br/>
-			
-			<div class="row" ng-controller="datosEmpresaGrupoCtrl">
+	
+			<div class="row">
                 <div class="col-md-4">
                   {{ form_label(form.figura_legal_constitucion) }}
                   {{ form_errors(form.figura_legal_constitucion) }}
                   {{ form_widget(form.figura_legal_constitucion, { 'attr': {'class': 'form-control', 'placeholder': 'Figura legal de constitución...'} }) }}
                 </div>
                 <div class="col-md-4">
-                	
                   {{ form_label(form.numero_identificacion_tributaria) }}
                   {{ form_errors(form.numero_identificacion_tributaria) }}
-				  <div class="input-group">
-                  	<input type="text" class="form-control" ng-model="numeroIdentificacion" ng-change="calcularDigitoVerificacion()" placeholder="Número de identificación tributaria...">
-					<div class="input-group-addon"> - [[digitoVerificacion]]</div>
-                  </div>
-
-                  <div style="visibility:hidden">
-	                  {{ form_widget(form.numero_identificacion_tributaria, { 'attr': {'class': 'form-control', 'placeholder': 'Número de identificación tributaria...', 'value': '[[numeroIdentificacion]]-[[digitoVerificacion]]' } }) }}
-                  </div>
-				  
+                  {{ form_widget(form.numero_identificacion_tributaria, { 'attr': {'class': 'form-control', 'placeholder': 'Número de identificación tributaria...'} }) }}
                 </div>
-
                 <div class="col-md-4">
                   {{ form_label(form.fecha_constitucion_legal) }}
                   {{ form_errors(form.fecha_constitucion_legal) }}

@@ -45,39 +45,36 @@
 
     <div class="section">
       <div class="container">
-        <div class="row">
-          <div class="col-md-12">
+	  <div class="row">
+			<div class="col-md-12">
+				<fieldset>
+					<legend>Datos del POA</legend>
+				</fieldset>            
+			</div>
+		</div>     
             <!--form class="form-horizontal" role="form"-->
-
-              <div class="form-group">
-                <div class="col-sm-12">
+		<br/>
+		
+		<div class="row">
+				<div class="col-sm-12">
                   <div class="danger">{{ form_errors(form) }}</div>
-                </div>    
-              </div>
+                </div>            
 
-              <div class="form-group">
-                <div class="col-sm-2">
+              
+                <div class="col-md-4">
                   {{ form_label(form.anio) }}
-                </div>
-                <div class="col-sm-10">
-                  {{ form_errors(form.anio) }}
+				  {{ form_errors(form.anio) }}
                   {{ form_widget(form.anio, { 'attr': {'class': 'form-control', 'placeholder': 'Año...'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-2">
+                <div class="col-md-4">
                   {{ form_label(form.presupuesto) }}
-                </div>
-                <div class="col-sm-10">
-                  {{ form_errors(form.presupuesto) }}
+				  {{ form_errors(form.presupuesto) }}
                   {{ form_widget(form.presupuesto, { 'attr': {'class': 'form-control', 'placeholder': 'Presupuesto...'} }) }}
-                </div>
-              </div>
-
-            <!--/form-->
-          </div>
-        </div>
+                </div>          
+		</div>		
+		<br/>
+		<br/>               
+        <!--/form-->          
       </div>
     </div>
 

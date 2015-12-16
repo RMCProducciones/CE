@@ -45,10 +45,102 @@ class GestionEmpresarialController extends Controller
     public function gruposGestionAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $grupos = $em->getRepository('AppBundle:Grupo')->findAll(); 
+        $grupos = $em->getRepository('AppBundle:Grupo')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupos-gestion.html.twig', array( 'grupos' => $grupos));
     }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}", name="grupo")
+     */
+    public function GrupoAction($idGrupo)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        //$elementos = $query->getResult();
+
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new GetSetMethodNormalizer());
+
+        $serializer = new Serializer($normalizers, $encoders);
+        
+        return new Response('{"grupo": ' . $serializer->serialize($grupo, 'json') . '}');
+
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/editar", name="grupoEditar")
+     */
+    public function GrupoEditarAction(Request $request, $idGrupo)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $grupo = new Grupo();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $form = $this->createForm(new GrupoType(), $grupo);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $grupo = $form->getData();
+
+            if($grupo->getRural() == true){
+                $grupo->setBarrio('');
+            }
+            else
+            {
+                $grupo->setCorregimiento(null);
+                $grupo->setVereda(null);
+                $grupo->setCacerio(null);
+            }
+
+            $grupo->setFechaModificacion(new \DateTime());
+
+            $usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
+            
+            $grupo->setUsuarioModificacion($usuarioModificacion);
+
+            $em->flush();
+
+            return $this->redirectToRoute('gruposGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idGrupo' => $idGrupo,
+                    'grupo' => $grupo,
+            )
+        );
+
+    }
+
 
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/nuevo", name="gruposNuevo")
@@ -73,14 +165,30 @@ class GestionEmpresarialController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            // data is an array with "name", "email", and "message" keys
+            
             $grupo = $form->getData();
+
+            if($grupo->getRural() == true){
+                $grupo->setBarrio('');
+            }
+            else
+            {
+                $grupo->setCorregimiento(null);
+                $grupo->setVereda(null);
+                $grupo->setCacerio(null);
+            }
 
             $grupo->setActive(true);
             $grupo->setFechaCreacion(new \DateTime());
 
-
+            $usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
             
+            $grupo->setUsuarioCreacion($usuarioCreacion);
+
             $em->persist($grupo);
             $em->flush();
 
@@ -130,7 +238,10 @@ class GestionEmpresarialController extends Controller
 			if ($form->isValid()) {
 
 				$tipoSoporte = $em->getRepository('AppBundle:Listas')->findOneBy(
-					array('descripcion' => $grupoSoporte->getTipoSoporte()->getDescripcion(), 'dominio' => 'grupo_tipo_soporte')
+					array(
+                        'descripcion' => $grupoSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'grupo_tipo_soporte'
+                    )
 				);
 				
 				$actualizarGrupoSoportes = $em->getRepository('AppBundle:GrupoSoporte')->findBy(
