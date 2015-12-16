@@ -171,44 +171,46 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">NP-RIC-3-2014/05-001 | Andrés Carne de Res</h4>
+            <h4 class="modal-title" id="myModalLabel">{{ grupo.codigo }} | {{ grupo.nombre }}</h4>
           </div>
           <div class="modal-body">
-            <b>Departamento:{{ grupo.codigo }}</b>
+            <b>Departamento:{{ grupo.municipio.departamento.nombre }}</b>
             <br>
-            <b>Municipio: {{ grupo.codigo }}</b>
+            <b>Municipio: {{ grupo.municipio }}</b>
             <br>
-            <b>Zona: Oriente {{ grupo.codigo }}</b>
+            <b>Zona: Oriente {{ grupo.municipio.zona.nombre }}</b>
             <br>
-            <b>Tipo de grupo: {{ grupo.codigo }}</b>
+            <b>Tipo de grupo: {{ grupo.tipo }}</b>
             <br>
-            <b>Codigo de grupo:</b>
+            <b>Codigo de grupo: {{ grupo.codigo }}</b>
             <br>
-            <b>Nombre grupo:NP-RIC-3-2014/05-003</b>
+            <b>Nombre grupo: {{ grupo.nombre }}</b>
             <br>
-            <b>Corregimiento:N/A</b>
+            <b>Corregimiento: {{ grupo.corregimiento }}</b>
             <br>
-            <b>Vereda:N/A</b>
+            <b>Vereda: {{ grupo.vereda }}</b>
             <br>
-            <b>Cacerio:N/A</b>
+            <b>Cacerio: {{ grupo.cacerio }}</b>
             <br>
-            <b>Direccion: CLL67 #78-89</b>
+            <b>Direccion:  {{ grupo.direccion }}</b>
             <br>
-            <b>Tipo de organización:Cooperativa</b>
+			<b>Barrio:  {{ grupo.barrio }}</b>
             <br>
-            <b>NIT:721394731-2</b>
+            <b>Tipo de organización: {{ grupo.codigo }}</b>
             <br>
-            <b>Telefono Movil:3126748675</b>
+            <b>NIT: {{ grupo.codigo }}</b>
             <br>
-            <b>Telefono Fijo:9867849</b>
+            <b>Telefono Movil: {{ grupo.telefonoCelular }}</b>
             <br>
-            <b>Cuenta Bancaria:Si</b>
+            <b>Telefono Fijo: {{ grupo.telefonoFijo }}</b>
             <br>
-            <b>Tipo de cuenta: Mancomunada</b>
+            <b>Cuenta Bancaria: {{ grupo.entidadFinancieraCuenta }}</b>
             <br>
-            <b>Numero de cuenta:76128348938-97</b>
+            <b>Tipo de cuenta:  {{ grupo.tipoCuenta }}</b>
             <br>
-            <b>Banco:Banco de Bogota</b>
+            <b>Numero de cuenta: {{ grupo.entidadFinancieraCuenta }}</b>
+            <br>
+            <b>Banco: {{ grupo.entidadFinancieraCuenta}}</b>
           </div>
 
           <div class="modal-footer">
