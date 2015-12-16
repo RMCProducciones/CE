@@ -82,11 +82,11 @@
 			<div class="row">
 				<div class="col-md-4">
 					  <label>Departamento</label> {{grupo.municipio.departamento.id}}
-					  <select ng-model="selDepartamento" class="form-control" ng-change="cargarZonas()" ng-options="departamento.nombre for departamento in JSONDepartamento track by departamento.id"></select> 
+					  <select id="selDepartamento" ng-model="selDepartamento" class="form-control" ng-change="cargarZonas()" ng-options="departamento.nombre for departamento in JSONDepartamento track by departamento.id"></select> 
 				</div>
 				<div class="col-md-4">
 					  <label>Zona</label> {{grupo.municipio.zona.id}}
-					  <select ng-model="selZona" class="form-control" ng-change="cargarMunicipios()" ng-options="zona.nombre for zona in JSONZona track by zona.id"></select> 
+					  <select id="selZona" ng-model="selZona" class="form-control" ng-change="cargarMunicipios()" ng-options="zona.nombre for zona in JSONZona track by zona.id"></select> 
 				</div>
 					<div class="col-md-4">
 					  {{ form_label(form.municipio) }} {{grupo.municipio.id}}
