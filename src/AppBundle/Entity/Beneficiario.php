@@ -1,4 +1,4 @@
-<?php
+	<?php
 
 namespace AppBundle\Entity;
 
@@ -124,9 +124,7 @@ class Beneficiario
     private $desplazado;
 
 	 /**
-     * @var string
-     *
-     * @ORM\Column(name="discapacidad", type="string")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $discapacidad;
 	
@@ -737,11 +735,11 @@ class Beneficiario
 	/**
      * Set discapacidad
      *
-     * @param string $discapacidad
+     * @param AppBundle\Entity\Listas $discapacidad
      *
      * @return Beneficiario
      */
-    public function setDiscapacidad($discapacidad)
+    public function setDiscapacidad(\AppBundle\Entity\Listas $discapacidad)
     {
         $this->discapacidad = $discapacidad;
 
@@ -751,7 +749,7 @@ class Beneficiario
     /**
      * Get discapacidad
      *
-     * @return string
+     * @return AppBundle\Entity\Listas
      */
     public function getDiscapacidad()
     {
