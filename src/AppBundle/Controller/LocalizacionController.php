@@ -23,12 +23,14 @@ class LocalizacionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $query = $em->createQuery(
-            'SELECT departamento.id, departamento.nombre
+        $query = $em->createQuery('
+        	SELECT 
+        		departamento.id, 
+        		departamento.nombre 
             FROM AppBundle:Departamento departamento
-            ORDER BY departamento.nombre ASC'
-		);
-        
+            ORDER BY departamento.nombre ASC
+    	');
+
 		$elementos = $query->getResult();
 
 		$encoders = array(new XmlEncoder(), new JsonEncoder());
@@ -37,7 +39,6 @@ class LocalizacionController extends Controller
 		$serializer = new Serializer($normalizers, $encoders);
 		
 		return new Response('{"departamentos": ' . $serializer->serialize($elementos, 'json') . '}');
-
     }
 
     /**
@@ -48,13 +49,16 @@ class LocalizacionController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $query = $em->createQuery('
-			SELECT zona.id, zona.nombre
+			SELECT 
+				zona.id, 
+				zona.nombre
             FROM AppBundle:Zona zona
 			INNER JOIN AppBundle:Municipio municipio WITH zona.id = municipio.zona
 			WHERE municipio.departamento = :idDepartamento
             GROUP BY zona.id
 			ORDER BY zona.nombre ASC			
 		');
+		
 		$query->setParameter('idDepartamento', $idDepartamento);
         
 		$elementos = $query->getResult();
