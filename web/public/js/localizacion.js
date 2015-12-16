@@ -33,11 +33,6 @@ app.controller('CamposDireccionCtrl', ['$scope', '$http', function($scope, $http
 			$('#grupo_corregimiento').removeAttr('required');
 			$('#grupo_vereda').removeAttr('required');
 			$('#grupo_cacerio').removeAttr('required');
-
-			$('#grupo_barrio').val('');
-			$('#grupo_corregimiento').val('');
-			$('#grupo_vereda').val('');
-			$('#grupo_cacerio').val('');
 		}
 		else
 		{
@@ -45,11 +40,6 @@ app.controller('CamposDireccionCtrl', ['$scope', '$http', function($scope, $http
 			$('#grupo_corregimiento').attr('required', 'required');
 			$('#grupo_vereda').attr('required', 'required');
 			$('#grupo_cacerio').attr('required', 'required');
-		
-			$('#grupo_barrio').val('');
-			$('#grupo_corregimiento').val('');
-			$('#grupo_vereda').val('');
-			$('#grupo_cacerio').val('');
 		}		
 	});
 	
