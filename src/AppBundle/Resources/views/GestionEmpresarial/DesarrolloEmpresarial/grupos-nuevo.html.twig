@@ -218,18 +218,28 @@
 			</div>	
 
 			<br/>
-	
-			<div class="row">
+			
+			<div class="row" ng-controller="datosEmpresaGrupoCtrl">
                 <div class="col-md-4">
                   {{ form_label(form.figura_legal_constitucion) }}
                   {{ form_errors(form.figura_legal_constitucion) }}
                   {{ form_widget(form.figura_legal_constitucion, { 'attr': {'class': 'form-control', 'placeholder': 'Figura legal de constitución...'} }) }}
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
+                	
                   {{ form_label(form.numero_identificacion_tributaria) }}
                   {{ form_errors(form.numero_identificacion_tributaria) }}
-                  {{ form_widget(form.numero_identificacion_tributaria, { 'attr': {'class': 'form-control', 'placeholder': 'Número de identificación tributaria...'} }) }}
+                  <input type="text" class="form-control" ng-model="numeroIdentificacion" ng-change="calcularDigitoVerificacion()" placeholder="Número de identificación tributaria...">
+                  <div style="visibility:hidden">
+                  {{ form_widget(form.numero_identificacion_tributaria, { 'attr': {'class': 'form-control', 'placeholder': 'Número de identificación tributaria...', 'value': '[[numeroIdentificacion]]-[[digitoVerificacion]]' } }) }}
+                  </div>
+				  
                 </div>
+                <div class="col-md-1">
+					<label for="grupo_numero_identificacion_tributaria">DV</label>
+					<input type="text" class="form-control" placeholder="DV" value="[[digitoVerificacion]]">
+                </div>
+
                 <div class="col-md-4">
                   {{ form_label(form.fecha_constitucion_legal) }}
                   {{ form_errors(form.fecha_constitucion_legal) }}
