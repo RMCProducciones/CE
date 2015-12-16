@@ -1,8 +1,13 @@
-app.controller('ListasLocalizacionCtrl', ['$scope', '$http', function($scope, $http) {
+app.controller('ListasLocalizacionCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
 	$scope.JSONDepartamento = [ ];
 	$scope.JSONMunicipio    = [ ];
 	$scope.JSONZona         = [ ];
 	
+	//alert(window.location);
+	alert($location.path());
+
+	//$scope.rutaAbsoluta = "";
+
 	obtenerDepartamento($http, $scope);
 	
 	$scope.cargarZonas = function() { 
@@ -17,13 +22,30 @@ app.controller('ListasLocalizacionCtrl', ['$scope', '$http', function($scope, $h
 
 app.controller('CamposDireccionCtrl', ['$scope', '$http', function($scope, $http) {
 	
-	$('#grupo_barrio').attr('required', 'required');
-	$('#grupo_corregimiento').removeAttr('required');
-	$('#grupo_vereda').removeAttr('required');
-	$('#grupo_cacerio').removeAttr('required');
-
-	$scope.swRural = false;	
 	
+	if($('#grupo_rural').prop('checked')==false){
+		
+		$scope.swRural = false;	
+
+		$('#swRural').removeClass('checked');
+
+		$('#grupo_barrio').attr('required', 'required');
+		$('#grupo_corregimiento').removeAttr('required');
+		$('#grupo_vereda').removeAttr('required');
+		$('#grupo_cacerio').removeAttr('required');
+	}
+	else
+	{
+		$scope.swRural = true;	
+
+		$('#swRural').addClass('checked');
+
+		$('#grupo_barrio').removeAttr('required');
+		$('#grupo_corregimiento').attr('required', 'required');
+		$('#grupo_vereda').attr('required', 'required');
+		$('#grupo_cacerio').attr('required', 'required');
+	}
+
 	$scope.$watch('swRural', function() {
 		$('#grupo_rural').prop('checked', $scope.swRural);
 		
@@ -43,10 +65,6 @@ app.controller('CamposDireccionCtrl', ['$scope', '$http', function($scope, $http
 		}		
 	});
 	
-	$scope.mostrarCamposRural = function(){
-		
-		
-    }		
 }]);
 
 function obtenerDepartamento($http, $scope){
@@ -62,7 +80,7 @@ function obtenerDepartamento($http, $scope){
 	});    
 }
 
-function obtenerZona($http,$scope,lstDepartamento){
+function obtenerZona($http, $scope, lstDepartamento){
 
 	var idDepartamento = 0
 	if(!(Object.prototype.toString.call(lstDepartamento) === "[object Array]")) idDepartamento = lstDepartamento.id;
@@ -78,7 +96,7 @@ function obtenerZona($http,$scope,lstDepartamento){
 	});    
 }
 
-function obtenerMunicipio($http,$scope, lstDepartamento, lstZona){
+function obtenerMunicipio($http, $scope, lstDepartamento, lstZona){
 	
 	var idDepartamento = 0;
 	var idZona = 0;

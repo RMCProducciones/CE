@@ -45,7 +45,10 @@ class GestionEmpresarialController extends Controller
     public function gruposGestionAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $grupos = $em->getRepository('AppBundle:Grupo')->findAll(); 
+        $grupos = $em->getRepository('AppBundle:Grupo')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupos-gestion.html.twig', array( 'grupos' => $grupos));
     }
