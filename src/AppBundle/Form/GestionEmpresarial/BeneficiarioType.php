@@ -66,6 +66,7 @@ class BeneficiarioType extends AbstractType
 										            ->addOrderBy('l.descripcion', 'ASC');
 										    },))
 			->add('desplazado', 'checkbox', array('required' => false))
+			->add('discapacidad', 'checkbox', array('required' => false))
 			->add('red_unidos', 'checkbox', array('label' => 'Pertenece a la Red Unidos', 'required' => false))
 			->add('rol_grupo_familiar', 'entity', array('class' => 'AppBundle:Listas',
 										    'query_builder' => function(EntityRepository $er) {
