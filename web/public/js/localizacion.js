@@ -2,21 +2,30 @@ app.controller('ListasLocalizacionCtrl', ['$scope', '$http', '$location', functi
 	$scope.JSONDepartamento = [ ];
 	$scope.JSONMunicipio    = [ ];
 	$scope.JSONZona         = [ ];
+	$scope.idMunicipioSeleccionado = 0;
 	
-	//alert(window.location);
-	alert($location.path());
-
-	//$scope.rutaAbsoluta = "";
+	if($location.absUrl().indexOf("editar") >= 0 || $location.absUrl().indexOf("nuevo") >= 0 )
+	{
+		if($location.absUrl().indexOf("editar") >= 0){
+			$scope.idMunicipioSeleccionado = $('#grupo_municipio').val();				
+		}else{
+		}	
+	}
 
 	obtenerDepartamento($http, $scope);
 	
 	$scope.cargarZonas = function() { 
-		obtenerZona($http,$scope,$scope.selDepartamento)		
+		obtenerZona($http, $scope, $scope.selDepartamento)		
 	};
 
 	$scope.cargarMunicipios = function() { 
-		obtenerMunicipio($http,$scope,$scope.selDepartamento,$scope.selZona)
-	};
+		obtenerMunicipio($http, $scope, $scope.selDepartamento, $scope.selZona)
+	};		
+
+	$scope.init = function() {
+		$('#selDepartamento').find('option:first').remove();
+  	};	
+
 	
 }]);
 
@@ -68,6 +77,8 @@ app.controller('CamposDireccionCtrl', ['$scope', '$http', function($scope, $http
 }]);
 
 function obtenerDepartamento($http, $scope){
+
+	//alert("hola");
 	
 	$http.get($scope.rutaServidor + "departamentos")
 	.success(function(data) {
