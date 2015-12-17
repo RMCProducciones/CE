@@ -64,16 +64,16 @@
 				  {{ form_errors(form.tipo_documento) }}
                   {{ form_widget(form.tipo_documento, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-                <div class="col-md-4">
-                  {{ form_label(form.tipo) }}
-				  {{ form_errors(form.tipo) }}
-                  {{ form_widget(form.tipo, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-                <div class="col-md-4">
+				<div class="col-md-4">
                   {{ form_label(form.numero_documento) }}
 				  {{ form_errors(form.numero_documento) }}
                   {{ form_widget(form.numero_documento, { 'attr': {'class': 'form-control'} }) }}
                 </div>
+                <div class="col-md-4">
+                  {{ form_label(form.tipo) }}
+				  {{ form_errors(form.tipo) }}
+                  {{ form_widget(form.tipo, { 'attr': {'class': 'form-control'} }) }}
+                </div>                
 		</div>
 
 		</br>
