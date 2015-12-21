@@ -119,7 +119,7 @@
 	    		
 	                
 	                <tr>
-	                  <td>1</td>
+	                  <td>{{ consecutivo }}</td>
 	                  <td>
 	                    <input type="checkbox">
 	                  </td>
@@ -133,10 +133,10 @@
 	         
 	                  
 	                  <td>
-	                    <a href="#" alt="Capacitaciones" title="Capacitaciones"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span> | </a>
-	                    <a href="acta-subir-grupos.html" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span> | </a>
-					    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> | </a>
-	                    <a title="Editar" alt="Editar" href="3-grupos-editar.html"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> | </a>
+	                    <a href="#" alt="Capacitaciones" title="Capacitaciones"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> | 
+	                    <a href="acta-subir-grupos.html" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> | 
+					    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ programaCapacitacionFinanciera.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
+	                    <a title="Editar" alt="Editar" href="3-grupos-editar.html"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> | 
 	                    <a title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registro?"><span class="glyphicon glyphicon-trash"></span></a>
 	                  </td>
 	                </tr>
@@ -157,53 +157,26 @@
       </div>
     </div>  
 
-
+	{% for programaCapacitacionFinanciera in programaCapacitacionFinancieras %}
     <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal fade" id="myModal{{ programaCapacitacionFinanciera.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">NP-RIC-3-2014/05-001 | Andrés Carne de Res</h4>
+            <h4 class="modal-title" id="myModalLabel">{{ programaCapacitacionFinanciera.id }} | {{ programaCapacitacionFinanciera.talentoFinanciero }}</h4>
           </div>
           <div class="modal-body">
-            <b>Departamento:Antioquia</b>
+            <b>Talento financiero: {{ programaCapacitacionFinanciera.talentoFinanciero }}</b>
             <br>
-            <b>Municipio: Rionegro</b>
+            <b>Lugar: {{ programaCapacitacionFinanciera.lugar }}</b>
             <br>
-            <b>Zona: Oriente Antioqueño</b>
+            <b>Estado: {{ programaCapacitacionFinanciera.estado }}</b>
             <br>
-            <b>Tipo de grupo: No formal</b>
-            <br>
-            <b>Codigo de grupo:</b>
-            <br>
-            <b>Nombre grupo:NP-RIC-3-2014/05-003</b>
-            <br>
-            <b>Corregimiento:N/A</b>
-            <br>
-            <b>Vereda:N/A</b>
-            <br>
-            <b>Cacerio:N/A</b>
-            <br>
-            <b>Direccion: CLL67 #78-89</b>
-            <br>
-            <b>Tipo de organización:Cooperativa</b>
-            <br>
-            <b>NIT:721394731-2</b>
-            <br>
-            <b>Telefono Movil:3126748675</b>
-            <br>
-            <b>Telefono Fijo:9867849</b>
-            <br>
-            <b>Cuenta Bancaria:Si</b>
-            <br>
-            <b>Tipo de cuenta: Mancomunada</b>
-            <br>
-            <b>Numero de cuenta:76128348938-97</b>
-            <br>
-            <b>Banco:Banco de Bogota</b>
+            <b>Municipio: {{ programaCapacitacionFinanciera.municipio }}</b>
+            <br>            
           </div>
 
           <div class="modal-footer">
@@ -212,6 +185,6 @@
         </div>
       </div>
     </div>
-               
+    {% endfor %}           
 {% endblock %}
 
