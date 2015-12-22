@@ -140,8 +140,8 @@
 	                    <a title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registro?"><span class="glyphicon glyphicon-trash"></span></a>
 	                  </td>
 	                </tr>
-					
-	                  {% else %}
+					{% set consecutivo = consecutivo + 1 %}
+	                {% else %}
 	                
 	                <tr>
 	                  	<td colspan="7" class="info">No se encontraron registros.</td>
