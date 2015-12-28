@@ -1,8 +1,13 @@
-app.controller('ListasLocalizacionCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
+app.controller('ListasLocalizacionCtrl', ['$scope', '$http', '$location', '$parse', function($scope, $http, $location, $parse) {
 	$scope.JSONDepartamento = [ ];
 	$scope.JSONMunicipio    = [ ];
 	$scope.JSONZona         = [ ];
 	$scope.idMunicipioSeleccionado = 0;
+
+	$scope.idDepartamento = 0;
+	$scope.idZona = 0;
+	$scope.idMunicipio = 0;
+
 	
 	if($location.absUrl().indexOf("editar") >= 0 || $location.absUrl().indexOf("nuevo") >= 0 )
 	{
@@ -13,19 +18,19 @@ app.controller('ListasLocalizacionCtrl', ['$scope', '$http', '$location', functi
 	}
 
 	obtenerDepartamento($http, $scope);
+	//obtenerZona($http, $scope);
+	//obtenerMunicipio($http, $scope);
+
+	//$('#selDepartamento').find('option:first').remove();
+
 	
 	$scope.cargarZonas = function() { 
-		obtenerZona($http, $scope, $scope.selDepartamento)		
+		obtenerZona($http, $scope)		
 	};
 
 	$scope.cargarMunicipios = function() { 
-		obtenerMunicipio($http, $scope, $scope.selDepartamento, $scope.selZona)
+		obtenerMunicipio($http, $scope)
 	};		
-
-	$scope.init = function() {
-		$('#selDepartamento').find('option:first').remove();
-  	};	
-
 	
 }]);
 
@@ -76,14 +81,14 @@ app.controller('CamposDireccionCtrl', ['$scope', '$http', function($scope, $http
 	
 }]);
 
-function obtenerDepartamento($http, $scope){
+function obtenerDepartamento($http, $scope, $parse){
 
-	//alert("hola");
-	
 	$http.get($scope.rutaServidor + "departamentos")
 	.success(function(data) {
-		var array = data == null ? [] : (data.departamentos instanceof Array ? data.departamentos : [data.departamentos]);
-		$scope.JSONDepartamento  = array;
+		//var array = data == null ? [] : (data instanceof Array ? data : [data]);
+		$scope.JSONDepartamento  = (data);
+		
+		console.log(($scope.JSONDepartamento));
 		$scope.selDepartamento   = $scope.JSONDepartamento;
 	})
 	.error(function(data) {
@@ -91,12 +96,9 @@ function obtenerDepartamento($http, $scope){
 	});    
 }
 
-function obtenerZona($http, $scope, lstDepartamento){
+function obtenerZona($http, $scope){
 
-	var idDepartamento = 0
-	if(!(Object.prototype.toString.call(lstDepartamento) === "[object Array]")) idDepartamento = lstDepartamento.id;
-	
-	$http.get($scope.rutaServidor + idDepartamento + "/zonas")
+	$http.get($scope.rutaServidor + "zonas")
 	.success(function(data) {
 		var array = data == null ? [] : (data.zonas instanceof Array ? data.zonas : [data.zonas]);
 		$scope.JSONZona  = array;
@@ -107,7 +109,38 @@ function obtenerZona($http, $scope, lstDepartamento){
 	});    
 }
 
-function obtenerMunicipio($http, $scope, lstDepartamento, lstZona){
+function obtenerZona2($http, $scope){
+
+	$scope.idDepartamento = 0
+	if(!(Object.prototype.toString.call($scope.selDepartamento) === "[object Array]")) $scope.idDepartamento = $scope.selDepartamento.id;
+	
+	alert($scope.idDepartamento);
+
+	$http.get($scope.rutaServidor + $scope.idDepartamento + "/zonas")
+	.success(function(data) {
+		var array = data == null ? [] : (data.zonas instanceof Array ? data.zonas : [data.zonas]);
+		$scope.JSONZona  = array;
+		$scope.selZona   = $scope.JSONZona;
+	})
+	.error(function(data) {
+		console.log('Error: ' + data);
+	});    
+}
+
+function obtenerMunicipio($http, $scope){
+	
+	$http.get($scope.rutaServidor + "municipios")
+	.success(function(data) {
+		var array = data == null ? [] : (data.municipios instanceof Array ? data.municipios : [data.municipios]);
+		$scope.JSONMunicipio  = array;
+		$scope.selMunicipio   = $scope.JSONMunicipio;
+	})
+	.error(function(data) {
+		console.log('Error: ' + data);
+	});    
+}
+
+function obtenerMunicipio2($http, $scope, lstDepartamento, lstZona){
 	
 	var idDepartamento = 0;
 	var idZona = 0;
