@@ -201,28 +201,28 @@ class Beneficiario
     /**
      * @var string
      *
-     * @ORM\Column(name="barrio", type="string")
+     * @ORM\Column(name="barrio", type="string", nullable=true)
      */
     private $barrio;
 
 	 /**
      * @var string
      *
-     * @ORM\Column(name="corregimiento", type="string")
+     * @ORM\Column(name="corregimiento", type="string", nullable=true)
      */
     private $corregimiento;
 	
 	/**
      * @var string
      *
-     * @ORM\Column(name="vereda", type="string")
+     * @ORM\Column(name="vereda", type="string", nullable=true)
      */
     private $vereda;
 	
 	/**
      * @var string
      *
-     * @ORM\Column(name="cacerio", type="string")
+     * @ORM\Column(name="cacerio", type="string", nullable=true)
      */
     private $cacerio;
 	
@@ -1068,6 +1068,30 @@ class Beneficiario
         return $this->rural;
     }
 	
+	/**
+     * Set barrio
+     *
+     * @param string $barrio
+     *
+     * @return Beneficiario
+     */
+    public function setBarrio($barrio)
+    {
+        $this->barrio = $barrio;
+
+        return $this;
+    }
+
+    /**
+     * Get barrio
+     *
+     * @return string
+     */
+    public function getBarrio()
+    {
+        return $this->barrio;
+    }
+	
 	  /**
      * Set corregimiento
      *
@@ -1075,7 +1099,7 @@ class Beneficiario
      *
      * @return Beneficiario
      */
-    public function setCorregimiento($direccion)
+    public function setCorregimiento($corregimiento)
     {
         $this->corregimiento = $corregimiento;
 
@@ -1099,7 +1123,7 @@ class Beneficiario
      *
      * @return Beneficiario
      */
-    public function setVereda($direccion)
+    public function setVereda($vereda)
     {
         $this->vereda = $vereda;
 
@@ -1123,7 +1147,7 @@ class Beneficiario
      *
      * @return Beneficiario
      */
-    public function setCacerio($direccion)
+    public function setCacerio($cacerio)
     {
         $this->cacerio = $cacerio;
 

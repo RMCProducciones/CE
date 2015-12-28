@@ -120,7 +120,7 @@
 	    		
 	                
 	                <tr>
-	                  <td>1</td>
+	                  <td>{{ consecutivo }}</td>
 	                  <td>
 	                    <input type="checkbox">
 	                  </td>
@@ -137,14 +137,14 @@
 	                  
 	                  <td>
 	                   
-	                    <a href="acta-subir-grupos.html" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span> | </a>
-					    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> | </a>
-	                    <a title="Editar" alt="Editar" href="3-grupos-editar.html"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> | </a>
+	                    <a href="acta-subir-grupos.html" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> | 
+					    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ evento.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
+	                    <a title="Editar" alt="Editar" href="3-grupos-editar.html"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> | 
 	                    <a title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registro?"><span class="glyphicon glyphicon-trash"></span></a>
 	                  </td>
 	                </tr>
-					
-	                  {% else %}
+					{% set consecutivo = consecutivo + 1 %}
+	                {% else %}
 	                
 	                <tr>
 	                  	<td colspan="7" class="info">No se encontraron registros.</td>
@@ -160,53 +160,33 @@
       </div>
     </div>  
 
-
+{% for evento in eventos %}
     <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal fade" id="myModal{{ evento.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">NP-RIC-3-2014/05-001 | Andrés Carne de Res</h4>
+            <h4 class="modal-title" id="myModalLabel">{{ evento.id }} | {{ evento.nombre }}</h4>
           </div>
           <div class="modal-body">
-            <b>Departamento:Antioquia</b>
+            <b>Organizador: {{ evento.organizador }}</b>
             <br>
-            <b>Municipio: Rionegro</b>
+            <b>Nombre del evento: {{ evento.nombre }}</b>
             <br>
-            <b>Zona: Oriente Antioqueño</b>
+			<b>Descripcion: {{ evento.descripcion }}</b>
             <br>
-            <b>Tipo de grupo: No formal</b>
+            <b>Fecha de la publicacion: {{ evento.fechaPublicacion |  date('d - m - Y') }}</b>
             <br>
-            <b>Codigo de grupo:</b>
+            <b>Fecha de inicio del evento: {{ evento.fechaInicio |  date('d - m - Y') }}</b>
             <br>
-            <b>Nombre grupo:NP-RIC-3-2014/05-003</b>
+            <b>Fecha de finalizacion del evento: {{ evento.fechaFinalizacion |  date('d - m - Y') }}</b>
             <br>
-            <b>Corregimiento:N/A</b>
+            <b>Tipo de evento: {{ evento.tipo }}</b>
             <br>
-            <b>Vereda:N/A</b>
-            <br>
-            <b>Cacerio:N/A</b>
-            <br>
-            <b>Direccion: CLL67 #78-89</b>
-            <br>
-            <b>Tipo de organización:Cooperativa</b>
-            <br>
-            <b>NIT:721394731-2</b>
-            <br>
-            <b>Telefono Movil:3126748675</b>
-            <br>
-            <b>Telefono Fijo:9867849</b>
-            <br>
-            <b>Cuenta Bancaria:Si</b>
-            <br>
-            <b>Tipo de cuenta: Mancomunada</b>
-            <br>
-            <b>Numero de cuenta:76128348938-97</b>
-            <br>
-            <b>Banco:Banco de Bogota</b>
+            <b>Municipio: {{ evento.municipio }}</b> 
           </div>
 
           <div class="modal-footer">
@@ -215,6 +195,6 @@
         </div>
       </div>
     </div>
-               
+    {% endfor %}      
 {% endblock %}
 

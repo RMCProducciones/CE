@@ -46,373 +46,331 @@
     <div class="section">
       <div class="container">
 		<div class="row">
-				<div class="col-md-12">
-					<fieldset>
-						<legend>Informacion del Beneficiario:</legend>
-					</fieldset>            
-				</div>
-			</div>	
-        
-            <!--form class="form-horizontal" role="form"-->
-              <fieldset>
-			  <legend>Informacion Beneficiario:</legend>
-              <div class="form-group">
-                <div class="col-sm-3">
-                  {{ form_label(form.tipo_documento) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.tipo_documento) }}
-                  {{ form_widget(form.tipo_documento, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
+			<div class="col-md-12">
+				<fieldset>
+					<legend>Información del Beneficiario:</legend>
+				</fieldset>            
+			</div>
+		</div>
 
-              <div class="form-group">
-                <div class="col-sm-3">
+		<br/>
+ <!--form class="form-horizontal" role="form"-->
+		<div class="row">
+				<div class="col-md-4">
+                  {{ form_label(form.tipo_documento) }}
+				  {{ form_errors(form.tipo_documento) }}
+                  {{ form_widget(form.tipo_documento, { 'attr': {'class': 'form-control'} }) }}
+                </div> 
+                <div class="col-md-4">
                   {{ form_label(form.numero_documento) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.numero_documento) }}
+				  {{ form_errors(form.numero_documento) }}
                   {{ form_widget(form.numero_documento, { 'attr': {'class': 'form-control', 'placeholder': 'Número de documento...'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.primer_apellido) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.primer_apellido) }}
+				  {{ form_errors(form.primer_apellido) }}
                   {{ form_widget(form.primer_apellido, { 'attr': {'class': 'form-control', 'placeholder': 'Primer apellido...'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+		</div>
+		
+		<br/>
+		
+		<div class="row">
+				<div class="col-md-4">
                   {{ form_label(form.segundo_apellido) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.segundo_apellido) }}
+				  {{ form_errors(form.segundo_apellido) }}
                   {{ form_widget(form.segundo_apellido, { 'attr': {'class': 'form-control', 'placeholder': 'segundo_apellido...'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.primer_nombre) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.primer_nombre) }}
+				  {{ form_errors(form.primer_nombre) }}
                   {{ form_widget(form.primer_nombre, { 'attr': {'class': 'form-control', 'placeholder': 'primer_nombre...'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.segundo_nombre) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.segundo_nombre) }}
+				  {{ form_errors(form.segundo_nombre) }}
                   {{ form_widget(form.segundo_nombre, { 'attr': {'class': 'form-control', 'placeholder': 'segundo_nombre...'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+		</div>
+        
+		<br/>
+		
+		<div class="row">
+				<div class="col-md-4">
                   {{ form_label(form.genero) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.genero) }}
+				  {{ form_errors(form.genero) }}
                   {{ form_widget(form.genero, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.fecha_nacimiento) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.fecha_nacimiento) }}
+				  {{ form_errors(form.fecha_nacimiento) }}
                   {{ form_widget(form.fecha_nacimiento, { 'attr': {'class': 'form-control', 'placeholder': 'Fecha de nacimiento...'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.edad_inscripcion) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.edad_inscripcion) }}
+				  {{ form_errors(form.edad_inscripcion) }}
                   {{ form_widget(form.edad_inscripcion, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+		</div>
+		
+		<br/>
+		
+		<div class="row">
+				<div class="col-md-4">
                   {{ form_label(form.corte_sisben) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.corte_sisben) }}
+				  {{ form_errors(form.corte_sisben) }}
                   {{ form_widget(form.corte_sisben, { 'attr': {'class': 'form-control', 'placeholder': 'corte_sisben...'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.puntaje_sisben) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.puntaje_sisben) }}
+				  {{ form_errors(form.puntaje_sisben) }}
                   {{ form_widget(form.puntaje_sisben, { 'attr': {'class': 'form-control', 'placeholder': 'puntaje_sisben...'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.pertenencia_etnica) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.pertenencia_etnica) }}
+				  {{ form_errors(form.pertenencia_etnica) }}
                   {{ form_widget(form.pertenencia_etnica, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+		</div>
+		
+		<br/>
+		
+		<div class="row">
+				<div class="col-md-4">
                   {{ form_label(form.grupo_indigena) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.grupo_indigena) }}
+				  {{ form_errors(form.grupo_indigena) }}
                   {{ form_widget(form.grupo_indigena, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
-                  {{ form_label(form.desplazado) }}
+                <div class="col-md-4">
+                  {{ form_label(form.desplazado) }}</br>
+				  {{ form_errors(form.desplazado) }}
+				  <center>
+				  <switch id="swDesplazado" name="swDesplazado" ng-model="swDesplazado"  class="green" on="Si" off="No"></switch>
+                  {{ form_widget(form.desplazado, { 'attr': {'style':'visibility:hidden'} }) }}
+				  </center>				  
                 </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.desplazado) }}
-                  {{ form_widget(form.desplazado, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
+                <div class="col-md-4">
+				  {{ form_label(form.discapacidad) }}
+				  {{ form_errors(form.discapacidad) }}
+                  {{ form_widget(form.discapacidad, { 'attr': {'class': 'form-control'} }) }}
+                </div> 
+		</div>
 
-              <div class="form-group">
-                <div class="col-sm-3">
+		<br/>
+
+		<div class="row">
+				<div class="col-md-4">
                   {{ form_label(form.red_unidos) }}
+				  {{ form_errors(form.red_unidos) }}
+                  <center>
+				  <switch id="swRedUnidos" name="swRedUnidos" ng-model="swRedUnidos"  class="green" on="Si" off="No"></switch>
+                  {{ form_widget(form.red_unidos, { 'attr': {'style':'visibility:hidden'} }) }}
+				  </center>	
                 </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.red_unidos) }}
-                  {{ form_widget(form.red_unidos, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.rol_grupo_familiar) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.rol_grupo_familiar) }}
+				  {{ form_errors(form.rol_grupo_familiar) }}
                   {{ form_widget(form.rol_grupo_familiar, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.hijos_menores_5) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.hijos_menores_5) }}
+				  {{ form_errors(form.hijos_menores_5) }}
                   {{ form_widget(form.hijos_menores_5, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+		</div>
+		
+		<br/>
+		
+		<div class="row">
+				<div class="col-md-4">
                   {{ form_label(form.miembros_nucleo_familiar) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.miembros_nucleo_familiar) }}
+				  {{ form_errors(form.miembros_nucleo_familiar) }}
                   {{ form_widget(form.miembros_nucleo_familiar, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.sabe_leer) }}
+				  {{ form_errors(form.sabe_leer) }}
+                  <center>
+				  <switch id="swSabeLeer" name="swSabeLeer" ng-model="swSabeLeer"  class="green" on="Si" off="No"></switch>
+                  {{ form_widget(form.sabe_leer, { 'attr': {'style':'visibility:hidden'} }) }}
+				  </center>			
                 </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.sabe_leer) }}
-                  {{ form_widget(form.sabe_leer, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.sabe_escribir) }}
+				  {{ form_errors(form.sabe_escribir) }}
+                  <center>
+				  <switch id="swSabeEscribir" name="swSabeEscribir" ng-model="swSabeEscribir"  class="green" on="Si" off="No"></switch>
+                  {{ form_widget(form.sabe_escribir, { 'attr': {'style':'visibility:hidden'} }) }}
+				  </center>	
                 </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.sabe_escribir) }}
-                  {{ form_widget(form.sabe_escribir, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+		</div>
+		
+		<br/>
+		
+		<div class="row">
+				<div class="col-md-4">
                   {{ form_label(form.nivel_estudios) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.nivel_estudios) }}
+				  {{ form_errors(form.nivel_estudios) }}
                   {{ form_widget(form.nivel_estudios, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.ocupacion) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.ocupacion) }}
+				  {{ form_errors(form.ocupacion) }}
                   {{ form_widget(form.ocupacion, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.tipo_vivienda) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.tipo_vivienda) }}
+				  {{ form_errors(form.tipo_vivienda) }}
                   {{ form_widget(form.tipo_vivienda, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
+		</div>
+		
+		</br>
+		
+		<div ng-controller = "CamposDireccionCtrl">
+				<div class="row">
+						<div class="col-md-4">
+						  {{ form_label(form.rural) }}<br/>
+						  {{ form_errors(form.rural) }}
+						  <switch id="swRural" name="swRural" ng-model="swRural" class="green" on="Si" off="No"></switch>
+						  {{ form_widget(form.rural, { 'attr': {'style':'visibility:hidden'} }) }}
+						</div>
+						<div class="col-md-4">
+						  {{ form_label(form.direccion) }}
+						  {{ form_errors(form.direccion) }}
+						  {{ form_widget(form.direccion, { 'attr': {'class': 'form-control', 'placeholder': 'Dirección...'} }) }}
+						</div>
+						<div class="col-md-4">
+							<div ng-show="swRural === false">
+							  {{ form_label(form.barrio) }}
+							  {{ form_errors(form.barrio) }}
+							  {{ form_widget(form.barrio, { 'attr': {'class': 'form-control', 'placeholder': 'Barrio...'} }) }}
+							</div>
+							<div ng-show="swRural === true">							
+							  {{ form_label(form.corregimiento) }}
+							  {{ form_errors(form.corregimiento) }}
+							  {{ form_widget(form.corregimiento, { 'attr': {'class': 'form-control', 'placeholder': 'Corregimiento...'} }) }}							  
+						</div>
+						</div>
+				</div>	
 
-              <div class="form-group">
-                <div class="col-sm-3">
+				<br/>
+	
+				<div class="row" ng-show="swRural === true">
+						<div class="col-md-4">							  
+						</div>
+
+						<div class="col-md-4">
+						  {{ form_label(form.vereda) }}
+						  {{ form_errors(form.vereda) }}
+						  {{ form_widget(form.vereda, { 'attr': {'class': 'form-control', 'placeholder': 'Vereda...'} }) }}
+						</div>
+
+						<div class="col-md-4">
+						  {{ form_label(form.cacerio) }}
+						  {{ form_errors(form.cacerio) }}
+						  {{ form_widget(form.cacerio, { 'attr': {'class': 'form-control', 'placeholder': 'Cacerío...'} }) }}
+						</div>
+				</div>	
+			</div>	
+		
+		<br/>
+		
+		<div class="row">
+				<div class="col-md-4">
                   {{ form_label(form.telefono_fijo) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.telefono_fijo) }}
+				  {{ form_errors(form.telefono_fijo) }}
                   {{ form_widget(form.telefono_fijo, { 'attr': {'class': 'form-control', 'placeholder': 'telefono_fijo...'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.telefono_celular) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.telefono_celular) }}
+				  {{ form_errors(form.telefono_celular) }}
                   {{ form_widget(form.telefono_celular, { 'attr': {'class': 'form-control', 'placeholder': 'telefono_celular...'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.correo_electronico) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.correo_electronico) }}
+				  {{ form_errors(form.correo_electronico) }}
                   {{ form_widget(form.correo_electronico, { 'attr': {'class': 'form-control', 'placeholder': 'correo_electronico...'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+		</div>
+		
+		<br/>
+		
+        <div class="row">
+                <div class="col-md-4">
                   {{ form_label(form.estado_civil) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.estado_civil) }}
+				  {{ form_errors(form.estado_civil) }}
                   {{ form_widget(form.estado_civil, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-			 
-			  
+        </div>
 		
+		<br/>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<fieldset>
+					<legend>Información del Conyuge:</legend>
+				</fieldset>            
+			</div>
+		</div>
 
-              <fieldset>
-			  <legend>Informacion Conyuge:</legend>
-              <div class="form-group">
-                <div class="col-sm-3">
+		<br/>
+
+		<div class="row">
+				<div class="col-md-4">
                   {{ form_label(form.tipo_documento_conyugue) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.tipo_documento_conyugue) }}
+				  {{ form_errors(form.tipo_documento_conyugue) }}
                   {{ form_widget(form.tipo_documento_conyugue, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.numero_documento_conyugue) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.numero_documento_conyugue) }}
+				  {{ form_errors(form.numero_documento_conyugue) }}
                   {{ form_widget(form.numero_documento_conyugue, { 'attr': {'class': 'form-control', 'placeholder': 'numero_documento_conyugue...'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.primer_apellido_conyugue) }}
+				  {{ form_errors(form.primer_apellido_conyugue) }}
+                  {{ form_widget(form.primer_apellido_conyugue, { 'attr': {'class': 'form-control', 'placeholder': 'Primer apellido del conyugue...'} }) }}
                 </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.primer_apellido_conyugue) }}
-                  {{ form_widget(form.primer_apellido_conyugue, { 'attr': {'class': 'form-control', 'placeholder': 'primer_apellido_conyugue...'} }) }}
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+		</div>
+		
+		<br/>
+		
+		<div class="row">
+				<div class="col-md-4">
                   {{ form_label(form.segundo_apellido_conyugue) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.segundo_apellido_conyugue) }}
+				  {{ form_errors(form.segundo_apellido_conyugue) }}
                   {{ form_widget(form.segundo_apellido_conyugue, { 'attr': {'class': 'form-control', 'placeholder': 'segundo_apellido_conyugue...'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.primer_nombre_conyugue) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.primer_nombre_conyugue) }}
+				  {{ form_errors(form.primer_nombre_conyugue) }}
                   {{ form_widget(form.primer_nombre_conyugue, { 'attr': {'class': 'form-control', 'placeholder': 'primer_nombre_conyugue...'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.segundo_nombre_conyugue) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.segundo_nombre_conyugue) }}
+				  {{ form_errors(form.segundo_nombre_conyugue) }}
                   {{ form_widget(form.segundo_nombre_conyugue, { 'attr': {'class': 'form-control', 'placeholder': 'segundo_nombre_conyugue...'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+		</div>
+		
+		<br/>
+		
+		<div class="row">
+				<div class="col-md-4">
                   {{ form_label(form.telefono_fijo_conyugue) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.telefono_fijo_conyugue) }}
+				  {{ form_errors(form.telefono_fijo_conyugue) }}
                   {{ form_widget(form.telefono_fijo_conyugue, { 'attr': {'class': 'form-control', 'placeholder': 'telefono_fijo_conyugue...'} }) }}
                 </div>
-              </div>
 
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.telefono_celular_conyugue) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.telefono_celular_conyugue) }}
+				  {{ form_errors(form.telefono_celular_conyugue) }}
                   {{ form_widget(form.telefono_celular_conyugue, { 'attr': {'class': 'form-control', 'placeholder': 'telefono_celular_conyugue...'} }) }}
                 </div>
-              </div>
-			  </fieldset>
-
-
+		</div>
+		<br/>
+		<br/>
             <!--/form-->
           
       </div>
