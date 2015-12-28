@@ -57,8 +57,15 @@ class ParticipanteType extends AbstractType
 										            ->orderBy('l.orden', 'ASC')
 										            ->addOrderBy('l.descripcion', 'ASC');
 										    },))
-			->add('desplazado', 'checkbox', array('required' => false))
-			->add('discapacidad', 'checkbox', array('required' => false))
+			->add('desplazado', 'checkbox', array('label' => 'Desplazado por la violencia' , 'required' => false))
+			->add('discapacidad', 'entity', array('class' => 'AppBundle:Listas',
+										    'query_builder' => function(EntityRepository $er) {
+										        return $er->createQueryBuilder('l')
+										        	->where('l.dominio = :dominio')
+										        	->andWhere('l.active = 1')
+										        	->setParameter('dominio', 'discapacidad')
+										            ->orderBy('l.orden', 'ASC');
+										    },))
 		
 			->add('rol_grupo_familiar', 'entity', array('class' => 'AppBundle:Listas',
 										    'query_builder' => function(EntityRepository $er) {
