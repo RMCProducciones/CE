@@ -70,7 +70,7 @@ class GrupoType extends AbstractType
 										        return $er->createQueryBuilder('l')
 										        	->where('l.dominio = :dominio')
 										        	->andWhere('l.active = 1')
-										        	->setParameter('dominio', 'entidad_financiera_cuenta')
+										        	->setParameter('dominio', 'entidad_financiera')
 										            ->orderBy('l.orden', 'ASC');
 										    },))
 			
