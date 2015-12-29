@@ -153,7 +153,7 @@ class GestionEmpresarialController extends Controller
         $form = $this->createForm(new GrupoType(), $grupo);
 		
 		$form->add(
-			'Guardar', 
+			'guardar', 
 			'submit', 
 			array(
 				'attr' => array(
@@ -165,6 +165,8 @@ class GestionEmpresarialController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+
+
             
             $grupo = $form->getData();
 
@@ -337,8 +339,6 @@ class GestionEmpresarialController extends Controller
             $beneficiarios->setActive(true);
             $beneficiarios->setFechaCreacion(new \DateTime());
 
-
-            
             $em->persist($beneficiarios);
             $em->flush();
 
