@@ -65,10 +65,13 @@ class BeneficiarioType extends AbstractType
 										            ->orderBy('l.orden', 'ASC')
 										            ->addOrderBy('l.descripcion', 'ASC');
 										    },))
+<<<<<<< HEAD
 
 			->add('desplazado', 'checkbox', array('required' => false))
 			->add('discapacidad')
 
+=======
+>>>>>>> 0950692b568dfff74a9be87fbf233f4e35ff8b25
 			->add('desplazado', 'checkbox', array('label' => 'Desplazado por la violencia' , 'required' => false))
 			->add('discapacidad', 'entity', array('class' => 'AppBundle:Listas',
 										    'query_builder' => function(EntityRepository $er) {
@@ -78,7 +81,10 @@ class BeneficiarioType extends AbstractType
 										        	->setParameter('dominio', 'discapacidad')
 										            ->orderBy('l.orden', 'ASC');
 										    },))
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0950692b568dfff74a9be87fbf233f4e35ff8b25
 			->add('red_unidos', 'checkbox', array('label' => 'Pertenece a la Red Unidos', 'required' => false))
 			->add('rol_grupo_familiar', 'entity', array('class' => 'AppBundle:Listas',
 										    'query_builder' => function(EntityRepository $er) {

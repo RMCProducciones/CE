@@ -318,6 +318,7 @@ class GestionEmpresarialController extends Controller
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiarios-gestion.html.twig', array( 'idGrupo' => $idGrupo, 'beneficiarios' => $beneficiarios));
+
     }
 
     /**
@@ -325,6 +326,8 @@ class GestionEmpresarialController extends Controller
      */
     public function beneficiariosNuevoAction(Request $request, $idGrupo)
     {      
+
+
         $em = $this->getDoctrine()->getManager();
         $beneficiarios = new Beneficiario();
         
@@ -344,7 +347,7 @@ class GestionEmpresarialController extends Controller
 
             return $this->redirectToRoute('beneficiariosGestion', array( 'idGrupo' => $idGrupo));
         }
-        
+      
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiarios-nuevo.html.twig', array('form' => $form->createView(),'idGrupo' => $idGrupo));
     }
 
