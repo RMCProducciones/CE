@@ -22,6 +22,7 @@
     <script type="text/javascript" src="{{ asset('public/lib/angular-bootstrap-confirm.js') }}"></script>
     <script type="text/javascript" src="{{ asset('public/lib/angular-ui-switch.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('public/lib/docs.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('public/lib/xml2json.min.js') }}"></script>
 	<script type="text/javascript">
 
 	</script>
@@ -31,7 +32,6 @@
 	<script type="text/javascript" src="{{ asset('public/js/app.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('public/js/default.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('public/js/localizacion.js') }}"></script>
-	
 	<script type="text/javascript" src="{{ asset('public/js/grupo.js') }}"></script>
 
 {% endblock %}
@@ -67,7 +67,9 @@
         </div>
       </div>
     </div>
-    {% endblock %}
+  	{% endblock %}
+
+	{% render controller('AppBundle:Default:menu') %}
 
 	{% block section %}{% endblock %}
 	
