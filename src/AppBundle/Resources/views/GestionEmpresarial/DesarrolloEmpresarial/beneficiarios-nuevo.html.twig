@@ -121,10 +121,10 @@
 				  {{ form_errors(form.corte_sisben) }}
                   {{ form_widget(form.corte_sisben, { 'attr': {'class': 'form-control', 'placeholder': 'corte_sisben...'} }) }}
                 </div>
-                <div class="col-md-4">
-                  {{ form_label(form.puntaje_sisben) }}
-				  {{ form_errors(form.puntaje_sisben) }}
-                  {{ form_widget(form.puntaje_sisben, { 'attr': {'class': 'form-control', 'placeholder': 'puntaje_sisben...'} }) }}
+               <div class="col-md-4">
+                  {{ form_label(form.grupo_indigena) }}
+				  {{ form_errors(form.grupo_indigena) }}
+                  {{ form_widget(form.grupo_indigena, { 'attr': {'class': 'form-control'} }) }}
                 </div>
                 <div class="col-md-4">
                   {{ form_label(form.pertenencia_etnica) }}
@@ -134,27 +134,30 @@
 		</div>
 		
 		<br/>
-		
-		<div class="row">
+			<div class="row">
 				<div class="col-md-4">
-                  {{ form_label(form.grupo_indigena) }}
-				  {{ form_errors(form.grupo_indigena) }}
-                  {{ form_widget(form.grupo_indigena, { 'attr': {'class': 'form-control'} }) }}
+                  {{ form_label(form.miembros_nucleo_familiar) }}
+				  {{ form_errors(form.miembros_nucleo_familiar) }}
+                  {{ form_widget(form.miembros_nucleo_familiar, { 'attr': {'class': 'form-control'} }) }}
                 </div>
                 <div class="col-md-4">
-                  {{ form_label(form.desplazado) }}</br>
-				  {{ form_errors(form.desplazado) }}
-				  <center>
-				  <switch id="swDesplazado" name="swDesplazado" ng-model="swDesplazado"  class="green" on="Si" off="No"></switch>
-                  {{ form_widget(form.desplazado, { 'attr': {'style':'visibility:hidden'} }) }}
-				  </center>				  
+                  {{ form_label(form.sabe_leer) }}
+				  {{ form_errors(form.sabe_leer) }}
+                  <center>
+				  <switch id="swSabeLeer" name="swSabeLeer" ng-model="swSabeLeer"  class="green" on="Si" off="No"></switch>
+                  {{ form_widget(form.sabe_leer, { 'attr': {'style':'visibility:hidden'} }) }}
+				  </center>			
                 </div>
                 <div class="col-md-4">
-				  {{ form_label(form.discapacidad) }}
-				  {{ form_errors(form.discapacidad) }}
-                  {{ form_widget(form.discapacidad, { 'attr': {'class': 'form-control'} }) }}
-                </div> 
+                  {{ form_label(form.sabe_escribir) }}
+				  {{ form_errors(form.sabe_escribir) }}
+                  <center>
+				  <switch id="swSabeEscribir" name="swSabeEscribir" ng-model="swSabeEscribir"  class="green" on="Si" off="No"></switch>
+                  {{ form_widget(form.sabe_escribir, { 'attr': {'style':'visibility:hidden'} }) }}
+				  </center>	
+                </div>
 		</div>
+		
 
 		<br/>
 
@@ -181,28 +184,25 @@
 		
 		<br/>
 		
-		<div class="row">
-				<div class="col-md-4">
-                  {{ form_label(form.miembros_nucleo_familiar) }}
-				  {{ form_errors(form.miembros_nucleo_familiar) }}
-                  {{ form_widget(form.miembros_nucleo_familiar, { 'attr': {'class': 'form-control'} }) }}
+	<div class="row">
+				  <div class="col-md-4">
+                  {{ form_label(form.puntaje_sisben) }}
+				  {{ form_errors(form.puntaje_sisben) }}
+                  {{ form_widget(form.puntaje_sisben, { 'attr': {'class': 'form-control', 'placeholder': 'puntaje_sisben...'} }) }}
                 </div>
                 <div class="col-md-4">
-                  {{ form_label(form.sabe_leer) }}
-				  {{ form_errors(form.sabe_leer) }}
-                  <center>
-				  <switch id="swSabeLeer" name="swSabeLeer" ng-model="swSabeLeer"  class="green" on="Si" off="No"></switch>
-                  {{ form_widget(form.sabe_leer, { 'attr': {'style':'visibility:hidden'} }) }}
-				  </center>			
+                  {{ form_label(form.desplazado) }}</br>
+				  {{ form_errors(form.desplazado) }}
+				  <center>
+				  <switch id="swDesplazado" name="swDesplazado" ng-model="swDesplazado"  class="green" on="Si" off="No"></switch>
+                  {{ form_widget(form.desplazado, { 'attr': {'style':'visibility:hidden'} }) }}
+				  </center>				  
                 </div>
                 <div class="col-md-4">
-                  {{ form_label(form.sabe_escribir) }}
-				  {{ form_errors(form.sabe_escribir) }}
-                  <center>
-				  <switch id="swSabeEscribir" name="swSabeEscribir" ng-model="swSabeEscribir"  class="green" on="Si" off="No"></switch>
-                  {{ form_widget(form.sabe_escribir, { 'attr': {'style':'visibility:hidden'} }) }}
-				  </center>	
-                </div>
+				  {{ form_label(form.discapacidad) }}
+				  {{ form_errors(form.discapacidad) }}
+                  {{ form_widget(form.discapacidad, { 'attr': {'class': 'form-control'} }) }}
+                </div> 
 		</div>
 		
 		<br/>

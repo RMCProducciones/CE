@@ -48,14 +48,6 @@ class BeneficiarioType extends AbstractType
 			->add('edad_inscripcion', 'text', array('label' => 'Edad al momento de la inscripción'))
 			->add('corte_sisben')
 			->add('puntaje_sisben')
-			->add('pertenencia_etnica', 'entity', array('class' => 'AppBundle:Listas',
-										    'query_builder' => function(EntityRepository $er) {
-										        return $er->createQueryBuilder('l')
-										        	->where('l.dominio = :dominio')
-										        	->andWhere('l.active = 1')
-										        	->setParameter('dominio', 'pertenencia_etnica')
-										            ->orderBy('l.orden', 'ASC');
-										    },))
 			->add('grupo_indigena', 'entity', array('class' => 'AppBundle:Listas',
 										    'query_builder' => function(EntityRepository $er) {
 										        return $er->createQueryBuilder('l')
@@ -65,6 +57,15 @@ class BeneficiarioType extends AbstractType
 										            ->orderBy('l.orden', 'ASC')
 										            ->addOrderBy('l.descripcion', 'ASC');
 										    },))
+			->add('pertenencia_etnica', 'entity', array('class' => 'AppBundle:Listas',
+										    'query_builder' => function(EntityRepository $er) {
+										        return $er->createQueryBuilder('l')
+										        	->where('l.dominio = :dominio')
+										        	->andWhere('l.active = 1')
+										        	->setParameter('dominio', 'pertenencia_etnica')
+										            ->orderBy('l.orden', 'ASC');
+										    },))
+			
 
 			->add('desplazado', 'checkbox', array('label' => 'Desplazado por la violencia' , 'required' => false))
 			->add('discapacidad', 'entity', array('class' => 'AppBundle:Listas',
