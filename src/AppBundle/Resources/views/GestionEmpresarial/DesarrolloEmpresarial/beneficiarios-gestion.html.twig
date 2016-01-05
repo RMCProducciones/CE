@@ -121,7 +121,7 @@
             <br>
             <b>Genero: {{ beneficiario.genero }}</b>
             <br>
-            <b>Fecha de Nacimiento: {{ beneficiario.fechaNacimiento }}</b>
+            <b>Fecha de Nacimiento: {{ beneficiario.fechaNacimiento |  date('d - m - Y') }}</b>
             <br>
             <b>Edad al momento de la inscripcion: {{ beneficiario.edadInscripcion }}</b>
             <br>
