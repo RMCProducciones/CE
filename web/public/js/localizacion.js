@@ -105,6 +105,9 @@ function obtenerDepartamento($http, $scope){
 	$http.get($scope.rutaServidor + "departamentos")
 	.success(function(data) {
 
+		//console.log("departamento: " + data);
+		//console.log(data);
+
 		var array = data == null ? [] : (data instanceof Array ? data : [data]);
 
 		if($scope.nuevoRegistro == true){
@@ -135,6 +138,8 @@ function obtenerZona($http, $scope){
 		
 		$scope.JSONZona  = array;
 		$scope.selZona   = $scope.JSONZona;
+
+		//console.log(array);
 
 		obtenerMunicipio($http, $scope);
 

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<structure>
+<component code="1" level="0" type="Componente" title="Gestion Empresarial" path="#">
+	<module code="1" level="1" type="Módulo" title="Formacion de capital social asociativo y desarrollo empresarial" path="#">
+		<submodule code="1" level="2" type="Submódulo" title="Gestión de Grupos" path="gruposGestion">
+			<action code="1" level="3" type="Funcionalidad" title="Nuevo" path="#"></action>
+			<action code="2" level="3" type="Funcionalidad" title="Detalle" path="#"></action>
+			<action code="3" level="3" type="Funcionalidad" title="Editar" path="#"></action>
+			<action code="4" level="3" type="Funcionalidad" title="Borrar" path="#"></action>
+		</submodule>
+		<submodule code="2" level="2" type="Submódulo" title="Gestión de CLEAR" path="CLEARGestion">
+			<action code="1" level="3" type="Funcionalidad" title="Nuevo" path="#"></action>
+			<action code="2" level="3" type="Funcionalidad" title="Detalle" path="#"></action>
+			<action code="3" level="3" type="Funcionalidad" title="Editar" path="#"></action>
+			<action code="4" level="3" type="Funcionalidad" title="Borrar" path="#"></action>
+		</submodule>
+		<submodule code="3" level="2" type="Submódulo" title="Gestión de seguimiento y monitoreo" path="#">
+			<action code="1" level="3" type="Funcionalidad" title="Nuevo" path="#"></action>
+			<action code="2" level="3" type="Funcionalidad" title="Detalle" path="#"></action>
+			<action code="3" level="3" type="Funcionalidad" title="Editar" path="#"></action>
+			<action code="4" level="3" type="Funcionalidad" title="Borrar" path="#"></action>
+		</submodule>
+	</module>
+	<module code="2" level="1" type="Módulo" title="Concursos de mejoramiento" path="#">
+		<submodule code="1" level="2" type="Submódulo" title="Gestion de Concursos" path="concursoGestion">
+			<action code="1" level="3" type="Funcionalidad" title="Nuevo" path="#"></action>
+			<action code="2" level="3" type="Funcionalidad" title="Detalle" path="#"></action>
+			<action code="3" level="3" type="Funcionalidad" title="Editar" path="#"></action>
+			<action code="4" level="3" type="Funcionalidad" title="Borrar" path="#"></action>
+		</submodule>
+		<submodule code="2" level="2" type="Submódulo" title="Gestion de Jurados" path="#">
+			<action code="1" level="3" type="Funcionalidad" title="Nuevo" path="#"></action>
+			<action code="2" level="3" type="Funcionalidad" title="Detalle" path="#"></action>
+			<action code="3" level="3" type="Funcionalidad" title="Editar" path="#"></action>
+			<action code="4" level="3" type="Funcionalidad" title="Borrar" path="#"></action>
+		</submodule>
+		<submodule code="3" level="2" type="Submódulo" title="Gestion de seguimiento y monitoreo" path="#">
+			<action code="1" level="3" type="Funcionalidad" title="Nuevo" path="#"></action>
+			<action code="2" level="3" type="Funcionalidad" title="Detalle" path="#"></action>
+			<action code="3" level="3" type="Funcionalidad" title="Editar" path="#"></action>
+			<action code="4" level="3" type="Funcionalidad" title="Borrar" path="#"></action>
+		</submodule>
+	</module>
+	<module code="3" level="1" type="Módulo" title="Servicios complementarios" path="#">
+		<submodule code="1" level="2" type="Submódulo" title="Participación rutas y pasantias" path="#">
+			<action code="1" level="3" type="Funcionalidad" title="Nuevo" path="#"></action>
+			<action code="2" level="3" type="Funcionalidad" title="Detalle" path="#"></action>
+			<action code="3" level="3" type="Funcionalidad" title="Editar" path="#"></action>
+			<action code="4" level="3" type="Funcionalidad" title="Borrar" path="#"></action>
+		</submodule>
+		<submodule code="2" level="2" type="Submódulo" title="Participación en talleres" path="#">
+			<action code="1" level="3" type="Funcionalidad" title="Nuevo" path="#"></action>
+			<action code="2" level="3" type="Funcionalidad" title="Detalle" path="#"></action>
+			<action code="3" level="3" type="Funcionalidad" title="Editar" path="#"></action>
+			<action code="4" level="3" type="Funcionalidad" title="Borrar" path="#"></action>
+		</submodule>
+		<submodule code="3" level="2" type="Submódulo" title="Participación en Ferias" path="#">
+			<action code="1" level="3" type="Funcionalidad" title="Nuevo" path="#"></action>
+			<action code="2" level="3" type="Funcionalidad" title="Detalle" path="#"></action>
+			<action code="3" level="3" type="Funcionalidad" title="Editar" path="#"></action>
+			<action code="4" level="3" type="Funcionalidad" title="Borrar" path="#"></action>
+		</submodule>
+		<submodule code="4" level="2" type="Submódulo" title="Desarrollo de ferias de difusión del proyecto" path="#">
+			<action code="1" level="3" type="Funcionalidad" title="Nuevo" path="#"></action>
+			<action code="2" level="3" type="Funcionalidad" title="Detalle" path="#"></action>
+			<action code="3" level="3" type="Funcionalidad" title="Editar" path="#"></action>
+			<action code="4" level="3" type="Funcionalidad" title="Borrar" path="#"></action>
+		</submodule>
+	</module>
+</component>
+<component code="2" level="0" type="Componente" title="Gestion Financiera" path="#">
+</component>
+</structure>

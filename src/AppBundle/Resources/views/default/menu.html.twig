@@ -1,0 +1,86 @@
+    <div class="section" ng-controller="MenuCtrl">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 table-responsive">
+
+
+            <div class="panel-group" id="component" role="tablist" aria-multiselectable="true">
+              <div class="panel panel-default" ng-repeat="component in RPP">
+                <div class="panel-heading" role="tab" id="heading[[component._type]][[component._code]]">  
+                  <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#component" href="#collapse[[component._type]][[component._code]]" aria-expanded="false" aria-controls="collapse[[component._type]][[component._code]]">
+                      Componente #[[$index + 1]]: [[component._title]]
+                    </a>
+                  </h4>
+                </div>
+                <div id="collapse[[component._type]][[component._code]]" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading[[component._type]][[component._code]]">
+                  <div class="panel-body">
+
+
+                    <div class="panel-group" id="module[[component._code]]" role="tablist" aria-multiselectable="true">
+                      <div class="panel panel-default" ng-repeat="module in component.module">
+                        <div class="panel-heading" role="tab" id="heading[[module._type]][[component._code]][[module._code]]">
+                          <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#module[[component._code]]" href="#collapse[[module._type]][[component._code]][[module._code]]" aria-expanded="true" aria-controls="collapse[[module._type]][[component._code]][[module._code]]">
+                              Módulo #[[$index + 1]]: [[module._title]]
+                            </a>
+                          </h4>
+                        </div>
+                        <div id="collapse[[module._type]][[component._code]][[module._code]]" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading[[module._type]][[component._code]][[module._code]]">
+                          <div class="panel-body">
+
+
+                            <div class="panel-group" id="submodule[[component._code]][[module._code]]" role="tablist" aria-multiselectable="true">
+                              <div class="panel panel-default" ng-repeat="submodule in module.submodule">
+                                <div class="panel-heading" role="tab" id="heading[[submodule._type]][[component._code]][[module._code]][[submodule._code]]">
+                                  <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#submodule[[component._code]][[module._code]]" href="#collapse[[submodule._type]][[component._code]][[module._code]][[submodule._code]]" aria-expanded="true" aria-controls="collapse[[submodule._type]][[component._code]][[module._code]][[submodule._code]]">
+                                      Submódulo #[[$index + 1]]: [[submodule._title]]
+                                    </a>
+                                  </h4>
+                                </div>
+                                <div id="collapse[[submodule._type]][[component._code]][[module._code]][[submodule._code]]" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading[[submodule._type]][[component._code]][[module._code]][[submodule._code]]">
+                                  <div class="panel-body">
+
+
+                                    <table class="table">
+                                      <thead>
+                                          <tr>
+                                            <th>Funcionalidad</th>
+                                            <th></th>
+                                          </tr>
+                                     </thead>
+                                     <tbody>
+                                       
+                                          <tr ng-repeat="action in submodule.action">
+                                            <td><input type="checkbox"> [[ action._title ]] </td>
+                                            <td>
+                                            </td>
+                                          </tr>
+                                
+                                       </tbody>
+                                    </table>
+
+
+                                  </div>
+                                </div>
+                              </div>
+                            </div>   
+
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>            
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>  
