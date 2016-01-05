@@ -58,13 +58,23 @@ class GrupoType extends AbstractType
 			->add('corregimiento', 'text', array('required' => false))
 			->add('vereda', 'text', array('required' => false))
 			->add('cacerio', 'text', array('required' => false))
-			->add('figura_legal_constitucion', 'text', array('required' => false))
+		
 			->add('numero_identificacion_tributaria', 'text', array('required' => false))
 			->add('fecha_constitucion_legal', 'date', array('label' => 'Fecha de constitucion legal del grupo', 'widget' => 'single_text'))
 			->add('telefono_fijo', 'text', array('required' => false))
 			->add('telefono_celular')
 			->add('correo_electronico', 'email')
 			
+			
+			->add('figura_legal_constitucion', 'entity', array('class' => 'AppBundle:Listas',
+										    'query_builder' => function(EntityRepository $er) {
+										        return $er->createQueryBuilder('l')
+										        	->where('l.dominio = :dominio')
+										        	->andWhere('l.active = 1')
+										        	->setParameter('dominio', 'figura_legal_constitucion')
+										            ->orderBy('l.orden', 'ASC');
+										    },))
+											
 			->add('entidad_financiera_cuenta', 'entity', array('class' => 'AppBundle:Listas',
 										    'query_builder' => function(EntityRepository $er) {
 										        return $er->createQueryBuilder('l')
