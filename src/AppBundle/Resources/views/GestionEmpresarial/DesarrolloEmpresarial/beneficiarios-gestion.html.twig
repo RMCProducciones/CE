@@ -104,44 +104,94 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">NP-RIC-3-2014/05-001 | Andrés Carne de Res</h4>
+            <h4 class="modal-title" id="myModalLabel">{{ beneficiario.grupo.id }} | {{ beneficiario.grupo.nombre }}</h4>
           </div>
           <div class="modal-body">
-            <b>Departamento:Antioquia</b>
+            <b>Tipo de Documento:{{ beneficiario.tipoDocumento }}</b>
             <br>
-            <b>Municipio: Rionegro</b>
+            <b>Numero de Documento: {{ beneficiario.numeroDocumento }}</b>
             <br>
-            <b>Zona: Oriente Antioqueño</b>
+            <b>Primero Apellido: {{ beneficiario.primerApellido }}</b>
             <br>
-            <b>Tipo de grupo: No formal</b>
+            <b>Segundo Apellido: {{ beneficiario.segundoApellido }}</b>
             <br>
-            <b>Codigo de grupo:</b>
+            <b>Primero Nombre: {{ beneficiario.primerNombre }}</b>
             <br>
-            <b>Nombre grupo:NP-RIC-3-2014/05-003</b>
+            <b>Segundo Nombre: {{ beneficiario.segundoNombre }}</b>
             <br>
-            <b>Corregimiento:N/A</b>
+            <b>Genero: {{ beneficiario.genero }}</b>
             <br>
-            <b>Vereda:N/A</b>
+            <b>Fecha de Nacimiento: {{ beneficiario.fechaNacimiento }}</b>
             <br>
-            <b>Cacerio:N/A</b>
+            <b>Edad al momento de la inscripcion: {{ beneficiario.edadInscripcion }}</b>
             <br>
-            <b>Direccion: CLL67 #78-89</b>
+            <b>Deplazado por la violencia: {{ beneficiario.desplazado }}</b>
             <br>
-            <b>Tipo de organización:Cooperativa</b>
+            <b>Grupo indigena: {{ beneficiario.grupoIndigena }}</b>
             <br>
-            <b>NIT:721394731-2</b>
+            <b>Pertenencia Etnica: {{ beneficiario.pertenenciaEtnica }}</b>
             <br>
-            <b>Telefono Movil:3126748675</b>
+            <b>Pertenece a la red unidos: {{ beneficiario.redUnidos }}</b>
             <br>
-            <b>Telefono Fijo:9867849</b>
+            <b>Sabe leer: {{ beneficiario.sabeLeer }}</b>
             <br>
-            <b>Cuenta Bancaria:Si</b>
+            <b>Sabe escribir: {{ beneficiario.sabeEscribir }}</b>
             <br>
-            <b>Tipo de cuenta: Mancomunada</b>
+			<b>Puntaje del sisben: {{ beneficiario.puntajeSisben }}</b>
             <br>
-            <b>Numero de cuenta:76128348938-97</b>
+            <b>Corte sisben: {{ beneficiario.corteSisben }}</b>
             <br>
-            <b>Banco:Banco de Bogota</b>
+            <b>Discapacidad: {{ beneficiario.discapacidad }}</b>
+			<br>
+            <b>Rol grupo familiar: {{ beneficiario.rolGrupoFamiliar }}</b>
+			<br>
+            <b>Mimebros	nucleo familiar: {{ beneficiario.miembrosNucleoFamiliar }}</b>
+			<br>
+            <b>Hijos menores 5: {{ beneficiario.hijosMenores5 }}</b>
+			<br>
+            <b>Nivel de estudios: {{ beneficiario.nivelEstudios }}</b>
+			<br>
+            <b>Ocupacion: {{ beneficiario.ocupacion }}</b>
+			<br>
+            <b>Tipo de vivienda: {{ beneficiario.tipoVivienda }}</b>
+			<br>
+            <b>Rural: {{ beneficiario.rural }}</b>
+			<br>
+            <b>Direccion: {{ beneficiario.direccion }}</b>
+			<br>
+            <b>Barrio: {{ beneficiario.barrio }}</b>
+			<br>
+            <b>Corregimiento: {{ beneficiario.corregimiento }}</b>
+			<br>
+            <b>Vereda: {{ beneficiario.vereda }}</b>
+			<br>
+            <b>Cacerio: {{ beneficiario.cacerio }}</b>
+			<br>
+            <b>Telefono Fijo: {{ beneficiario.telefonoFijo }}</b>
+			<br>
+            <b>Telefono Celular: {{ beneficiario.telefonoCelular }}</b>
+			<br>
+            <b>Correo electronico: {{ beneficiario.correoElectronico }}</b>
+			<br>
+            <b>Estado civil: {{ beneficiario.estadoCivil }}</b>
+			<br>
+            <b>Información del Conyuge</b>
+			<br>
+            <b>Tipo de documento del conyuge: {{ beneficiario.tipoDocumentoConyugue }}</b>
+			<br>
+            <b>Numero de documento del conyuge: {{ beneficiario.numeroDocumentoConyugue }}</b>
+			<br>
+            <b>Primer apellido del conyuge: {{ beneficiario.primerApellidoConyugue }}</b>
+			<br>
+            <b>Segundo apellido del conyuge: {{ beneficiario.segundoApellidoConyugue }}</b>
+			<br>
+            <b>Primer nombre del conyuge: {{ beneficiario.primerNombreConyugue }}</b>
+			<br>
+            <b>Segundo nombre del conyuge: {{ beneficiario.segundoNombreConyugue }}</b>
+			<br>
+            <b>Telefono fijo del conyuge: {{ beneficiario.telefonoFijoConyugue }}</b>
+			<br>
+            <b>Telefono celular del conyuge: {{ beneficiario.telefonoCelularConyugue }}</b>
           </div>
 
           <div class="modal-footer">
