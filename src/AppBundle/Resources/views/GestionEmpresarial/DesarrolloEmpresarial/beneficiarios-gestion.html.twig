@@ -49,10 +49,9 @@
 	                  <th>
 	                    <input type="checkbox">
 	                  </th>
+					  <th>Documento</th>
 	                  <th>Nombre</th>
-	                  <th>Rol</th>
-	                  <th>Localización</th>
-	                  <th>Estado</th>
+	                  <th>Rol Familiar</th>
 	                  <th>Acciones</th>
 	                </tr>
 	           </thead>
@@ -68,17 +67,9 @@
 
 	                    <input type="checkbox">
 	                  </td>
-	                  <td>{{ beneficiario.primernombre}}</td>
+					  <td>{{ beneficiario.numeroDocumento}}</td>
+	                  <td>{{ beneficiario.primernombre}} {{ beneficiario.segundonombre}} {{ beneficiario.primerapellido}}</td>
 	                  <td>{{ beneficiario.rolGrupoFamiliar }}</td>
-	                  <td>
-	                    <b>M</b>Valdivia
-	                    <br>
-	                    <b>D</b>Antioquia
-	                    <br>
-	                    <b>Z</b>Zona
-	                    <br>
-	                  </td>
-	                  <td>Habilitado</td>
 	                  <td>
 	                    <a href="acta-subir-grupos.html" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span> | </a>
 	                    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ beneficiario.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> | </a>
