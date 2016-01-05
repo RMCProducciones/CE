@@ -312,12 +312,14 @@ class GestionEmpresarialController extends Controller
     public function beneficiariosGestionAction($idGrupo)
     {
         $em = $this->getDoctrine()->getManager();
+		
         $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
             array('active' => '1', 'grupo' => $idGrupo),
             array('primer_apellido' => 'ASC')
         );
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiarios-gestion.html.twig', array( 'idGrupo' => $idGrupo, 'beneficiarios' => $beneficiarios));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiarios-gestion.html.twig', 
+		array( 'idGrupo' => $idGrupo, 'beneficiarios' => $beneficiarios));
 
     }
 
