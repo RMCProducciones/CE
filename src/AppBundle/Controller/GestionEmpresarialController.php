@@ -22,6 +22,7 @@ use AppBundle\Entity\IntegranteCLEAR;
 use AppBundle\Entity\AsignacionIntegranteCLEAR;
 use AppBundle\Entity\Concurso;
 use AppBundle\Entity\ActividadConcurso;
+use AppBundle\Entity\Listas;
 
 use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
 use AppBundle\Form\GestionEmpresarial\AsignacionIntegranteCLEARType;
@@ -168,7 +169,7 @@ class GestionEmpresarialController extends Controller
             
             $grupo = $form->getData();
 
-            if($grupo->getRural() == true){
+            if($grupo->getRural() == true){				
                 $grupo->setBarrio(null);
             }
             else
@@ -333,12 +334,26 @@ class GestionEmpresarialController extends Controller
         
         $form = $this->createForm(new BeneficiarioType(), $beneficiarios);
 
-        $form->handleRequest($request);
-
+        $form->handleRequest($request);        
+        $var = '46';
+        
         if ($form->isValid()) {
+            
             // data is an array with "name", "email", and "message" keys
             $beneficiarios = $form->getData();
+            die("si entra".$beneficiarios->getPertenenciaEtnica()->getDescripcion());
+		    //$var = $beneficiarios->getGrupoIndigena();      	
+			/*if($beneficiarios->getGenero() == null){
+                echo '<script language="javascript">alert("juas");</script>'; 
+				//$beneficiarios->setPertenenciaEtnica(null);
+            } */        
+            if($beneficiarios->getPertenenciaEtnica()->getNombre() != 'Indígena'){
+                $beneficiarios->setGrupoIndigena(null);
+            }
 
+            if($var == '46'){
+                echo '<script language="javascript">alert("juas");</script>';             
+            }
             $beneficiarios->setActive(true);
             $beneficiarios->setFechaCreacion(new \DateTime());
 
@@ -347,7 +362,8 @@ class GestionEmpresarialController extends Controller
 
             return $this->redirectToRoute('beneficiariosGestion', array( 'idGrupo' => $idGrupo));
         }
-      
+        
+        
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiarios-nuevo.html.twig', array('form' => $form->createView(),'idGrupo' => $idGrupo));
     }
 
