@@ -42,12 +42,12 @@ class ConcursoType extends AbstractType
 			))
 			
 			->add('tematica','textarea')
-			->add('ambito')
-			->add('problematica')
+			->add('ambito', 'text', array('label' => 'Ámbito'))
+			->add('problematica', 'text', array('label' => 'Problematicás'))
 			->add('actividades')
 			->add('resultados')
 			->add('valor')
-			->add('distribucion')
+			->add('distribucion', 'text', array('label' => 'Distribución'))
 			->add('criterios');
 			
     
