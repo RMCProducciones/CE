@@ -50,126 +50,94 @@
     <div class="section">
       <div class="container">
         <div class="row">
-          <div class="col-md-12">
-            <!--form class="form-horizontal" role="form"-->
-			
-			   <div class="form-group">
-                <div class="col-sm-3">
+		
+			<div class="row">
+					<div class="col-md-12">
+						<fieldset>
+							<legend>Datos del concurso</legend>
+						</fieldset>            
+					</div>
+			</div>	
+			<br/>
+			<div class="row">
+			    <!--form class="form-horizontal" role="form"-->
+			    <div class="col-md-4">
                   {{ form_label(form.fecha_bases) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.fecha_bases) }}
-                  {{ form_widget(form.fecha_bases, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-			   <div class="form-group">
-                <div class="col-sm-3">
+				  {{ form_errors(form.fecha_bases) }}
+				  {{ form_widget(form.fecha_bases, { 'attr': {'class': 'form-control'} }) }}
+                </div>			
+                           		   
+                <div class="col-md-4">
                   {{ form_label(form.tipo) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.tipo) }}
-                  {{ form_widget(form.tipo, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-			  <div class="form-group">
-                <div class="col-sm-3">
+				  {{ form_errors(form.tipo) }}
+				  {{ form_widget(form.tipo, { 'attr': {'class': 'form-control'} }) }}
+                </div>								
+			  
+                <div class="col-md-4">
                   {{ form_label(form.modalidad) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.modalidad) }}
+				  {{ form_errors(form.modalidad) }}
                   {{ form_widget(form.modalidad, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-			  <div class="form-group">
-                <div class="col-sm-3">
+                </div>			        	
+            </div>
+			
+			<br/>
+			
+			<div class="row">
+			<div class="col-md-4">
                   {{ form_label(form.tematica) }}
+				  {{ form_errors(form.tematica) }}
+				  {{ form_widget(form.tematica, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.tematica) }}
-                  {{ form_widget(form.tematica, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+				<div class="col-md-4">
                   {{ form_label(form.ambito) }}
+				  {{ form_errors(form.ambito) }}
+				  {{ form_widget(form.ambito, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.ambito) }}
-                  {{ form_widget(form.ambito, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-			  
-              <div class="form-group">
-                <div class="col-sm-3">
+				<div class="col-md-4">
                   {{ form_label(form.problematica) }}
+				  {{ form_errors(form.problematica) }}
+				  {{ form_widget(form.problematica, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.problematica) }}
-                  {{ form_widget(form.problematica, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-			  
-			    <div class="form-group">
-                <div class="col-sm-3">
+                
+			</div>
+			<br/>
+			<div class="row">
+			<div class="col-md-4">
                   {{ form_label(form.actividades) }}
+				  {{ form_errors(form.actividades) }}
+				  {{ form_widget(form.actividades, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.actividades) }}
-                  {{ form_widget(form.actividades, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-			  
-			    <div class="form-group">
-                <div class="col-sm-3">
+				<div class="col-md-4">
                   {{ form_label(form.resultados) }}
+				  {{ form_errors(form.resultados) }}
+				  {{ form_widget(form.resultados, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.resultados) }}
-                  {{ form_widget(form.resultados, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-			  
-			  <div class="form-group">
-                <div class="col-sm-3">
+				<div class="col-md-4">
                   {{ form_label(form.valor) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.valor) }}
-                  {{ form_widget(form.valor, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-			  
-			  <div class="form-group">
-                <div class="col-sm-3">
+				  {{ form_errors(form.valor) }}
+				  {{ form_widget(form.valor, { 'attr': {'class': 'form-control'} }) }}
+                </div>                
+                
+            </div>   
+			<br/>
+			<div class ="row">
+			<div class="col-md-4">
                   {{ form_label(form.distribucion) }}
+				  {{ form_errors(form.distribucion) }}
+				  {{ form_widget(form.distribucion, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.distribucion) }}
-                  {{ form_widget(form.distribucion, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-			  
-			 
-			  
-			   <div class="form-group">
-                <div class="col-sm-3">
+				<div class="col-md-4">
                   {{ form_label(form.criterios) }}
+				  {{ form_errors(form.criterios) }}
+				  {{ form_widget(form.criterios, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.criterios) }}
-                  {{ form_widget(form.criterios, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-             
-			  
-             
-             
-
-            <!--/form-->
-          </div>
+                
+			</div>
+			<!--/form-->
+			<br/>
+		  	<br/>	
+          </div>	    
         </div>
-      </div>
     </div>
 
   {{ form_end(form) }}

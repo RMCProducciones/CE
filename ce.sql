@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-12-2015 a las 14:14:06
+-- Tiempo de generación: 06-01-2016 a las 16:11:46
 -- Versión del servidor: 5.6.16
 -- Versión de PHP: 5.5.11
 
@@ -303,14 +303,15 @@ CREATE TABLE IF NOT EXISTS `beca` (
   KEY `IDX_8A1280F558BC1BE0` (`municipio_id`),
   KEY `IDX_8A1280F5DADD026` (`usuario_modificacion_id`),
   KEY `IDX_8A1280F5AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
 -- Volcado de datos para la tabla `beca`
 --
 
 INSERT INTO `beca` (`id`, `entidad`, `nombre`, `fecha_publicacion`, `fecha_inicio`, `fecha_finalizacion`, `active`, `fecha_modificacion`, `fecha_creacion`, `tipo_id`, `modalidad_id`, `municipio_id`, `usuario_modificacion_id`, `usuario_creacion_id`) VALUES
-(1, 'fdsfsaf', 'sdafsadfasdf', '2015-12-19 00:00:00', '2015-12-10 00:00:00', '2015-12-20 00:00:00', 1, NULL, '2015-12-07 23:31:28', 156, 158, 1, NULL, NULL);
+(1, 'fdsfsaf', 'sdafsadfasdf', '2015-12-19 00:00:00', '2015-12-10 00:00:00', '2015-12-20 00:00:00', 1, NULL, '2015-12-07 23:31:28', 156, 158, 1, NULL, NULL),
+(2, 'sdaff', 'dasfsadfsdaf', '2015-12-27 00:00:00', '2015-12-19 00:00:00', '2015-12-08 00:00:00', 1, NULL, '2015-12-14 15:55:57', 155, 158, 17, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -351,10 +352,10 @@ CREATE TABLE IF NOT EXISTS `beneficiario` (
   `sabe_escribir` tinyint(1) DEFAULT NULL,
   `direccion` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `rural` tinyint(1) NOT NULL,
-  `barrio` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `corregimiento` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `vereda` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `cacerio` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `barrio` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `corregimiento` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `vereda` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cacerio` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `telefono_fijo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `telefono_celular` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `correo_electronico` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -368,7 +369,7 @@ CREATE TABLE IF NOT EXISTS `beneficiario` (
   `active` tinyint(1) DEFAULT NULL,
   `fecha_modificacion` datetime DEFAULT NULL,
   `fecha_creacion` datetime NOT NULL,
-  `discapacidad` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `discapacidad_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_E8D0B6179C833003` (`grupo_id`),
   KEY `IDX_E8D0B617F6939175` (`tipo_documento_id`),
@@ -384,8 +385,24 @@ CREATE TABLE IF NOT EXISTS `beneficiario` (
   KEY `IDX_E8D0B617B4837970` (`tipo_vivienda_id`),
   KEY `IDX_E8D0B617906677C2` (`tipo_documento_conyugue_id`),
   KEY `IDX_E8D0B617DADD026` (`usuario_modificacion_id`),
-  KEY `IDX_E8D0B617AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+  KEY `IDX_E8D0B617AEADF654` (`usuario_creacion_id`),
+  KEY `IDX_E8D0B61713DA6592` (`discapacidad_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
+
+--
+-- Volcado de datos para la tabla `beneficiario`
+--
+
+INSERT INTO `beneficiario` (`id`, `grupo_id`, `tipo_documento_id`, `genero_id`, `pertenencia_etnica_id`, `grupo_indigena_id`, `estado_civil_id`, `rol_grupo_familiar_id`, `hijos_menores_5_id`, `miembros_nucleo_familiar_id`, `nivel_estudios_id`, `ocupacion_id`, `tipo_vivienda_id`, `tipo_documento_conyugue_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `numero_documento`, `primer_apellido`, `segundo_apellido`, `primer_nombre`, `segundo_nombre`, `fecha_nacimiento`, `edad_inscripcion`, `joven_rural`, `corte_sisben`, `puntaje_sisben`, `desplazado`, `red_unidos`, `sabe_leer`, `sabe_escribir`, `direccion`, `rural`, `barrio`, `corregimiento`, `vereda`, `cacerio`, `telefono_fijo`, `telefono_celular`, `correo_electronico`, `numero_documento_conyugue`, `primer_apellido_conyugue`, `segundo_apellido_conyugue`, `primer_nombre_conyugue`, `segundo_nombre_conyugue`, `telefono_fijo_conyugue`, `telefono_celular_conyugue`, `active`, `fecha_modificacion`, `fecha_creacion`, `discapacidad_id`) VALUES
+(1, NULL, 1, 6, 50, 46, 8, 13, 17, 21, NULL, 35, 38, 4, NULL, NULL, '3423', 'dsvdcvxzc', 'xcvxzcv', 'zxcv', 'zcxvzxcv', '2015-12-11 00:00:00', 21, NULL, '544', '54', 0, 0, 0, 0, 'dasdsf', 0, 'dsfsdf', NULL, NULL, NULL, NULL, '5151313', 'jjsdfdsf@dsfsdf.com', '13138464', 'dfsgvfdsg', 'fdsg', 'sdfg', 'dsfg', 'dfsg', 'sdfgdfg', 1, NULL, '2015-12-29 16:59:07', NULL),
+(2, NULL, 1, 7, 61, 48, 8, 13, 20, 24, NULL, 36, 39, 3, NULL, NULL, '43123432', 'adsfdsfsdaf', 'sdafsadf', 'sdaf', 'adsfasdf', '2015-12-10 00:00:00', 41, NULL, '1653', '123', 0, 0, 0, 0, 'dasffsdafdsfa', 0, NULL, NULL, NULL, NULL, NULL, '3135315', 'sdafsdaf@asddasd.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2015-12-29 17:00:02', NULL),
+(3, NULL, 1, 6, 50, 46, 8, 13, 17, 21, NULL, 35, 38, 4, NULL, NULL, '3423', 'dsvdcvxzc', 'xcvxzcv', 'zxcv', 'zcxvzxcv', '2015-12-11 00:00:00', 21, NULL, '544', '54', 0, 0, 0, 0, 'dasdsf', 0, 'dsfsdf', NULL, NULL, NULL, NULL, '5151313', 'jjsdfdsf@dsfsdf.com', '13138464', 'dfsgvfdsg', 'fdsg', 'sdfg', 'dsfg', 'dfsg', 'sdfgdfg', 1, NULL, '2015-12-29 17:10:15', NULL),
+(4, NULL, 1, 7, 61, 47, 8, 12, 14, 21, NULL, 34, 37, 2, NULL, NULL, '12323', 'cxvczxvxczv', 'xcv', 'zxcv', 'xczvcx', '2015-12-13 00:00:00', 23, NULL, '23', '23', 0, 0, 0, 0, '3425356', 0, NULL, NULL, NULL, NULL, NULL, '2551', 'jasdas@sdfsd.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2015-12-29 17:11:44', NULL),
+(5, NULL, 1, 7, 50, 46, 8, 12, 14, 25, NULL, 34, 37, 1, NULL, NULL, '32132132', 'asdasd', 'asdasd', 'sadasd', 'sadasd', '2015-12-11 00:00:00', 13, NULL, '2313', '321', 0, 0, 0, 0, 'sadasd', 0, NULL, 'asd', NULL, NULL, NULL, '1221321', 'asdfasdf@sdafsdfs.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2015-12-30 17:32:09', NULL),
+(6, NULL, 1, 6, 50, 47, 8, 12, 20, 27, NULL, 34, 37, 1, NULL, NULL, '102234556', 'cantor', 'forero', 'juan', 'sebastian', '2015-12-12 00:00:00', 51, NULL, '51', '21', 0, 0, 0, 0, 'asdas', 0, NULL, 'sasa', NULL, NULL, NULL, '3215555555', 'juanas@asdasd.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2015-12-30 17:35:06', NULL),
+(7, 2, 1, 6, 64, 47, 10, 12, 14, 21, 28, 34, 37, 4, NULL, NULL, '102237895', 'hhhhh', 'hhhh', 'kajsu', 'lsosj', '2016-01-03 00:00:00', 12, NULL, '2536', '12', 0, 0, 0, 0, 'ljkhgfcgh', 0, NULL, 'fvflvb', 'bnbbvb', 'n bbnvv', '1111111', '12456352', 'jhgjdas@dsfsdf.com', '1232122', 'jhhdhdhdh', 'dhdhdhdh', 'dhdhdhdhdh', 'dhdhdhdh', '1231234', '12457896', 1, NULL, '2016-01-05 16:38:19', 213),
+(8, 1, 1, 6, 58, 45, 11, 13, 20, 27, 33, 36, 38, 3, NULL, NULL, '1022376577', 'bastidas', 'no lo c', 'DANIEL', 'no lo c', '2015-12-31 00:00:00', 12, NULL, '123', '123', 0, 0, 0, 0, 'asdasd', 0, NULL, 'dsafds', 'dsd', 'cvscds', '123456', '1231234', 'asdasdasd@fasdfasd.com', 'asdasd', 'asd', 'asd', 'asd', 'asd', 'asd', 'asd', 1, NULL, '2016-01-05 17:21:14', 217),
+(9, NULL, 2, 7, 50, 46, 8, 13, 18, 23, 28, 34, 37, 5, NULL, NULL, '1022376511', 'ccccc', 'vvvv', 'bbbb', 'nnnnn', '2016-01-07 00:00:00', 12, NULL, '322', '12', 0, 0, 0, 0, 'sadasd', 0, NULL, 'sadasd', 'sad', 'asdasd', '2132', '3131', '321321@adsasd.com', 'asd', 'asd', 's', 'asdgf', 'sad', 'asd', 'asd', 1, NULL, '2016-01-06 14:26:57', 215);
 
 -- --------------------------------------------------------
 
@@ -493,7 +510,7 @@ CREATE TABLE IF NOT EXISTS `clear` (
   KEY `IDX_E5B1F10658BC1BE0` (`municipio_id`),
   KEY `IDX_E5B1F106DADD026` (`usuario_modificacion_id`),
   KEY `IDX_E5B1F106AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 --
 -- Volcado de datos para la tabla `clear`
@@ -503,7 +520,9 @@ INSERT INTO `clear` (`id`, `municipio_id`, `usuario_modificacion_id`, `usuario_c
 (1, 1, NULL, NULL, '2015-11-06 00:00:00', '2015-11-27 00:00:00', 0, 1, NULL, '2015-11-18 23:04:46'),
 (2, 1, NULL, NULL, '2015-11-14 00:00:00', '2015-11-21 00:00:00', 0, 1, NULL, '2015-11-23 21:38:38'),
 (3, 1, NULL, NULL, '2015-11-15 00:00:00', '2015-11-12 00:00:00', 0, 1, NULL, '2015-11-27 16:01:49'),
-(4, 1, NULL, NULL, '2015-12-22 00:00:00', '2015-12-13 00:00:00', 0, 1, NULL, '2015-12-02 15:43:43');
+(4, 1, NULL, NULL, '2015-12-22 00:00:00', '2015-12-13 00:00:00', 0, 1, NULL, '2015-12-02 15:43:43'),
+(5, 12, NULL, NULL, '2015-12-09 00:00:00', '2015-12-18 00:00:00', 0, 1, NULL, '2015-12-16 16:59:14'),
+(6, 19, NULL, NULL, '2015-12-10 00:00:00', '2015-12-04 00:00:00', 0, 1, NULL, '2015-12-16 18:39:17');
 
 -- --------------------------------------------------------
 
@@ -537,7 +556,7 @@ CREATE TABLE IF NOT EXISTS `concurso` (
   KEY `IDX_785F9DE61E092B9F` (`modalidad_id`),
   KEY `IDX_785F9DE6DADD026` (`usuario_modificacion_id`),
   KEY `IDX_785F9DE6AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 --
 -- Volcado de datos para la tabla `concurso`
@@ -548,7 +567,8 @@ INSERT INTO `concurso` (`id`, `fecha_bases`, `tematica`, `ambito`, `problematica
 (2, '2015-12-24 00:00:00', 'ESTA TEMATICA AEASDASDASD ASDASD ASDASD', 'SADFADSFASD', 'ASDFASDF', 'ADSFADSF', 'ASDFASDF', 'ADSFASDF', 'ADSFASDF', 'ADSFASDFASDF', NULL, NULL, NULL, 1, NULL, '2015-12-04 20:49:10', NULL, NULL, NULL, NULL),
 (3, '2015-12-18 00:00:00', 'dsfdasdasfasdf', 'asdfasdadsf', 'sdafa', 'adsfasd', 'adsfas', 'ADSfasdf', 'asdfasdf', 'dsafasdf', NULL, NULL, NULL, 1, NULL, '2015-12-04 22:11:03', NULL, 143, NULL, NULL),
 (4, '2015-12-13 00:00:00', 'czxcz<cxzx', 'czxvzxcv', 'xczvzxcv', 'zxcvzxcv', 'xzcvzxcv', 'xczvzxcv', 'zcxvzxcv', 'czxvzcxvczvzcv', NULL, NULL, NULL, 1, NULL, '2015-12-04 22:26:32', 144, 143, NULL, NULL),
-(5, '2015-12-19 00:00:00', 'esto es para hacer tal cosa', 'sdasd', 'adsfadf', 'adsfasdf', 'sdafdsaf', 'sdfsadf', 'asdfadf', 'adsfasdf', NULL, NULL, NULL, 1, NULL, '2015-12-07 13:19:12', 147, 142, NULL, NULL);
+(5, '2015-12-19 00:00:00', 'esto es para hacer tal cosa', 'sdasd', 'adsfadf', 'adsfasdf', 'sdafdsaf', 'sdfsadf', 'asdfadf', 'adsfasdf', NULL, NULL, NULL, 1, NULL, '2015-12-07 13:19:12', 147, 142, NULL, NULL),
+(6, '2015-12-11 00:00:00', 'dfsg', 'fdsgsdf', 'sa', 'dfsg', 'sdfg', 'dfsg', 'sfdg', 'sdfg', NULL, NULL, NULL, 1, NULL, '2015-12-29 17:10:36', 147, 142, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -578,7 +598,7 @@ CREATE TABLE IF NOT EXISTS `convocatoria` (
 --
 
 INSERT INTO `convocatoria` (`id`, `poa_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `fecha_inicio`, `fecha_cierre`, `fecha_modificacion`, `fecha_creacion`, `numero`, `active`) VALUES
-(1, 1, NULL, NULL, '2011-04-17 00:00:00', '2013-05-28 00:00:00', NULL, '2015-11-11 23:28:00', 1, 0),
+(1, 1, NULL, NULL, '2011-04-17 00:00:00', '2013-05-28 00:00:00', NULL, '2015-11-11 23:28:00', 1, 1),
 (2, 1, NULL, NULL, '2011-04-17 00:00:00', '2013-05-28 00:00:00', NULL, '2015-11-11 23:29:25', 1, 0),
 (3, 1, NULL, NULL, '2011-04-17 00:00:00', '2013-05-28 00:00:00', NULL, '2015-11-11 23:33:04', 1, 0),
 (4, 1, NULL, NULL, '2011-04-17 00:00:00', '2013-05-28 00:00:00', NULL, '2015-11-11 23:34:56', 1, 0);
@@ -608,7 +628,7 @@ CREATE TABLE IF NOT EXISTS `departamento` (
 
 INSERT INTO `departamento` (`id`, `usuario_modificacion_id`, `usuario_creacion_id`, `nombre`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
 (1, NULL, NULL, 'CAUCA', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(2, NULL, NULL, 'NARI?O', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(2, NULL, NULL, 'NARIÑO', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (3, NULL, NULL, 'ARAUCA', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (4, NULL, NULL, 'NTE DE SANTANDER', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (5, NULL, NULL, 'CESAR', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
@@ -733,6 +753,7 @@ CREATE TABLE IF NOT EXISTS `grupo` (
   `active` tinyint(1) DEFAULT NULL,
   `fecha_modificacion` datetime DEFAULT NULL,
   `fecha_creacion` datetime DEFAULT NULL,
+  `numero_cuenta` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_8C0E9BD320332D99` (`codigo`),
   KEY `IDX_8C0E9BD34EE93BE6` (`convocatoria_id`),
@@ -743,16 +764,19 @@ CREATE TABLE IF NOT EXISTS `grupo` (
   KEY `IDX_8C0E9BD378814E56` (`tipo_cuenta_id`),
   KEY `IDX_8C0E9BD3DADD026` (`usuario_modificacion_id`),
   KEY `IDX_8C0E9BD3AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 --
 -- Volcado de datos para la tabla `grupo`
 --
 
-INSERT INTO `grupo` (`id`, `convocatoria_id`, `municipio_id`, `tipo_id`, `figura_legal_constitucion_id`, `entidad_financiera_cuenta_id`, `tipo_cuenta_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `fecha_inscripcion`, `codigo`, `nombre`, `direccion`, `rural`, `barrio`, `corregimiento`, `vereda`, `cacerio`, `numero_identificacion_tributaria`, `fecha_constitucion_legal`, `telefono_fijo`, `telefono_celular`, `correo_electronico`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
-(1, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, '2010-01-01 00:00:00', 'AAA111', 'ASDFSADF', 'ASDF', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3102343243', 'sdsdf@sdfsdf', 0, NULL, NULL),
-(2, NULL, 6, NULL, NULL, NULL, NULL, NULL, NULL, '2010-01-01 00:00:00', 'AAA112', 'werwer', 'asdfds', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '234324', 'asdfs@asdfdsf', 0, NULL, NULL),
-(3, NULL, 23, NULL, NULL, NULL, NULL, NULL, NULL, '2010-01-01 00:00:00', 'ASDFSD', 'ASDF', 'SADF', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '234234', 'asdf@asdf', 0, NULL, NULL);
+INSERT INTO `grupo` (`id`, `convocatoria_id`, `municipio_id`, `tipo_id`, `figura_legal_constitucion_id`, `entidad_financiera_cuenta_id`, `tipo_cuenta_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `fecha_inscripcion`, `codigo`, `nombre`, `direccion`, `rural`, `barrio`, `corregimiento`, `vereda`, `cacerio`, `numero_identificacion_tributaria`, `fecha_constitucion_legal`, `telefono_fijo`, `telefono_celular`, `correo_electronico`, `active`, `fecha_modificacion`, `fecha_creacion`, `numero_cuenta`) VALUES
+(1, NULL, 11, NULL, NULL, NULL, NULL, NULL, NULL, '2010-01-01 00:00:00', 'AAA111', 'ASDFSADF', 'ASDF', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3102343243', 'sdsdf@sdfsdf', 0, NULL, NULL, ''),
+(2, NULL, 6, NULL, NULL, NULL, NULL, NULL, NULL, '2010-01-01 00:00:00', 'AAA112', 'werwer', 'asdfds', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '234324', 'asdfs@asdfdsf', 0, NULL, NULL, ''),
+(3, NULL, 23, NULL, NULL, NULL, NULL, NULL, NULL, '2010-01-01 00:00:00', 'ASDFSD', 'ASDF', 'SADF', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '234234', 'asdf@asdf', 0, NULL, NULL, ''),
+(4, 1, 78, 171, NULL, NULL, 175, 1, 1, '2015-12-13 00:00:00', 'DC-0.25', 'andres dc', 'CALLE 23 N32-65', 1, '', 'VALLE DEL DARIEN', 'LA COSA', 'xxx', '900.256.369-NaN', '2015-12-01 00:00:00', '2116527', '3017544126', 'jhonattan.martinez@yahoo.com', 1, '2015-12-29 16:14:47', '2015-12-16 17:24:50', '256365154'),
+(5, NULL, 53, 173, NULL, NULL, 175, NULL, 1, '2015-12-18 00:00:00', 'asd', 'sadxasd', 'sadsdasd', 0, 'asdasd', NULL, NULL, NULL, '0-0', '2015-12-24 00:00:00', '323132231', '2212123131', 'jujuaja@assada.commas', 1, NULL, '2015-12-17 18:03:05', 'fxfcvx324'),
+(6, 1, 72, 174, 205, 182, 175, NULL, 1, '2016-01-05 00:00:00', 'TO-12PRUEBA', 'PRUEBA1', 'VEREDA 3 KM-67', 1, '', 'PLANADAS', 'SAN IGANACIO', 'N/A', '0-0', '2016-01-14 00:00:00', '1234567', '3027895461', 'VERS@HOTASS.COM', 1, NULL, '2016-01-05 15:17:51', '123458785452');
 
 -- --------------------------------------------------------
 
@@ -775,7 +799,7 @@ CREATE TABLE IF NOT EXISTS `grupo_soporte` (
   KEY `IDX_5D2EB461E24646FA` (`tipo_soporte_id`),
   KEY `IDX_5D2EB461DADD026` (`usuario_modificacion_id`),
   KEY `IDX_5D2EB461AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
 
 --
 -- Volcado de datos para la tabla `grupo_soporte`
@@ -786,7 +810,10 @@ INSERT INTO `grupo_soporte` (`id`, `grupo_id`, `tipo_soporte_id`, `usuario_modif
 (2, 1, 141, NULL, NULL, 'd183559a00ef10833175f0dac6500ea275af3d81.png', 0, '2015-12-03 19:59:16', '2015-12-03 19:59:02'),
 (3, 1, 141, NULL, NULL, '8dda62cff36115848bf6f97e447b7bb1bede97b7.png', 1, NULL, '2015-12-03 19:59:16'),
 (4, 1, 140, NULL, NULL, '95db73dfd28a96042e46fd94aec6726b2a671d34.png', 0, '2015-12-03 20:00:23', '2015-12-03 20:00:10'),
-(5, 1, 140, NULL, NULL, '2f02b7c062f681ad3a0f7fc9c3fa236bbf83c8bd.png', 1, NULL, '2015-12-03 20:00:23');
+(5, 1, 140, NULL, NULL, '2f02b7c062f681ad3a0f7fc9c3fa236bbf83c8bd.png', 0, '2015-12-10 14:41:54', '2015-12-03 20:00:23'),
+(6, 1, 140, NULL, NULL, '4c8caf70ad56c263d26a94605084f8cd0e1fff1e.png', 1, NULL, '2015-12-10 14:41:54'),
+(7, 4, 140, NULL, NULL, '9433fe0d72796f3d587cb27c8185a72b91169cfd.png', 0, '2015-12-16 18:47:56', '2015-12-16 18:46:15'),
+(8, 4, 140, NULL, NULL, '876e86ed5b7bb91089541b26f0ad519587075d2a.png', 1, NULL, '2015-12-16 18:47:56');
 
 -- --------------------------------------------------------
 
@@ -828,14 +855,15 @@ CREATE TABLE IF NOT EXISTS `integrante_clear` (
   KEY `IDX_380CDB55DA995DEC` (`pertenencia_etnica_id`),
   KEY `IDX_380CDB55DADD026` (`usuario_modificacion_id`),
   KEY `IDX_380CDB55AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=12 ;
 
 --
 -- Volcado de datos para la tabla `integrante_clear`
 --
 
 INSERT INTO `integrante_clear` (`id`, `tipo_documento_id`, `genero_id`, `municipio_id`, `nivel_estudios_id`, `pertenencia_etnica_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `numero_documento`, `primer_apellido`, `segundo_apellido`, `primer_nombre`, `segundo_nombre`, `fecha_nacimiento`, `entidad`, `cargo`, `direccion`, `telefono_fijo`, `telefono_celular`, `telefono_celular2`, `correo_electronico`, `foto`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
-(10, 1, 6, 1, NULL, 50, NULL, NULL, '1022376577', 'cantor', 'forero', 'juan', 'Sebastian', '2015-12-19 00:00:00', 'RMC Producciones', 'Ingeniero Mecatronico', 'callek', '983484489', '893423894', NULL, 'juanchhh@hotmaaa.com', NULL, 1, NULL, '2015-12-02 19:36:13');
+(10, 1, 6, 1, NULL, 50, NULL, NULL, '1022376577', 'cantor', 'forero', 'juan', 'Sebastian', '2015-12-19 00:00:00', 'RMC Producciones', 'Ingeniero Mecatronico', 'callek', '983484489', '893423894', NULL, 'juanchhh@hotmaaa.com', NULL, 1, NULL, '2015-12-02 19:36:13'),
+(11, 1, 6, 1, NULL, 53, NULL, NULL, '92544859', 'MARTINEZ', 'RIBON', 'JHONATTAN', 'GUILLERMO', '2015-11-10 00:00:00', 'ALCALDIA MUNICIPAL', 'SECRETARIO DE AGRICULTURA', 'CARRERA 24 N 64-16', '2116527', '3017544126', NULL, 'jhonattan.martinez@minagricultura.gov.co', NULL, 1, NULL, '2015-12-16 16:54:13');
 
 -- --------------------------------------------------------
 
@@ -857,15 +885,15 @@ CREATE TABLE IF NOT EXISTS `listas` (
   PRIMARY KEY (`id`),
   KEY `IDX_C54ECE20DADD026` (`usuario_modificacion_id`),
   KEY `IDX_C54ECE20AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=171 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=219 ;
 
 --
 -- Volcado de datos para la tabla `listas`
 --
 
 INSERT INTO `listas` (`id`, `usuario_modificacion_id`, `usuario_creacion_id`, `dominio`, `descripcion`, `abreviatura`, `orden`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
-(1, NULL, NULL, 'tipo_documento', 'Cedula de Ciudadania', 'CC', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(2, NULL, NULL, 'tipo_documento', 'Cedula de Extrangeria', 'CE', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(1, NULL, NULL, 'tipo_documento', 'Cedula de Ciudadanía', 'CC', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(2, NULL, NULL, 'tipo_documento', 'Cedula de Extrangería', 'CE', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (3, NULL, NULL, 'tipo_documento', 'Pasaporte', 'PA', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (4, NULL, NULL, 'tipo_documento', 'Tarjeta de Identidad', 'TI', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (5, NULL, NULL, 'tipo_documento', 'Registro Civil', 'RC', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
@@ -873,7 +901,7 @@ INSERT INTO `listas` (`id`, `usuario_modificacion_id`, `usuario_creacion_id`, `d
 (7, NULL, NULL, 'genero', 'Femenino', 'F', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (8, NULL, NULL, 'estado_civil', 'Soltero', 'S', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (9, NULL, NULL, 'estado_civil', 'Casado', 'C', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(10, NULL, NULL, 'estado_civil', 'Union Libre', 'UL', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(10, NULL, NULL, 'estado_civil', 'Unión Libre', 'UL', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (11, NULL, NULL, 'estado_civil', 'Viudo', 'V', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (12, NULL, NULL, 'rol_grupo_familiar', 'Jefe de Hogar ', 'JH', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (13, NULL, NULL, 'rol_grupo_familiar', 'Miembro del Hogar', 'MH', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
@@ -891,30 +919,30 @@ INSERT INTO `listas` (`id`, `usuario_modificacion_id`, `usuario_creacion_id`, `d
 (25, NULL, NULL, 'miembros_nucleo_familiar', '5', 'MN5', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (26, NULL, NULL, 'miembros_nucleo_familiar', '6', 'MN6', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (27, NULL, NULL, 'miembros_nucleo_familiar', '6 o mas ', 'MNM6', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(28, NULL, NULL, 'nivel-estudios-id', 'Pre escolar ', 'PE', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(29, NULL, NULL, 'nivel-estudios-id', 'Primaria', 'PRI', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(30, NULL, NULL, 'nivel-estudios-id', 'Bachillerato', 'BAC', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(31, NULL, NULL, 'nivel-estudios-id', 'Universitaria', 'UNI', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(32, NULL, NULL, 'nivel-estudios-id', 'Post Grado', 'POST', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(33, NULL, NULL, 'nivel-estudios-id', 'Ninguno', 'NONE', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(28, NULL, NULL, 'nivel_estudios', 'Pre escolar ', 'PE', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(29, NULL, NULL, 'nivel_estudios', 'Primaria', 'PRI', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(30, NULL, NULL, 'nivel_estudios', 'Bachillerato', 'BAC', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(31, NULL, NULL, 'nivel_estudios', 'Universitaria', 'UNI', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(32, NULL, NULL, 'nivel_estudios', 'Post Grado', 'POST', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(33, NULL, NULL, 'nivel_estudios', 'Ninguno', 'NONE', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (34, NULL, NULL, 'ocupacion', 'Empleado', 'EM', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (35, NULL, NULL, 'ocupacion', 'Independiente', 'IN', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (36, NULL, NULL, 'ocupacion', 'Desempleado', 'DES', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (37, NULL, NULL, 'tipo_vivienda', 'Propia', 'PR', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (38, NULL, NULL, 'tipo_vivienda', 'Arriendo', 'ARR', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(39, NULL, NULL, 'tipo_vivienda', 'Alquilada', 'ALQ', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(39, NULL, NULL, 'tipo_vivienda', 'Familiar', 'FAM', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (40, NULL, NULL, 'tipo_documento_conyuge', 'Cedula de Ciudadania', 'CC', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (41, NULL, NULL, 'tipo_documento_conyuge', 'Cedula de Extrangeria', 'CE', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (42, NULL, NULL, 'tipo_documento_conyuge', 'Pasaporte', 'PA', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (43, NULL, NULL, 'tipo_documento_conyuge', 'Tarjeta de Identidad', 'TI', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (44, NULL, NULL, 'tipo_documento_conyuge', 'Registro Civil', 'RC', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(45, NULL, NULL, 'grupo_indigena', 'Indigena', 'IND', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(45, NULL, NULL, 'grupo_indigena', 'Indígena', 'IND', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (46, NULL, NULL, 'grupo_indigena', 'Afrodecendiente', 'AFRO', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (47, NULL, NULL, 'grupo_indigena', 'Palenquedo de san Basilio', 'PASB', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (48, NULL, NULL, 'grupo_indigena', 'Raizal', 'RAIZAL', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (49, NULL, NULL, 'grupo_indigena', 'ROM', 'ROM', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (50, NULL, NULL, 'pertenencia_etnica', 'Achagua', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(51, NULL, NULL, 'pertenencia_etnica', 'Amor?a', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(51, NULL, NULL, 'pertenencia_etnica', 'Amora', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (52, NULL, NULL, 'pertenencia_etnica', 'Andoke', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (53, NULL, NULL, 'pertenencia_etnica', 'Arhuaco', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (54, NULL, NULL, 'pertenencia_etnica', 'Awa', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
@@ -923,7 +951,7 @@ INSERT INTO `listas` (`id`, `usuario_modificacion_id`, `usuario_creacion_id`, `d
 (57, NULL, NULL, 'pertenencia_etnica', 'Bar', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (58, NULL, NULL, 'pertenencia_etnica', 'Betoye', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (59, NULL, NULL, 'pertenencia_etnica', 'Bora', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(60, NULL, NULL, 'pertenencia_etnica', 'Ca?amomo', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(60, NULL, NULL, 'pertenencia_etnica', 'Cañamomo', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (61, NULL, NULL, 'pertenencia_etnica', 'Carapana', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (62, NULL, NULL, 'pertenencia_etnica', 'Chimila', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (63, NULL, NULL, 'pertenencia_etnica', 'Chiricoa', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
@@ -946,10 +974,10 @@ INSERT INTO `listas` (`id`, `usuario_modificacion_id`, `usuario_creacion_id`, `d
 (80, NULL, NULL, 'pertenencia_etnica', 'Inga', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (81, NULL, NULL, 'pertenencia_etnica', 'Juhup', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (82, NULL, NULL, 'pertenencia_etnica', 'Kakua', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(83, NULL, NULL, 'pertenencia_etnica', 'Kam?nts', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(83, NULL, NULL, 'pertenencia_etnica', 'Kamñnts', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (84, NULL, NULL, 'pertenencia_etnica', 'Kankuamo', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (85, NULL, NULL, 'pertenencia_etnica', 'Karijona', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(86, NULL, NULL, 'pertenencia_etnica', 'Kawiyar? - Cabiyar', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(86, NULL, NULL, 'pertenencia_etnica', 'Kawiyar - Cabiyar', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (87, NULL, NULL, 'pertenencia_etnica', 'Kof', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (88, NULL, NULL, 'pertenencia_etnica', 'Kogui', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (89, NULL, NULL, 'pertenencia_etnica', 'Kubeo', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
@@ -964,7 +992,7 @@ INSERT INTO `listas` (`id`, `usuario_modificacion_id`, `usuario_creacion_id`, `d
 (98, NULL, NULL, 'pertenencia_etnica', 'Mokan', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (99, NULL, NULL, 'pertenencia_etnica', 'Muinane', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (100, NULL, NULL, 'pertenencia_etnica', 'Muisca', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(101, NULL, NULL, 'pertenencia_etnica', 'Nasa - P?ez', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(101, NULL, NULL, 'pertenencia_etnica', 'Nasa - Paez', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (102, NULL, NULL, 'pertenencia_etnica', 'Nonuya', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (103, NULL, NULL, 'pertenencia_etnica', 'Nukak', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (104, NULL, NULL, 'pertenencia_etnica', 'Ocaina', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
@@ -974,9 +1002,9 @@ INSERT INTO `listas` (`id`, `usuario_modificacion_id`, `usuario_creacion_id`, `d
 (108, NULL, NULL, 'pertenencia_etnica', 'Piratapuyo', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (109, NULL, NULL, 'pertenencia_etnica', 'Pisamira', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (110, NULL, NULL, 'pertenencia_etnica', 'Puinave', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(111, NULL, NULL, 'pertenencia_etnica', 'S?liba', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(112, NULL, NULL, 'pertenencia_etnica', 'S?nha', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(113, NULL, NULL, 'pertenencia_etnica', 'Sen?', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(111, NULL, NULL, 'pertenencia_etnica', 'Saliba', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(112, NULL, NULL, 'pertenencia_etnica', 'Sanha', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(113, NULL, NULL, 'pertenencia_etnica', 'Sena', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (114, NULL, NULL, 'pertenencia_etnica', 'Sikuani', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (115, NULL, NULL, 'pertenencia_etnica', 'Siona', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (116, NULL, NULL, 'pertenencia_etnica', 'Siriano', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
@@ -990,7 +1018,7 @@ INSERT INTO `listas` (`id`, `usuario_modificacion_id`, `usuario_creacion_id`, `d
 (124, NULL, NULL, 'pertenencia_etnica', 'Tucano', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (125, NULL, NULL, 'pertenencia_etnica', 'Tule', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (126, NULL, NULL, 'pertenencia_etnica', 'Tuyuka', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(127, NULL, NULL, 'pertenencia_etnica', 'U?wa - Tunebo', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(127, NULL, NULL, 'pertenencia_etnica', 'Uawa - Tunebo', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (128, NULL, NULL, 'pertenencia_etnica', 'Uitoto', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (129, NULL, NULL, 'pertenencia_etnica', 'Wanano', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (130, NULL, NULL, 'pertenencia_etnica', 'Waunan', '', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
@@ -1031,7 +1059,55 @@ INSERT INTO `listas` (`id`, `usuario_modificacion_id`, `usuario_creacion_id`, `d
 (167, NULL, NULL, 'estado_ahorro', 'En ahorro', 'EA', NULL, 1, NULL, '2015-12-08 00:00:00'),
 (168, NULL, NULL, 'estado_ahorro', 'Finalizado', 'F', NULL, 1, NULL, '2015-12-08 00:00:00'),
 (169, NULL, NULL, 'estado_capacitacion_financiera', 'Iniciado', 'IN', NULL, 1, NULL, '2015-12-09 00:00:00'),
-(170, NULL, NULL, 'estado_capacitacion_financiera', 'Finalizado', 'FI', NULL, 1, NULL, '2015-12-09 00:00:00');
+(170, NULL, NULL, 'estado_capacitacion_financiera', 'Finalizado', 'FI', NULL, 1, NULL, '2015-12-09 00:00:00'),
+(171, NULL, NULL, 'tipo_grupo', 'Formal con negocio', 'FN', NULL, 1, NULL, '2015-12-17 00:00:00'),
+(172, NULL, NULL, 'tipo_grupo', 'Formal Sin Negocio', 'FSN', NULL, 1, NULL, '2015-12-17 00:00:00'),
+(173, NULL, NULL, 'tipo_grupo', 'No Formal Sin Negocio', 'NFSN', NULL, 1, NULL, '2015-12-17 00:00:00'),
+(174, NULL, NULL, 'tipo_grupo', 'No Formal Con Negocio', NULL, NULL, 1, NULL, '2015-12-17 00:00:00'),
+(175, NULL, NULL, 'tipo_cuenta', 'Cuenta Ahorros', 'CA', NULL, 1, NULL, '2015-12-17 00:00:00'),
+(176, NULL, NULL, 'tipo_cuenta', 'Cuenta Corriente', NULL, NULL, 1, NULL, '2015-12-17 00:00:00'),
+(177, NULL, NULL, 'entidad_financiera', 'Bancolombia', 'BC', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(178, NULL, NULL, 'entidad_financiera', 'Banco Popular', 'BP', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(179, NULL, NULL, 'entidad_financiera', 'Banco CorpBanca', 'BCO', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(180, NULL, NULL, 'entidad_financiera', 'Citibank', 'BCO', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(181, NULL, NULL, 'entidad_financiera', 'Banco GNB Sudameris', 'GNB', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(182, NULL, NULL, 'entidad_financiera', 'BBVA Colombia', 'GNB', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(183, NULL, NULL, 'entidad_financiera', 'Banco de Occidente', 'BOC', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(184, NULL, NULL, 'entidad_financiera', 'BCSC S.A.', 'BCSC', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(185, NULL, NULL, 'entidad_financiera', 'Davivienda', 'BCSC', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(186, NULL, NULL, 'entidad_financiera', 'Colpatria Red Multibanca', 'BCSC', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(187, NULL, NULL, 'entidad_financiera', 'Banagrario', 'BCSC', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(188, NULL, NULL, 'entidad_financiera', 'AV Villas', 'BCSC', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(189, NULL, NULL, 'entidad_financiera', 'Procredit', 'BCSC', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(190, NULL, NULL, 'entidad_financiera', 'Bancamía S.A.', 'BCSC', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(191, NULL, NULL, 'entidad_financiera', 'WWB S.A.', 'BCSC', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(192, NULL, NULL, 'entidad_financiera', 'Bancoomeva', 'BCOO', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(193, NULL, NULL, 'entidad_financiera', 'Finandina', 'FIN', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(194, NULL, NULL, 'entidad_financiera', 'Banco Falabella S.A.', 'BFAL', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(195, NULL, NULL, 'entidad_financiera', 'Banco Pichincha S.A.', 'BPI', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(196, NULL, NULL, 'entidad_financiera', 'Coopcentral', 'COOP', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(197, NULL, NULL, 'entidad_financiera', 'Banco Santander ', 'BSA', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(198, NULL, NULL, 'entidad_financiera', 'MUNDO MUJER EL BANCO DE LA COMUNIDAD', 'MUNDO', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(199, NULL, NULL, 'entidad_financiera', 'MULTIBANK S.A', 'MULTI', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(200, NULL, NULL, 'entidad_financiera', 'BANCOMPARTIR S.A.', 'BANC', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(201, NULL, NULL, 'figura_legal_constitucion', 'Asociación ', 'ASC', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(202, NULL, NULL, 'figura_legal_constitucion', 'Cooperativa  ', 'COOP', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(203, NULL, NULL, 'figura_legal_constitucion', 'Precooperativa  ', 'PRFECO', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(204, NULL, NULL, 'figura_legal_constitucion', 'Fundación   ', 'FUN', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(205, NULL, NULL, 'figura_legal_constitucion', 'Junta de Acción comunal ', 'JAC', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(206, NULL, NULL, 'figura_legal_constitucion', 'Corporaciones ', 'COR', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(207, NULL, NULL, 'figura_legal_constitucion', 'Sociedadad Anónima ', 'SA', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(208, NULL, NULL, 'figura_legal_constitucion', 'Sociedad por Acciones Simplificada (SAS)', 'SAS', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(209, NULL, NULL, 'figura_legal_constitucion', 'Empresa Unipersonal', 'EUN', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(210, NULL, NULL, 'figura_legal_constitucion', 'Sociedad Encomandita Simple', 'SESI', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(211, NULL, NULL, 'figura_legal_constitucion', 'Sociedad Encomandita por Acciones', 'SESA', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(212, NULL, NULL, 'figura_legal_constitucion', 'Sociedad Limitada (Ltda)', 'SLI', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(213, NULL, NULL, 'discapacidad', 'Ninguna', 'N', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(214, NULL, NULL, 'discapacidad', 'Auditiva', 'A', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(215, NULL, NULL, 'discapacidad', 'Visual', 'V', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(216, NULL, NULL, 'discapacidad', 'Motriz', 'M', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(217, NULL, NULL, 'discapacidad', 'Otra', 'O', NULL, 1, NULL, '2016-01-05 00:00:00'),
+(218, NULL, NULL, 'tipo_vivienda', 'Colectiva', 'COLE', 0, 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -1090,7 +1166,7 @@ INSERT INTO `municipio` (`id`, `departamento_id`, `zona_id`, `usuario_modificaci
 (27, 4, 6, NULL, 1, 'EL TARRA', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (28, 4, 6, NULL, 1, 'HACARI', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (29, 4, 6, NULL, 1, 'LA PLAYA', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(30, 4, 6, NULL, 1, 'OCAÑA', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(30, 4, 6, NULL, 1, 'OCANA', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (31, 4, 6, NULL, 1, 'SAN CALIXTO', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (32, 4, 6, NULL, 1, 'TEORAMA', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (33, 4, 6, NULL, 1, 'CONVENCION', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
@@ -1121,7 +1197,7 @@ INSERT INTO `municipio` (`id`, `departamento_id`, `zona_id`, `usuario_modificaci
 (58, 11, 10, NULL, 1, 'NECH', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (59, 11, 10, NULL, 1, 'ZARAGOZA', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (60, 11, 10, NULL, 1, 'ANORI', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(61, 11, 10, NULL, 1, 'BRICE?O', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(61, 11, 10, NULL, 1, 'BRICEÑO', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (62, 11, 10, NULL, 1, 'ITUANGO', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (63, 11, 10, NULL, 1, 'VALDIVIA', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (64, 11, 10, NULL, 1, 'TARAZA', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
@@ -1151,7 +1227,7 @@ INSERT INTO `municipio` (`id`, `departamento_id`, `zona_id`, `usuario_modificaci
 (88, 15, 15, NULL, 1, 'CARMEN DEL DARIEN', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (89, 15, 15, NULL, 1, 'RIOSUCIO', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (90, 15, 15, NULL, 1, 'UNGUIA', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
-(91, 11, 15, NULL, 1, 'MUTAT?', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
+(91, 11, 15, NULL, 1, 'MUTATA', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (92, 11, 16, NULL, 1, 'GRANADA', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (93, 11, 16, NULL, 1, 'SAN CARLOS', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
 (94, 11, 16, NULL, 1, 'SAN FRANCISCO', 1, '0000-00-00 00:00:00', '2015-11-05 00:00:00'),
@@ -1180,7 +1256,6 @@ CREATE TABLE IF NOT EXISTS `participante` (
   `edad_inscripcion` int(11) NOT NULL,
   `joven_rural` tinyint(1) DEFAULT NULL,
   `desplazado` tinyint(1) NOT NULL,
-  `discapacidad` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `sabe_leer` tinyint(1) NOT NULL,
   `sabe_escribir` tinyint(1) NOT NULL,
   `telefono_fijo` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -1202,6 +1277,7 @@ CREATE TABLE IF NOT EXISTS `participante` (
   `tipo_vivienda_id` int(11) DEFAULT NULL,
   `usuario_modificacion_id` int(11) DEFAULT NULL,
   `usuario_creacion_id` int(11) DEFAULT NULL,
+  `discapacidad_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_85BDC5C34B64ABC7` (`beneficiario_id`),
   KEY `IDX_85BDC5C3F6939175` (`tipo_documento_id`),
@@ -1215,15 +1291,16 @@ CREATE TABLE IF NOT EXISTS `participante` (
   KEY `IDX_85BDC5C3D8999C67` (`ocupacion_id`),
   KEY `IDX_85BDC5C3B4837970` (`tipo_vivienda_id`),
   KEY `IDX_85BDC5C3DADD026` (`usuario_modificacion_id`),
-  KEY `IDX_85BDC5C3AEADF654` (`usuario_creacion_id`)
+  KEY `IDX_85BDC5C3AEADF654` (`usuario_creacion_id`),
+  KEY `IDX_85BDC5C313DA6592` (`discapacidad_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 --
 -- Volcado de datos para la tabla `participante`
 --
 
-INSERT INTO `participante` (`id`, `relacion`, `numero_documento`, `primer_apellido`, `segundo_apellido`, `primer_nombre`, `segundo_nombre`, `fecha_nacimiento`, `edad_inscripcion`, `joven_rural`, `desplazado`, `discapacidad`, `sabe_leer`, `sabe_escribir`, `telefono_fijo`, `telefono_celular`, `correo_electronico`, `active`, `fecha_modificacion`, `fecha_creacion`, `beneficiario_id`, `tipo_documento_id`, `genero_id`, `pertenencia_etnica_id`, `grupo_indigena_id`, `estado_civil_id`, `rol_grupo_familiar_id`, `hijos_menores_5_id`, `nivel_estudios_id`, `ocupacion_id`, `tipo_vivienda_id`, `usuario_modificacion_id`, `usuario_creacion_id`) VALUES
-(1, 0, 'sadasd', 'sadasd', 'sad', 'sadasd', 'sadasd', '2015-12-12 00:00:00', 12, NULL, 1, '1', 1, 1, 'sdasd', 'asdasd', 'asdasd@fdsfsdfsdf.sadasd', 1, NULL, '2015-12-09 21:57:32', NULL, 1, 6, 50, 46, 8, 12, 14, NULL, 34, 37, NULL, NULL);
+INSERT INTO `participante` (`id`, `relacion`, `numero_documento`, `primer_apellido`, `segundo_apellido`, `primer_nombre`, `segundo_nombre`, `fecha_nacimiento`, `edad_inscripcion`, `joven_rural`, `desplazado`, `sabe_leer`, `sabe_escribir`, `telefono_fijo`, `telefono_celular`, `correo_electronico`, `active`, `fecha_modificacion`, `fecha_creacion`, `beneficiario_id`, `tipo_documento_id`, `genero_id`, `pertenencia_etnica_id`, `grupo_indigena_id`, `estado_civil_id`, `rol_grupo_familiar_id`, `hijos_menores_5_id`, `nivel_estudios_id`, `ocupacion_id`, `tipo_vivienda_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `discapacidad_id`) VALUES
+(1, 0, 'sadasd', 'sadasd', 'sad', 'sadasd', 'sadasd', '2015-12-12 00:00:00', 12, NULL, 1, 1, 1, 'sdasd', 'asdasd', 'asdasd@fdsfsdfsdf.sadasd', 1, NULL, '2015-12-09 21:57:32', NULL, 1, 6, 50, 46, 8, 12, 14, NULL, 34, 37, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1534,15 +1611,15 @@ ALTER TABLE `actividad_concurso`
 -- Filtros para la tabla `ahorro`
 --
 ALTER TABLE `ahorro`
-  ADD CONSTRAINT `FK_2F1C7D069F5A440B` FOREIGN KEY (`estado_id`) REFERENCES `listas` (`id`),
-  ADD CONSTRAINT `FK_2F1C7D069C833003` FOREIGN KEY (`grupo_id`) REFERENCES `grupo` (`id`);
+  ADD CONSTRAINT `FK_2F1C7D069C833003` FOREIGN KEY (`grupo_id`) REFERENCES `grupo` (`id`),
+  ADD CONSTRAINT `FK_2F1C7D069F5A440B` FOREIGN KEY (`estado_id`) REFERENCES `listas` (`id`);
 
 --
 -- Filtros para la tabla `asignacion_beneficiario_ahorro`
 --
 ALTER TABLE `asignacion_beneficiario_ahorro`
-  ADD CONSTRAINT `FK_31D70FA3AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_31D70FA34B64ABC7` FOREIGN KEY (`beneficiario_id`) REFERENCES `beneficiario` (`id`),
+  ADD CONSTRAINT `FK_31D70FA3AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_31D70FA3DADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_31D70FA3EC5CE259` FOREIGN KEY (`ahorro_id`) REFERENCES `ahorro` (`id`);
 
@@ -1550,8 +1627,8 @@ ALTER TABLE `asignacion_beneficiario_ahorro`
 -- Filtros para la tabla `asignacion_beneficiario_poliza`
 --
 ALTER TABLE `asignacion_beneficiario_poliza`
-  ADD CONSTRAINT `FK_66DA46FDAEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_66DA46FD4B64ABC7` FOREIGN KEY (`beneficiario_id`) REFERENCES `beneficiario` (`id`),
+  ADD CONSTRAINT `FK_66DA46FDAEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_66DA46FDD5746945` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`id`),
   ADD CONSTRAINT `FK_66DA46FDDADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`);
 
@@ -1559,9 +1636,9 @@ ALTER TABLE `asignacion_beneficiario_poliza`
 -- Filtros para la tabla `asignacion_beneficiario_programa_capacitacion_financiera`
 --
 ALTER TABLE `asignacion_beneficiario_programa_capacitacion_financiera`
-  ADD CONSTRAINT `FK_D8FF3741AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_D8FF37414B64ABC7` FOREIGN KEY (`beneficiario_id`) REFERENCES `beneficiario` (`id`),
   ADD CONSTRAINT `FK_D8FF37416B25D3FE` FOREIGN KEY (`programa_capacitacion_financiera_id`) REFERENCES `programa_capacitacion_financiera` (`id`),
+  ADD CONSTRAINT `FK_D8FF3741AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_D8FF3741DADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_D8FF3741F6F50196` FOREIGN KEY (`participante_id`) REFERENCES `participante` (`id`);
 
@@ -1569,26 +1646,26 @@ ALTER TABLE `asignacion_beneficiario_programa_capacitacion_financiera`
 -- Filtros para la tabla `asignacion_grupo_clear`
 --
 ALTER TABLE `asignacion_grupo_clear`
-  ADD CONSTRAINT `FK_2858D49CAEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_2858D49C9C833003` FOREIGN KEY (`grupo_id`) REFERENCES `grupo` (`id`),
+  ADD CONSTRAINT `FK_2858D49CAEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_2858D49CDADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`);
 
 --
 -- Filtros para la tabla `asignacion_integrante_clear`
 --
 ALTER TABLE `asignacion_integrante_clear`
-  ADD CONSTRAINT `FK_ECDABF1FAEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_ECDABF1F4BAB96C` FOREIGN KEY (`rol_id`) REFERENCES `listas` (`id`),
   ADD CONSTRAINT `FK_ECDABF1F6EA6C980` FOREIGN KEY (`integrante_id`) REFERENCES `integrante_clear` (`id`),
+  ADD CONSTRAINT `FK_ECDABF1FAEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_ECDABF1FDADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`);
 
 --
 -- Filtros para la tabla `asignacion_usuario_beca`
 --
 ALTER TABLE `asignacion_usuario_beca`
-  ADD CONSTRAINT `FK_FF79C6A3AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_FF79C6A31D749D82` FOREIGN KEY (`beca_id`) REFERENCES `beca` (`id`),
   ADD CONSTRAINT `FK_FF79C6A39F5A440B` FOREIGN KEY (`estado_id`) REFERENCES `listas` (`id`),
+  ADD CONSTRAINT `FK_FF79C6A3AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_FF79C6A3DADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_FF79C6A3DB38439E` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`);
 
@@ -1596,9 +1673,9 @@ ALTER TABLE `asignacion_usuario_beca`
 -- Filtros para la tabla `asignacion_usuario_capacitacion`
 --
 ALTER TABLE `asignacion_usuario_capacitacion`
-  ADD CONSTRAINT `FK_BDD02705AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_BDD027055B587DA` FOREIGN KEY (`capacitacion_id`) REFERENCES `capacitacion` (`id`),
   ADD CONSTRAINT `FK_BDD027059F5A440B` FOREIGN KEY (`estado_id`) REFERENCES `listas` (`id`),
+  ADD CONSTRAINT `FK_BDD02705AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_BDD02705DADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_BDD02705DB38439E` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`);
 
@@ -1606,8 +1683,8 @@ ALTER TABLE `asignacion_usuario_capacitacion`
 -- Filtros para la tabla `asignacion_usuario_evento`
 --
 ALTER TABLE `asignacion_usuario_evento`
-  ADD CONSTRAINT `FK_34D86019AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_34D8601987A5F842` FOREIGN KEY (`evento_id`) REFERENCES `evento` (`id`),
+  ADD CONSTRAINT `FK_34D86019AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_34D86019DADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_34D86019DB38439E` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`);
 
@@ -1625,6 +1702,7 @@ ALTER TABLE `beca`
 -- Filtros para la tabla `beneficiario`
 --
 ALTER TABLE `beneficiario`
+  ADD CONSTRAINT `FK_E8D0B61713DA6592` FOREIGN KEY (`discapacidad_id`) REFERENCES `listas` (`id`),
   ADD CONSTRAINT `FK_E8D0B617378258DA` FOREIGN KEY (`nivel_estudios_id`) REFERENCES `listas` (`id`),
   ADD CONSTRAINT `FK_E8D0B6176313548C` FOREIGN KEY (`hijos_menores_5_id`) REFERENCES `listas` (`id`),
   ADD CONSTRAINT `FK_E8D0B61775376D93` FOREIGN KEY (`estado_civil_id`) REFERENCES `listas` (`id`),
@@ -1663,9 +1741,9 @@ ALTER TABLE `capacitacion`
 -- Filtros para la tabla `capacitacion_financiera`
 --
 ALTER TABLE `capacitacion_financiera`
-  ADD CONSTRAINT `FK_16AFBD3AAEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_16AFBD3A6B25D3FE` FOREIGN KEY (`programa_capacitacion_financiera_id`) REFERENCES `programa_capacitacion_financiera` (`id`),
   ADD CONSTRAINT `FK_16AFBD3A9F5A440B` FOREIGN KEY (`estado_id`) REFERENCES `listas` (`id`),
+  ADD CONSTRAINT `FK_16AFBD3AAEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_16AFBD3ADADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`);
 
 --
@@ -1771,6 +1849,7 @@ ALTER TABLE `municipio`
 -- Filtros para la tabla `participante`
 --
 ALTER TABLE `participante`
+  ADD CONSTRAINT `FK_85BDC5C313DA6592` FOREIGN KEY (`discapacidad_id`) REFERENCES `listas` (`id`),
   ADD CONSTRAINT `FK_85BDC5C3378258DA` FOREIGN KEY (`nivel_estudios_id`) REFERENCES `listas` (`id`),
   ADD CONSTRAINT `FK_85BDC5C34B64ABC7` FOREIGN KEY (`beneficiario_id`) REFERENCES `beneficiario` (`id`),
   ADD CONSTRAINT `FK_85BDC5C36313548C` FOREIGN KEY (`hijos_menores_5_id`) REFERENCES `listas` (`id`),
@@ -1796,16 +1875,16 @@ ALTER TABLE `poa`
 -- Filtros para la tabla `poliza`
 --
 ALTER TABLE `poliza`
-  ADD CONSTRAINT `FK_78113458AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_781134589C833003` FOREIGN KEY (`grupo_id`) REFERENCES `grupo` (`id`),
+  ADD CONSTRAINT `FK_78113458AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_78113458DADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`);
 
 --
 -- Filtros para la tabla `poliza_soporte`
 --
 ALTER TABLE `poliza_soporte`
-  ADD CONSTRAINT `FK_ADA8C8B9AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_ADA8C8B99F5A440B` FOREIGN KEY (`estado_id`) REFERENCES `listas` (`id`),
+  ADD CONSTRAINT `FK_ADA8C8B9AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_ADA8C8B9D5746945` FOREIGN KEY (`poliza_id`) REFERENCES `poliza` (`id`),
   ADD CONSTRAINT `FK_ADA8C8B9DADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_ADA8C8B9E24646FA` FOREIGN KEY (`tipo_soporte_id`) REFERENCES `listas` (`id`);
@@ -1814,18 +1893,18 @@ ALTER TABLE `poliza_soporte`
 -- Filtros para la tabla `programa_capacitacion_financiera`
 --
 ALTER TABLE `programa_capacitacion_financiera`
-  ADD CONSTRAINT `FK_66386F1AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_66386F135775952` FOREIGN KEY (`talento_financiero_id`) REFERENCES `talento` (`id`),
   ADD CONSTRAINT `FK_66386F158BC1BE0` FOREIGN KEY (`municipio_id`) REFERENCES `municipio` (`id`),
   ADD CONSTRAINT `FK_66386F19F5A440B` FOREIGN KEY (`estado_id`) REFERENCES `listas` (`id`),
+  ADD CONSTRAINT `FK_66386F1AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_66386F1DADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`);
 
 --
 -- Filtros para la tabla `seguimiento_beneficiario_ahorro`
 --
 ALTER TABLE `seguimiento_beneficiario_ahorro`
-  ADD CONSTRAINT `FK_4D0FDEBDAEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_4D0FDEBD22507D80` FOREIGN KEY (`asignacion_beneficiario_ahorro_id`) REFERENCES `asignacion_beneficiario_ahorro` (`id`),
+  ADD CONSTRAINT `FK_4D0FDEBDAEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_4D0FDEBDDADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`);
 
 --

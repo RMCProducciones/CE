@@ -80,34 +80,44 @@
                   {{ form_widget(form.lugar_realizacion_CLEAR, { 'attr': {'class': 'form-control'} }) }}
                 </div>
               </div>
+			  <div ng-controller="ListasLocalizacionCtrl" ng-init="valoresInicialesLocalizacion(true, 0, 0, 0)">
+			  
 			  <div class="form-group">
-                <div class="col-sm-3">
-                  {{ form_label(form.zona) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.zona) }}
-                  {{ form_widget(form.zona, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
-                  {{ form_label(form.departamento) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.departamento) }}
-                  {{ form_widget(form.departamento, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
+				<div class="col-sm-3">
+				<label>* Departamento</label>                
+				</div> 				
+				<div class="col-sm-9">
+					<select id="selDepartamento" ng-model="selDepartamento" class="form-control" ng-change="cargarZonas()">
+						<option ng-repeat="departamento in JSONDepartamento track by departamento.id" ng-selected="[[departamento.id == idDepartamento]]" value="[[departamento.id]]">[[departamento.nombre]]</option>
+					</select> 
+				</div>
+              </div>			  
+			  <div class="form-group">
+				<div class="col-sm-3">
+				<label>* Zona</label>                  
+				</div>
+				<div class="col-sm-9">
+					<select id="selZona" ng-model="selZona" class="form-control" ng-change="cargarMunicipios()">
+						<option ng-repeat="zona in JSONZona" ng-selected="[[zona.id == idZona]]" value="[[zona.id]]">[[zona.nombre]]</option>
+					</select>
+				</div>
+              </div>        
 			  
               <div class="form-group">
-                <div class="col-sm-3">
-                  {{ form_label(form.municipio) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.municipio) }}
-                  {{ form_widget(form.municipio, { 'attr': {'class': 'form-control'} }) }}
-                </div>
+				<div class="col-sm-3">
+                {{ form_label(form.municipio) }}
+				</div>
+				<div class="col-sm-9">
+					   {{ form_errors(form.municipio) }}
+					<select id="selMunicipio" ng-model="selMunicipio" class="form-control" ng-change="cambiarMunicipio()">
+						<option ng-repeat="municipio in JSONMunicipio" ng-selected="[[municipio.id == idMunicipio]]" value="[[municipio.id]]">[[municipio.nombre]]</option>
+					</select>
+					   {{ form_widget(form.municipio, { 
+					   		'attr': {
+					   			'class': 'form-control selMunicipio',
+								'style': 'visibility:hidden'
+					   } }) }}
+				</div>
               </div>
              
 

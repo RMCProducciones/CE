@@ -49,144 +49,104 @@
 
     <div class="section">
       <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <!--form class="form-horizontal" role="form"-->
-			
-			   <div class="form-group">
-                <div class="col-sm-3">
+	  <div class="row">
+			<div class="col-md-12">
+				<fieldset>
+					<legend>Datos de la experiencia</legend>
+				</fieldset>            
+			</div>
+		</div>
+            <!--form class="form-horizontal" role="form"-->		
+		<div class="row">
+				<div class="col-md-4">
                   {{ form_label(form.fecha_registro) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.fecha_registro) }}
+				  {{ form_errors(form.fecha_registro) }}
                   {{ form_widget(form.fecha_registro, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-			   <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.numero_empleos) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.numero_empleos) }}
+				  {{ form_errors(form.numero_empleos) }}
                   {{ form_widget(form.numero_empleos, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-			  <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.ventas_mes) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.ventas_mes) }}
+				  {{ form_errors(form.ventas_mes) }}
                   {{ form_widget(form.ventas_mes, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-			  <div class="form-group">
-                <div class="col-sm-3">
+		</div>
+		
+		<br/>
+		
+		<div class="row">
+				<div class="col-md-4">
                   {{ form_label(form.produccion_mensual) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.produccion_mensual) }}
+				  {{ form_errors(form.produccion_mensual) }}
                   {{ form_widget(form.produccion_mensual, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.fuentes_financiacion) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.fuentes_financiacion) }}
+				  {{ form_errors(form.fuentes_financiacion) }}
                   {{ form_widget(form.fuentes_financiacion, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-			  
-              <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.valor_recursos_financiacion) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.valor_recursos_financiacion) }}
+				  {{ form_errors(form.valor_recursos_financiacion) }}
                   {{ form_widget(form.valor_recursos_financiacion, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-			  
-			    <div class="form-group">
-                <div class="col-sm-3">
+		</div>
+		
+		<br/>
+		
+		<div class="row">
+				<div class="col-md-4">
                   {{ form_label(form.tipo_poblacion) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.tipo_poblacion) }}
+				  {{ form_errors(form.tipo_poblacion) }}
                   {{ form_widget(form.tipo_poblacion, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-			  
-			    <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.proceso_productivo) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.proceso_productivo) }}
+				  {{ form_errors(form.proceso_productivo) }}
                   {{ form_widget(form.proceso_productivo, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-			  
-			  <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.testimonio_poblacion) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.testimonio_poblacion) }}
+				  {{ form_errors(form.testimonio_poblacion) }}
                   {{ form_widget(form.testimonio_poblacion, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-			  
-			  <div class="form-group">
-                <div class="col-sm-3">
+		</div>
+		
+		<br/>
+		
+		<div class="row">
+				<div class="col-md-4">
                   {{ form_label(form.acciones_minimizacion_impacto_ambiental) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.acciones_minimizacion_impacto_ambiental) }}
+				  {{ form_errors(form.acciones_minimizacion_impacto_ambiental) }}
                   {{ form_widget(form.acciones_minimizacion_impacto_ambiental, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-			  
-			 
-			  
-			   <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.impacto_comunidad) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.impacto_comunidad) }}
+				  {{ form_errors(form.impacto_comunidad) }}
                   {{ form_widget(form.impacto_comunidad, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-			   <div class="form-group">
-                <div class="col-sm-3">
+                <div class="col-md-4">
                   {{ form_label(form.innovacion) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.innovacion) }}
+				  {{ form_errors(form.innovacion) }}
                   {{ form_widget(form.innovacion, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-              </div>
-             <div class="form-group">
-                <div class="col-sm-3">
-                  {{ form_label(form.observaciones) }}
-                </div>
-                <div class="col-sm-9">
-                  {{ form_errors(form.observaciones) }}
-                  {{ form_widget(form.observaciones, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-              </div>
-             
-			  
-             
-             
+		</div>
 
+		</br>
+
+		<div class="row">
+				<div class="col-md-4">
+                  {{ form_label(form.observaciones) }}
+				  {{ form_errors(form.observaciones) }}
+                  {{ form_widget(form.observaciones, { 'attr': {'class': 'form-control'} }) }}
+                </div>	
+		</div>		
+		<br/>
+		<br/>
             <!--/form-->
-          </div>
-        </div>
       </div>
     </div>
 

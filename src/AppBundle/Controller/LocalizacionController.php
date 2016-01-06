@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 
 class LocalizacionController extends Controller
@@ -23,21 +23,22 @@ class LocalizacionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $query = $em->createQuery(
-            'SELECT departamento.id, departamento.nombre
+        $query = $em->createQuery('
+        	SELECT 
+        		departamento.id, 
+        		departamento.nombre 
             FROM AppBundle:Departamento departamento
-            ORDER BY departamento.nombre ASC'
-		);
-        
+            ORDER BY departamento.nombre ASC
+    	');
+
 		$elementos = $query->getResult();
 
-		$encoders = array(new XmlEncoder(), new JsonEncoder());
-		$normalizers = array(new GetSetMethodNormalizer());
+		$encoders = array(new JsonEncoder());
+		$normalizers = array(new ObjectNormalizer());
 
 		$serializer = new Serializer($normalizers, $encoders);
 		
-		return new Response('{"departamentos": ' . $serializer->serialize($elementos, 'json') . '}');
-
+		return new Response($serializer->serialize($elementos, 'json'));
     }
 
     /**
@@ -48,23 +49,26 @@ class LocalizacionController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $query = $em->createQuery('
-			SELECT zona.id, zona.nombre
+			SELECT 
+				zona.id, 
+				zona.nombre
             FROM AppBundle:Zona zona
 			INNER JOIN AppBundle:Municipio municipio WITH zona.id = municipio.zona
 			WHERE municipio.departamento = :idDepartamento
             GROUP BY zona.id
 			ORDER BY zona.nombre ASC			
 		');
+		
 		$query->setParameter('idDepartamento', $idDepartamento);
         
 		$elementos = $query->getResult();
 
 		$encoders = array(new XmlEncoder(), new JsonEncoder());
-		$normalizers = array(new GetSetMethodNormalizer());
+		$normalizers = array(new ObjectNormalizer());
 
 		$serializer = new Serializer($normalizers, $encoders);
 		
-		return new Response('{"zonas": ' . $serializer->serialize($elementos, 'json') . '}');
+		return new Response($serializer->serialize($elementos, 'json'));
 
 	}
 	
@@ -115,11 +119,11 @@ class LocalizacionController extends Controller
         $elementos = $query->getResult();
 		
 		$encoders = array(new XmlEncoder(), new JsonEncoder());
-		$normalizers = array(new GetSetMethodNormalizer());
+		$normalizers = array(new ObjectNormalizer());
 
 		$serializer = new Serializer($normalizers, $encoders);
 
-		return new Response('{"municipios": ' . $serializer->serialize($elementos, 'json') . '}');
+		return new Response($serializer->serialize($elementos, 'json'));
 
 	}   
 	

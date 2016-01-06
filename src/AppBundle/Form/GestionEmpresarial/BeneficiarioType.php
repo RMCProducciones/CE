@@ -48,14 +48,6 @@ class BeneficiarioType extends AbstractType
 			->add('edad_inscripcion', 'text', array('label' => 'Edad al momento de la inscripción'))
 			->add('corte_sisben')
 			->add('puntaje_sisben')
-			->add('pertenencia_etnica', 'entity', array('class' => 'AppBundle:Listas',
-										    'query_builder' => function(EntityRepository $er) {
-										        return $er->createQueryBuilder('l')
-										        	->where('l.dominio = :dominio')
-										        	->andWhere('l.active = 1')
-										        	->setParameter('dominio', 'pertenencia_etnica')
-										            ->orderBy('l.orden', 'ASC');
-										    },))
 			->add('grupo_indigena', 'entity', array('class' => 'AppBundle:Listas',
 										    'query_builder' => function(EntityRepository $er) {
 										        return $er->createQueryBuilder('l')
@@ -65,7 +57,25 @@ class BeneficiarioType extends AbstractType
 										            ->orderBy('l.orden', 'ASC')
 										            ->addOrderBy('l.descripcion', 'ASC');
 										    },))
-			->add('desplazado', 'checkbox', array('required' => false))
+			->add('pertenencia_etnica', 'entity', array('label' => 'Pertenencia étnica','class' => 'AppBundle:Listas',
+										    'query_builder' => function(EntityRepository $er) {
+										        return $er->createQueryBuilder('l')
+										        	->where('l.dominio = :dominio')
+										        	->andWhere('l.active = 1')
+										        	->setParameter('dominio', 'pertenencia_etnica')
+										            ->orderBy('l.orden', 'ASC');
+										    },))
+			
+
+			->add('desplazado', 'checkbox', array('label' => 'Desplazado por la violencia' , 'required' => false))
+			->add('discapacidad', 'entity', array('class' => 'AppBundle:Listas',
+										    'query_builder' => function(EntityRepository $er) {
+										        return $er->createQueryBuilder('l')
+										        	->where('l.dominio = :dominio')
+										        	->andWhere('l.active = 1')
+										        	->setParameter('dominio', 'discapacidad')
+										            ->orderBy('l.orden', 'ASC');
+										    },))
 			->add('red_unidos', 'checkbox', array('label' => 'Pertenece a la Red Unidos', 'required' => false))
 			->add('rol_grupo_familiar', 'entity', array('class' => 'AppBundle:Listas',
 										    'query_builder' => function(EntityRepository $er) {
@@ -101,7 +111,7 @@ class BeneficiarioType extends AbstractType
 										        	->setParameter('dominio', 'nivel_estudios')
 										            ->orderBy('l.orden', 'ASC');
 										    },))
-			->add('ocupacion', 'entity', array('class' => 'AppBundle:Listas',
+			->add('ocupacion', 'entity', array('label' => 'Ocupación','class' => 'AppBundle:Listas',
 										    'query_builder' => function(EntityRepository $er) {
 										        return $er->createQueryBuilder('l')
 										        	->where('l.dominio = :dominio')
@@ -117,9 +127,15 @@ class BeneficiarioType extends AbstractType
 										        	->setParameter('dominio', 'tipo_vivienda')
 										            ->orderBy('l.orden', 'ASC');
 										    },))
-			->add('telefono_fijo')
-			->add('telefono_celular')
-			->add('correo_electronico', 'email')
+			->add('direccion', 'text', array('label' => 'Dirección'))
+			->add('rural', 'checkbox', array('required' => false))
+			->add('barrio', 'text', array('required' => false))
+			->add('corregimiento', 'text', array('required' => false))
+			->add('vereda', 'text', array('required' => false))
+			->add('cacerio', 'text', array('required' => false))
+			->add('telefono_fijo', 'text', array('label' => 'Teléfono fijo'))
+			->add('telefono_celular', 'text', array('label' => 'Teléfono celular'))
+			->add('correo_electronico', 'email',array('label' => 'Correo eléctronico'))
 			->add('estado_civil', 'entity', array('class' => 'AppBundle:Listas',
 										    'query_builder' => function(EntityRepository $er) {
 										        return $er->createQueryBuilder('l')
@@ -142,8 +158,8 @@ class BeneficiarioType extends AbstractType
 			->add('primer_nombre_conyugue', 'text', array('required' => false))
 			->add('segundo_nombre_conyugue', 'text', array('required' => false))
 			
-			->add('telefono_fijo_conyugue', 'text', array('required' => false))
-			->add('telefono_celular_conyugue', 'text', array('required' => false))
+			->add('telefono_fijo_conyugue', 'text', array('label' => 'Teléfono fijo conyugue','required' => false))
+			->add('telefono_celular_conyugue', 'text', array('label' => 'Teléfono movil conyugue','required' => false))
 			
 			
 		;

@@ -13,6 +13,8 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
+use Symfony\Component\Finder\Finder;
+
 use AppBundle\Entity\Grupo;
 use AppBundle\Form\GestionEmpresarial\GrupoType;
 use AppBundle\Entity\Beneficiario;
@@ -61,5 +63,13 @@ class DefaultController extends Controller
         return $this->render('AppBundle:default:nav.html.twig');
     }
 
+    /**
+     * @Route("/menu", name="menu")
+     */
+    public function menuAction()
+    {
+
+        return $this->render('AppBundle:default:menu.html.twig');
+    }
     
 }

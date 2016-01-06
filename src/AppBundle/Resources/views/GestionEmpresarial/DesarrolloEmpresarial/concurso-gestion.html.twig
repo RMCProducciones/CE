@@ -121,7 +121,7 @@
 	    		{% for concurso in concursos %}
 	                
 	                <tr>
-	                  <td>1</td>
+	                  <td>{{ consecutivo }}</td>
 	                  <td>
 	                    <input type="checkbox">
 	                  </td>
@@ -142,19 +142,19 @@
 					    <td>
 	                    {{concurso.modalidad}}
 	                  </td>
-	                  
+			  
 	         
 	                  
 	                  <td>
-	                    <a href="{{ path('actividadConcurso')}}" alt="Asignacion Actividades" title="Asignacion Actividades"><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> | </a>
-	                    <a href="#" alt="Asignacion Grupos" title="Asignacion Grupos"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> | </a>
-	                    <a href="acta-subir-grupos.html" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span> | </a>
-					    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> | </a>
-	                    <a title="Editar" alt="Editar" href="3-grupos-editar.html"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> | </a>
+	                    <a href="{{ path('actividadConcurso')}}" alt="Asignacion Actividades" title="Asignacion Actividades"> <span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a> |
+	                    <a href="#" alt="Asignacion Grupos" title="Asignacion Grupos"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a> | 
+	                    <a href="acta-subir-grupos.html" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> | 
+					    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ concurso.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
+	                    <a title="Editar" alt="Editar" href="3-grupos-editar.html"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> | 
 	                    <a title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registro?"><span class="glyphicon glyphicon-trash"></span></a>
 	                  </td>
 	                </tr>
-	                
+	                {% set consecutivo = consecutivo + 1 %}	
 	                {% else %}
 	                
 	                <tr>
@@ -162,6 +162,7 @@
 	                </tr>
 	                
 	                {% endfor %}
+			  
                </tbody>
             </table>
           </div>
@@ -169,53 +170,37 @@
       </div>
     </div>  
 
-
+	{% for concurso in concursos %}
     <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal fade" id="myModal{{ concurso.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">NP-RIC-3-2014/05-001 | Andrés Carne de Res</h4>
+            <h4 class="modal-title" id="myModalLabel">{{ concurso.id }} | {{ concurso.tipo }}</h4>
           </div>
           <div class="modal-body">
-            <b>Departamento:Antioquia</b>
+            <b>Tipo de Concurso:{{ concurso.tipo }}</b>
             <br>
-            <b>Municipio: Rionegro</b>
+            <b>Modalidad del Concurso: {{concurso.modalidad}}</b>
             <br>
-            <b>Zona: Oriente Antioqueño</b>
+            <b>Temática del Concurso: Oriente {{concurso.tematica}}</b>
             <br>
-            <b>Tipo de grupo: No formal</b>
+            <b>Ambito del Concurso: {{concurso.ambito}}</b>
             <br>
-            <b>Codigo de grupo:</b>
+            <b>Problematica del Concurso: {{concurso.problematica}}</b>
             <br>
-            <b>Nombre grupo:NP-RIC-3-2014/05-003</b>
+            <b>Actividades del Concurso: {{concurso.actividades}}</b>
             <br>
-            <b>Corregimiento:N/A</b>
+            <b>Resultados del Concurso: {{concurso.resultados}}</b>
             <br>
-            <b>Vereda:N/A</b>
+            <b>Valor del Concurso: {{concurso.valor}}</b>
             <br>
-            <b>Cacerio:N/A</b>
+            <b>Distribución del Concurso: {{concurso.distribucion}}</b>
             <br>
-            <b>Direccion: CLL67 #78-89</b>
-            <br>
-            <b>Tipo de organización:Cooperativa</b>
-            <br>
-            <b>NIT:721394731-2</b>
-            <br>
-            <b>Telefono Movil:3126748675</b>
-            <br>
-            <b>Telefono Fijo:9867849</b>
-            <br>
-            <b>Cuenta Bancaria:Si</b>
-            <br>
-            <b>Tipo de cuenta: Mancomunada</b>
-            <br>
-            <b>Numero de cuenta:76128348938-97</b>
-            <br>
-            <b>Banco:Banco de Bogota</b>
+            <b>Criterios del Concurso: {{concurso.criterios}}</b>            
           </div>
 
           <div class="modal-footer">
@@ -224,6 +209,6 @@
         </div>
       </div>
     </div>
-               
+    {% endfor %}           
 {% endblock %}
 
