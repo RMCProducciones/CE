@@ -12,7 +12,7 @@ app.controller('anularSoporteGrupoCtrl', ['$scope', '$location', function($scope
 
 }]);
 
-app.controller('datosEmpresaGrupoCtrl', ['$scope', function($scope, $location) {
+app.controller('datosEmpresaGrupoCtrl', ['$scope', '$location', function($scope, $location) {
 
 	$scope.numeroIdentificacion = 0;
 	$scope.digitoVerificacion = 0;

@@ -165,13 +165,11 @@ class GestionEmpresarialController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-
-
             
             $grupo = $form->getData();
 
             if($grupo->getRural() == true){
-                $grupo->setBarrio('');
+                $grupo->setBarrio(null);
             }
             else
             {

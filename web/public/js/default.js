@@ -30,7 +30,7 @@ app.controller('FiltrosCtrl', ['$scope', '$http', 'styleBuscarHerramientas', fun
 app.controller('MenuCtrl', ['$scope', '$http', function($scope, $http) {
 	$scope.RPP = '';
 
-	$http({
+	/*$http({
     	method  : 'GET',
     	url     : $scope.rutaServidor + "public/xml/menu.xml",
     	timeout : 10000,
@@ -53,5 +53,5 @@ app.controller('MenuCtrl', ['$scope', '$http', function($scope, $http) {
 	}).error(function(data, status, headers, config) {
 		console.log("Problemas al cargar la estructura del mapa de navegación de los usuarios");
     	//alert('Problemas a');
-	});
+	});*/
 }]);
