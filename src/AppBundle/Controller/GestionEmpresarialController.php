@@ -367,6 +367,29 @@ class GestionEmpresarialController extends Controller
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:clear-gestion.html.twig', array( 'cleares' => $cleares));
     }
+	
+	/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/CLEAR/{idCLEAR}", name="CLEAR")
+     */
+    public function ClearAction($idCLEAR)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
+            array('id' => $idCLEAR)
+        );
+
+        //$elementos = $query->getResult();
+
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new GetSetMethodNormalizer());
+
+        $serializer = new Serializer($normalizers, $encoders);
+        
+        return new Response('{"": ' . $serializer->serialize($clear, 'json') . '}');
+
+    }
+	
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/clear/nuevo", name="clearNuevo")
      */
@@ -395,7 +418,60 @@ class GestionEmpresarialController extends Controller
         }
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:clear-nuevo.html.twig', array('form' => $form->createView()));
-    }   
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/editar", name="clearEditar")
+     */
+    public function clearEditarAction(Request $request, $idCLEAR)
+    {
+        
+		$em = $this->getDoctrine()->getManager();
+        $clear = new Clear();
+
+        $clear = $em->getRepository('AppBundle:Clear')->findOneBy(
+            array('id' => $idCLEAR)
+        );
+		
+        $form = $this->createForm(new CLEARType(), $clear);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $clear = $form->getData();
+
+            $clear->setActive(true);
+            $clear->setFechaCreacion(new \DateTime());
+
+            $em->persist($clear);
+            $em->flush();
+
+            return $this->redirectToRoute('CLEARGestion');
+        }
+
+
+		return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:clear-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idCLEAR' => $idCLEAR,
+                    'clear' => $clear
+            )
+        );
+		
+
+    }	
 	
 	/**
      * @Route("/gestion-empresarial/desarrollo-empresarial/clear/integrantes/nuevo", name="integrantesNuevo")

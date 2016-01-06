@@ -43,7 +43,7 @@ class CLEAR
     /**
      * @var integer
      *
-     * @ORM\Column(name="lugar_realizacion_CLEAR", type="integer")
+     * @ORM\Column(name="lugar_realizacion_CLEAR", type="string")
      */
     private $lugar_realizacion_CLEAR;
 
@@ -164,7 +164,7 @@ class CLEAR
     /**
      * Set lugarRealizacionCLEAR
      *
-     * @param integer $lugarRealizacionCLEAR
+     * @param string $lugarRealizacionCLEAR
      *
      * @return CLEAR
      */
@@ -178,7 +178,7 @@ class CLEAR
     /**
      * Get lugarRealizacionCLEAR
      *
-     * @return integer
+     * @return string
      */
     public function getLugarRealizacionCLEAR()
     {
