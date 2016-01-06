@@ -38,10 +38,10 @@ class IntegranteCLEARType extends AbstractType
 			->add('entidad')
 			->add('cargo', 'text', array('label' => 'Cargo dentro de la entidad a la cual representa'))
 			->add('municipio', 'entity', array('class' => 'AppBundle:Municipio'))
-			->add('direccion')
-			->add('telefono_fijo')
-			->add('telefono_celular')
-			->add('correo_electronico', 'email')
+			->add('direccion', 'text', array('label' => 'Dirección'))
+			->add('telefono_fijo', 'text', array('label' => 'Teléfono fijo'))
+			->add('telefono_celular', 'text', array('label' => 'Teléfono celular'))
+			->add('correo_electronico', 'email',array('label' => 'Correo eléctronico'))
 			->add('nivel_estudios', 'entity', array('class' => 'AppBundle:Listas',
 										    'query_builder' => function(EntityRepository $er) {
 										        return $er->createQueryBuilder('l')
