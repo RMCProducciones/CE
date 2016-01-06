@@ -83,13 +83,13 @@
 			
 			<div class="row">
 				<div class="col-md-4">
-					  <label>Departamento</label>
+					  <label>* Departamento</label>
 						<select id="selDepartamento" ng-model="selDepartamento" class="form-control" ng-change="cargarZonas()">
 						<option ng-repeat="departamento in JSONDepartamento track by departamento.id" ng-selected="[[departamento.id == idDepartamento]]" value="[[departamento.id]]">[[departamento.nombre]]</option>
 					</select> 
 				</div>
 				<div class="col-md-4">
-					  <label>Zona</label>
+					  <label>* Zona</label>
 					<select id="selZona" ng-model="selZona" class="form-control" ng-change="cargarMunicipios()">
 						<option ng-repeat="zona in JSONZona" ng-selected="[[zona.id == idZona]]" value="[[zona.id]]">[[zona.nombre]]</option>
 					</select>
