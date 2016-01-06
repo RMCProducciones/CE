@@ -12,7 +12,8 @@
 
 # Parameters
 /app/config/parameters.yml
-/app/config/parameters.ini
+#/app/config/parameters.ini
+!app/config/.gitkeep
 
 # Managed by Composer
 #/app/bootstrap.php.cache
