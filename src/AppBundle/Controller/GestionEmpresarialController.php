@@ -333,7 +333,8 @@ class GestionEmpresarialController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $beneficiarios = new Beneficiario();
-
+        $listas = new Listas();
+        $listas = null;
         $form = $this->createForm(new BeneficiarioType(), $beneficiarios);
 
         $form->handleRequest($request);        
@@ -352,7 +353,7 @@ class GestionEmpresarialController extends Controller
             $beneficiarios->setGrupo($grupo);            
 
             if($beneficiarios->getPertenenciaEtnica()->getDescripcion() != 'Indígena'){
-                $beneficiarios->setNullGrupoIndigena();
+                $beneficiarios->setGrupoIndigena($listas);
             }                    
 
             $beneficiarios->setActive(true);

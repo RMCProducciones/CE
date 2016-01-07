@@ -133,18 +133,8 @@
                 <div class="col-md-4">
                   {{ form_label(form.grupo_indigena) }}
 				  {{ form_errors(form.grupo_indigena) }}
-<<<<<<< HEAD
-                  {{ form_widget(form.grupo_indigena, { 'attr': {'class': 'form-control grupo_indigena', 'ng-model': 'grupoIndigena', 'ng-change': 'pertenenciaEtnica()'} }) }}
-                </div>
-                <div class="col-md-4" ng-show="mostrarPertenenciaEtnica"> 
-                  {{ form_label(form.pertenencia_etnica) }}
-				  {{ form_errors(form.pertenencia_etnica) }}
-                  {{ form_widget(form.pertenencia_etnica, { 'attr': {'class': 'form-control'} }) }}
-                  <select class = "form-control" ng-hide="mostrarPertenenciaEtnica" disabled></select>
-=======
 				  {{ form_widget(form.grupo_indigena, { 'attr': {'class': 'form-control', 'ng-show':'mostrarGrupoIndigena'} }) }}                  
 				  <select class ="form-control" ng-hide="mostrarGrupoIndigena" disabled></select>
->>>>>>> f24c10d45c4c0905687bbf62c95584285efb757d
                 </div>
 		</div>
 		
