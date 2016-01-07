@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity
  */
-class Usuario
+class Usuario extends BaseUser
 {
     /**
      * @var integer
@@ -19,103 +20,103 @@ class Usuario
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="usuario", type="string", length=255)
-     */
-    private $usuario;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=80)
-     */
-    private $password;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="salt", type="string", length=255)
-     */
-    private $salt;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="nombres", type="string", length=255)
      */
-    private $nombres;
+    protected $nombres;
 
     /**
      * @var string
      *
      * @ORM\Column(name="apellidos", type="string", length=255)
      */
-    private $apellidos;
+    protected $apellidos;
 
     /**
      * @var string
      *
      * @ORM\Column(name="telefono_fijo", type="string")
      */
-    private $telefono_fijo;
+    protected $telefono_fijo;
 
     /**
      * @var string
      *
      * @ORM\Column(name="telefono_celular", type="string")
      */
-    private $telefono_celular;
+    protected $telefono_celular;
 
     /**
      * @var string
      *
      * @ORM\Column(name="correo_electronico", type="string")
      */
-    private $correo_electronico;
+    protected $correo_electronico;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="active", type="boolean")
      */
-    private $active;
+    protected $active;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="usuario_modificacion", type="integer")
      */
-    private $usuario_modificacion;
+    protected $usuario_modificacion;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="fecha_modificacion", type="datetime")
      */
-    private $fecha_modificacion;
+    protected $fecha_modificacion;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="usuario_creacion", type="integer")
      */
-    private $usuario_creacion;
+    protected $usuario_creacion;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="fecha_creacion", type="datetime")
      */
-    private $fecha_creacion;
+    protected $fecha_creacion;
 
     
     public function __toString()
     {
         return $this->getNombres()." ".$this->getApellidos();
+    }
+
+    public function __construct()
+    {
+        parent::__construct();
+        // your own logic
+    }
+
+    /**
+     * Agrega un rol al usuario.
+     * @throws Exception
+     * @param Rol $rol 
+     */
+    public function addRole( $rol )
+    {
+        if($rol == 1) {
+          array_push($this->roles, 'ROLE_ADMIN');
+        }
+        else if($rol == 2) {
+          array_push($this->roles, 'ROLE_USER');
+        }
     }
 
     /**
@@ -126,78 +127,6 @@ class Usuario
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set usuario
-     *
-     * @param string $usuario
-     *
-     * @return Usuario
-     */
-    public function setUsuario($usuario)
-    {
-        $this->usuario = $usuario;
-
-        return $this;
-    }
-
-    /**
-     * Get usuario
-     *
-     * @return string
-     */
-    public function getUsuario()
-    {
-        return $this->usuario;
-    }
-
-    /**
-     * Set password
-     *
-     * @param string $password
-     *
-     * @return Usuario
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * Set salt
-     *
-     * @param string $salt
-     *
-     * @return Usuario
-     */
-    public function setSalt($salt)
-    {
-        $this->salt = $salt;
-
-        return $this;
-    }
-
-    /**
-     * Get salt
-     *
-     * @return string
-     */
-    public function getSalt()
-    {
-        return $this->salt;
     }
 
     /**
