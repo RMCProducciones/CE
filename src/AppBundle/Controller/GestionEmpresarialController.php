@@ -23,6 +23,7 @@ use AppBundle\Entity\IntegranteCLEAR;
 use AppBundle\Entity\AsignacionIntegranteCLEAR;
 use AppBundle\Entity\Concurso;
 use AppBundle\Entity\ActividadConcurso;
+use AppBundle\Entity\Listas;
 
 use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
 use AppBundle\Form\GestionEmpresarial\AsignacionIntegranteCLEARType;
@@ -170,7 +171,7 @@ class GestionEmpresarialController extends Controller
             
             $grupo = $form->getData();
 
-            if($grupo->getRural() == true){
+            if($grupo->getRural() == true){				
                 $grupo->setBarrio(null);
             }
             else
@@ -332,15 +333,20 @@ class GestionEmpresarialController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $beneficiarios = new Beneficiario();
-        
+        $listas = new Listas();
         $form = $this->createForm(new BeneficiarioType(), $beneficiarios);
 
-        $form->handleRequest($request);
-
+        $form->handleRequest($request);        
+        $var = '46';
+        
         if ($form->isValid()) {
+            
             // data is an array with "name", "email", and "message" keys
-            $beneficiarios = $form->getData();
+            $beneficiarios = $form->getData();   
 
+            if($beneficiarios->getPertenenciaEtnica()->getDescripcion() != 'Indígena'){
+                $beneficiarios->setNullGrupoIndigena();
+            }                      
             $beneficiarios->setActive(true);
             $beneficiarios->setFechaCreacion(new \DateTime());
 
@@ -349,7 +355,8 @@ class GestionEmpresarialController extends Controller
 
             return $this->redirectToRoute('beneficiariosGestion', array( 'idGrupo' => $idGrupo));
         }
-      
+        
+        
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiarios-nuevo.html.twig', array('form' => $form->createView(),'idGrupo' => $idGrupo));
     }
 
