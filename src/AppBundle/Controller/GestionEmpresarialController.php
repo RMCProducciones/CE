@@ -333,20 +333,28 @@ class GestionEmpresarialController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $beneficiarios = new Beneficiario();
-        $listas = new Listas();
+        $listas = new Listas();        
         $form = $this->createForm(new BeneficiarioType(), $beneficiarios);
 
         $form->handleRequest($request);        
-        $var = '46';
-        
+                
         if ($form->isValid()) {
             
             // data is an array with "name", "email", and "message" keys
+
+            $grupo = new Grupo();
+            $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+                array('id' => $idGrupo)
+            );
+
             $beneficiarios = $form->getData();   
+
+            $beneficiarios->setGrupo($grupo);            
 
             if($beneficiarios->getPertenenciaEtnica()->getDescripcion() != 'Indígena'){
                 $beneficiarios->setNullGrupoIndigena();
-            }                      
+            }                    
+
             $beneficiarios->setActive(true);
             $beneficiarios->setFechaCreacion(new \DateTime());
 
