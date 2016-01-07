@@ -333,7 +333,7 @@ class GestionEmpresarialController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $beneficiarios = new Beneficiario();
-        
+        $listas = new Listas();
         $form = $this->createForm(new BeneficiarioType(), $beneficiarios);
 
         $form->handleRequest($request);        
@@ -342,20 +342,11 @@ class GestionEmpresarialController extends Controller
         if ($form->isValid()) {
             
             // data is an array with "name", "email", and "message" keys
-            $beneficiarios = $form->getData();
-            die("si entra".$beneficiarios->getPertenenciaEtnica()->getDescripcion());
-		    //$var = $beneficiarios->getGrupoIndigena();      	
-			/*if($beneficiarios->getGenero() == null){
-                echo '<script language="javascript">alert("juas");</script>'; 
-				//$beneficiarios->setPertenenciaEtnica(null);
-            } */        
-            if($beneficiarios->getPertenenciaEtnica()->getNombre() != 'Indígena'){
-                $beneficiarios->setGrupoIndigena(null);
-            }
+            $beneficiarios = $form->getData();   
 
-            if($var == '46'){
-                echo '<script language="javascript">alert("juas");</script>';             
-            }
+            if($beneficiarios->getPertenenciaEtnica()->getDescripcion() != 'Indígena'){
+                $beneficiarios->setNullGrupoIndigena();
+            }                      
             $beneficiarios->setActive(true);
             $beneficiarios->setFechaCreacion(new \DateTime());
 

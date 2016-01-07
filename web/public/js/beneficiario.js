@@ -1,9 +1,9 @@
-app.controller('GrupoIndigenaCtrl', ['$scope', function($scope) {
+app.controller('PertenenciaEtnicaCtrl', ['$scope', function($scope) {
 
-	$scope.mostrarPertenenciaEtnica = false;
-	var valorPertenenciaEtnica = "";
-	$scope.pertenenciaEtnica = function() { 
-		$scope.mostrarPertenenciaEtnica = $(".grupo_indigena option[value='"+$('.grupo_indigena').val()+"']").text().toLowerCase() == "indígena";			
+	$scope.mostrarGrupoIndigena = false;
+	
+	$scope.grupoIndigena = function() { 
+		$scope.mostrarGrupoIndigena = $(".pertenencia_etnica option[value='"+$('.pertenencia_etnica').val()+"']").text().toLowerCase() == "indígena";			
 	};	
 
 }]);

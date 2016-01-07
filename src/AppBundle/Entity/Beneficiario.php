@@ -698,6 +698,13 @@ class Beneficiario
         return $this;
     }
 
+    public function setNullGrupoIndigena()
+    {
+        $this->grupo_indigena = null;
+    }
+
+
+
     /**
      * Get grupoIndigena
      *
