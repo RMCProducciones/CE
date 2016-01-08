@@ -145,6 +145,25 @@ class GestionEmpresarialController extends Controller
     }
 
 
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/eliminar", name="grupoEliminar")
+     */
+    public function GrupoEliminarAction(Request $request, $idGrupo)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $grupo = new Grupo();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->find($idGrupo);              
+
+        $em->remove($grupo);//->where('id' => $idGrupo);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('gruposGestion'));
+
+    }
+
+
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/nuevo", name="gruposNuevo")
      */

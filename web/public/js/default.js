@@ -24,6 +24,18 @@ app.controller('FiltrosCtrl', ['$scope', '$http', 'styleBuscarHerramientas', fun
 		}
 		
     }	
+	
+    $scope.limpiarCamposFiltroBusqueda = function(){
+       
+
+		$("#dato").val("");
+		$("#selDepartamento").val("");
+		$("#selZona").val("");
+		$("#selMunicipio").val("");
+		$("#lstEstado").val("");
+       
+    }
+      
 		
 }]);
 

@@ -1,5 +1,5 @@
 
-app.controller('anularSoporteGrupoCtrl', ['$scope', '$location', function($scope, $location) {
+app.controller('gestionDocumentoSoporteGrupoCtrl', ['$scope', '$location', function($scope, $location) {
 
 	$scope.idGrupo = 0;
 	$scope.idGrupoSoporteActivo = 0;
@@ -9,6 +9,8 @@ app.controller('anularSoporteGrupoCtrl', ['$scope', '$location', function($scope
 		window.location.replace($scope.rutaServidor  + "gestion-empresarial/desarrollo-empresarial/grupos/" + $scope.idGrupo + "/documentos-soporte/" + $scope.idGrupoSoporteActivo + "/borrar");
 		
 	};	
+
+
 
 }]);
 
@@ -67,15 +69,28 @@ app.controller('datosEmpresaGrupoCtrl', ['$scope', '$location', function($scope,
 
 }]);
 
-/*app.controller('GrupoCtrl', ['$scope', function($scope) {
+app.controller('gestionGrupoCtrl', ['$scope', '$http', function($scope, $http) {
 
 	$scope.idGrupo = 0;	
 
-	$scope.traerGrupoXID = function(idGrupo){
+	$scope.eliminarGrupo = function(idGrupo){
+
 		$scope.idGrupo = idGrupo;
-		alert($scope.idGrupo);
+
+		$http.get($scope.rutaServidor + "gestion-empresarial/desarrollo-empresarial/grupo/" + $scope.idGrupo + "/eliminar")
+		.success(function(data) {
+    
+			//script
+			//window.location.reload();
+			window.location.replace($scope.rutaServidor + "gestion-empresarial/desarrollo-empresarial/grupo/" + $scope.idGrupo + "/eliminar");
+			console.log("eliminado");
+
+		}).error(function(data) {
+			//console.log('Error: ' + data);
+		});
+
 		
 	};	
 
-}]);*/
+}]);
 
