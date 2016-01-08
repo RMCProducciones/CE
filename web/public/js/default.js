@@ -154,12 +154,6 @@ app.controller('PermisoCtrl', ['$scope', '$http', function($scope, $http) {
 
 }]);
 
-app.controller('MensajeCtrl', ['$scope', function($scope) {
-
-
-}]);
-
-
 app.controller('MenuCtrl', ['$scope', '$http', function($scope, $http) {
 
 

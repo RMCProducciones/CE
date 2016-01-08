@@ -156,8 +156,8 @@ class GestionEmpresarialController extends Controller
 
         $grupo = $em->getRepository('AppBundle:Grupo')->find($idGrupo);              
 
-        //$em->remove($grupo);
-        //$em->flush();
+        $em->remove($grupo);
+        $em->flush();
 
         return $this->redirect($this->generateUrl('gruposGestion'));
 
