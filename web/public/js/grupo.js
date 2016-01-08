@@ -82,25 +82,11 @@ app.controller('gestionGrupoCtrl', ['$scope', '$http', function($scope, $http) {
 
 		$http.get($scope.rutaServidor + "gestion-empresarial/desarrollo-empresarial/grupo/" + $scope.idGrupo + "/eliminar")
 		.success(function(data) {
-			//console.log("eliminado: " + $scope.consecutivoGrupo);
 
   			$("#filaGrupo" + $scope.consecutivoGrupo).fadeOut("slow");
-  			//$("#filaGrupo" + $scope.consecutivoGrupo).html('<tr class="alert alert-warning">Registro Eliminado</tr>');
-/*
+			$scope.mostrarMensaje("success", true, "Registro Eliminado");
 
-			$("#filaGrupo" + $scope.consecutivoGrupo).fadeOut( 1000, function() {
-
-				$("#filaGrupo" + $scope.consecutivoGrupo).html('<tr class="alert alert-warning">Registro Eliminado</tr>');
-
-				$("#filaGrupo" + $scope.consecutivoGrupo).fadeIn( 1000, function() {
-				
-					$("#filaGrupo" + $scope.consecutivoGrupo).html('<tr class="alert alert-warning">Registro Eliminado</tr>');
-    				//$("#filaGrupo" + $scope.consecutivoGrupo).fadeIn( "slow" );
-
-    			});
-
-  			});
-*/  			
+			console.log(data);
 
 		}).error(function(data) {
 			//console.log('Error: ' + data);
