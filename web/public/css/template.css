@@ -5,6 +5,40 @@
 }
 .banner img{ padding-top: 3vh;  width: 70%; height:auto;}
 
+.h1, .h2, .h3, h1, h2, h3 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+    color: #666;
+}
+
+
+h1{
+  font-size: 3.4vmin;  
+}
+
+h2{
+  font-size: 2.8vmin; 
+}
+
+h3{
+  font-size: 2.2vmin;
+  color: #777;
+}
+
+hr{
+  margin-top: 10px;
+}
+
+
+
+   
 
 footer {
   background: url(../images/footer.png);
@@ -17,7 +51,10 @@ footer {
   height: 22vh;
 }
 footer h3{
+  margin-top: 20px;
+  margin-bottom: 10px;
   font-size: 1.8vmin;
+  color: #fff;
 }
 
 .div-login{
