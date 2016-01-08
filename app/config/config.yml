@@ -6,7 +6,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: es
 
 framework:
     #esi:             ~
@@ -16,7 +16,8 @@ framework:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
     form:            ~
-    csrf_protection: ~
+    csrf_protection: 
+         enabled: true
     validation:      { enable_annotations: true }
     #serializer:      { enable_annotations: true }
     templating:
@@ -78,3 +79,9 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+# FOSUserBundle Configuration
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: AppBundle\Entity\Usuario
