@@ -4,6 +4,7 @@ app.constant('styleBuscarHerramientas', { dropdown: 'dropdown', dropup: 'dropup'
 app.controller('rutaServidorCtrl', ['$scope', '$http', function($scope, $http) {
 
 	$scope.rutaServidor = $('#path').val();
+	$scope.elementPermiso = "inicioMenu";
 	
 }]);
 
@@ -28,6 +29,7 @@ app.controller('FiltrosCtrl', ['$scope', '$http', 'styleBuscarHerramientas', fun
 }]);
 
 app.controller('PermisoCtrl', ['$scope', '$http', function($scope, $http) {
+
 	$scope.RPP = '';
 
 	$http({
@@ -120,6 +122,18 @@ app.controller('PermisoCtrl', ['$scope', '$http', function($scope, $http) {
 
 		$scope.elementPermiso = JSON.stringify(elementPermiso);
 
+		//console.log($scope.elementPermiso);
+
     }	
 
 }]);
+
+app.controller('MenuCtrl', ['$scope', '$http', function($scope, $http) {
+
+
+    $scope.construirMenuUsuario = function(){
+
+    }
+
+
+}]);	
