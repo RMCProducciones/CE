@@ -109,7 +109,7 @@ class GestionEmpresarialController extends Controller
             $grupo = $form->getData();
 
             if($grupo->getRural() == true){
-                $grupo->setBarrio('');
+                $grupo->setBarrio(null);
             }
             else
             {
@@ -156,8 +156,8 @@ class GestionEmpresarialController extends Controller
 
         $grupo = $em->getRepository('AppBundle:Grupo')->find($idGrupo);              
 
-        $em->remove($grupo);//->where('id' => $idGrupo);
-        $em->flush();
+        //$em->remove($grupo);
+        //$em->flush();
 
         return $this->redirect($this->generateUrl('gruposGestion'));
 
@@ -203,13 +203,13 @@ class GestionEmpresarialController extends Controller
             $grupo->setActive(true);
             $grupo->setFechaCreacion(new \DateTime());
 
-            $usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            /*$usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
                 array(
                     'id' => 1
                 )
             );
             
-            $grupo->setUsuarioCreacion($usuarioCreacion);
+            $grupo->setUsuarioCreacion($usuarioCreacion);*/
 
             $em->persist($grupo);
             $em->flush();

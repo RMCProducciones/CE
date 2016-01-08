@@ -135,3 +135,8 @@ app.controller('PermisoCtrl', ['$scope', '$http', function($scope, $http) {
     }	
 
 }]);
+
+app.controller('MensajeCtrl', ['$scope', function($scope) {
+
+
+}]);
