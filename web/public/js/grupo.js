@@ -73,17 +73,34 @@ app.controller('gestionGrupoCtrl', ['$scope', '$http', function($scope, $http) {
 
 	$scope.idGrupo = 0;	
 
-	$scope.eliminarGrupo = function(idGrupo){
+	console.log($scope.estadoMensaje);
+
+	$scope.eliminarGrupo = function(idGrupo, consecutivo){
 
 		$scope.idGrupo = idGrupo;
+		$scope.consecutivoGrupo = consecutivo;
 
 		$http.get($scope.rutaServidor + "gestion-empresarial/desarrollo-empresarial/grupo/" + $scope.idGrupo + "/eliminar")
 		.success(function(data) {
-    
-			//script
-			//window.location.reload();
-			window.location.replace($scope.rutaServidor + "gestion-empresarial/desarrollo-empresarial/grupo/" + $scope.idGrupo + "/eliminar");
-			console.log("eliminado");
+			//console.log("eliminado: " + $scope.consecutivoGrupo);
+
+  			$("#filaGrupo" + $scope.consecutivoGrupo).fadeOut("slow");
+  			//$("#filaGrupo" + $scope.consecutivoGrupo).html('<tr class="alert alert-warning">Registro Eliminado</tr>');
+/*
+
+			$("#filaGrupo" + $scope.consecutivoGrupo).fadeOut( 1000, function() {
+
+				$("#filaGrupo" + $scope.consecutivoGrupo).html('<tr class="alert alert-warning">Registro Eliminado</tr>');
+
+				$("#filaGrupo" + $scope.consecutivoGrupo).fadeIn( 1000, function() {
+				
+					$("#filaGrupo" + $scope.consecutivoGrupo).html('<tr class="alert alert-warning">Registro Eliminado</tr>');
+    				//$("#filaGrupo" + $scope.consecutivoGrupo).fadeIn( "slow" );
+
+    			});
+
+  			});
+*/  			
 
 		}).error(function(data) {
 			//console.log('Error: ' + data);
