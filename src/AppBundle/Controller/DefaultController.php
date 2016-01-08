@@ -33,13 +33,6 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class DefaultController extends Controller
 {
-    /**
-     * @Route("/loginx", name="loginx")
-     */
-    public function loginxAction()
-    {
-        return $this->render('AppBundle:default:login.html.twig');
-    }
 
     /**
      * @Route("/", name="homepage")
