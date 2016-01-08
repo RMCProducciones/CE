@@ -23,23 +23,49 @@ class Usuario extends BaseUser
     protected $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="nombres", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
-    protected $nombres;
+    protected $tipo_documento;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="apellidos", type="string", length=255)
+     * @ORM\Column(name="numero_documento", type="string")
      */
-    protected $apellidos;
+    protected $numero_documento;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="telefono_fijo", type="string")
+     * @ORM\Column(name="primer_apellido", type="string")
+     */
+    protected $primer_apellido;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="segundo_apellido", type="string", nullable=true)
+     */
+    protected $segundo_apellido;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="primer_nombre", type="string")
+     */
+    protected $primer_nombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="segundo_nombre", type="string", nullable=true)
+     */
+    protected $segundo_nombre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="telefono_fijo", type="string", nullable=true)
      */
     protected $telefono_fijo;
 
@@ -53,35 +79,31 @@ class Usuario extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="correo_electronico", type="string")
+     * @ORM\Column(name="correo_electronico", type="string", nullable=true)
      */
     protected $correo_electronico;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="active", type="boolean")
+     * @ORM\Column(name="active", type="boolean", nullable=true)
      */
     protected $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     protected $usuario_modificacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
      */
     protected $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     protected $usuario_creacion;
 
@@ -95,7 +117,7 @@ class Usuario extends BaseUser
     
     public function __toString()
     {
-        return $this->getNombres()." ".$this->getApellidos();
+        return $this->getPrimerNombre().' '.$this->getSegundoNombre().' '.$this->getPrimerApellido().' '.$this->getSegundoApellido();
     }
 
     public function __construct()
@@ -130,51 +152,147 @@ class Usuario extends BaseUser
     }
 
     /**
-     * Set nombres
+     * Set tipoDocumento
      *
-     * @param string $nombres
+     * @param AppBundle\Entity\Listas $tipoDocumento
      *
      * @return Usuario
      */
-    public function setNombres($nombres)
+    public function setTipoDocumento(\AppBundle\Entity\Listas $tipoDocumento)
     {
-        $this->nombres = $nombres;
+        $this->tipo_documento = $tipoDocumento;
 
         return $this;
     }
 
     /**
-     * Get nombres
+     * Get tipoDocumento
      *
-     * @return string
+     * @return AppBundle\Entity\Listas
      */
-    public function getNombres()
+    public function getTipoDocumento()
     {
-        return $this->nombres;
+        return $this->tipo_documento;
     }
 
     /**
-     * Set apellidos
+     * Set numeroDocumento
      *
-     * @param string $apellidos
+     * @param string $numeroDocumento
      *
      * @return Usuario
      */
-    public function setApellidos($apellidos)
+    public function setNumeroDocumento($numeroDocumento)
     {
-        $this->apellidos = $apellidos;
+        $this->numero_documento = $numeroDocumento;
 
         return $this;
     }
 
     /**
-     * Get apellidos
+     * Get numeroDocumento
      *
      * @return string
      */
-    public function getApellidos()
+    public function getNumeroDocumento()
     {
-        return $this->apellidos;
+        return $this->numero_documento;
+    }
+
+    /**
+     * Set primerApellido
+     *
+     * @param string $primerApellido
+     *
+     * @return Usuario
+     */
+    public function setPrimerApellido($primerApellido)
+    {
+        $this->primer_apellido = $primerApellido;
+
+        return $this;
+    }
+
+    /**
+     * Get primerApellido
+     *
+     * @return string
+     */
+    public function getPrimerApellido()
+    {
+        return $this->primer_apellido;
+    }
+
+    /**
+     * Set segundoApellido
+     *
+     * @param string $segundoApellido
+     *
+     * @return Usuario
+     */
+    public function setSegundoApellido($segundoApellido)
+    {
+        $this->segundo_apellido = $segundoApellido;
+
+        return $this;
+    }
+
+    /**
+     * Get segundoApellido
+     *
+     * @return string
+     */
+    public function getSegundoApellido()
+    {
+        return $this->segundo_apellido;
+    }
+
+    /**
+     * Set primerNombre
+     *
+     * @param string $primerNombre
+     *
+     * @return Usuario
+     */
+    public function setPrimerNombre($primerNombre)
+    {
+        $this->primer_nombre = $primerNombre;
+
+        return $this;
+    }
+
+    /**
+     * Get primerNombre
+     *
+     * @return string
+     */
+    public function getPrimerNombre()
+    {
+        return $this->primer_nombre;
+    }
+
+    /**
+     * Set segundoNombre
+     *
+     * @param string $segundoNombre
+     *
+     * @return Usuario
+     */
+    public function setSegundoNombre($segundoNombre)
+    {
+        $this->segundo_nombre = $segundoNombre;
+
+        return $this;
+    }
+
+    /**
+     * Get segundoNombre
+     *
+     * @return string
+     */
+    public function getSegundoNombre()
+    {
+        return $this->segundo_nombre;
     }
 
     /**
@@ -276,11 +394,11 @@ class Usuario extends BaseUser
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return Usuario
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -290,7 +408,7 @@ class Usuario extends BaseUser
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -324,11 +442,11 @@ class Usuario extends BaseUser
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return Usuario
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -338,7 +456,7 @@ class Usuario extends BaseUser
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
