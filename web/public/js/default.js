@@ -27,16 +27,15 @@ app.controller('FiltrosCtrl', ['$scope', '$http', 'styleBuscarHerramientas', fun
 		
 }]);
 
-app.controller('MenuCtrl', ['$scope', '$http', function($scope, $http) {
+app.controller('PermisoCtrl', ['$scope', '$http', function($scope, $http) {
 	$scope.RPP = '';
 
-	/*$http({
+	$http({
     	method  : 'GET',
-    	url     : $scope.rutaServidor + "public/xml/menu.xml",
+    	url     : $scope.rutaServidor + "public/xml/estructuraPermiso.xml",
     	timeout : 10000,
     	params  : {},  // Query Parameters (GET)
     	transformResponse : function(data) {
-        	// string -> XML document object
         	var x2js = new X2JS();
             var json = x2js.xml_str2json(data);
 
@@ -48,10 +47,79 @@ app.controller('MenuCtrl', ['$scope', '$http', function($scope, $http) {
 
 		$scope.RPP = array;
 
-		console.log($scope.RPP);
-	
 	}).error(function(data, status, headers, config) {
 		console.log("Problemas al cargar la estructura del mapa de navegación de los usuarios");
-    	//alert('Problemas a');
-	});*/
+	});
+
+	$scope.construirJsonPermisos = function(){
+		
+		/*
+		"code":1,
+		"level":3,
+		"type":"Funcionalidad",
+		"title":"Nuevo",
+		"path":"#" 
+		*/							
+
+		var elementPermiso = {};
+		var arrayComponent = [];
+
+		//Para los componentes
+		$.each($('.component'), function(idObjComponent, objComponent) {
+		
+			var elementComponent = {};
+			var arrayModule = [];
+
+			elementComponent.code = (idObjComponent + 1);
+
+			//Para los módulos
+			$.each($('.component .module-' + (idObjComponent+1)), function( idObjModule, objModule ) {
+
+				var elementModule = {};
+				var arraySubModule = [];
+
+				elementModule.code = (idObjModule + 1);
+
+				//Para los submódulos
+				$.each($('.component .module-' + (idObjComponent+1) + ' .submodule-' + (idObjComponent+1) + '-' + (idObjModule+1)), function( idObjSubModule, objSubModule ) {
+
+						var elementSubModule = {};
+						var arrayAction = [];
+
+						elementSubModule.code = (idObjSubModule + 1);
+
+						//Para las funciones o acciones
+						$.each($('.component .module-' + (idObjComponent+1) + ' .submodule-' + (idObjComponent+1) + '-' + (idObjModule+1) + ' .ckPermiso-' + (idObjComponent+1) + '-' + (idObjModule+1) + '-' + (idObjSubModule+1) ), function( idObjFuncionalidad, objFuncionalidad ) {
+
+							var elementAction = {};
+
+							elementAction.code = (idObjFuncionalidad + 1);
+							elementAction.checked = $('.component .module-' + (idObjComponent+1) + ' .submodule-' + (idObjComponent+1) + '-' + (idObjModule+1) + ' #ckPermiso-' + (idObjComponent+1) + '-' + (idObjModule+1) + '-' + (idObjSubModule+1) + '-' + (idObjFuncionalidad+1))[0].checked;
+
+							arrayAction.push(elementAction);
+
+						});
+
+						elementSubModule.action = arrayAction;
+						arraySubModule.push(elementSubModule);
+
+				});
+
+				elementModule.subModule = arraySubModule;
+				arrayModule.push(elementModule);
+				
+
+			});
+
+			elementComponent.module = arrayModule;			
+			arrayComponent.push(elementComponent);
+
+		});
+
+		elementPermiso.component = arrayComponent;
+
+		console.log(JSON.stringify(elementPermiso));
+
+    }	
+
 }]);

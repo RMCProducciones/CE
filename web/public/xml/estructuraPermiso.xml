@@ -60,7 +60,13 @@
 			<action code="3" level="3" type="Funcionalidad" title="Editar" path="#"></action>
 			<action code="4" level="3" type="Funcionalidad" title="Borrar" path="#"></action>
 		</submodule>
-		<submodule code="4" level="2" type="Submódulo" title="Desarrollo de ferias de difusión del proyecto" path="#">
+		<submodule code="4" level="2" type="Submódulo" title="Participación en ferias de difusión del proyecto" path="#">
+			<action code="1" level="3" type="Funcionalidad" title="Nuevo" path="#"></action>
+			<action code="2" level="3" type="Funcionalidad" title="Detalle" path="#"></action>
+			<action code="3" level="3" type="Funcionalidad" title="Editar" path="#"></action>
+			<action code="4" level="3" type="Funcionalidad" title="Borrar" path="#"></action>
+		</submodule>
+		<submodule code="5" level="2" type="Submódulo" title="Desarrollo de ferias de difusión del proyecto" path="#">
 			<action code="1" level="3" type="Funcionalidad" title="Nuevo" path="#"></action>
 			<action code="2" level="3" type="Funcionalidad" title="Detalle" path="#"></action>
 			<action code="3" level="3" type="Funcionalidad" title="Editar" path="#"></action>
