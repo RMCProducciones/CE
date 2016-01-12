@@ -43,7 +43,7 @@ app.controller('FiltrosCtrl', ['$scope', '$http', 'styleBuscarHerramientas', fun
     $scope.limpiarCamposFiltroBusqueda = function(){
        
 
-		$("#dato").val("");
+		$("#txtBuscar").val("");
 		$("#selDepartamento").val("");
 		$("#selZona").val("");
 		$("#selMunicipio").val("");

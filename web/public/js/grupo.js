@@ -86,11 +86,7 @@ app.controller('gestionGrupoCtrl', ['$scope', '$http', function($scope, $http) {
   			$("#filaGrupo" + $scope.consecutivoGrupo).fadeOut("slow");
 			$scope.mostrarMensaje("success", true, "Registro Eliminado");
 
-			console.log(data);
-			console.log(status);
-			console.log(headers);
-			console.log(config);
-
+		
 		}).error(function(data, status, headers, config) {
 
 			console.log($(data).filter("title").html());
