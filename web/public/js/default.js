@@ -5,6 +5,7 @@ app.controller('rutaServidorCtrl', ['$scope', '$http', function($scope, $http) {
 
 	$scope.rutaServidor = $('#path').val();
 	$scope.elementPermiso = "inicioMenu";
+	$scope.jsonPermiso = [];
 
 	$scope.estadoMensaje = "success";
 	$scope.mostrarMensaje = false;
