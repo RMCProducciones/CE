@@ -134,7 +134,7 @@ app.controller('PermisoCtrl', ['$scope', '$http', function($scope, $http) {
 
 		$scope.elementPermiso = JSON.stringify(elementPermiso);
 
-		//console.log($scope.elementPermiso);
+		console.log($scope.elementPermiso);
 
     }	
 
