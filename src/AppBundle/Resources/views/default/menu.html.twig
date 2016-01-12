@@ -20,16 +20,16 @@
 
           <li class="dropdown" ng-repeat="componentMenu in pruebaJsonMenu.component">
 
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">[[componentMenu.code]]<strong class="caret"></strong></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">[[componentMenu.title]]<strong class="caret"></strong></a>
 
             <ul class="dropdown-menu">
               <li class="dropdown dropdown-submenu" ng-repeat="moduleMenu in componentMenu.module">
 
-                <a href="#">[[moduleMenu.code]]</a>
+                <a href="#">[[moduleMenu.title]]</a>
 
                 <ul class="dropdown-menu">
                     <li ng-repeat="subModuleMenu in moduleMenu.subModule">
-                      <a href="{{ path('gruposGestion') }}">[[subModuleMenu.code]]</a>
+                      <a href="[[subModuleMenu.path]]">[[subModuleMenu.title]]</a>
                     </li>                
                 </ul>
 
