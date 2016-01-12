@@ -1233,6 +1233,7 @@ class Beneficiario
         return $this;
     }
 
+
     /**
      * Get tipoDocumentoConyugue
      *
@@ -1241,6 +1242,11 @@ class Beneficiario
     public function getTipoDocumentoConyugue()
     {
         return $this->tipo_documento_conyugue;
+    }
+
+   public function setNullDocumentoConyugue()
+    {
+        $this->tipo_documento_conyugue = null;
     }
 
     /**

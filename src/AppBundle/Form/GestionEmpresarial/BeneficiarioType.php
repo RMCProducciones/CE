@@ -36,14 +36,16 @@ class BeneficiarioType extends AbstractType
 			->add('segundo_apellido', 'text', array('required' => false))
 			->add('primer_nombre')
 			->add('segundo_nombre', 'text', array('required' => false))
-			->add('genero', 'entity', array('class' => 'AppBundle:Listas', 'expanded' => true, 
-										    'query_builder' => function(EntityRepository $er) {
-										        return $er->createQueryBuilder('l')
-										        	->where('l.dominio = :dominio')
-										        	->andWhere('l.active = 1')
-										        	->setParameter('dominio', 'genero')
-										            ->orderBy('l.orden', 'ASC');
-										    },))
+			->add('genero', 'entity', array(
+				'class' => 'AppBundle:Listas', 
+				
+				'query_builder' => function(EntityRepository $er) {
+			        return $er->createQueryBuilder('l')
+			        	->where('l.dominio = :dominio')
+			        	->andWhere('l.active = 1')
+			        	->setParameter('dominio', 'genero')
+			            ->orderBy('l.orden', 'ASC');
+			    },))
 			->add('fecha_nacimiento', 'date', array('label' => 'Fecha de nacimiento', 'widget' => 'single_text'))
 			->add('edad_inscripcion', 'text', array('label' => 'Edad al momento de la inscripción'))
 			->add('corte_sisben')
