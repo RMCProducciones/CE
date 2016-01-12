@@ -396,9 +396,9 @@ class GestionEmpresarialController extends Controller
 
 
 /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/beneficiarios/{idBeneficiario}/documentos-soporte", name="beneficiarioSoporte")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/beneficiarios/{idGrupo}/{idBeneficiario}/documentos-soporte", name="beneficiarioSoporte")
      */
-    public function beneficiarioSoporteAction(Request $request, $idBeneficiario)
+    public function beneficiarioSoporteAction(Request $request, $idGrupo, $idBeneficiario)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -464,16 +464,19 @@ class GestionEmpresarialController extends Controller
                 $em->persist($beneficiarioSoporte);
                 $em->flush();
 
-                return $this->redirectToRoute('beneficiarioSoporte', array( 'idBeneficiario' => $idBeneficiario));
+                return $this->redirectToRoute('beneficiarioSoporte', array( 'idGrupo' => $idGrupo, 'idBeneficiario' => $idBeneficiario) );
             }
         }   
         
+
+        //return new Response("Hola mundo");
         return $this->render(
             'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiarios-soporte.html.twig', 
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
-                'histotialSoportes' => $histotialSoportes
+                'histotialSoportes' => $histotialSoportes,
+                'idGrupo' => $idGrupo
             )
         );
         
@@ -499,6 +502,8 @@ class GestionEmpresarialController extends Controller
         return $this->redirectToRoute('beneficiarioSoporte', array( 'idBeneficiario' => $idBeneficiario));
         
     }
+
+
 
 /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/{idGrupo}/{idBeneficiario}/beneficiarios/editar", name="beneficiariosEditar")
@@ -564,7 +569,22 @@ class GestionEmpresarialController extends Controller
 
     }    
 
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/{idGrupo}/{idBeneficiario}/beneficiarios/eliminar", name="beneficiariosEliminar")
+     */
+    public function BeneficiariosEliminarAction(Request $request, $idGrupo, $idBeneficiario)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $beneficiarios = new Beneficiario();
 
+        $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->find($idBeneficiario);              
+
+        $em->remove($beneficiarios);
+        $em->flush();
+
+        return $this->redirectToRoute('beneficiariosGestion', array( 'idGrupo' => $idGrupo));
+
+    }
 
 
 
