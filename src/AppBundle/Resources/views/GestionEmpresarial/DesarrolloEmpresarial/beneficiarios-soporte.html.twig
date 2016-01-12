@@ -8,7 +8,7 @@
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
       <li>Formacion de capital social asociativo y desarrollo empresarial</li>
-      <li><a href="{{ path('gruposGestion') }}">Beneficiarios</a></li>
+      <li><a href="{{ path('beneficiariosGestion', {'idGrupo': idGrupo}) }}">Beneficiarios</a></li>
       <li class="active">Documentos Soporte</li>
     </ul>
 
@@ -33,7 +33,7 @@
   
               <button name="grupoSoporte[Guardar]" id="grupoSoporte_Guardar" type="submit" class="btn btn-success">Guardar</button>
               
-              <a href="{{ path('gruposGestion') }}" class="btn btn-danger" title="" alt="Cancelar" >Cancelar</a>
+              <a href="{{ path('beneficiariosGestion', {'idGrupo': idGrupo}) }}" class="btn btn-danger" title="" alt="Cancelar" >Cancelar</a>
               
             </div>
           </div>
@@ -45,7 +45,7 @@
     
     <div class="section">
       <div class="container">
-		<h2 class="page-header">Gestión de documentos soportes del Grupo</h2>
+		<h2 class="page-header">Gestión de documentos soportes del Beneficiario</h2>
         <div class="row">
           <div class="col-md-12">
               
@@ -111,7 +111,7 @@
 	                  <td>{% if soporteActivo.active %}Activo{% else %}Inactivo{% endif %}</td>
 	                  <td>{{ soporteActivo.fechacreacion | date ('d/m/Y h:i:s', 'America/Bogota')}}</td>
 	                  <td>
-	                    <a class="ng-binding ng-isolate-scope" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="anularSoporteGrupo();" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true" ng-click="idGrupo = {{soporteActivo.grupo.id}}; idGrupoSoporteActivo = {{soporteActivo.id}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>	 |   
+	                    <a class="ng-binding ng-isolate-scope" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="anularSoporteGrupo();" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true" ng-click="idGrupo = {{soporteActivo.beneficiario.id}}; idGrupoSoporteActivo = {{soporteActivo.id}}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>	 |   
 						<a href="{{ asset('../uploads/documents/'~ soporteActivo.path) }}" alt="Descargar" title="Descargar"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a> 	                  
 	                  </td>
 	                </tr>
