@@ -564,7 +564,22 @@ class GestionEmpresarialController extends Controller
 
     }    
 
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/{idGrupo}/{idBeneficiario}/beneficiarios/eliminar", name="beneficiariosEliminar")
+     */
+    public function BeneficiariosEliminarAction(Request $request, $idGrupo, $idBeneficiario)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $beneficiarios = new Beneficiario();
 
+        $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->find($idBeneficiario);              
+
+        $em->remove($beneficiarios);
+        $em->flush();
+
+        return $this->redirectToRoute('beneficiariosGestion', array( 'idGrupo' => $idGrupo));
+
+    }
 
 
 
