@@ -1,5 +1,5 @@
+{% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
-[[elementPermiso]]
 <nav ng-controller="MenuCtrl">
   <div class="navbar navbar-default navbar-static-top">
     <div class="container">
@@ -18,18 +18,18 @@
 
         <ul class="nav navbar-nav">
 
-          <li class="dropdown" ng-repeat="component in elementPermiso">
+          <li class="dropdown" ng-repeat="componentMenu in pruebaJsonMenu.component">
 
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gestión Empresarial<strong class="caret"></strong></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">[[componentMenu.code]]<strong class="caret"></strong></a>
 
             <ul class="dropdown-menu">
-              <li class="dropdown dropdown-submenu">
+              <li class="dropdown dropdown-submenu" ng-repeat="moduleMenu in componentMenu.module">
 
-                <a href="#">Formación de capital social asociativo y desarrollo empresarial</a>
+                <a href="#">[[moduleMenu.code]]</a>
 
                 <ul class="dropdown-menu">
-                    <li>
-                      <a href="{{ path('gruposGestion') }}">Gestión de Grupos </a>
+                    <li ng-repeat="subModuleMenu in moduleMenu.subModule">
+                      <a href="{{ path('gruposGestion') }}">[[subModuleMenu.code]]</a>
                     </li>                
                 </ul>
 
@@ -136,3 +136,5 @@
     </div>
   </div>
 </div>  
+
+{% endif %}
