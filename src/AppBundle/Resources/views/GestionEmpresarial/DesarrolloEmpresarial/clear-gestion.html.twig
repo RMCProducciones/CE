@@ -104,15 +104,15 @@
             <table class="table table-striped table-hover" ng-controller="gestionClearCtrl">
               <thead>
                 	<tr>
-	                  <th>#</th>
-	                  <th>
-	                    <input type="checkbox">
-	                  </th>
-	                  
-	                  <th>Fecha Inicio</th>
-	                  <th>Fecha Finalización </th>
-	                  <th>Lugar Realización</th>
-	                  <th>Acciones</th>
+	                  <th class="text-center">#</th>	    
+                    <th></th> 
+                    <th></th>     
+	                  <th class="text-left">Fecha Inicio</th>
+                    <th></th>
+	                  <th class="text-left">Fecha Finalización </th>
+                    <th></th>
+	                  <th class="text-left">Lugar Realización</th>                    
+	                  <th class="text-center">Acciones</th>
 	                </tr>
 	           </thead>
 	           <tbody>
@@ -122,22 +122,22 @@
 	    		{% for clear in cleares %}
 	                
 	                <tr id="filaCLEAR{{ consecutivo }}">
-	                  <td>{{ consecutivo }}</td>
-	                  <td>
-	                    <input type="checkbox">
-	                  </td>
-	                  <td>{{ clear.fechaInicio |  date('d - m - Y') }}</td>
-	                  <td>{{ clear.fechaFinalizacion |  date('d - m - Y') }}</td>
-	                  <td>
+	                  <td class="text-center">{{ consecutivo }}</td>
+                    <td></td>	    
+                    <th></th>              
+	                  <td class="text-left">{{ clear.fechaInicio |  date('d - m - Y') }}</td>
+                    <th></th>
+	                  <td class="text-left">{{ clear.fechaFinalizacion |  date('d - m - Y') }}</td>
+                    <th></th>
+	                  <td class="text-left">
 	                    <b>M</b> {{ clear.municipio }}
 	                    <br>
 	                    <b>D</b> {{ clear.municipio.departamento }}
 	                    <br>
 	                    <b>Z</b> {{ clear.municipio.zona }}
 	                    <br>
-	                  </td>
-	                  
-	                  <td>
+	                  </td>	                  
+	                  <td class="text-center">
 	                    <a href="{{ path('integrantesGestion', {'idCLEAR': clear.id}) }}" alt="Integrantes CLEAR" title="Integrantes CLEAR"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a> | 
 	                    <a href="#" alt="Asignacion Grupos" title="Asignacion Grupos"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a> | 
 	                    <a href="acta-subir-grupos.html" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> | 
