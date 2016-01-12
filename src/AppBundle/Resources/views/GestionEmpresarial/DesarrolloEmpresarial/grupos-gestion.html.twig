@@ -23,7 +23,7 @@
 
   <br />
 
-    <div class="section busqueda" ng-controller="FiltrosCtrl">
+    <div class="section" ng-controller="FiltrosCtrl">
       <div class="container">
         <div class="row" >
           
@@ -37,7 +37,7 @@
           <div class="col-md-4">
             <div class="input-group">           
 
-              <input class="form-control" id="dato" placeholder="Buscar..." ng-model="txtBuscar" type="text">
+              <input class="form-control" id="txtBuscar" placeholder="Buscar..." ng-model="txtBuscar" type="text">
               <span class="input-group-btn">
                 <button class="btn btn-default" style="color:white; background-color:#ccc;" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>              
               </span>         
@@ -89,7 +89,7 @@
     <br />
 
   <div class="container">
-    <div class="alert alert-[[estadoMensaje]]" id="MensajeCtrl" ng-show="mostrarMensaje === true" role="alert">[[textoMensaje]]</div>
+    <div class="alert alert-[[estadoMensaje]] alert-dismissible" id="MensajeCtrl" ng-show="mostrarMensaje === true" role="alert">[[textoMensaje]]<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
   </div>
 
 

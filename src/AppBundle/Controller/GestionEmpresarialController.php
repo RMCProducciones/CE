@@ -639,6 +639,23 @@ class GestionEmpresarialController extends Controller
     }
 
     /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/eliminar", name="clearEliminar")
+     */
+    public function ClearEliminarAction(Request $request, $idCLEAR)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $clear = new Clear();
+
+        $clear = $em->getRepository('AppBundle:Clear')->find($idCLEAR);              
+
+        $em->remove($clear);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('CLEARGestion'));
+
+    }
+
+    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/editar", name="clearEditar")
      */
     public function clearEditarAction(Request $request, $idCLEAR)
@@ -737,7 +754,8 @@ class GestionEmpresarialController extends Controller
             array()
         );	
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantes-clear-gestion-asignacion.html.twig', array('integrantesCLEAR' => $integrantesCLEAR, 'asignacionIntegrantesCLEAR' => $asignacionIntegrantesCLEAR ));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantes-clear-gestion-asignacion.html.twig', 
+            array('integrantesCLEAR' => $integrantesCLEAR, 'asignacionIntegrantesCLEAR' => $asignacionIntegrantesCLEAR ));        
     }
 	
 	
