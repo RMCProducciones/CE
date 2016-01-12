@@ -709,12 +709,12 @@ class GestionEmpresarialController extends Controller
     }	
 	
 	/**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/integrantes/nuevo", name="integrantesNuevo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/integrantes/nuevo", name="integrantesNuevo")
      */
-    public function integrantesNuevoAction(Request $request)
+    public function integrantesNuevoAction(Request $request, $idCLEAR)
     {
         $em = $this->getDoctrine()->getManager();
-        $integranteCLEAR = new IntegranteCLEAR();
+        $integranteCLEAR = new IntegranteCLEAR();        
         
         $form = $this->createForm(new IntegranteCLEARType(), $integranteCLEAR);
 
@@ -732,10 +732,12 @@ class GestionEmpresarialController extends Controller
             $em->persist($integranteCLEAR);
             $em->flush();
 
-            return $this->redirectToRoute('CLEARGestion');
+            return $this->redirectToRoute('CLEARGestion', array('idCLEAR' => $idCLEAR));
         }
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantes-clear-nuevo.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantes-clear-nuevo.html.twig', 
+            array('form' => $form->createView(),
+                'idCLEAR' => $idCLEAR));
     }
 	
 	/**
@@ -755,7 +757,11 @@ class GestionEmpresarialController extends Controller
         );	
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantes-clear-gestion-asignacion.html.twig', 
-            array('integrantesCLEAR' => $integrantesCLEAR, 'asignacionIntegrantesCLEAR' => $asignacionIntegrantesCLEAR ));        
+            array(
+                'integrantesCLEAR' => $integrantesCLEAR, 
+                'asignacionIntegrantesCLEAR' => $asignacionIntegrantesCLEAR,
+                'idCLEAR' => $idCLEAR
+            ));        
     }
 	
 	
