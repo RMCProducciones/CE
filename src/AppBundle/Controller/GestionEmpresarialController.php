@@ -326,6 +326,9 @@ class GestionEmpresarialController extends Controller
     }
 	
 
+
+
+
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/{idGrupo}/beneficiarios/", name="beneficiariosGestion")
      */
@@ -372,6 +375,9 @@ class GestionEmpresarialController extends Controller
 
             if($beneficiarios->getPertenenciaEtnica()->getDescripcion() != 'Indígena'){
                 $beneficiarios->setNullGrupoIndigena();
+            }  
+             if($beneficiarios->getEstadoCivil()->getDescripcion() != 'Casado'||$beneficiarios->getEstadoCivil()->getDescripcion() != 'Unión Libre'){
+                $beneficiarios->setNullDocumentoConyugue();
             }                    
 
             $beneficiarios->setActive(true);
@@ -494,7 +500,88 @@ class GestionEmpresarialController extends Controller
         
     }
 
-    
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/{idGrupo}/{idBeneficiario}/beneficiarios/editar", name="beneficiariosEditar")
+     */
+    public function BeneficiariosEditarAction(Request $request, $idGrupo, $idBeneficiario)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $beneficiarios = new Beneficiario();
+
+        $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
+            array('id' => $idBeneficiario)
+        );
+
+        //print_r($idBeneficiario);
+
+
+        $form = $this->createForm(new BeneficiarioType(), $beneficiarios);
+
+        
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $beneficiarios = $form->getData();
+            $beneficiarios->$setActive(true);
+            $beneficiarios->setFechaModificacion(new \DateTime());
+
+            /*$usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );*/
+            
+            $beneficiarios->setUsuarioModificacion($usuarioModificacion);
+
+            $em->persist($beneficiarios);
+            $em->flush();
+
+
+            return $this->redirectToRoute('beneficiariosGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiarios-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idGrupo' => $idGrupo,
+                    'idBeneficiario' => $idBeneficiario,
+                    'beneficiarios' => $beneficiarios,
+            )
+        );
+
+    }    
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/{idGrupo}/{idBeneficiario}/beneficiarios/eliminar", name="beneficiariosEliminar")
+     */
+    public function BeneficiariosEliminarAction(Request $request, $idGrupo, $idBeneficiario)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $beneficiarios = new Beneficiario();
+
+        $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->find($idBeneficiario);              
+
+        $em->remove($beneficiarios);
+        $em->flush();
+
+        return $this->redirectToRoute('beneficiariosGestion', array( 'idGrupo' => $idGrupo));
+
+    }
+
+
 
 
 
@@ -564,6 +651,23 @@ class GestionEmpresarialController extends Controller
         }
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:clear-nuevo.html.twig', array('form' => $form->createView()));
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/eliminar", name="clearEliminar")
+     */
+    public function ClearEliminarAction(Request $request, $idCLEAR)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $clear = new Clear();
+
+        $clear = $em->getRepository('AppBundle:Clear')->find($idCLEAR);              
+
+        $em->remove($clear);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('CLEARGestion'));
+
     }
 
     /**
@@ -665,7 +769,8 @@ class GestionEmpresarialController extends Controller
             array()
         );	
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantes-clear-gestion-asignacion.html.twig', array('integrantesCLEAR' => $integrantesCLEAR, 'asignacionIntegrantesCLEAR' => $asignacionIntegrantesCLEAR ));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantes-clear-gestion-asignacion.html.twig', 
+            array('integrantesCLEAR' => $integrantesCLEAR, 'asignacionIntegrantesCLEAR' => $asignacionIntegrantesCLEAR ));        
     }
 	
 	
