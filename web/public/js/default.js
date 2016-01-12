@@ -149,7 +149,7 @@ app.controller('PermisoCtrl', ['$scope', '$http', function($scope, $http) {
 
 		$scope.elementPermiso = JSON.stringify(elementPermiso);
 
-		console.log($scope.elementPermiso);
+		//console.log($scope.elementPermiso);
 
     }	
 
@@ -157,6 +157,10 @@ app.controller('PermisoCtrl', ['$scope', '$http', function($scope, $http) {
 
 app.controller('MenuCtrl', ['$scope', '$http', function($scope, $http) {
 
+	$scope.pruebaJsonMenu = '{"component":[{"code":1,"module":[{"code":1,"subModule":[{"code":1,"action":[{"code":1,"checked":true},{"code":2,"checked":false},{"code":3,"checked":false},{"code":4,"checked":false}]},{"code":2,"action":[{"code":1,"checked":false},{"code":2,"checked":false},{"code":3,"checked":false},{"code":4,"checked":false}]},{"code":3,"action":[{"code":1,"checked":false},{"code":2,"checked":false},{"code":3,"checked":false},{"code":4,"checked":false}]}]},{"code":2,"subModule":[{"code":1,"action":[{"code":1,"checked":false},{"code":2,"checked":false},{"code":3,"checked":false},{"code":4,"checked":false}]},{"code":2,"action":[{"code":1,"checked":false},{"code":2,"checked":false},{"code":3,"checked":false},{"code":4,"checked":false}]},{"code":3,"action":[{"code":1,"checked":false},{"code":2,"checked":false},{"code":3,"checked":false},{"code":4,"checked":false}]}]},{"code":3,"subModule":[{"code":1,"action":[{"code":1,"checked":false},{"code":2,"checked":false},{"code":3,"checked":false},{"code":4,"checked":false}]},{"code":2,"action":[{"code":1,"checked":false},{"code":2,"checked":false},{"code":3,"checked":false},{"code":4,"checked":false}]},{"code":3,"action":[{"code":1,"checked":false},{"code":2,"checked":false},{"code":3,"checked":false},{"code":4,"checked":false}]},{"code":4,"action":[{"code":1,"checked":false},{"code":2,"checked":false},{"code":3,"checked":false},{"code":4,"checked":false}]},{"code":5,"action":[{"code":1,"checked":false},{"code":2,"checked":false},{"code":3,"checked":false},{"code":4,"checked":false}]}]}]}]}';
+	$scope.pruebaJsonMenu = angular.fromJson($scope.pruebaJsonMenu);
+
+	console.log($scope.pruebaJsonMenu);
 
     $scope.construirMenuUsuario = function(){
 
