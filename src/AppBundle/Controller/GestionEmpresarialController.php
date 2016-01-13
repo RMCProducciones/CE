@@ -234,7 +234,7 @@ class GestionEmpresarialController extends Controller
 		$em = $this->getDoctrine()->getManager();
 
         $grupoSoporte = new GrupoSoporte();
-        
+
         $form = $this->createForm(new GrupoSoporteType(), $grupoSoporte);
 
 		$form->add(
@@ -271,6 +271,7 @@ class GestionEmpresarialController extends Controller
 			$form->bind($this->getRequest());
 			if ($form->isValid()) {
 
+
 				$tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
 
                     array(
@@ -278,7 +279,8 @@ class GestionEmpresarialController extends Controller
                         'dominio' => 'grupo_tipo_soporte'
                     )
                 );
-				
+
+			
 				$actualizarGrupoSoportes = $em->getRepository('AppBundle:GrupoSoporte')->findBy(
 					array(
 						'active' => '1' , 
@@ -293,14 +295,21 @@ class GestionEmpresarialController extends Controller
 					$actualizarGrupoSoporte->setActive(0);
 					$em->flush();
 				}
-				
+
 				$grupoSoporte->setGrupo($grupo);
 				$grupoSoporte->setActive(true);
 				$grupoSoporte->setFechaCreacion(new \DateTime());
+
 				//$grupoSoporte->setUsuarioCreacion(1);
 
+
 				$em->persist($grupoSoporte);
+
+                //print_r($grupoSoporte);
+
 				$em->flush();
+
+
 
 				return $this->redirectToRoute('gruposSoporte', array( 'idGrupo' => $idGrupo));
 			}
