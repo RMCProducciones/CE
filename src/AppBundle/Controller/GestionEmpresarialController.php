@@ -23,6 +23,7 @@ use AppBundle\Entity\ClearSoporte;
 use AppBundle\Entity\IntegranteCLEAR;
 use AppBundle\Entity\AsignacionIntegranteCLEAR;
 use AppBundle\Entity\Concurso;
+use AppBundle\Entity\ConcursoSoporte;
 use AppBundle\Entity\ActividadConcurso;
 use AppBundle\Entity\Listas;
 
@@ -30,6 +31,7 @@ use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
 use AppBundle\Form\GestionEmpresarial\AsignacionIntegranteCLEARType;
 use AppBundle\Form\GestionEmpresarial\GrupoType;
 use AppBundle\Form\GestionEmpresarial\GrupoSoporteType;
+use AppBundle\Form\GestionEmpresarial\ConcursoSoporteType;
 use AppBundle\Form\GestionEmpresarial\BeneficiarioType;
 use AppBundle\Form\GestionEmpresarial\BeneficiarioSoporteType;
 use AppBundle\Form\GestionEmpresarial\CLEARType;
@@ -270,6 +272,7 @@ class GestionEmpresarialController extends Controller
 			if ($form->isValid()) {
 
 				$tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+
                     array(
                         'descripcion' => $grupoSoporte->getTipoSoporte()->getDescripcion(), 
                         'dominio' => 'grupo_tipo_soporte'
@@ -1014,7 +1017,6 @@ class GestionEmpresarialController extends Controller
     }
 
 
-
 /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/eliminar", name="concursoEliminar")
      */
@@ -1035,6 +1037,113 @@ class GestionEmpresarialController extends Controller
 
 
 	
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/documentos-soporte", name="concursoSoporte")
+     */
+    public function concursoSoporteAction(Request $request, $idConcurso)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $concursoSoporte = new ConcursoSoporte();
+        
+        $form = $this->createForm(new ConcursoSoporteType(), $concursoSoporte);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $soportesActivos = $em->getRepository('AppBundle:ConcursoSoporte')->findBy(
+            array('active' => '1', 'concurso' => $idConcurso),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $histotialSoportes = $em->getRepository('AppBundle:ConcursoSoporte')->findBy(
+            array('active' => '0', 'concurso' => $idConcurso),
+            array('fecha_creacion' => 'ASC')
+        );
+        
+        $concurso = $em->getRepository('AppBundle:Concurso')->findOneBy(
+            array('id' => $idConcurso)
+        );
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+
+                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                    array(
+                        'descripcion' => $concursoSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'concurso_tipo_soporte'
+                    )
+                );
+                
+                $actualizarConcursoSoportes = $em->getRepository('AppBundle:ConcursoSoporte')->findBy(
+                    array(
+                        'active' => '1' , 
+                        'tipo_soporte' => $tipoSoporte->getId(), 
+                        'concurso' => $idConcurso
+                    )
+                );  
+            
+                foreach ($actualizarConcursoSoportes as $actualizarConcursoSoporte){
+                    echo $actualizarConcursoSoporte->getId()." ".$actualizarConcursoSoporte->getTipoSoporte()."<br />";
+                    $actualizarConcursoSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarConcursoSoporte->setActive(0);
+                    $em->flush();
+                }
+                
+                $concursoSoporte->setConcurso($concurso);
+                $concursoSoporte->setActive(true);
+                $concursoSoporte->setFechaCreacion(new \DateTime());
+                //$grupoSoporte->setUsuarioCreacion(1);
+
+                $em->persist($concursoSoporte);
+                $em->flush();
+
+                return $this->redirectToRoute('concursoSoporte', array( 'idConcurso' => $idConcurso));
+            }
+        }   
+        
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:concurso-soporte.html.twig', 
+            array(
+                'form' => $form->createView(), 
+                'soportesActivos' => $soportesActivos, 
+                'histotialSoportes' => $histotialSoportes
+            )
+        );
+        
+    }
+    
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/documentos-soporte/{idConcursoSoporte}/borrar", name="concursoSoporteBorrar")
+     */
+    public function concursoSoporteBorrarAction(Request $request, $idConcurso, $idConcursoSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $ConcursoSoporte = new ConcursoSoporte();
+        
+        $concursoSoporte = $em->getRepository('AppBundle:ConcursoSoporte')->findOneBy(
+            array('id' => $idConcursoSoporte)
+        );
+        
+        $concursoSoporte->setFechaModificacion(new \DateTime());
+        $concursoSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('concursoSoporte', array( 'idConcurso' => $idConcurso));
+        
+    }
+
+
+
 	
 	 /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/actividades", name="actividadConcurso")
