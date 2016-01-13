@@ -826,6 +826,95 @@ class GestionEmpresarialController extends Controller
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:concurso-nuevo.html.twig', array('form' => $form->createView()));
     }   
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/editar", name="concursoEditar")
+     */
+    public function ConcursoEditarrAction(Request $request, $idConcurso)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $concurso = new Concurso();
+
+        $concurso = $em->getRepository('AppBundle:Concurso')->findOneBy(
+            array('id' => $idConcurso)
+        );
+
+        $form = $this->createForm(new ConcursoType(), $concurso);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $concurso = $form->getData();
+
+            if($concurso->getRural() == true){
+                $concurso->setBarrio(null);
+            }
+            else
+            {
+                $concurso->setCorregimiento(null);
+                $concurso->setVereda(null);
+                $concurso->setCacerio(null);
+            }
+
+            $concurso->setFechaModificacion(new \DateTime());
+
+            $usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
+            
+            $concurso->setUsuarioModificacion($usuarioModificacion);
+
+            $em->flush();
+
+            return $this->redirectToRoute('concursoGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:concurso-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idConcurso' => $idConcurso,
+                    'concurso' => $concurso,
+            )
+        );
+
+    }
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/eliminar", name="concursoEliminar")
+     */
+    public function ConcursoEliminarAction(Request $request, $idConcurso)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $concurso = new Concurso();
+
+        $concurso = $em->getRepository('AppBundle:Concurso')->find($idConcurso);              
+
+        $em->remove($concurso);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('concursoGestion'));
+
+    }
+
+
+
 	
 	
 	 /**
