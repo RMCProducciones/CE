@@ -453,7 +453,7 @@ class GestionEmpresarialController extends Controller
                     $em->flush();
                 }
                 
-                $beneficiarioSoporte->setGrupo($beneficiario);
+                $beneficiarioSoporte->setBeneficiario($beneficiario);
                 $beneficiarioSoporte->setActive(true);
                 $beneficiarioSoporte->setFechaCreacion(new \DateTime());
                 //$grupoSoporte->setUsuarioCreacion(1);
