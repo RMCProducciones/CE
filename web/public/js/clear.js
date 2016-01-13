@@ -36,3 +36,19 @@ SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a 
 	};	
 
 }]);
+
+
+app.controller('gestionDocumentoSoporteClearCtrl', ['$scope', '$location', function($scope, $location) {
+
+	$scope.idCLEAR = 0;
+	$scope.idClearSoporteActivo = 0;
+
+	$scope.anularSoporteClear = function() { 
+	
+		window.location.replace($scope.rutaServidor  + "gestion-empresarial/desarrollo-empresarial/clear/" + $scope.idCLEAR + "/documentos-soporte/" + $scope.idGrupoSoporteActivo + "/borrar");
+		
+	};	
+
+
+
+}]);
