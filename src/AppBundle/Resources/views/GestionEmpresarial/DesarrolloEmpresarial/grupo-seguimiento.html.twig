@@ -1,0 +1,132 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+
+{% block title %}Grupos{% endblock %}
+
+{% block breadcrumb_ul %}
+
+    <ul class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Empresarial</li>
+      <li>Formacion de capital social asociativo y desarrollo empresarial</li>
+      <li>Seguimiento y monitoréo</li>
+      <li class="active">Seguimiento de Grupo</li>
+    </ul>
+
+{% endblock %}
+
+{% block section %}
+
+  <div class="container">
+    <h1>Seguimiento de Grupo {{grupo.nombre}}</h1>
+    <hr>
+  </div>
+
+  <br />
+
+  
+
+    <br />
+
+  <div class="container">
+    <div class="alert alert-[[estadoMensaje]] alert-dismissible" id="MensajeCtrl" ng-show="mostrarMensaje === true" role="alert">[[textoMensaje]]<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+  </div>
+
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 table-responsive">
+            
+              
+              <br />
+
+              <canvas id="myCanvas" width="1000" height="100" style="border:1px solid #000000;">
+              </canvas>
+
+              <script type="text/javascript">
+                
+                var c = document.getElementById("myCanvas");
+                var ctx = c.getContext("2d");
+                
+                ctx.fillStyle = "#FF0000";
+                ctx.fillRect(0,0,150,75);
+
+                ctx.moveTo(0,0);
+                ctx.lineTo(200,100);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(95,50,40,0,2*Math.PI);
+                ctx.stroke();
+
+              </script>     
+
+              <br />
+              <br />
+
+          </div>
+        </div>
+      </div>
+    </div>  
+
+
+    
+    <!-- Modal -->
+    <div class="modal fade" id="myModal{{ grupo.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">{{ grupo.codigo }} | {{ grupo.nombre }}</h4>
+          </div>
+          <div class="modal-body">
+            <b>Departamento:{{ grupo.municipio.departamento.nombre }}</b>
+            <br>
+            <b>Municipio: {{ grupo.municipio }}</b>
+            <br>
+            <b>Zona: Oriente {{ grupo.municipio.zona.nombre }}</b>
+            <br>
+            <b>Tipo de grupo: {{ grupo.tipo }}</b>
+            <br>
+            <b>Codigo de grupo: {{ grupo.codigo }}</b>
+            <br>
+            <b>Nombre grupo: {{ grupo.nombre }}</b>
+            <br>
+            <b>Corregimiento: {{ grupo.corregimiento }}</b>
+            <br>
+            <b>Vereda: {{ grupo.vereda }}</b>
+            <br>
+            <b>Cacerio: {{ grupo.cacerio }}</b>
+            <br>
+            <b>Direccion:  {{ grupo.direccion }}</b>
+            <br>
+			      <b>Barrio:  {{ grupo.barrio }}</b>
+            <br>
+            <b>Tipo de organización: {{ grupo.codigo }}</b>
+            <br>
+            <b>NIT: {{ grupo.numeroIdentificacionTributaria }}</b>
+            <br>
+            <b>Telefono Movil: {{ grupo.telefonoCelular }}</b>
+            <br>
+            <b>Telefono Fijo: {{ grupo.telefonoFijo }}</b>
+            <br>
+            <b>Cuenta Bancaria: {{ grupo.entidadFinancieraCuenta }}</b>
+            <br>
+            <b>Tipo de cuenta:  {{ grupo.tipoCuenta }}</b>
+            <br>
+            <b>Numero de cuenta: {{ grupo.numeroCuenta }}</b>            
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+               
+{% endblock %}
+

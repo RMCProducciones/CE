@@ -2,7 +2,7 @@
 <structure>
 <component id="1" code="1" level="0" type="Componente" title="Gestion Empresarial" path="#">
 	<module id="1"  code="1" level="1" type="Módulo" title="Formacion de capital social asociativo y desarrollo empresarial" path="#">
-		<submodule id="1"  code="1" level="2" type="Submódulo" title="Gestión de Grupos" path="{{ path('gruposGestion') }}">
+		<submodule id="1"  code="1" level="2" type="Submódulo" title="Gestión de Grupos" path="gruposGestion">
 			<action id="1"  code="1" level="3" type="Funcionalidad" title="Nuevo" path="#"></action>
 			<action id="2"  code="2" level="3" type="Funcionalidad" title="Detalle" path="#"></action>
 			<action id="3"  code="3" level="3" type="Funcionalidad" title="Editar" path="#"></action>
