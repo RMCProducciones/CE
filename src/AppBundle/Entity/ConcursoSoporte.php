@@ -8,13 +8,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * GrupoSoporte
+ * ConcursoSoporte
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\GrupoSoporteRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\ConcursoSoporteRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class GrupoSoporte
+class ConcursoSoporte
 {
     /**
      * @var integer
@@ -26,9 +26,9 @@ class GrupoSoporte
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Concurso")
      */
-    private $grupo;
+    private $concurso;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\DocumentoSoporte")
@@ -95,27 +95,27 @@ class GrupoSoporte
     }
 
     /**
-     * Set grupo
+     * Set concurso
      *
-     * @param AppBundle\Entity\Grupo $grupo
+     * @param AppBundle\Entity\Concurso $concurso
      *
-     * @return GrupoSoporte
+     * @return ConcursoSoporte
      */
-    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
+    public function setConcurso(\AppBundle\Entity\Concurso $concurso)
     {
-        $this->grupo = $grupo;
+        $this->concurso = $concurso;
     
         return $this;
     }
 
     /**
-     * Get grupo
+     * Get concurso
      *
-     * @return AppBundle\Entity\Grupo
+     * @return AppBundle\Entity\Concurso
      */
-    public function getGrupo()
+    public function getConcurso()
     {
-        return $this->grupo;
+        return $this->concurso;
     }
 
     /**
