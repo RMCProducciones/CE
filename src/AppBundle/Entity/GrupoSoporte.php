@@ -31,7 +31,7 @@ class GrupoSoporte
     private $grupo;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\DocumentoSoporte")
      */
     private $tipo_soporte;
 
@@ -121,11 +121,11 @@ class GrupoSoporte
     /**
      * Set tipoSoporte
      *
-     * @param AppBundle\Entity\Listas $tipoSoporte
+     * @param AppBundle\Entity\DocumentoSoporte $tipoSoporte
      *
      * @return GrupoSoporte
      */
-    public function setTipoSoporte(\AppBundle\Entity\Listas $tipoSoporte)
+    public function setTipoSoporte(\AppBundle\Entity\DocumentoSoporte $tipoSoporte)
     {
         $this->tipo_soporte = $tipoSoporte;
     
@@ -135,7 +135,7 @@ class GrupoSoporte
     /**
      * Get tipoSoporte
      *
-     * @return AppBundle\Entity\Listas
+     * @return AppBundle\Entity\DocumentoSoporte
      */
 	 public function getTipoSoporte()
     {
