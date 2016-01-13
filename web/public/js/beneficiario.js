@@ -1,3 +1,19 @@
+app.controller('gestionDocumentoSoporteBeneficiarioCtrl', ['$scope', '$location', function($scope, $location) {
+
+	$scope.idBeneficiario = 0;
+	$scope.idBeneficiarioSoporteActivo = 0;
+
+	$scope.anularSoporteBeneficiario = function() { 
+
+		window.location.replace($scope.rutaServidor  + "gestion-empresarial/desarrollo-empresarial/beneficiarios/" + $scope.idBeneficiario + "/documentos-soporte/" + $scope.idBeneficiarioSoporteActivo + "/borrar");
+		
+	};
+
+
+}]);
+
+
+
 app.controller('PertenenciaEtnicaCtrl', ['$scope', function($scope) {
 
 	$scope.mostrarGrupoIndigena = false;
