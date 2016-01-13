@@ -52,13 +52,9 @@
 
                   {% for subModuleMenu in moduleMenu.subModule %}
 
-                    
-
                   <li repeat="subModuleMenu in moduleMenu.subModule">
-                    <a href="{{ path(subModuleMenu.path) }}">{{subModuleMenu.title}}</a>
+                    <a href="{{subModuleMenu.path}}">{{subModuleMenu.title}}</a>
                   </li>                
-
-                    
 
                     {% set consecutivoSubModuleMenu = consecutivoSubModuleMenu + 1 %}
 
