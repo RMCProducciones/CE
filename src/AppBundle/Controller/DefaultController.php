@@ -55,14 +55,5 @@ class DefaultController extends Controller
     {
         return $this->render('AppBundle:default:nav.html.twig');
     }
-
-    /**
-     * @Route("/menu", name="menu")
-     */
-    public function menuAction()
-    {
-
-        return $this->render('AppBundle:default:menu.html.twig');
-    }
-    
+   
 }
