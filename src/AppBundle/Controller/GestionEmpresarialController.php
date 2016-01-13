@@ -1185,6 +1185,21 @@ class GestionEmpresarialController extends Controller
     } 
 	
 	
+
+
+    /**
+     * @Route("/gestion-empresarial/gestion-seguimiento/grupo/{idGrupo}", name="seguimientoGrupo")
+     */
+    public function seguimientoGrupoAction($idGrupo)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-seguimiento.html.twig', array( 'grupo' => $grupo));
+    }
 	
 	
 }
