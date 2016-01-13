@@ -985,29 +985,23 @@ class GestionEmpresarialController extends Controller
 
         $form->handleRequest($request);
 
+
         if ($form->isValid()) {
 
             $concurso = $form->getData();
 
-            if($concurso->getRural() == true){
-                $concurso->setBarrio(null);
-            }
-            else
-            {
-                $concurso->setCorregimiento(null);
-                $concurso->setVereda(null);
-                $concurso->setCacerio(null);
-            }
-
+           
             $concurso->setFechaModificacion(new \DateTime());
 
-            $usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            /*$usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
                 array(
                     'id' => 1
                 )
             );
+            echo 'hola';
+
             
-            $concurso->setUsuarioModificacion($usuarioModificacion);
+            $concurso->setUsuarioModificacion($usuarioModificacion);*/
 
             $em->flush();
 
