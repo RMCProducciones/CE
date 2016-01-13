@@ -227,6 +227,8 @@ class GestionEmpresarialController extends Controller
      */
     public function gruposSoporteAction(Request $request, $idGrupo)
     {
+
+
 		$em = $this->getDoctrine()->getManager();
 
         $grupoSoporte = new GrupoSoporte();
@@ -252,7 +254,13 @@ class GestionEmpresarialController extends Controller
 			array('active' => '0', 'grupo' => $idGrupo),
 			array('fecha_creacion' => 'ASC')
 		);
-		
+
+/*
+        echo "<pre>";
+        print_r($soportesActivos);
+        echo "</pre>";
+*/
+
 		$grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
 			array('id' => $idGrupo)
 		);
