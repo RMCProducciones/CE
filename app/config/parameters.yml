@@ -6,7 +6,7 @@ parameters:
     database_user: root
     database_password: null
     mailer_transport: smtp
-    mailer_host: 127.0.0.1
-    mailer_user: null
-    mailer_password: null
+    mailer_host: eu18.mihosting.net
+    mailer_user: ce@rmcproducciones.com
+    mailer_password: c4p4c1d4d3s
     secret: e89a7710ef163f637911777f183d019348265806

@@ -64,5 +64,43 @@ class DefaultController extends Controller
 
         return $this->render('AppBundle:default:menu.html.twig');
     }
+
+    /**
+     * @Route("/testcorreo", name="homepage")
+     */
+    public function testCorreoAction(Request $request)
+    {
+        $name = "test";
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Hello Email')
+            ->setFrom('ce@rmcproducciones.com')
+            ->setTo('j.bolanos@rmcproducciones.com')
+            ->setBody(
+                $this->renderView(
+                    // app/Resources/views/Emails/registration.html.twig
+                    'Emails/registration.html.twig',
+                    array('name' => $name)
+                ),
+                'text/html'
+            )
+            /*
+             * If you also want to include a plaintext version of the message
+            ->addPart(
+                $this->renderView(
+                    'Emails/registration.txt.twig',
+                    array('name' => $name)
+                ),
+                'text/plain'
+            )
+            */
+        ;
+        $this->get('mailer')->send($message);
+
+        return $this->render('AppBundle:default:index.html.twig', array(
+            'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
+        ));
+        
+    }
     
 }
