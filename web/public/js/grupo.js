@@ -81,29 +81,26 @@ app.controller('gestionGrupoCtrl', ['$scope', '$http', function($scope, $http) {
 		$scope.consecutivoGrupo = consecutivo;
 
 		$http.get($scope.rutaServidor + "gestion-empresarial/desarrollo-empresarial/grupo/" + $scope.idGrupo + "/eliminar")
-		.success(function(data) {
-			//console.log("eliminado: " + $scope.consecutivoGrupo);
+		.success(function(data, status, headers, config) {
 
   			$("#filaGrupo" + $scope.consecutivoGrupo).fadeOut("slow");
-  			//$("#filaGrupo" + $scope.consecutivoGrupo).html('<tr class="alert alert-warning">Registro Eliminado</tr>');
-/*
+			$scope.mostrarMensaje("success", true, "Registro Eliminado");
 
-			$("#filaGrupo" + $scope.consecutivoGrupo).fadeOut( 1000, function() {
+		
+		}).error(function(data, status, headers, config) {
 
-				$("#filaGrupo" + $scope.consecutivoGrupo).html('<tr class="alert alert-warning">Registro Eliminado</tr>');
+			console.log($(data).filter("title").html());
 
-				$("#filaGrupo" + $scope.consecutivoGrupo).fadeIn( 1000, function() {
-				
-					$("#filaGrupo" + $scope.consecutivoGrupo).html('<tr class="alert alert-warning">Registro Eliminado</tr>');
-    				//$("#filaGrupo" + $scope.consecutivoGrupo).fadeIn( "slow" );
+			$scope.mostrarMensaje("warning", true, $(data).filter("title").html());
 
-    			});
+			//if($(data).filter("title").html())
 
-  			});
-*/  			
 
-		}).error(function(data) {
-			//console.log('Error: ' + data);
+
+			/*<title>    An exception occurred while executing &#039;DELETE FROM grupo WHERE id = ?&#039; with params [1]:
+
+SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a parent row: a foreign key constraint fails (`ce`.`grupo_soporte`, CONSTRAINT `FK_5D2EB4619C833003` FOREIGN KEY (`grupo_id`) REFERENCES `grupo` (`id`)) (500 Internal Server Error)
+</title>*/
 		});
 
 		

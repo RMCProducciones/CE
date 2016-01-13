@@ -26,9 +26,8 @@
               <span class="input-group-btn">
 			  <button class="btn btn-default" type="button">Buscar</button>
               </span>
-            </div>
-			
-                r:[[txtBuscar]]
+            </div>			
+         
 			  
           </div>
           <div class="col-md-3 text-center">
@@ -124,7 +123,7 @@
             </div>
             <hr>
             <div class="btn-group">
-              <a href="{{ path('integrantesNuevo') }}" class="btn btn-default">Nuevo</a>
+              <a href="{{ path('integrantesNuevo', {'idCLEAR': idCLEAR}) }}" class="btn btn-default">Nuevo</a>
               <a href="#" class="btn btn-default">Eliminar</a>
               <a href="#" class="btn btn-default">Asignar</a>
             </div>

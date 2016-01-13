@@ -8,13 +8,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * GrupoSoporte
+ * CLEARSoporte
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\GrupoSoporteRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\ClearSoporteRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class GrupoSoporte
+class ClearSoporte
 {
     /**
      * @var integer
@@ -26,9 +26,9 @@ class GrupoSoporte
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CLEAR")
      */
-    private $grupo;
+    private $clear;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\DocumentoSoporte")
@@ -95,27 +95,27 @@ class GrupoSoporte
     }
 
     /**
-     * Set grupo
+     * Set clear
      *
-     * @param AppBundle\Entity\Grupo $grupo
+     * @param AppBundle\Entity\CLEAR $clear
      *
-     * @return GrupoSoporte
+     * @return ClearSoporte
      */
-    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
+    public function setClear(\AppBundle\Entity\CLEAR $clear)
     {
-        $this->grupo = $grupo;
+        $this->clear = $clear;
     
         return $this;
     }
 
     /**
-     * Get grupo
+     * Get clear
      *
-     * @return AppBundle\Entity\Grupo
+     * @return AppBundle\Entity\CLEAR
      */
-    public function getGrupo()
+    public function getClear()
     {
-        return $this->grupo;
+        return $this->clear;
     }
 
     /**
@@ -123,7 +123,7 @@ class GrupoSoporte
      *
      * @param AppBundle\Entity\DocumentoSoporte $tipoSoporte
      *
-     * @return GrupoSoporte
+     * @return ClearSoporte
      */
     public function setTipoSoporte(\AppBundle\Entity\DocumentoSoporte $tipoSoporte)
     {
@@ -147,7 +147,7 @@ class GrupoSoporte
      *
      * @param string $path
      *
-     * @return GrupoSoporte
+     * @return ClearSoporte
      */
     public function setPath($path)
     {
@@ -171,7 +171,7 @@ class GrupoSoporte
      *
      * @param boolean $active
      *
-     * @return GrupoSoporte
+     * @return ClearSoporte
      */
     public function setActive($active)
     {
@@ -195,7 +195,7 @@ class GrupoSoporte
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return GrupoSoporte
+     * @return ClearSoporte
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
@@ -219,7 +219,7 @@ class GrupoSoporte
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return GrupoSoporte
+     * @return ClearSoporte
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -243,7 +243,7 @@ class GrupoSoporte
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return GrupoSoporte
+     * @return ClearSoporte
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
@@ -267,7 +267,7 @@ class GrupoSoporte
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return GrupoSoporte
+     * @return ClearSoporte
      */
     public function setFechaCreacion($fechaCreacion)
     {
@@ -393,4 +393,3 @@ class GrupoSoporte
         }
     }	
 }
-

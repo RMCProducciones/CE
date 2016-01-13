@@ -5,6 +5,21 @@ app.controller('rutaServidorCtrl', ['$scope', '$http', function($scope, $http) {
 
 	$scope.rutaServidor = $('#path').val();
 	$scope.elementPermiso = "inicioMenu";
+	$scope.jsonPermiso = [];
+
+	$scope.estadoMensaje = "success";
+	$scope.mostrarMensaje = false;
+	$scope.textoMensaje = ""
+
+
+    $scope.mostrarMensaje = function(estadoMensaje, mostrarMensaje, textoMensaje){
+		
+		$scope.estadoMensaje = estadoMensaje;
+		$scope.mostrarMensaje = mostrarMensaje;
+		$scope.textoMensaje = textoMensaje;
+
+    }
+
 	
 }]);
 
@@ -29,7 +44,7 @@ app.controller('FiltrosCtrl', ['$scope', '$http', 'styleBuscarHerramientas', fun
     $scope.limpiarCamposFiltroBusqueda = function(){
        
 
-		$("#dato").val("");
+		$("#txtBuscar").val("");
 		$("#selDepartamento").val("");
 		$("#selZona").val("");
 		$("#selMunicipio").val("");
@@ -84,7 +99,10 @@ app.controller('PermisoCtrl', ['$scope', '$http', function($scope, $http) {
 			var elementComponent = {};
 			var arrayModule = [];
 
-			elementComponent.code = (idObjComponent + 1);
+			elementComponent.id = (idObjComponent + 1);
+			elementComponent.code = $(objComponent).attr("component-code");
+			elementComponent.path = $(objComponent).attr("component-path");
+			elementComponent.title = $(objComponent).attr("component-title");
 
 			//Para los módulos
 			$.each($('.component .module-' + (idObjComponent+1)), function( idObjModule, objModule ) {
@@ -92,7 +110,10 @@ app.controller('PermisoCtrl', ['$scope', '$http', function($scope, $http) {
 				var elementModule = {};
 				var arraySubModule = [];
 
-				elementModule.code = (idObjModule + 1);
+				elementModule.id = (idObjModule + 1);
+				elementModule.code = $(objModule).attr("module-code");
+				elementModule.path = $(objModule).attr("module-path");
+				elementModule.title = $(objModule).attr("module-title");
 
 				//Para los submódulos
 				$.each($('.component .module-' + (idObjComponent+1) + ' .submodule-' + (idObjComponent+1) + '-' + (idObjModule+1)), function( idObjSubModule, objSubModule ) {
@@ -100,14 +121,17 @@ app.controller('PermisoCtrl', ['$scope', '$http', function($scope, $http) {
 						var elementSubModule = {};
 						var arrayAction = [];
 
-						elementSubModule.code = (idObjSubModule + 1);
+						elementSubModule.id = (idObjSubModule + 1);
+						elementSubModule.code = $(objSubModule).attr("submodule-code");
+						elementSubModule.path = $(objSubModule).attr("submodule-path");
+						elementSubModule.title = $(objSubModule).attr("submodule-title");
 
 						//Para las funciones o acciones
 						$.each($('.component .module-' + (idObjComponent+1) + ' .submodule-' + (idObjComponent+1) + '-' + (idObjModule+1) + ' .ckPermiso-' + (idObjComponent+1) + '-' + (idObjModule+1) + '-' + (idObjSubModule+1) ), function( idObjFuncionalidad, objFuncionalidad ) {
 
 							var elementAction = {};
 
-							elementAction.code = (idObjFuncionalidad + 1);
+							elementAction.id = (idObjFuncionalidad + 1);
 							elementAction.checked = $('.component .module-' + (idObjComponent+1) + ' .submodule-' + (idObjComponent+1) + '-' + (idObjModule+1) + ' #ckPermiso-' + (idObjComponent+1) + '-' + (idObjModule+1) + '-' + (idObjSubModule+1) + '-' + (idObjFuncionalidad+1))[0].checked;
 
 							arrayAction.push(elementAction);
@@ -139,19 +163,3 @@ app.controller('PermisoCtrl', ['$scope', '$http', function($scope, $http) {
     }	
 
 }]);
-
-app.controller('MensajeCtrl', ['$scope', function($scope) {
-
-
-}]);
-
-
-app.controller('MenuCtrl', ['$scope', '$http', function($scope, $http) {
-
-
-    $scope.construirMenuUsuario = function(){
-
-    }
-
-
-}]);	
