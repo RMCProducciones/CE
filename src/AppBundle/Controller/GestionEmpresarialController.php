@@ -19,6 +19,7 @@ use AppBundle\Entity\GrupoSoporte;
 use AppBundle\Entity\BeneficiarioSoporte;
 use AppBundle\Entity\Beneficiario;
 use AppBundle\Entity\CLEAR;
+use AppBundle\Entity\ClearSoporte;
 use AppBundle\Entity\IntegranteCLEAR;
 use AppBundle\Entity\AsignacionIntegranteCLEAR;
 use AppBundle\Entity\Concurso;
@@ -34,6 +35,7 @@ use AppBundle\Form\GestionEmpresarial\ConcursoSoporteType;
 use AppBundle\Form\GestionEmpresarial\BeneficiarioType;
 use AppBundle\Form\GestionEmpresarial\BeneficiarioSoporteType;
 use AppBundle\Form\GestionEmpresarial\CLEARType;
+use AppBundle\Form\GestionEmpresarial\ClearSoporteType;
 use AppBundle\Form\GestionEmpresarial\ConcursoType;
 use AppBundle\Form\GestionEmpresarial\ActividadConcursoType;
 
@@ -262,11 +264,12 @@ class GestionEmpresarialController extends Controller
 			if ($form->isValid()) {
 
 				$tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
-					array(
+
+                    array(
                         'descripcion' => $grupoSoporte->getTipoSoporte()->getDescripcion(), 
                         'dominio' => 'grupo_tipo_soporte'
                     )
-				);
+                );
 				
 				$actualizarGrupoSoportes = $em->getRepository('AppBundle:GrupoSoporte')->findBy(
 					array(
@@ -394,7 +397,7 @@ class GestionEmpresarialController extends Controller
 
 
 
-/**
+    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/beneficiarios/{idGrupo}/{idBeneficiario}/documentos-soporte", name="beneficiarioSoporte")
      */
     public function beneficiarioSoporteAction(Request $request, $idGrupo, $idBeneficiario)
@@ -726,6 +729,115 @@ class GestionEmpresarialController extends Controller
 		
 
     }	
+
+     /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/documentos-soporte", name="clearSoporte")
+     */
+    public function clearSoporteAction(Request $request, $idCLEAR)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $clearSoporte = new ClearSoporte();
+        
+        $form = $this->createForm(new ClearSoporteType(), $clearSoporte);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $soportesActivos = $em->getRepository('AppBundle:ClearSoporte')->findBy(
+            array('active' => '1', 'clear' => $idCLEAR),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $histotialSoportes = $em->getRepository('AppBundle:ClearSoporte')->findBy(
+            array('active' => '0', 'clear' => $idCLEAR),
+            array('fecha_creacion' => 'ASC')
+        );
+        
+        $clear = $em->getRepository('AppBundle:Clear')->findOneBy(
+            array('id' => $idCLEAR)
+        );
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+
+                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                    array(
+                        'descripcion' => $clearSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'clear_tipo_soporte'
+                    )
+                );
+                
+                $actualizarClearSoportes = $em->getRepository('AppBundle:ClearSoporte')->findBy(
+                    array(
+                        'active' => '1' , 
+                        'tipo_soporte' => $tipoSoporte->getId(), 
+                        'clear' => $idCLEAR
+                    )
+                );  
+            
+                foreach ($actualizarClearSoportes as $actualizarClearSoporte){
+                    echo $actualizarClearSoporte->getId()." ".$actualizarClearSoporte->getTipoSoporte()."<br />";
+                    $actualizarClearSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarClearSoporte->setActive(0);
+                    $em->flush();
+                }
+                
+                $clearSoporte->setClear($clear);
+                $clearSoporte->setActive(true);
+                $clearSoporte->setFechaCreacion(new \DateTime());
+                //$grupoSoporte->setUsuarioCreacion(1);
+
+                $em->persist($clearSoporte);
+                $em->flush();
+
+                return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR) );
+            }
+        }   
+        
+
+        //return new Response("Hola mundo");
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:clear-soporte.html.twig', 
+            array(
+                'form' => $form->createView(), 
+                'soportesActivos' => $soportesActivos, 
+                'histotialSoportes' => $histotialSoportes,
+                'idCLEAR' => $idCLEAR
+            )
+        );
+        
+    }
+    
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/beneficiarios/{idCLEAR}/documentos-soporte/{idClearSoporte}/borrar", name="clearSoporteBorrar")
+     */
+    public function clearSoporteBorrarAction(Request $request, $idCLEAR, $idClearSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $clearSoporte = new ClearSoporte();
+        
+        $clearSoporte = $em->getRepository('AppBundle:ClearSoporte')->findOneBy(
+            array('id' => $idClearSoporte)
+        );
+        
+        $clearSoporte->setFechaModificacion(new \DateTime());
+        $clearSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR));
+        
+    }
+
 	
 	/**
      * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/integrantes/nuevo", name="integrantesNuevo")
