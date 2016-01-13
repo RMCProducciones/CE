@@ -46,3 +46,13 @@ assetic:
 
 #swiftmailer:
 #    delivery_address: me@example.com
+
+
+#    transport: gmail
+#    username:  totemmaster00@gmail.com
+#    password:  mamando00
+swiftmailer :    
+    transport :  smtp 
+    host :       eu18.mihosting.net 
+    username :   ce@rmcproducciones.com 
+    password :   c4p4c1d4d3s
