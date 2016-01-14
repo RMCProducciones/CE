@@ -67,9 +67,9 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/testcorreo", name="homepage")
+     * @Route("/testcorreo", name="testCorreo")
      */
-    /*public function testCorreoAction(Request $request)
+    public function testCorreoAction(Request $request)
     {
         $name = "test";
 
@@ -95,14 +95,14 @@ class DefaultController extends Controller
                 'text/plain'
             )
             */
-        /*;
+        ;
         $this->get('mailer')->send($message);
 
         return $this->render('AppBundle:default:index.html.twig', array(
             'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
         ));
         
-    }*/
+    }
     
 
 
