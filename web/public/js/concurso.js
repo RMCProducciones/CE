@@ -4,11 +4,13 @@ app.controller('gestionDocumentoSoporteConcursoCtrl', ['$scope', '$location', fu
 	$scope.idConcursoSoporteActivo = 0;
 
 	$scope.anularSoporteConcurso = function() { 
-	
+
 		window.location.replace($scope.rutaServidor  + "gestion-empresarial/desarrollo-empresarial/concurso/" + $scope.idConcurso + "/documentos-soporte/" + $scope.idConcursoSoporteActivo + "/borrar");
 		
 	};
 
+
+}]);
 
 
 
