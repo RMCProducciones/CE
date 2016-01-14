@@ -998,7 +998,6 @@ class GestionEmpresarialController extends Controller
                     'id' => 1
                 )
             );            
-
             
             $concurso->setUsuarioModificacion($usuarioModificacion);*/
 
