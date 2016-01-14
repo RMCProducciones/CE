@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * IntegranteJurados
+ * IntegranteComite
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\IntegranteCLEARRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\IntegranteComiteRepository")
  */
-class IntegranteJurados
+class IntegranteComite
 {
     /**
      * @var integer
@@ -191,7 +191,7 @@ class IntegranteJurados
      *
      * @param AppBundle\Entity\Listas $tipoDocumento
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setTipoDocumento(\AppBundle\Entity\Listas $tipoDocumento)
     {
@@ -215,7 +215,7 @@ class IntegranteJurados
      *
      * @param string $numeroDocumento
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setNumeroDocumento($numeroDocumento)
     {
@@ -239,7 +239,7 @@ class IntegranteJurados
      *
      * @param string $primerApellido
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setPrimerApellido($primerApellido)
     {
@@ -263,7 +263,7 @@ class IntegranteJurados
      *
      * @param string $segundoApellido
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setSegundoApellido($segundoApellido)
     {
@@ -287,7 +287,7 @@ class IntegranteJurados
      *
      * @param string $primerNombre
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setPrimerNombre($primerNombre)
     {
@@ -311,7 +311,7 @@ class IntegranteJurados
      *
      * @param string $segundoNombre
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setSegundoNombre($segundoNombre)
     {
@@ -335,7 +335,7 @@ class IntegranteJurados
      *
      * @param AppBundle\Entity\Listas $genero
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setGenero(\AppBundle\Entity\Listas $genero)
     {
@@ -359,7 +359,7 @@ class IntegranteJurados
      *
      * @param \DateTime $fechaNacimiento
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setFechaNacimiento($fechaNacimiento)
     {
@@ -383,7 +383,7 @@ class IntegranteJurados
      *
      * @param string $entidad
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setEntidad($entidad)
     {
@@ -407,7 +407,7 @@ class IntegranteJurados
      *
      * @param string $cargo
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setCargo($cargo)
     {
@@ -431,7 +431,7 @@ class IntegranteJurados
      *
      * @param AppBundle\Entity\Municipio $municipio
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setMunicipio(\AppBundle\Entity\Municipio $municipio)
     {
@@ -455,7 +455,7 @@ class IntegranteJurados
      *
      * @param string $direccion
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setDireccion($direccion)
     {
@@ -479,7 +479,7 @@ class IntegranteJurados
      *
      * @param string $telefonoFijo
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setTelefonoFijo($telefonoFijo)
     {
@@ -503,7 +503,7 @@ class IntegranteJurados
      *
      * @param string $telefonoCelular
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setTelefonoCelular($telefonoCelular)
     {
@@ -527,7 +527,7 @@ class IntegranteJurados
      *
      * @param string $telefonoCelular2
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setTelefonoCelular2($telefonoCelular2)
     {
@@ -551,7 +551,7 @@ class IntegranteJurados
      *
      * @param string $correoElectronico
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setCorreoElectronico($correoElectronico)
     {
@@ -575,7 +575,7 @@ class IntegranteJurados
      *
      * @param AppBundle\Entity\Listas $nivelEstudios
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setNivelEstudios(\AppBundle\Entity\Listas $nivelEstudios)
     {
@@ -599,7 +599,7 @@ class IntegranteJurados
      *
      * @param AppBundle\Entity\Listas $pertenenciaEtnica
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setPertenenciaEtnica(\AppBundle\Entity\Listas $pertenenciaEtnica)
     {
@@ -623,7 +623,7 @@ class IntegranteJurados
      *
      * @param string $foto
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setFoto($foto)
     {
@@ -647,7 +647,7 @@ class IntegranteJurados
      *
      * @param boolean $active
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setActive($active)
     {
@@ -671,7 +671,7 @@ class IntegranteJurados
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
@@ -695,7 +695,7 @@ class IntegranteJurados
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -719,7 +719,7 @@ class IntegranteJurados
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
@@ -743,7 +743,7 @@ class IntegranteJurados
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return IntegranteJurados
+     * @return IntegranteComite
      */
     public function setFechaCreacion($fechaCreacion)
     {

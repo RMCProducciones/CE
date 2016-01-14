@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Jurados
+ * Comite
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\JuradosRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\ComiteRepository")
  */
-class Jurados
+class Comite
 {
     /**
      * @var integer
@@ -43,9 +43,9 @@ class Jurados
     /**
      * @var integer
      *
-     * @ORM\Column(name="lugar_realizacion_CLEAR", type="string")
+     * @ORM\Column(name="lugar_realizacion_comite", type="string")
      */
-    private $lugar_realizacion_CLEAR;
+    private $lugar_realizacion_comite;
 
     /**
      * @var boolean
@@ -94,7 +94,7 @@ class Jurados
      *
      * @param \DateTime $fechaInicio
      *
-     * @return Jurados
+     * @return Comite
      */
     public function setFechaInicio($fechaInicio)
     {
@@ -118,7 +118,7 @@ class Jurados
      *
      * @param \DateTime $fechaFinalizacion
      *
-     * @return Jurados
+     * @return Comite
      */
     public function setFechaFinalizacion($fechaFinalizacion)
     {
@@ -142,7 +142,7 @@ class Jurados
      *
      * @param AppBundle\Entity\Municipio $municipio
      *
-     * @return Jurados
+     * @return Comite
      */
     public function setMunicipio(\AppBundle\Entity\Municipio $municipio)
     {
@@ -162,27 +162,27 @@ class Jurados
     }
 
     /**
-     * Set lugarRealizacionCLEAR
+     * Set lugarRealizacionComite
      *
-     * @param string $lugarRealizacionCLEAR
+     * @param string $lugarRealizacionComite
      *
-     * @return Jurados
+     * @return Comite
      */
-    public function setLugarRealizacionCLEAR($lugarRealizacionCLEAR)
+    public function setLugarRealizacionComite($lugarRealizacionComite)
     {
-        $this->lugar_realizacion_CLEAR = $lugarRealizacionCLEAR;
+        $this->lugar_realizacion_comite = $lugarRealizacionComite;
 
         return $this;
     }
 
     /**
-     * Get lugarRealizacionCLEAR
+     * Get lugarRealizacionComite
      *
      * @return string
      */
-    public function getLugarRealizacionCLEAR()
+    public function getLugarRealizacionComite()
     {
-        return $this->lugar_realizacion_CLEAR;
+        return $this->lugar_realizacion_comite;
     }
 
     /**
@@ -190,7 +190,7 @@ class Jurados
      *
      * @param boolean $active
      *
-     * @return Jurados
+     * @return Comite
      */
     public function setActive($active)
     {
@@ -214,7 +214,7 @@ class Jurados
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return Jurados
+     * @return Comite
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
@@ -238,7 +238,7 @@ class Jurados
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return Jurados
+     * @return Comite
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -262,7 +262,7 @@ class Jurados
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return Jurados
+     * @return Comite
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
@@ -286,7 +286,7 @@ class Jurados
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return Jurados
+     * @return Comite
      */
     public function setFechaCreacion($fechaCreacion)
     {
