@@ -41,16 +41,22 @@
               
               <br />
 
-              <canvas id="myCanvas" width="1000" height="100" style="border:1px solid #000000;">
+              <canvas id="myCanvas" width="1000" height="500" style="border:1px solid #000000;">
               </canvas>
 
               <script type="text/javascript">
                 
                 var c = document.getElementById("myCanvas");
                 var ctx = c.getContext("2d");
+                var escX = .5;
+                var escY = .5;
                 
-                ctx.fillStyle = "#FF0000";
-                ctx.fillRect(0,0,150,75);
+                ctx.fillStyle = "#F2F2F2";    ctx.fillRect(200*escX, 100*escY, 250*escX, 600*escY);
+
+                ctx.fillStyle = "#EBEBEB";    ctx.fillRect(450*escX, 100*escY, 450*escX, 300*escY);
+                ctx.fillStyle = "#F2F2F2";    ctx.fillRect(900*escX, 100*escY, 450*escX, 300*escY);
+
+
 
                 ctx.moveTo(0,0);
                 ctx.lineTo(200,100);
