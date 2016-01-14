@@ -997,9 +997,7 @@ class GestionEmpresarialController extends Controller
                 array(
                     'id' => 1
                 )
-            );
-            echo 'hola';
-
+            );            
             
             $concurso->setUsuarioModificacion($usuarioModificacion);*/
 
