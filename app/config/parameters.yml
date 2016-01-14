@@ -4,7 +4,7 @@ parameters:
     database_port: null
     database_name: ce
     database_user: root
-    database_password: 2boxes
+    database_password: null
     mailer_transport: smtp
     mailer_host: eu18.mihosting.net
     mailer_user: ce@rmcproducciones.com
