@@ -90,6 +90,10 @@ app.controller('PermisoCtrl', ['$scope', '$http', function($scope, $http) {
 		"path":"#" 
 		*/							
 
+		var elementComponentChecked = false;
+		var elementModuleChecked = false;
+		var elementSubModuleChecked = false;
+
 		var elementPermiso = {};
 		var arrayComponent = [];
 
@@ -98,6 +102,8 @@ app.controller('PermisoCtrl', ['$scope', '$http', function($scope, $http) {
 		
 			var elementComponent = {};
 			var arrayModule = [];
+
+			elementComponentChecked = false;
 
 			elementComponent.id = (idObjComponent + 1);
 			elementComponent.code = $(objComponent).attr("component-code");
@@ -110,6 +116,8 @@ app.controller('PermisoCtrl', ['$scope', '$http', function($scope, $http) {
 				var elementModule = {};
 				var arraySubModule = [];
 
+				elementModuleChecked = false;
+
 				elementModule.id = (idObjModule + 1);
 				elementModule.code = $(objModule).attr("module-code");
 				elementModule.path = $(objModule).attr("module-path");
@@ -118,37 +126,50 @@ app.controller('PermisoCtrl', ['$scope', '$http', function($scope, $http) {
 				//Para los submódulos
 				$.each($('.component .module-' + (idObjComponent+1) + ' .submodule-' + (idObjComponent+1) + '-' + (idObjModule+1)), function( idObjSubModule, objSubModule ) {
 
-						var elementSubModule = {};
-						var arrayAction = [];
+					var elementSubModule = {};
+					var arrayAction = [];
 
-						elementSubModule.id = (idObjSubModule + 1);
-						elementSubModule.code = $(objSubModule).attr("submodule-code");
-						elementSubModule.path = $(objSubModule).attr("submodule-path");
-						elementSubModule.title = $(objSubModule).attr("submodule-title");
+					elementSubModuleChecked = false;
 
-						//Para las funciones o acciones
-						$.each($('.component .module-' + (idObjComponent+1) + ' .submodule-' + (idObjComponent+1) + '-' + (idObjModule+1) + ' .ckPermiso-' + (idObjComponent+1) + '-' + (idObjModule+1) + '-' + (idObjSubModule+1) ), function( idObjFuncionalidad, objFuncionalidad ) {
+					elementSubModule.id = (idObjSubModule + 1);
+					elementSubModule.code = $(objSubModule).attr("submodule-code");
+					elementSubModule.path = $(objSubModule).attr("submodule-path");
+					elementSubModule.title = $(objSubModule).attr("submodule-title");
 
-							var elementAction = {};
+					//Para las funciones o acciones
+					$.each($('.component .module-' + (idObjComponent+1) + ' .submodule-' + (idObjComponent+1) + '-' + (idObjModule+1) + ' .ckPermiso-' + (idObjComponent+1) + '-' + (idObjModule+1) + '-' + (idObjSubModule+1) ), function( idObjFuncionalidad, objFuncionalidad ) {
 
-							elementAction.id = (idObjFuncionalidad + 1);
-							elementAction.checked = $('.component .module-' + (idObjComponent+1) + ' .submodule-' + (idObjComponent+1) + '-' + (idObjModule+1) + ' #ckPermiso-' + (idObjComponent+1) + '-' + (idObjModule+1) + '-' + (idObjSubModule+1) + '-' + (idObjFuncionalidad+1))[0].checked;
+						var elementAction = {};
 
-							arrayAction.push(elementAction);
+						elementAction.id = (idObjFuncionalidad + 1);
+						elementAction.checked = $('.component .module-' + (idObjComponent+1) + ' .submodule-' + (idObjComponent+1) + '-' + (idObjModule+1) + ' #ckPermiso-' + (idObjComponent+1) + '-' + (idObjModule+1) + '-' + (idObjSubModule+1) + '-' + (idObjFuncionalidad+1))[0].checked;
 
-						});
+						if(elementAction.checked){
 
-						elementSubModule.action = arrayAction;
-						arraySubModule.push(elementSubModule);
+							elementComponentChecked = true;
+							elementModuleChecked = true;
+							elementSubModuleChecked = true;
+
+						}
+
+						arrayAction.push(elementAction);
+
+					});
+
+					elementSubModule.checked = elementSubModuleChecked;
+					elementSubModule.action = arrayAction;
+					arraySubModule.push(elementSubModule);
 
 				});
 
+				elementModule.checked = elementModuleChecked;
 				elementModule.subModule = arraySubModule;
 				arrayModule.push(elementModule);
 				
 
 			});
 
+			elementComponent.checked = elementComponentChecked;
 			elementComponent.module = arrayModule;			
 			arrayComponent.push(elementComponent);
 
@@ -158,7 +179,7 @@ app.controller('PermisoCtrl', ['$scope', '$http', function($scope, $http) {
 
 		$scope.elementPermiso = JSON.stringify(elementPermiso);
 
-		//console.log($scope.elementPermiso);
+		console.log($scope.elementPermiso);
 
     }	
 

@@ -19,9 +19,9 @@ class ParametrizacionController extends Controller
 
 
     /**
-     * @Route("/backend/permiso-rol", name="permisoRol")
+     * @Route("/backend/permiso-rol/asignar", name="asignarPermisoRol")
      */
-    public function permisoRolAction()
+    public function asignarPermisoRolAction()
     {
 
         return $this->render(
@@ -29,18 +29,24 @@ class ParametrizacionController extends Controller
         );
     }
 
-
     /**
-     * @Route("/backend/permiso-rol/{idUsuario}", name="permisoRolActivo")
+     * @Route("/backend/permiso-rol/editar", name="editarPermisoRol")
      */
-    public function permisoRolActivoAction()
+    public function editarPermisoRolAction()
     {
 
-		$permisoRol = '{
-            "component":[{"id":1,"code":"1","path":"#","title":"Gestion Empresarial",
-            "module":[{"id":1,"code":"1","path":"#","title":"Formacion de capital social asociativo y desarrollo empresarial",
-            "subModule":[{"id":1,"code":"1","path":"gruposNuevo","title":"Gestión de Grupos",
-            "action":[{"id":1,"checked":true},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":2,"code":"2","path":"#","title":"Gestión de CLEAR","action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":3,"code":"3","path":"#","title":"Gestión de seguimiento y monitoreo","action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]}]},{"id":2,"code":"2","path":"#","title":"Concursos de mejoramiento","subModule":[{"id":1,"code":"1","path":"#","title":"Gestion de Concursos","action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":2,"code":"2","path":"#","title":"Gestion de Jurados","action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":3,"code":"3","path":"#","title":"Gestion de seguimiento y monitoreo","action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]}]},{"id":3,"code":"3","path":"#","title":"Servicios complementarios","subModule":[{"id":1,"code":"1","path":"#","title":"Participación rutas y pasantias","action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":2,"code":"2","path":"#","title":"Participación en talleres","action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":3,"code":"3","path":"#","title":"Participación en Ferias","action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":4,"code":"4","path":"#","title":"Participación en ferias de difusión del proyecto","action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":5,"code":"5","path":"#","title":"Desarrollo de ferias de difusión del proyecto","action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]}]}]}]}';
+        return $this->render(
+            'AppBundle:Backend/Parametrizacion:permiso-rol.html.twig' 
+        );
+    }
+
+    /**
+     * @Route("/backend/permiso-rol/gestion/{idUsuario}", name="gestionPermisoRol")
+     */
+    public function gestionPermisoRolAction()
+    {
+
+		$permisoRol = '{"component":[{"id":1,"code":"1","path":"#","title":"Gestion Empresarial","checked":true,"module":[{"id":1,"code":"1","path":"#","title":"Formacion de capital social asociativo y desarrollo empresarial","checked":true,"subModule":[{"id":1,"code":"1","path":"gruposGestion","title":"Gestión de Grupos","checked":true,"action":[{"id":1,"checked":true},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":2,"code":"2","path":"CLEARGestion","title":"Gestión de CLEAR","checked":false,"action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":3,"code":"3","path":"#","title":"Gestión de seguimiento y monitoreo","checked":false,"action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]}]},{"id":2,"code":"2","path":"#","title":"Concursos de mejoramiento","checked":false,"subModule":[{"id":1,"code":"1","path":"concursoGestion","title":"Gestion de Concursos","checked":false,"action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":2,"code":"2","path":"#","title":"Gestion de Jurados","checked":false,"action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":3,"code":"3","path":"#","title":"Gestion de seguimiento y monitoreo","checked":false,"action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]}]},{"id":3,"code":"3","path":"#","title":"Servicios complementarios","checked":false,"subModule":[{"id":1,"code":"1","path":"#","title":"Participación rutas y pasantias","checked":false,"action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":2,"code":"2","path":"#","title":"Participación en talleres","checked":false,"action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":3,"code":"3","path":"#","title":"Participación en Ferias","checked":false,"action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":4,"code":"4","path":"#","title":"Participación en ferias de difusión del proyecto","checked":false,"action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":5,"code":"5","path":"#","title":"Desarrollo de ferias de difusión del proyecto","checked":false,"action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]}]}]}]}';
 
 		/*
         $em = $this->getDoctrine()->getManager();
@@ -64,38 +70,51 @@ class ParametrizacionController extends Controller
 
         foreach($jsonPermisoRol['component'] as $component){
 
-            if($component['path'] != "#"){
-                
-                $component['path'] = $this->generateUrl($component['path']); 
+            if($component['checked'] == true){
 
-            }
 
-            $idArrayModule = 0;
-
-            foreach($component['module'] as $module){
-
-                if($module['path'] != "#"){
+                if($component['path'] != "#"){
                     
-                    $module['path'] = $this->generateUrl($module['path']); 
+                    $component['path'] = $this->generateUrl($component['path']); 
 
                 }
 
-                $idArraySubModule = 0;                
+                $idArrayModule = 0;
 
-                foreach($module['subModule'] as $subModule){
+                foreach($component['module'] as $module){
 
-                    if($subModule['path'] != "#"){
-                        
-                        $jsonPermisoRol['component'][$idArrayComponente]['module'][$idArrayModule]['subModule'][$idArraySubModule]['path'] = $this->generateUrl($subModule['path']); 
 
+                    if($module['checked'] == true){
+
+                        if($module['path'] != "#"){
+                            
+                            $module['path'] = $this->generateUrl($module['path']); 
+
+                        }
+
+                        $idArraySubModule = 0;                
+
+                        foreach($module['subModule'] as $subModule){
+
+                            if($subModule['checked'] == true){                            
+
+                                if($subModule['path'] != "#"){
+                                    
+                                    $jsonPermisoRol['component'][$idArrayComponente]['module'][$idArrayModule]['subModule'][$idArraySubModule]['path'] = $this->generateUrl($subModule['path']); 
+
+                                }
+
+                            }
+
+                            $idArraySubModule++;
+
+                        }
                     }
 
-                    $idArraySubModule++;
-
+                    $idArrayModule++;
+                    
                 }
 
-                $idArrayModule++;
-                
             }
 
             $idArrayComponente++;
