@@ -43,6 +43,7 @@ use AppBundle\Form\GestionEmpresarial\ClearSoporteType;
 use AppBundle\Form\GestionEmpresarial\ConcursoType;
 use AppBundle\Form\GestionEmpresarial\ActividadConcursoType;
 use AppBundle\Form\GestionEmpresarial\ComiteType;
+use AppBundle\Form\GestionEmpresarial\IntegranteComiteType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -1272,7 +1273,7 @@ class GestionEmpresarialController extends Controller
         $em = $this->getDoctrine()->getManager();
         $integranteComite = new IntegranteComite();        
         
-        $form = $this->createForm(new IntegranteJuradoType(), $integranteComite);
+        $form = $this->createForm(new IntegranteComiteType(), $integranteComite);
 
         $form->handleRequest($request);
 
@@ -1288,7 +1289,7 @@ class GestionEmpresarialController extends Controller
             $em->persist($integranteComite);
             $em->flush();
 
-            return $this->redirectToRoute('CLEARGestion', array('idComite' => $idComite));
+            return $this->redirectToRoute('juradosGestion', array('idComite' => $idComite));
         }
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:jurados-comite-nuevo.html.twig', 
