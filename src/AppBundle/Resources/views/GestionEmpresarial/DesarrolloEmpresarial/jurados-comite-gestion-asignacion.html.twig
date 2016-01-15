@@ -25,29 +25,25 @@
 
   <br />
   <br />
+  <div class="section">
+      <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+              <div class="btn-group">
+                <a href="{{ path('comiteGestion') }}" class="btn btn-warning">Volver</a>              
+                <a href="{{ path('juradosNuevo', {'idComite': idComite}) }}" class="btn btn-success">Nuevo</a>              
+              </div>
+            </div>
+        </div>
+      </div>
+  </div>
+
+  <br />  
 
      <div class="section">
       <div class="container">
         <div class="row">
-          <div class="col-md-5 well">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="input-group">
-                  <input class="form-control" placeholder="Buscar..." type="text">
-                  <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Buscar</button>
-                  </span>
-                </div>
-              </div>
-              <div class="col-md-3 text-center">
-                <div class="btn-group">
-                  <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> Filtros <span class="fa fa-caret-down"></span></a>
-                </div>
-              </div>
-              <div class="col-md-3 text-center">
-                <a class="btn btn-default">Limpiar</a>
-              </div>
-            </div>
+          <div class="col-md-5 well">            
             <br>
             <div class="row well">
               <div class="col-md-6">
@@ -68,18 +64,13 @@
                 </datalist>
               </div>
             </div>
-            <hr>
-            <div class="btn-group">
-              <a href="" class="btn btn-default">Nuevo</a>
-              <a href="#" class="btn btn-default">Eliminar</a>
-              <a href="#" class="btn btn-default">Asignar</a>
-            </div>
+            <hr>            
             <table class="table table-striped table-hover">
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th class="text-center">#</th>
                   <th>
-                    <input type="checkbox">
+                    
                   </th>
                   <th>Opcionado</th>
                   <th>Acciones</th>
@@ -92,9 +83,9 @@
 	    		{% for integrantesComites in integrantesComite %}
 				
 				<tr>
-                  <td>{{ consecutivo }}</td>
+                  <td class="text-center">{{ consecutivo }}</td>
                   <td>
-                    <input type="checkbox">
+                    
                   </td>
                   <td>
 				    <br>{{integrantesComites.primernombre}} {{integrantesComites.segundonombre}} {{integrantesComites.primerapellido}} {{integrantesComites.segundoapellido}}
@@ -152,36 +143,16 @@
               </ul>
             </div>
           </div>
-          <div class="col-md-1">
-            <ul class="pager">
-              <li>
-                <a href="#">Asignar  →</a>
-              </li>
-            </ul>
-            <ul class="pager">
-              <li>
-                <a href="#">←  Retirar</a>
-              </li>
-            </ul>
-          </div>
-          <div class="col-md-6 well">
-            <div class="btn-group">
-              <a href="#" class="btn btn-default">Retirar</a>
-              <a href="#" class="btn btn-default"></a>
-              <a href="#" class="btn btn-default"></a>
-              <a href="#" class="btn btn-default"></a>
-            </div>
+
+          <div class="col-md-6 col-md-offset-1 well">            
             <table class="table table-striped table-hover">
-              <thead>
-			  
-			  
-			  
+              <thead>	  			  
                 <tr>
                   <th>#</th>
                   <th>
-                    <input type="checkbox">
+                    
                   </th>
-                  <th>Integrante del CLEAR</th>
+                  <th>Integrante del Comite</th>
                   <th>Rol (Comité)</th>
                   <th>Acciones</th>
                 </tr>
@@ -194,7 +165,7 @@
                 <tr>
                   <td>{{ consecutivo }}</td>
                   <td>
-                    <input type="checkbox">
+                    
                   </td>
                   <td>{{integrantesComites.primernombre}} {{integrantesComites.segundonombre}}</td>
                   <td>{{integrantesComites.cargo}}</td>
