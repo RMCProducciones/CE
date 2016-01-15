@@ -26,6 +26,10 @@ use AppBundle\Entity\Concurso;
 use AppBundle\Entity\ConcursoSoporte;
 use AppBundle\Entity\ActividadConcurso;
 use AppBundle\Entity\Listas;
+use AppBundle\Entity\Comite;
+use AppBundle\Entity\JuradoSoporte;
+use AppBundle\Entity\IntegranteComite;
+use AppBundle\Entity\AsignacionIntegranteComite;
 
 use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
 use AppBundle\Form\GestionEmpresarial\AsignacionIntegranteCLEARType;
@@ -38,6 +42,7 @@ use AppBundle\Form\GestionEmpresarial\CLEARType;
 use AppBundle\Form\GestionEmpresarial\ClearSoporteType;
 use AppBundle\Form\GestionEmpresarial\ConcursoType;
 use AppBundle\Form\GestionEmpresarial\ActividadConcursoType;
+use AppBundle\Form\GestionEmpresarial\ComiteType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -998,7 +1003,6 @@ class GestionEmpresarialController extends Controller
                     'id' => 1
                 )
             );            
-
             
             $concurso->setUsuarioModificacion($usuarioModificacion);*/
 
@@ -1192,6 +1196,128 @@ class GestionEmpresarialController extends Controller
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-seguimiento.html.twig', array( 'grupo' => $grupo));
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite/", name="comiteGestion")
+     */
+    public function ComiteGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $comites = $em->getRepository('AppBundle:Comite')->findBY(
+            array('active' => 1),
+            array('fecha_inicio' => 'ASC')
+        ); 
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:comite-gestion.html.twig', array( 'comites' => $comites));
+    }
+    
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/Comite/{idComite}", name="Comite")
+     */
+    public function ComiteAction($idComite)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $comite = $em->getRepository('AppBundle:Comite')->findOneBy(
+            array('id' => $idComite)
+        );
+
+        //$elementos = $query->getResult();
+
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new GetSetMethodNormalizer());
+
+        $serializer = new Serializer($normalizers, $encoders);
+        
+        return new Response('{"": ' . $serializer->serialize($comite, 'json') . '}');
+
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite/nuevo", name="comiteNuevo")
+     */
+    public function juradoNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $comite = new Comite();
+        
+        $form = $this->createForm(new ComiteType(), $comite);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $comite = $form->getData();
+
+            $comite->setActive(true);
+            $comite->setFechaCreacion(new \DateTime());
+
+
+            
+            $em->persist($comite);
+            $em->flush();
+
+            return $this->redirectToRoute('comiteGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:comite-nuevo.html.twig', array('form' => $form->createView()));
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite/{idComite}/jurados/nuevo", name="juradosNuevo")
+     */
+    public function juradosNuevoAction(Request $request, $idComite)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $integranteComite = new IntegranteComite();        
+        
+        $form = $this->createForm(new IntegranteJuradoType(), $integranteComite);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $integranteComite= $form->getData();
+
+            $integranteComite->setActive(true);
+            $integranteComite->setFechaCreacion(new \DateTime());
+
+
+            
+            $em->persist($integranteComite);
+            $em->flush();
+
+            return $this->redirectToRoute('CLEARGestion', array('idComite' => $idComite));
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:jurados-comite-nuevo.html.twig', 
+            array('form' => $form->createView(),
+                'idComite' => $idComite));
+    }
+    
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite/{idComite}/jurados", name="juradosGestion")
+     */
+    public function juradosGestionAction($idComite)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $integrantesComite = $em->getRepository('AppBundle:IntegranteComite')->findBy(
+            array('active' => '1'),
+            array('primer_apellido' => 'ASC')
+        );  
+        $AsignacionIntegranteComite = $em->getRepository('AppBundle:AsignacionIntegranteComite')->findBy(
+            array('active' => '1', 'clear' => $idComite),
+            array()
+        );  
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:jurados-comite-gestion-asignacion.html.twig', 
+            array(
+                'integrantesComite' => $integrantesComite, 
+                'AsignacionIntegranteComite' => $AsignacionIntegranteComite,
+                'idComite' => $idComite
+            ));        
     }
 	
 	
