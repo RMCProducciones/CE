@@ -88,10 +88,10 @@ class ParametrizacionController extends Controller
         $elementos = $query->getResult();
         */
         
-        $jsonPermisoRol = json_decode($permisoRol,true);
+        //$jsonPermisoRol = json_decode($permisoRol,true);
 
 
-        return new Response($jsonPermisoRol);
+        return new Response($permisoRol);
 
     }
 
