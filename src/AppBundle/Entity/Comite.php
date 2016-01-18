@@ -74,7 +74,7 @@ class Comite
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_creacion", type="datetime", nullable=true)
+     * @ORM\Column(name="fecha_creacion", type="datetime")
      */
     private $fecha_creacion;
 
