@@ -55,33 +55,39 @@ app.controller('FiltrosCtrl', ['$scope', '$http', 'styleBuscarHerramientas', fun
 		
 }]);
 
-app.controller('PermisoCtrl', ['$scope', '$http', function($scope, $http) {
+app.controller('AsignarPermisoCtrl', ['$scope', '$http', function($scope, $http) {
 
 	$scope.RPP = '';
+	$scope.AsignarPermiso = true;
 
-	$http({
-    	method  : 'GET',
-    	url     : $scope.rutaServidor + "public/xml/estructuraPermiso.xml",
-    	timeout : 10000,
-    	params  : {},  // Query Parameters (GET)
-    	transformResponse : function(data) {
-        	var x2js = new X2JS();
-            var json = x2js.xml_str2json(data);
-
-            return json;
-    	}
-	}).success(function(data, status, headers, config) {
-    
-		var array = data == null ? [] : (data.structure.component instanceof Array ? data.structure.component : [data.structure.component]);
-
-		$scope.RPP = array;
-
-	}).error(function(data, status, headers, config) {
-		console.log("Problemas al cargar la estructura del mapa de navegación de los usuarios");
-	});
+	obtenerRPP($http, $scope);
 
 	$scope.construirJsonPermisos = function(){
-		
+		construirJsonPermisos($scope);
+    }	
+
+}]);
+
+
+app.controller('EditarPermisoCtrl', ['$scope', '$http', function($scope, $http) {
+
+	$scope.RPP = '';
+	$scope.RPPActual = '';
+
+	$scope.AsignarPermiso = false;
+
+	obtenerRPP($http, $scope);
+
+	$scope.construirJsonPermisos = function(){
+		construirJsonPermisos($scope);
+    }	
+
+}]);
+
+
+function construirJsonPermisos($scope){
+
+
 		/*
 		"code":1,
 		"level":3,
@@ -181,6 +187,67 @@ app.controller('PermisoCtrl', ['$scope', '$http', function($scope, $http) {
 
 		console.log($scope.elementPermiso);
 
-    }	
+}
 
-}]);
+function obtenerRPP($http, $scope, idUsuario){
+
+	$http({
+    	method  : 'GET',
+    	url     : $scope.rutaServidor + "public/xml/estructuraPermiso.xml",
+    	timeout : 10000,
+    	params  : {},  // Query Parameters (GET)
+    	transformResponse : function(data) {
+        	var x2js = new X2JS();
+            var json = x2js.xml_str2json(data);
+
+            return json;
+    	}
+	}).success(function(data, status, headers, config) {
+    
+		var array = data == null ? [] : (data.structure.component instanceof Array ? data.structure.component : [data.structure.component]);
+
+		$scope.RPP = array;
+
+		if ($scope.AsignarPermiso == false){
+			obtenerRPPActual($http, $scope, 1) //Debe pasarse el idUsuario
+		}
+
+	}).error(function(data, status, headers, config) {
+		console.log("Problemas al cargar la estructura del mapa de navegación de los usuarios");
+	});
+
+}
+
+function obtenerRPPActual($http, $scope, idUsuario){
+
+	$http.get($scope.rutaServidor + "backend/permiso-rol/obtener/" + idUsuario)
+	.success(function(data) {
+
+		var array = data == null ? [] : (data instanceof Array ? data : [data]);
+
+		$scope.RPPActual = array;
+
+		//console.log($scope.RPPActual.length);
+
+		//var indice = 0;
+		$.each( $scope.RPPActual, function( idObjComponent, objComponent ) {
+  			console.log(idObjComponent);
+		});
+
+		//console.log($scope.RPPActual[0].component);
+
+		//$('#ckPermiso-1-1-1-1').prop('checked', true);
+
+		//Para los componentes
+		//$.each($('.component'), function(idObjComponent, objComponent) {
+
+
+		//console.log($scope.RPP);
+		//console.log($scope.RPPActual);
+
+	})
+	.error(function(data) {
+		console.log('Error: ' + data);
+	});    
+
+}
