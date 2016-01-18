@@ -22,9 +22,9 @@ class ParametrizacionController extends Controller
 
 
     /**
-     * @Route("/backend/rol/gestion", name="gestionRol")
+     * @Route("/backend/rol/gestion", name="rolGestion")
      */
-    public function gestionRolAction()
+    public function rolGestionAction()
     {
 
 
