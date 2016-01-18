@@ -8,13 +8,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * JuradoSoporte
+ * ComiteSoporte
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\JuradoSoporteRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\ComiteSoporteRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class JuradoSoporte
+class ComiteSoporte
 {
     /**
      * @var integer
@@ -28,7 +28,7 @@ class JuradoSoporte
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Comite")
      */
-    private $jurado;
+    private $comite;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\DocumentoSoporte")
@@ -95,27 +95,27 @@ class JuradoSoporte
     }
 
     /**
-     * Set jurado
+     * Set comite
      *
-     * @param AppBundle\Entity\Comite $jurados
+     * @param AppBundle\Entity\Comite $comite
      *
-     * @return JuradoSoporte
+     * @return ComiteSoporte
      */
-    public function setJurado(\AppBundle\Entity\Comite $jurado)
+    public function setComite(\AppBundle\Entity\Comite $comite)
     {
-        $this->jurado = $jurado;
+        $this->comite = $comite;
     
         return $this;
     }
 
     /**
-     * Get jurado
+     * Get comite
      *
      * @return AppBundle\Entity\Comite
      */
-    public function getJurado()
+    public function getComite()
     {
-        return $this->jurado;
+        return $this->comite;
     }
 
     /**
@@ -123,7 +123,7 @@ class JuradoSoporte
      *
      * @param AppBundle\Entity\DocumentoSoporte $tipoSoporte
      *
-     * @return JuradoSoporte
+     * @return ComiteSoporte
      */
     public function setTipoSoporte(\AppBundle\Entity\DocumentoSoporte $tipoSoporte)
     {
@@ -147,7 +147,7 @@ class JuradoSoporte
      *
      * @param string $path
      *
-     * @return JuradoSoporte
+     * @return ComiteSoporte
      */
     public function setPath($path)
     {
@@ -171,7 +171,7 @@ class JuradoSoporte
      *
      * @param boolean $active
      *
-     * @return JuradoSoporte
+     * @return ComiteSoporte
      */
     public function setActive($active)
     {
@@ -195,7 +195,7 @@ class JuradoSoporte
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return JuradoSoporte
+     * @return ComiteSoporte
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
@@ -219,7 +219,7 @@ class JuradoSoporte
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return JuradoSoporte
+     * @return ComiteSoporte
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -243,7 +243,7 @@ class JuradoSoporte
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return JuradoSoporte
+     * @return ComiteSoporte
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
@@ -267,7 +267,7 @@ class JuradoSoporte
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return JuradoSoporte
+     * @return ComiteSoporte
      */
     public function setFechaCreacion($fechaCreacion)
     {
