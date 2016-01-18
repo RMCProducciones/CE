@@ -1226,6 +1226,16 @@ class GestionEmpresarialController extends Controller
         $comite = new Comite();
         
         $form = $this->createForm(new ComiteType(), $comite);
+        
+        $form->add(
+            'guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
 
         $form->handleRequest($request);
 
