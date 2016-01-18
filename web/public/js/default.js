@@ -60,7 +60,7 @@ app.controller('AsignarPermisoCtrl', ['$scope', '$http', function($scope, $http)
 	$scope.RPP = '';
 	$scope.AsignarPermiso = true;
 
-	obtenerRPP($http, $scope);
+	obtenerRPP($http, $scope, 1);
 
 	$scope.construirJsonPermisos = function(){
 		construirJsonPermisos($scope);
@@ -76,7 +76,7 @@ app.controller('EditarPermisoCtrl', ['$scope', '$http', function($scope, $http) 
 
 	$scope.AsignarPermiso = false;
 
-	obtenerRPP($http, $scope);
+	obtenerRPP($http, $scope, 1);
 
 	$scope.construirJsonPermisos = function(){
 		construirJsonPermisos($scope);
@@ -209,7 +209,7 @@ function obtenerRPP($http, $scope, idUsuario){
 		$scope.RPP = array;
 
 		if ($scope.AsignarPermiso == false){
-			obtenerRPPActual($http, $scope, 1) //Debe pasarse el idUsuario
+			cargarRPPActual($http, $scope, idUsuario) //Debe pasarse el idUsuario
 		}
 
 	}).error(function(data, status, headers, config) {
@@ -218,7 +218,7 @@ function obtenerRPP($http, $scope, idUsuario){
 
 }
 
-function obtenerRPPActual($http, $scope, idUsuario){
+function cargarRPPActual($http, $scope, idUsuario){
 
 	$http.get($scope.rutaServidor + "backend/permiso-rol/obtener/" + idUsuario)
 	.success(function(data) {
@@ -227,23 +227,37 @@ function obtenerRPPActual($http, $scope, idUsuario){
 
 		$scope.RPPActual = array;
 
-		//console.log($scope.RPPActual.length);
-
-		//var indice = 0;
-		$.each( $scope.RPPActual, function( idObjComponent, objComponent ) {
-  			console.log(idObjComponent);
-		});
-
-		//console.log($scope.RPPActual[0].component);
-
-		//$('#ckPermiso-1-1-1-1').prop('checked', true);
 
 		//Para los componentes
-		//$.each($('.component'), function(idObjComponent, objComponent) {
+		$.each( $scope.RPPActual, function( idObjComponent, objComponent ) {
+  			
+  			//Para los módulos
+  			$.each( objComponent.component[idObjComponent].module, function( idObjModule, objModule ) {
 
+  				//Para los submódulos
+	  			$.each( objModule.subModule, function( idObjSubModule, objSubModule ) {
+	
+	  				//Para las acciones
+		  			$.each( objSubModule.action, function( idObjAction, objAction ) {
+		  				//console.log(objAction);
 
-		//console.log($scope.RPP);
-		//console.log($scope.RPPActual);
+		  				if ( $('#ckPermiso-'+objComponent.component[idObjComponent].id+'-'+objModule.id+'-'+objSubModule.id+'-'+objAction.id+'').length ) {
+  							
+  							if(objAction.checked == true){
+  								$('#ckPermiso-'+objComponent.component[idObjComponent].id+'-'+objModule.id+'-'+objSubModule.id+'-'+objAction.id+'').prop('checked', true);
+  							}
+  							
+						}
+
+		  			});
+
+	  			});
+
+  			});
+
+		});
+
+		construirJsonPermisos($scope);
 
 	})
 	.error(function(data) {
