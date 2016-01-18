@@ -36,12 +36,12 @@ class IntegranteComiteType extends AbstractType
 										    },))
 			->add('fecha_nacimiento', 'date', array('label' => 'Fecha de nacimiento', 'widget' => 'single_text'))
 			->add('entidad')
-			->add('cargo', 'text', array('label' => 'Cargo dentro de la entidad a la cual representa'))
+			->add('cargo', 'text', array('label' => 'Cargo dentro del comite de concursos'))			
 			->add('municipio', 'entity', array('class' => 'AppBundle:Municipio'))
 			->add('direccion', 'text', array('label' => 'Dirección'))
 			->add('telefono_fijo', 'text', array('label' => 'Teléfono fijo'))
 			->add('telefono_celular', 'text', array('label' => 'Teléfono celular'))
-			->add('correo_electronico', 'email',array('label' => 'Correo eléctronico'))
+			->add('correo_electronico', 'email',array('label' => 'Correo electrónico'))
 			->add('nivel_estudios', 'entity', array('class' => 'AppBundle:Listas',
 										    'query_builder' => function(EntityRepository $er) {
 										        return $er->createQueryBuilder('l')

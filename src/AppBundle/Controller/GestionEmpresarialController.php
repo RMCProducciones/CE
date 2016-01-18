@@ -27,6 +27,7 @@ use AppBundle\Entity\ConcursoSoporte;
 use AppBundle\Entity\ActividadConcurso;
 use AppBundle\Entity\Listas;
 use AppBundle\Entity\Comite;
+use AppBundle\Entity\ComiteSoporte;
 use AppBundle\Entity\JuradoSoporte;
 use AppBundle\Entity\IntegranteComite;
 use AppBundle\Entity\AsignacionIntegranteComite;
@@ -43,6 +44,7 @@ use AppBundle\Form\GestionEmpresarial\ClearSoporteType;
 use AppBundle\Form\GestionEmpresarial\ConcursoType;
 use AppBundle\Form\GestionEmpresarial\ActividadConcursoType;
 use AppBundle\Form\GestionEmpresarial\ComiteType;
+use AppBundle\Form\GestionEmpresarial\ComiteSoporteType;
 use AppBundle\Form\GestionEmpresarial\IntegranteComiteType;
 
 /*Para autenticación por código*/
@@ -1263,6 +1265,184 @@ class GestionEmpresarialController extends Controller
         }
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:comite-nuevo.html.twig', array('form' => $form->createView()));
+    }    
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite/{idComite}/editar", name="comiteEditar")
+     */
+    public function comiteEditarAction(Request $request, $idComite)
+    {
+        
+        $em = $this->getDoctrine()->getManager();
+        $comite = new Comite();
+
+        $comite = $em->getRepository('AppBundle:Comite')->findOneBy(
+            array('id' => $idComite)
+        );
+        
+        $form = $this->createForm(new ComiteType(), $comite);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $comite = $form->getData();
+
+            $comite->setActive(true);
+            $comite->setFechaCreacion(new \DateTime());
+
+            $em->persist($comite);
+            $em->flush();
+
+            return $this->redirectToRoute('comiteGestion');
+        }
+
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:comite-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idComite' => $idComite,
+                    'comite' => $comite
+            )
+        );
+        
+
+    }   
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite/{idComite}/eliminar", name="comiteEliminar")
+     */
+    public function ComiteEliminarAction(Request $request, $idComite)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $comite = new Comite();
+
+        $comite = $em->getRepository('AppBundle:Comite')->find($idComite);              
+
+        $em->remove($comite);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('comiteGestion'));
+
+    }
+
+     /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite/{idComite}/documentos-soporte", name="comiteSoporte")
+     */
+    public function comiteSoporteAction(Request $request, $idComite)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $comiteSoporte = new ComiteSoporte();
+        
+        $form = $this->createForm(new ComiteSoporteType(), $comiteSoporte);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $soportesActivos = $em->getRepository('AppBundle:ComiteSoporte')->findBy(
+            array('active' => '1', 'comite' => $idComite),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $histotialSoportes = $em->getRepository('AppBundle:ComiteSoporte')->findBy(
+            array('active' => '0', 'comite' => $idComite),
+            array('fecha_creacion' => 'ASC')
+        );
+        
+        $comite = $em->getRepository('AppBundle:Comite')->findOneBy(
+            array('id' => $idComite)
+        );
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+
+                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                    array(
+                        'descripcion' => $comiteSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'concurso_tipo_soporte'
+                    )
+                );
+                
+                $actualizarComiteSoportes = $em->getRepository('AppBundle:ComiteSoporte')->findBy(
+                    array(
+                        'active' => '1' , 
+                        'tipo_soporte' => $tipoSoporte->getId(), 
+                        'comite' => $idComite
+                    )
+                );  
+            
+                foreach ($actualizarComiteSoportes as $actualizarComiteSoporte){
+                    echo $actualizarComiteSoporte->getId()." ".$actualizarComiteSoporte->getTipoSoporte()."<br />";
+                    $actualizarComiteSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarComiteSoporte->setActive(0);
+                    $em->flush();
+                }
+                
+                $comiteSoporte->setComite($comite);
+                $comiteSoporte->setActive(true);
+                $comiteSoporte->setFechaCreacion(new \DateTime());
+                //$grupoSoporte->setUsuarioCreacion(1);
+
+                $em->persist($comiteSoporte);
+                $em->flush();
+
+                return $this->redirectToRoute('comiteSoporte', array( 'idComite' => $idComite) );
+            }
+        }   
+        
+
+        //return new Response("Hola mundo");
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:comite-soporte.html.twig', 
+            array(
+                'form' => $form->createView(), 
+                'soportesActivos' => $soportesActivos, 
+                'histotialSoportes' => $histotialSoportes,
+                'idComite' => $idComite
+            )
+        );
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite/{idComite}/documentos-soporte/{idComiteSoporte}/borrar", name="comiteSoporteBorrar")
+     */
+    public function comiteSoporteBorrarAction(Request $request, $idComite, $idComiteSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $comiteSoporte = new ComiteSoporte();
+        
+        $comiteSoporte = $em->getRepository('AppBundle:ComiteSoporte')->findOneBy(
+            array('id' => $idComiteSoporte)
+        );
+        
+        $comiteSoporte->setFechaModificacion(new \DateTime());
+        $comiteSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('comiteSoporte', array( 'idComite' => $idComite));
+        
     }
 
     /**

@@ -89,14 +89,14 @@
                   </td>
                   <td>
 				    <br>{{integrantesComites.primernombre}} {{integrantesComites.segundonombre}} {{integrantesComites.primerapellido}} {{integrantesComites.segundoapellido}}
-                    <br>{{integrantesComites.entidad}}
-                    <br>{{integrantesComites.cargo}}
+            <br>{{integrantesComites.entidad}}
+            <br>{{integrantesComites.cargo}}
 					<br>{{integrantesComites.tipodocumento}}
 					<br>{{integrantesComites.numerodocumento}}
 
                     
                   <td>
-                    <a href="#" alt="Detalles" title="Detalles"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ integrantesComites.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                     <br>
                     <a href="clear-integrantes-editar.html" title="Editar" alt="Editar"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                     <br>
@@ -171,7 +171,7 @@
                   <td>{{integrantesComites.cargo}}</td>
 				  
                   <td>
-                    <a href="#" alt="Detalles" title="Detalles"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> | </a>
+                    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ integrantesComites.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
                     <a href="#" title="Editar" alt="Editar"></a>
                     <a href="#" title="¿Eliminar registro?" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger"><span class="glyphicon glyphicon-remove-circle"></span></a>
                   </td>
@@ -189,7 +189,63 @@
           </div>
         </div>
       </div>
+    </div>}
+
+{% for integrantesComites in integrantesComite %}
+    <!-- Modal -->
+  <div class="modal fade" id="myModal{{ integrantesComites.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">{{ integrantesComites.id }} | {{ integrantesComites.primerNombre }} {{ integrantesComites.segundoNombre }} {{ integrantesComites.primerApellido }} {{ integrantesComites.segundoApellido }}</h4>
+          </div>
+          <div class="modal-body">
+            <b>Tipo de documento:{{ integrantesComites.tipoDocumento }}</b>
+            <br>
+            <b>Numero de documento: {{ integrantesComites.numeroDocumento }}</b>
+            <br>
+            <b>Primer apellido: {{ integrantesComites.primerApellido }}</b>
+            <br>
+            <b>Segundo apellido: {{ integrantesComites.segundoApellido }}</b>
+            <br>
+            <b>Primer nombre: {{ integrantesComites.primerNombre }}</b>
+            <br>
+            <b>Segundo nombre: {{ integrantesComites.segundoNombre }}</b>
+            <br>
+            <b>Genero: {{ integrantesComites.genero }}</b>
+            <br>
+            <b>Fecha de nacimiento: {{ integrantesComites.fechaNacimiento |  date('d - m - Y') }}</b>
+            <br>
+            <b>Entidad: {{ integrantesComites.entidad }}</b>
+            <br>
+            <b>Cargo: {{ integrantesComites.cargo }}</b>
+            <br>
+            <b>Municipio:  {{ integrantesComites.municipio }}</b>
+            <br>
+            <b>Dirección:  {{ integrantesComites.direccion }}</b>
+            <br>
+            <b>Telefono fijo: {{ integrantesComites.telefonoFijo }}</b>
+            <br>
+            <b>Telefono celular: {{ integrantesComites.telefonoCelular }}</b>
+            <br>
+            <b>Correo electrónico: {{ integrantesComites.correoElectronico }}</b>
+            <br>
+            <b>Nivel de estudios: {{ integrantesComites.nivelEstudios }}</b>
+            <br>
+            <b>Pertenencia étnica: {{ integrantesComites.pertenenciaEtnica }}</b>        
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
-               
+{% endfor %}      
+      
+
 {% endblock %}
 
