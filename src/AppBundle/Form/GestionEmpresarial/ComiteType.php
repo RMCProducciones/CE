@@ -21,6 +21,6 @@ class ComiteType extends AbstractType
     
     public function getName()
     {
-        return 'Comite';
+        return 'comite';
     }
 }

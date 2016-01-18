@@ -55,7 +55,7 @@ class GestionEmpresarialController extends Controller
 {
     
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/", name="gruposGestion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/gestion", name="gruposGestion")
      */
     public function gruposGestionAction()
     {
@@ -69,31 +69,9 @@ class GestionEmpresarialController extends Controller
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}", name="grupo")
-     */
-    public function GrupoAction($idGrupo)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
-            array('id' => $idGrupo)
-        );
-
-        //$elementos = $query->getResult();
-
-        $encoders = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new GetSetMethodNormalizer());
-
-        $serializer = new Serializer($normalizers, $encoders);
-        
-        return new Response('{"grupo": ' . $serializer->serialize($grupo, 'json') . '}');
-
-    }
-
-    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/editar", name="grupoEditar")
      */
-    public function GrupoEditarAction(Request $request, $idGrupo)
+    public function grupoEditarAction(Request $request, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();
         $grupo = new Grupo();
@@ -161,7 +139,7 @@ class GestionEmpresarialController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/eliminar", name="grupoEliminar")
      */
-    public function GrupoEliminarAction(Request $request, $idGrupo)
+    public function grupoEliminarAction(Request $request, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();
         $grupo = new Grupo();
@@ -177,7 +155,7 @@ class GestionEmpresarialController extends Controller
 
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/nuevo", name="gruposNuevo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/nuevo", name="gruposNuevo")
      */
     public function gruposNuevoAction(Request $request)
     {
@@ -532,7 +510,7 @@ class GestionEmpresarialController extends Controller
 
 
 
-/**
+    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/{idGrupo}/{idBeneficiario}/beneficiarios/editar", name="beneficiariosEditar")
      */
     public function BeneficiariosEditarAction(Request $request, $idGrupo, $idBeneficiario)
@@ -1202,7 +1180,7 @@ class GestionEmpresarialController extends Controller
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/comite/", name="comiteGestion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/", name="comiteGestion")
      */
     public function ComiteGestionAction()
     {
@@ -1216,7 +1194,7 @@ class GestionEmpresarialController extends Controller
     }
     
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/Comite/{idComite}", name="Comite")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/gestion/{idComite}", name="Comite")
      */
     public function ComiteAction($idComite)
     {
@@ -1238,11 +1216,13 @@ class GestionEmpresarialController extends Controller
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/comite/nuevo", name="comiteNuevo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/nuevo", name="comiteNuevo")
      */
-    public function juradoNuevoAction(Request $request)
+    public function comiteNuevoAction(Request $request)
     {
+
         $em = $this->getDoctrine()->getManager();
+
         $comite = new Comite();
         
         $form = $this->createForm(new ComiteType(), $comite);
@@ -1256,7 +1236,6 @@ class GestionEmpresarialController extends Controller
             $comite->setActive(true);
             $comite->setFechaCreacion(new \DateTime());
 
-
             
             $em->persist($comite);
             $em->flush();
@@ -1264,11 +1243,16 @@ class GestionEmpresarialController extends Controller
             return $this->redirectToRoute('comiteGestion');
         }
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:comite-nuevo.html.twig', array('form' => $form->createView()));
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:comite-nuevo.html.twig', 
+            array(
+                'form' => $form->createView()
+            )
+        );
     }    
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/comite/{idComite}/editar", name="comiteEditar")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/editar", name="comiteEditar")
      */
     public function comiteEditarAction(Request $request, $idComite)
     {
@@ -1321,7 +1305,7 @@ class GestionEmpresarialController extends Controller
     }   
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/comite/{idComite}/eliminar", name="comiteEliminar")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/eliminar", name="comiteEliminar")
      */
     public function ComiteEliminarAction(Request $request, $idComite)
     {
@@ -1338,7 +1322,7 @@ class GestionEmpresarialController extends Controller
     }
 
      /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/comite/{idComite}/documentos-soporte", name="comiteSoporte")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/documentos-soporte", name="comiteSoporte")
      */
     public function comiteSoporteAction(Request $request, $idComite)
     {
@@ -1425,7 +1409,7 @@ class GestionEmpresarialController extends Controller
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/comite/{idComite}/documentos-soporte/{idComiteSoporte}/borrar", name="comiteSoporteBorrar")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/documentos-soporte/{idComiteSoporte}/borrar", name="comiteSoporteBorrar")
      */
     public function comiteSoporteBorrarAction(Request $request, $idComite, $idComiteSoporte)
     {
@@ -1446,7 +1430,7 @@ class GestionEmpresarialController extends Controller
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/comite/{idComite}/jurados/nuevo", name="juradosNuevo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/jurados/nuevo", name="juradosNuevo")
      */
     public function juradosNuevoAction(Request $request, $idComite)
     {
@@ -1478,7 +1462,7 @@ class GestionEmpresarialController extends Controller
     }
     
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/comite/{idComite}/jurados", name="juradosGestion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/jurados", name="juradosGestion")
      */
     public function juradosGestionAction($idComite)
     {
@@ -1500,6 +1484,8 @@ class GestionEmpresarialController extends Controller
                 'idComite' => $idComite
             ));        
     }
+
+      
 	
 	
 }

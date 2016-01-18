@@ -9,7 +9,7 @@ app.controller('gestionComiteCtrl', ['$scope', '$http', function($scope, $http) 
 		$scope.idComite = idComite;
 		$scope.consecutivoComite = consecutivo;
 
-		$http.get($scope.rutaServidor + "gestion-empresarial/desarrollo-empresarial/comite/" + $scope.idComite + "/eliminar")
+		$http.get($scope.rutaServidor + "gestion-empresarial/desarrollo-empresarial/comite-concursos/" + $scope.idComite + "/eliminar")
 		.success(function(data, status, headers, config) {
 
   			$("#filaComite" + $scope.consecutivoComite).fadeOut("slow");
@@ -38,7 +38,7 @@ app.controller('gestionDocumentoSoporteComiteCtrl', ['$scope', '$location', func
 
 	$scope.anularSoporteComite = function() { 
 	
-		window.location.replace($scope.rutaServidor  + "gestion-empresarial/desarrollo-empresarial/comite/" + $scope.idComite + "/documentos-soporte/" + $scope.idComiteSoporteActivo + "/borrar");
+		window.location.replace($scope.rutaServidor  + "gestion-empresarial/desarrollo-empresarial/comite-concursos/" + $scope.idComite + "/documentos-soporte/" + $scope.idComiteSoporteActivo + "/borrar");
 		
 	};	
 
