@@ -821,7 +821,7 @@ class GestionEmpresarialController extends Controller
     }
     
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/beneficiarios/{idCLEAR}/documentos-soporte/{idClearSoporte}/borrar", name="clearSoporteBorrar")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/documentos-soporte/{idClearSoporte}/borrar", name="clearSoporteBorrar")
      */
     public function clearSoporteBorrarAction(Request $request, $idCLEAR, $idClearSoporte)
     {
@@ -1227,6 +1227,16 @@ class GestionEmpresarialController extends Controller
         
         $form = $this->createForm(new ComiteType(), $comite);
 
+        $form->add(
+            'guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -1484,6 +1494,73 @@ class GestionEmpresarialController extends Controller
                 'idComite' => $idComite
             ));        
     }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/{idJurado}/jurados-editar", name="juradosEditar")
+     */
+    public function JuradosEditarAction(Request $request, $idComite, $idJurado)
+    {
+
+        $em = $this->getDoctrine()->getManager();        
+        $integranteComite = new IntegranteComite();        
+
+        $integranteComite = $em->getRepository('AppBundle:IntegranteComite')->findOneBy(
+            array('id' => $idJurado)
+
+        );
+
+
+        //print_r($idJurado);
+
+
+        $form = $this->createForm(new IntegranteComiteType(), $integranteComite);
+
+        echo "hola";
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $integranteComite = $form->getData();
+            $integranteComite->$setActive(true);
+            $integranteComite->setFechaModificacion(new \DateTime());
+
+            /*$usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );*/
+            
+            $integranteComite->setUsuarioModificacion($usuarioModificacion);
+
+            $em->persist($integranteComite);
+            $em->flush();
+
+
+            return $this->redirectToRoute('juradosGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:jurados-comite-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idComite' => $idComite,
+                    'idJurado' => $idJurado,
+                    'integranteComite' => $integranteComite
+            )
+        );
+
+    }  
 
       
 	

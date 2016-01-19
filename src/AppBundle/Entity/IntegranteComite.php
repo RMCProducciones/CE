@@ -22,6 +22,11 @@ class IntegranteComite
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Comite")
+    */
+    private $comite;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $tipo_documento;
@@ -184,6 +189,30 @@ class IntegranteComite
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set comite
+     *
+     * @param AppBundle\Entity\Comite $comite
+     *
+     * @return IntegranteComite
+     */
+    public function setComite(\AppBundle\Entity\Comite $comite)
+    {
+        $this->comite = $comite;
+
+        return $this;
+    }
+
+    /**
+     * Get comite
+     *
+     * @return AppBundle\Entity\Grupo
+     */
+    public function getComite()
+    {
+        return $this->comite;
     }
 
     /**
