@@ -22,16 +22,12 @@ class Ruta
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="territorio_aprendizaje", type="string")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\TerritorioAprendizaje")
      */
     private $territorio_aprendizaje;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="grupo", type="string")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
      */
     private $grupo;
 
@@ -57,30 +53,26 @@ class Ruta
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
      */
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_creacion", type="datetime")
+     * @ORM\Column(name="fecha_creacion", type="datetime",nullable=true )
      */
     private $fecha_creacion;
 
@@ -98,11 +90,11 @@ class Ruta
     /**
      * Set territorioAprendizaje
      *
-     * @param string $territorioAprendizaje
+     * @param AppBundle\Entity\TerritorioAprendizaje $territorioAprendizaje
      *
      * @return Ruta
      */
-    public function setTerritorioAprendizaje($territorioAprendizaje)
+    public function setTerritorioAprendizaje(\AppBundle\Entity\TerritorioAprendizaje $territorioAprendizaje)
     {
         $this->territorio_aprendizaje = $territorioAprendizaje;
     
@@ -112,7 +104,7 @@ class Ruta
     /**
      * Get territorioAprendizaje
      *
-     * @return string
+     * @return AppBundle\Entity\TerritorioAprendizaje
      */
     public function getTerritorioAprendizaje()
     {
@@ -122,11 +114,11 @@ class Ruta
     /**
      * Set grupo
      *
-     * @param string $grupo
+     * @param AppBundle\Entity\Grupo $grupo
      *
      * @return Ruta
      */
-    public function setGrupo($grupo)
+    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
     {
         $this->grupo = $grupo;
     
@@ -136,7 +128,7 @@ class Ruta
     /**
      * Get grupo
      *
-     * @return string
+     * @return AppBundle\Entity\Grupo
      */
     public function getGrupo()
     {
@@ -218,11 +210,11 @@ class Ruta
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return Ruta
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
     
@@ -232,7 +224,7 @@ class Ruta
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -266,11 +258,11 @@ class Ruta
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return Ruta
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
     
@@ -280,7 +272,7 @@ class Ruta
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {

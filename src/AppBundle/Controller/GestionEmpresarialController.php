@@ -27,6 +27,7 @@ use AppBundle\Entity\ConcursoSoporte;
 use AppBundle\Entity\ActividadConcurso;
 use AppBundle\Entity\Listas;
 use AppBundle\Entity\Comite;
+use AppBundle\Entity\Ruta;
 use AppBundle\Entity\ComiteSoporte;
 use AppBundle\Entity\JuradoSoporte;
 use AppBundle\Entity\IntegranteComite;
@@ -46,6 +47,7 @@ use AppBundle\Form\GestionEmpresarial\ActividadConcursoType;
 use AppBundle\Form\GestionEmpresarial\ComiteType;
 use AppBundle\Form\GestionEmpresarial\ComiteSoporteType;
 use AppBundle\Form\GestionEmpresarial\IntegranteComiteType;
+use AppBundle\Form\GestionEmpresarial\RutaType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -1564,5 +1566,72 @@ class GestionEmpresarialController extends Controller
 
       
 	
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/gestion", name="rutaGestion")
+     */
+    public function rutaGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $rutas = $em->getRepository('AppBundle:Ruta')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:ruta-gestion.html.twig', array( 'rutas' => $rutas));
+    }
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/nuevo", name="rutaNuevo")
+     */
+    public function rutaNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ruta = new Ruta();
+        
+        $form = $this->createForm(new RutaType(), $ruta);
+        
+        $form->add(
+            'guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $ruta = $form->getData();
+
+
+            $ruta->setActive(true);
+            $ruta->setFechaCreacion(new \DateTime());
+
+            /*$usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
+            
+            $ruta->setUsuarioCreacion($usuarioCreacion);*/
+
+            $em->persist($ruta);
+            $em->flush();
+
+            return $this->redirectToRoute('rutaGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:ruta-nuevo.html.twig', array('form' => $form->createView()));
+    }
+
+
+
+
+
 	
 }
