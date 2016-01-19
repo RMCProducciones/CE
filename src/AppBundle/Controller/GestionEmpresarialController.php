@@ -27,6 +27,7 @@ use AppBundle\Entity\ConcursoSoporte;
 use AppBundle\Entity\ActividadConcurso;
 use AppBundle\Entity\Listas;
 use AppBundle\Entity\Comite;
+use AppBundle\Entity\Integrante;
 use AppBundle\Entity\ComiteSoporte;
 use AppBundle\Entity\JuradoSoporte;
 use AppBundle\Entity\IntegranteComite;
@@ -44,6 +45,7 @@ use AppBundle\Form\GestionEmpresarial\ClearSoporteType;
 use AppBundle\Form\GestionEmpresarial\ConcursoType;
 use AppBundle\Form\GestionEmpresarial\ActividadConcursoType;
 use AppBundle\Form\GestionEmpresarial\ComiteType;
+use AppBundle\Form\GestionEmpresarial\IntegranteType;
 use AppBundle\Form\GestionEmpresarial\ComiteSoporteType;
 use AppBundle\Form\GestionEmpresarial\IntegranteComiteType;
 
@@ -843,58 +845,69 @@ class GestionEmpresarialController extends Controller
 
 	
 	/**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/integrantes/nuevo", name="integrantesNuevo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idComite}/integrantes/nuevo", name="integrantesNuevo")
      */
-    public function integrantesNuevoAction(Request $request, $idCLEAR)
+    public function integrantesNuevoAction(Request $request, $idComite)
     {
         $em = $this->getDoctrine()->getManager();
-        $integranteCLEAR = new IntegranteCLEAR();        
+        $integrante = new Integrante();        
         
-        $form = $this->createForm(new IntegranteCLEARType(), $integranteCLEAR);
+        $form = $this->createForm(new IntegranteType(), $integrante);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             // data is an array with "name", "email", and "message" keys
-            $integranteCLEAR= $form->getData();
+            $integrante= $form->getData();
 
-            $integranteCLEAR->setActive(true);
-            $integranteCLEAR->setFechaCreacion(new \DateTime());
+            $integrante->setActive(true);
+            $integrante->setFechaCreacion(new \DateTime());
 
 
             
-            $em->persist($integranteCLEAR);
+            $em->persist($integrante);
             $em->flush();
 
-            return $this->redirectToRoute('CLEARGestion', array('idCLEAR' => $idCLEAR));
+            return $this->redirectToRoute('integrantesGestion', array('idComite' => $idComite));
         }
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantes-clear-nuevo.html.twig', 
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantes-nuevo.html.twig', 
             array('form' => $form->createView(),
-                'idCLEAR' => $idCLEAR));
+                'rutaRegreso' => 'integrantesGestion',
+                'idComite' => $idComite));
     }
 	
 	/**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/integrantes", name="integrantesGestion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idComite}/integrantes", name="integrantesGestion")
      */
-    public function integrantesGestionAction($idCLEAR)
+    public function integrantesGestionAction($idComite)
     {
         $em = $this->getDoctrine()->getManager();
         
-		$integrantesCLEAR = $em->getRepository('AppBundle:IntegranteCLEAR')->findBy(
+		$integrantes = $em->getRepository('AppBundle:Integrante')->findBy(
             array('active' => '1'),
             array('primer_apellido' => 'ASC')
         );	
 		$asignacionIntegrantesCLEAR = $em->getRepository('AppBundle:AsignacionIntegranteCLEAR')->findBy(
-            array('active' => '1', 'clear' => $idCLEAR),
+            array('active' => '1', 'clear' => $idComite),
             array()
         );	
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantes-clear-gestion-asignacion.html.twig', 
             array(
-                'integrantesCLEAR' => $integrantesCLEAR, 
+                'integrantes' => $integrantes, 
                 'asignacionIntegrantesCLEAR' => $asignacionIntegrantesCLEAR,
-                'idCLEAR' => $idCLEAR
+                'idComite' => $idComite
             ));        
     }
 	
@@ -1445,29 +1458,40 @@ class GestionEmpresarialController extends Controller
     public function juradosNuevoAction(Request $request, $idComite)
     {
         $em = $this->getDoctrine()->getManager();
-        $integranteComite = new IntegranteComite();        
+        $integrante = new Integrante();        
         
-        $form = $this->createForm(new IntegranteComiteType(), $integranteComite);
+        $form = $this->createForm(new IntegranteType(), $integrante);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             // data is an array with "name", "email", and "message" keys
-            $integranteComite= $form->getData();
+            $integrante= $form->getData();
 
-            $integranteComite->setActive(true);
-            $integranteComite->setFechaCreacion(new \DateTime());
+            $integrante->setActive(true);
+            $integrante->setFechaCreacion(new \DateTime());
 
 
             
-            $em->persist($integranteComite);
+            $em->persist($integrante);
             $em->flush();
 
             return $this->redirectToRoute('juradosGestion', array('idComite' => $idComite));
         }
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:jurados-comite-nuevo.html.twig', 
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantes-nuevo.html.twig', 
             array('form' => $form->createView(),
+                'rutaRegreso' => 'juradosGestion',
                 'idComite' => $idComite));
     }
     
@@ -1478,18 +1502,18 @@ class GestionEmpresarialController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         
-        $integrantesComite = $em->getRepository('AppBundle:IntegranteComite')->findBy(
+        $integrantes = $em->getRepository('AppBundle:Integrante')->findBy(
             array('active' => '1'),
             array('primer_apellido' => 'ASC')
         );  
         $AsignacionIntegranteComite = $em->getRepository('AppBundle:AsignacionIntegranteComite')->findBy(
-            array('active' => '1', 'clear' => $idComite),
+            array('active' => '1', 'comite' => $idComite),
             array()
         );  
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:jurados-comite-gestion-asignacion.html.twig', 
             array(
-                'integrantesComite' => $integrantesComite, 
+                'integrantes' => $integrantes, 
                 'AsignacionIntegranteComite' => $AsignacionIntegranteComite,
                 'idComite' => $idComite
             ));        
@@ -1506,16 +1530,16 @@ class GestionEmpresarialController extends Controller
 
         $integranteComite = $em->getRepository('AppBundle:IntegranteComite')->findOneBy(
             array('id' => $idJurado)
-
         );
 
 
-        //print_r($idJurado);
+        //print_r($integranteComite);
 
 
-        $form = $this->createForm(new IntegranteComiteType(), $integranteComite);
+        $form = $this->createForm(new IntegranteComiteType(), $integranteComite);        
 
-        echo "hola";
+        echo $integranteComite->getId();
+        
         
         $form->add(
             'Guardar', 

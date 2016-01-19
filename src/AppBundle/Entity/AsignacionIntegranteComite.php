@@ -29,9 +29,9 @@ class AsignacionIntegranteComite
     /**
      * @var string
      *
-     * @ORM\Column(name="clear", type="string")
+     * @ORM\Column(name="comite", type="string")
      */
-    private $clear;
+    private $comite;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
@@ -105,27 +105,27 @@ class AsignacionIntegranteComite
     }
 
     /**
-     * Set clear
+     * Set comite
      *
-     * @param string $clear
+     * @param string $comite
      *
      * @return AsignacionIntegranteComite
      */
-    public function setClear($clear)
+    public function setComite($comite)
     {
-        $this->clear = $clear;
+        $this->comite = $comite;
 
         return $this;
     }
 
     /**
-     * Get clear
+     * Get comite
      *
      * @return string
      */
-    public function getClear()
+    public function getComite()
     {
-        return $this->clear;
+        return $this->comite;
     }
 
     /**
