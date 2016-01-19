@@ -75,4 +75,7 @@ php app/console doctrine:generate:entity --entity="AppBundle:AsignacionBeneficia
 
 php app/console doctrine:generate:entity --entity="AppBundle:Participante" --fields="beneficiario:integer relacion:integer tipo_documento:integer numero_documento:string primer_apellido:string segundo_apellido:string primer_nombre:string segundo_nombre:string genero:integer fecha_nacimiento:datetime edad_inscripcion:integer joven_rural:boolean pertenencia_etnica:integer grupo_indigena:integer desplazado:boolean discapacidad:string estado_civil:integer rol_grupo_familiar:integer hijos_menores_5:integer sabe_leer:boolean sabe_escribir:boolean nivel_estudios:integer ocupacion:integer tipo_vivienda:integer telefono_fijo:string telefono_celular:string correo_electronico:string active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
+php app/console doctrine:generate:entity --entity="AppBundle:Rol" --fields="rol:string permiso:string active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
 

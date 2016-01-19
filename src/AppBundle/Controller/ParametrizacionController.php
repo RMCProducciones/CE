@@ -35,7 +35,7 @@ class ParametrizacionController extends Controller
         );
 
         return $this->render(
-            'AppBundle:Backend/Parametrizacion:permiso-gestion.html.twig',
+            'AppBundle:Backend/Parametrizacion:rol-gestion.html.twig',
             array( 'roles' => $roles) 
         );
     }
@@ -68,7 +68,7 @@ class ParametrizacionController extends Controller
 
 
         return $this->render(
-            'AppBundle:Backend/Parametrizacion:permiso-rol-editar.html.twig', 
+            'AppBundle:Backend/Parametrizacion:rol-editar.html.twig', 
             array( 
                 'permisoRol' =>  $jsonPermisoRol
             )

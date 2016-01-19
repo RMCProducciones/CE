@@ -18,7 +18,6 @@ telefono_celular:string
 correo_electronico:string
 entidad_financiera_cuenta:integer
 tipo_cuenta:integer
-
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 php app/console doctrine:generate:entity --entity="AppBundle:Beneficiario" --fields="
@@ -373,10 +372,6 @@ telefono_fijo:string
 telefono_celular:string
 correo_electronico:string
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
-
-
-php app/console doctrine:generate:entity --entity="AppBundle:Rol" --fields="rol:string permiso:string active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
-
 
 
 

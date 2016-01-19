@@ -251,9 +251,10 @@
       </div>
     </div>
 
-
-
 </nav>
 
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
+{{ app.user.roles | json_encode()}}
 
+{% endif %}
