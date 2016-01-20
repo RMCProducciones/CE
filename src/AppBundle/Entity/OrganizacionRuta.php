@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AsignacionIntegranteCLEAR
+ * OrganizacionRuta
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\AsignacionIntegranteCLEARRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\OrganizacionRutaRepository")
  */
-class AsignacionIntegranteCLEAR
+class OrganizacionRuta
 {
     /**
      * @var integer
@@ -22,21 +22,18 @@ class AsignacionIntegranteCLEAR
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\IntegranteCLEAR")
+     * @var string
+     *
+     * @ORM\Column(name="ruta", type="string")
      */
-    private $integrante;
+    private $ruta;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="clear", type="string")
+     * @ORM\Column(name="organizacion", type="string")
      */
-    private $clear;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
-     */
-    private $rol;
+    private $organizacion;
 
     /**
      * @var boolean
@@ -46,7 +43,9 @@ class AsignacionIntegranteCLEAR
     private $active;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
+     * @var integer
+     *
+     * @ORM\Column(name="usuario_modificacion", type="integer")
      */
     private $usuario_modificacion;
 
@@ -58,7 +57,9 @@ class AsignacionIntegranteCLEAR
     private $fecha_modificacion;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
+     * @var integer
+     *
+     * @ORM\Column(name="usuario_creacion", type="integer")
      */
     private $usuario_creacion;
 
@@ -81,75 +82,51 @@ class AsignacionIntegranteCLEAR
     }
 
     /**
-     * Set integrante
+     * Set ruta
      *
-     * @param AppBundle\Entity\IntegranteCLEAR $integrante
+     * @param string $ruta
      *
-     * @return AsignacionIntegranteCLEAR
+     * @return OrganizacionRuta
      */
-    public function setIntegrante(\AppBundle\Entity\IntegranteCLEAR $integrante)
+    public function setRuta($ruta)
     {
-        $this->integrante = $integrante;
-
+        $this->ruta = $ruta;
+    
         return $this;
     }
 
     /**
-     * Get integrante
-     *
-     * @return AppBundle\Entity\IntegranteCLEAR
-     */
-    public function getIntegrante()
-    {
-        return $this->integrante;
-    }
-
-    /**
-     * Set clear
-     *
-     * @param string $clear
-     *
-     * @return AsignacionIntegranteCLEAR
-     */
-    public function setClear($clear)
-    {
-        $this->clear = $clear;
-
-        return $this;
-    }
-
-    /**
-     * Get clear
+     * Get ruta
      *
      * @return string
      */
-    public function getClear()
+    public function getRuta()
     {
-        return $this->clear;
+        return $this->ruta;
     }
 
     /**
-     * Set rol
+     * Set organizacion
      *
-     * @param AppBundle\Entity\Listas $rol
+     * @param string $organizacion
      *
-     * @return AsignacionIntegranteCLEAR
+     * @return OrganizacionRuta
      */
-    public function setRol(\AppBundle\Entity\Listas $rol)
+    public function setOrganizacion($organizacion)
     {
-        $this->rol = $rol;
-
+        $this->organizacion = $organizacion;
+    
         return $this;
     }
 
     /**
-     * Get rol
+     * Get organizacion
      *
-     * @return AppBundle\Entity\Listas
+     * @return string
      */
-    public function getRol()
+    public function getOrganizacion()
     {
-        return $this->rol;
+        return $this->organizacion;
     }
 
     /**
@@ -157,12 +134,12 @@ class AsignacionIntegranteCLEAR
      *
      * @param boolean $active
      *
-     * @return AsignacionIntegranteCLEAR
+     * @return OrganizacionRuta
      */
     public function setActive($active)
     {
         $this->active = $active;
-
+    
         return $this;
     }
 
@@ -179,21 +156,21 @@ class AsignacionIntegranteCLEAR
     /**
      * Set usuarioModificacion
      *
-     * @param AppBundle\Entity\Usuario $usuarioModificacion
+     * @param integer $usuarioModificacion
      *
-     * @return AsignacionIntegranteCLEAR
+     * @return OrganizacionRuta
      */
-    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
+    public function setUsuarioModificacion($usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
-
+    
         return $this;
     }
 
     /**
      * Get usuarioModificacion
      *
-     * @return AppBundle\Entity\Usuario
+     * @return integer
      */
     public function getUsuarioModificacion()
     {
@@ -205,12 +182,12 @@ class AsignacionIntegranteCLEAR
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return AsignacionIntegranteCLEAR
+     * @return OrganizacionRuta
      */
     public function setFechaModificacion($fechaModificacion)
     {
         $this->fecha_modificacion = $fechaModificacion;
-
+    
         return $this;
     }
 
@@ -227,21 +204,21 @@ class AsignacionIntegranteCLEAR
     /**
      * Set usuarioCreacion
      *
-     * @param AppBundle\Entity\Usuario $usuarioCreacion
+     * @param integer $usuarioCreacion
      *
-     * @return AsignacionIntegranteCLEAR
+     * @return OrganizacionRuta
      */
-    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
+    public function setUsuarioCreacion($usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
-
+    
         return $this;
     }
 
     /**
      * Get usuarioCreacion
      *
-     * @return AppBundle\Entity\Usuario
+     * @return integer
      */
     public function getUsuarioCreacion()
     {
@@ -253,12 +230,12 @@ class AsignacionIntegranteCLEAR
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return AsignacionIntegranteCLEAR
+     * @return OrganizacionRuta
      */
     public function setFechaCreacion($fechaCreacion)
     {
         $this->fecha_creacion = $fechaCreacion;
-
+    
         return $this;
     }
 

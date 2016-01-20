@@ -16,7 +16,20 @@
 {% endblock %}
 
 {% block section %}
+<div class="section">
+      <div class="container"> 
+        <div class="row">
+            <div class="col-md-6">
+              <div class="btn-group">
+                <a href="{{ path('CLEARGestion') }}" class="btn btn-warning">Volver</a>              
+                <a href="{{ path('integrantesNuevo', {'idComite': idComite}) }}" class="btn btn-success">Nuevo</a>              
+              </div>
+            </div>
+        </div>
+      </div>
+  </div>
 
+  <br />  
 	<div class="section" ng-controller="FiltrosCtrl">
       <div class="container">
         <div class="row">
@@ -123,7 +136,7 @@
             </div>
             <hr>
             <div class="btn-group">
-              <a href="{{ path('integrantesNuevo', {'idCLEAR': idCLEAR}) }}" class="btn btn-default">Nuevo</a>
+              <a href="{{ path('integrantesNuevo', {'idComite': idComite}) }}" class="btn btn-default">Nuevo</a>
               <a href="#" class="btn btn-default">Eliminar</a>
               <a href="#" class="btn btn-default">Asignar</a>
             </div>
@@ -142,7 +155,7 @@
                 
 				 {% set consecutivo = 1 %}
 	    	
-	    		{% for integranteCLEAR in integrantesCLEAR %}
+	    		{% for integrante in integrantes %}
 				
 				<tr>
                   <td>{{ consecutivo }}</td>
@@ -150,11 +163,11 @@
                     <input type="checkbox">
                   </td>
                   <td>
-				    <br>{{integranteCLEAR.primernombre}} {{integranteCLEAR.segundonombre}} {{integranteCLEAR.primerapellido}} {{integranteCLEAR.segundoapellido}}
-                    <br>{{integranteCLEAR.entidad}}
-                    <br>{{integranteCLEAR.cargo}}
-					<br>{{integranteCLEAR.tipodocumento}}
-					<br>{{integranteCLEAR.numerodocumento}}
+				    <br>{{integrante.primernombre}} {{integrante.segundonombre}} {{integrante.primerapellido}} {{integrante.segundoapellido}}
+                    <br>{{integrante.entidad}}
+                    <br>{{integrante.cargo}}
+					<br>{{integrante.tipodocumento}}
+					<br>{{integrante.numerodocumento}}
 
                     
                   <td>
@@ -243,14 +256,14 @@
               <tbody>
 			  {% set consecutivo = 1 %}
 	    	
-	    		{% for integranteCLEAR in integrantesCLEAR %}
+	    		{% for integrante in integrantes %}
                 <tr>
                   <td>{{ consecutivo }}</td>
                   <td>
                     <input type="checkbox">
                   </td>
-                  <td>{{integranteCLEAR.primernombre}} {{integranteCLEAR.segundonombre}}</td>
-                  <td>{{integranteCLEAR.cargo}}</td>
+                  <td>{{integrante.primernombre}} {{integrante.segundonombre}}</td>
+                  <td>{{integrante.cargo}}</td>
 				  
                   <td>
                     <a href="#" alt="Detalles" title="Detalles"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> | </a>

@@ -18,7 +18,6 @@ telefono_celular:string
 correo_electronico:string
 entidad_financiera_cuenta:integer
 tipo_cuenta:integer
-
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 php app/console doctrine:generate:entity --entity="AppBundle:Beneficiario" --fields="
@@ -374,10 +373,73 @@ telefono_celular:string
 correo_electronico:string
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
+php app/console doctrine:generate:entity --entity="AppBundle:Organizacion" --fields="
+nombre_organizacion:string 
+linea_productiva:string
+tipo_producto:string
+fecha_inscripcion:datetime
+codigo:string
+nombre:string
+direccion:string
+rural:boolean
+barrio:string
+corregimiento:string
+vereda:string
+cacerio:string
+municipio:integer
+tipo_documentoo_contacto:integer
+numero_documento_contacto:string
+primer_apellidoo_contacto:string
+segundo_apellidoo_contacto:string
+primer_nombreo_contacto:string
+segundo_nombreo_contacto:string
+telefono_fijoo_contacto:string
+telefono_celularo_contacto:string
+correo_electronicoo_contacto:string
+ruta:boolean
+pasantia:boolean
+observaciones:string
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
+php app/console doctrine:generate:entity --entity="AppBundle:TerritorioAprendizaje" --fields="
+nombre_territorio:string 
+observaciones:string
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
+php app/console doctrine:generate:entity --entity="AppBundle:OrganizacionTerritorioAprendizaje" --fields="
+territorio_aprendizaje:string 
+organizacion:string
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
+php app/console doctrine:generate:entity --entity="AppBundle:Ruta" --fields="
+territorio_aprendizaje:string 
+grupo:string
+nombre_ruta:string
+observaciones:string
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
+php app/console doctrine:generate:entity --entity="AppBundle:OrganizacionRuta" --fields="
+ruta:string 
+organizacion:string
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:BeneficiarioRuta" --fields="
+ruta:string 
+beneficiario:string
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:Pasantia" --fields="
+territorio_aprendizaje:string 
+organizacion:string
+grupo:string
+nombre_pasantia:string
+observaciones:string
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:BeneficiarioPasantia" --fields="
+pasantia:string 
+beneficiario:string
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 PENDIENTE POR DEFINIR
 
@@ -400,5 +462,7 @@ rubricas_manejo_financiero:string
 rubricas_ahorro_colectivo:string
 rubricas_enfoque_diferencial:string
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
 
 

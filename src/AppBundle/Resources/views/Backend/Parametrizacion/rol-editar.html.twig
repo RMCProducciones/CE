@@ -8,8 +8,7 @@
     <ul class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Backend</li>
-      <li>Roles</li>
-      <li class="active">Gestión de permisos por rol de usuario</li>
+      <li class="active">Roles</li>
     </ul>
 
 {% endblock %}
@@ -17,8 +16,9 @@
 {% block section %}
 
   <div class="container">
-    <h1>Gestión de permisos por rol de usuario</h1>
-    <hr>
+    <h1>Gestión Roles de Usuario</h1>
+    <hr />
+    <h3 style="padding-top: 5px">Edición de permisos de usuario</h3>
   </div>
 
   <br />
@@ -27,7 +27,27 @@
     <div class="alert alert-[[estadoMensaje]] alert-dismissible" id="MensajeCtrl" ng-show="mostrarMensaje === true" role="alert">[[textoMensaje]]<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
   </div>
 
-  <div class="section" ng-controller="PermisoCtrl">
+
+    <div class="section">
+      <div class="container">
+        <div class="row">          
+          <div class="col-md-6">
+            <div class="btn-group">
+
+              <button name="rol[Guardar]" id="rol_Guardar" type="submit" class="btn btn-success">Guardar</button>
+              
+              <a href="{{ path('rolGestion') }}" class="btn btn-danger" title="Cancelar" alt="Cancelar">Cancelar</a>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <br>
+
+
+  <div class="section" ng-controller="EditarPermisoCtrl">
     <div class="container">
       <div class="row">
         <div class="col-md-12 table-responsive">

@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Jurados
+ * Ruta
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\JuradosRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\RutaRepository")
  */
-class Jurados
+class Ruta
 {
     /**
      * @var integer
@@ -22,30 +22,28 @@ class Jurados
     private $id;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="fecha_inicio", type="datetime")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\TerritorioAprendizaje")
      */
-    private $fecha_inicio;
+    private $territorio_aprendizaje;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="fecha_finalizacion", type="datetime")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
      */
-    private $fecha_finalizacion;
+    private $grupo;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Municipio")
+     * @var string
+     *
+     * @ORM\Column(name="nombre_ruta", type="string")
      */
-    private $municipio;
+    private $nombre_ruta;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="lugar_realizacion_CLEAR", type="string")
+     * @ORM\Column(name="observaciones", type="string")
      */
-    private $lugar_realizacion_CLEAR;
+    private $observaciones;
 
     /**
      * @var boolean
@@ -54,7 +52,7 @@ class Jurados
      */
     private $active;
 
-   /**
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
@@ -74,7 +72,7 @@ class Jurados
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_creacion", type="datetime", nullable=true)
+     * @ORM\Column(name="fecha_creacion", type="datetime",nullable=true )
      */
     private $fecha_creacion;
 
@@ -90,99 +88,99 @@ class Jurados
     }
 
     /**
-     * Set fechaInicio
+     * Set territorioAprendizaje
      *
-     * @param \DateTime $fechaInicio
+     * @param AppBundle\Entity\TerritorioAprendizaje $territorioAprendizaje
      *
-     * @return Jurados
+     * @return Ruta
      */
-    public function setFechaInicio($fechaInicio)
+    public function setTerritorioAprendizaje(\AppBundle\Entity\TerritorioAprendizaje $territorioAprendizaje)
     {
-        $this->fecha_inicio = $fechaInicio;
-
+        $this->territorio_aprendizaje = $territorioAprendizaje;
+    
         return $this;
     }
 
     /**
-     * Get fechaInicio
+     * Get territorioAprendizaje
      *
-     * @return \DateTime
+     * @return AppBundle\Entity\TerritorioAprendizaje
      */
-    public function getFechaInicio()
+    public function getTerritorioAprendizaje()
     {
-        return $this->fecha_inicio;
+        return $this->territorio_aprendizaje;
     }
 
     /**
-     * Set fechaFinalizacion
+     * Set grupo
      *
-     * @param \DateTime $fechaFinalizacion
+     * @param AppBundle\Entity\Grupo $grupo
      *
-     * @return Jurados
+     * @return Ruta
      */
-    public function setFechaFinalizacion($fechaFinalizacion)
+    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
     {
-        $this->fecha_finalizacion = $fechaFinalizacion;
-
+        $this->grupo = $grupo;
+    
         return $this;
     }
 
     /**
-     * Get fechaFinalizacion
+     * Get grupo
      *
-     * @return \DateTime
+     * @return AppBundle\Entity\Grupo
      */
-    public function getFechaFinalizacion()
+    public function getGrupo()
     {
-        return $this->fecha_finalizacion;
+        return $this->grupo;
     }
 
     /**
-     * Set municipio
+     * Set nombreRuta
      *
-     * @param AppBundle\Entity\Municipio $municipio
+     * @param string $nombreRuta
      *
-     * @return Jurados
+     * @return Ruta
      */
-    public function setMunicipio(\AppBundle\Entity\Municipio $municipio)
+    public function setNombreRuta($nombreRuta)
     {
-        $this->municipio = $municipio;
-
+        $this->nombre_ruta = $nombreRuta;
+    
         return $this;
     }
 
     /**
-     * Get municipio
-     *
-     * @return AppBundle\Entity\Municipio
-     */
-    public function getMunicipio()
-    {
-        return $this->municipio;
-    }
-
-    /**
-     * Set lugarRealizacionCLEAR
-     *
-     * @param string $lugarRealizacionCLEAR
-     *
-     * @return Jurados
-     */
-    public function setLugarRealizacionCLEAR($lugarRealizacionCLEAR)
-    {
-        $this->lugar_realizacion_CLEAR = $lugarRealizacionCLEAR;
-
-        return $this;
-    }
-
-    /**
-     * Get lugarRealizacionCLEAR
+     * Get nombreRuta
      *
      * @return string
      */
-    public function getLugarRealizacionCLEAR()
+    public function getNombreRuta()
     {
-        return $this->lugar_realizacion_CLEAR;
+        return $this->nombre_ruta;
+    }
+
+    /**
+     * Set observaciones
+     *
+     * @param string $observaciones
+     *
+     * @return Ruta
+     */
+    public function setObservaciones($observaciones)
+    {
+        $this->observaciones = $observaciones;
+    
+        return $this;
+    }
+
+    /**
+     * Get observaciones
+     *
+     * @return string
+     */
+    public function getObservaciones()
+    {
+        return $this->observaciones;
     }
 
     /**
@@ -190,12 +188,12 @@ class Jurados
      *
      * @param boolean $active
      *
-     * @return Jurados
+     * @return Ruta
      */
     public function setActive($active)
     {
         $this->active = $active;
-
+    
         return $this;
     }
 
@@ -214,12 +212,12 @@ class Jurados
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return Jurados
+     * @return Ruta
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
-
+    
         return $this;
     }
 
@@ -238,12 +236,12 @@ class Jurados
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return Jurados
+     * @return Ruta
      */
     public function setFechaModificacion($fechaModificacion)
     {
         $this->fecha_modificacion = $fechaModificacion;
-
+    
         return $this;
     }
 
@@ -262,12 +260,12 @@ class Jurados
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return Jurados
+     * @return Ruta
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
-
+    
         return $this;
     }
 
@@ -286,12 +284,12 @@ class Jurados
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return Jurados
+     * @return Ruta
      */
     public function setFechaCreacion($fechaCreacion)
     {
         $this->fecha_creacion = $fechaCreacion;
-
+    
         return $this;
     }
 
@@ -305,3 +303,4 @@ class Jurados
         return $this->fecha_creacion;
     }
 }
+

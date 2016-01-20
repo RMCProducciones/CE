@@ -33,6 +33,9 @@
                       <a href="{{ path('gruposGestion') }}">Gestión de Grupos </a>
                     </li>
                     <li>
+                      <a href="{{ path('integranteGestion') }}">Gestión de Integrantes de Comité</a>
+                    </li>
+                    <li>
                       <a href="{{ path('CLEARGestion') }}">Gestión de CLEAR</a>
                     </li>
                     <li>
@@ -47,7 +50,7 @@
                       <a href="{{ path('concursoGestion') }}">Gestión de Concursos</a>
                     </li>
                     <li>
-                      <a href="jurados.html">Gestión de Jurados</a>
+                      <a href="{{ path('comiteGestion') }}">Gestión de Comites de Concursos</a>
                     </li>
                     <li>
                       <a href="#">Gestión de seguimiento y monitoreo</a>
@@ -58,7 +61,10 @@
                   <a href="#">Servicio complementario</a>
                   <ul class="dropdown-menu">
                     <li>
-                      <a href="pasantias.html">Participación Rutas y pasantias </a>
+                      <a href="{{ path('rutaGestion') }}">Participación Rutas</a>
+                    </li>
+                    <li>
+                      <a href="{{ path('pasantiaGestion') }}">Participación Pasantias </a>
                     </li>
                     <li>
                       <a href="talleres.html">Participación en talleres</a>
@@ -251,7 +257,10 @@
       </div>
     </div>
 
-
-
 </nav>
 
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+{{ app.user.roles | json_encode()}}
+
+{% endif %}

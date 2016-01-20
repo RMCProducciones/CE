@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * IntegranteCLEAR
+ * Integrante
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\IntegranteCLEARRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\IntegranteRepository")
  */
-class IntegranteCLEAR
+class Integrante
 {
     /**
      * @var integer
@@ -88,11 +88,6 @@ class IntegranteCLEAR
     private $cargo;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Municipio")
-     */
-    private $municipio;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="direccion", type="string")
@@ -127,7 +122,7 @@ class IntegranteCLEAR
      */
     private $correo_electronico;
 
-  /**
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $nivel_estudios;
@@ -151,7 +146,7 @@ class IntegranteCLEAR
      */
     private $active;
 
-  /**
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
@@ -191,7 +186,7 @@ class IntegranteCLEAR
      *
      * @param AppBundle\Entity\Listas $tipoDocumento
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setTipoDocumento(\AppBundle\Entity\Listas $tipoDocumento)
     {
@@ -215,7 +210,7 @@ class IntegranteCLEAR
      *
      * @param string $numeroDocumento
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setNumeroDocumento($numeroDocumento)
     {
@@ -239,7 +234,7 @@ class IntegranteCLEAR
      *
      * @param string $primerApellido
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setPrimerApellido($primerApellido)
     {
@@ -263,7 +258,7 @@ class IntegranteCLEAR
      *
      * @param string $segundoApellido
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setSegundoApellido($segundoApellido)
     {
@@ -287,7 +282,7 @@ class IntegranteCLEAR
      *
      * @param string $primerNombre
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setPrimerNombre($primerNombre)
     {
@@ -311,7 +306,7 @@ class IntegranteCLEAR
      *
      * @param string $segundoNombre
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setSegundoNombre($segundoNombre)
     {
@@ -335,7 +330,7 @@ class IntegranteCLEAR
      *
      * @param AppBundle\Entity\Listas $genero
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setGenero(\AppBundle\Entity\Listas $genero)
     {
@@ -359,7 +354,7 @@ class IntegranteCLEAR
      *
      * @param \DateTime $fechaNacimiento
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setFechaNacimiento($fechaNacimiento)
     {
@@ -383,7 +378,7 @@ class IntegranteCLEAR
      *
      * @param string $entidad
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setEntidad($entidad)
     {
@@ -407,7 +402,7 @@ class IntegranteCLEAR
      *
      * @param string $cargo
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setCargo($cargo)
     {
@@ -427,35 +422,11 @@ class IntegranteCLEAR
     }
 
     /**
-     * Set municipio
-     *
-     * @param AppBundle\Entity\Municipio $municipio
-     *
-     * @return IntegranteCLEAR
-     */
-    public function setMunicipio(\AppBundle\Entity\Municipio $municipio)
-    {
-        $this->municipio = $municipio;
-
-        return $this;
-    }
-
-    /**
-     * Get municipio
-     *
-     * @return AppBundle\Entity\Municipio
-     */
-    public function getMunicipio()
-    {
-        return $this->municipio;
-    }
-
-    /**
      * Set direccion
      *
      * @param string $direccion
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setDireccion($direccion)
     {
@@ -479,7 +450,7 @@ class IntegranteCLEAR
      *
      * @param string $telefonoFijo
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setTelefonoFijo($telefonoFijo)
     {
@@ -503,7 +474,7 @@ class IntegranteCLEAR
      *
      * @param string $telefonoCelular
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setTelefonoCelular($telefonoCelular)
     {
@@ -527,7 +498,7 @@ class IntegranteCLEAR
      *
      * @param string $telefonoCelular2
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setTelefonoCelular2($telefonoCelular2)
     {
@@ -551,7 +522,7 @@ class IntegranteCLEAR
      *
      * @param string $correoElectronico
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setCorreoElectronico($correoElectronico)
     {
@@ -575,7 +546,7 @@ class IntegranteCLEAR
      *
      * @param AppBundle\Entity\Listas $nivelEstudios
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setNivelEstudios(\AppBundle\Entity\Listas $nivelEstudios)
     {
@@ -599,7 +570,7 @@ class IntegranteCLEAR
      *
      * @param AppBundle\Entity\Listas $pertenenciaEtnica
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setPertenenciaEtnica(\AppBundle\Entity\Listas $pertenenciaEtnica)
     {
@@ -623,7 +594,7 @@ class IntegranteCLEAR
      *
      * @param string $foto
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setFoto($foto)
     {
@@ -647,7 +618,7 @@ class IntegranteCLEAR
      *
      * @param boolean $active
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setActive($active)
     {
@@ -671,7 +642,7 @@ class IntegranteCLEAR
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
@@ -695,7 +666,7 @@ class IntegranteCLEAR
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -719,7 +690,7 @@ class IntegranteCLEAR
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
@@ -743,7 +714,7 @@ class IntegranteCLEAR
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return IntegranteCLEAR
+     * @return Integrante
      */
     public function setFechaCreacion($fechaCreacion)
     {

@@ -1,0 +1,184 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+{% block title %}Integrante nuevo{% endblock %}
+
+{% block breadcrumb_ul %}
+
+    <ul class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Empresarial</li>
+      <li>Formacion de capital social asociativo y desarrollo empresarial</li>
+      <li><a href="{{ path('integranteGestion') }}">Integrantes Comité</a></li>
+	  <!--<li><a href=" path('juradosGestion', {'idComite': idComite}) ">Jurados</a></li>-->
+      <li class="active">Nuevo</li>
+    </ul>
+
+{% endblock %}
+
+
+{% block section %}
+
+     
+  	<br>
+
+
+
+    
+  {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+    {{ form_errors(form) }}
+
+     <div class="container">
+    <h1>Gestión Integrantes</h1>
+    <hr>
+    <h3>Nuevo Registro</h3>
+  </div>
+  </div>
+  <br />
+  <br />
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="btn-group">
+  
+              <button name="integrante[Guardar]" id="grupo_Guardar" type="submit" class="btn btn-success">Guardar</button>
+              
+              <a href="{{ path('integranteGestion') }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <br />
+    <br />
+        
+
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <!--form class="form-horizontal" role="form"-->
+			  <div class="row">
+            <div class="col-md-4">
+              {{ form_label(form.tipo_documento) }}
+              {{ form_errors(form.tipo_documento) }}
+              {{ form_widget(form.tipo_documento, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="col-md-4">
+              {{ form_label(form.numero_documento) }}
+              {{ form_errors(form.numero_documento) }}
+              {{ form_widget(form.numero_documento, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="col-md-4">
+              {{ form_label(form.primer_apellido) }}
+              {{ form_errors(form.primer_apellido) }}
+              {{ form_widget(form.primer_apellido, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+
+        <br />
+			  
+        <div class="row">          
+            <div class="col-md-4">
+              {{ form_label(form.segundo_apellido) }}
+              {{ form_errors(form.segundo_apellido) }}
+              {{ form_widget(form.segundo_apellido, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="col-md-4">
+              {{ form_label(form.primer_nombre) }}
+              {{ form_errors(form.primer_nombre) }}
+              {{ form_widget(form.primer_nombre, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="col-md-4">
+              {{ form_label(form.segundo_nombre) }}
+              {{ form_errors(form.segundo_nombre) }}
+              {{ form_widget(form.segundo_nombre, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">          
+                <div class="col-md-4">
+                  {{ form_label(form.genero) }}
+                  {{ form_errors(form.genero) }}
+                  {{ form_widget(form.genero, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+                <div class="col-md-4">
+                  {{ form_label(form.fecha_nacimiento) }}
+                  {{ form_errors(form.fecha_nacimiento) }}
+                  {{ form_widget(form.fecha_nacimiento, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+                <div class="col-md-4">
+                  {{ form_label(form.entidad) }}
+                  {{ form_errors(form.entidad) }}
+                  {{ form_widget(form.entidad, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+        </div>    
+
+        <br />
+
+        <div class="row">          
+            <div class="col-md-4">
+              {{ form_label(form.cargo) }}
+              {{ form_errors(form.cargo) }}
+              {{ form_widget(form.cargo, { 'attr': {'class': 'form-control'} }) }}
+            </div>                        
+            <div class="col-md-4">
+              {{ form_label(form.direccion) }}
+              {{ form_errors(form.direccion) }}
+              {{ form_widget(form.direccion, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="col-md-4">
+              {{ form_label(form.telefono_fijo) }}
+              {{ form_errors(form.telefono_fijo) }}
+              {{ form_widget(form.telefono_fijo, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">                      
+            <div class="col-md-4">
+              {{ form_label(form.telefono_celular) }}
+              {{ form_errors(form.telefono_celular) }}
+              {{ form_widget(form.telefono_celular, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="col-md-4">
+              {{ form_label(form.correo_electronico) }}
+              {{ form_errors(form.correo_electronico) }}
+              {{ form_widget(form.correo_electronico, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+            <div class="col-md-4">
+              {{ form_label(form.nivel_estudios) }}
+              {{ form_errors(form.nivel_estudios) }}
+              {{ form_widget(form.nivel_estudios, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">      
+            <div class="col-md-4">
+              {{ form_label(form.pertenencia_etnica) }}
+              {{ form_errors(form.pertenencia_etnica) }}
+              {{ form_widget(form.pertenencia_etnica, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+        </div>
+        <br />
+        <br />
+			  <!--/form-->
+          </div>
+        </div>
+      </div>
+    </div>
+
+  {{ form_end(form) }}
+               
+{% endblock %}
+
