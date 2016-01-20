@@ -229,13 +229,24 @@
 
               $('#myCanvas').click(function (e) {
            
-                    var clickedX = e.pageX - this.offsetLeft;
-                    var clickedY = e.pageY - this.offsetTop;
-                    
-                    alert(clickedX+", "+clickedY)
+                    var scrollX = ( window.scrollX !== null && typeof window.scrollX !== 'undefined') ? window.scrollX : window.pageXOffset;
+                    var scrollY = ( window.scrollY !== null && typeof window.scrollY !== 'undefined') ? window.scrollY : window.pageYOffset;
+                    clickedX = e.pageX - $("#myCanvas").offset().left //+ scrollX;
+                    clickedY = e.pageY - $("#myCanvas").offset().top //+ scrollY;
+
+                    //var clickedX = e.pageX - this.offsetLeft;
+                    //var clickedY = e.pageY - this.offsetTop;
+                    ctx.fillStyle = "#333"; 
+                    //alert(e.pageX+", "+e.pageY)
+                    //alert(clickedX+", "+clickedY)
+                    //alert($("#myCanvas").offset().left+", "+$("#myCanvas").offset().top)
                     for (var i = 0; i < circles.length; i++) {
                         //ctx.fillRect(circles[i].left, circles[i].top, 45*(escX+escY)/2, 45*(escX+escY)/2);
-                        ctx.fillText(circles[i].left+","+circles[i].top,circles[i].left,circles[i].top);
+                        ctx.fillText(Math.round(circles[i].left)+" a "+Math.round(circles[i].right)+"    ,    "+Math.round(circles[i].top)+" a "+Math.round(circles[i].bottom),circles[i].left,circles[i].top);
+                        //if (clickedX < circles[i].right && clickedX > circles[i].left)
+                        //  alert ('si en X number ' + (i + 1));
+                        //if (clickedY > circles[i].top && clickedY < circles[i].bottom)
+                        // alert ('si en Y number ' + (i + 1));
                         if (clickedX < circles[i].right && clickedX > circles[i].left && clickedY > circles[i].top && clickedY < circles[i].bottom) {
                             alert ('clicked number ' + (i + 1));
                         }
