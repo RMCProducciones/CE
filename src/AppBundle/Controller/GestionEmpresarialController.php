@@ -30,6 +30,7 @@ use AppBundle\Entity\Comite;
 use AppBundle\Entity\Integrante;
 use AppBundle\Entity\IntegranteSoporte;
 use AppBundle\Entity\Ruta;
+use AppBundle\Entity\Pasantia;
 use AppBundle\Entity\ComiteSoporte;
 use AppBundle\Entity\JuradoSoporte;
 use AppBundle\Entity\IntegranteComite;
@@ -52,6 +53,7 @@ use AppBundle\Form\GestionEmpresarial\IntegranteSoporteType;
 use AppBundle\Form\GestionEmpresarial\ComiteSoporteType;
 use AppBundle\Form\GestionEmpresarial\IntegranteComiteType;
 use AppBundle\Form\GestionEmpresarial\RutaType;
+use AppBundle\Form\GestionEmpresarial\PasantiaType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -1695,6 +1697,236 @@ class GestionEmpresarialController extends Controller
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:ruta-nuevo.html.twig', array('form' => $form->createView()));
     }
+
+    
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/editar", name="rutaEditar")
+     */
+    public function rutaEditarAction(Request $request, $idRuta)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ruta = new Ruta();
+
+        $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
+            array('id' => $idRuta)
+        );
+
+        $form = $this->createForm(new RutaType(), $ruta);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $ruta = $form->getData();
+
+            $ruta->setFechaModificacion(new \DateTime());
+
+            $usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
+            
+            $ruta->setUsuarioModificacion($usuarioModificacion);
+
+            $em->flush();
+
+            return $this->redirectToRoute('rutaGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:ruta-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idRuta' => $idRuta,
+                    'ruta' => $ruta,
+            )
+        );
+
+    }
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/eliminar", name="rutaEliminar")
+     */
+    public function rutaEliminarAction(Request $request, $idRuta)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ruta = new Ruta();
+
+        $ruta = $em->getRepository('AppBundle:Ruta')->find($idRuta);              
+
+        $em->remove($ruta);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('rutaGestion'));
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/gestion", name="pasantiaGestion")
+     */
+    public function pasantiaGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $pasantias = $em->getRepository('AppBundle:Pasantia')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:pasantia-gestion.html.twig', array( 'pasantias' => $pasantias));
+    }
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/nuevo", name="pasantiaNuevo")
+     */
+    public function pasantiaNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $pasantia= new Pasantia();
+        
+        $form = $this->createForm(new PasantiaType(), $pasantia);
+        
+        $form->add(
+            'guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $pasantia = $form->getData();
+
+
+            $pasantia->setActive(true);
+            $pasantia->setFechaCreacion(new \DateTime());
+
+            /*$usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
+            
+            $pasantia->setUsuarioCreacion($usuarioCreacion);*/
+
+            $em->persist($pasantia);
+            $em->flush();
+
+            return $this->redirectToRoute('pasantiaGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:pasantia-nuevo.html.twig', array('form' => $form->createView()));
+    }
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/editar", name="pasantiaEditar")
+     */
+    public function pasantiaEditarAction(Request $request, $idPasantia)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $pasantia = new Pasantia();
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+            array('id' => $idPasantia)
+        );
+
+        $form = $this->createForm(new PasantiaType(), $pasantia);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $pasantia = $form->getData();
+
+            $pasantia->setFechaModificacion(new \DateTime());
+
+            $usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
+            
+            $pasantia->setUsuarioModificacion($usuarioModificacion);
+
+            $em->flush();
+
+            return $this->redirectToRoute('pasantiaGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:pasantia-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idPasantia' => $idPasantia,
+                    'pasantia' => $pasantia,
+            )
+        );
+
+    }
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/eliminar", name="pasantiaEliminar")
+     */
+    public function pasantiaEliminarAction(Request $request, $idPasantia)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $pasantia = new Pasantia();
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->find($idPasantia);              
+
+        $em->remove($pasantia);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('pasantiaGestion'));
+
+    }
+
+
+
+
+
 
 
 
