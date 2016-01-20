@@ -21,24 +21,18 @@ class Pasantia
      */
     private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="territorio_aprendizaje", type="string")
+      /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\TerritorioAprendizaje")
      */
     private $territorio_aprendizaje;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="organizacion", type="string")
+      /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Organizacion")
      */
     private $organizacion;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="grupo", type="string")
+      /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
      */
     private $grupo;
 
@@ -63,31 +57,27 @@ class Pasantia
      */
     private $active;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+      /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
      */
     private $fecha_modificacion;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_creacion", type="datetime")
+     * @ORM\Column(name="fecha_creacion", type="datetime", nullable=true)
      */
     private $fecha_creacion;
 
@@ -105,11 +95,11 @@ class Pasantia
     /**
      * Set territorioAprendizaje
      *
-     * @param string $territorioAprendizaje
+     * @param AppBundle\Entity\TerritorioAprendizaje $territorioAprendizaje
      *
      * @return Pasantia
      */
-    public function setTerritorioAprendizaje($territorioAprendizaje)
+    public function setTerritorioAprendizaje(\AppBundle\Entity\TerritorioAprendizaje $territorioAprendizaje)
     {
         $this->territorio_aprendizaje = $territorioAprendizaje;
     
@@ -119,7 +109,7 @@ class Pasantia
     /**
      * Get territorioAprendizaje
      *
-     * @return string
+     * @return AppBundle\Entity\TerritorioAprendizaje
      */
     public function getTerritorioAprendizaje()
     {
@@ -129,11 +119,11 @@ class Pasantia
     /**
      * Set organizacion
      *
-     * @param string $organizacion
+     * @param AppBundle\Entity\Organizacion $organizacion
      *
      * @return Pasantia
      */
-    public function setOrganizacion($organizacion)
+    public function setOrganizacion(\AppBundle\Entity\Organizacion $organizacion)
     {
         $this->organizacion = $organizacion;
     
@@ -143,7 +133,7 @@ class Pasantia
     /**
      * Get organizacion
      *
-     * @return string
+     * @return AppBundle\Entity\Organizacion
      */
     public function getOrganizacion()
     {
@@ -153,11 +143,11 @@ class Pasantia
     /**
      * Set grupo
      *
-     * @param string $grupo
+     * @param AppBundle\Entity\Grupo $grupo
      *
      * @return Pasantia
      */
-    public function setGrupo($grupo)
+    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
     {
         $this->grupo = $grupo;
     
@@ -167,7 +157,7 @@ class Pasantia
     /**
      * Get grupo
      *
-     * @return string
+     * @return AppBundle\Entity\Grupo
      */
     public function getGrupo()
     {
@@ -249,11 +239,11 @@ class Pasantia
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return Pasantia
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
     
@@ -263,7 +253,7 @@ class Pasantia
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -297,11 +287,11 @@ class Pasantia
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return Pasantia
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
     
@@ -311,7 +301,7 @@ class Pasantia
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
