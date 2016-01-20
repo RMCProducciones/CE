@@ -34,11 +34,11 @@ app.controller('gestionIntegranteComiteCtrl', ['$scope', '$http', function($scop
 app.controller('gestionDocumentoSoporteIntegranteComiteCtrl', ['$scope', '$location', function($scope, $location) {
 
 	$scope.idIntegrante = 0;
-	$scope.idIntegranteComiteSoporteActivo = 0;
+	$scope.idIntegranteSoporteActivo = 0;
 
 	$scope.anularSoporteIntegranteComite = function() { 
 	
-		window.location.replace($scope.rutaServidor  + "gestion-empresarial/desarrollo-empresarial/integrante/" + $scope.idIntegrante + "/documentos-soporte/" + $scope.idIntegranteComiteSoporteActivo + "/borrar");
+		window.location.replace($scope.rutaServidor  + "gestion-empresarial/desarrollo-empresarial/integrante/" + $scope.idIntegrante + "/documentos-soporte/" + $scope.idIntegranteSoporteActivo + "/borrar");
 		
 	};	
 

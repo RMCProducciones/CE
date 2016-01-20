@@ -832,6 +832,27 @@ class GestionEmpresarialController extends Controller
         
     }
 
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-integrante", name="clearAsignacionIntegrante")
+     */
+    public function clearAsignacionIntegranteAction(Request $request, $idCLEAR, $idClearSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $clearSoporte = new ClearSoporte();
+        
+        $clearSoporte = $em->getRepository('AppBundle:ClearSoporte')->findOneBy(
+            array('id' => $idClearSoporte)
+        );
+        
+        $clearSoporte->setFechaModificacion(new \DateTime());
+        $clearSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR));
+        
+    }
+
 	
 	/**
      * @Route("/gestion-empresarial/desarrollo-empresarial/integrantes/nuevo", name="integranteNuevo")
@@ -1008,7 +1029,7 @@ class GestionEmpresarialController extends Controller
                 $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
                     array(
                         'descripcion' => $integranteSoporte->getTipoSoporte()->getDescripcion(), 
-                        'dominio' => 'comite_tipo_soporte'
+                        'dominio' => 'grupo_tipo_soporte'
                     )
                 );
 
@@ -1060,11 +1081,13 @@ class GestionEmpresarialController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $IntegranteSoporte = new IntegranteSoporte();
+        $integranteSoporte = new IntegranteSoporte();
         
         $integranteSoporte = $em->getRepository('AppBundle:IntegranteSoporte')->findOneBy(
             array('id' => $idIntegranteSoporte)
         );
+
+        echo $idIntegranteSoporte;
         
         $integranteSoporte->setFechaModificacion(new \DateTime());
         $integranteSoporte->setActive(0);
