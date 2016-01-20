@@ -26,7 +26,7 @@ class IntegranteType extends AbstractType
 			->add('segundo_apellido', 'text', array('required' => false))
 			->add('primer_nombre', 'text',array('label' => 'Primer Nombre'))
 			->add('segundo_nombre', 'text', array('required' => false))
-			->add('genero', 'entity', array('class' => 'AppBundle:Listas', 'expanded' => true, 
+			->add('genero', 'entity', array('class' => 'AppBundle:Listas', 
 										    'query_builder' => function(EntityRepository $er) {
 										        return $er->createQueryBuilder('l')
 										        	->where('l.dominio = :dominio')

@@ -28,6 +28,7 @@ use AppBundle\Entity\ActividadConcurso;
 use AppBundle\Entity\Listas;
 use AppBundle\Entity\Comite;
 use AppBundle\Entity\Integrante;
+use AppBundle\Entity\IntegranteSoporte;
 use AppBundle\Entity\Ruta;
 use AppBundle\Entity\RutaSoporte;
 use AppBundle\Entity\Pasantia;
@@ -50,6 +51,7 @@ use AppBundle\Form\GestionEmpresarial\ConcursoType;
 use AppBundle\Form\GestionEmpresarial\ActividadConcursoType;
 use AppBundle\Form\GestionEmpresarial\ComiteType;
 use AppBundle\Form\GestionEmpresarial\IntegranteType;
+use AppBundle\Form\GestionEmpresarial\IntegranteSoporteType;
 use AppBundle\Form\GestionEmpresarial\ComiteSoporteType;
 use AppBundle\Form\GestionEmpresarial\IntegranteComiteType;
 use AppBundle\Form\GestionEmpresarial\RutaType;
@@ -120,13 +122,13 @@ class GestionEmpresarialController extends Controller
 
             $grupo->setFechaModificacion(new \DateTime());
 
-            $usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            /*$usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
                 array(
                     'id' => 1
                 )
             );
             
-            $grupo->setUsuarioModificacion($usuarioModificacion);
+            $grupo->setUsuarioModificacion($usuarioModificacion);*/
 
             $em->flush();
 
@@ -896,14 +898,14 @@ class GestionEmpresarialController extends Controller
     public function integranteEditarAction(Request $request, $idIntegrante)
     {
         $em = $this->getDoctrine()->getManager();
-        $integrante = new Integrante();
+        $integrantes = new Integrante();
 
-        $integrante = $em->getRepository('AppBundle:Integrante')->findOneBy(
+        $integrantes = $em->getRepository('AppBundle:Integrante')->findOneBy(
             array('id' => $idIntegrante)
         );
+        //echo $integrantes->getPertenenciaEtnica();
+        $form = $this->createForm(new IntegranteType(), $integrantes);
         
-        $form = $this->createForm(new IntegranteType(), $integrante);
-
         $form->add(
             'Guardar', 
             'submit', 
@@ -917,28 +919,159 @@ class GestionEmpresarialController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            // data is an array with "name", "email", and "message" keys
-            $integrante = $form->getData();
 
-            $integrante->setActive(true);
-            $integrante->setFechaCreacion(new \DateTime());
+            $integrantes = $form->getData();
 
-            $em->persist($integrante);
+            $integrantes->setFechaModificacion(new \DateTime());
+
+            /*$usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
+            
+            $integrantes->setUsuarioModificacion($usuarioModificacion);*/
+
             $em->flush();
 
-            return $this->redirectToRoute('integranteGestion');
+            return $this->redirectToRoute('gruposGestion');
         }
-
 
         return $this->render(
             'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrante-editar.html.twig', 
             array(
                     'form' => $form->createView(),
                     'idIntegrante' => $idIntegrante,
-                    'integrante' => $integrante
+                    'integrantes' => $integrantes,
             )
         );
+
                
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/integrante/{idIntegrante}/eliminar", name="integranteEliminar")
+     */
+    public function IntegranteEliminarAction(Request $request, $idIntegrante)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $integrante = new Integrante();
+
+        $integrante = $em->getRepository('AppBundle:Integrante')->find($idIntegrante);              
+
+        $em->remove($integrante);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('integranteGestion'));
+
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/integrante/{idIntegrante}/documentos-soporte", name="integranteSoporte")
+     */
+    public function integranteSoporteAction(Request $request, $idIntegrante)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $integranteSoporte = new IntegranteSoporte();
+        
+        $form = $this->createForm(new IntegranteSoporteType(), $integranteSoporte);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $soportesActivos = $em->getRepository('AppBundle:IntegranteSoporte')->findBy(
+            array('active' => '1', 'integrante' => $idIntegrante),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $histotialSoportes = $em->getRepository('AppBundle:IntegranteSoporte')->findBy(
+            array('active' => '0', 'integrante' => $idIntegrante),
+            array('fecha_creacion' => 'ASC')
+        );
+        
+        $integrante = $em->getRepository('AppBundle:Integrante')->findOneBy(
+            array('id' => $idIntegrante)
+        );
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+
+                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                    array(
+                        'descripcion' => $integranteSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'comite_tipo_soporte'
+                    )
+                );
+
+                echo $integranteSoporte->getTipoSoporte()->getDescripcion();
+                
+                $actualizarIntegranteSoportes = $em->getRepository('AppBundle:IntegranteSoporte')->findBy(
+                    array(
+                        'active' => '1' ,                         
+                        'tipo_soporte' => $tipoSoporte->getId(), 
+                        'integrante' => $idIntegrante
+                    )
+                );  
+
+            
+                foreach ($actualizarIntegranteSoportes as $actualizarIntegranteSoporte){
+                    echo $actualizarIntegranteSoporte->getId()." ".$actualizarIntegranteSoporte->getTipoSoporte()."<br />";
+                    $actualizarIntegranteSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarIntegranteSoporte->setActive(0);
+                    $em->flush();
+                }
+                
+                $integranteSoporte->setIntegrante($integrante);
+                $integranteSoporte->setActive(true);
+                $integranteSoporte->setFechaCreacion(new \DateTime());
+                //$grupoSoporte->setUsuarioCreacion(1);
+
+                $em->persist($integranteSoporte);
+                $em->flush();
+
+                return $this->redirectToRoute('integranteSoporte', array( 'idIntegrante' => $idIntegrante));
+            }
+        }   
+        
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrante-soporte.html.twig', 
+            array(
+                'form' => $form->createView(), 
+                'soportesActivos' => $soportesActivos, 
+                'histotialSoportes' => $histotialSoportes
+            )
+        );
+        
+    }
+    
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/integrante/{idIntegrante}/documentos-soporte/{idIntegranteSoporte}/borrar", name="integranteSoporteBorrar")
+     */
+    public function integranteSoporteBorrarAction(Request $request, $idIntegrante, $idIntegranteSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $IntegranteSoporte = new IntegranteSoporte();
+        
+        $integranteSoporte = $em->getRepository('AppBundle:IntegranteSoporte')->findOneBy(
+            array('id' => $idIntegranteSoporte)
+        );
+        
+        $integranteSoporte->setFechaModificacion(new \DateTime());
+        $integranteSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('integranteSoporte', array( 'idIntegrante' => $idIntegrante));
+        
     }
 	
 	
@@ -1047,7 +1180,7 @@ class GestionEmpresarialController extends Controller
     }
 
 
-/**
+    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/eliminar", name="concursoEliminar")
      */
     public function ConcursoEliminarAction(Request $request, $idConcurso)
@@ -1067,7 +1200,7 @@ class GestionEmpresarialController extends Controller
 
 
 	
-/**
+    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/documentos-soporte", name="concursoSoporte")
      */
     public function concursoSoporteAction(Request $request, $idConcurso)
