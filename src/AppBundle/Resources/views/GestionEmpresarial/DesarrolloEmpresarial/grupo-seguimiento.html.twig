@@ -33,48 +33,227 @@
   </div>
 
 
-    <div class="section">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 table-responsive">
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 table-responsive">
+          Mantener relación de aspecto <input id="aspecto" type = "checkbox" checked onclick="escalarX()"><br><br>
+          Ancho <input id="escalaX" type="range" style="width: 30vw; display:inline; margin-right:5vw;" min="15" max="200" step="1" value="50" width="200px" onChange="escalarX()">
+          Alto <input id="escalaY" type="range" style="width: 30vw; display:inline;" min="15" max="200" step="1" value="50" width="200px" onChange="escalarY()">
+          
+       </div>
+      </div>
+    </div>
+  </div>  
+
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 table-responsive">
+          
             
+            <br />
+
+            
+            <canvas id="myCanvas" width="1400" height="500" style="border:1px solid #EBEBEB;">
+            </canvas>
+
+            <script type="text/javascript">
               
-              <br />
+              var c = document.getElementById("myCanvas");
+              var ctx = c.getContext("2d");
+              
 
-              <canvas id="myCanvas" width="1000" height="500" style="border:1px solid #000000;">
-              </canvas>
+              var escX = .5;
+              var escY = .5;
 
-              <script type="text/javascript">
+              var circles = [];
+
+              dibujar();
+
+             
+
+              function escalarX(){
+                if (document.getElementById("aspecto").checked)
+                  document.getElementById("escalaY").value = document.getElementById("escalaX").value;
+                dibujar();
+              }
+
+              function escalarY(){
+                if (document.getElementById("aspecto").checked)
+                  document.getElementById("escalaX").value = document.getElementById("escalaY").value;
+                dibujar();
+              }
+
+              function dibujar(){
+
+                circles = [];
                 
-                var c = document.getElementById("myCanvas");
-                var ctx = c.getContext("2d");
-                var escX = .5;
-                var escY = .5;
+                c.width = c.width;
+
+                escX = document.getElementById("escalaX").value/100;
+                escY = document.getElementById("escalaY").value/100;
+                c.width = 2500*escX;
+                c.height = 800*escY;
                 
                 ctx.fillStyle = "#F2F2F2";    ctx.fillRect(200*escX, 100*escY, 250*escX, 600*escY);
 
                 ctx.fillStyle = "#EBEBEB";    ctx.fillRect(450*escX, 100*escY, 450*escX, 300*escY);
                 ctx.fillStyle = "#F2F2F2";    ctx.fillRect(900*escX, 100*escY, 450*escX, 300*escY);
+                ctx.fillStyle = "#EBEBEB";    ctx.fillRect(1350*escX, 100*escY, 450*escX, 300*escY);
+                ctx.fillStyle = "#F2F2F2";    ctx.fillRect(1800*escX, 100*escY, 450*escX, 300*escY);
+
+                ctx.fillStyle = "#F2F3F7";    ctx.fillRect(450*escX, 400*escY, 450*escX, 300*escY);
+                ctx.fillStyle = "#EBEDF4";    ctx.fillRect(900*escX, 400*escY, 450*escX, 300*escY);
+                ctx.fillStyle = "#F2F3F7";    ctx.fillRect(1350*escX, 400*escY, 450*escX, 300*escY);
+                ctx.fillStyle = "#EBEDF4";    ctx.fillRect(1800*escX, 400*escY, 450*escX, 300*escY);
+
+
+                ctx.fillStyle = "#F2F2F2";    ctx.fillRect(450*escX, 22*escY, 450*escX, 70*escY);
+                ctx.fillStyle = "#EBEBEB";    ctx.fillRect(900*escX, 22*escY, 450*escX, 70*escY);
+                ctx.fillStyle = "#F2F2F2";    ctx.fillRect(1350*escX, 22*escY, 450*escX, 70*escY);
+                ctx.fillStyle = "#EBEBEB";    ctx.fillRect(1800*escX, 22*escY, 450*escX, 70*escY);
+
+                ctx.fillStyle = "#F2F2F2";    ctx.fillRect(450*escX, 708*escY, 450*escX, 70*escY);
+                ctx.fillStyle = "#EBEBEB";    ctx.fillRect(900*escX, 708*escY, 1350*escX, 70*escY);
+
+                ctx.fillStyle = "#F2F2F2";    ctx.fillRect(2300*escX, 100*escY, 150*escX, 300*escY);
+                ctx.fillStyle = "#EBEDF4";    ctx.fillRect(2300*escX, 400*escY, 150*escX, 300*escY);
 
 
 
-                ctx.moveTo(0,0);
-                ctx.lineTo(200,100);
-                ctx.stroke();
+                ctx.font = 26*(escX+escY)/2+"px Arial"; 
 
-                ctx.beginPath();
-                ctx.arc(95,50,40,0,2*Math.PI);
-                ctx.stroke();
+                ctx.fillStyle = "#999"; 
+                ctx.fillText("Convocatoria",10*escX,408*escY);
 
-              </script>     
+                ctx.font = 16*(escX+escY)/2+"px Arial";
+                ctx.fillText("CLEAR",220*escX,308*escY);
 
-              <br />
-              <br />
+                // data for "hot points"
+                var dataTab = {
+                  0: 'circulo n0',
+                  1: 'circulo n1',
+                  2: 'circulo n2',
+                };
 
-          </div>
+                circulo(200, 400, 3);
+                circulo(280, 400, 1);
+                circulo(380, 180);
+                circulo(280, 630);
+                circulo(330, 580);
+
+                
+                circulo(480, 280, 2);
+                circulo(630, 280);
+                circulo(780, 280);
+
+                circulo(480, 530);
+                circulo(630, 530);
+                circulo(780, 530);
+
+                circulo(900, 530);
+
+                circulo(950, 530);
+                circulo(1050, 530);
+                circulo(1100, 530);
+                circulo(1150, 530);
+                circulo(1250, 530);
+
+                circulo(1350, 530);
+
+                circulo(1400, 530);
+
+                linea(200, 400, 280, 400, 1)
+                linea(220, 150, 380, 270, 2)
+
+
+                
+              }
+                    
+              function Circle(x, y, radius) {
+                  this.left = x - radius;
+                  this.top = y - radius;
+                  this.right = x + radius;
+                  this.bottom = y + radius;
+              };
+
+              function circulo(x, y, estado){
+
+                var radius = 45/2*(escX+escY)/2;
+
+                ctx.fillStyle = color(estado);
+                ctx.beginPath(); 
+                ctx.arc(x*escX,y*escY, radius,0,2*Math.PI, true); 
+                ctx.closePath();
+                ctx.fill();
+
+                var circle = new Circle(x*escX, y*escY, radius);
+                circles.push(circle);
+              }
+
+              var vinculo = function(x, y, radius) {
+                this.left = x - radius;
+                this.top = y - radius;
+                this.right = x + radius;
+                this.bottom = y + radius;
+              };
+
+
+              function linea(x1, y1, x2, y2, estado){
+        
+                ctx.strokeStyle=color(estado); 
+                ctx.lineWidth=4; 
+                ctx.beginPath(); 
+                ctx.moveTo(x1*escX, y1*escY); 
+                ctx.lineTo(x2*escX, y2*escY); 
+                ctx.closePath();
+                ctx.stroke(); 
+              }
+
+              function color(estado){
+
+                var colorHexa = "#E0E0D5";    
+                if(estado == 1)
+                  colorHexa = "#A1D44A";
+                else if(estado == 2)
+                  colorHexa = "#DCDC00";
+                else if(estado == 3)
+                  colorHexa = "#DB0041";
+                else if(estado == -1)
+                  colorHexa = "transparent";
+
+                
+                return colorHexa;
+              }
+
+              $('#myCanvas').click(function (e) {
+           
+                    var clickedX = e.pageX - this.offsetLeft;
+                    var clickedY = e.pageY - this.offsetTop;
+                    
+                    alert(clickedX+", "+clickedY)
+                    for (var i = 0; i < circles.length; i++) {
+                        //ctx.fillRect(circles[i].left, circles[i].top, 45*(escX+escY)/2, 45*(escX+escY)/2);
+                        ctx.fillText(circles[i].left+","+circles[i].top,circles[i].left,circles[i].top);
+                        if (clickedX < circles[i].right && clickedX > circles[i].left && clickedY > circles[i].top && clickedY < circles[i].bottom) {
+                            alert ('clicked number ' + (i + 1));
+                        }
+                    }
+                });
+
+
+              
+
+            </script>     
+
+            <br />
+            <br />
+
         </div>
       </div>
-    </div>  
+    </div>
+  </div>  
 
 
     
