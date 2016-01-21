@@ -50,14 +50,14 @@ class Organizacion
     /**
      * @var string
      *
-     * @ORM\Column(name="codigo", type="string")
+     * @ORM\Column(name="codigo", type="string", nullable=true)
      */
     private $codigo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string")
+     * @ORM\Column(name="nombre", type="string", nullable=true)
      */
     private $nombre;
 
@@ -153,21 +153,21 @@ class Organizacion
     /**
      * @var string
      *
-     * @ORM\Column(name="telefono_fijo_contacto", type="string")
+     * @ORM\Column(name="telefono_fijo_contacto", type="string", nullable=true)
      */
     private $telefono_fijo_contacto;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="telefono_celular_contacto", type="string")
+     * @ORM\Column(name="telefono_celular_contacto", type="string", nullable=true)
      */
     private $telefono_celular_contacto;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="correo_electronico_contacto", type="string")
+     * @ORM\Column(name="correo_electronico_contacto", type="string", nullable=true)
      */
     private $correo_electronico_contacto;
 
