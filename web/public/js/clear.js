@@ -52,3 +52,11 @@ app.controller('gestionDocumentoSoporteClearCtrl', ['$scope', '$location', funct
 
 
 }]);
+
+app.controller('gestionIntegranteClearCtrl', ['$scope', '$http', function($scope, $http) {
+
+	$scope.eliminarIntegranteClear = function(ruta){
+		window.location.replace(ruta);
+	};	
+
+}]);

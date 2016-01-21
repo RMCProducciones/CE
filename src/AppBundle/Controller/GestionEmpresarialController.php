@@ -896,7 +896,43 @@ class GestionEmpresarialController extends Controller
         
     }
 
-	
+     /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-integrante/{idAsignacionIntegranteCLEAR}/eliminar", name="clearEliminarIntegrante")
+     */
+    public function clearEliminarIntegranteAction(Request $request, $idCLEAR, $idAsignacionIntegranteCLEAR)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionIntegranteCLEAR = new AsignacionIntegranteCLEAR();
+
+        $asignacionIntegranteCLEAR = $em->getRepository('AppBundle:AsignacionIntegranteCLEAR')->find($idAsignacionIntegranteCLEAR); 
+
+        $integrantes = $em->getRepository('AppBundle:Integrante')->findBy(
+            array('active' => '1'),
+            array('primer_apellido' => 'ASC')            
+        );  
+
+        $em->remove($asignacionIntegranteCLEAR);
+        $em->flush();
+
+        $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
+            array('id' => $idCLEAR)
+        );
+
+        $asignacionesIntegranteCLEAR = $em->getRepository('AppBundle:AsignacionIntegranteCLEAR')->findBy(
+            array('clear' => $clear)
+        );  
+
+        return $this->redirectToRoute('clearIntegrante',
+             array(
+                'integrantes' => $integrantes,
+                'asignacionesIntegranteCLEAR' => $asignacionIntegranteCLEAR,
+                'idCLEAR' => $idCLEAR
+            ));    
+        
+    }
+
+
 	/**
      * @Route("/gestion-empresarial/desarrollo-empresarial/integrantes/nuevo", name="integranteNuevo")
      */
@@ -1682,27 +1718,105 @@ class GestionEmpresarialController extends Controller
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/jurados", name="juradosGestion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/asignacion-integrante", name="comiteIntegrante")
      */
-    public function juradosGestionAction($idComite)
+    public function comiteIntegranteAction($idComite)
     {
         $em = $this->getDoctrine()->getManager();
-        
+
+        $comite = $em->getRepository('AppBundle:Comite')->findOneBy(
+            array('id' => $idComite)
+        );
+
+        $asignacionesIntegranteComite = $em->getRepository('AppBundle:AsignacionIntegranteComite')->findBy(
+            array('comite' => $comite)
+        );  
+
         $integrantes = $em->getRepository('AppBundle:Integrante')->findBy(
             array('active' => '1'),
             array('primer_apellido' => 'ASC')
-        );  
-        $AsignacionIntegranteComite = $em->getRepository('AppBundle:AsignacionIntegranteComite')->findBy(
-            array('active' => '1', 'comite' => $idComite),
-            array()
-        );  
+        );          
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:jurados-comite-gestion-asignacion.html.twig', 
             array(
-                'integrantes' => $integrantes, 
-                'AsignacionIntegranteComite' => $AsignacionIntegranteComite,
+                'integrantes' => $integrantes,
+                'asignacionesIntegranteComite' => $asignacionesIntegranteComite,
                 'idComite' => $idComite
             ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/asignacion-integrante/{idIntegrante}/nueva-asignacion", name="comiteAsignarIntegrante")
+     */
+    public function comiteAsignarIntegranteAction($idComite, $idIntegrante)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $integrantes = $em->getRepository('AppBundle:Integrante')->findOneBy(
+            array('id' => $idIntegrante)
+        );  
+
+        $comite = $em->getRepository('AppBundle:Comite')->findOneBy(
+            array('id' => $idComite)
+        );  
+           
+        $asignacionesIntegranteComite = new AsignacionIntegranteComite();
+
+        $asignacionesIntegranteComite->setIntegrante($integrantes);
+        $asignacionesIntegranteComite->setComite($comite);           
+        $asignacionesIntegranteComite->setActive(true);
+        $asignacionesIntegranteComite->setFechaCreacion(new \DateTime());
+
+        $em->persist($asignacionesIntegranteComite);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('comiteIntegrante', 
+            array(
+                'integrantes' => $integrantes, 
+                'asignacionesIntegranteComite' => $asignacionesIntegranteComite,
+                'idComite' => $idComite
+            ));        
+        
+    }
+
+     /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/asignacion-integrante/{idAsignacionIntegranteComite}/eliminar", name="comiteEliminarIntegrante")
+     */
+    public function comiteEliminarIntegranteAction(Request $request, $idComite, $idAsignacionIntegranteComite)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionIntegranteComite = new AsignacionIntegranteComite();
+
+        $asignacionIntegranteComite = $em->getRepository('AppBundle:AsignacionIntegranteComite')->find($idAsignacionIntegranteComite); 
+
+        $integrantes = $em->getRepository('AppBundle:Integrante')->findBy(
+            array('active' => '1'),
+            array('primer_apellido' => 'ASC')            
+        );  
+
+        $em->remove($asignacionIntegranteComite);
+        $em->flush();
+
+        $comite = $em->getRepository('AppBundle:Comite')->findOneBy(
+            array('id' => $idComite)
+        );
+
+        $asignacionesIntegranteComite = $em->getRepository('AppBundle:AsignacionIntegranteComite')->findBy(
+            array('comite' => $comite)
+        );  
+
+        return $this->redirectToRoute('comiteIntegrante',
+             array(
+                'integrantes' => $integrantes,
+                'asignacionesIntegranteComite' => $asignacionIntegranteComite,
+                'idComite' => $idComite
+            ));    
+        
     }
      
     /**

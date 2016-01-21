@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AsignacionIntegranteCLEAR
+ * AsignacionIntegranteComite
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\AsignacionIntegranteCLEARRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\AsignacionIntegranteComiteRepository")
  */
-class AsignacionIntegranteCLEAR
+class AsignacionIntegranteComite
 {
     /**
      * @var integer
@@ -22,9 +22,9 @@ class AsignacionIntegranteCLEAR
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CLEAR")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Comite")
      */
-    private $clear;
+    private $comite;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Integrante")
@@ -79,15 +79,15 @@ class AsignacionIntegranteCLEAR
     }
 
     /**
-     * Set clear
+     * Set comite
      *
-     * @param AppBundle\Entity\CLEAR $clear
+     * @param AppBundle\Entity\Comite $comite
      *
-     * @return AsignacionIntegranteCLEAR
+     * @return AsignacionIntegranteComite
      */
-    public function setClear(\AppBundle\Entity\CLEAR $clear)
+    public function setComite(\AppBundle\Entity\Comite $comite)
     {
-        $this->clear = $clear;
+        $this->comite = $comite;
 
         return $this;
     }
@@ -95,11 +95,11 @@ class AsignacionIntegranteCLEAR
     /**
      * Get clear
      *
-     * @return AppBundle\Entity\CLEAR
+     * @return AppBundle\Entity\Comite
      */
-    public function getClear()
+    public function getComite()
     {
-        return $this->clear;
+        return $this->comite;
     }
 
     /**
@@ -107,7 +107,7 @@ class AsignacionIntegranteCLEAR
      *
      * @param AppBundle\Entity\Integrante $integrante
      *
-     * @return AsignacionIntegranteCLEAR
+     * @return AsignacionIntegranteComite
      */
     public function setIntegrante(\AppBundle\Entity\Integrante $integrante)
     {
@@ -131,7 +131,7 @@ class AsignacionIntegranteCLEAR
      *
      * @param AppBundle\Entity\Listas $rol
      *
-     * @return AsignacionIntegranteCLEAR
+     * @return AsignacionIntegranteComite
      */
     public function setRol(\AppBundle\Entity\Listas $rol)
     {
@@ -155,7 +155,7 @@ class AsignacionIntegranteCLEAR
      *
      * @param boolean $active
      *
-     * @return AsignacionIntegranteCLEAR
+     * @return AsignacionIntegranteComite
      */
     public function setActive($active)
     {
@@ -179,7 +179,7 @@ class AsignacionIntegranteCLEAR
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return AsignacionIntegranteCLEAR
+     * @return AsignacionIntegranteComite
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
@@ -203,7 +203,7 @@ class AsignacionIntegranteCLEAR
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return AsignacionIntegranteCLEAR
+     * @return AsignacionIntegranteComite
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -227,7 +227,7 @@ class AsignacionIntegranteCLEAR
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return AsignacionIntegranteCLEAR
+     * @return AsignacionIntegranteComite
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
@@ -251,7 +251,7 @@ class AsignacionIntegranteCLEAR
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return AsignacionIntegranteCLEAR
+     * @return AsignacionIntegranteComite
      */
     public function setFechaCreacion($fechaCreacion)
     {
@@ -270,4 +270,3 @@ class AsignacionIntegranteCLEAR
         return $this->fecha_creacion;
     }
 }
-
