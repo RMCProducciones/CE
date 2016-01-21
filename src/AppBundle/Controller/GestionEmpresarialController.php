@@ -37,6 +37,7 @@ use AppBundle\Entity\ComiteSoporte;
 use AppBundle\Entity\JuradoSoporte;
 use AppBundle\Entity\IntegranteComite;
 use AppBundle\Entity\AsignacionIntegranteComite;
+use AppBundle\Entity\Organizacion;
 
 use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
 use AppBundle\Form\GestionEmpresarial\AsignacionIntegranteCLEARType;
@@ -58,6 +59,7 @@ use AppBundle\Form\GestionEmpresarial\RutaType;
 use AppBundle\Form\GestionEmpresarial\PasantiaType;
 use AppBundle\Form\GestionEmpresarial\RutaSoporteType;
 use AppBundle\Form\GestionEmpresarial\PasantiaSoporteType;
+use AppBundle\Form\GestionEmpresarial\OrganizacionType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -1888,18 +1890,6 @@ class GestionEmpresarialController extends Controller
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
  /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/gestion", name="pasantiaGestion")
      */
@@ -2146,6 +2136,79 @@ class GestionEmpresarialController extends Controller
 
 
 
+
+ /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/organizacion/gestion", name="organizacionGestion")
+     */
+    public function organizacionGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $organizaciones = $em->getRepository('AppBundle:Organizacion')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:organizacion-gestion.html.twig', array( 'organizaciones' => $organizaciones));
+    }
+
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/organizacion/nuevo", name="organizacionNuevo")
+     */
+    public function organizacionNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $organizacion = new Organizacion();
+        
+        $form = $this->createForm(new OrganizacionType(), $organizacion);
+        
+        $form->add(
+            'guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $organizacion = $form->getData();
+
+            if($organizacion->getRural() == true){             
+                $organizacion->setBarrio(null);
+            }
+            else
+            {
+                $organizacion->setCorregimiento(null);
+                $organizacion->setVereda(null);
+                $organizacion->setCacerio(null);
+            }
+
+            $organizacion->setActive(true);
+            $organizacion->setFechaCreacion(new \DateTime());
+
+            /*$usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
+            
+            $grupo->setUsuarioCreacion($usuarioCreacion);*/
+
+            $em->persist($organizacion);
+            $em->flush();
+
+            return $this->redirectToRoute('organizacionGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:organizacion-nuevo.html.twig', array('form' => $form->createView()));
+    }
 
 
 
