@@ -15,7 +15,15 @@ class OrganizacionType extends AbstractType
         $builder
 			
             ->add('nombre_organizacion', 'text', array('label' => 'Nombre Organización'))
-            ->add('linea_productiva', 'text', array('label' => 'línea Productiva'))
+            ->add('linea_productiva', 'entity', array('label' => 'Linea Productiva', 
+											'class' => 'AppBundle:Listas',
+										    'query_builder' => function(EntityRepository $er) {
+										        return $er->createQueryBuilder('l')
+										        	->where('l.dominio = :dominio')
+										        	->andWhere('l.active = 1')
+										        	->setParameter('dominio', 'linea_productiva')
+										            ->orderBy('l.orden', 'ASC');
+										    },))
             ->add('tipo_producto', 'text', array('label' => 'Tipo Producto '))
             ->add('fecha_inscripcion', 'date', array('label' => 'Fecha de inscripción', 'widget' => 'single_text'))
             ->add('direccion', 'text', array('label' => 'Dirección'))

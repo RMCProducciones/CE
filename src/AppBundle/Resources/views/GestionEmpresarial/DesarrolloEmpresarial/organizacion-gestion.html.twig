@@ -102,14 +102,44 @@
               <thead>
                 	<tr>
 	                  <th class="text-center">#</th>
-	                  <th class="text-left">Nombre Ruta</th>
-	                  <th class="text-left">Observaciones</th>
+	                  <th class="text-left">Nombre Organizacion</th>
+	                  <th class="text-left">Linea Productiva</th>
 	                  <th class="text-center">Acciones</th>
 	                </tr>
 	           </thead>
 	           <tbody>
           
-            
+            {% set consecutivo = 1 %}
+        
+          {% for organizacion in organizaciones %}
+                  
+                  <tr id="filaOrganizacion{{ consecutivo }}">
+                    <td class="text-center">{{ consecutivo }}</td>
+                    <td></td>
+                    <td class="text-left">
+                                      </td>
+                     <td class="text-left">
+                      {{organizacion.nombre_organizacion}}
+                     </td>
+                     <td class="text-left">
+                      {{organizacion.linea_productiva}}
+                    </td>
+                    <td class="text-left">
+                      {{organizacion.tipo_producto}}
+                    </td>     
+                    <td class="text-center">
+                     
+                    </td>
+                  </tr>
+                  {% set consecutivo = consecutivo + 1 %} 
+                  {% else %}
+                  
+                  <tr>
+                      <td colspan="7" class="info">No se encontraron registros.</td>
+                  </tr>
+                  
+                  {% endfor %}
+        
 	    	
 	    		
 	                
