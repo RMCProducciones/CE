@@ -605,12 +605,6 @@ class GestionEmpresarialController extends Controller
 
     }
 
-
-
-
-
-
-
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/clear/gestion", name="CLEARGestion")
      */
@@ -834,6 +828,72 @@ class GestionEmpresarialController extends Controller
         
     }
 
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-integrante", name="clearIntegrante")
+     */
+    public function clearIntegranteAction($idCLEAR)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
+            array('id' => $idCLEAR)
+        );
+
+        $asignacionesIntegranteCLEAR = $em->getRepository('AppBundle:AsignacionIntegranteCLEAR')->findBy(
+            array('clear' => $clear)
+        );  
+
+        $integrantes = $em->getRepository('AppBundle:Integrante')->findBy(
+            array('active' => '1'),
+            array('primer_apellido' => 'ASC')
+        );          
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantes-clear-gestion-asignacion.html.twig', 
+            array(
+                'integrantes' => $integrantes,
+                'asignacionesIntegranteCLEAR' => $asignacionesIntegranteCLEAR,
+                'idCLEAR' => $idCLEAR
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-integrante/{idIntegrante}/nueva-asignacion", name="clearAsignarIntegrante")
+     */
+    public function clearAsignarIntegranteAction($idCLEAR, $idIntegrante)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $integrantes = $em->getRepository('AppBundle:Integrante')->findOneBy(
+            array('id' => $idIntegrante)
+        );  
+
+        $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
+            array('id' => $idCLEAR)
+        );  
+           
+        $asignacionesIntegranteCLEAR = new AsignacionIntegranteCLEAR();
+
+        $asignacionesIntegranteCLEAR->setIntegrante($integrantes);
+        $asignacionesIntegranteCLEAR->setClear($clear);           
+        $asignacionesIntegranteCLEAR->setActive(true);
+        $asignacionesIntegranteCLEAR->setFechaCreacion(new \DateTime());
+
+        $em->persist($asignacionesIntegranteCLEAR);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('clearIntegrante', 
+            array(
+                'integrantes' => $integrantes, 
+                'asignacionesIntegranteCLEAR' => $asignacionesIntegranteCLEAR,
+                'idCLEAR' => $idCLEAR
+            ));        
+        
+    }
+
 	
 	/**
      * @Route("/gestion-empresarial/desarrollo-empresarial/integrantes/nuevo", name="integranteNuevo")
@@ -1010,7 +1070,7 @@ class GestionEmpresarialController extends Controller
                 $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
                     array(
                         'descripcion' => $integranteSoporte->getTipoSoporte()->getDescripcion(), 
-                        'dominio' => 'comite_tipo_soporte'
+                        'dominio' => 'grupo_tipo_soporte'
                     )
                 );
 
@@ -1062,11 +1122,13 @@ class GestionEmpresarialController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $IntegranteSoporte = new IntegranteSoporte();
+        $integranteSoporte = new IntegranteSoporte();
         
         $integranteSoporte = $em->getRepository('AppBundle:IntegranteSoporte')->findOneBy(
             array('id' => $idIntegranteSoporte)
         );
+
+        echo $idIntegranteSoporte;
         
         $integranteSoporte->setFechaModificacion(new \DateTime());
         $integranteSoporte->setActive(0);

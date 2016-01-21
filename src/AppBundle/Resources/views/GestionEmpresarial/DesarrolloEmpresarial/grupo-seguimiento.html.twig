@@ -33,48 +33,299 @@
   </div>
 
 
-    <div class="section">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 table-responsive">
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 table-responsive">
+          Mantener relación de aspecto <input id="aspecto" type = "checkbox" checked onclick="escalarX()"><br><br>
+          Ancho <input id="escalaX" type="range" style="width: 30vw; display:inline; margin-right:5vw;" min="15" max="200" step="1" value="50" width="200px" onChange="escalarX()">
+          Alto <input id="escalaY" type="range" style="width: 30vw; display:inline;" min="15" max="200" step="1" value="50" width="200px" onChange="escalarY()">
+          
+       </div>
+      </div>
+    </div>
+  </div>  
+
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 table-responsive">
+          
             
+            <br />
+
+            
+            <canvas id="myCanvas" width="1400" height="500" style="border:1px solid #EBEBEB;">
+            </canvas>
+
+            <script type="text/javascript">
               
-              <br />
+              var c = document.getElementById("myCanvas");
+              var ctx = c.getContext("2d");
+              
 
-              <canvas id="myCanvas" width="1000" height="500" style="border:1px solid #000000;">
-              </canvas>
+              var escX = .5;
+              var escY = .5;
 
-              <script type="text/javascript">
+              var circles = [];
+
+              dibujar();
+
+             
+
+              function escalarX(){
+                if (document.getElementById("aspecto").checked)
+                  document.getElementById("escalaY").value = document.getElementById("escalaX").value;
+                dibujar();
+              }
+
+              function escalarY(){
+                if (document.getElementById("aspecto").checked)
+                  document.getElementById("escalaX").value = document.getElementById("escalaY").value;
+                dibujar();
+              }
+
+              function dibujar(){
+
+                circles = [];
                 
-                var c = document.getElementById("myCanvas");
-                var ctx = c.getContext("2d");
-                var escX = .5;
-                var escY = .5;
+                c.width = c.width;
+
+                escX = document.getElementById("escalaX").value/100;
+                escY = document.getElementById("escalaY").value/100;
+                c.width = 2500*escX;
+                c.height = 800*escY;
                 
+                ctx.save();
+
+
                 ctx.fillStyle = "#F2F2F2";    ctx.fillRect(200*escX, 100*escY, 250*escX, 600*escY);
 
                 ctx.fillStyle = "#EBEBEB";    ctx.fillRect(450*escX, 100*escY, 450*escX, 300*escY);
                 ctx.fillStyle = "#F2F2F2";    ctx.fillRect(900*escX, 100*escY, 450*escX, 300*escY);
+                ctx.fillStyle = "#EBEBEB";    ctx.fillRect(1350*escX, 100*escY, 450*escX, 300*escY);
+                ctx.fillStyle = "#F2F2F2";    ctx.fillRect(1800*escX, 100*escY, 450*escX, 300*escY);
+
+                ctx.fillStyle = "#F2F3F7";    ctx.fillRect(450*escX, 400*escY, 450*escX, 300*escY);
+                ctx.fillStyle = "#EBEDF4";    ctx.fillRect(900*escX, 400*escY, 450*escX, 300*escY);
+                ctx.fillStyle = "#F2F3F7";    ctx.fillRect(1350*escX, 400*escY, 450*escX, 300*escY);
+                ctx.fillStyle = "#EBEDF4";    ctx.fillRect(1800*escX, 400*escY, 450*escX, 300*escY);
+
+
+                ctx.fillStyle = "#F2F2F2";    ctx.fillRect(450*escX, 22*escY, 450*escX, 70*escY);
+                ctx.fillStyle = "#EBEBEB";    ctx.fillRect(900*escX, 22*escY, 450*escX, 70*escY);
+                ctx.fillStyle = "#F2F2F2";    ctx.fillRect(1350*escX, 22*escY, 450*escX, 70*escY);
+                ctx.fillStyle = "#EBEBEB";    ctx.fillRect(1800*escX, 22*escY, 450*escX, 70*escY);
+
+                ctx.fillStyle = "#F2F2F2";    ctx.fillRect(450*escX, 708*escY, 450*escX, 70*escY);
+                ctx.fillStyle = "#EBEBEB";    ctx.fillRect(900*escX, 708*escY, 1350*escX, 70*escY);
+
+                ctx.fillStyle = "#F2F2F2";    ctx.fillRect(2300*escX, 100*escY, 150*escX, 300*escY);
+                ctx.fillStyle = "#EBEDF4";    ctx.fillRect(2300*escX, 400*escY, 150*escX, 300*escY);
 
 
 
-                ctx.moveTo(0,0);
-                ctx.lineTo(200,100);
-                ctx.stroke();
+                linea(200, 400, 280, 400)       // 1 a 2
+                linea(280, 400, 380, 180)       // 2 a 3
+                linea(280, 400, 280, 630)       // 2 a 4
+                linea(280, 400, 330, 580)       // 2 a 5
 
-                ctx.beginPath();
-                ctx.arc(95,50,40,0,2*Math.PI);
-                ctx.stroke();
+                linea(280, 400, 480, 280)       // 2 a 6
+                linea(280, 400, 480, 530)       // 2 a 9
+                linea(480, 530, 630, 530)       // 9 a 10
+                linea(630, 530, 780, 530)       // 10 a 11
+                linea(780, 530, 900, 530)       // 11 a 12
+                linea(900, 530, 950, 530)       // 12 a 13
+                linea(950, 530, 1050, 530)      // 13 a 14
+                linea(1050, 530, 1100, 530)     // 14 a 15
+                linea(1100, 530, 1150, 530)     // 15 a 16
+                linea(1150, 530, 1250, 530)     // 16 a 17
+                linea(1250, 530, 1350, 530)     // 17 a 18
+                linea(1350, 530, 1400, 530)     // 18 a 19
+                linea(1400, 530, 1500, 530)     // 19 a 20
+                linea(1500, 530, 1550, 530)     // 20 a 21
+                linea(1550, 530, 1600, 530)     // 21 a 22
+                linea(1600, 530, 1700, 530)     // 22 a 23
+                linea(1700, 530, 1800, 400)     // 23 a 24
+                linea(1800, 400, 1850, 280)     // 24 a 25
+                linea(1850, 280, 1950, 280)     // 25 a 26
+                linea(1950, 280, 2000, 280)     // 26 a 27
+                linea(2000, 280, 2050, 280)     // 27 a 28
+                linea(2050, 280, 2150, 280)     // 28 a 29
+                linea(2150, 280, 2250, 280)     // 29 a 30
 
-              </script>     
+                linea(480, 280, 630, 280)       // 6 a 7
+                linea(630, 280, 780, 280)       // 7 a 8
 
-              <br />
-              <br />
 
-          </div>
+
+                // data for "hot points"
+                var dataTab = {
+                  0: 'circulo n0',
+                  1: 'circulo n1',
+                  2: 'circulo n2',
+                };
+
+                ctx.font = 26*(escX+escY)/2+"px Arial";
+
+                ctx.fillStyle = "#999"; 
+                ctx.textAlign="left"; ctx.fillText("Convocatoria",10*escX,408*escY);
+                circulo(200, 400, 1);   // 1    Convocatoria
+
+                ctx.font = 16*(escX+escY)/2+"px Arial";
+
+                ctx.fillStyle = "#999"; ctx.textAlign="right"; ctx.fillText("CLEAR",280*escX,350*escY); ctx.fillText("Habilitación",280*escX,370*escY);
+                circulo(280, 400);   // 2    CLEAR Habilitación
+                
+                ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Visita previa",380*escX,150*escY);
+                circulo(380, 180);      // 3    Visita previa
+
+                ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Visita previa",280*escX,670*escY);
+                circulo(280, 630);      // 4    Visita previa
+
+                ctx.fillStyle = "#999"; ctx.textAlign="left"; ctx.fillText("Visita previa",330*escX,550*escY);
+                circulo(330, 580);      // 5    Visita previa
+
+                
+                circulo(480, 280);      // 6    Formal MOT Clear Asignación
+                circulo(630, 280);      // 7    Formal MOT Talleres
+                circulo(780, 280);      // 8    Formal MOT Legalización Fase
+
+                circulo(480, 530);      // 9    No Formal MOT Clear Asignación
+                circulo(630, 530);      // 10   No Formal MOT Talleres 
+                circulo(780, 530);      // 11   No Formal MOT Legalización Fase 
+
+                circulo(900, 530);      // 12    
+
+                circulo(950, 530);      // 13 
+
+                
+                ctx.fillStyle = "#999"; ctx.save(); ctx.translate( 1050*escX, 500*escY ); ctx.rotate(-Math.PI / 4); ctx.textAlign="left"; ctx.fillText("Visita 1",0,0); ctx.restore();
+                circulo(1050, 530);     // 14    
+                
+                ctx.fillStyle = "#999"; ctx.save(); ctx.translate( 1100*escX, 500*escY ); ctx.rotate(-Math.PI / 4); ctx.textAlign="left"; ctx.fillText("Visita 2",0,0); ctx.restore();
+                circulo(1100, 530);     // 15
+
+                ctx.fillStyle = "#999"; ctx.save(); ctx.translate( 1150*escX, 500*escY ); ctx.rotate(-Math.PI / 4); ctx.textAlign="left"; ctx.fillText("Visita 3",0,0); ctx.restore(); 
+                circulo(1150, 530);     // 16
+
+                circulo(1250, 530);     // 17    
+
+                circulo(1350, 530);     // 18    
+
+                circulo(1400, 530);     // 19
+                circulo(1500, 530);     // 20    
+                circulo(1550, 530);     // 21    
+                circulo(1600, 530);     // 22    
+                circulo(1700, 530);     // 23    
+
+                circulo(1800, 400);     // 24
+
+                circulo(1850, 280);     // 25
+                circulo(1950, 280);     // 26    
+                circulo(2000, 280);     // 27    
+                circulo(2050, 280);     // 28    
+                circulo(2150, 280);     // 29   
+
+                circulo(2250, 280);     // 30
+
+
+
+                
+
+
+
+                
+              }
+                    
+              function Circle(x, y, radius) {
+                  this.left = x - radius;
+                  this.top = y - radius;
+                  this.right = x + radius;
+                  this.bottom = y + radius;
+              };
+
+              function circulo(x, y, estado){
+
+                var radius = 45/2*(escX+escY)/2;
+
+                ctx.fillStyle = color(estado);
+                ctx.beginPath(); 
+                ctx.arc(x*escX,y*escY, radius,0,2*Math.PI, true); 
+                ctx.closePath();
+                ctx.fill();
+
+                var circle = new Circle(x*escX, y*escY, radius);
+                circles.push(circle);
+              }
+
+              var vinculo = function(x, y, radius) {
+                this.left = x - radius;
+                this.top = y - radius;
+                this.right = x + radius;
+                this.bottom = y + radius;
+              };
+
+
+              function linea(x1, y1, x2, y2, estado){
+        
+                ctx.strokeStyle=color(estado); 
+                ctx.lineWidth=4; 
+                ctx.beginPath(); 
+                ctx.moveTo(x1*escX, y1*escY); 
+                ctx.lineTo(x2*escX, y2*escY); 
+                ctx.closePath();
+                ctx.stroke(); 
+              }
+
+              function color(estado){
+
+                var colorHexa = "#E0E0D5";    
+                if(estado == 1)
+                  colorHexa = "#A1D44A";
+                else if(estado == 2)
+                  colorHexa = "#DCDC00";
+                else if(estado == 3)
+                  colorHexa = "#DB0041";
+                else if(estado == -1)
+                  colorHexa = "transparent";
+
+                
+                return colorHexa;
+              }
+
+              $('#myCanvas').click(function (e) {
+           
+                    var scrollX = ( window.scrollX !== null && typeof window.scrollX !== 'undefined') ? window.scrollX : window.pageXOffset;
+                    var scrollY = ( window.scrollY !== null && typeof window.scrollY !== 'undefined') ? window.scrollY : window.pageYOffset;
+                    clickedX = e.pageX - $("#myCanvas").offset().left //+ scrollX;
+                    clickedY = e.pageY - $("#myCanvas").offset().top //+ scrollY;
+
+  
+                    ctx.fillStyle = "#333"; 
+                 
+                    for (var i = 0; i < circles.length; i++) {
+                        
+                        //ctx.fillText(Math.round(circles[i].left)+" a "+Math.round(circles[i].right)+"    ,    "+Math.round(circles[i].top)+" a "+Math.round(circles[i].bottom),circles[i].left,circles[i].top);
+            
+                        if (clickedX < circles[i].right && clickedX > circles[i].left && clickedY > circles[i].top && clickedY < circles[i].bottom) {
+                            alert ('clicked number ' + (i + 1));
+                        }
+                    }
+                });
+
+
+              
+
+            </script>     
+
+            <br />
+            <br />
+
         </div>
       </div>
-    </div>  
+    </div>
+  </div>  
 
 
     
