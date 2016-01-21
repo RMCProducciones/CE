@@ -31,17 +31,11 @@ app.controller('gestionComiteCtrl', ['$scope', '$http', function($scope, $http) 
 }]);
 
 
-app.controller('gestionDocumentoSoporteComiteCtrl', ['$scope', '$location', function($scope, $location) {
-
-	$scope.idComite = 0;
-	$scope.idComiteSoporteActivo = 0;
-
-	$scope.anularSoporteComite = function() { 
+app.controller('gestionIntegranteComiteConcursoCtrl', ['$scope', '$http', function($scope, $http) {
 	
-		window.location.replace($scope.rutaServidor  + "gestion-empresarial/desarrollo-empresarial/comite-concursos/" + $scope.idComite + "/documentos-soporte/" + $scope.idComiteSoporteActivo + "/borrar");
-		
+	$scope.eliminarIntegranteComiteConcurso = function(ruta){
+
+		window.location.replace(ruta);
+
 	};	
-
-
-
 }]);
