@@ -96,6 +96,9 @@
                 c.width = 2500*escX;
                 c.height = 800*escY;
                 
+                ctx.save();
+
+
                 ctx.fillStyle = "#F2F2F2";    ctx.fillRect(200*escX, 100*escY, 250*escX, 600*escY);
 
                 ctx.fillStyle = "#EBEBEB";    ctx.fillRect(450*escX, 100*escY, 450*escX, 300*escY);
@@ -122,13 +125,39 @@
 
 
 
-                ctx.font = 26*(escX+escY)/2+"px Arial"; 
+                linea(200, 400, 280, 400)       // 1 a 2
+                linea(280, 400, 380, 180)       // 2 a 3
+                linea(280, 400, 280, 630)       // 2 a 4
+                linea(280, 400, 330, 580)       // 2 a 5
 
-                ctx.fillStyle = "#999"; 
-                ctx.fillText("Convocatoria",10*escX,408*escY);
+                linea(280, 400, 480, 280)       // 2 a 6
+                linea(280, 400, 480, 530)       // 2 a 9
+                linea(480, 530, 630, 530)       // 9 a 10
+                linea(630, 530, 780, 530)       // 10 a 11
+                linea(780, 530, 900, 530)       // 11 a 12
+                linea(900, 530, 950, 530)       // 12 a 13
+                linea(950, 530, 1050, 530)      // 13 a 14
+                linea(1050, 530, 1100, 530)     // 14 a 15
+                linea(1100, 530, 1150, 530)     // 15 a 16
+                linea(1150, 530, 1250, 530)     // 16 a 17
+                linea(1250, 530, 1350, 530)     // 17 a 18
+                linea(1350, 530, 1400, 530)     // 18 a 19
+                linea(1400, 530, 1500, 530)     // 19 a 20
+                linea(1500, 530, 1550, 530)     // 20 a 21
+                linea(1550, 530, 1600, 530)     // 21 a 22
+                linea(1600, 530, 1700, 530)     // 22 a 23
+                linea(1700, 530, 1800, 400)     // 23 a 24
+                linea(1800, 400, 1850, 280)     // 24 a 25
+                linea(1850, 280, 1950, 280)     // 25 a 26
+                linea(1950, 280, 2000, 280)     // 26 a 27
+                linea(2000, 280, 2050, 280)     // 27 a 28
+                linea(2050, 280, 2150, 280)     // 28 a 29
+                linea(2150, 280, 2250, 280)     // 29 a 30
 
-                ctx.font = 16*(escX+escY)/2+"px Arial";
-                ctx.fillText("CLEAR",220*escX,308*escY);
+                linea(480, 280, 630, 280)       // 6 a 7
+                linea(630, 280, 780, 280)       // 7 a 8
+
+
 
                 // data for "hot points"
                 var dataTab = {
@@ -137,35 +166,73 @@
                   2: 'circulo n2',
                 };
 
-                circulo(200, 400, 3);
-                circulo(280, 400, 1);
-                circulo(380, 180);
-                circulo(280, 630);
-                circulo(330, 580);
+                ctx.font = 26*(escX+escY)/2+"px Arial";
+
+                ctx.fillStyle = "#999"; 
+                ctx.textAlign="left"; ctx.fillText("Convocatoria",10*escX,408*escY);
+                circulo(200, 400, 1);   // 1    Convocatoria
+
+                ctx.font = 16*(escX+escY)/2+"px Arial";
+
+                ctx.fillStyle = "#999"; ctx.textAlign="right"; ctx.fillText("CLEAR",280*escX,350*escY); ctx.fillText("Habilitación",280*escX,370*escY);
+                circulo(280, 400);   // 2    CLEAR Habilitación
+                
+                ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Visita previa",380*escX,150*escY);
+                circulo(380, 180);      // 3    Visita previa
+
+                ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Visita previa",280*escX,670*escY);
+                circulo(280, 630);      // 4    Visita previa
+
+                ctx.fillStyle = "#999"; ctx.textAlign="left"; ctx.fillText("Visita previa",330*escX,550*escY);
+                circulo(330, 580);      // 5    Visita previa
 
                 
-                circulo(480, 280, 2);
-                circulo(630, 280);
-                circulo(780, 280);
+                circulo(480, 280);      // 6    Formal MOT Clear Asignación
+                circulo(630, 280);      // 7    Formal MOT Talleres
+                circulo(780, 280);      // 8    Formal MOT Legalización Fase
 
-                circulo(480, 530);
-                circulo(630, 530);
-                circulo(780, 530);
+                circulo(480, 530);      // 9    No Formal MOT Clear Asignación
+                circulo(630, 530);      // 10   No Formal MOT Talleres 
+                circulo(780, 530);      // 11   No Formal MOT Legalización Fase 
 
-                circulo(900, 530);
+                circulo(900, 530);      // 12    
 
-                circulo(950, 530);
-                circulo(1050, 530);
-                circulo(1100, 530);
-                circulo(1150, 530);
-                circulo(1250, 530);
+                circulo(950, 530);      // 13 
 
-                circulo(1350, 530);
+                
+                ctx.fillStyle = "#999"; ctx.save(); ctx.translate( 1050*escX, 500*escY ); ctx.rotate(-Math.PI / 4); ctx.textAlign="left"; ctx.fillText("Visita 1",0,0); ctx.restore();
+                circulo(1050, 530);     // 14    
+                
+                ctx.fillStyle = "#999"; ctx.save(); ctx.translate( 1100*escX, 500*escY ); ctx.rotate(-Math.PI / 4); ctx.textAlign="left"; ctx.fillText("Visita 2",0,0); ctx.restore();
+                circulo(1100, 530);     // 15
 
-                circulo(1400, 530);
+                ctx.fillStyle = "#999"; ctx.save(); ctx.translate( 1150*escX, 500*escY ); ctx.rotate(-Math.PI / 4); ctx.textAlign="left"; ctx.fillText("Visita 3",0,0); ctx.restore(); 
+                circulo(1150, 530);     // 16
 
-                linea(200, 400, 280, 400, 1)
-                linea(220, 150, 380, 270, 2)
+                circulo(1250, 530);     // 17    
+
+                circulo(1350, 530);     // 18    
+
+                circulo(1400, 530);     // 19
+                circulo(1500, 530);     // 20    
+                circulo(1550, 530);     // 21    
+                circulo(1600, 530);     // 22    
+                circulo(1700, 530);     // 23    
+
+                circulo(1800, 400);     // 24
+
+                circulo(1850, 280);     // 25
+                circulo(1950, 280);     // 26    
+                circulo(2000, 280);     // 27    
+                circulo(2050, 280);     // 28    
+                circulo(2150, 280);     // 29   
+
+                circulo(2250, 280);     // 30
+
+
+
+                
+
 
 
                 
@@ -234,19 +301,13 @@
                     clickedX = e.pageX - $("#myCanvas").offset().left //+ scrollX;
                     clickedY = e.pageY - $("#myCanvas").offset().top //+ scrollY;
 
-                    //var clickedX = e.pageX - this.offsetLeft;
-                    //var clickedY = e.pageY - this.offsetTop;
+  
                     ctx.fillStyle = "#333"; 
-                    //alert(e.pageX+", "+e.pageY)
-                    //alert(clickedX+", "+clickedY)
-                    //alert($("#myCanvas").offset().left+", "+$("#myCanvas").offset().top)
+                 
                     for (var i = 0; i < circles.length; i++) {
-                        //ctx.fillRect(circles[i].left, circles[i].top, 45*(escX+escY)/2, 45*(escX+escY)/2);
-                        ctx.fillText(Math.round(circles[i].left)+" a "+Math.round(circles[i].right)+"    ,    "+Math.round(circles[i].top)+" a "+Math.round(circles[i].bottom),circles[i].left,circles[i].top);
-                        //if (clickedX < circles[i].right && clickedX > circles[i].left)
-                        //  alert ('si en X number ' + (i + 1));
-                        //if (clickedY > circles[i].top && clickedY < circles[i].bottom)
-                        // alert ('si en Y number ' + (i + 1));
+                        
+                        //ctx.fillText(Math.round(circles[i].left)+" a "+Math.round(circles[i].right)+"    ,    "+Math.round(circles[i].top)+" a "+Math.round(circles[i].bottom),circles[i].left,circles[i].top);
+            
                         if (clickedX < circles[i].right && clickedX > circles[i].left && clickedY > circles[i].top && clickedY < circles[i].bottom) {
                             alert ('clicked number ' + (i + 1));
                         }

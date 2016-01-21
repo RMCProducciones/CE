@@ -29,9 +29,7 @@ class Organizacion
     private $nombre_organizacion;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="linea_productiva", type="string")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $linea_productiva;
 
@@ -52,14 +50,14 @@ class Organizacion
     /**
      * @var string
      *
-     * @ORM\Column(name="codigo", type="string")
+     * @ORM\Column(name="codigo", type="string", nullable=true)
      */
     private $codigo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string")
+     * @ORM\Column(name="nombre", type="string", nullable=true)
      */
     private $nombre;
 
@@ -80,28 +78,28 @@ class Organizacion
     /**
      * @var string
      *
-     * @ORM\Column(name="barrio", type="string")
+     * @ORM\Column(name="barrio", type="string", nullable=true)
      */
     private $barrio;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="corregimiento", type="string")
+     * @ORM\Column(name="corregimiento", type="string", nullable=true)
      */
     private $corregimiento;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="vereda", type="string")
+     * @ORM\Column(name="vereda", type="string", nullable=true)
      */
     private $vereda;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="cacerio", type="string")
+     * @ORM\Column(name="cacerio", type="string", nullable=true)
      */
     private $cacerio;
 
@@ -112,12 +110,10 @@ class Organizacion
      */
     private $municipio;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="tipo_documentoo_contacto", type="integer")
+   /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
-    private $tipo_documentoo_contacto;
+    private $tipo_documento_contacto;
 
     /**
      * @var string
@@ -129,63 +125,63 @@ class Organizacion
     /**
      * @var string
      *
-     * @ORM\Column(name="primer_apellidoo_contacto", type="string")
+     * @ORM\Column(name="primer_apellido_contacto", type="string")
      */
-    private $primer_apellidoo_contacto;
+    private $primer_apellido_contacto;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="segundo_apellidoo_contacto", type="string")
+     * @ORM\Column(name="segundo_apellido_contacto", type="string", nullable=true)
      */
-    private $segundo_apellidoo_contacto;
+    private $segundo_apellido_contacto;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="primer_nombreo_contacto", type="string")
+     * @ORM\Column(name="primer_nombre_contacto", type="string")
      */
-    private $primer_nombreo_contacto;
+    private $primer_nombre_contacto;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="segundo_nombreo_contacto", type="string")
+     * @ORM\Column(name="segundo_nombre_contacto", type="string", nullable=true)
      */
-    private $segundo_nombreo_contacto;
+    private $segundo_nombre_contacto;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="telefono_fijoo_contacto", type="string")
+     * @ORM\Column(name="telefono_fijo_contacto", type="string", nullable=true)
      */
-    private $telefono_fijoo_contacto;
+    private $telefono_fijo_contacto;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="telefono_celularo_contacto", type="string")
+     * @ORM\Column(name="telefono_celular_contacto", type="string", nullable=true)
      */
-    private $telefono_celularo_contacto;
+    private $telefono_celular_contacto;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="correo_electronicoo_contacto", type="string")
+     * @ORM\Column(name="correo_electronico_contacto", type="string", nullable=true)
      */
-    private $correo_electronicoo_contacto;
+    private $correo_electronico_contacto;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="ruta", type="boolean")
+     * @ORM\Column(name="ruta", type="boolean", nullable=true)
      */
     private $ruta;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="pasantia", type="boolean")
+     * @ORM\Column(name="pasantia", type="boolean", nullable=true)
      */
     private $pasantia;
 
@@ -203,31 +199,27 @@ class Organizacion
      */
     private $active;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+  /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
      */
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_creacion", type="datetime")
+     * @ORM\Column(name="fecha_creacion", type="datetime", nullable=true)
      */
     private $fecha_creacion;
 
@@ -269,11 +261,11 @@ class Organizacion
     /**
      * Set lineaProductiva
      *
-     * @param string $lineaProductiva
+     * @param AppBundle\Entity\Listas $lineaProductiva
      *
      * @return Organizacion
      */
-    public function setLineaProductiva($lineaProductiva)
+    public function setLineaProductiva(\AppBundle\Entity\Listas $lineaProductiva)
     {
         $this->linea_productiva = $lineaProductiva;
     
@@ -283,7 +275,7 @@ class Organizacion
     /**
      * Get lineaProductiva
      *
-     * @return string
+     * @return AppBundle\Entity\Listas
      */
     public function getLineaProductiva()
     {
@@ -555,27 +547,27 @@ class Organizacion
     }
 
     /**
-     * Set tipoDocumentooContacto
+     * Set tipoDocumentoContacto
      *
-     * @param integer $tipoDocumentooContacto
+     * @param AppBundle\Entity\Listas $tipoDocumentoContacto
      *
      * @return Organizacion
      */
-    public function setTipoDocumentooContacto($tipoDocumentooContacto)
+    public function setTipoDocumentoContacto(\AppBundle\Entity\Listas $tipoDocumentoContacto)
     {
-        $this->tipo_documentoo_contacto = $tipoDocumentooContacto;
+        $this->tipo_documento_contacto = $tipoDocumentoContacto;
     
         return $this;
     }
 
     /**
-     * Get tipoDocumentooContacto
+     * Get tipoDocumentoContacto
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
-    public function getTipoDocumentooContacto()
+    public function getTipoDocumentoContacto()
     {
-        return $this->tipo_documentoo_contacto;
+        return $this->tipo_documento_contacto;
     }
 
     /**
@@ -603,171 +595,171 @@ class Organizacion
     }
 
     /**
-     * Set primerApellidooContacto
+     * Set primerApellidoContacto
      *
-     * @param string $primerApellidooContacto
+     * @param string $primerApellidoContacto
      *
      * @return Organizacion
      */
-    public function setPrimerApellidooContacto($primerApellidooContacto)
+    public function setPrimerApellidoContacto($primerApellidoContacto)
     {
-        $this->primer_apellidoo_contacto = $primerApellidooContacto;
+        $this->primer_apellido_contacto = $primerApellidoContacto;
     
         return $this;
     }
 
     /**
-     * Get primerApellidooContacto
+     * Get primerApellidoContacto
      *
      * @return string
      */
-    public function getPrimerApellidooContacto()
+    public function getPrimerApellidoContacto()
     {
-        return $this->primer_apellidoo_contacto;
+        return $this->primer_apellido_contacto;
     }
 
     /**
-     * Set segundoApellidooContacto
+     * Set segundoApellidoContacto
      *
-     * @param string $segundoApellidooContacto
+     * @param string $segundoApellidoContacto
      *
      * @return Organizacion
      */
-    public function setSegundoApellidooContacto($segundoApellidooContacto)
+    public function setSegundoApellidoContacto($segundoApellidoContacto)
     {
-        $this->segundo_apellidoo_contacto = $segundoApellidooContacto;
+        $this->segundo_apellido_contacto = $segundoApellidoContacto;
     
         return $this;
     }
 
     /**
-     * Get segundoApellidooContacto
+     * Get segundoApellidoContacto
      *
      * @return string
      */
-    public function getSegundoApellidooContacto()
+    public function getSegundoApellidoContacto()
     {
-        return $this->segundo_apellidoo_contacto;
+        return $this->segundo_apellido_contacto;
     }
 
     /**
-     * Set primerNombreoContacto
+     * Set primerNombreContacto
      *
-     * @param string $primerNombreoContacto
+     * @param string $primerNombreContacto
      *
      * @return Organizacion
      */
-    public function setPrimerNombreoContacto($primerNombreoContacto)
+    public function setPrimerNombreContacto($primerNombreContacto)
     {
-        $this->primer_nombreo_contacto = $primerNombreoContacto;
+        $this->primer_nombre_contacto = $primerNombreContacto;
     
         return $this;
     }
 
     /**
-     * Get primerNombreoContacto
+     * Get primerNombreContacto
      *
      * @return string
      */
-    public function getPrimerNombreoContacto()
+    public function getPrimerNombreContacto()
     {
-        return $this->primer_nombreo_contacto;
+        return $this->primer_nombre_contacto;
     }
 
     /**
-     * Set segundoNombreoContacto
+     * Set segundoNombreContacto
      *
-     * @param string $segundoNombreoContacto
+     * @param string $segundoNombreContacto
      *
      * @return Organizacion
      */
-    public function setSegundoNombreoContacto($segundoNombreoContacto)
+    public function setSegundoNombreContacto($segundoNombreContacto)
     {
-        $this->segundo_nombreo_contacto = $segundoNombreoContacto;
+        $this->segundo_nombre_contacto = $segundoNombreContacto;
     
         return $this;
     }
 
     /**
-     * Get segundoNombreoContacto
+     * Get segundoNombreContacto
      *
      * @return string
      */
-    public function getSegundoNombreoContacto()
+    public function getSegundoNombreContacto()
     {
-        return $this->segundo_nombreo_contacto;
+        return $this->segundo_nombre_contacto;
     }
 
     /**
-     * Set telefonoFijooContacto
+     * Set telefonoFijoContacto
      *
-     * @param string $telefonoFijooContacto
+     * @param string $telefonoFijoContacto
      *
      * @return Organizacion
      */
-    public function setTelefonoFijooContacto($telefonoFijooContacto)
+    public function setTelefonoFijoContacto($telefonoFijoContacto)
     {
-        $this->telefono_fijoo_contacto = $telefonoFijooContacto;
+        $this->telefono_fijo_contacto = $telefonoFijoContacto;
     
         return $this;
     }
 
     /**
-     * Get telefonoFijooContacto
+     * Get telefonoFijoContacto
      *
      * @return string
      */
-    public function getTelefonoFijooContacto()
+    public function getTelefonoFijoContacto()
     {
-        return $this->telefono_fijoo_contacto;
+        return $this->telefono_fijo_contacto;
     }
 
     /**
-     * Set telefonoCelularoContacto
+     * Set telefonoCelularContacto
      *
-     * @param string $telefonoCelularoContacto
+     * @param string $telefonoCelularContacto
      *
      * @return Organizacion
      */
-    public function setTelefonoCelularoContacto($telefonoCelularoContacto)
+    public function setTelefonoCelularContacto($telefonoCelularContacto)
     {
-        $this->telefono_celularo_contacto = $telefonoCelularoContacto;
+        $this->telefono_celular_contacto = $telefonoCelularContacto;
     
         return $this;
     }
 
     /**
-     * Get telefonoCelularoContacto
+     * Get telefonoCelularContacto
      *
      * @return string
      */
-    public function getTelefonoCelularoContacto()
+    public function getTelefonoCelularContacto()
     {
-        return $this->telefono_celularo_contacto;
+        return $this->telefono_celular_contacto;
     }
 
     /**
-     * Set correoElectronicooContacto
+     * Set correoElectronicoContacto
      *
-     * @param string $correoElectronicooContacto
+     * @param string $correoElectronicoContacto
      *
      * @return Organizacion
      */
-    public function setCorreoElectronicooContacto($correoElectronicooContacto)
+    public function setCorreoElectronicoContacto($correoElectronicoContacto)
     {
-        $this->correo_electronicoo_contacto = $correoElectronicooContacto;
+        $this->correo_electronico_contacto = $correoElectronicoContacto;
     
         return $this;
     }
 
     /**
-     * Get correoElectronicooContacto
+     * Get correoElectronicoContacto
      *
      * @return string
      */
-    public function getCorreoElectronicooContacto()
+    public function getCorreoElectronicoContacto()
     {
-        return $this->correo_electronicoo_contacto;
+        return $this->correo_electronico_contacto;
     }
 
     /**
@@ -869,11 +861,11 @@ class Organizacion
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return Organizacion
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
     
@@ -883,7 +875,7 @@ class Organizacion
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -917,11 +909,11 @@ class Organizacion
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return Organizacion
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
     
@@ -931,7 +923,7 @@ class Organizacion
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
