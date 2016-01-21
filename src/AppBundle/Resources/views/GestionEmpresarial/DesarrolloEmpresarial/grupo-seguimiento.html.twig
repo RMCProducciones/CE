@@ -96,6 +96,9 @@
                 c.width = 2500*escX;
                 c.height = 800*escY;
                 
+                ctx.save();
+
+
                 ctx.fillStyle = "#F2F2F2";    ctx.fillRect(200*escX, 100*escY, 250*escX, 600*escY);
 
                 ctx.fillStyle = "#EBEBEB";    ctx.fillRect(450*escX, 100*escY, 450*escX, 300*escY);
@@ -151,6 +154,9 @@
                 linea(2050, 280, 2150, 280)     // 28 a 29
                 linea(2150, 280, 2250, 280)     // 29 a 30
 
+                linea(480, 280, 630, 280)       // 6 a 7
+                linea(630, 280, 780, 280)       // 7 a 8
+
 
 
                 // data for "hot points"
@@ -191,10 +197,18 @@
 
                 circulo(900, 530);      // 12    
 
-                circulo(950, 530);      // 13    
+                circulo(950, 530);      // 13 
+
+                
+                ctx.fillStyle = "#999"; ctx.save(); ctx.translate( 1050*escX, 500*escY ); ctx.rotate(-Math.PI / 4); ctx.textAlign="left"; ctx.fillText("Visita 1",0,0); ctx.restore();
                 circulo(1050, 530);     // 14    
-                circulo(1100, 530);     // 15    
-                circulo(1150, 530);     // 16    
+                
+                ctx.fillStyle = "#999"; ctx.save(); ctx.translate( 1100*escX, 500*escY ); ctx.rotate(-Math.PI / 4); ctx.textAlign="left"; ctx.fillText("Visita 2",0,0); ctx.restore();
+                circulo(1100, 530);     // 15
+
+                ctx.fillStyle = "#999"; ctx.save(); ctx.translate( 1150*escX, 500*escY ); ctx.rotate(-Math.PI / 4); ctx.textAlign="left"; ctx.fillText("Visita 3",0,0); ctx.restore(); 
+                circulo(1150, 530);     // 16
+
                 circulo(1250, 530);     // 17    
 
                 circulo(1350, 530);     // 18    
