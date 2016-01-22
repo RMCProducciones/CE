@@ -39,3 +39,13 @@ app.controller('gestionIntegranteComiteConcursoCtrl', ['$scope', '$http', functi
 
 	};	
 }]);
+
+
+app.controller('gestionGrupoComiteConcursoCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.eliminarGrupoComiteConcurso = function(ruta){
+
+		window.location.replace(ruta);
+
+	};	
+}]);
