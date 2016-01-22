@@ -27,10 +27,18 @@ use AppBundle\Entity\ConcursoSoporte;
 use AppBundle\Entity\ActividadConcurso;
 use AppBundle\Entity\Listas;
 use AppBundle\Entity\Comite;
+use AppBundle\Entity\Integrante;
+use AppBundle\Entity\IntegranteSoporte;
+use AppBundle\Entity\Ruta;
+use AppBundle\Entity\RutaSoporte;
+use AppBundle\Entity\Pasantia;
+use AppBundle\Entity\PasantiaSoporte;
 use AppBundle\Entity\ComiteSoporte;
 use AppBundle\Entity\JuradoSoporte;
 use AppBundle\Entity\IntegranteComite;
 use AppBundle\Entity\AsignacionIntegranteComite;
+use AppBundle\Entity\Organizacion;
+use AppBundle\Entity\OrganizacionSoporte;
 
 use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
 use AppBundle\Form\GestionEmpresarial\AsignacionIntegranteCLEARType;
@@ -44,8 +52,16 @@ use AppBundle\Form\GestionEmpresarial\ClearSoporteType;
 use AppBundle\Form\GestionEmpresarial\ConcursoType;
 use AppBundle\Form\GestionEmpresarial\ActividadConcursoType;
 use AppBundle\Form\GestionEmpresarial\ComiteType;
+use AppBundle\Form\GestionEmpresarial\IntegranteType;
+use AppBundle\Form\GestionEmpresarial\IntegranteSoporteType;
 use AppBundle\Form\GestionEmpresarial\ComiteSoporteType;
 use AppBundle\Form\GestionEmpresarial\IntegranteComiteType;
+use AppBundle\Form\GestionEmpresarial\RutaType;
+use AppBundle\Form\GestionEmpresarial\PasantiaType;
+use AppBundle\Form\GestionEmpresarial\RutaSoporteType;
+use AppBundle\Form\GestionEmpresarial\PasantiaSoporteType;
+use AppBundle\Form\GestionEmpresarial\OrganizacionType;
+use AppBundle\Form\GestionEmpresarial\OrganizacionSoporteType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -110,13 +126,13 @@ class GestionEmpresarialController extends Controller
 
             $grupo->setFechaModificacion(new \DateTime());
 
-            $usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            /*$usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
                 array(
                     'id' => 1
                 )
             );
             
-            $grupo->setUsuarioModificacion($usuarioModificacion);
+            $grupo->setUsuarioModificacion($usuarioModificacion);*/
 
             $em->flush();
 
@@ -591,14 +607,8 @@ class GestionEmpresarialController extends Controller
 
     }
 
-
-
-
-
-
-
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/", name="CLEARGestion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/gestion", name="CLEARGestion")
      */
     public function CLEARGestionAction()
     {
@@ -610,28 +620,7 @@ class GestionEmpresarialController extends Controller
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:clear-gestion.html.twig', array( 'cleares' => $cleares));
     }
-	
-	/**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/CLEAR/{idCLEAR}", name="CLEAR")
-     */
-    public function ClearAction($idCLEAR)
-    {
-        $em = $this->getDoctrine()->getManager();
 
-        $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
-            array('id' => $idCLEAR)
-        );
-
-        //$elementos = $query->getResult();
-
-        $encoders = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new GetSetMethodNormalizer());
-
-        $serializer = new Serializer($normalizers, $encoders);
-        
-        return new Response('{"": ' . $serializer->serialize($clear, 'json') . '}');
-
-    }
 	
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/clear/nuevo", name="clearNuevo")
@@ -841,61 +830,350 @@ class GestionEmpresarialController extends Controller
         
     }
 
-	
-	/**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/integrantes/nuevo", name="integrantesNuevo")
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-integrante", name="clearIntegrante")
      */
-    public function integrantesNuevoAction(Request $request, $idCLEAR)
+    public function clearIntegranteAction($idCLEAR)
     {
         $em = $this->getDoctrine()->getManager();
-        $integranteCLEAR = new IntegranteCLEAR();        
+
+        $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
+            array('id' => $idCLEAR)
+        );
+
+        $asignacionesIntegranteCLEAR = $em->getRepository('AppBundle:AsignacionIntegranteCLEAR')->findBy(
+            array('clear' => $clear)
+        );  
+
+        $integrantes = $em->getRepository('AppBundle:Integrante')->findBy(
+            array('active' => '1'),
+            array('primer_apellido' => 'ASC')
+        );          
         
-        $form = $this->createForm(new IntegranteCLEARType(), $integranteCLEAR);
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantes-clear-gestion-asignacion.html.twig', 
+            array(
+                'integrantes' => $integrantes,
+                'asignacionesIntegranteCLEAR' => $asignacionesIntegranteCLEAR,
+                'idCLEAR' => $idCLEAR
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-integrante/{idIntegrante}/nueva-asignacion", name="clearAsignarIntegrante")
+     */
+    public function clearAsignarIntegranteAction($idCLEAR, $idIntegrante)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $integrantes = $em->getRepository('AppBundle:Integrante')->findOneBy(
+            array('id' => $idIntegrante)
+        );  
+
+        $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
+            array('id' => $idCLEAR)
+        );  
+           
+        $asignacionesIntegranteCLEAR = new AsignacionIntegranteCLEAR();
+
+        $asignacionesIntegranteCLEAR->setIntegrante($integrantes);
+        $asignacionesIntegranteCLEAR->setClear($clear);           
+        $asignacionesIntegranteCLEAR->setActive(true);
+        $asignacionesIntegranteCLEAR->setFechaCreacion(new \DateTime());
+
+        $em->persist($asignacionesIntegranteCLEAR);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('clearIntegrante', 
+            array(
+                'integrantes' => $integrantes, 
+                'asignacionesIntegranteCLEAR' => $asignacionesIntegranteCLEAR,
+                'idCLEAR' => $idCLEAR
+            ));        
+        
+    }
+
+     /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-integrante/{idAsignacionIntegranteCLEAR}/eliminar", name="clearEliminarIntegrante")
+     */
+    public function clearEliminarIntegranteAction(Request $request, $idCLEAR, $idAsignacionIntegranteCLEAR)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionIntegranteCLEAR = new AsignacionIntegranteCLEAR();
+
+        $asignacionIntegranteCLEAR = $em->getRepository('AppBundle:AsignacionIntegranteCLEAR')->find($idAsignacionIntegranteCLEAR); 
+
+        $integrantes = $em->getRepository('AppBundle:Integrante')->findBy(
+            array('active' => '1'),
+            array('primer_apellido' => 'ASC')            
+        );  
+
+        $em->remove($asignacionIntegranteCLEAR);
+        $em->flush();
+
+        $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
+            array('id' => $idCLEAR)
+        );
+
+        $asignacionesIntegranteCLEAR = $em->getRepository('AppBundle:AsignacionIntegranteCLEAR')->findBy(
+            array('clear' => $clear)
+        );  
+
+        return $this->redirectToRoute('clearIntegrante',
+             array(
+                'integrantes' => $integrantes,
+                'asignacionesIntegranteCLEAR' => $asignacionIntegranteCLEAR,
+                'idCLEAR' => $idCLEAR
+            ));    
+        
+    }
+
+
+	/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/integrantes/nuevo", name="integranteNuevo")
+     */
+    public function integrantesNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $integrante = new Integrante();        
+        
+        $form = $this->createForm(new IntegranteType(), $integrante);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             // data is an array with "name", "email", and "message" keys
-            $integranteCLEAR= $form->getData();
+            $integrante= $form->getData();
 
-            $integranteCLEAR->setActive(true);
-            $integranteCLEAR->setFechaCreacion(new \DateTime());
+            $integrante->setActive(true);
+            $integrante->setFechaCreacion(new \DateTime());
 
 
             
-            $em->persist($integranteCLEAR);
+            $em->persist($integrante);
             $em->flush();
 
-            return $this->redirectToRoute('CLEARGestion', array('idCLEAR' => $idCLEAR));
+            return $this->redirectToRoute('integranteGestion');
         }
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantes-clear-nuevo.html.twig', 
-            array('form' => $form->createView(),
-                'idCLEAR' => $idCLEAR));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantes-nuevo.html.twig', 
+            array('form' => $form->createView()));
     }
 	
 	/**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/integrantes", name="integrantesGestion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/integrante/gestion", name="integranteGestion")
      */
-    public function integrantesGestionAction($idCLEAR)
+    public function integrantesGestionAction()
     {
         $em = $this->getDoctrine()->getManager();
         
-		$integrantesCLEAR = $em->getRepository('AppBundle:IntegranteCLEAR')->findBy(
+		$integrantes = $em->getRepository('AppBundle:Integrante')->findBy(
             array('active' => '1'),
             array('primer_apellido' => 'ASC')
-        );	
-		$asignacionIntegrantesCLEAR = $em->getRepository('AppBundle:AsignacionIntegranteCLEAR')->findBy(
-            array('active' => '1', 'clear' => $idCLEAR),
-            array()
-        );	
+        );			
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantes-clear-gestion-asignacion.html.twig', 
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrante-gestion.html.twig', 
             array(
-                'integrantesCLEAR' => $integrantesCLEAR, 
-                'asignacionIntegrantesCLEAR' => $asignacionIntegrantesCLEAR,
-                'idCLEAR' => $idCLEAR
+                'integrantes' => $integrantes,                  
             ));        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/integrante/{idIntegrante}/editar", name="integranteEditar")
+     */
+    public function integranteEditarAction(Request $request, $idIntegrante)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $integrantes = new Integrante();
+
+        $integrantes = $em->getRepository('AppBundle:Integrante')->findOneBy(
+            array('id' => $idIntegrante)
+        );
+        //echo $integrantes->getPertenenciaEtnica();
+        $form = $this->createForm(new IntegranteType(), $integrantes);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $integrantes = $form->getData();
+
+            $integrantes->setFechaModificacion(new \DateTime());
+
+            /*$usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
+            
+            $integrantes->setUsuarioModificacion($usuarioModificacion);*/
+
+            $em->flush();
+
+            return $this->redirectToRoute('gruposGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrante-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idIntegrante' => $idIntegrante,
+                    'integrantes' => $integrantes,
+            )
+        );
+
+               
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/integrante/{idIntegrante}/eliminar", name="integranteEliminar")
+     */
+    public function IntegranteEliminarAction(Request $request, $idIntegrante)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $integrante = new Integrante();
+
+        $integrante = $em->getRepository('AppBundle:Integrante')->find($idIntegrante);              
+
+        $em->remove($integrante);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('integranteGestion'));
+
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/integrante/{idIntegrante}/documentos-soporte", name="integranteSoporte")
+     */
+    public function integranteSoporteAction(Request $request, $idIntegrante)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $integranteSoporte = new IntegranteSoporte();
+        
+        $form = $this->createForm(new IntegranteSoporteType(), $integranteSoporte);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $soportesActivos = $em->getRepository('AppBundle:IntegranteSoporte')->findBy(
+            array('active' => '1', 'integrante' => $idIntegrante),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $histotialSoportes = $em->getRepository('AppBundle:IntegranteSoporte')->findBy(
+            array('active' => '0', 'integrante' => $idIntegrante),
+            array('fecha_creacion' => 'ASC')
+        );
+        
+        $integrante = $em->getRepository('AppBundle:Integrante')->findOneBy(
+            array('id' => $idIntegrante)
+        );
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+
+                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                    array(
+                        'descripcion' => $integranteSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'grupo_tipo_soporte'
+                    )
+                );
+
+                echo $integranteSoporte->getTipoSoporte()->getDescripcion();
+                
+                $actualizarIntegranteSoportes = $em->getRepository('AppBundle:IntegranteSoporte')->findBy(
+                    array(
+                        'active' => '1' ,                         
+                        'tipo_soporte' => $tipoSoporte->getId(), 
+                        'integrante' => $idIntegrante
+                    )
+                );  
+
+            
+                foreach ($actualizarIntegranteSoportes as $actualizarIntegranteSoporte){
+                    echo $actualizarIntegranteSoporte->getId()." ".$actualizarIntegranteSoporte->getTipoSoporte()."<br />";
+                    $actualizarIntegranteSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarIntegranteSoporte->setActive(0);
+                    $em->flush();
+                }
+                
+                $integranteSoporte->setIntegrante($integrante);
+                $integranteSoporte->setActive(true);
+                $integranteSoporte->setFechaCreacion(new \DateTime());
+                //$grupoSoporte->setUsuarioCreacion(1);
+
+                $em->persist($integranteSoporte);
+                $em->flush();
+
+                return $this->redirectToRoute('integranteSoporte', array( 'idIntegrante' => $idIntegrante));
+            }
+        }   
+        
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrante-soporte.html.twig', 
+            array(
+                'form' => $form->createView(), 
+                'soportesActivos' => $soportesActivos, 
+                'histotialSoportes' => $histotialSoportes
+            )
+        );
+        
+    }
+    
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/integrante/{idIntegrante}/documentos-soporte/{idIntegranteSoporte}/borrar", name="integranteSoporteBorrar")
+     */
+    public function integranteSoporteBorrarAction(Request $request, $idIntegrante, $idIntegranteSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $integranteSoporte = new IntegranteSoporte();
+        
+        $integranteSoporte = $em->getRepository('AppBundle:IntegranteSoporte')->findOneBy(
+            array('id' => $idIntegranteSoporte)
+        );
+
+        echo $idIntegranteSoporte;
+        
+        $integranteSoporte->setFechaModificacion(new \DateTime());
+        $integranteSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('integranteSoporte', array( 'idIntegrante' => $idIntegrante));
+        
     }
 	
 	
@@ -1004,7 +1282,7 @@ class GestionEmpresarialController extends Controller
     }
 
 
-/**
+    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/eliminar", name="concursoEliminar")
      */
     public function ConcursoEliminarAction(Request $request, $idConcurso)
@@ -1024,7 +1302,7 @@ class GestionEmpresarialController extends Controller
 
 
 	
-/**
+    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/documentos-soporte", name="concursoSoporte")
      */
     public function concursoSoporteAction(Request $request, $idConcurso)
@@ -1440,82 +1718,184 @@ class GestionEmpresarialController extends Controller
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/jurados/nuevo", name="juradosNuevo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/asignacion-integrante", name="comiteIntegrante")
      */
-    public function juradosNuevoAction(Request $request, $idComite)
+    public function comiteIntegranteAction($idComite)
     {
         $em = $this->getDoctrine()->getManager();
-        $integranteComite = new IntegranteComite();        
+
+        $comite = $em->getRepository('AppBundle:Comite')->findOneBy(
+            array('id' => $idComite)
+        );
+
+        $asignacionesIntegranteComite = $em->getRepository('AppBundle:AsignacionIntegranteComite')->findBy(
+            array('comite' => $comite)
+        );  
+
+        $integrantes = $em->getRepository('AppBundle:Integrante')->findBy(
+            array('active' => '1'),
+            array('primer_apellido' => 'ASC')
+        );          
         
-        $form = $this->createForm(new IntegranteComiteType(), $integranteComite);
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:jurados-comite-gestion-asignacion.html.twig', 
+            array(
+                'integrantes' => $integrantes,
+                'asignacionesIntegranteComite' => $asignacionesIntegranteComite,
+                'idComite' => $idComite
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/asignacion-integrante/{idIntegrante}/nueva-asignacion", name="comiteAsignarIntegrante")
+     */
+    public function comiteAsignarIntegranteAction($idComite, $idIntegrante)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $integrantes = $em->getRepository('AppBundle:Integrante')->findOneBy(
+            array('id' => $idIntegrante)
+        );  
+
+        $comite = $em->getRepository('AppBundle:Comite')->findOneBy(
+            array('id' => $idComite)
+        );  
+           
+        $asignacionesIntegranteComite = new AsignacionIntegranteComite();
+
+        $asignacionesIntegranteComite->setIntegrante($integrantes);
+        $asignacionesIntegranteComite->setComite($comite);           
+        $asignacionesIntegranteComite->setActive(true);
+        $asignacionesIntegranteComite->setFechaCreacion(new \DateTime());
+
+        $em->persist($asignacionesIntegranteComite);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('comiteIntegrante', 
+            array(
+                'integrantes' => $integrantes, 
+                'asignacionesIntegranteComite' => $asignacionesIntegranteComite,
+                'idComite' => $idComite
+            ));        
+        
+    }
+
+     /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/asignacion-integrante/{idAsignacionIntegranteComite}/eliminar", name="comiteEliminarIntegrante")
+     */
+    public function comiteEliminarIntegranteAction(Request $request, $idComite, $idAsignacionIntegranteComite)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionIntegranteComite = new AsignacionIntegranteComite();
+
+        $asignacionIntegranteComite = $em->getRepository('AppBundle:AsignacionIntegranteComite')->find($idAsignacionIntegranteComite); 
+
+        $integrantes = $em->getRepository('AppBundle:Integrante')->findBy(
+            array('active' => '1'),
+            array('primer_apellido' => 'ASC')            
+        );  
+
+        $em->remove($asignacionIntegranteComite);
+        $em->flush();
+
+        $comite = $em->getRepository('AppBundle:Comite')->findOneBy(
+            array('id' => $idComite)
+        );
+
+        $asignacionesIntegranteComite = $em->getRepository('AppBundle:AsignacionIntegranteComite')->findBy(
+            array('comite' => $comite)
+        );  
+
+        return $this->redirectToRoute('comiteIntegrante',
+             array(
+                'integrantes' => $integrantes,
+                'asignacionesIntegranteComite' => $asignacionIntegranteComite,
+                'idComite' => $idComite
+            ));    
+        
+    }
+     
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/gestion", name="rutaGestion")
+     */
+    public function rutaGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $rutas = $em->getRepository('AppBundle:Ruta')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:ruta-gestion.html.twig', array( 'rutas' => $rutas));
+    }
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/nuevo", name="rutaNuevo")
+     */
+    public function rutaNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ruta = new Ruta();
+        
+        $form = $this->createForm(new RutaType(), $ruta);
+        
+        $form->add(
+            'guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            // data is an array with "name", "email", and "message" keys
-            $integranteComite= $form->getData();
-
-            $integranteComite->setActive(true);
-            $integranteComite->setFechaCreacion(new \DateTime());
-
-
             
-            $em->persist($integranteComite);
+            $ruta = $form->getData();
+
+
+            $ruta->setActive(true);
+            $ruta->setFechaCreacion(new \DateTime());
+
+            /*$usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
+            
+            $ruta->setUsuarioCreacion($usuarioCreacion);*/
+
+            $em->persist($ruta);
             $em->flush();
 
-            return $this->redirectToRoute('juradosGestion', array('idComite' => $idComite));
+            return $this->redirectToRoute('rutaGestion');
         }
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:jurados-comite-nuevo.html.twig', 
-            array('form' => $form->createView(),
-                'idComite' => $idComite));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:ruta-nuevo.html.twig', array('form' => $form->createView()));
     }
+
     
-    /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/jurados", name="juradosGestion")
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/editar", name="rutaEditar")
      */
-    public function juradosGestionAction($idComite)
+    public function rutaEditarAction(Request $request, $idRuta)
     {
         $em = $this->getDoctrine()->getManager();
-        
-        $integrantesComite = $em->getRepository('AppBundle:IntegranteComite')->findBy(
-            array('active' => '1'),
-            array('primer_apellido' => 'ASC')
-        );  
-        $AsignacionIntegranteComite = $em->getRepository('AppBundle:AsignacionIntegranteComite')->findBy(
-            array('active' => '1', 'clear' => $idComite),
-            array()
-        );  
-        
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:jurados-comite-gestion-asignacion.html.twig', 
-            array(
-                'integrantesComite' => $integrantesComite, 
-                'AsignacionIntegranteComite' => $AsignacionIntegranteComite,
-                'idComite' => $idComite
-            ));        
-    }
+        $ruta = new Ruta();
 
-    /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/{idJurado}/jurados-editar", name="juradosEditar")
-     */
-    public function JuradosEditarAction(Request $request, $idComite, $idJurado)
-    {
-
-        $em = $this->getDoctrine()->getManager();        
-        $integranteComite = new IntegranteComite();        
-
-        $integranteComite = $em->getRepository('AppBundle:IntegranteComite')->findOneBy(
-            array('id' => $idJurado)
-
+        $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
+            array('id' => $idRuta)
         );
 
-
-        //print_r($idJurado);
-
-
-        $form = $this->createForm(new IntegranteComiteType(), $integranteComite);
-
-        echo "hola";
+        $form = $this->createForm(new RutaType(), $ruta);
         
         $form->add(
             'Guardar', 
@@ -1531,38 +1911,672 @@ class GestionEmpresarialController extends Controller
 
         if ($form->isValid()) {
 
-            $integranteComite = $form->getData();
-            $integranteComite->$setActive(true);
-            $integranteComite->setFechaModificacion(new \DateTime());
+            $ruta = $form->getData();
 
-            /*$usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            $ruta->setFechaModificacion(new \DateTime());
+
+            $usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
                 array(
                     'id' => 1
                 )
-            );*/
+            );
             
-            $integranteComite->setUsuarioModificacion($usuarioModificacion);
+            $ruta->setUsuarioModificacion($usuarioModificacion);
 
-            $em->persist($integranteComite);
             $em->flush();
 
-
-            return $this->redirectToRoute('juradosGestion');
+            return $this->redirectToRoute('rutaGestion');
         }
 
         return $this->render(
-            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:jurados-comite-editar.html.twig', 
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:ruta-editar.html.twig', 
             array(
                     'form' => $form->createView(),
-                    'idComite' => $idComite,
-                    'idJurado' => $idJurado,
-                    'integranteComite' => $integranteComite
+                    'idRuta' => $idRuta,
+                    'ruta' => $ruta,
             )
         );
 
-    }  
+    }
 
-      
-	
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/eliminar", name="rutaEliminar")
+     */
+    public function rutaEliminarAction(Request $request, $idRuta)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ruta = new Ruta();
+
+        $ruta = $em->getRepository('AppBundle:Ruta')->find($idRuta);              
+
+        $em->remove($ruta);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('rutaGestion'));
+
+    }
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/documentos-soporte", name="rutaSoporte")
+     */
+    public function rutaSoporteAction(Request $request, $idRuta)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $rutaSoporte = new RutaSoporte();
+        
+        $form = $this->createForm(new RutaSoporteType(), $rutaSoporte);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $soportesActivos = $em->getRepository('AppBundle:RutaSoporte')->findBy(
+            array('active' => '1', 'ruta' => $idRuta),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $histotialSoportes = $em->getRepository('AppBundle:RutaSoporte')->findBy(
+            array('active' => '0', 'ruta' => $idRuta),
+            array('fecha_creacion' => 'ASC')
+        );
+        
+        $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
+            array('id' => $idRuta)
+        );
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+
+                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                    array(
+                        'descripcion' => $rutaSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'ruta_tipo_soporte'
+                    )
+                );
+                
+                $actualizarRutaSoportes = $em->getRepository('AppBundle:RutaSoporte')->findBy(
+                    array(
+                        'active' => '1' , 
+                        'tipo_soporte' => $tipoSoporte->getId(), 
+                        'ruta' => $idRuta
+                    )
+                );  
+            
+                foreach ($actualizarRutaSoportes as $actualizarRutaSoporte){
+                    echo $actualizarRutaSoporte->getId()." ".$actualizarRutaSoporte->getTipoSoporte()."<br />";
+                    $actualizarRutaSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarRutaSoporte->setActive(0);
+                    $em->flush();
+                }
+                
+                $rutaSoporte->setRuta($ruta);
+                $rutaSoporte->setActive(true);
+                $rutaSoporte->setFechaCreacion(new \DateTime());
+                //$grupoSoporte->setUsuarioCreacion(1);
+
+                $em->persist($rutaSoporte);
+                $em->flush();
+
+                return $this->redirectToRoute('rutaSoporte', array( 'idRuta' => $idRuta));
+            }
+        }   
+        
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:ruta-soporte.html.twig', 
+            array(
+                'form' => $form->createView(), 
+                'soportesActivos' => $soportesActivos, 
+                'histotialSoportes' => $histotialSoportes
+            )
+        );
+        
+    }
+    
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/documentos-soporte/{idRutaSoporte}/borrar", name="rutaSoporteBorrar")
+     */
+    public function rutaSoporteBorrarAction(Request $request, $idRuta, $idRutaSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $RutaSoporte = new RutaSoporte();
+        
+        $rutaSoporte = $em->getRepository('AppBundle:RutaSoporte')->findOneBy(
+            array('id' => $idRutaSoporte)
+        );
+        
+        $rutaSoporte->setFechaModificacion(new \DateTime());
+        $rutaSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('rutaSoporte', array( 'idRuta' => $idRuta));
+        
+    }
+
+
+
+
+
+ /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/gestion", name="pasantiaGestion")
+     */
+    public function pasantiaGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $pasantias = $em->getRepository('AppBundle:Pasantia')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:pasantia-gestion.html.twig', array( 'pasantias' => $pasantias));
+    }
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/nuevo", name="pasantiaNuevo")
+     */
+    public function pasantiaNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $pasantia= new Pasantia();
+        
+        $form = $this->createForm(new PasantiaType(), $pasantia);
+        
+        $form->add(
+            'guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $pasantia = $form->getData();
+
+
+            $pasantia->setActive(true);
+            $pasantia->setFechaCreacion(new \DateTime());
+
+            /*$usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
+            
+            $pasantia->setUsuarioCreacion($usuarioCreacion);*/
+
+            $em->persist($pasantia);
+            $em->flush();
+
+            return $this->redirectToRoute('pasantiaGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:pasantia-nuevo.html.twig', array('form' => $form->createView()));
+    }
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/editar", name="pasantiaEditar")
+     */
+    public function pasantiaEditarAction(Request $request, $idPasantia)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $pasantia = new Pasantia();
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+            array('id' => $idPasantia)
+        );
+
+        $form = $this->createForm(new PasantiaType(), $pasantia);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $pasantia = $form->getData();
+
+            $pasantia->setFechaModificacion(new \DateTime());
+
+            $usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
+            
+            $pasantia->setUsuarioModificacion($usuarioModificacion);
+
+            $em->flush();
+
+            return $this->redirectToRoute('pasantiaGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:pasantia-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idPasantia' => $idPasantia,
+                    'pasantia' => $pasantia,
+            )
+        );
+
+    }
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/eliminar", name="pasantiaEliminar")
+     */
+    public function pasantiaEliminarAction(Request $request, $idPasantia)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $pasantia = new Pasantia();
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->find($idPasantia);              
+
+        $em->remove($pasantia);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('pasantiaGestion'));
+
+    }
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/documentos-soporte", name="pasantiaSoporte")
+     */
+    public function pasantiaSoporteAction(Request $request, $idPasantia)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $pasantiaSoporte = new PasantiaSoporte();
+        
+        $form = $this->createForm(new PasantiaSoporteType(), $pasantiaSoporte);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $soportesActivos = $em->getRepository('AppBundle:PasantiaSoporte')->findBy(
+            array('active' => '1', 'pasantia' => $idPasantia),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $histotialSoportes = $em->getRepository('AppBundle:PasantiaSoporte')->findBy(
+            array('active' => '0', 'pasantia' => $idPasantia),
+            array('fecha_creacion' => 'ASC')
+        );
+        
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+            array('id' => $idPasantia)
+        );
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+
+                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                    array(
+                        'descripcion' => $pasantiaSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'pasantia_tipo_soporte'
+                    )
+                );
+                
+                $actualizarPasantiaSoportes = $em->getRepository('AppBundle:PasantiaSoporte')->findBy(
+                    array(
+                        'active' => '1' , 
+                        'tipo_soporte' => $tipoSoporte->getId(), 
+                        'pasantia' => $idPasantia
+                    )
+                );  
+            
+                foreach ($actualizarPasantiaSoportes as $actualizarPasantiaSoporte){
+                    echo $actualizarPasantiaSoporte->getId()." ".$actualizarPasantiaSoporte->getTipoSoporte()."<br />";
+                    $actualizarPasantiaSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarPasantiaSoporte->setActive(0);
+                    $em->flush();
+                }
+                
+                $pasantiaSoporte->setPasantia($pasantia);
+                $pasantiaSoporte->setActive(true);
+                $pasantiaSoporte->setFechaCreacion(new \DateTime());
+                //$grupoSoporte->setUsuarioCreacion(1);
+
+                $em->persist($pasantiaSoporte);
+                $em->flush();
+
+                return $this->redirectToRoute('pasantiaSoporte', array( 'idPasantia' => $idPasantia));
+            }
+        }   
+        
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:pasantia-soporte.html.twig', 
+            array(
+                'form' => $form->createView(), 
+                'soportesActivos' => $soportesActivos, 
+                'histotialSoportes' => $histotialSoportes
+            )
+        );
+        
+    }
+    
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/documentos-soporte/{idPasantiaSoporte}/borrar", name="pasantiaSoporteBorrar")
+     */
+    public function pasantiaSoporteBorrarAction(Request $request, $idPasantia, $idPasantiaSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $PasantiaSoporte = new PasantiaSoporte();
+        
+        $pasantiaSoporte = $em->getRepository('AppBundle:PasantiaSoporte')->findOneBy(
+            array('id' => $idPasantiaSoporte)
+        );
+        
+        $pasantiaSoporte->setFechaModificacion(new \DateTime());
+        $pasantiaSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('pasantiaSoporte', array( 'idPasantia' => $idPasantia));
+        
+    }
+
+
+
+
+ /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/organizacion/gestion", name="organizacionGestion")
+     */
+    public function organizacionGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $organizaciones = $em->getRepository('AppBundle:Organizacion')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:organizacion-gestion.html.twig', array( 'organizaciones' => $organizaciones));
+    }
+
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/organizacion/nuevo", name="organizacionNuevo")
+     */
+    public function organizacionNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $organizacion = new Organizacion();
+        
+        $form = $this->createForm(new OrganizacionType(), $organizacion);
+        
+        $form->add(
+            'guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $organizacion = $form->getData();
+
+            if($organizacion->getRural() == true){             
+                $organizacion->setBarrio(null);
+            }
+            else
+            {
+                $organizacion->setCorregimiento(null);
+                $organizacion->setVereda(null);
+                $organizacion->setCacerio(null);
+            }
+
+            $organizacion->setActive(true);
+            $organizacion->setFechaCreacion(new \DateTime());
+
+            /*$usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
+            
+            $grupo->setUsuarioCreacion($usuarioCreacion);*/
+
+            $em->persist($organizacion);
+            $em->flush();
+
+            return $this->redirectToRoute('organizacionGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:organizacion-nuevo.html.twig', array('form' => $form->createView()));
+    }
+
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/organizacion/{idOrganizacion}/editar", name="organizacionEditar")
+     */
+    public function organizacionEditarAction(Request $request, $idOrganizacion)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $organizacion = new Organizacion();
+
+        $organizacion = $em->getRepository('AppBundle:Organizacion')->findOneBy(
+            array('id' => $idOrganizacion)
+        );
+
+        $form = $this->createForm(new OrganizacionType(), $organizacion);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $organizacion = $form->getData();
+
+            $organizacion->setFechaModificacion(new \DateTime());
+
+            $usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
+            
+            $organizacion->setUsuarioModificacion($usuarioModificacion);
+
+            $em->flush();
+
+            return $this->redirectToRoute('organizacionGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:organizacion-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idOrganizacion' => $idOrganizacion,
+                    'organizacion' => $organizacion,
+            )
+        );
+
+    }
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/organizacion/{idOrganizacion}/eliminar", name="organizacionEliminar")
+     */
+    public function organizacionEliminarAction(Request $request, $idOrganizacion)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $organizacion = new Organizacion();
+
+        $organizacion = $em->getRepository('AppBundle:Organizacion')->find($idOrganizacion);              
+
+        $em->remove($organizacion);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('organizacionGestion'));
+
+    }
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/organizacion/{idOrganizacion}/documentos-soporte", name="organizacionSoporte")
+     */
+    public function organizacionSoporteAction(Request $request, $idOrganizacion)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $organizacionSoporte = new OrganizacionSoporte();
+        
+        $form = $this->createForm(new OrganizacionSoporteType(), $organizacionSoporte);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $soportesActivos = $em->getRepository('AppBundle:OrganizacionSoporte')->findBy(
+            array('active' => '1', 'organizacion' => $idOrganizacion),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $histotialSoportes = $em->getRepository('AppBundle:OrganizacionSoporte')->findBy(
+            array('active' => '0', 'organizacion' => $idOrganizacion),
+            array('fecha_creacion' => 'ASC')
+        );
+        
+        $organizacion = $em->getRepository('AppBundle:Organizacion')->findOneBy(
+            array('id' => $idOrganizacion)
+        );
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+
+                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                    array(
+                        'descripcion' => $organizacionSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'organizacion_tipo_soporte'
+                    )
+                );
+                
+                $actualizarOrganizacionSoportes = $em->getRepository('AppBundle:OrganizacionSoporte')->findBy(
+                    array(
+                        'active' => '1' , 
+                        'tipo_soporte' => $tipoSoporte->getId(), 
+                        'organizacion' => $idOrganizacion
+                    )
+                );  
+            
+                foreach ($actualizarOrganizacionSoportes as $actualizarOrganizacionSoporte){
+                    echo $actualizarOrganizacionSoporte->getId()." ".$actualizarOrganizacionSoporte->getTipoSoporte()."<br />";
+                    $actualizarOrganizacionSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarOrganizacionSoporte->setActive(0);
+                    $em->flush();
+                }
+                
+                $organizacionSoporte->setOrganizacion($pasantia);
+                $organizacionSoporte->setActive(true);
+                $organizacionSoporte->setFechaCreacion(new \DateTime());
+                //$grupoSoporte->setUsuarioCreacion(1);
+
+                $em->persist($organizacionSoporte);
+                $em->flush();
+
+                return $this->redirectToRoute('organizacionSoporte', array( 'idOrganizacion' => $idOrganizacion));
+            }
+        }   
+        
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:organizacion-soporte.html.twig', 
+            array(
+                'form' => $form->createView(), 
+                'soportesActivos' => $soportesActivos, 
+                'histotialSoportes' => $histotialSoportes
+            )
+        );
+        
+    }
+    
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/organizacion/{idOrganizacion}/documentos-soporte/{idOrganizacionSoporte}/borrar", name="organizacionSoporteBorrar")
+     */
+    public function organizacionSoporteBorrarAction(Request $request, $idOrganizacion, $idOrganizacionSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $OrganizacionSoporte = new OrganizacionSoporte();
+        
+        $organizacionSoporte = $em->getRepository('AppBundle:OrganizacionSoporte')->findOneBy(
+            array('id' => $idOrganizacionSoporte)
+        );
+        
+        $organizacionSoporte->setFechaModificacion(new \DateTime());
+        $organizacionSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('organizacionSoporte', array( 'idOrganizacion' => $idOrganizacion));
+        
+    }
+
+
+
+
+
+
+
 	
 }

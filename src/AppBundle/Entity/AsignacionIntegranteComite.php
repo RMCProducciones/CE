@@ -22,21 +22,19 @@ class AsignacionIntegranteComite
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\IntegranteComite")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Comite")
+     */
+    private $comite;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Integrante")
      */
     private $integrante;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="clear", type="string")
-     */
-    private $clear;
-
-    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
-    private $rol;
+    private $rol;    
 
     /**
      * @var boolean
@@ -53,11 +51,11 @@ class AsignacionIntegranteComite
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
      */
     private $fecha_modificacion;
 
-    /**
+     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
@@ -81,13 +79,37 @@ class AsignacionIntegranteComite
     }
 
     /**
-     * Set integrante
+     * Set comite
      *
-     * @param AppBundle\Entity\IntegranteComite $integrante
+     * @param AppBundle\Entity\Comite $comite
      *
      * @return AsignacionIntegranteComite
      */
-    public function setIntegrante(\AppBundle\Entity\IntegranteComite $integrante)
+    public function setComite(\AppBundle\Entity\Comite $comite)
+    {
+        $this->comite = $comite;
+
+        return $this;
+    }
+
+    /**
+     * Get clear
+     *
+     * @return AppBundle\Entity\Comite
+     */
+    public function getComite()
+    {
+        return $this->comite;
+    }
+
+    /**
+     * Set integrante
+     *
+     * @param AppBundle\Entity\Integrante $integrante
+     *
+     * @return AsignacionIntegranteComite
+     */
+    public function setIntegrante(\AppBundle\Entity\Integrante $integrante)
     {
         $this->integrante = $integrante;
 
@@ -97,36 +119,12 @@ class AsignacionIntegranteComite
     /**
      * Get integrante
      *
-     * @return AppBundle\Entity\IntegranteComite
+     * @return AppBundle\Entity\Integrante
      */
     public function getIntegrante()
     {
         return $this->integrante;
-    }
-
-    /**
-     * Set clear
-     *
-     * @param string $clear
-     *
-     * @return AsignacionIntegranteComite
-     */
-    public function setClear($clear)
-    {
-        $this->clear = $clear;
-
-        return $this;
-    }
-
-    /**
-     * Get clear
-     *
-     * @return string
-     */
-    public function getClear()
-    {
-        return $this->clear;
-    }
+    } 
 
     /**
      * Set rol
@@ -150,7 +148,7 @@ class AsignacionIntegranteComite
     public function getRol()
     {
         return $this->rol;
-    }
+    } 
 
     /**
      * Set active
@@ -272,4 +270,3 @@ class AsignacionIntegranteComite
         return $this->fecha_creacion;
     }
 }
-

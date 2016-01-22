@@ -22,21 +22,19 @@ class AsignacionIntegranteCLEAR
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\IntegranteCLEAR")
-     */
-    private $integrante;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="clear", type="string")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CLEAR")
      */
     private $clear;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Integrante")
+     */
+    private $integrante;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
-    private $rol;
+    private $rol;    
 
     /**
      * @var boolean
@@ -53,11 +51,11 @@ class AsignacionIntegranteCLEAR
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
      */
     private $fecha_modificacion;
 
-    /**
+     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
@@ -81,37 +79,13 @@ class AsignacionIntegranteCLEAR
     }
 
     /**
-     * Set integrante
-     *
-     * @param AppBundle\Entity\IntegranteCLEAR $integrante
-     *
-     * @return AsignacionIntegranteCLEAR
-     */
-    public function setIntegrante(\AppBundle\Entity\IntegranteCLEAR $integrante)
-    {
-        $this->integrante = $integrante;
-
-        return $this;
-    }
-
-    /**
-     * Get integrante
-     *
-     * @return AppBundle\Entity\IntegranteCLEAR
-     */
-    public function getIntegrante()
-    {
-        return $this->integrante;
-    }
-
-    /**
      * Set clear
      *
-     * @param string $clear
+     * @param AppBundle\Entity\CLEAR $clear
      *
      * @return AsignacionIntegranteCLEAR
      */
-    public function setClear($clear)
+    public function setClear(\AppBundle\Entity\CLEAR $clear)
     {
         $this->clear = $clear;
 
@@ -121,12 +95,36 @@ class AsignacionIntegranteCLEAR
     /**
      * Get clear
      *
-     * @return string
+     * @return AppBundle\Entity\CLEAR
      */
     public function getClear()
     {
         return $this->clear;
     }
+
+    /**
+     * Set integrante
+     *
+     * @param AppBundle\Entity\Integrante $integrante
+     *
+     * @return AsignacionIntegranteCLEAR
+     */
+    public function setIntegrante(\AppBundle\Entity\Integrante $integrante)
+    {
+        $this->integrante = $integrante;
+
+        return $this;
+    }
+
+    /**
+     * Get integrante
+     *
+     * @return AppBundle\Entity\Integrante
+     */
+    public function getIntegrante()
+    {
+        return $this->integrante;
+    } 
 
     /**
      * Set rol
@@ -150,7 +148,7 @@ class AsignacionIntegranteCLEAR
     public function getRol()
     {
         return $this->rol;
-    }
+    } 
 
     /**
      * Set active
