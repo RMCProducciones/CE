@@ -72,8 +72,8 @@ class ParametrizacionController extends Controller
             $rol = $form->getData();
 
 
-            //$rol->setActive(true);
-            //$rol->setFechaCreacion(new \DateTime());
+            $rol->setActive(true);
+            $rol->setFechaCreacion(new \DateTime());
 
             /*$usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
                 array(
