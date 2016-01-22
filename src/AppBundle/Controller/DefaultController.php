@@ -27,6 +27,7 @@ use AppBundle\Entity\CLEAR;
 use AppBundle\Form\GestionEmpresarial\CLEARType;
 
 /*Para autenticación por código*/
+use AppBundle\Entity\Rol;
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
@@ -64,6 +65,91 @@ class DefaultController extends Controller
     {
 
         return $this->render('AppBundle:default:menu.html.twig');
+    }
+
+    /**
+     * @Route("/menu/{idRol}", name="menuRol")
+     */
+    public function menuRolAction($idRol)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $rol = new Rol();
+
+        $rol = $em->getRepository('AppBundle:Rol')->findOneBy(
+            array('id' => $idRol)
+        );
+
+        $permisoRol = $rol->getPermiso();
+
+        $jsonPermisoRol = json_decode($permisoRol,true);
+
+        $idArrayComponente = 0;
+        $idArrayModule = 0;
+        $idArraySubModule = 0;
+
+        foreach($jsonPermisoRol['component'] as $component){
+
+
+            if($component['checked'] == true){
+
+                if($component['path'] != "#"){
+                    
+                    $component['path'] = $this->generateUrl($component['path']); 
+
+                }
+
+                $idArrayModule = 0;
+
+                foreach($component['module'] as $module){
+
+                    if($module['checked'] == true){
+
+                        if($module['path'] != "#"){
+                            
+                            $module['path'] = $this->generateUrl($module['path']); 
+
+                        }
+
+                        $idArraySubModule = 0;                
+
+                        foreach($module['subModule'] as $subModule){
+
+                            if($subModule['checked'] == true){                            
+
+                                if($subModule['path'] != "#"){
+                                    
+                                    $jsonPermisoRol['component'][$idArrayComponente]['module'][$idArrayModule]['subModule'][$idArraySubModule]['path'] = $this->generateUrl($subModule['path']); 
+
+                                }
+
+                            }
+
+                            $idArraySubModule++;
+
+                        }
+                    }
+
+                    $idArrayModule++;
+                    
+                }
+
+            }
+
+            $idArrayComponente++;
+
+        }
+
+
+
+        return $this->render(
+            'AppBundle:default:main-menu.html.twig', 
+            array( 
+                'permisoRol' =>  $jsonPermisoRol
+            )
+        );
+
     }
 
     /**
