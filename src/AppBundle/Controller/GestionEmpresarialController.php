@@ -21,12 +21,14 @@ use AppBundle\Entity\Beneficiario;
 use AppBundle\Entity\CLEAR;
 use AppBundle\Entity\ClearSoporte;
 use AppBundle\Entity\IntegranteCLEAR;
+use AppBundle\Entity\AsignacionGrupoCLEAR;
 use AppBundle\Entity\AsignacionIntegranteCLEAR;
 use AppBundle\Entity\Concurso;
 use AppBundle\Entity\ConcursoSoporte;
 use AppBundle\Entity\ActividadConcurso;
 use AppBundle\Entity\Listas;
 use AppBundle\Entity\Comite;
+use AppBundle\Entity\AsignacionGrupoComite;
 use AppBundle\Entity\Integrante;
 use AppBundle\Entity\IntegranteSoporte;
 use AppBundle\Entity\Ruta;
@@ -932,6 +934,108 @@ class GestionEmpresarialController extends Controller
         
     }
 
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-grupo", name="clearGrupo")
+     */
+    public function clearGrupoAction($idCLEAR)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
+            array('id' => $idCLEAR)
+        );
+
+        $asignacionesGrupoCLEAR = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
+            array('clear' => $clear)
+        );  
+
+        $grupos = $em->getRepository('AppBundle:Grupo')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );     
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-clear-gestion-asignacion.html.twig', 
+            array(
+                'grupos' => $grupos,
+                'asignacionesGrupoCLEAR' => $asignacionesGrupoCLEAR,
+                'idCLEAR' => $idCLEAR
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-grupo/{idGrupo}/nueva-asignacion", name="clearAsignarGrupo")
+     */
+    public function clearAsignarGrupoAction($idCLEAR, $idGrupo)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $grupos = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );  
+
+        $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
+            array('id' => $idCLEAR)
+        );  
+           
+        $asignacionesGrupoCLEAR = new AsignacionGrupoCLEAR();
+
+        $asignacionesGrupoCLEAR->setGrupo($grupos);
+        $asignacionesGrupoCLEAR->setClear($clear);           
+        $asignacionesGrupoCLEAR->setActive(true);
+        $asignacionesGrupoCLEAR->setFechaCreacion(new \DateTime());
+
+        $em->persist($asignacionesGrupoCLEAR);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('clearGrupo', 
+            array(
+                'grupos' => $grupos, 
+                'asignacionesGrupoCLEAR' => $asignacionesGrupoCLEAR,
+                'idCLEAR' => $idCLEAR
+            ));        
+        
+    }
+
+     /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-grupo/{idAsignacionGrupoCLEAR}/eliminar", name="clearEliminarGrupo")
+     */
+    public function clearEliminarGrupoAction(Request $request, $idCLEAR, $idAsignacionGrupoCLEAR)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionesGrupoCLEAR = new AsignacionGrupoCLEAR();
+
+        $asignacionesGrupoCLEAR = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->find($idAsignacionGrupoCLEAR); 
+
+        $grupos = $em->getRepository('AppBundle:Grupo')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );      
+
+        $em->remove($asignacionesGrupoCLEAR);
+        $em->flush();
+
+        $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
+            array('id' => $idCLEAR)
+        );
+
+        $asignacionesIntegranteCLEAR = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
+            array('clear' => $clear)
+        );  
+
+        return $this->redirectToRoute('clearGrupo',
+             array(
+                'grupos' => $grupos,
+                'asignacionesIntegranteCLEAR' => $asignacionesGrupoCLEAR,
+                'idCLEAR' => $idCLEAR
+            ));    
+        
+    }
+
 
 	/**
      * @Route("/gestion-empresarial/desarrollo-empresarial/integrantes/nuevo", name="integranteNuevo")
@@ -1814,6 +1918,108 @@ class GestionEmpresarialController extends Controller
              array(
                 'integrantes' => $integrantes,
                 'asignacionesIntegranteComite' => $asignacionIntegranteComite,
+                'idComite' => $idComite
+            ));    
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/asignacion-grupo", name="comiteGrupo")
+     */
+    public function comiteGrupoAction($idComite)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $comite = $em->getRepository('AppBundle:Comite')->findOneBy(
+            array('id' => $idComite)
+        );
+
+        $asignacionesGrupoComite = $em->getRepository('AppBundle:AsignacionGrupoComite')->findBy(
+            array('comite' => $comite)
+        );  
+
+        $grupos = $em->getRepository('AppBundle:Grupo')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );     
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-comite-gestion-asignacion.html.twig', 
+            array(
+                'grupos' => $grupos,
+                'asignacionesGrupoComite' => $asignacionesGrupoComite,
+                'idComite' => $idComite
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/asignacion-grupo/{idGrupo}/nueva-asignacion", name="comiteAsignarGrupo")
+     */
+    public function comiteAsignarGrupoAction($idComite, $idGrupo)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $grupos = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );  
+
+        $comite = $em->getRepository('AppBundle:Comite')->findOneBy(
+            array('id' => $idComite)
+        );  
+           
+        $asignacionesGrupoComite = new AsignacionGrupoComite();
+
+        $asignacionesGrupoComite->setGrupo($grupos);
+        $asignacionesGrupoComite->setComite($comite);           
+        $asignacionesGrupoComite->setActive(true);
+        $asignacionesGrupoComite->setFechaCreacion(new \DateTime());
+
+        $em->persist($asignacionesGrupoComite);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('comiteGrupo', 
+            array(
+                'grupos' => $grupos, 
+                'asignacionesGrupoComite' => $asignacionesGrupoComite,
+                'idComite' => $idComite
+            ));        
+        
+    }
+
+     /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/asignacion-grupo/{idAsignacionGrupoComite}/eliminar", name="comiteEliminarGrupo")
+     */
+    public function comiteEliminarGrupoAction(Request $request, $idComite, $idAsignacionGrupoComite)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionesGrupoComite = new AsignacionGrupoComite();
+
+        $asignacionesGrupoComite = $em->getRepository('AppBundle:AsignacionGrupoComite')->find($idAsignacionGrupoComite); 
+
+        $grupos = $em->getRepository('AppBundle:Grupo')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );      
+
+        $em->remove($asignacionesGrupoComite);
+        $em->flush();
+
+        $comite = $em->getRepository('AppBundle:Comite')->findOneBy(
+            array('id' => $idComite)
+        );
+
+        $asignacionesGrupoComite = $em->getRepository('AppBundle:AsignacionGrupoComite')->findBy(
+            array('comite' => $comite)
+        );  
+
+        return $this->redirectToRoute('comiteGrupo',
+             array(
+                'grupos' => $grupos,
+                'asignacionesGrupoComite' => $asignacionesGrupoComite,
                 'idComite' => $idComite
             ));    
         

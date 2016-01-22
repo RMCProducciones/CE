@@ -60,3 +60,12 @@ app.controller('gestionIntegranteClearCtrl', ['$scope', '$http', function($scope
 	};	
 
 }]);
+
+
+app.controller('gestionGrupoClearCtrl', ['$scope', '$http', function($scope, $http) {
+
+	$scope.eliminarGrupoClear = function(ruta){
+		window.location.replace(ruta);
+	};	
+
+}]);

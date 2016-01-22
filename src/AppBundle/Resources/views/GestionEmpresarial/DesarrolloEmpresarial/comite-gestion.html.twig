@@ -8,7 +8,7 @@
     <ul class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
-      <li>Formacion de capital social asociativo y desarrollo empresarial</li>
+      <li>Concurso de Mejoramiento</li>
       <li class="active">Comité de Concursos</li>
     </ul>
 {% endblock %}
@@ -140,7 +140,9 @@
 	                  </td>	                  
 	                  <td class="text-center">
 	                    <a href="{{ path('comiteIntegrante', {'idComite': comite.id}) }}" alt="Jurados Comité" title="Jurados Comité"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a> | 
-	                    <a href="#" alt="Asignacion Grupos" title="Asignacion Grupos"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a> | 
+
+	                    <a href="{{ path('comiteGrupo', {'idComite': comite.id}) }}" alt="Asignacion Grupos" title="Asignacion Grupos"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a> | 
+
 	                    <a href="{{ path('comiteSoporte', {'idComite': comite.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> | 
 					            <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ comite.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
 	                    <a title="Editar" alt="Editar" href="{{ path('comiteEditar', {'idComite': comite.id}) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> | 

@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AsignacionGrupoCLEAR
+ * AsignacionGrupoComite
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\AsignacionGrupoCLEARRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\AsignacionGrupoComiteRepository")
  */
-class AsignacionGrupoCLEAR
+class AsignacionGrupoComite
 {
     /**
      * @var integer
@@ -28,9 +28,9 @@ class AsignacionGrupoCLEAR
     private $grupo;
 
      /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CLEAR")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Comite")
      */
-    private $clear;
+    private $comite;
 
     /**
      * @var boolean
@@ -100,7 +100,7 @@ class AsignacionGrupoCLEAR
      *
      * @param AppBundle\Entity\Grupo $grupo
      *
-     * @return AsignacionGrupoCLEAR
+     * @return AsignacionGrupoComite
      */
     public function setGrupo(\AppBundle\Entity\Grupo $grupo)
     {
@@ -120,27 +120,27 @@ class AsignacionGrupoCLEAR
     }
 
     /**
-     * Set clear
+     * Set comite
      *
-     * @param AppBundle\Entity\CLEAR $clear
+     * @param AppBundle\Entity\Comite $comite
      *
-     * @return AsignacionGrupoCLEAR
+     * @return AsignacionGrupoComite
      */
-    public function setClear(\AppBundle\Entity\CLEAR $clear)
+    public function setComite(\AppBundle\Entity\Comite $comite)
     {
-        $this->clear = $clear;
+        $this->comite = $comite;
 
         return $this;
     }
 
     /**
-     * Get clear
+     * Get comite
      *
-     * @return AppBundle\Entity\CLEAR
+     * @return AppBundle\Entity\Comite
      */
-    public function getClear()
+    public function getComite()
     {
-        return $this->clear;
+        return $this->comite;
     }
 
     /**
@@ -148,7 +148,7 @@ class AsignacionGrupoCLEAR
      *
      * @param boolean $habilitacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return AsignacionGrupoComite
      */
     public function setHabilitacion($habilitacion)
     {
@@ -172,7 +172,7 @@ class AsignacionGrupoCLEAR
      *
      * @param boolean $asignacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return AsignacionGrupoComite
      */
     public function setAsignacion($asignacion)
     {
@@ -196,7 +196,7 @@ class AsignacionGrupoCLEAR
      *
      * @param boolean $contraloriaSocial
      *
-     * @return AsignacionGrupoCLEAR
+     * @return AsignacionGrupoComite
      */
     public function setContraloriaSocial($contraloriaSocial)
     {
@@ -220,7 +220,7 @@ class AsignacionGrupoCLEAR
      *
      * @param boolean $active
      *
-     * @return AsignacionGrupoCLEAR
+     * @return AsignacionGrupoComite
      */
     public function setActive($active)
     {
@@ -244,7 +244,7 @@ class AsignacionGrupoCLEAR
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return AsignacionGrupoComite
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
@@ -268,7 +268,7 @@ class AsignacionGrupoCLEAR
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return AsignacionGrupoComite
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -292,7 +292,7 @@ class AsignacionGrupoCLEAR
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return AsignacionGrupoComite
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
@@ -316,7 +316,7 @@ class AsignacionGrupoCLEAR
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return AsignacionGrupoCLEAR
+     * @return AsignacionGrupoComite
      */
     public function setFechaCreacion($fechaCreacion)
     {
