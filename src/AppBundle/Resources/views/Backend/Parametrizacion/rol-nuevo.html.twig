@@ -1,0 +1,85 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+{% block title %}Roles{% endblock %}
+
+{% block breadcrumb_ul %}
+
+    <ul class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Empresarial</li>
+      <li>Formacion de capital social asociativo y desarrollo empresarial</li>
+      <li><a href="{{ path('gruposGestion') }}">Grupos</a></li>
+      <li class="active">Nuevo</li>
+    </ul>
+
+{% endblock %}
+
+
+{% block section %}
+<div class="container">
+    <h1> Gestión Roles </h1>
+    <hr>
+    <h3> Nuevo Rol</h3>
+    <br />
+    <br />
+  </div>
+     
+
+  {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+    {{ form_errors(form) }}
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="btn-group">
+  
+              <button name="rol[guardar]" id="rol_guardar" type="submit" class="btn btn-success">Guardar</button>
+              
+              <a href="{{ path('rolGestion') }}" class="btn btn-danger">Cancelar</a>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <br>
+        
+
+
+    <div class="section">
+    	<div class="container">
+
+			<div class="row">
+				<div class="col-md-12">
+					<fieldset>
+						<legend>Datos básicos del grupo</legend>
+					</fieldset>            
+				</div>
+			</div>	
+
+			<div class="row">
+				<div class="col-md-4">
+			{{ form_label(form.rol) }}
+			{{ form_errors(form.rol) }}
+			{{ form_widget(form.rol, { 'attr': {'class': 'form-control', 'placeholder': 'Rol'} }) }}
+				</div>
+				<div class="col-md-4">
+			{{ form_label(form.permiso) }}
+          	{{ form_errors(form.permiso) }}
+          	{{ form_widget(form.permiso, { 'attr': {'style':'visibility:visible'} }) }}	
+
+          		</div>
+			</div>	
+
+			<br/>
+
+      	</div>
+    </div>
+
+  {{ form_end(form) }}
+               
+{% endblock %}
+

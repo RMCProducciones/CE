@@ -27,32 +27,49 @@
     <div class="alert alert-[[estadoMensaje]] alert-dismissible" id="MensajeCtrl" ng-show="mostrarMensaje === true" role="alert">[[textoMensaje]]<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
   </div>
 
+  {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
 
-    <div class="section">
-      <div class="container">
-        <div class="row">          
-          <div class="col-md-6">
-            <div class="btn-group">
+    {{ form_errors(form) }}
 
-              <button name="rol[Guardar]" id="rol_Guardar" type="submit" class="btn btn-success">Guardar</button>
-              
-              <a href="{{ path('rolGestion') }}" class="btn btn-danger" title="Cancelar" alt="Cancelar">Cancelar</a>
-              
-            </div>
+  <div class="section">
+    <div class="container">
+      <div class="row">          
+        <div class="col-md-6">
+          <div class="btn-group">
+
+            <button name="rol[guardar]" id="rol_guardar" type="submit" class="btn btn-success">Guardar</button>
+            
+            <a href="{{ path('rolGestion') }}" class="btn btn-danger" title="Cancelar" alt="Cancelar">Cancelar</a>
+            
           </div>
         </div>
       </div>
     </div>
-    
-    <br>
+  </div>
+  
+  <br>
 
-
-  <div class="section" ng-controller="EditarPermisoCtrl">
+  <div class="section">
     <div class="container">
+
       <div class="row">
-        <div class="col-md-12 table-responsive">
+        <div class="col-md-12">
+          <fieldset>
+            <legend>Datos básicos del grupo</legend>
+          </fieldset>            
+        </div>
+      </div>  
 
-
+      <div class="row">
+        <div class="col-md-4">
+          {{ form_label(form.rol) }}
+          {{ form_errors(form.rol) }}
+          {{ form_widget(form.rol, { 'attr': {'class': 'form-control', 'placeholder': 'Rol'} }) }}
+        </div>
+        <div class="col-md-8" ng-controller="EditarPermisoCtrl">
+          {{ form_label(form.permiso) }}
+          {{ form_errors(form.permiso) }}
+          {{ form_widget(form.permiso, { 'attr': {'style':'visibility:hidden'} }) }}
           <div class="panel-group" id="component" role="tablist" aria-multiselectable="true">
             <div class="panel panel-default component" ng-repeat="component in RPP" component-title="[[component._title]]" component-code="[[component._code]]" component-path="[[component._path]]">
               <div class="panel-heading" role="tab" id="heading[[component._type]][[component._id]]">  
@@ -127,11 +144,14 @@
               </div>
             </div>
           </div>
-
-
         </div>
-      </div>
+      </div>  
+
+      <br/>
+
     </div>
-  </div>  
+  </div>
+
+  {{ form_end(form) }} 
                
 {% endblock %}
