@@ -31,7 +31,7 @@ class Rol
     /**
      * @var string
      *
-     * @ORM\Column(name="permiso", type="string")
+     * @ORM\Column(name="permiso", type="text")
      */
     private $permiso;
 

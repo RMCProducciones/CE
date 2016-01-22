@@ -40,7 +40,10 @@ app.controller('AsignarPermisoCtrl', ['$scope', '$http', function($scope, $http)
 	$scope.RPP = '';
 	$scope.AsignarPermiso = true;
 
-	obtenerRPP($http, $scope, 1);
+	$scope.initRol = function(idRol){
+	    $scope.idRol = idRol;
+		obtenerRPP($http, $scope, $scope.idRol);
+	};
 
 	$scope.construirJsonPermisos = function(){
 		construirJsonPermisos($scope);
@@ -55,7 +58,10 @@ app.controller('EditarPermisoCtrl', ['$scope', '$http', function($scope, $http) 
 
 	$scope.AsignarPermiso = false;
 
-	obtenerRPP($http, $scope, 1);
+	$scope.initRol = function(idRol){
+	    $scope.idRol = idRol;
+		obtenerRPP($http, $scope, $scope.idRol);
+	};
 
 	$scope.construirJsonPermisos = function(){
 		construirJsonPermisos($scope);
@@ -165,14 +171,9 @@ function construirJsonPermisos($scope){
 
 		$('#rol_permiso').val($scope.elementPermiso);
 
-/*		
-		console.log('rol_permiso');
-		console.log($scope.elementPermiso);
-*/
-
 }
 
-function obtenerRPP($http, $scope, idUsuario){
+function obtenerRPP($http, $scope, idRol){
 
 	$http({
     	method  : 'GET',
@@ -194,7 +195,7 @@ function obtenerRPP($http, $scope, idUsuario){
 		construirJsonPermisos($scope);
 
 		if ($scope.AsignarPermiso == false){
-			cargarRPPActual($http, $scope, idUsuario) //Debe pasarse el idUsuario
+			cargarRPPActual($http, $scope, idRol) //Debe pasarse el idUsuario
 		}
 
 	}).error(function(data, status, headers, config) {
