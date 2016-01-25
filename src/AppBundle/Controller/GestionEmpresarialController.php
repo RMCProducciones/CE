@@ -24,6 +24,7 @@ use AppBundle\Entity\IntegranteCLEAR;
 use AppBundle\Entity\AsignacionGrupoCLEAR;
 use AppBundle\Entity\AsignacionIntegranteCLEAR;
 use AppBundle\Entity\Concurso;
+use AppBundle\Entity\AsignacionGrupoConcurso;
 use AppBundle\Entity\ConcursoSoporte;
 use AppBundle\Entity\ActividadConcurso;
 use AppBundle\Entity\Listas;
@@ -1544,6 +1545,109 @@ class GestionEmpresarialController extends Controller
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:concurso-actividades.html.twig', array('form' => $form->createView()));
     } 
 	
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/asignacion-grupo", name="concursoGrupo")
+     */
+    public function concursoGrupoAction($idConcurso)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $concurso = $em->getRepository('AppBundle:Concurso')->findOneBy(
+            array('id' => $idConcurso)
+        );
+
+        $asignacionesGrupoConcurso = $em->getRepository('AppBundle:AsignacionGrupoConcurso')->findBy(
+            array('concurso' => $concurso)
+        );  
+
+        $grupos = $em->getRepository('AppBundle:Grupo')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );     
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-concurso-gestion-asignacion.html.twig', 
+            array(
+                'grupos' => $grupos,
+                'asignacionesGrupoConcurso' => $asignacionesGrupoConcurso,
+                'idConcurso' => $idConcurso
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/asignacion-grupo/{idGrupo}/nueva-asignacion", name="concursoAsignarGrupo")
+     */
+    public function concursoAsignarGrupoAction($idConcurso, $idGrupo)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $grupos = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );  
+
+        $concurso = $em->getRepository('AppBundle:Concurso')->findOneBy(
+            array('id' => $idConcurso)
+        );  
+           
+        $asignacionesGrupoConcurso = new AsignacionGrupoConcurso();
+
+        $asignacionesGrupoConcurso->setGrupo($grupos);
+        $asignacionesGrupoConcurso->setConcurso($concurso);           
+        $asignacionesGrupoConcurso->setActive(true);
+        $asignacionesGrupoConcurso->setFechaCreacion(new \DateTime());
+
+        $em->persist($asignacionesGrupoConcurso);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('concursoGrupo', 
+            array(
+                'grupos' => $grupos, 
+                'asignacionesGrupoConcurso' => $asignacionesGrupoConcurso,
+                'idConcurso' => $idConcurso
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/asignacion-grupo/{idAsignacionGrupoConcurso}/eliminar", name="concursoEliminarGrupo")
+     */
+    public function concursoEliminarGrupoAction(Request $request, $idConcurso, $idAsignacionGrupoConcurso)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionesGrupoConcurso = new AsignacionGrupoConcurso();
+
+        $asignacionesGrupoConcurso = $em->getRepository('AppBundle:AsignacionGrupoConcurso')->find($idAsignacionGrupoConcurso); 
+
+        $grupos = $em->getRepository('AppBundle:Grupo')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );      
+
+        $em->remove($asignacionesGrupoConcurso);
+        $em->flush();
+
+        $concurso = $em->getRepository('AppBundle:Concurso')->findOneBy(
+            array('id' => $idConcurso)
+        );
+
+        $asignacionesGrupoConcurso = $em->getRepository('AppBundle:AsignacionGrupoConcurso')->findBy(
+            array('concurso' => $concurso)
+        );  
+
+        return $this->redirectToRoute('concursoGrupo',
+             array(
+                'grupos' => $grupos,
+                'asignacionesGrupoConcurso' => $asignacionesGrupoConcurso,
+                'idConcurso' => $idConcurso
+            ));    
+        
+    }
+
+    
 	
 
 

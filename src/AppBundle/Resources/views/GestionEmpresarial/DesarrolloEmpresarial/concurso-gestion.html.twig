@@ -8,7 +8,7 @@
     <ul class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
-      <li>Formacion de capital social asociativo y desarrollo empresarial</li>
+      <li>Concursos de Mejoramiento</li>
       <li class="active">Concursos</li>
     </ul>
 
@@ -94,7 +94,7 @@
 	                  <td class="text-center">
 	                    <a href="{{ path('actividadConcurso')}}" alt="Asignacion Actividades" title="Asignacion Actividades"> <span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span></a> |
 
-	                    <a href="#" alt="Asignacion Grupos" title="Asignacion Grupos"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a> | 
+	                    <a href="{{ path('concursoGrupo', {'idConcurso': concurso.id}) }}" alt="Asignacion Grupos" title="Asignacion Grupos"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a> | 
 
 	                    <a href="{{ path('concursoSoporte', {'idConcurso': concurso.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> | 
 
