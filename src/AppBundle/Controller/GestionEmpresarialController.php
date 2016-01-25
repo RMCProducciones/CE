@@ -35,6 +35,7 @@ use AppBundle\Entity\IntegranteSoporte;
 use AppBundle\Entity\Ruta;
 use AppBundle\Entity\RutaSoporte;
 use AppBundle\Entity\Pasantia;
+use AppBundle\Entity\AsignacionGrupoPasantia;
 use AppBundle\Entity\PasantiaSoporte;
 use AppBundle\Entity\ComiteSoporte;
 use AppBundle\Entity\JuradoSoporte;
@@ -2621,6 +2622,111 @@ class GestionEmpresarialController extends Controller
         return $this->redirectToRoute('pasantiaSoporte', array( 'idPasantia' => $idPasantia));
         
     }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-grupo", name="pasantiaGrupo")
+     */
+    public function pasantiaGrupoAction($idPasantia)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+            array('id' => $idPasantia)
+        );
+
+        $asignacionesGrupoPasantia = $em->getRepository('AppBundle:AsignacionGrupoPasantia')->findBy(
+            array('pasantia' => $pasantia)
+        );  
+
+        $grupos = $em->getRepository('AppBundle:Grupo')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );     
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-pasantia-gestion-asignacion.html.twig', 
+            array(
+                'grupos' => $grupos,
+                'asignacionesGrupoPasantia' => $asignacionesGrupoPasantia,
+                'idPasantia' => $idPasantia
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-grupo/{idGrupo}/nueva-asignacion", name="pasantiaAsignarGrupo")
+     */
+    public function pasantiaAsignarGrupoAction($idPasantia, $idGrupo)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $grupos = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );  
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+            array('id' => $idPasantia)
+        );  
+           
+        $asignacionesGrupoPasantia = new AsignacionGrupoPasantia();
+
+        $asignacionesGrupoPasantia->setGrupo($grupos);
+        $asignacionesGrupoPasantia->setPasantia($pasantia);           
+        $asignacionesGrupoPasantia->setActive(true);
+        $asignacionesGrupoPasantia->setFechaCreacion(new \DateTime());
+
+        $em->persist($asignacionesGrupoPasantia);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('pasantiaGrupo', 
+            array(
+                'grupos' => $grupos, 
+                'asignacionesGrupoPasantia' => $asignacionesGrupoPasantia,
+                'idPasantia' => $idPasantia
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-grupo/{idAsignacionGrupoPasantia}/eliminar", name="pasantiaEliminarGrupo")
+     */
+    public function pasantiaEliminarGrupoAction(Request $request, $idPasantia, $idAsignacionGrupoPasantia)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionesGrupoPasantia = new AsignacionGrupoPasantia();
+
+        $asignacionesGrupoPasantia = $em->getRepository('AppBundle:AsignacionGrupoPasantia')->find($idAsignacionGrupoPasantia); 
+
+        $grupos = $em->getRepository('AppBundle:Grupo')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );      
+
+        $em->remove($asignacionesGrupoPasantia);
+        $em->flush();
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+            array('id' => $idPasantia)
+        );
+
+        $asignacionesGrupoPasantia = $em->getRepository('AppBundle:AsignacionGrupoPasantia')->findBy(
+            array('pasantia' => $pasantia)
+        );  
+
+        return $this->redirectToRoute('pasantiaGrupo',
+             array(
+                'grupos' => $grupos,
+                'asignacionesGrupoPasantia' => $asignacionesGrupoPasantia,
+                'idPasantia' => $idPasantia
+            ));    
+        
+    }
+
+
+
 
 
 
