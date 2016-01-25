@@ -51,3 +51,12 @@ app.controller('gestionRutaCtrl', ['$scope', '$http', function($scope, $http) {
 
 }]);
 
+app.controller('gestionGrupoRutaCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.eliminarGrupoRuta = function(ruta){
+
+		window.location.replace(ruta);
+
+	};	
+}]);
+

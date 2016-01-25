@@ -33,6 +33,7 @@ use AppBundle\Entity\AsignacionGrupoComite;
 use AppBundle\Entity\Integrante;
 use AppBundle\Entity\IntegranteSoporte;
 use AppBundle\Entity\Ruta;
+use AppBundle\Entity\AsignacionGrupoRuta;
 use AppBundle\Entity\RutaSoporte;
 use AppBundle\Entity\Pasantia;
 use AppBundle\Entity\AsignacionOrganizacionPasantia;
@@ -2375,6 +2376,109 @@ class GestionEmpresarialController extends Controller
         return $this->redirectToRoute('rutaSoporte', array( 'idRuta' => $idRuta));
         
     }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-grupo", name="rutaGrupo")
+     */
+    public function rutaGrupoAction($idRuta)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
+            array('id' => $idRuta)
+        );
+
+        $asignacionesGrupoRuta = $em->getRepository('AppBundle:AsignacionGrupoRuta')->findBy(
+            array('ruta' => $ruta)
+        );  
+
+        $grupos = $em->getRepository('AppBundle:Grupo')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );     
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-ruta-gestion-asignacion.html.twig', 
+            array(
+                'grupos' => $grupos,
+                'asignacionesGrupoRuta' => $asignacionesGrupoRuta,
+                'idRuta' => $idRuta
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-grupo/{idGrupo}/nueva-asignacion", name="rutaAsignarGrupo")
+     */
+    public function rutaAsignarGrupoAction($idRuta, $idGrupo)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $grupos = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );  
+
+        $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
+            array('id' => $idRuta)
+        );  
+           
+        $asignacionesGrupoRuta = new AsignacionGrupoRuta();
+
+        $asignacionesGrupoRuta->setGrupo($grupos);
+        $asignacionesGrupoRuta->setRuta($ruta);           
+        $asignacionesGrupoRuta->setActive(true);
+        $asignacionesGrupoRuta->setFechaCreacion(new \DateTime());
+
+        $em->persist($asignacionesGrupoRuta);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('rutaGrupo', 
+            array(
+                'grupos' => $grupos, 
+                'asignacionesGrupoRuta' => $asignacionesGrupoRuta,
+                'idRuta' => $idRuta
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-grupo/{idAsignacionGrupoRuta}/eliminar", name="rutaEliminarGrupo")
+     */
+    public function rutaEliminarGrupoAction(Request $request, $idRuta, $idAsignacionGrupoRuta)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionesGrupoRuta = new AsignacionGrupoRuta();
+
+        $asignacionesGrupoRuta = $em->getRepository('AppBundle:AsignacionGrupoRuta')->find($idAsignacionGrupoRuta); 
+
+        $grupos = $em->getRepository('AppBundle:Grupo')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );      
+
+        $em->remove($asignacionesGrupoRuta);
+        $em->flush();
+
+        $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
+            array('id' => $idRuta)
+        );
+
+        $asignacionesGrupoRuta = $em->getRepository('AppBundle:AsignacionGrupoRuta')->findBy(
+            array('ruta' => $ruta)
+        );  
+
+        return $this->redirectToRoute('rutaGrupo',
+             array(
+                'grupos' => $grupos,
+                'asignacionesGrupoRuta' => $asignacionesGrupoRuta,
+                'idRuta' => $idRuta
+            ));    
+        
+    }
+
 
 
 
