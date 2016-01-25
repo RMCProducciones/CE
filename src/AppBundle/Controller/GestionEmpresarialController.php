@@ -35,6 +35,7 @@ use AppBundle\Entity\IntegranteSoporte;
 use AppBundle\Entity\Ruta;
 use AppBundle\Entity\RutaSoporte;
 use AppBundle\Entity\Pasantia;
+use AppBundle\Entity\AsignacionOrganizacionPasantia;
 use AppBundle\Entity\AsignacionGrupoPasantia;
 use AppBundle\Entity\PasantiaSoporte;
 use AppBundle\Entity\ComiteSoporte;
@@ -2623,6 +2624,109 @@ class GestionEmpresarialController extends Controller
         
     }
 
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-organizacion", name="pasantiaOrganizacion")
+     */
+    public function pasantiaOrganizacionAction($idPasantia)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+            array('id' => $idPasantia)
+        );
+
+        $asignacionesOrganizacionPasantia = $em->getRepository('AppBundle:AsignacionOrganizacionPasantia')->findBy(
+            array('pasantia' => $pasantia)
+        );  
+
+        $organizaciones = $em->getRepository('AppBundle:Organizacion')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );     
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:organizacion-pasantia-gestion-asignacion.html.twig', 
+            array(
+                'organizaciones' => $organizaciones,
+                'asignacionesOrganizacionPasantia' => $asignacionesOrganizacionPasantia,
+                'idPasantia' => $idPasantia
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-organizacion/{idOrganizacion}/nueva-asignacion", name="pasantiaAsignarOrganizacion")
+     */
+    public function pasantiaAsignarOrganizacionAction($idPasantia, $idOrganizacion)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $organizaciones = $em->getRepository('AppBundle:Organizacion')->findOneBy(
+            array('id' => $idOrganizacion)
+        );  
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+            array('id' => $idPasantia)
+        );  
+           
+        $asignacionesOrganizacionPasantia = new AsignacionOrganizacionPasantia();
+
+        $asignacionesOrganizacionPasantia->setOrganizacion($organizaciones);
+        $asignacionesOrganizacionPasantia->setPasantia($pasantia);           
+        $asignacionesOrganizacionPasantia->setActive(true);
+        $asignacionesOrganizacionPasantia->setFechaCreacion(new \DateTime());
+
+        $em->persist($asignacionesOrganizacionPasantia);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('pasantiaOrganizacion', 
+            array(
+                'organizaciones' => $organizaciones, 
+                'asignacionesOrganizacionPasantia' => $asignacionesOrganizacionPasantia,
+                'idPasantia' => $idPasantia
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-organizacion/{idAsignacionOrganizacionPasantia}/eliminar", name="pasantiaEliminarOrganizacion")
+     */
+    public function pasantiaEliminarOrganizacionAction(Request $request, $idPasantia, $idAsignacionOrganizacionPasantia)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionesOrganizacionPasantia = new AsignacionOrganizacionPasantia();
+
+        $asignacionesOrganizacionPasantia = $em->getRepository('AppBundle:AsignacionOrganizacionPasantia')->find($idAsignacionOrganizacionPasantia); 
+
+        $organizaciones = $em->getRepository('AppBundle:Organizacion')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );      
+
+        $em->remove($asignacionesOrganizacionPasantia);
+        $em->flush();
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+            array('id' => $idPasantia)
+        );
+
+        $asignacionesOrganizacionPasantia = $em->getRepository('AppBundle:AsignacionOrganizacionPasantia')->findBy(
+            array('pasantia' => $pasantia)
+        );  
+
+        return $this->redirectToRoute('pasantiaOrganizacion',
+             array(
+                'organizaciones' => $organizaciones,
+                'asignacionesOrganizacionPasantia' => $asignacionesOrganizacionPasantia,
+                'idPasantia' => $idPasantia
+            ));    
+        
+    }
+
+    
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-grupo", name="pasantiaGrupo")
      */
