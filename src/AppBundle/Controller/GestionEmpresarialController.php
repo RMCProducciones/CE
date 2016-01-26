@@ -34,6 +34,7 @@ use AppBundle\Entity\Integrante;
 use AppBundle\Entity\IntegranteSoporte;
 use AppBundle\Entity\Ruta;
 use AppBundle\Entity\AsignacionGrupoRuta;
+use AppBundle\Entity\AsignacionOrganizacionRuta;
 use AppBundle\Entity\RutaSoporte;
 use AppBundle\Entity\Pasantia;
 use AppBundle\Entity\AsignacionOrganizacionPasantia;
@@ -953,11 +954,11 @@ class GestionEmpresarialController extends Controller
             array('clear' => $clear)
         );  
 
-        $grupos = $em->getRepository('AppBundle:Grupo')->findBy(
-            array('active' => '1'),
-            array('fecha_creacion' => 'ASC')
-        );     
-        
+        $query = $em->createQuery('SELECT g FROM AppBundle:Grupo g WHERE g.id NOT IN (SELECT grupo.id FROM AppBundle:Grupo grupo JOIN AppBundle:AsignacionGrupoCLEAR agc WHERE grupo = agc.grupo AND agc.clear = :clear)');
+        $query->setParameter('clear', $clear);
+
+        $grupos = $query->getResult();
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-clear-gestion-asignacion.html.twig', 
             array(
                 'grupos' => $grupos,
@@ -2474,6 +2475,108 @@ class GestionEmpresarialController extends Controller
              array(
                 'grupos' => $grupos,
                 'asignacionesGrupoRuta' => $asignacionesGrupoRuta,
+                'idRuta' => $idRuta
+            ));    
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-organizacion", name="rutaOrganizacion")
+     */
+    public function rutaOrganizacionAction($idRuta)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
+            array('id' => $idRuta)
+        );
+
+        $asignacionesOrganizacionRuta = $em->getRepository('AppBundle:AsignacionOrganizacionRuta')->findBy(
+            array('ruta' => $ruta)
+        );  
+
+        $organizaciones = $em->getRepository('AppBundle:Organizacion')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );     
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:organizacion-ruta-gestion-asignacion.html.twig', 
+            array(
+                'organizaciones' => $organizaciones,
+                'asignacionesOrganizacionRuta' => $asignacionesOrganizacionRuta,
+                'idRuta' => $idRuta
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-organizacion/{idOrganizacion}/nueva-asignacion", name="rutaAsignarOrganizacion")
+     */
+    public function rutaAsignarOrganizacionAction($idRuta, $idOrganizacion)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $organizaciones = $em->getRepository('AppBundle:Organizacion')->findOneBy(
+            array('id' => $idOrganizacion)
+        );  
+
+        $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
+            array('id' => $idRuta)
+        );  
+           
+        $asignacionesOrganizacionRuta = new AsignacionOrganizacionRuta();
+
+        $asignacionesOrganizacionRuta->setOrganizacion($organizaciones);
+        $asignacionesOrganizacionRuta->setRuta($ruta);           
+        $asignacionesOrganizacionRuta->setActive(true);
+        $asignacionesOrganizacionRuta->setFechaCreacion(new \DateTime());
+
+        $em->persist($asignacionesOrganizacionRuta);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('rutaOrganizacion', 
+            array(
+                'organizaciones' => $organizaciones, 
+                'asignacionesOrganizacionRuta' => $asignacionesOrganizacionRuta,
+                'idRuta' => $idRuta
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-organizacion/{idAsignacionOrganizacionRuta}/eliminar", name="rutaEliminarOrganizacion")
+     */
+    public function rutaEliminarOrganizacionAction(Request $request, $idRuta, $idAsignacionOrganizacionRuta)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionesOrganizacionRuta = new AsignacionOrganizacionRuta();
+
+        $asignacionesOrganizacionRuta = $em->getRepository('AppBundle:AsignacionOrganizacionRuta')->find($idAsignacionOrganizacionRuta); 
+
+        $organizaciones = $em->getRepository('AppBundle:Organizacion')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );      
+
+        $em->remove($asignacionesOrganizacionRuta);
+        $em->flush();
+
+        $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
+            array('id' => $idRuta)
+        );
+
+        $asignacionesOrganizacionRuta = $em->getRepository('AppBundle:AsignacionOrganizacionRuta')->findBy(
+            array('ruta' => $ruta)
+        );  
+
+        return $this->redirectToRoute('rutaOrganizacion',
+             array(
+                'organizaciones' => $organizaciones,
+                'asignacionesOrganizacionRuta' => $asignacionesOrganizacionRuta,
                 'idRuta' => $idRuta
             ));    
         
