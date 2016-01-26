@@ -954,11 +954,11 @@ class GestionEmpresarialController extends Controller
             array('clear' => $clear)
         );  
 
-        $grupos = $em->getRepository('AppBundle:Grupo')->findBy(
-            array('active' => '1'),
-            array('fecha_creacion' => 'ASC')
-        );     
-        
+        $query = $em->createQuery('SELECT g FROM AppBundle:Grupo g WHERE g.id NOT IN (SELECT grupo.id FROM AppBundle:Grupo grupo JOIN AppBundle:AsignacionGrupoCLEAR agc WHERE grupo = agc.grupo AND agc.clear = :clear)');
+        $query->setParameter('clear', $clear);
+
+        $grupos = $query->getResult();
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-clear-gestion-asignacion.html.twig', 
             array(
                 'grupos' => $grupos,
