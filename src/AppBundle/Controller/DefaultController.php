@@ -59,26 +59,23 @@ class DefaultController extends Controller
 
 
     /**
-     * @Route("/menu", name="menu")
+     * @Route("/menu", name="menuRol")
      */
-    public function menuAction()
-    {
-
-        return $this->render('AppBundle:default:menu.html.twig');
-    }
-
-    /**
-     * @Route("/menu/{idRol}", name="menuRol")
-     */
-    public function menuRolAction($idRol)
+    public function menuRolAction()
     {
 
         $em = $this->getDoctrine()->getManager();
 
+        $usuario = $this->get('security.context')->getToken()->getUser();
+
+        print_r($usuario);
+
+        $roles = $usuario->getRoles();
+
         $rol = new Rol();
 
         $rol = $em->getRepository('AppBundle:Rol')->findOneBy(
-            array('id' => $idRol)
+            array('rol' => $roles[0])
         );
 
         $permisoRol = $rol->getPermiso();
