@@ -35,7 +35,7 @@ class TalentoType extends AbstractType
 			->add('primer_nombre')
 			->add('segundo_nombre', 'text', array('required' => false))
 			
-			->add('genero', 'entity', array('class' => 'AppBundle:Listas', 'expanded' => true, 
+			->add('genero', 'entity', array('class' => 'AppBundle:Listas', 
 										    'query_builder' => function(EntityRepository $er) {
 										        return $er->createQueryBuilder('l')
 										        	->where('l.dominio = :dominio')

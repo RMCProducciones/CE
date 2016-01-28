@@ -31,7 +31,7 @@ class Rol
     /**
      * @var string
      *
-     * @ORM\Column(name="permiso", type="string")
+     * @ORM\Column(name="permiso", type="text")
      */
     private $permiso;
 
@@ -50,7 +50,7 @@ class Rol
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
      */
     private $fecha_modificacion;
 

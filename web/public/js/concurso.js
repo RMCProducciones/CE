@@ -57,3 +57,12 @@ SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a 
 
 }]);
 
+
+app.controller('gestionGrupoConcursoCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.eliminarGrupoConcurso = function(ruta){
+
+		window.location.replace(ruta);
+
+	};	
+}]);

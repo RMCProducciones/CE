@@ -27,31 +27,29 @@ class AsignacionGrupoCLEAR
      */
     private $grupo;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="clear", type="string")
+     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CLEAR")
      */
     private $clear;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="habilitacion", type="boolean")
+     * @ORM\Column(name="habilitacion", type="boolean", nullable = true)
      */
     private $habilitacion;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="asignacion", type="boolean")
+     * @ORM\Column(name="asignacion", type="boolean", nullable = true)
      */
     private $asignacion;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="contraloria_social", type="boolean")
+     * @ORM\Column(name="contraloria_social", type="boolean", nullable = true)
      */
     private $contraloria_social;
 
@@ -70,7 +68,7 @@ class AsignacionGrupoCLEAR
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable = true)
      */
     private $fecha_modificacion;
 
@@ -124,11 +122,11 @@ class AsignacionGrupoCLEAR
     /**
      * Set clear
      *
-     * @param string $clear
+     * @param AppBundle\Entity\CLEAR $clear
      *
      * @return AsignacionGrupoCLEAR
      */
-    public function setClear($clear)
+    public function setClear(\AppBundle\Entity\CLEAR $clear)
     {
         $this->clear = $clear;
 
@@ -138,7 +136,7 @@ class AsignacionGrupoCLEAR
     /**
      * Get clear
      *
-     * @return string
+     * @return AppBundle\Entity\CLEAR
      */
     public function getClear()
     {

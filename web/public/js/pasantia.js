@@ -50,3 +50,21 @@ app.controller('gestionPasantiaCtrl', ['$scope', '$http', function($scope, $http
 
 }]);
 
+app.controller('gestionGrupoPasantiaCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.eliminarGrupoPasantia = function(ruta){
+
+		window.location.replace(ruta);
+
+	};	
+}]);
+
+app.controller('gestionOrganizacionPasantiaCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.eliminarOrganizacionPasantia = function(ruta){		
+		window.location.replace(ruta);
+
+	};	
+}]);
+
+

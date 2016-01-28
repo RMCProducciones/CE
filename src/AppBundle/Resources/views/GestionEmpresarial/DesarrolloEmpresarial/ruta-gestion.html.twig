@@ -124,8 +124,9 @@
 
                     <td class="text-center">
 
-                     
-                     <a href="#" alt="Asignacion Grupos" title="Asignacion Grupos"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a> |
+                     <a href="{{ path('rutaOrganizacion', {'idRuta': ruta.id}) }}" alt="Asignacion Organizaciones" title="Asignacion Organizaciones"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span></a> |
+
+                     <a href="{{ path('rutaGrupo', {'idRuta': ruta.id}) }}" alt="Asignacion Grupos" title="Asignacion Grupos"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a> |
                      
                      <a href="{{ path('rutaSoporte', {'idRuta': ruta.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> | 
 

@@ -60,6 +60,9 @@
                 <li class="dropdown dropdown-submenu">
                   <a href="#">Servicio complementario</a>
                   <ul class="dropdown-menu">
+                     <li>
+                      <a href="{{ path('organizacionGestion') }}">Organizaciones</a>
+                    </li>
                     <li>
                       <a href="{{ path('rutaGestion') }}">Participación Rutas</a>
                     </li>
@@ -258,9 +261,3 @@
     </div>
 
 </nav>
-
-{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-
-{{ app.user.roles | json_encode()}}
-
-{% endif %}

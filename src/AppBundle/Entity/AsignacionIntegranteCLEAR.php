@@ -32,6 +32,11 @@ class AsignacionIntegranteCLEAR
     private $integrante;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
+     */
+    private $rol;    
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="active", type="boolean")
@@ -119,6 +124,30 @@ class AsignacionIntegranteCLEAR
     public function getIntegrante()
     {
         return $this->integrante;
+    } 
+
+    /**
+     * Set rol
+     *
+     * @param AppBundle\Entity\Listas $rol
+     *
+     * @return AsignacionIntegranteCLEAR
+     */
+    public function setRol(\AppBundle\Entity\Listas $rol)
+    {
+        $this->rol = $rol;
+
+        return $this;
+    }
+
+    /**
+     * Get rol
+     *
+     * @return AppBundle\Entity\Listas
+     */
+    public function getRol()
+    {
+        return $this->rol;
     } 
 
     /**

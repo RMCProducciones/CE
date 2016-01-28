@@ -27,6 +27,7 @@ use AppBundle\Entity\CLEAR;
 use AppBundle\Form\GestionEmpresarial\CLEARType;
 
 /*Para autenticación por código*/
+use AppBundle\Entity\Rol;
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
@@ -58,12 +59,97 @@ class DefaultController extends Controller
 
 
     /**
-     * @Route("/menu", name="menu")
+     * @Route("/menu", name="menuRol")
      */
-    public function menuAction()
+    public function menuRolAction()
     {
 
-        return $this->render('AppBundle:default:menu.html.twig');
+        $em = $this->getDoctrine()->getManager();
+
+        $logged = $this->container->get('security.authorization_checker');
+        $usuario = $this->get('security.context')->getToken()->getUser();
+
+        if($logged->isGranted('IS_AUTHENTICATED_REMEMBERED')){
+
+            $roles = $usuario->getRoles();
+
+            $rol = new Rol();
+
+            $rol = $em->getRepository('AppBundle:Rol')->findOneBy(
+                array('rol' => $roles[0])
+            );
+
+            $permisoRol = $rol->getPermiso();
+
+            $jsonPermisoRol = json_decode($permisoRol,true);
+
+            $idArrayComponente = 0;
+            $idArrayModule = 0;
+            $idArraySubModule = 0;
+
+            foreach($jsonPermisoRol['component'] as $component){
+
+
+                if($component['checked'] == true){
+
+                    if($component['path'] != "#"){
+                        
+                        $component['path'] = $this->generateUrl($component['path']); 
+
+                    }
+
+                    $idArrayModule = 0;
+
+                    foreach($component['module'] as $module){
+
+                        if($module['checked'] == true){
+
+                            if($module['path'] != "#"){
+                                
+                                $module['path'] = $this->generateUrl($module['path']); 
+
+                            }
+
+                            $idArraySubModule = 0;                
+
+                            foreach($module['subModule'] as $subModule){
+
+                                if($subModule['checked'] == true){                            
+
+                                    if($subModule['path'] != "#"){
+                                        
+                                        $jsonPermisoRol['component'][$idArrayComponente]['module'][$idArrayModule]['subModule'][$idArraySubModule]['path'] = $this->generateUrl($subModule['path']); 
+
+                                    }
+
+                                }
+
+                                $idArraySubModule++;
+
+                            }
+                        }
+
+                        $idArrayModule++;
+                        
+                    }
+
+                }
+
+                $idArrayComponente++;
+
+            }
+
+        }else{
+            $jsonPermisoRol=null;
+        }
+
+        return $this->render(
+            'AppBundle:default:main-menu.html.twig', 
+            array( 
+                'permisoRol' =>  $jsonPermisoRol
+            )
+        );
+
     }
 
     /**
