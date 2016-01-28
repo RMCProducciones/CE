@@ -46,6 +46,7 @@ use AppBundle\Entity\IntegranteComite;
 use AppBundle\Entity\AsignacionIntegranteComite;
 use AppBundle\Entity\Organizacion;
 use AppBundle\Entity\OrganizacionSoporte;
+use AppBundle\Entity\TerritorioAprendizaje;
 
 use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
 use AppBundle\Form\GestionEmpresarial\AsignacionIntegranteCLEARType;
@@ -70,6 +71,7 @@ use AppBundle\Form\GestionEmpresarial\PasantiaSoporteType;
 use AppBundle\Form\GestionEmpresarial\OrganizacionType;
 use AppBundle\Form\GestionEmpresarial\OrganizacionSoporteType;
 use AppBundle\Form\GestionEmpresarial\ListaRolType;
+use AppBundle\Form\GestionEmpresarial\TerritorioAprendizajeType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -3377,7 +3379,150 @@ class GestionEmpresarialController extends Controller
 
 
 
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/territorio/gestion", name="territorioaprendizajeGestion")
+     */
+    public function territorioaprendizajeGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $territorios = $em->getRepository('AppBundle:TerritorioAprendizaje')->findBy(
+            array('active' => '1')
+            
+        );
 
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:territorio-gestion.html.twig', array( 'territorios' => $territorios));
+    }
+
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/territorio/nuevo", name="territorioaprendizajeNuevo")
+     */
+    public function territorioaprendizajeNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $territorio = new TerritorioAprendizaje();
+        
+        $form = $this->createForm(new TerritorioAprendizajeType(), $territorio);
+        
+        $form->add(
+            'guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $territorio = $form->getData();
+
+            $territorio->setActive(true);
+            $territorio->setFechaCreacion(new \DateTime());
+
+            /*$usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
+            
+            $grupo->setUsuarioCreacion($usuarioCreacion);*/
+
+            $em->persist($territorio);
+            $em->flush();
+
+            return $this->redirectToRoute('territorioaprendizajeGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:territorio-nuevo.html.twig', array('form' => $form->createView()));
+    }
+
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/territorio/{idTerritorioAprendizaje}/editar", name="territorioaprendizajeEditar")
+     */
+    public function territorioaprendizajeEditarAction(Request $request, $idTerritorioAprendizaje)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $territorio = new TerritorioAprendizaje();
+
+        $territorio = $em->getRepository('AppBundle:TerritorioAprendizaje')->findOneBy(
+            array('id' => $idTerritorioAprendizaje)
+        );
+
+        $form = $this->createForm(new TerritorioAprendizajeType(), $territorio);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $territorio = $form->getData();
+
+            $territorio->setFechaModificacion(new \DateTime());
+
+            $usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
+            
+            $territorio->setUsuarioModificacion($usuarioModificacion);
+
+            $em->flush();
+
+            return $this->redirectToRoute('territorioaprendizajeGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:territorio-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idTerritorioAprendizaje' => $idTerritorioAprendizaje,
+                    'territorio' => $territorio,
+            )
+        );
+
+    }
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/territorio/{idTerritorioAprendizaje}/eliminar", name="territorioaprendizajeEliminar")
+     */
+    public function territorioaprendizajeEliminarAction(Request $request, $idTerritorioAprendizaje)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $territorio = new TerritorioAprendizaje();
+
+        $territorio = $em->getRepository('AppBundle:TerritorioAprendizaje')->find($idTerritorioAprendizaje);              
+
+        $em->remove($territorio);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('territorioaprendizajeGestion'));
+
+    }
+
+
+
+
+    
 
 
 
