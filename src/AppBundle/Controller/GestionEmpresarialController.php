@@ -69,6 +69,7 @@ use AppBundle\Form\GestionEmpresarial\RutaSoporteType;
 use AppBundle\Form\GestionEmpresarial\PasantiaSoporteType;
 use AppBundle\Form\GestionEmpresarial\OrganizacionType;
 use AppBundle\Form\GestionEmpresarial\OrganizacionSoporteType;
+use AppBundle\Form\GestionEmpresarial\ListaRolType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -656,7 +657,9 @@ class GestionEmpresarialController extends Controller
             return $this->redirectToRoute('CLEARGestion');
         }
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:clear-nuevo.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:clear-nuevo.html.twig',
+            array('form' => $form->createView())
+        );
     }
 
     /**
@@ -840,7 +843,7 @@ class GestionEmpresarialController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-integrante", name="clearIntegrante")
      */
-    public function clearIntegranteAction($idCLEAR)
+    public function clearIntegranteAction(Request $request, $idCLEAR)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -848,15 +851,48 @@ class GestionEmpresarialController extends Controller
             array('id' => $idCLEAR)
         );
 
+        if ($request->getMethod() == 'POST') {
+
+
+            if(isset($_POST["idRolIntegrante"])){
+
+
+                $asignacionIntegranteCLEAR = new AsignacionIntegranteCLEAR();
+
+                $rolIntegrante = $em->getRepository('AppBundle:Listas')->findOneBy(
+                    array('id' => $_POST["idRolIntegrante"]["rol"])
+                );  
+
+                $integrante = $em->getRepository('AppBundle:Integrante')->findOneBy(
+                    array('id' => $_POST["idRolIntegrante"]["idIntegrante"])
+                );  
+
+                $asignacionIntegranteCLEAR->setRol($rolIntegrante);
+                $asignacionIntegranteCLEAR->setClear($clear);
+                $asignacionIntegranteCLEAR->setIntegrante($integrante);
+
+                $asignacionIntegranteCLEAR->setFechaCreacion(new \DateTime());
+                $asignacionIntegranteCLEAR->setActive(0);
+
+
+                $em->persist($asignacionIntegranteCLEAR);
+                $em->flush();
+
+            }
+
+        }        
+
+        $asignacionesIntegranteCLEAR = new AsignacionIntegranteCLEAR();
+
         $asignacionesIntegranteCLEAR = $em->getRepository('AppBundle:AsignacionIntegranteCLEAR')->findBy(
             array('clear' => $clear)
-        ); 
+        );        
 
         $query = $em->createQuery('SELECT i FROM AppBundle:Integrante i WHERE i.id NOT IN (SELECT integrante.id FROM AppBundle:Integrante integrante JOIN AppBundle:AsignacionIntegranteCLEAR agc WHERE integrante = agc.integrante AND agc.clear = :clear) AND i.active = 1');
         $query->setParameter('clear', $clear);
 
-        $integrantes = $query->getResult(); 
-        
+        $integrantes = $query->getResult();
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:integrantes-clear-gestion-asignacion.html.twig', 
             array(
                 'integrantes' => $integrantes,
@@ -865,6 +901,53 @@ class GestionEmpresarialController extends Controller
             ));        
         
     }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-integrante/{idIntegrante}/formulario", name="formularioRol")
+     */
+    public function formularioRolAction(Request $request, $idCLEAR, $idIntegrante)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionesIntegranteCLEAR = new AsignacionIntegranteCLEAR();
+
+        $form = $this->createForm(new ListaRolType(), $asignacionesIntegranteCLEAR);
+
+        $form->add(
+                'idIntegrante', 
+                'hidden', 
+                array(
+                    'mapped' => false,
+                    'attr' => array(
+                        'value' => $idIntegrante,
+                        'style' => 'visibility:hidden'
+                    )
+                )
+        );
+
+        $form->add(
+            'Asignar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:asignarRol.html.twig',
+            array(
+                'form' => $form->createView(),
+                'idIntegrante' => $idIntegrante,
+                'idCLEAR' => $idCLEAR
+                )
+        );
+    }
+
 
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-integrante/{idIntegrante}/nueva-asignacion", name="clearAsignarIntegrante")
@@ -891,8 +974,6 @@ class GestionEmpresarialController extends Controller
 
         $em->persist($asignacionesIntegranteCLEAR);
         $em->flush();
-
-
 
         return $this->redirectToRoute('clearIntegrante', 
             array(

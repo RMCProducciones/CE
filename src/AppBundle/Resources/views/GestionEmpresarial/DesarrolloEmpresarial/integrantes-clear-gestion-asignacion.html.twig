@@ -68,7 +68,12 @@
                 </datalist>
               </div>
             </div>
-            <hr>            
+            <hr> 
+
+            
+
+
+
             <table class="table table-striped table-hover">
               <thead>
                 <tr>
@@ -102,7 +107,7 @@
                   <td>
                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ integrante.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                     <br>                    
-                    <a href="{{ path('clearAsignarIntegrante', {'idCLEAR': idCLEAR, 'idIntegrante': integrante.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
+                    <a href="#" title="Asignar" alt="Asignar" data-toggle="modal" data-target="#asignarRol{{ integrante.id }}"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
                     <br>                    
                   </td>
                 </tr>
@@ -169,7 +174,7 @@
                     
                   </td>
                   <td>{{asignacionIntegranteCLEAR.integrante.primernombre}} {{asignacionIntegranteCLEAR.integrante.segundonombre}}</td>
-                  <td>{{asignacionIntegranteCLEAR.integrante.cargo}}</td>
+                  <td>{{asignacionIntegranteCLEAR.rol}}</td>
           
                   <td>
                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ asignacionIntegranteCLEAR.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> |                     
@@ -254,7 +259,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ asignacionIntegranteCLEAR.integrante.id }} | {{ asignacionIntegranteCLEAR.integrante.primerNombre }} {{ asignacionIntegranteCLEAR.integrante.segundoNombre }} {{ asignacionIntegranteCLEAR.integrante.primerApellido }} {{ asignacionIntegranteCLEAR.integrante.segundoApellido }}</h4>
+            <h4 class="modal-title" id="myModalLabel">{{ asignacionIntegranteCLEAR.integrante.id }} | {{ asignacionIntegranteCLEAR.rol }} | {{ asignacionIntegranteCLEAR.integrante.primerNombre }} {{ asignacionIntegranteCLEAR.integrante.segundoNombre }} {{ asignacionIntegranteCLEAR.integrante.primerApellido }} {{ asignacionIntegranteCLEAR.integrante.segundoApellido }}</h4>
           </div>
           <div class="modal-body">
             <b>Tipo de documento:{{ asignacionIntegranteCLEAR.integrante.tipoDocumento }}</b>
@@ -277,6 +282,8 @@
             <br>
             <b>Cargo: {{ asignacionIntegranteCLEAR.integrante.cargo }}</b>            
             <br>
+            <b>Rol: {{ asignacionIntegranteCLEAR.rol }}</b>            
+            <br>
             <b>Dirección:  {{ asignacionIntegranteCLEAR.integrante.direccion }}</b>
             <br>
             <b>Telefono fijo: {{ asignacionIntegranteCLEAR.integrante.telefonoFijo }}</b>
@@ -296,7 +303,15 @@
         </div>
       </div>
     </div>
-{% endfor %}      
+{% endfor %} 
+
+
+{% for integrante in integrantes %}
+ 
+  {% render url('formularioRol', {'idCLEAR': idCLEAR, 'idIntegrante': integrante.id }) %}
+
+{% endfor %}
+
                
 {% endblock %}
 
