@@ -92,3 +92,8 @@ php app/console doctrine:generate:entity --entity="AppBundle:BeneficiarioRuta" -
 php app/console doctrine:generate:entity --entity="AppBundle:Pasantia" --fields=" territorio_aprendizaje:string  organizacion:string grupo:string nombre_pasantia:string observaciones:string active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 php app/console doctrine:generate:entity --entity="AppBundle:BeneficiarioPasantia" --fields=" pasantia:string  beneficiario:string active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
+php app/console doctrine:generate:entity --entity="AppBundle:DiagnosticoOrganizacional" --fields="grupo:integer fecha_visita:datetime promotor:integer 1a:smallint 1b:smallint 1c:smallint 1d:smallint 1e:smallint 1f:smallint 2a:smallint 2b:smallint 2c:smallint 2d:smallint 2e:smallint 3a:smallint 3b:smallint 3c:smallint 3d:smallint 3e:smallint 3f:smallint 4a:smallint 4b:smallint 4c:smallint 4d:smallint 4e:smallint 5a:smallint 5b:smallint 5c:smallint 5d:smallint 5e:smallint 5f:smallint total1:smallint total2:smallint total3:smallint total4:smallint total5:smallint total:smallint active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
