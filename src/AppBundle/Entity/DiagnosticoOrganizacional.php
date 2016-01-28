@@ -22,9 +22,7 @@ class DiagnosticoOrganizacional
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="grupo", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
      */
     private $grupo;
 
@@ -329,11 +327,11 @@ class DiagnosticoOrganizacional
     /**
      * Set grupo
      *
-     * @param integer $grupo
+     * @param AppBundle\Entity\Grupo $grupo
      *
      * @return DiagnosticoOrganizacional
      */
-    public function setGrupo($grupo)
+    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
     {
         $this->grupo = $grupo;
 
@@ -343,7 +341,7 @@ class DiagnosticoOrganizacional
     /**
      * Get grupo
      *
-     * @return integer
+     * @return AppBundle\Entity\Grupo
      */
     public function getGrupo()
     {
