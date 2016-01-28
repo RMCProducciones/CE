@@ -172,7 +172,7 @@
                 ctx.textAlign="left"; ctx.fillText("Convocatoria",10*escX,408*escY);
                 circulo(200, 400, 1);   // 1    Convocatoria
 
-                ctx.font = 16*(escX+escY)/2+"px Arial";
+                ctx.font = 15*(escX+escY)/2+"px Arial";
 
                 ctx.fillStyle = "#999"; ctx.textAlign="right"; ctx.fillText("CLEAR",280*escX,350*escY); ctx.fillText("Habilitación",280*escX,370*escY);
                 circulo(280, 400);   // 2    CLEAR Habilitación
@@ -186,17 +186,28 @@
                 ctx.fillStyle = "#999"; ctx.textAlign="left"; ctx.fillText("Visita previa",330*escX,550*escY);
                 circulo(330, 580);      // 5    Visita previa
 
-                
+                ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("CLEAR",480*escX,210*escY); ctx.fillText("Asignación",480*escX,230*escY); ctx.fillText("$ 760.000",480*escX,250*escY);
                 circulo(480, 280);      // 6    Formal MOT Clear Asignación
+
+                ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Talleres",630*escX,250*escY);
                 circulo(630, 280);      // 7    Formal MOT Talleres
+
+                ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Legalización",780*escX,320*escY); ctx.fillText("Fase",780*escX,340*escY);
                 circulo(780, 280);      // 8    Formal MOT Legalización Fase
 
+                ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("CLEAR",480*escX,460*escY); ctx.fillText("Asignación",480*escX,480*escY); ctx.fillText("$ 760.000",480*escX,500*escY);
                 circulo(480, 530);      // 9    No Formal MOT Clear Asignación
-                circulo(630, 530);      // 10   No Formal MOT Talleres 
+
+                ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Talleres",630*escX,500*escY);
+                circulo(630, 530);      // 10   No Formal MOT Talleres
+
+                ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Legalización",780*escX,570*escY); ctx.fillText("Fase",780*escX,590*escY);
                 circulo(780, 530);      // 11   No Formal MOT Legalización Fase 
 
+                ctx.fillStyle = "#999"; ctx.textAlign="right"; ctx.fillText("CLEAR",900*escX,460*escY); ctx.fillText("Convocatoria",900*escX,480*escY); ctx.fillText("Social",900*escX,500*escY);
                 circulo(900, 530);      // 12    
 
+                ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("CLEAR",970*escX,460*escY); ctx.fillText("Asignación 5:1",970*escX,480*escY); ctx.fillText("max $ 5'700.000",970*escX,500*escY);
                 circulo(950, 530);      // 13 
 
                 
@@ -209,6 +220,7 @@
                 ctx.fillStyle = "#999"; ctx.save(); ctx.translate( 1150*escX, 500*escY ); ctx.rotate(-Math.PI / 4); ctx.textAlign="left"; ctx.fillText("Visita 3",0,0); ctx.restore(); 
                 circulo(1150, 530);     // 16
 
+                ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Legalización",1250*escX,570*escY); ctx.fillText("Fase",1250*escX,590*escY);
                 circulo(1250, 530);     // 17    
 
                 circulo(1350, 530);     // 18    
