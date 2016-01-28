@@ -905,9 +905,9 @@ class GestionEmpresarialController extends Controller
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-integrante/{idIntegrante}/formulario", name="formularioRol")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-integrante/{idIntegrante}/formulario", name="formularioRolIntegranteClear")
      */
-    public function formularioRolAction(Request $request, $idCLEAR, $idIntegrante)
+    public function formularioRolIntegranteClearAction(Request $request, $idCLEAR, $idIntegrante)
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -941,7 +941,7 @@ class GestionEmpresarialController extends Controller
         $form->handleRequest($request);
 
         return $this->render(
-            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:asignarRol.html.twig',
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:asignarRolIntegranteClear.html.twig',
             array(
                 'form' => $form->createView(),
                 'idIntegrante' => $idIntegrante,
@@ -952,41 +952,6 @@ class GestionEmpresarialController extends Controller
 
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-integrante/{idIntegrante}/nueva-asignacion", name="clearAsignarIntegrante")
-     */
-    public function clearAsignarIntegranteAction($idCLEAR, $idIntegrante)
-    {
-
-        $em = $this->getDoctrine()->getManager();
-
-        $integrantes = $em->getRepository('AppBundle:Integrante')->findOneBy(
-            array('id' => $idIntegrante)
-        );  
-
-        $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
-            array('id' => $idCLEAR)
-        );  
-           
-        $asignacionesIntegranteCLEAR = new AsignacionIntegranteCLEAR();
-
-        $asignacionesIntegranteCLEAR->setIntegrante($integrantes);
-        $asignacionesIntegranteCLEAR->setClear($clear);           
-        $asignacionesIntegranteCLEAR->setActive(true);
-        $asignacionesIntegranteCLEAR->setFechaCreacion(new \DateTime());
-
-        $em->persist($asignacionesIntegranteCLEAR);
-        $em->flush();
-
-        return $this->redirectToRoute('clearIntegrante', 
-            array(
-                'integrantes' => $integrantes, 
-                'asignacionesIntegranteCLEAR' => $asignacionesIntegranteCLEAR,
-                'idCLEAR' => $idCLEAR
-            ));        
-        
-    }
-
-     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-integrante/{idAsignacionIntegranteCLEAR}/eliminar", name="clearEliminarIntegrante")
      */
     public function clearEliminarIntegranteAction(Request $request, $idCLEAR, $idAsignacionIntegranteCLEAR)
@@ -2015,13 +1980,46 @@ class GestionEmpresarialController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/asignacion-integrante", name="comiteIntegrante")
      */
-    public function comiteIntegranteAction($idComite)
+    public function comiteIntegranteAction(Request $request, $idComite)
     {
         $em = $this->getDoctrine()->getManager();
 
         $comite = $em->getRepository('AppBundle:Comite')->findOneBy(
             array('id' => $idComite)
         );
+
+        if ($request->getMethod() == 'POST') {
+
+
+            if(isset($_POST["idRolIntegrante"])){
+
+
+                $asignacionIntegranteComite = new AsignacionIntegranteComite();
+
+                $rolIntegrante = $em->getRepository('AppBundle:Listas')->findOneBy(
+                    array('id' => $_POST["idRolIntegrante"]["rol"])
+                );  
+
+                $integrante = $em->getRepository('AppBundle:Integrante')->findOneBy(
+                    array('id' => $_POST["idRolIntegrante"]["idIntegrante"])
+                );  
+
+                $asignacionIntegranteComite->setRol($rolIntegrante);
+                $asignacionIntegranteComite->setComite($comite);
+                $asignacionIntegranteComite->setIntegrante($integrante);
+
+                $asignacionIntegranteComite->setFechaCreacion(new \DateTime());
+                $asignacionIntegranteComite->setActive(0);
+
+
+                $em->persist($asignacionIntegranteComite);
+                $em->flush();
+
+            }
+
+        }       
+
+        $asignacionesIntegranteComite = new AsignacionIntegranteComite();
 
         $asignacionesIntegranteComite = $em->getRepository('AppBundle:AsignacionIntegranteComite')->findBy(
             array('comite' => $comite)
@@ -2040,6 +2038,53 @@ class GestionEmpresarialController extends Controller
             ));        
         
     }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/asignacion-integrante/{idIntegrante}/formulario", name="formularioRolIntegranteComite")
+     */
+    public function formularioRolIntegranteComiteAction(Request $request, $idComite, $idIntegrante)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionesIntegranteComite = new AsignacionIntegranteComite();
+
+        $form = $this->createForm(new ListaRolType(), $asignacionesIntegranteComite);
+
+        $form->add(
+                'idIntegrante', 
+                'hidden', 
+                array(
+                    'mapped' => false,
+                    'attr' => array(
+                        'value' => $idIntegrante,
+                        'style' => 'visibility:hidden'
+                    )
+                )
+        );
+
+        $form->add(
+            'Asignar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:asignarRolIntegranteComite.html.twig',
+            array(
+                'form' => $form->createView(),
+                'idIntegrante' => $idIntegrante,
+                'idComite' => $idComite
+                )
+        );
+    }
+
 
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/asignacion-integrante/{idIntegrante}/nueva-asignacion", name="comiteAsignarIntegrante")
