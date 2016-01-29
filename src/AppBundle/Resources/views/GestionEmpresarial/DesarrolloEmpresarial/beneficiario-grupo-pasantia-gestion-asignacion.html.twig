@@ -85,7 +85,7 @@
                 
          {% set consecutivo = 1 %}
         
-          {% for grupo in grupos %}
+          {% for beneficiario in beneficiarios %}
         
         <tr>
                   <td class="text-center">{{ consecutivo }}</td>
@@ -93,23 +93,25 @@
 
                   </td>
                   <td>
-                    {{ grupo.codigo }}
-                    <br />
                     {{ grupo.nombre }}
-                    <br />
-                    <b>M</b> {{ grupo.municipio }}
+                  </td>
+                  <td>
+                    <b>Primero Apellido: {{ beneficiario.primerApellido }}</b>
                     <br>
-                    <b>D</b> {{ grupo.municipio.departamento }}
+                    <b>Segundo Apellido: {{ beneficiario.segundoApellido }}</b>
                     <br>
-                    <b>Z</b> {{ grupo.municipio.zona }}                                
+                    <b>Primero Nombre: {{ beneficiario.primerNombre }}</b>
+                    <br>
+                    <b>Segundo Nombre: {{ beneficiario.segundoNombre }}</b>                   
+                  </td>
           <br>
           <br>
 
                     
                   <td>
-                    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ grupo.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ beneficiario.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                     <br>                    
-                    <a href="{{ path('pasantiaAsignarGrupo', {'idPasantia': idPasantia, 'idGrupo': grupo.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
+                    <a href="{{ path('pasantiaAsignarGrupoBeneficiario', {'idPasantia': idPasantia, 'idAsignacionGrupoPasantia': asignacionesGrupoPasantia.id, 'idBeneficiario': beneficiario.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
                     <br>                    
                   </td>
                 </tr>
@@ -153,7 +155,7 @@
           </div>
 
           <div class="col-md-6 col-md-offset-1 well">            
-            <table class="table table-striped table-hover" ng-controller="gestionGrupoPasantiaCtrl">
+            <table class="table table-striped table-hover" ng-controller="gestionGrupoBeneficiarioPasantiaCtrl">
               <thead>           
                 <tr>
                   <th>#</th>
@@ -169,29 +171,28 @@
               <tbody>
         {% set consecutivo = 1 %}
         
-          {% for asignacionGrupoPasantia in asignacionesGrupoPasantia %}
+          {% for asignacionGrupoBeneficiarioPasantia in asignacionesGrupoBeneficiarioPasantia %}
                 <tr id="filaIntegranteCLEAR{{ consecutivo }}">
                   <td>{{ consecutivo }}</td>
                   <td>
                     
                   </td>
                   <td>
-                    {{ asignacionGrupoPasantia.grupo.codigo }}
-                    <br />
-                    {{ asignacionGrupoPasantia.grupo.nombre }}
-                    <br />
+                    {{ asignacionGrupoBeneficiarioPasantia.beneficiario.grupo.nombre }}
                   </td>
                   <td>
-                    <b>M</b> {{ asignacionGrupoPasantia.grupo.municipio }}
+                    <b>Primero Apellido: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.primerApellido }}</b>
                     <br>
-                    <b>D</b> {{ asignacionGrupoPasantia.grupo.municipio.departamento }}
+                    <b>Segundo Apellido: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.segundoApellido }}</b>
                     <br>
-                    <b>Z</b> {{ asignacionGrupoPasantia.grupo.municipio.zona }}    
+                    <b>Primero Nombre: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.primerNombre }}</b>
+                    <br>
+                    <b>Segundo Nombre: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.segundoNombre }}</b>                   
                   </td>
           
                   <td>
-                    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ asignacionGrupoPasantia.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
-                    <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarGrupoPasantia('{{ path('pasantiaEliminarGrupo', {'idPasantia': idPasantia, 'idAsignacionGrupoPasantia': asignacionGrupoPasantia.id}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>                                   
+                    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ asignacionGrupoBeneficiarioPasantia.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
+                    <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarGrupoBeneficiarioPasantia('{{ path('pasantiaEliminarGrupoBeneficiario', {'idPasantia': idPasantia, 'idAsignacionGrupoPasantia': asignacionesGrupoPasantia.id, 'idAsignacionoBeneficiario': asignacionGrupoBeneficiarioPasantia.id}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>                                   
                   </td>
                 </tr>
         
@@ -209,53 +210,103 @@
       </div>
     </div>
 
-   {% for grupo in grupos %}
+  {% for beneficiario in beneficiarios %}
     <!-- Modal -->
-    <div class="modal fade" id="myModal{{ grupo.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal fade" id="myModal{{ beneficiario.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ grupo.codigo }} | {{ grupo.nombre }}</h4>
+            <h4 class="modal-title" id="myModalLabel">{{ grupo.id }} | {{ grupo.nombre }}</h4>
           </div>
           <div class="modal-body">
-            <b>Departamento:{{ grupo.municipio.departamento.nombre }}</b>
+            <b>Tipo de Documento:{{ beneficiario.tipoDocumento }}</b>
             <br>
-            <b>Municipio: {{ grupo.municipio }}</b>
+            <b>Numero de Documento: {{ beneficiario.numeroDocumento }}</b>
             <br>
-            <b>Zona: Oriente {{ grupo.municipio.zona.nombre }}</b>
+            <b>Primero Apellido: {{ beneficiario.primerApellido }}</b>
             <br>
-            <b>Tipo de grupo: {{ grupo.tipo }}</b>
+            <b>Segundo Apellido: {{ beneficiario.segundoApellido }}</b>
             <br>
-            <b>Codigo de grupo: {{ grupo.codigo }}</b>
+            <b>Primero Nombre: {{ beneficiario.primerNombre }}</b>
             <br>
-            <b>Nombre grupo: {{ grupo.nombre }}</b>
+            <b>Segundo Nombre: {{ beneficiario.segundoNombre }}</b>
             <br>
-            <b>Corregimiento: {{ grupo.corregimiento }}</b>
+            <b>Genero: {{ beneficiario.genero }}</b>
             <br>
-            <b>Vereda: {{ grupo.vereda }}</b>
+            <b>Fecha de Nacimiento: {{ beneficiario.fechaNacimiento |  date('d - m - Y') }}</b>
             <br>
-            <b>Cacerio: {{ grupo.cacerio }}</b>
+            <b>Edad al momento de la inscripcion: {{ beneficiario.edadInscripcion }}</b>
             <br>
-            <b>Direccion:  {{ grupo.direccion }}</b>
+            <b>Deplazado por la violencia: {{ beneficiario.desplazado }}</b>
+            <br>            
+            <b>Pertenencia Etnica: {{ beneficiario.pertenenciaEtnica }}</b>
             <br>
-            <b>Barrio:  {{ grupo.barrio }}</b>
+            <b>Grupo indigena: {{ beneficiario.grupoIndigena }}</b>
             <br>
-            <b>Tipo de organización: {{ grupo.codigo }}</b>
+            <b>Pertenece a la red unidos: {{ beneficiario.redUnidos }}</b>
             <br>
-            <b>NIT: {{ grupo.numeroIdentificacionTributaria }}</b>
+            <b>Sabe leer: {{ beneficiario.sabeLeer }}</b>
             <br>
-            <b>Telefono Movil: {{ grupo.telefonoCelular }}</b>
+            <b>Sabe escribir: {{ beneficiario.sabeEscribir }}</b>
             <br>
-            <b>Telefono Fijo: {{ grupo.telefonoFijo }}</b>
+             <b>Puntaje del sisben: {{ beneficiario.puntajeSisben }}</b>
             <br>
-            <b>Cuenta Bancaria: {{ grupo.entidadFinancieraCuenta }}</b>
+            <b>Corte sisben: {{ beneficiario.corteSisben }}</b>
             <br>
-            <b>Tipo de cuenta:  {{ grupo.tipoCuenta }}</b>
+            <b>Discapacidad: {{ beneficiario.discapacidad }}</b>
             <br>
-            <b>Numero de cuenta: {{ grupo.numeroCuenta }}</b>            
+            <b>Rol grupo familiar: {{ beneficiario.rolGrupoFamiliar }}</b>
+            <br>
+            <b>Mimebros nucleo familiar: {{ beneficiario.miembrosNucleoFamiliar }}</b>
+            <br>
+            <b>Hijos menores 5: {{ beneficiario.hijosMenores5 }}</b>
+      <br>
+            <b>Nivel de estudios: {{ beneficiario.nivelEstudios }}</b>
+      <br>
+            <b>Ocupacion: {{ beneficiario.ocupacion }}</b>
+      <br>
+            <b>Tipo de vivienda: {{ beneficiario.tipoVivienda }}</b>
+      <br>
+            <b>Rural: {{ beneficiario.rural }}</b>
+      <br>
+            <b>Direccion: {{ beneficiario.direccion }}</b>
+      <br>
+            <b>Barrio: {{ beneficiario.barrio }}</b>
+      <br>
+            <b>Corregimiento: {{ beneficiario.corregimiento }}</b>
+      <br>
+            <b>Vereda: {{ beneficiario.vereda }}</b>
+      <br>
+            <b>Cacerio: {{ beneficiario.cacerio }}</b>
+      <br>
+            <b>Telefono Fijo: {{ beneficiario.telefonoFijo }}</b>
+      <br>
+            <b>Telefono Celular: {{ beneficiario.telefonoCelular }}</b>
+      <br>
+            <b>Correo electronico: {{ beneficiario.correoElectronico }}</b>
+      <br>
+            <b>Estado civil: {{ beneficiario.estadoCivil }}</b>
+      <br>
+            <b>Información del Conyuge</b>
+      <br>
+            <b>Tipo de documento del conyuge: {{ beneficiario.tipoDocumentoConyugue }}</b>
+      <br>
+            <b>Numero de documento del conyuge: {{ beneficiario.numeroDocumentoConyugue }}</b>
+      <br>
+            <b>Primer apellido del conyuge: {{ beneficiario.primerApellidoConyugue }}</b>
+      <br>
+            <b>Segundo apellido del conyuge: {{ beneficiario.segundoApellidoConyugue }}</b>
+      <br>
+            <b>Primer nombre del conyuge: {{ beneficiario.primerNombreConyugue }}</b>
+      <br>
+            <b>Segundo nombre del conyuge: {{ beneficiario.segundoNombreConyugue }}</b>
+      <br>
+            <b>Telefono fijo del conyuge: {{ beneficiario.telefonoFijoConyugue }}</b>
+      <br>
+            <b>Telefono celular del conyuge: {{ beneficiario.telefonoCelularConyugue }}</b>
           </div>
 
           <div class="modal-footer">
@@ -264,55 +315,105 @@
         </div>
       </div>
     </div>
-     {% endfor %}
+   {% endfor %}             
 
- {% for asignacionGrupoPasantia in asignacionesGrupoPasantia %}
+   {% for asignacionGrupoBeneficiarioPasantia in asignacionesGrupoBeneficiarioPasantia %}
     <!-- Modal -->
-    <div class="modal fade" id="myModal{{ asignacionGrupoPasantia.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal fade" id="myModal{{ asignacionGrupoBeneficiarioPasantia.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ asignacionGrupoPasantia.grupo.codigo }} | {{ asignacionGrupoPasantia.grupo.nombre }}</h4>
+            <h4 class="modal-title" id="myModalLabel">{{ asignacionGrupoBeneficiarioPasantia.beneficiario.grupo.id }} | {{ asignacionGrupoBeneficiarioPasantia.beneficiario.grupo.nombre }}</h4>
           </div>
           <div class="modal-body">
-            <b>Departamento:{{ asignacionGrupoPasantia.grupo.municipio.departamento.nombre }}</b>
+            <b>Tipo de Documento:{{ asignacionGrupoBeneficiarioPasantia.beneficiario.tipoDocumento }}</b>
             <br>
-            <b>Municipio: {{ asignacionGrupoPasantia.grupo.municipio }}</b>
+            <b>Numero de Documento: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.numeroDocumento }}</b>
             <br>
-            <b>Zona: Oriente {{ asignacionGrupoPasantia.grupo.municipio.zona.nombre }}</b>
+            <b>Primero Apellido: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.primerApellido }}</b>
             <br>
-            <b>Tipo de grupo: {{ asignacionGrupoPasantia.grupo.tipo }}</b>
+            <b>Segundo Apellido: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.segundoApellido }}</b>
             <br>
-            <b>Codigo de grupo: {{ asignacionGrupoPasantia.grupo.codigo }}</b>
+            <b>Primero Nombre: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.primerNombre }}</b>
             <br>
-            <b>Nombre grupo: {{ asignacionGrupoPasantia.grupo.nombre }}</b>
+            <b>Segundo Nombre: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.segundoNombre }}</b>
             <br>
-            <b>Corregimiento: {{ asignacionGrupoPasantia.grupo.corregimiento }}</b>
+            <b>Genero: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.genero }}</b>
             <br>
-            <b>Vereda: {{ asignacionGrupoPasantia.grupo.vereda }}</b>
+            <b>Fecha de Nacimiento: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.fechaNacimiento |  date('d - m - Y') }}</b>
             <br>
-            <b>Cacerio: {{ asignacionGrupoPasantia.grupo.cacerio }}</b>
+            <b>Edad al momento de la inscripcion: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.edadInscripcion }}</b>
             <br>
-            <b>Direccion:  {{ asignacionGrupoPasantia.grupo.direccion }}</b>
+            <b>Deplazado por la violencia: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.desplazado }}</b>
+            <br>            
+            <b>Pertenencia Etnica: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.pertenenciaEtnica }}</b>
             <br>
-            <b>Barrio:  {{ asignacionGrupoPasantia.grupo.barrio }}</b>
+            <b>Grupo indigena: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.grupoIndigena }}</b>
             <br>
-            <b>Tipo de organización: {{ asignacionGrupoPasantia.grupo.codigo }}</b>
+            <b>Pertenece a la red unidos: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.redUnidos }}</b>
             <br>
-            <b>NIT: {{ asignacionGrupoPasantia.grupo.numeroIdentificacionTributaria }}</b>
+            <b>Sabe leer: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.sabeLeer }}</b>
             <br>
-            <b>Telefono Movil: {{ asignacionGrupoPasantia.grupo.telefonoCelular }}</b>
+            <b>Sabe escribir: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.sabeEscribir }}</b>
             <br>
-            <b>Telefono Fijo: {{ asignacionGrupoPasantia.grupo.telefonoFijo }}</b>
+             <b>Puntaje del sisben: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.puntajeSisben }}</b>
             <br>
-            <b>Cuenta Bancaria: {{ asignacionGrupoPasantia.grupo.entidadFinancieraCuenta }}</b>
+            <b>Corte sisben: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.corteSisben }}</b>
             <br>
-            <b>Tipo de cuenta:  {{ asignacionGrupoPasantia.grupo.tipoCuenta }}</b>
+            <b>Discapacidad: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.discapacidad }}</b>
             <br>
-            <b>Numero de cuenta: {{ asignacionGrupoPasantia.grupo.numeroCuenta }}</b>            
+            <b>Rol grupo familiar: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.rolGrupoFamiliar }}</b>
+            <br>
+            <b>Mimebros nucleo familiar: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.miembrosNucleoFamiliar }}</b>
+            <br>
+            <b>Hijos menores 5: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.hijosMenores5 }}</b>
+            <br>
+            <b>Nivel de estudios: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.nivelEstudios }}</b>
+            <br>
+            <b>Ocupacion: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.ocupacion }}</b>
+            <br>
+            <b>Tipo de vivienda: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.tipoVivienda }}</b>
+      <br>
+            <b>Rural: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.rural }}</b>
+      <br>
+            <b>Direccion: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.direccion }}</b>
+      <br>
+            <b>Barrio: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.barrio }}</b>
+      <br>
+            <b>Corregimiento: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.corregimiento }}</b>
+      <br>
+            <b>Vereda: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.vereda }}</b>
+      <br>
+            <b>Cacerio: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.cacerio }}</b>
+      <br>
+            <b>Telefono Fijo: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.telefonoFijo }}</b>
+      <br>
+            <b>Telefono Celular: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.telefonoCelular }}</b>
+      <br>
+            <b>Correo electronico: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.correoElectronico }}</b>
+      <br>
+            <b>Estado civil: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.estadoCivil }}</b>
+      <br>
+            <b>Información del Conyuge</b>
+      <br>
+            <b>Tipo de documento del conyuge: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.tipoDocumentoConyugue }}</b>
+      <br>
+            <b>Numero de documento del conyuge: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.numeroDocumentoConyugue }}</b>
+      <br>
+            <b>Primer apellido del conyuge: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.primerApellidoConyugue }}</b>
+      <br>
+            <b>Segundo apellido del conyuge: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.segundoApellidoConyugue }}</b>
+      <br>
+            <b>Primer nombre del conyuge: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.primerNombreConyugue }}</b>
+      <br>
+            <b>Segundo nombre del conyuge: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.segundoNombreConyugue }}</b>
+      <br>
+            <b>Telefono fijo del conyuge: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.telefonoFijoConyugue }}</b>
+      <br>
+            <b>Telefono celular del conyuge: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.telefonoCelularConyugue }}</b>
           </div>
 
           <div class="modal-footer">
@@ -321,7 +422,8 @@
         </div>
       </div>
     </div>
-     {% endfor %}
+   {% endfor %}             
+
                
 {% endblock %}
 
