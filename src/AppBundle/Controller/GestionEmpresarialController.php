@@ -39,6 +39,7 @@ use AppBundle\Entity\RutaSoporte;
 use AppBundle\Entity\Pasantia;
 use AppBundle\Entity\AsignacionOrganizacionPasantia;
 use AppBundle\Entity\AsignacionGrupoPasantia;
+use AppBundle\Entity\AsignacionGrupoBeneficiarioPasantia;
 use AppBundle\Entity\PasantiaSoporte;
 use AppBundle\Entity\ComiteSoporte;
 use AppBundle\Entity\JuradoSoporte;
@@ -3066,15 +3067,19 @@ class GestionEmpresarialController extends Controller
             array('id' => $idPasantia)
         );
 
+
         $asignacionesGrupoPasantia = $em->getRepository('AppBundle:AsignacionGrupoPasantia')->findBy(
             array('pasantia' => $pasantia)
         );  
 
-        $query = $em->createQuery('SELECT g FROM AppBundle:Grupo g WHERE g.id NOT IN (SELECT grupo.id FROM AppBundle:Grupo grupo JOIN AppBundle:AsignacionGrupoPasantia agc WHERE grupo = agc.grupo AND agc.pasantia = :pasantia) AND g.active = 1');
-        $query->setParameter('pasantia', $pasantia);
+        if($asignacionesGrupoPasantia == null){            
+            $query = $em->createQuery('SELECT g FROM AppBundle:Grupo g WHERE g.id NOT IN (SELECT grupo.id FROM AppBundle:Grupo grupo JOIN AppBundle:AsignacionGrupoPasantia agc WHERE grupo = agc.grupo AND agc.pasantia = :pasantia) AND g.active = 1');
+            $query->setParameter('pasantia', $pasantia);
+            $grupos = $query->getResult();      
+        }else{
+            $grupos = null; 
+        }
 
-        $grupos = $query->getResult();     
-        
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-pasantia-gestion-asignacion.html.twig', 
             array(
                 'grupos' => $grupos,
@@ -3154,6 +3159,49 @@ class GestionEmpresarialController extends Controller
                 'asignacionesGrupoPasantia' => $asignacionesGrupoPasantia,
                 'idPasantia' => $idPasantia
             ));    
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-grupo/{idAsignacionGrupoPasantia}/asignacion-beneficiario", name="pasantiaGrupoBeneficiario")
+     */
+    public function pasantiaGrupoBeneficiarioAction($idPasantia, $idAsignacionGrupoPasantia)
+    {
+        $em = $this->getDoctrine()->getManager();        
+
+        //echo $pasantia->getId();
+
+        $asignacionesGrupoPasantia = $em->getRepository('AppBundle:AsignacionGrupoPasantia')->findOneBy(
+            array('id' => $idAsignacionGrupoPasantia)
+        );
+
+        /*echo '<pre>';
+         print_r($asignacionesGrupoPasantia);
+        echo '</pre>';*/
+
+        echo $asignacionesGrupoPasantia->getId();
+
+        //$asignacionesGrupoBeneficiariosPasantia = $asignacionesGrupoPasantia->getGrupo()->getId();
+
+        /*$asignacionesGrupoPasantia = $em->getRepository('AppBundle:AsignacionGrupoPasantia')->findOneBy(
+            array('asignacionesGrupoPasantia' => $idAsignacionGrupoPasantia)
+        ); 
+
+        
+        );*/
+
+        //echo $asignacionesGrupoBeneficiariosPasantia; 
+                
+        $query = $em->createQuery('SELECT g FROM AppBundle:Grupo g WHERE g.id NOT IN (SELECT grupo.id FROM AppBundle:Grupo grupo JOIN AppBundle:AsignacionGrupoPasantia agc WHERE grupo = agc.grupo AND agc.pasantia = :pasantia) AND g.active = 1');
+        $query->setParameter('pasantia', $pasantia);
+        $beneficiarios = $query->getResult();      
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiario-grupo-pasantia-gestion-asignacion.html.twig', 
+            array(
+                'beneficiarios' => $beneficiarios,
+                'asignacionesGrupoPasantia' => $asignacionesGrupoPasantia,
+                'idPasantia' => $idPasantia
+            ));        
         
     }
 
