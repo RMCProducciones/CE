@@ -21,13 +21,7 @@ class ListaRolType extends AbstractType
 						->orderBy('l.orden', 'ASC');
 				})
 			)
-			/*->add(
-				'idIntegrante', 
-				'text', 
-				array(
-					'required' => false
-				)
-			)*/
+
 		;
     }
     public function getName()

@@ -27,14 +27,14 @@ class AsignacionGrupoBeneficiarioPasantia
     private $asignacion_grupo_pasantia;   
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
-     */
-    private $grupo;
-
-     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Pasantia")
      */
     private $pasantia;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Beneficiario")
+     */
+    private $beneficiario;
 
     /**
      * @var boolean
@@ -124,30 +124,6 @@ class AsignacionGrupoBeneficiarioPasantia
     }
 
     /**
-     * Set grupo
-     *
-     * @param AppBundle\Entity\Grupo $grupo
-     *
-     * @return AsignacionGrupoBeneficiarioPasantia
-     */
-    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
-    {
-        $this->grupo = $grupo;
-
-        return $this;
-    }
-
-    /**
-     * Get grupo
-     *
-     * @return AppBundle\Entity\Grupo
-     */
-    public function getGrupo()
-    {
-        return $this->grupo;
-    }
-
-    /**
      * Set pasantia
      *
      * @param AppBundle\Entity\Pasantia $pasantia
@@ -169,6 +145,30 @@ class AsignacionGrupoBeneficiarioPasantia
     public function getPasantia()
     {
         return $this->pasantia;
+    }
+
+    /**
+     * Set beneficiario
+     *
+     * @param AppBundle\Entity\Beneficiario $beneficiario
+     *
+     * @return AsignacionGrupoBeneficiarioPasantia
+     */
+    public function setBeneficiario(\AppBundle\Entity\Beneficiario $beneficiario)
+    {
+        $this->beneficiario = $beneficiario;
+
+        return $this;
+    }
+
+    /**
+     * Get beneficiario
+     *
+     * @return AppBundle\Entity\Beneficiario
+     */
+    public function getBeneficiario()
+    {
+        return $this->beneficiario;
     }
 
     /**
