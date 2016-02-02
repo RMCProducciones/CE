@@ -1,0 +1,137 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+{% block title %}Diagnostico Organizacional{% endblock %}
+
+{% block breadcrumb_ul %}
+
+    <ul class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Empresarial</li>
+      <li>Formacion de capital social asociativo y desarrollo empresarial</li>
+      <li><a href="{{ path('concursoGestion') }}">Concursos</a></li>
+      <li class="active">Nuevo</li>
+    </ul>
+
+{% endblock %}
+
+
+{% block section %}
+    
+    <div class="container">
+    <h1> Gestión Concursos</h1>
+    <hr>
+    <h3> Nuevo Registro</h3>   
+  </div>
+
+  <br />
+  <br />
+
+
+    
+
+    
+  {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+    {{ form_errors(form) }}
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="btn-group">
+  
+              <button name="concurso[Guardar]" id="grupo_Guardar" type="submit" class="btn btn-success">Guardar</button>
+              
+              <a href="{{ path('concursoGestion') }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <br>
+        
+
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+						<div class="col-md-12">
+						<fieldset>
+							<legend>Preguntas sección productiva</legend>
+						</fieldset>            
+				</div>
+      </div>      			
+			
+			<div class="row">
+			    <!--form class="form-horizontal" role="form"-->
+			    <div class="col-md-4">
+                  {{ form_label(form.productivaA) }}
+        				  {{ form_errors(form.productivaA) }}
+        				  {{ form_widget(form.productivaA, { 'attr': {'class': 'form-control'} }) }}
+          </div>		
+          <div class="col-md-4">
+                  {{ form_label(form.fecha_visita) }}
+                  {{ form_errors(form.fecha_visita) }}
+                  {{ form_widget(form.fecha_visita, { 'attr': {'class': 'form-control'} }) }}
+          </div>    	
+                
+			</div>
+      <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-4">
+                  {{ form_label(form.productivaB) }}
+                  {{ form_errors(form.productivaB) }}
+                  {{ form_widget(form.productivaB, { 'attr': {'class': 'form-control'} }) }}
+          </div>    
+          <div class="col-md-4">
+                  {{ form_label(form.productivaC) }}
+                  {{ form_errors(form.productivaC) }}
+                  {{ form_widget(form.productivaC, { 'attr': {'class': 'form-control'} }) }}
+          </div>   
+           <div class="col-md-4">
+                  {{ form_label(form.productivaD) }}
+                  {{ form_errors(form.productivaD) }}
+                  {{ form_widget(form.productivaD, { 'attr': {'class': 'form-control'} }) }}
+          </div>       
+                
+      </div>
+           <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-4">
+                  {{ form_label(form.productivaE) }}
+                  {{ form_errors(form.productivaE) }}
+                  {{ form_widget(form.productivaE, { 'attr': {'class': 'form-control'} }) }}
+          </div>    
+          <div class="col-md-4">
+                  {{ form_label(form.productivaF) }}
+                  {{ form_errors(form.productivaF) }}
+                  {{ form_widget(form.productivaF, { 'attr': {'class': 'form-control'} }) }}
+          </div>   
+        <br/>
+        <br/> 
+        <br/>
+        <br/> 
+
+
+          <div class="col-md-12">
+            <fieldset>
+              <legend>Preguntas sección comercial</legend>
+            </fieldset>            
+        </div>
+      </div> 
+         
+      </div>
+
+			<!--/form-->
+			<br/>
+		  	<br/>	
+          
+        </div>
+    </div>
+
+  {{ form_end(form) }}
+               
+{% endblock %}
+

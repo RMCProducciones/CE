@@ -48,6 +48,7 @@ use AppBundle\Entity\AsignacionIntegranteComite;
 use AppBundle\Entity\Organizacion;
 use AppBundle\Entity\OrganizacionSoporte;
 use AppBundle\Entity\TerritorioAprendizaje;
+use AppBundle\Entity\DiagnosticoOrganizacional;
 
 use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
 use AppBundle\Form\GestionEmpresarial\AsignacionIntegranteCLEARType;
@@ -73,6 +74,7 @@ use AppBundle\Form\GestionEmpresarial\OrganizacionType;
 use AppBundle\Form\GestionEmpresarial\OrganizacionSoporteType;
 use AppBundle\Form\GestionEmpresarial\ListaRolType;
 use AppBundle\Form\GestionEmpresarial\TerritorioAprendizajeType;
+use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -3575,8 +3577,56 @@ class GestionEmpresarialController extends Controller
 
 
 
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/diagnostico/nuevo", name="diagnosticoNuevo")
+     */
+    public function diagnosticoNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $Diagnosticoorganizacional= new DiagnosticoOrganizacional();
+        
+        $form = $this->createForm(new DiagnosticoOrganizacionalType(), $Diagnosticoorganizacional);
+        
+        $form->add(
+            'guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
 
-    
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $Diagnosticoorganizacional = $form->getData();
+
+
+            $Diagnosticoorganizacional->setActive(true);
+            $Diagnosticoorganizacional->setFechaCreacion(new \DateTime());
+
+            /*$usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
+            
+            $pasantia->setUsuarioCreacion($usuarioCreacion);*/
+
+            $em->persist($Diagnosticoorganizacional);
+            $em->flush();
+
+            return $this->redirectToRoute('pasantiaGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:diagnostico-nuevo.html.twig', array('form' => $form->createView()));
+    }
+   
+
+
+
 
 
 
