@@ -923,18 +923,18 @@ class GestionEmpresarialController extends Controller
 
         $form->add(
             'idIntegrante', 
-            'text', 
+            'hidden', 
             array(
                 'mapped' => false,
                 'attr' => array(      
                     'value' => $idIntegrante,              
-                    'style' => 'visibility:vissible'
+                    'style' => 'visibility:hidden'
                 )
             )
         );
-
+//El boton tiene un error al enviar el ID del beneficiario
         $form->add(
-            'Asignar', 
+            'Asignar_'.$idIntegrante, 
             'submit', 
             array(
                 'attr' => array(
@@ -3074,7 +3074,14 @@ class GestionEmpresarialController extends Controller
             array('id' => $idPasantia)
         );
 
-        $asignacionesGrupoPasantia = new Pasantia();
+        echo '<pre>';
+          print_r ($pasantia);
+        echo '</pre>';
+        $grupoAsignado = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $pasantia->getGrupo()));
+
+        echo $grupoAsignado->getId();        
+
 
         //echo $pasantia->getGrupo()->getId();
 
@@ -3095,7 +3102,7 @@ class GestionEmpresarialController extends Controller
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-pasantia-gestion-asignacion.html.twig', 
             array(
                 'grupos' => $grupos,
-                'asignacionesGrupoPasantia' => $pasantia,
+                'asignacionesGrupoPasantia' => $asignacionGrupo,
                 'idPasantia' => $idPasantia
             ));        
         
