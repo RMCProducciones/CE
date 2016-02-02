@@ -66,30 +66,38 @@
 			
 			<div class="row">
 			    <!--form class="form-horizontal" role="form"-->
-			    <div class="col-md-4">
+			    <div class="col-md-12">
                   {{ form_label(form.productivaA) }}
         				  {{ form_errors(form.productivaA) }}
-        				  {{ form_widget(form.productivaA, { 'attr': {'class': 'form-control'} }) }}
-          </div>		
-          <div class="col-md-4">
+        				  {{ form_widget(form.productivaA, { 'attr': {'class': 'form-control radio-br'} }) }}
+          </div>		 	
+                
+			</div>
+
+
+
+        <div class="row">
+          <div class="col-md-12">
                   {{ form_label(form.fecha_visita) }}
                   {{ form_errors(form.fecha_visita) }}
                   {{ form_widget(form.fecha_visita, { 'attr': {'class': 'form-control'} }) }}
-          </div>    	
-                
-			</div>
+          </div>   
+   </div> 
+
       <div class="row">
           <!--form class="form-horizontal" role="form"-->
-          <div class="col-md-4">
+          <div class="col-md-12">
                   {{ form_label(form.productivaB) }}
                   {{ form_errors(form.productivaB) }}
-                  {{ form_widget(form.productivaB, { 'attr': {'class': 'form-control'} }) }}
+                  {{ form_widget(form.productivaB, { 'attr': {'class': 'form-control radio-br'} }) }}
           </div>    
-          <div class="col-md-4">
+           <div class="row">
+          <div class="col-md-12">
                   {{ form_label(form.productivaC) }}
                   {{ form_errors(form.productivaC) }}
                   {{ form_widget(form.productivaC, { 'attr': {'class': 'form-control'} }) }}
-          </div>   
+          </div> 
+          </div>  
            <div class="col-md-4">
                   {{ form_label(form.productivaD) }}
                   {{ form_errors(form.productivaD) }}
@@ -123,6 +131,67 @@
       </div> 
          
       </div>
+      <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            <fieldset>
+              <legend>Preguntas sección productiva</legend>
+            </fieldset>            
+        </div>
+      </div>            
+      
+      <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-12">
+                  {{ form_label(form.comercialA) }}
+                  {{ form_errors(form.comercialA) }}
+                  {{ form_widget(form.comercialA, { 'attr': {'class': 'form-control'} }) }}
+          </div>      
+                
+      </div>
+
+
+
+        <div class="row">
+          <div class="col-md-12">
+                  {{ form_label(form.comercialB) }}
+                  {{ form_errors(form.comercialB) }}
+                  {{ form_widget(form.comercialB, { 'attr': {'class': 'form-control'} }) }}
+          </div>   
+   </div> 
+
+      <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-4">
+                  {{ form_label(form.comercialC) }}
+                  {{ form_errors(form.comercialC) }}
+                  {{ form_widget(form.comercialC, { 'attr': {'class': 'form-control'} }) }}
+          </div>    
+          <div class="col-md-4">
+                  {{ form_label(form.comercialD) }}
+                  {{ form_errors(form.comercialD) }}
+                  {{ form_widget(form.comercialD, { 'attr': {'class': 'form-control'} }) }}
+          </div>   
+           <div class="col-md-4">
+                  {{ form_label(form.comercialE) }}
+                  {{ form_errors(form.comercialE) }}
+                  {{ form_widget(form.comercialE, { 'attr': {'class': 'form-control'} }) }}
+          </div>       
+                
+      </div>
+           
+        <br/> 
+        <br/>
+        <br/> 
+
+
+          <div class="col-md-12">
+            <fieldset>
+              <legend>Preguntas sección comercial</legend>
+            </fieldset>            
+        </div>
+        </div>
+      </div> 
 
 			<!--/form-->
 			<br/>

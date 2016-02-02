@@ -14,11 +14,13 @@ class DiagnosticoOrganizacionalType extends AbstractType
         $builder
 			
 	 	->add('productivaA', 'choice', array(
+        'label' => 'Ámbito',
         'choices'  => array(
 
-        '1' => 1,
+        'cada una de las personas' => 1,        
         '2' => 2,
         '3' => 3,
+
     ),
         'multiple'  => false,
         'expanded'  => true,
@@ -28,7 +30,7 @@ class DiagnosticoOrganizacionalType extends AbstractType
         ->add('productivaB', 'choice', array(
         'choices'  => array(
             
-        '1' => 1,
+        '1' => 1, 
         '2' => 2,
         '3' => 3,
     ),
@@ -85,6 +87,70 @@ class DiagnosticoOrganizacionalType extends AbstractType
     // *this line is important*
     'choices_as_values' => true,
 ))
+
+        ->add('comercialA', 'choice', array(
+        'label' => 'Ámbito',
+        'choices'  => array(
+
+        'cada una de las personas' => 1,        
+        '2' => 2,
+        '3' => 3,
+
+    ),
+        'multiple'  => false,
+        'expanded'  => true,
+    // *this line is important*
+    'choices_as_values' => true,
+))
+        ->add('comercialB', 'choice', array(
+        'choices'  => array(
+            
+        '1' => 1, 
+        '2' => 2,
+        '3' => 3,
+    ),
+        'multiple'  => false,
+        'expanded'  => true,
+    // *this line is important*
+    'choices_as_values' => true,
+))
+        ->add('comercialC', 'choice', array(
+        'choices'  => array(
+            
+        '1' => 1,
+        '2' => 2,
+        '3' => 3,
+    ),
+        'multiple'  => false,
+        'expanded'  => true,
+    // *this line is important*
+    'choices_as_values' => true,
+))
+        ->add('comercialD', 'choice', array(
+        'choices'  => array(
+            
+        '1' => 1,
+        '2' => 2,
+        '3' => 3,
+    ),
+        'multiple'  => false,
+        'expanded'  => true,
+    // *this line is important*
+    'choices_as_values' => true,
+))
+        ->add('comercialE', 'choice', array(
+        'choices'  => array(
+            
+        '1' => 1,
+        '2' => 2,
+        '3' => 3,
+    ),
+        'multiple'  => false,
+        'expanded'  => true,
+    // *this line is important*
+    'choices_as_values' => true,
+))
+       
 			
 			->add('fecha_visita', 'date', array('label' => 'Fecha de la Visita', 'widget' => 'single_text'))
 						

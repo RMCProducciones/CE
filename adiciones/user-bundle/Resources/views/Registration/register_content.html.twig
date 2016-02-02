@@ -1,8 +1,120 @@
+
 {% trans_default_domain 'FOSUserBundle' %}
 
 {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-    {{ form_widget(form) }}
-    <div>
+ 
+   	<div class="row">
+				<div class="col-md-12">
+					<fieldset>
+						<legend>Registro de usuarios nuevos </legend>
+					</fieldset>            
+				</div>
+			</div>	
+
+   <center>
+   	<br>
+    <div class="row">    	
+            <div class="col-md-4">
+            	
+              {{ form_label(form.tipo_documento) }}
+              {{ form_errors(form.tipo_documento) }}
+              {{ form_widget(form.tipo_documento, { 'attr': {'class': 'form-control'} }) }}
+            </div>  
+            <div class="col-md-4">
+              {{ form_label(form.numero_documento) }}
+              {{ form_errors(form.numero_documento) }}
+              {{ form_widget(form.numero_documento, { 'attr': {'class': 'form-control'} }) }}
+            </div>  
+            <div class="col-md-4">
+              {{ form_label(form.email) }}
+              {{ form_errors(form.email) }}
+              {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
+            </div> 
+
+    </div> 
+    <br>
+     <div class="row">
+            <div class="col-md-4">
+              {{ form_label(form.primer_apellido) }}
+              {{ form_errors(form.primer_apellido) }}
+              {{ form_widget(form.primer_apellido, { 'attr': {'class': 'form-control'} }) }}
+            </div>  
+            <div class="col-md-4">
+              {{ form_label(form.segundo_apellido) }}
+              {{ form_errors(form.segundo_apellido) }}
+              {{ form_widget(form.segundo_apellido, { 'attr': {'class': 'form-control'} }) }}
+            </div> 
+            <div class="col-md-4">
+              {{ form_label(form.primer_nombre) }}
+              {{ form_errors(form.primer_nombre) }}
+              {{ form_widget(form.primer_nombre, { 'attr': {'class': 'form-control'} }) }}
+            </div>  
+    </div>
+ <br>
+ 
+    <br>
+    <div class="row">
+       <div class="col-md-4">
+              {{ form_label(form.segundo_nombre) }}
+              {{ form_errors(form.segundo_nombre) }}
+              {{ form_widget(form.segundo_nombre, { 'attr': {'class': 'form-control'} }) }}
+            </div> 
+            <div class="col-md-4">
+              {{ form_label(form.telefono_fijo) }}
+              {{ form_errors(form.telefono_fijo) }}
+              {{ form_widget(form.telefono_fijo, { 'attr': {'class': 'form-control'} }) }}
+            </div>  
+            <div class="col-md-4">
+              {{ form_label(form.telefono_celular) }}
+              {{ form_errors(form.telefono_celular) }}
+              {{ form_widget(form.telefono_celular, { 'attr': {'class': 'form-control'} }) }}
+            </div>  
+    </div>
+    <br>
+ 
+    <br>
+    <div class="row">
+      <div class="col-md-4">
+              {{ form_label(form.username) }}
+              {{ form_errors(form.username) }}
+              {{ form_widget(form.username, { 'attr': {'class': 'form-control'} }) }}
+            </div> 
+            <div class="col-md-4">
+
+              {{ form_label(form.plainPassword.first) }}
+              {{ form_errors(form.plainPassword.first) }}
+              {{ form_widget(form.plainPassword.first, { 'attr': {'class': 'form-control'} }) }}
+             
+            </div>  
+            <div class="col-md-4">
+
+              {{ form_label(form.plainPassword.second) }}
+              {{ form_errors(form.plainPassword.second) }}
+              {{ form_widget(form.plainPassword.second, { 'attr': {'class': 'form-control'} }) }}
+             
+            </div>  
+             
+<br>
+    
+
+              
+    </div>
+    <br>
+   <div>
         <input type="submit" value="{{ 'registration.submit'|trans }}" />
     </div>
+ 
+    
+</center>
 {{ form_end(form) }}
+
+
+
+
+
+
+
+
+
+
+
