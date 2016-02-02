@@ -87,6 +87,20 @@ label.required:before {
     padding-left: 2px;
     padding-right: 20px;
 }
+
+.radio-br{
+  height: auto;
+}
+
+.radio-br label.required {
+  display:inline;
+}
+.radio-br label.required:after {
+  content:"\a";
+    white-space: pre;
+}
+
+
 .dropdown-submenu {
             position: relative;
         }
