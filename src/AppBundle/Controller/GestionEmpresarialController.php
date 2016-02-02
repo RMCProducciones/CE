@@ -3074,22 +3074,17 @@ class GestionEmpresarialController extends Controller
             array('id' => $idPasantia)
         );
 
-        echo '<pre>';
-          print_r ($pasantia);
-        echo '</pre>';
-        $grupoAsignado = $em->getRepository('AppBundle:Grupo')->findOneBy(
-            array('id' => $pasantia->getGrupo()));
+        if($pasantia->getGrupo() != null){            
+            $idGrupo = $pasantia->getGrupo()->getId();        
 
-        echo $grupoAsignado->getId();        
+            $grupoAsignado = $em->getRepository('AppBundle:Grupo')->findBy(
+                array('id' => $idGrupo)
+            );
+            
+        }else{
 
-
-        //echo $pasantia->getGrupo()->getId();
-
-        //$grupos = $em->getRepository('AppBundle:Grupo')->find
-
-        /*$asignacionesGrupoPasantia = $em->getRepository('AppBundle:AsignacionGrupoPasantia')->findBy(
-            array('pasantia' => $pasantia)
-        );*/  
+            $grupoAsignado = null;
+        }       
 
         if($pasantia->getGrupo() == null){            
             $query = $em->createQuery('SELECT g FROM AppBundle:Grupo g WHERE g.id NOT IN (SELECT grupo.id FROM AppBundle:Grupo grupo JOIN AppBundle:Pasantia apc WHERE grupo = apc.grupo AND apc.grupo = :grupo) AND g.active = 1');
@@ -3102,7 +3097,7 @@ class GestionEmpresarialController extends Controller
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-pasantia-gestion-asignacion.html.twig', 
             array(
                 'grupos' => $grupos,
-                'asignacionesGrupoPasantia' => $asignacionGrupo,
+                'asignacionesGrupoPasantia' => $grupoAsignado,
                 'idPasantia' => $idPasantia
             ));        
         
@@ -3145,42 +3140,123 @@ class GestionEmpresarialController extends Controller
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-grupo/{idAsignacionGrupoPasantia}/eliminar", name="pasantiaEliminarGrupo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-grupo/{idGrupo}/eliminar", name="pasantiaEliminarGrupo")
      */
-    public function pasantiaEliminarGrupoAction(Request $request, $idPasantia, $idAsignacionGrupoPasantia)
+    public function pasantiaEliminarGrupoAction(Request $request, $idPasantia)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $asignacionesGrupoPasantia = new AsignacionGrupoPasantia();
-
-        $asignacionesGrupoPasantia = $em->getRepository('AppBundle:AsignacionGrupoPasantia')->find($idAsignacionGrupoPasantia); 
-
-        $grupos = $em->getRepository('AppBundle:Grupo')->findBy(
-            array('active' => '1'),
-            array('fecha_creacion' => 'ASC')
-        );      
-
-        $em->remove($asignacionesGrupoPasantia);
-        $em->flush();
+        $em = $this->getDoctrine()->getManager();                
 
         $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
             array('id' => $idPasantia)
-        );
+        );                    
 
-        $asignacionesGrupoPasantia = $em->getRepository('AppBundle:AsignacionGrupoPasantia')->findBy(
-            array('pasantia' => $pasantia)
-        );  
+        $pasantia->setNullGrupo();
+
+        $em->persist($pasantia);
+        $em->flush();
 
         return $this->redirectToRoute('pasantiaGrupo',
              array(
-                'grupos' => $grupos,
-                'asignacionesGrupoPasantia' => $asignacionesGrupoPasantia,
                 'idPasantia' => $idPasantia
             ));    
         
     }
 
- 
+     /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-grupo/{idGrupo}/asignacion-beneficiario", name="pasantiaGrupoBeneficiario")
+     */
+    public function pasantiaGrupoBeneficiarioAction($idPasantia, $idGrupo)
+    {
+        $em = $this->getDoctrine()->getManager();    
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+            array('id' => $idPasantia)
+        );   
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );         
+
+        $beneficiarioGrupo = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('grupo' => $idGrupo));
+
+        $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
+            array('id' => 13));
+
+        echo $beneficiario->getPrimerApellido();
+        
+
+        $beneficiariosPasantia = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioPasantia')->findBy(
+            array('pasantia' => $pasantia)
+        );
+
+        /*$asignacionGrupoBeneficiarioPasantia = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioPasantia')->findOneBy(
+            array('beneficiario' => $beneficiario));*/
+
+        //echo $asignacionGrupoBeneficiarioPasantia->beneficiario();
+
+        /*$beneficiarioAsignado = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('id' => $beneficiariosPasantia->getBeneficiario()->getId()));*/
+
+
+        //echo $asignacionGrupoBeneficiarioPasantia->getBeneficiario();        
+        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionGrupoBeneficiarioPasantia abc WHERE beneficiario = abc.beneficiario AND abc.beneficiario = :beneficiario) AND b.active = 1');
+        $query->setParameter('beneficiario', $beneficiario);
+        $beneficiarios = $query->getResult();
+
+        //echo $beneficiarios->getId();
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiario-grupo-pasantia-gestion-asignacion.html.twig', 
+            array(
+                'beneficiarios' => $beneficiarios,                
+                'beneficiariosPasantia' => $beneficiariosPasantia,
+                'idPasantia' => $idPasantia, 
+                'idGrupo' => $idGrupo,               
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-grupo/{idGrupo}/{idBeneficiario}/asignacion-beneficiario/nueva-asignacion", name="pasantiaAsignarGrupoBeneficiario")
+     */
+    public function pasantiaAsignarGrupoBeneficiarioAction($idPasantia, $idGrupo, $idBeneficiario)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
+            array('id' => $idBeneficiario)
+        );      
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+            array('id' => $idPasantia)
+        );  
+           
+        $asignacionesGrupoBeneficiarioPasantia = new AsignacionGrupoBeneficiarioPasantia();
+
+        $asignacionesGrupoBeneficiarioPasantia->setBeneficiario($beneficiario);        
+        $asignacionesGrupoBeneficiarioPasantia->setPasantia($pasantia);           
+        $asignacionesGrupoBeneficiarioPasantia->setActive(true);
+        $asignacionesGrupoBeneficiarioPasantia->setFechaCreacion(new \DateTime());
+
+        $em->persist($asignacionesGrupoBeneficiarioPasantia);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('pasantiaGrupoBeneficiario', 
+            array(
+                'beneficiario' => $beneficiario,          
+                'asignacionesGrupoBeneficiarioPasantia' => $asignacionesGrupoBeneficiarioPasantia,
+                'idPasantia' => $idPasantia,
+                'idGrupo' => $idGrupo
+            ));        
+        
+    } 
 
 
     /**

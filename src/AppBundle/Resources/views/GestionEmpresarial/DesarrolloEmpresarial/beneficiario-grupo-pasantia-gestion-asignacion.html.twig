@@ -93,7 +93,7 @@
 
                   </td>
                   <td>
-                    {{ grupo.nombre }}
+                    {{ beneficiario.grupo.nombre }}
                   </td>
                   <td>
                     <b>Primero Apellido: {{ beneficiario.primerApellido }}</b>
@@ -111,7 +111,7 @@
                   <td>
                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ beneficiario.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                     <br>                    
-                    <a href="{{ path('pasantiaAsignarGrupoBeneficiario', {'idPasantia': idPasantia, 'idAsignacionGrupoPasantia': asignacionesGrupoPasantia.id, 'idBeneficiario': beneficiario.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
+                    <a href="{{ path('pasantiaAsignarGrupoBeneficiario', {'idPasantia': idPasantia, 'idGrupo': idGrupo, 'idBeneficiario': beneficiario.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
                     <br>                    
                   </td>
                 </tr>
@@ -171,28 +171,28 @@
               <tbody>
         {% set consecutivo = 1 %}
         
-          {% for asignacionGrupoBeneficiarioPasantia in asignacionesGrupoBeneficiarioPasantia %}
+          {% for beneficiarioPasantia in beneficiariosPasantia %}
                 <tr id="filaIntegranteCLEAR{{ consecutivo }}">
                   <td>{{ consecutivo }}</td>
                   <td>
                     
                   </td>
                   <td>
-                    {{ asignacionGrupoBeneficiarioPasantia.beneficiario.grupo.nombre }}
+                    {{ beneficiarioPasantia.beneficiario.grupo.nombre }}
                   </td>
                   <td>
-                    <b>Primero Apellido: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.primerApellido }}</b>
+                    <b>Primero Apellido: {{ beneficiarioPasantia.beneficiario.primerApellido }}</b>
                     <br>
-                    <b>Segundo Apellido: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.segundoApellido }}</b>
+                    <b>Segundo Apellido: {{ beneficiarioPasantia.beneficiario.segundoApellido }}</b>
                     <br>
-                    <b>Primero Nombre: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.primerNombre }}</b>
+                    <b>Primero Nombre: {{ beneficiarioPasantia.beneficiario.primerNombre }}</b>
                     <br>
-                    <b>Segundo Nombre: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.segundoNombre }}</b>                   
+                    <b>Segundo Nombre: {{ beneficiarioPasantia.beneficiario.segundoNombre }}</b>                   
                   </td>
           
                   <td>
-                    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ asignacionGrupoBeneficiarioPasantia.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
-                    <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarGrupoBeneficiarioPasantia('{{ path('pasantiaEliminarGrupoBeneficiario', {'idPasantia': idPasantia, 'idAsignacionGrupoPasantia': asignacionesGrupoPasantia.id, 'idAsignacionoBeneficiario': asignacionGrupoBeneficiarioPasantia.id}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>                                   
+                    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ beneficiarioPasantia.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
+                                                       
                   </td>
                 </tr>
         
@@ -219,7 +219,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ grupo.id }} | {{ grupo.nombre }}</h4>
+            <h4 class="modal-title" id="myModalLabel">{{ beneficiario.grupo.id }} | {{ beneficiario.grupo.nombre }}</h4>
           </div>
           <div class="modal-body">
             <b>Tipo de Documento:{{ beneficiario.tipoDocumento }}</b>
@@ -317,103 +317,103 @@
     </div>
    {% endfor %}             
 
-   {% for asignacionGrupoBeneficiarioPasantia in asignacionesGrupoBeneficiarioPasantia %}
+   {% for beneficiarioPasantia in beneficiariosPasantia %}
     <!-- Modal -->
-    <div class="modal fade" id="myModal{{ asignacionGrupoBeneficiarioPasantia.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal fade" id="myModal{{ beneficiarioPasantia.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ asignacionGrupoBeneficiarioPasantia.beneficiario.grupo.id }} | {{ asignacionGrupoBeneficiarioPasantia.beneficiario.grupo.nombre }}</h4>
+            <h4 class="modal-title" id="myModalLabel">{{ beneficiarioPasantia.beneficiario.grupo.id }} | {{ beneficiarioPasantia.beneficiario.grupo.nombre }}</h4>
           </div>
           <div class="modal-body">
-            <b>Tipo de Documento:{{ asignacionGrupoBeneficiarioPasantia.beneficiario.tipoDocumento }}</b>
+            <b>Tipo de Documento:{{ beneficiarioPasantia.beneficiario.tipoDocumento }}</b>
             <br>
-            <b>Numero de Documento: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.numeroDocumento }}</b>
+            <b>Numero de Documento: {{ beneficiarioPasantia.beneficiario.numeroDocumento }}</b>
             <br>
-            <b>Primero Apellido: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.primerApellido }}</b>
+            <b>Primero Apellido: {{ beneficiarioPasantia.beneficiario.primerApellido }}</b>
             <br>
-            <b>Segundo Apellido: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.segundoApellido }}</b>
+            <b>Segundo Apellido: {{ beneficiarioPasantia.beneficiario.segundoApellido }}</b>
             <br>
-            <b>Primero Nombre: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.primerNombre }}</b>
+            <b>Primero Nombre: {{ beneficiarioPasantia.beneficiario.primerNombre }}</b>
             <br>
-            <b>Segundo Nombre: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.segundoNombre }}</b>
+            <b>Segundo Nombre: {{ beneficiarioPasantia.beneficiario.segundoNombre }}</b>
             <br>
-            <b>Genero: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.genero }}</b>
+            <b>Genero: {{ beneficiarioPasantia.beneficiario.genero }}</b>
             <br>
-            <b>Fecha de Nacimiento: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.fechaNacimiento |  date('d - m - Y') }}</b>
+            <b>Fecha de Nacimiento: {{ beneficiarioPasantia.beneficiario.fechaNacimiento |  date('d - m - Y') }}</b>
             <br>
-            <b>Edad al momento de la inscripcion: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.edadInscripcion }}</b>
+            <b>Edad al momento de la inscripcion: {{ beneficiarioPasantia.beneficiario.edadInscripcion }}</b>
             <br>
-            <b>Deplazado por la violencia: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.desplazado }}</b>
+            <b>Deplazado por la violencia: {{ beneficiarioPasantia.beneficiario.desplazado }}</b>
             <br>            
-            <b>Pertenencia Etnica: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.pertenenciaEtnica }}</b>
+            <b>Pertenencia Etnica: {{ beneficiarioPasantia.beneficiario.pertenenciaEtnica }}</b>
             <br>
-            <b>Grupo indigena: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.grupoIndigena }}</b>
+            <b>Grupo indigena: {{ beneficiarioPasantia.beneficiario.grupoIndigena }}</b>
             <br>
-            <b>Pertenece a la red unidos: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.redUnidos }}</b>
+            <b>Pertenece a la red unidos: {{ beneficiarioPasantia.beneficiario.redUnidos }}</b>
             <br>
-            <b>Sabe leer: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.sabeLeer }}</b>
+            <b>Sabe leer: {{ beneficiarioPasantia.beneficiario.sabeLeer }}</b>
             <br>
-            <b>Sabe escribir: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.sabeEscribir }}</b>
+            <b>Sabe escribir: {{ beneficiarioPasantia.beneficiario.sabeEscribir }}</b>
             <br>
-             <b>Puntaje del sisben: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.puntajeSisben }}</b>
+             <b>Puntaje del sisben: {{ beneficiarioPasantia.beneficiario.puntajeSisben }}</b>
             <br>
-            <b>Corte sisben: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.corteSisben }}</b>
+            <b>Corte sisben: {{ beneficiarioPasantia.beneficiario.corteSisben }}</b>
             <br>
-            <b>Discapacidad: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.discapacidad }}</b>
+            <b>Discapacidad: {{ beneficiarioPasantia.beneficiario.discapacidad }}</b>
             <br>
-            <b>Rol grupo familiar: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.rolGrupoFamiliar }}</b>
+            <b>Rol grupo familiar: {{ beneficiarioPasantia.beneficiario.rolGrupoFamiliar }}</b>
             <br>
-            <b>Mimebros nucleo familiar: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.miembrosNucleoFamiliar }}</b>
+            <b>Mimebros nucleo familiar: {{ beneficiarioPasantia.beneficiario.miembrosNucleoFamiliar }}</b>
             <br>
-            <b>Hijos menores 5: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.hijosMenores5 }}</b>
+            <b>Hijos menores 5: {{ beneficiarioPasantia.beneficiario.hijosMenores5 }}</b>
             <br>
-            <b>Nivel de estudios: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.nivelEstudios }}</b>
+            <b>Nivel de estudios: {{ beneficiarioPasantia.beneficiario.nivelEstudios }}</b>
             <br>
-            <b>Ocupacion: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.ocupacion }}</b>
+            <b>Ocupacion: {{ beneficiarioPasantia.beneficiario.ocupacion }}</b>
             <br>
-            <b>Tipo de vivienda: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.tipoVivienda }}</b>
+            <b>Tipo de vivienda: {{ beneficiarioPasantia.beneficiario.tipoVivienda }}</b>
       <br>
-            <b>Rural: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.rural }}</b>
+            <b>Rural: {{ beneficiarioPasantia.beneficiario.rural }}</b>
       <br>
-            <b>Direccion: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.direccion }}</b>
+            <b>Direccion: {{ beneficiarioPasantia.beneficiario.direccion }}</b>
       <br>
-            <b>Barrio: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.barrio }}</b>
+            <b>Barrio: {{ beneficiarioPasantia.beneficiario.barrio }}</b>
       <br>
-            <b>Corregimiento: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.corregimiento }}</b>
+            <b>Corregimiento: {{ beneficiarioPasantia.beneficiario.corregimiento }}</b>
       <br>
-            <b>Vereda: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.vereda }}</b>
+            <b>Vereda: {{ beneficiarioPasantia.beneficiario.vereda }}</b>
       <br>
-            <b>Cacerio: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.cacerio }}</b>
+            <b>Cacerio: {{ beneficiarioPasantia.beneficiario.cacerio }}</b>
       <br>
-            <b>Telefono Fijo: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.telefonoFijo }}</b>
+            <b>Telefono Fijo: {{ beneficiarioPasantia.beneficiario.telefonoFijo }}</b>
       <br>
-            <b>Telefono Celular: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.telefonoCelular }}</b>
+            <b>Telefono Celular: {{ beneficiarioPasantia.beneficiario.telefonoCelular }}</b>
       <br>
-            <b>Correo electronico: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.correoElectronico }}</b>
+            <b>Correo electronico: {{ beneficiarioPasantia.beneficiario.correoElectronico }}</b>
       <br>
-            <b>Estado civil: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.estadoCivil }}</b>
+            <b>Estado civil: {{ beneficiarioPasantia.beneficiario.estadoCivil }}</b>
       <br>
             <b>Información del Conyuge</b>
       <br>
-            <b>Tipo de documento del conyuge: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.tipoDocumentoConyugue }}</b>
+            <b>Tipo de documento del conyuge: {{ beneficiarioPasantia.beneficiario.tipoDocumentoConyugue }}</b>
       <br>
-            <b>Numero de documento del conyuge: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.numeroDocumentoConyugue }}</b>
+            <b>Numero de documento del conyuge: {{ beneficiarioPasantia.beneficiario.numeroDocumentoConyugue }}</b>
       <br>
-            <b>Primer apellido del conyuge: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.primerApellidoConyugue }}</b>
+            <b>Primer apellido del conyuge: {{ beneficiarioPasantia.beneficiario.primerApellidoConyugue }}</b>
       <br>
-            <b>Segundo apellido del conyuge: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.segundoApellidoConyugue }}</b>
+            <b>Segundo apellido del conyuge: {{ beneficiarioPasantia.beneficiario.segundoApellidoConyugue }}</b>
       <br>
-            <b>Primer nombre del conyuge: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.primerNombreConyugue }}</b>
+            <b>Primer nombre del conyuge: {{ beneficiarioPasantia.beneficiario.primerNombreConyugue }}</b>
       <br>
-            <b>Segundo nombre del conyuge: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.segundoNombreConyugue }}</b>
+            <b>Segundo nombre del conyuge: {{ beneficiarioPasantia.beneficiario.segundoNombreConyugue }}</b>
       <br>
-            <b>Telefono fijo del conyuge: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.telefonoFijoConyugue }}</b>
+            <b>Telefono fijo del conyuge: {{ beneficiarioPasantia.beneficiario.telefonoFijoConyugue }}</b>
       <br>
-            <b>Telefono celular del conyuge: {{ asignacionGrupoBeneficiarioPasantia.beneficiario.telefonoCelularConyugue }}</b>
+            <b>Telefono celular del conyuge: {{ beneficiarioPasantia.beneficiario.telefonoCelularConyugue }}</b>
           </div>
 
           <div class="modal-footer">
