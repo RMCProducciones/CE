@@ -22,11 +22,6 @@ class AsignacionGrupoBeneficiarioPasantia
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\AsignacionGrupoPasantia")
-     */
-    private $asignacion_grupo_pasantia;   
-
-    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Pasantia")
      */
     private $pasantia;
@@ -97,30 +92,6 @@ class AsignacionGrupoBeneficiarioPasantia
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set asignacionGrupoPasantia
-     *
-     * @param AppBundle\Entity\AsignacionGrupoPasantia $asignacionGrupoPasantia
-     *
-     * @return AsignacionGrupoBeneficiarioPasantia
-     */
-    public function setAsignacionGrupoPasantia(\AppBundle\Entity\AsignacionGrupoPasantia $asignacionGrupoPasantia)
-    {
-        $this->asignacion_grupo_pasantia = $asignacionGrupoPasantia;
-
-        return $this;
-    }
-
-    /**
-     * Get asignacionGrupoPasantia
-     *
-     * @return AppBundle\Entity\AsignacionGrupoPasantia
-     */
-    public function getAsignacionGrupoPasantia()
-    {
-        return $this->asignacion_grupo_pasantia;
     }
 
     /**
