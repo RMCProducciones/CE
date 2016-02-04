@@ -36,7 +36,7 @@ class DiagnosticoOrganizacional
     /**
      * @var integer
      *
-     * @ORM\Column(name="promotor", type="integer")
+     * @ORM\Column(name="promotor", type="integer", nullable=true)
      */
     private $promotor;
 
@@ -239,42 +239,42 @@ class DiagnosticoOrganizacional
     /**
      * @var integer
      *
-     * @ORM\Column(name="totalProductiva", type="smallint")
+     * @ORM\Column(name="totalProductiva", type="smallint", nullable=true)
      */
     private $totalProductiva;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="totalComercial", type="smallint")
+     * @ORM\Column(name="totalComercial", type="smallint", nullable=true)
      */
     private $totalComercial;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="totalFinanciera", type="smallint")
+     * @ORM\Column(name="totalFinanciera", type="smallint", nullable=true)
      */
     private $totalFinanciera;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="totalAdministrativa", type="smallint")
+     * @ORM\Column(name="totalAdministrativa", type="smallint", nullable=true)
      */
     private $totalAdministrativa;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="totalOrganizacional", type="smallint")
+     * @ORM\Column(name="totalOrganizacional", type="smallint", nullable=true)
      */
     private $totalOrganizacional;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="total", type="smallint")
+     * @ORM\Column(name="total", type="smallint", nullable=true)
      */
     private $total;
 
@@ -285,31 +285,27 @@ class DiagnosticoOrganizacional
      */
     private $active;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
      */
     private $fecha_modificacion;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_creacion", type="datetime")
+     * @ORM\Column(name="fecha_creacion", type="datetime", nullable=true)
      */
     private $fecha_creacion;
 
@@ -1239,11 +1235,11 @@ class DiagnosticoOrganizacional
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return DiagnosticoOrganizacional
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -1253,7 +1249,7 @@ class DiagnosticoOrganizacional
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -1287,11 +1283,11 @@ class DiagnosticoOrganizacional
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return DiagnosticoOrganizacional
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -1301,7 +1297,7 @@ class DiagnosticoOrganizacional
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {

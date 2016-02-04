@@ -390,6 +390,13 @@ class DiagnosticoOrganizacionalType extends AbstractType
     // *this line is important*
     'choices_as_values' => true))
 			
+->add('totalProductiva', 'text', array('required' => false))
+->add('totalComercial', 'text', array('required' => false))
+->add('totalFinanciera', 'text', array('required' => false))
+->add('totalAdministrativa', 'text', array('required' => false))
+->add('totalOrganizacional', 'text', array('required' => false))
+->add('total', 'text', array('required' => false))
+
 
 
 			->add('fecha_visita', 'date', array('label' => 'Fecha de la Visita', 'widget' => 'single_text'))
