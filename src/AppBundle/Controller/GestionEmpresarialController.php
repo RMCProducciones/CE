@@ -3172,15 +3172,11 @@ class GestionEmpresarialController extends Controller
         $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
             array('id' => $idPasantia)
         );   
-
-        echo $pasantia->getId();
-        echo $pasantia->getGrupo()->getId();
+      
 
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id' => $idGrupo)
-        );         
-
-        echo $grupo->getId();
+        );                
 
         $beneficiarioGrupo = $em->getRepository('AppBundle:Beneficiario')->findBy(
             array('grupo' => $grupo));
@@ -3200,19 +3196,29 @@ class GestionEmpresarialController extends Controller
 
         }*/
 
-        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id IN (SELECT b.id FROM AppBundle:Grupo g WHERE g.id = b.grupo AND b.grupo = :grupo)');
-        $query->setParameter(':grupo', $grupo, ':beneficiario', $beneficiario);
-        $beneficiarios = $query->getResult();       
+        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionGrupoBeneficiarioPasantia abc WHERE beneficiario = abc.beneficiario AND abc.pasantia = :pasantia) AND b.active = 1');
+        $query->setParameter(':pasantia', $pasantia);
+        $beneficiarios = $query->getResult();
 
-        //if()
         
+        //echo "<pre>"; print_r($beneficiariosPasantia); echo "</pre>";
+        //$beneficiariosAsignados = $beneficiarios . $beneficiariosAsignados;
 
+        //$resultado = array_merge($beneficiarios, $);
 
-        //echo "<pre>"; print_r($beneficiarios); echo "</pre>";
-        
+        $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('id' => $beneficiarios, 'grupo' => $grupo )
+        );
+
+        //echo $mostrarBeneficiarios->getBeneficiario()->getId();
+
+        /*$mostrarBeneficiarios = $em->createQuery('SELECT b FROM "$beneficiarios" b WHERE b.id NOT IN (SELECT b.id FROM AppBundle:AsignacionBeneficiarioPasantia abp WHERE abp.beneficiario = b.id AND b.beneficiario = :beneficiario)');
+        $mostrarBeneficiarios->setParameter(':beneficiario', $beneficiario);
+        $resultado = $mostrarBeneficiarios->getResult();*/
+       
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiario-grupo-pasantia-gestion-asignacion.html.twig', 
             array(
-                'beneficiarios' => $beneficiarios,                
+                'beneficiarios' => $mostrarBeneficiarios,                
                 'beneficiariosPasantia' => $beneficiariosPasantia,
                 'idPasantia' => $idPasantia, 
                 'idGrupo' => $idGrupo,               
