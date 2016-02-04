@@ -75,7 +75,7 @@ use AppBundle\Form\GestionEmpresarial\OrganizacionSoporteType;
 use AppBundle\Form\GestionEmpresarial\ListaRolType;
 use AppBundle\Form\GestionEmpresarial\TerritorioAprendizajeType;
 use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalType;
-
+use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalResultadoType;
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -3730,7 +3730,7 @@ class GestionEmpresarialController extends Controller
             array('id' =>$idDiagnosticoOrganizacional) );
 
 
-        $form = $this->createForm(new DiagnosticoOrganizacionalType(), $Diagnosticoorganizacional);
+        $form = $this->createForm(new DiagnosticoOrganizacionalResultadoType(), $Diagnosticoorganizacional);
 
         $resultadoproductiva = ($Diagnosticoorganizacional->getProductivaA())+($Diagnosticoorganizacional->getProductivaB())+($Diagnosticoorganizacional->getProductivaC())+($Diagnosticoorganizacional->getProductivaD())+($Diagnosticoorganizacional->getProductivaE())+($Diagnosticoorganizacional->getProductivaF());
         $resultadocomercial = ($Diagnosticoorganizacional->getComercialA())+($Diagnosticoorganizacional->getComercialB())+($Diagnosticoorganizacional->getComercialC())+($Diagnosticoorganizacional->getComercialD())+($Diagnosticoorganizacional->getComercialE());
@@ -3754,16 +3754,7 @@ class GestionEmpresarialController extends Controller
 
         $form->handleRequest($request);
 
-        echo $Diagnosticoorganizacional->getTotalProductiva();
-        echo $Diagnosticoorganizacional->getTotalComercial();
-        echo $Diagnosticoorganizacional->getTotalFinanciera();
-        echo $Diagnosticoorganizacional->getTotalAdministrativa();
-        echo $Diagnosticoorganizacional->getTotalOrganizacional();
-        
-           
-
-           
-      
+              
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:diagnostico-resultado.html.twig',array('form' => $form->createView()));
     }
