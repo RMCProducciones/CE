@@ -75,7 +75,7 @@ use AppBundle\Form\GestionEmpresarial\OrganizacionSoporteType;
 use AppBundle\Form\GestionEmpresarial\ListaRolType;
 use AppBundle\Form\GestionEmpresarial\TerritorioAprendizajeType;
 use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalType;
-
+use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalResultadoType;
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -3711,13 +3711,59 @@ class GestionEmpresarialController extends Controller
             $em->persist($Diagnosticoorganizacional);
             $em->flush();
 
-            return $this->redirectToRoute('pasantiaGestion');
+            return $this->render(
+            'diagnosticoCalcular', 
+            array(
+                    'idDiagnosticoOrganizacional' => $Diagnosticoorganizacional->getId(),
+               
+            )
+        );
         }
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:diagnostico-nuevo.html.twig', array('form' => $form->createView()));
     }
    
 
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/diagnostico/{idDiagnosticoOrganizacional}/nuevo", name="diagnosticoCalcular")
+     */
+    public function diagnosticoCalcularAction(Request $request, $idDiagnosticoOrganizacional)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $Diagnosticoorganizacional= $em->getRepository('AppBundle:DiagnosticoOrganizacional')->findOneBy(
+            array('id' =>$idDiagnosticoOrganizacional) );
+
+
+        $form = $this->createForm(new DiagnosticoOrganizacionalResultadoType(), $Diagnosticoorganizacional);
+
+        $resultadoproductiva = ($Diagnosticoorganizacional->getProductivaA())+($Diagnosticoorganizacional->getProductivaB())+($Diagnosticoorganizacional->getProductivaC())+($Diagnosticoorganizacional->getProductivaD())+($Diagnosticoorganizacional->getProductivaE())+($Diagnosticoorganizacional->getProductivaF());
+        $resultadocomercial = ($Diagnosticoorganizacional->getComercialA())+($Diagnosticoorganizacional->getComercialB())+($Diagnosticoorganizacional->getComercialC())+($Diagnosticoorganizacional->getComercialD())+($Diagnosticoorganizacional->getComercialE());
+        $resultadofinanciera = ($Diagnosticoorganizacional->getFinancieraA())+($Diagnosticoorganizacional->getFinancieraB())+($Diagnosticoorganizacional->getFinancieraC())+($Diagnosticoorganizacional->getFinancieraD())+($Diagnosticoorganizacional->getFinancieraE())+($Diagnosticoorganizacional->getFinancieraF());
+        $resultadoadministrativa = ($Diagnosticoorganizacional->getAdministrativaA())+($Diagnosticoorganizacional->getAdministrativaB())+($Diagnosticoorganizacional->getAdministrativaC())+($Diagnosticoorganizacional->getAdministrativaD())+($Diagnosticoorganizacional->getAdministrativaE());
+        $resultadoorganizacional = ($Diagnosticoorganizacional->getOrganizacionalA())+($Diagnosticoorganizacional->getOrganizacionalB())+($Diagnosticoorganizacional->getOrganizacionalC())+($Diagnosticoorganizacional->getOrganizacionalD())+($Diagnosticoorganizacional->getOrganizacionalE())+($Diagnosticoorganizacional->getOrganizacionalF());
+        $resultadototal=$resultadoproductiva+$resultadocomercial+ $resultadofinanciera+$resultadoadministrativa+$resultadoorganizacional +$resultadoorganizacional;
+
+        $Diagnosticoorganizacional->setTotalProductiva($resultadoproductiva);
+        $Diagnosticoorganizacional->setTotalComercial($resultadocomercial);
+        $Diagnosticoorganizacional->setTotalFinanciera($resultadofinanciera);
+        $Diagnosticoorganizacional->setTotalAdministrativa($resultadoadministrativa);
+        $Diagnosticoorganizacional->setTotalOrganizacional($resultadoorganizacional);
+        $Diagnosticoorganizacional->setTotal($resultadototal);
+
+
+
+
+        $em->persist($Diagnosticoorganizacional);
+        $em->flush();
+
+        $form->handleRequest($request);
+
+              
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:diagnostico-resultado.html.twig',array('form' => $form->createView()));
+    }
 
 
 

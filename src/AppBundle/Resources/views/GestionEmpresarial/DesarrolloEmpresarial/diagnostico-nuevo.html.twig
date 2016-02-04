@@ -18,7 +18,7 @@
 {% block section %}
     
     <div class="container">
-    <h1> Gestión Concursos</h1>
+    <h1> Diagnostico Organizacional</h1>
     <hr>
     <h3> Nuevo Registro</h3>   
   </div>
@@ -52,21 +52,37 @@
     
     <br>
         
-
+ <br />
 
     <div class="section">
       <div class="container">
         <div class="row">
-						<div class="col-md-12">
+            <div class="col-md-10">
+            <fieldset>
+              <legend>Fechas</legend>
+            </fieldset>            
+        </div>
+      </div> 
+        <div class="row">
+      <div class="col-md-9">
+                  {{ form_label(form.fecha_visita) }}
+                  {{ form_errors(form.fecha_visita) }}
+                  {{ form_widget(form.fecha_visita, { 'attr': {'class': 'form-control'} }) }}
+          </div>   
+          </div> 
+   <br/>
+
+        <div class="row">
+						<div class="col-md-9">
 						<fieldset>
-							<legend>Preguntas sección productiva</legend>
+							<legend>ESTADO ACTUAL DEL AREA PRODUCTIVA DEL NEGOCIO</legend>
 						</fieldset>            
 				</div>
       </div>      			
 			
 			<div class="row">
 			    <!--form class="form-horizontal" role="form"-->
-			    <div class="col-md-12">
+			    <div class="col-md-9">
                   {{ form_label(form.productivaA) }}
         				  {{ form_errors(form.productivaA) }}
         				  {{ form_widget(form.productivaA, { 'attr': {'class': 'form-control radio-br'} }) }}
@@ -74,78 +90,76 @@
                 
 			</div>
 
-
+        <br/>
+     
 
         <div class="row">
-          <div class="col-md-12">
-                  {{ form_label(form.fecha_visita) }}
-                  {{ form_errors(form.fecha_visita) }}
-                  {{ form_widget(form.fecha_visita, { 'attr': {'class': 'form-control'} }) }}
-          </div>   
-   </div> 
-
-      <div class="row">
-          <!--form class="form-horizontal" role="form"-->
-          <div class="col-md-12">
+          
+            <div class="col-md-9">
                   {{ form_label(form.productivaB) }}
                   {{ form_errors(form.productivaB) }}
                   {{ form_widget(form.productivaB, { 'attr': {'class': 'form-control radio-br'} }) }}
-          </div>    
+          </div> 
+   </div> 
+
+   <br/>
            <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-9">
                   {{ form_label(form.productivaC) }}
                   {{ form_errors(form.productivaC) }}
-                  {{ form_widget(form.productivaC, { 'attr': {'class': 'form-control'} }) }}
+                  {{ form_widget(form.productivaC, { 'attr': {'class': 'form-control radio-br'} }) }}
           </div> 
           </div>  
-           <div class="col-md-4">
+
+             <br/>
+
+          <div class="row">
+           <div class="col-md-9">
                   {{ form_label(form.productivaD) }}
                   {{ form_errors(form.productivaD) }}
-                  {{ form_widget(form.productivaD, { 'attr': {'class': 'form-control'} }) }}
-          </div>       
-                
-      </div>
-           <div class="row">
-          <!--form class="form-horizontal" role="form"-->
-          <div class="col-md-4">
+                  {{ form_widget(form.productivaD, { 'attr': {'class': 'form-control radio-br'} }) }}
+                  <br/>
+          </div>  
+            <br/>
+
+          </div>   
+          <div class="row">
+           <div class="col-md-9">
                   {{ form_label(form.productivaE) }}
                   {{ form_errors(form.productivaE) }}
-                  {{ form_widget(form.productivaE, { 'attr': {'class': 'form-control'} }) }}
-          </div>    
-          <div class="col-md-4">
+                  {{ form_widget(form.productivaE, { 'attr': {'class': 'form-control radio-br'} }) }}
+           <br/>
+        
+          </div>  
+            
+
+          </div>
+          <div class="row">
+           <div class="col-md-9">
                   {{ form_label(form.productivaF) }}
                   {{ form_errors(form.productivaF) }}
-                  {{ form_widget(form.productivaF, { 'attr': {'class': 'form-control'} }) }}
+                  {{ form_widget(form.productivaF, { 'attr': {'class': 'form-control radio-br'} }) }}
+                  <br/>
+          </div>  
           </div>   
-        <br/>
-        <br/> 
-        <br/>
-        <br/> 
-
-
-          <div class="col-md-12">
-            <fieldset>
-              <legend>Preguntas sección comercial</legend>
-            </fieldset>            
-        </div>
-      </div> 
-         
+               
       </div>
       <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-9">
             <fieldset>
-              <legend>Preguntas sección productiva</legend>
+              <legend>ESTADO ACTUAL DEL ÁREA DEL MERCADODEL NEGOCIO.</legend>
             </fieldset>            
         </div>
       </div>            
       
       <div class="row">
           <!--form class="form-horizontal" role="form"-->
-          <div class="col-md-12">
+          <div class="col-md-9">
                   {{ form_label(form.comercialA) }}
                   {{ form_errors(form.comercialA) }}
-                  {{ form_widget(form.comercialA, { 'attr': {'class': 'form-control'} }) }}
+                  {{ form_widget(form.comercialA, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
           </div>      
                 
       </div>
@@ -153,46 +167,230 @@
 
 
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-9">
                   {{ form_label(form.comercialB) }}
                   {{ form_errors(form.comercialB) }}
-                  {{ form_widget(form.comercialB, { 'attr': {'class': 'form-control'} }) }}
+                  {{ form_widget(form.comercialB, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
           </div>   
    </div> 
 
       <div class="row">
           <!--form class="form-horizontal" role="form"-->
-          <div class="col-md-4">
+          <div class="col-md-9">
                   {{ form_label(form.comercialC) }}
                   {{ form_errors(form.comercialC) }}
-                  {{ form_widget(form.comercialC, { 'attr': {'class': 'form-control'} }) }}
-          </div>    
-          <div class="col-md-4">
+                  {{ form_widget(form.comercialC, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>          
+      </div>
+      <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-9">
                   {{ form_label(form.comercialD) }}
                   {{ form_errors(form.comercialD) }}
-                  {{ form_widget(form.comercialD, { 'attr': {'class': 'form-control'} }) }}
-          </div>   
-           <div class="col-md-4">
+                  {{ form_widget(form.comercialD, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>          
+      </div>
+      <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-9">
                   {{ form_label(form.comercialE) }}
                   {{ form_errors(form.comercialE) }}
-                  {{ form_widget(form.comercialE, { 'attr': {'class': 'form-control'} }) }}
-          </div>       
-                
+                  {{ form_widget(form.comercialE, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>          
       </div>
-           
-        <br/> 
-        <br/>
-        <br/> 
 
 
-          <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-9">
             <fieldset>
-              <legend>Preguntas sección comercial</legend>
+              <legend>ESTADO ACTUAL DEL ÁREA FINANCIERA DEL NEGOCIO.</legend>
             </fieldset>            
         </div>
-        </div>
-      </div> 
+      </div>            
+      
+      <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-9">
+                  {{ form_label(form.financieraA) }}
+                  {{ form_errors(form.financieraA) }}
+                  {{ form_widget(form.financieraA, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>      
+                
+      </div>
 
+        <div class="row">
+          <div class="col-md-9">
+                  {{ form_label(form.financieraB) }}
+                  {{ form_errors(form.financieraB) }}
+                  {{ form_widget(form.financieraB, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>   
+   </div> 
+
+      <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-9">
+                  {{ form_label(form.financieraC) }}
+                  {{ form_errors(form.financieraC) }}
+                  {{ form_widget(form.financieraC, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>          
+      </div>
+      <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-9">
+                  {{ form_label(form.financieraD) }}
+                  {{ form_errors(form.financieraD) }}
+                  {{ form_widget(form.financieraD, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>          
+      </div>
+      <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-9">
+                  {{ form_label(form.financieraE) }}
+                  {{ form_errors(form.financieraE) }}
+                  {{ form_widget(form.financieraE, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>          
+      </div>
+      <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-9">
+                  {{ form_label(form.financieraF) }}
+                  {{ form_errors(form.financieraF) }}
+                  {{ form_widget(form.financieraF, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>          
+      </div>
+
+
+
+
+<div class="row">
+            <div class="col-md-9">
+            <fieldset>
+              <legend>ESTADO ACTUAL DEL ÁREA ADMINISTRATIVA DEL NEGOCIO.</legend>
+            </fieldset>            
+        </div>
+      </div>            
+      
+      <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-9">
+                  {{ form_label(form.administrativaA) }}
+                  {{ form_errors(form.administrativaA) }}
+                  {{ form_widget(form.administrativaA, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>      
+                
+      </div>
+
+        <div class="row">
+          <div class="col-md-9">
+                  {{ form_label(form.administrativaB) }}
+                  {{ form_errors(form.administrativaB) }}
+                  {{ form_widget(form.administrativaB, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>   
+   </div> 
+
+      <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-9">
+                  {{ form_label(form.administrativaC) }}
+                  {{ form_errors(form.administrativaC) }}
+                  {{ form_widget(form.administrativaC, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>          
+      </div>
+      <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-9">
+                  {{ form_label(form.administrativaD) }}
+                  {{ form_errors(form.administrativaD) }}
+                  {{ form_widget(form.administrativaD, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>          
+      </div>
+      <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-9">
+                  {{ form_label(form.administrativaE) }}
+                  {{ form_errors(form.administrativaE) }}
+                  {{ form_widget(form.administrativaE, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>
+
+          <div class="row">
+            <div class="col-md-9">
+            <fieldset>
+              <legend>ESTADO ACTUAL DEL ÁREA ORGANIZACIONAL Y SOCIAL DEL NEGOCIO.</legend>
+            </fieldset>            
+        </div>
+      </div>  
+
+
+ <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-9">
+                  {{ form_label(form.organizacionalA) }}
+                  {{ form_errors(form.organizacionalA) }}
+                  {{ form_widget(form.organizacionalA, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>      
+                
+      </div>
+
+        <div class="row">
+          <div class="col-md-9">
+                  {{ form_label(form.organizacionalB) }}
+                  {{ form_errors(form.organizacionalB) }}
+                  {{ form_widget(form.organizacionalB, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>   
+   </div> 
+
+      <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-9">
+                  {{ form_label(form.organizacionalC) }}
+                  {{ form_errors(form.organizacionalC) }}
+                  {{ form_widget(form.organizacionalC, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>          
+      </div>
+      <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-9">
+                  {{ form_label(form.organizacionalD) }}
+                  {{ form_errors(form.organizacionalD) }}
+                  {{ form_widget(form.organizacionalD, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>          
+      </div>
+      <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-9">
+                  {{ form_label(form.organizacionalE) }}
+                  {{ form_errors(form.organizacionalE) }}
+                  {{ form_widget(form.organizacionalE, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>
+
+            <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-9">
+                  {{ form_label(form.organizacionalF) }}
+                  {{ form_errors(form.organizacionalF) }}
+                  {{ form_widget(form.organizacionalF, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>
 			<!--/form-->
 			<br/>
 		  	<br/>	

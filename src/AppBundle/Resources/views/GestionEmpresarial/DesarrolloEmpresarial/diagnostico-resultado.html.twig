@@ -1,0 +1,175 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+{% block title %}Diagnostico Organizacional{% endblock %}
+
+{% block breadcrumb_ul %}
+
+    <ul class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Empresarial</li>
+      <li>Formacion de capital social asociativo y desarrollo empresarial</li>
+      <li><a href="{{ path('concursoGestion') }}">Concursos</a></li>
+      <li class="active">Nuevo</li>
+    </ul>
+
+{% endblock %}
+
+
+{% block section %}
+    
+    <div class="container">
+    <h1> Diagnostico Organizacional</h1>
+    <hr>
+    <h3> Nuevo Registro</h3>   
+  </div>
+
+  <br />
+  <br />
+
+
+    
+
+    
+  {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+    {{ form_errors(form) }}
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="btn-group">
+  
+              <button name="concurso[Guardar]" id="grupo_Guardar" type="submit" class="btn btn-success">Guardar</button>
+              
+              <a href="{{ path('concursoGestion') }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <br>
+        
+ <br />
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+            <fieldset>
+              <legend>Fechas</legend>
+            </fieldset>            
+        </div>
+      </div> 
+        <div class="row">
+      <div class="col-md-9">
+                  {{ form_label(form.fecha_visita) }}
+                  {{ form_errors(form.fecha_visita) }}
+                  {{ form_widget(form.fecha_visita, { 'attr': {'class': 'form-control'} }) }}
+          </div>   
+          </div> 
+   <br/>
+
+        <div class="row">
+						<div class="col-md-9">
+						<fieldset>
+							<legend>ESTADO ACTUAL DEL AREA PRODUCTIVA DEL NEGOCIO</legend>
+						</fieldset>            
+				</div>
+      </div>      			
+			
+			<div class="row">
+			    <!--form class="form-horizontal" role="form"-->
+			    <div class="col-md-9">
+                  {{ form_label(form.totalProductiva) }}
+        				  {{ form_errors(form.totalProductiva) }}
+        				  {{ form_widget(form.totalProductiva, { 'attr': {'class': 'form-control radio-br'} }) }}
+          </div>	
+      </div>  	 	
+                
+			
+      <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+            <fieldset>
+              <legend>ESTADO ACTUAL DEL ÁREA DEL MERCADODEL NEGOCIO.</legend>
+            </fieldset>            
+        </div>
+      </div>            
+      
+      <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-9">
+                  {{ form_label(form.totalComercial) }}
+                  {{ form_errors(form.totalComercial) }}
+                  {{ form_widget(form.totalComercial, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>      
+                
+      </div>
+
+        <div class="row">
+            <div class="col-md-9">
+            <fieldset>
+              <legend>ESTADO ACTUAL DEL ÁREA FINANCIERA DEL NEGOCIO.</legend>
+            </fieldset>            
+        </div>
+      </div>            
+      
+      
+      <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-9">
+                  {{ form_label(form.totalFinanciera) }}
+                  {{ form_errors(form.totalFinanciera) }}
+                  {{ form_widget(form.totalFinanciera, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>          
+      </div>
+
+        <div class="row">
+            <div class="col-md-9">
+            <fieldset>
+              <legend>ESTADO ACTUAL DEL ÁREA ADMINISTRATIVA DEL NEGOCIO.</legend>
+            </fieldset>            
+        </div>
+      </div>            
+      
+      <div class="row">
+          <!--form class="form-horizontal" role="form"-->
+          <div class="col-md-9">
+                  {{ form_label(form.totalAdministrativa) }}
+                  {{ form_errors(form.totalAdministrativa) }}
+                  {{ form_widget(form.totalAdministrativa, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div>   
+             
+           <div class="col-md-9">
+                  {{ form_label(form.totalOrganizacional) }}
+                  {{ form_errors(form.totalOrganizacional) }}
+                  {{ form_widget(form.totalOrganizacional, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div> 
+           <div class="col-md-9">
+                  {{ form_label(form.total) }}
+                  {{ form_errors(form.total) }}
+                  {{ form_widget(form.total, { 'attr': {'class': 'form-control radio-br' } }) }}
+                  <br/>
+          </div> 
+                
+      
+
+
+			<!--/form-->
+			<br/>
+		  	<br/>	
+          
+        </div>
+    </div>
+
+  {{ form_end(form) }}
+               
+{% endblock %}
+
