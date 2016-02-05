@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Ruta
+ * AsignacionGrupoBeneficiarioRuta
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\RutaRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\AsignacionGrupoBeneficiarioRutaRepository")
  */
-class Ruta
+class AsignacionGrupoBeneficiarioRuta
 {
     /**
      * @var integer
@@ -22,28 +22,35 @@ class Ruta
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\TerritorioAprendizaje")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ruta")
      */
-    private $territorio_aprendizaje;
+    private $ruta;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Beneficiario")
      */
-    private $grupo;
+    private $beneficiario;
 
     /**
-     * @var string
+     * @var boolean
      *
-     * @ORM\Column(name="nombre_ruta", type="string")
+     * @ORM\Column(name="habilitacion", type="boolean", nullable = true)
      */
-    private $nombre_ruta;
+    private $habilitacion;
 
     /**
-     * @var string
+     * @var boolean
      *
-     * @ORM\Column(name="observaciones", type="string")
+     * @ORM\Column(name="asignacion", type="boolean", nullable = true)
      */
-    private $observaciones;
+    private $asignacion;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="contraloria_social", type="boolean", nullable = true)
+     */
+    private $contraloria_social;
 
     /**
      * @var boolean
@@ -52,7 +59,7 @@ class Ruta
      */
     private $active;
 
-    /**
+     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
@@ -60,11 +67,11 @@ class Ruta
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable = true)
      */
     private $fecha_modificacion;
 
-    /**
+     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
@@ -72,7 +79,7 @@ class Ruta
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_creacion", type="datetime",nullable=true )
+     * @ORM\Column(name="fecha_creacion", type="datetime")
      */
     private $fecha_creacion;
 
@@ -88,104 +95,123 @@ class Ruta
     }
 
     /**
-     * Set territorioAprendizaje
+     * Set ruta
      *
-     * @param AppBundle\Entity\TerritorioAprendizaje $territorioAprendizaje
+     * @param AppBundle\Entity\Ruta $ruta
      *
-     * @return Ruta
+     * @return AsignacionGrupoBeneficiarioRuta
      */
-    public function setTerritorioAprendizaje(\AppBundle\Entity\TerritorioAprendizaje $territorioAprendizaje)
+    public function setRuta(\AppBundle\Entity\Ruta $ruta)
     {
-        $this->territorio_aprendizaje = $territorioAprendizaje;
-    
+        $this->ruta = $ruta;
+
         return $this;
     }
 
     /**
-     * Get territorioAprendizaje
+     * Get ruta
      *
-     * @return AppBundle\Entity\TerritorioAprendizaje
+     * @return AppBundle\Entity\Ruta
      */
-    public function getTerritorioAprendizaje()
+    public function getRuta()
     {
-        return $this->territorio_aprendizaje;
+        return $this->ruta;
     }
 
     /**
-     * Set grupo
+     * Set beneficiario
      *
-     * @param AppBundle\Entity\Grupo $grupo
+     * @param AppBundle\Entity\Beneficiario $beneficiario
      *
-     * @return Ruta
+     * @return AsignacionGrupoBeneficiarioRuta
      */
-    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
+    public function setBeneficiario(\AppBundle\Entity\Beneficiario $beneficiario)
     {
-        $this->grupo = $grupo;
-    
-        return $this;
-    }
+        $this->beneficiario = $beneficiario;
 
-    public function setNullGrupo()
-    {
-        $this->grupo = null;
-    }
-
-    /**
-     * Get grupo
-     *
-     * @return AppBundle\Entity\Grupo
-     */
-    public function getGrupo()
-    {
-        return $this->grupo;
-    }
-
-    /**
-     * Set nombreRuta
-     *
-     * @param string $nombreRuta
-     *
-     * @return Ruta
-     */
-    public function setNombreRuta($nombreRuta)
-    {
-        $this->nombre_ruta = $nombreRuta;
-    
         return $this;
     }
 
     /**
-     * Get nombreRuta
+     * Get beneficiario
      *
-     * @return string
+     * @return AppBundle\Entity\Beneficiario
      */
-    public function getNombreRuta()
+    public function getBeneficiario()
     {
-        return $this->nombre_ruta;
+        return $this->beneficiario;
     }
 
     /**
-     * Set observaciones
+     * Set habilitacion
      *
-     * @param string $observaciones
+     * @param boolean $habilitacion
      *
-     * @return Ruta
+     * @return AsignacionGrupoBeneficiarioRuta
      */
-    public function setObservaciones($observaciones)
+    public function setHabilitacion($habilitacion)
     {
-        $this->observaciones = $observaciones;
-    
+        $this->habilitacion = $habilitacion;
+
         return $this;
     }
 
     /**
-     * Get observaciones
+     * Get habilitacion
      *
-     * @return string
+     * @return boolean
      */
-    public function getObservaciones()
+    public function getHabilitacion()
     {
-        return $this->observaciones;
+        return $this->habilitacion;
+    }
+
+    /**
+     * Set asignacion
+     *
+     * @param boolean $asignacion
+     *
+     * @return AsignacionGrupoBeneficiarioRuta
+     */
+    public function setAsignacion($asignacion)
+    {
+        $this->asignacion = $asignacion;
+
+        return $this;
+    }
+
+    /**
+     * Get asignacion
+     *
+     * @return boolean
+     */
+    public function getAsignacion()
+    {
+        return $this->asignacion;
+    }
+
+    /**
+     * Set contraloriaSocial
+     *
+     * @param boolean $contraloriaSocial
+     *
+     * @return AsignacionGrupoBeneficiarioRuta
+     */
+    public function setContraloriaSocial($contraloriaSocial)
+    {
+        $this->contraloria_social = $contraloriaSocial;
+
+        return $this;
+    }
+
+    /**
+     * Get contraloriaSocial
+     *
+     * @return boolean
+     */
+    public function getContraloriaSocial()
+    {
+        return $this->contraloria_social;
     }
 
     /**
@@ -193,12 +219,12 @@ class Ruta
      *
      * @param boolean $active
      *
-     * @return Ruta
+     * @return AsignacionGrupoBeneficiarioRuta
      */
     public function setActive($active)
     {
         $this->active = $active;
-    
+
         return $this;
     }
 
@@ -217,12 +243,12 @@ class Ruta
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return Ruta
+     * @return AsignacionGrupoBeneficiarioRuta
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
-    
+
         return $this;
     }
 
@@ -241,12 +267,12 @@ class Ruta
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return Ruta
+     * @return AsignacionGrupoBeneficiarioRuta
      */
     public function setFechaModificacion($fechaModificacion)
     {
         $this->fecha_modificacion = $fechaModificacion;
-    
+
         return $this;
     }
 
@@ -265,12 +291,12 @@ class Ruta
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return Ruta
+     * @return AsignacionGrupoBeneficiarioRuta
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
-    
+
         return $this;
     }
 
@@ -289,12 +315,12 @@ class Ruta
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return Ruta
+     * @return AsignacionGrupoBeneficiarioRuta
      */
     public function setFechaCreacion($fechaCreacion)
     {
         $this->fecha_creacion = $fechaCreacion;
-    
+
         return $this;
     }
 
