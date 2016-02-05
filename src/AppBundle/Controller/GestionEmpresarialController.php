@@ -3183,8 +3183,7 @@ class GestionEmpresarialController extends Controller
 
         $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findBy(
             array('id' => $beneficiarioGrupo));
-
-        //echo $beneficiario->getPrimerApellido();
+        
         
         $beneficiariosPasantia = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioPasantia')->findBy(
             array('pasantia' => $idPasantia)
@@ -3192,29 +3191,13 @@ class GestionEmpresarialController extends Controller
 
         $beneficiariosPrueba = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioPasantia')->find($pasantia->getId());
 
-        /*if($pasantia->getGrupo()->getId() == ){
-
-        }*/
-
         $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionGrupoBeneficiarioPasantia abc WHERE beneficiario = abc.beneficiario AND abc.pasantia = :pasantia) AND b.active = 1');
         $query->setParameter(':pasantia', $pasantia);
         $beneficiarios = $query->getResult();
 
-        
-        //echo "<pre>"; print_r($beneficiariosPasantia); echo "</pre>";
-        //$beneficiariosAsignados = $beneficiarios . $beneficiariosAsignados;
-
-        //$resultado = array_merge($beneficiarios, $);
-
         $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
             array('id' => $beneficiarios, 'grupo' => $grupo )
         );
-
-        //echo $mostrarBeneficiarios->getBeneficiario()->getId();
-
-        /*$mostrarBeneficiarios = $em->createQuery('SELECT b FROM "$beneficiarios" b WHERE b.id NOT IN (SELECT b.id FROM AppBundle:AsignacionBeneficiarioPasantia abp WHERE abp.beneficiario = b.id AND b.beneficiario = :beneficiario)');
-        $mostrarBeneficiarios->setParameter(':beneficiario', $beneficiario);
-        $resultado = $mostrarBeneficiarios->getResult();*/
        
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiario-grupo-pasantia-gestion-asignacion.html.twig', 
             array(
@@ -3265,6 +3248,60 @@ class GestionEmpresarialController extends Controller
                 'idPasantia' => $idPasantia,
                 'idGrupo' => $idGrupo
             ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-grupo/{idGrupo}/{idBeneficiario}/asignacion-beneficiario/{idBeneficiarioPasantia}/eliminar", name="pasantiaEliminarGrupoBeneficiario")
+     */
+    public function pasantiaEliminarGrupoBeneficiarioAction(Request $request, $idPasantia, $idGrupo, $idBeneficiario, $idBeneficiarioPasantia)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionesGrupoBeneficiarioPasantia = new AsignacionGrupoBeneficiarioPasantia();
+
+        $asignacionesGrupoBeneficiarioPasantia = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioPasantia')->find($idBeneficiarioPasantia); 
+
+        $em->remove($asignacionesGrupoBeneficiarioPasantia);
+        $em->flush();
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+            array('id' => $idPasantia)
+        );   
+      
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );                
+
+        $beneficiarioGrupo = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('grupo' => $grupo));
+
+        $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('id' => $beneficiarioGrupo));
+        
+        
+        $beneficiariosPasantia = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioPasantia')->findBy(
+            array('pasantia' => $idPasantia)
+        );
+
+        $beneficiariosPrueba = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioPasantia')->find($pasantia->getId());
+
+        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionGrupoBeneficiarioPasantia abc WHERE beneficiario = abc.beneficiario AND abc.pasantia = :pasantia) AND b.active = 1');
+        $query->setParameter(':pasantia', $pasantia);
+        $beneficiarios = $query->getResult();
+
+        $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('id' => $beneficiarios, 'grupo' => $grupo )
+        );
+
+        return $this->redirectToRoute('pasantiaGrupoBeneficiario',
+            array(
+                'beneficiarios' => $mostrarBeneficiarios,                
+                'beneficiariosPasantia' => $beneficiariosPasantia,
+                'idPasantia' => $idPasantia, 
+                'idGrupo' => $idGrupo,     
+            ));      
         
     } 
 
