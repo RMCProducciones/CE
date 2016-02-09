@@ -3899,8 +3899,7 @@ class GestionEmpresarialController extends Controller
             return $this->redirectToRoute(
             'diagnosticoCalcular', 
             array(
-                    'idDiagnosticoOrganizacional' => $Diagnosticoorganizacional->getId(),
-               
+                    'idDiagnosticoOrganizacional' => $Diagnosticoorganizacional->getId()
             )
         );
         }
@@ -3915,7 +3914,7 @@ class GestionEmpresarialController extends Controller
 
 
 /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/diagnostico/{idDiagnosticoOrganizacional}/nuevo", name="diagnosticoCalcular")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/diagnostico/{idDiagnosticoOrganizacional}/resultado", name="diagnosticoCalcular")
      */
     public function diagnosticoCalcularAction(Request $request, $idDiagnosticoOrganizacional)
     {
@@ -3935,12 +3934,16 @@ class GestionEmpresarialController extends Controller
                  ;   
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:diagnostico-resultado.html.twig', 
-            array(  'resultadoproductiva'=>$resultadoproductiva,
-                    'resultadocomercial'=>$resultadocomercial,
-                    'resultadofinanciera'=>$resultadofinanciera,
-                    'resultadoadministrativa'=>$resultadoadministrativa,
-                    'resultadoorganizacional'=>$resultadoorganizacional,
-                    'resultadototal'=>$resultadototal));
+            array(  
+                'resultadoproductiva'=>$resultadoproductiva,
+                'resultadocomercial'=>$resultadocomercial,
+                'resultadofinanciera'=>$resultadofinanciera,
+                'resultadoadministrativa'=>$resultadoadministrativa,
+                'resultadoorganizacional'=>$resultadoorganizacional,
+                'resultadototal'=>$resultadototal,
+                'DiagnosticoOrganizacional' => $Diagnosticoorganizacional
+            )
+        );
     }
 
 

@@ -41,10 +41,7 @@ class DiagnosticoOrganizacionalType extends AbstractType
         ->add('organizacionalD')
         ->add('organizacionalE')
         ->add('organizacionalF')
-      
-
-
-
+    
 			->add('fecha_visita', 'date', array('label' => 'Fecha de la Visita', 'widget' => 'single_text'))
 						
 			
