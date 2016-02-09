@@ -2720,7 +2720,7 @@ class GestionEmpresarialController extends Controller
      */
     public function rutaGrupoBeneficiarioAction($idRuta, $idGrupo)
     {
-        $em = $this->getDoctrine()->getManager();    
+        $em = $this->getDoctrine()->getManager();
 
         $ruta = $em->getRepository('AppBundle:Pasantia')->findOneBy(
             array('id' => $idRuta)
@@ -2757,7 +2757,7 @@ class GestionEmpresarialController extends Controller
                 'beneficiarios' => $mostrarBeneficiarios,                
                 'beneficiariosRuta' => $beneficiariosRuta,
                 'idRuta' => $idRuta, 
-                'idGrupo' => $idGrupo,               
+                'idGrupo' => $idGrupo,                               
             ));        
         
     }
@@ -3848,8 +3848,37 @@ class GestionEmpresarialController extends Controller
     }
 
 
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/territorio/{idTerritorioAprendizaje}/asignacion-organizacion", name="territorioAprendizajeOrganizacion")
+     */
+    public function territorioAprendizajeOrganizacionAction($idTerritorioAprendizaje)
+    {
+        $em = $this->getDoctrine()->getManager();
 
-/**
+        $territorioAprendizaje = $em->getRepository('AppBundle:TerritorioAprendizaje')->findOneBy(
+            array('id' => $idTerritorioAprendizaje)
+        );     
+
+        $asignacionesTerritoriosOrganizacion = $em->getRepository('AppBundle:AsignacionOrganizacionTerritorioAprendizaje')->findBy(
+            array('territorio_aprendizaje' => $territorioAprendizaje)
+        ); 
+
+        $query = $em->createQuery('SELECT o FROM AppBundle:Organizacion o WHERE o.id NOT IN (SELECT organizacion.id FROM AppBundle:Organizacion organizacion JOIN AppBundle:AsignacionOrganizacionTerritorioAprendizaje atc WHERE organizacion = atc.organizacion AND atc.organizacion = :organizacion) AND o.active = 1');
+        $query->setParameter('organizacion', $territorioAprendizaje);
+        $organizaciones = $query->getResult();      
+
+
+        return $this->render('AppBundle:GestionParametro:organizacion-territorio-gestion-asignacion.html.twig', 
+            array(
+                'organizaciones' => $organizaciones,
+                'asignacionesTerritoriosOrganizacion' => $asignacionesTerritoriosOrganizacion,
+                'idTerritorioAprendizaje' => $idTerritorioAprendizaje
+            ));        
+    }
+
+
+
+    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/diagnostico/nuevo", name="diagnosticoNuevo")
      */
     public function diagnosticoNuevoAction(Request $request)

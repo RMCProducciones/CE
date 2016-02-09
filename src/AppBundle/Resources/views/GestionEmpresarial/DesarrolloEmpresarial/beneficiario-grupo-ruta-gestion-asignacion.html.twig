@@ -19,7 +19,7 @@
 {% block section %}
 
  <div class="container">
-    <h1>Gestión Pasantias</h1>
+    <h1>Gestión Rutas</h1>
     <hr>
     <h3>Asignación Beneficiarios</h3>
   </div>
@@ -36,7 +36,7 @@
         <div class="row">
             <div class="col-md-6">
               <div class="btn-group">
-                <a href="{{ path('pasantiaGestion') }}" class="btn btn-warning">Volver</a>                             
+                <a href="{{ path('rutaGrupo', {'idRuta': idRuta}) }}" class="btn btn-warning">Volver</a>                             
               </div>
             </div>
         </div>
@@ -89,14 +89,14 @@
               </thead>
               <tbody>
                 
-              {% set consecutivo = 1 %}
+              {% set consecutivo = 1 %}              
         
             {% for beneficiario in beneficiarios %}
         
              <tr>
                   <td class="text-center">{{ consecutivo }}</td>
-                  <td>
-
+                  <td>  
+                    
                   </td>
                   <td>
                     {{ beneficiario.grupo.nombre }}

@@ -22,16 +22,12 @@ class OrganizacionRuta
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="ruta", type="string")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ruta")
      */
     private $ruta;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="organizacion", type="string")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Organizacion")
      */
     private $organizacion;
 
@@ -43,9 +39,7 @@ class OrganizacionRuta
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
@@ -57,9 +51,7 @@ class OrganizacionRuta
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -84,11 +76,11 @@ class OrganizacionRuta
     /**
      * Set ruta
      *
-     * @param string $ruta
+     * @param AppBundle\Entity\Ruta $ruta
      *
      * @return OrganizacionRuta
      */
-    public function setRuta($ruta)
+    public function setRuta(\AppBundle\Entity\Ruta $ruta)
     {
         $this->ruta = $ruta;
     
@@ -98,7 +90,7 @@ class OrganizacionRuta
     /**
      * Get ruta
      *
-     * @return string
+     * @return AppBundle\Entity\Ruta
      */
     public function getRuta()
     {
@@ -108,11 +100,11 @@ class OrganizacionRuta
     /**
      * Set organizacion
      *
-     * @param string $organizacion
+     * @param AppBundle\Entity\Organizacion $organizacion
      *
      * @return OrganizacionRuta
      */
-    public function setOrganizacion($organizacion)
+    public function setOrganizacion(\AppBundle\Entity\Organizacion $organizacion)
     {
         $this->organizacion = $organizacion;
     
@@ -122,7 +114,7 @@ class OrganizacionRuta
     /**
      * Get organizacion
      *
-     * @return string
+     * @return AppBundle\Entity\Organizacion
      */
     public function getOrganizacion()
     {
@@ -156,11 +148,11 @@ class OrganizacionRuta
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return OrganizacionRuta
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
     
@@ -170,7 +162,7 @@ class OrganizacionRuta
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -204,11 +196,11 @@ class OrganizacionRuta
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return OrganizacionRuta
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
     
@@ -218,7 +210,7 @@ class OrganizacionRuta
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
