@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * OrganizacionTerritorioAprendizaje
+ * OrganizacionPasantia
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\OrganizacionTerritorioAprendizajeRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\OrganizacionPasantiaRepository")
  */
-class OrganizacionTerritorioAprendizaje
+class OrganizacionPasantia
 {
     /**
      * @var integer
@@ -22,9 +22,9 @@ class OrganizacionTerritorioAprendizaje
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\TerritorioAprendizaje")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Pasantia")
      */
-    private $territorio_aprendizaje;
+    private $pasantia;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Organizacion")
@@ -74,27 +74,27 @@ class OrganizacionTerritorioAprendizaje
     }
 
     /**
-     * Set territorioAprendizaje
+     * Set pasantia
      *
-     * @param AppBundle\Entity\TerritorioAprendizaje $territorioAprendizaje
+     * @param AppBundle\Entity\Pasantia $pasantia
      *
-     * @return OrganizacionTerritorioAprendizaje
+     * @return OrganizacionPasantia
      */
-    public function setTerritorioAprendizaje(\AppBundle\Entity\TerritorioAprendizaje $territorioAprendizaje)
+    public function setPasantia(\AppBundle\Entity\Pasantia $pasantia)
     {
-        $this->territorio_aprendizaje = $territorioAprendizaje;
+        $this->pasantia = $pasantia;
     
         return $this;
     }
 
     /**
-     * Get territorioAprendizaje
+     * Get pasantia
      *
-     * @return AppBundle\Entity\TerritorioAprendizaje
+     * @return AppBundle\Entity\Pasantia
      */
-    public function getTerritorioAprendizaje()
+    public function getPasantia()
     {
-        return $this->territorio_aprendizaje;
+        return $this->pasantia;
     }
 
     /**
@@ -102,7 +102,7 @@ class OrganizacionTerritorioAprendizaje
      *
      * @param AppBundle\Entity\Organizacion $organizacion
      *
-     * @return OrganizacionTerritorioAprendizaje
+     * @return OrganizacionPasantia
      */
     public function setOrganizacion(\AppBundle\Entity\Organizacion $organizacion)
     {
@@ -126,7 +126,7 @@ class OrganizacionTerritorioAprendizaje
      *
      * @param boolean $active
      *
-     * @return OrganizacionTerritorioAprendizaje
+     * @return OrganizacionPasantia
      */
     public function setActive($active)
     {
@@ -150,7 +150,7 @@ class OrganizacionTerritorioAprendizaje
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return OrganizacionTerritorioAprendizaje
+     * @return OrganizacionPasantia
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
@@ -174,7 +174,7 @@ class OrganizacionTerritorioAprendizaje
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return OrganizacionTerritorioAprendizaje
+     * @return OrganizacionPasantia
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -198,7 +198,7 @@ class OrganizacionTerritorioAprendizaje
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return OrganizacionTerritorioAprendizaje
+     * @return OrganizacionPasantia
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
@@ -222,7 +222,7 @@ class OrganizacionTerritorioAprendizaje
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return OrganizacionTerritorioAprendizaje
+     * @return OrganizacionPasantia
      */
     public function setFechaCreacion($fechaCreacion)
     {

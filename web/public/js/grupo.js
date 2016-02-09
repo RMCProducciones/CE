@@ -1,3 +1,53 @@
+app.controller('CamposDireccionGrupoCtrl', ['$scope', '$http', function($scope, $http) {
+
+	console.log("hola dfdddd");
+
+	if($('#grupo_rural').prop('checked')==false){
+		
+		$scope.swRural = false;	
+
+		$('#swRural').removeClass('checked');
+
+		$('#grupo_barrio').attr('required', 'required');
+		$('#grupo_corregimiento').removeAttr('required');
+		$('#grupo_vereda').removeAttr('required');
+		$('#grupo_cacerio').removeAttr('required');
+	}
+	else
+	{
+		$scope.swRural = true;	
+
+		$('#swRural').addClass('checked');
+
+		$('#grupo_barrio').removeAttr('required');
+		$('#grupo_corregimiento').attr('required', 'required');
+		$('#grupo_vereda').attr('required', 'required');
+		$('#grupo_cacerio').attr('required', 'required');
+	}
+
+	$scope.$watch('swRural', function() {
+
+		$('#grupo_rural').prop('checked', $scope.swRural);
+		
+		if($scope.swRural == false)
+		{
+			$('#grupo_barrio').attr('required', 'required');
+			$('#grupo_corregimiento').removeAttr('required');
+			$('#grupo_vereda').removeAttr('required');
+			$('#grupo_cacerio').removeAttr('required');
+		}
+		else
+		{
+			$('#grupo_barrio').removeAttr('required');
+			$('#grupo_corregimiento').attr('required', 'required');
+			$('#grupo_vereda').attr('required', 'required');
+			$('#grupo_cacerio').attr('required', 'required');
+		}		
+	});
+
+
+	
+}]);
 
 app.controller('gestionDocumentoSoporteGrupoCtrl', ['$scope', '$location', function($scope, $location) {
 
