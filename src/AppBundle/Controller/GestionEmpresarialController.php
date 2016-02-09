@@ -3694,18 +3694,24 @@ class GestionEmpresarialController extends Controller
             $Diagnosticoorganizacional->setActive(true);
             $Diagnosticoorganizacional->setFechaCreacion(new \DateTime());
 
-            /*$usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
-                array(
-                    'id' => 1
-                )
-            );
-            
-            $pasantia->setUsuarioCreacion($usuarioCreacion);*/
+            $resultadoproductiva = ($Diagnosticoorganizacional->getProductivaA())+($Diagnosticoorganizacional->getProductivaB())+($Diagnosticoorganizacional->getProductivaC())+($Diagnosticoorganizacional->getProductivaD())+($Diagnosticoorganizacional->getProductivaE())+($Diagnosticoorganizacional->getProductivaF());
+            $resultadocomercial = ($Diagnosticoorganizacional->getComercialA())+($Diagnosticoorganizacional->getComercialB())+($Diagnosticoorganizacional->getComercialC())+($Diagnosticoorganizacional->getComercialD())+($Diagnosticoorganizacional->getComercialE());
+            $resultadofinanciera = ($Diagnosticoorganizacional->getFinancieraA())+($Diagnosticoorganizacional->getFinancieraB())+($Diagnosticoorganizacional->getFinancieraC())+($Diagnosticoorganizacional->getFinancieraD())+($Diagnosticoorganizacional->getFinancieraE())+($Diagnosticoorganizacional->getFinancieraF());
+            $resultadoadministrativa = ($Diagnosticoorganizacional->getAdministrativaA())+($Diagnosticoorganizacional->getAdministrativaB())+($Diagnosticoorganizacional->getAdministrativaC())+($Diagnosticoorganizacional->getAdministrativaD())+($Diagnosticoorganizacional->getAdministrativaE());
+            $resultadoorganizacional = ($Diagnosticoorganizacional->getOrganizacionalA())+($Diagnosticoorganizacional->getOrganizacionalB())+($Diagnosticoorganizacional->getOrganizacionalC())+($Diagnosticoorganizacional->getOrganizacionalD())+($Diagnosticoorganizacional->getOrganizacionalE())+($Diagnosticoorganizacional->getOrganizacionalF());
+            $resultadototal=$resultadoproductiva+$resultadocomercial+ $resultadofinanciera+$resultadoadministrativa+$resultadoorganizacional +$resultadoorganizacional;
+
+            $Diagnosticoorganizacional->setTotalProductiva($resultadoproductiva);
+            $Diagnosticoorganizacional->setTotalComercial($resultadocomercial);
+            $Diagnosticoorganizacional->setTotalFinanciera($resultadofinanciera);
+            $Diagnosticoorganizacional->setTotalAdministrativa($resultadoadministrativa);
+            $Diagnosticoorganizacional->setTotalOrganizacional($resultadoorganizacional);
+            $Diagnosticoorganizacional->setTotal($resultadototal);
 
             $em->persist($Diagnosticoorganizacional);
             $em->flush();
 
-            return $this->render(
+            return $this->redirectToRoute(
             'diagnosticoCalcular', 
             array(
                     'idDiagnosticoOrganizacional' => $Diagnosticoorganizacional->getId(),
@@ -3714,7 +3720,11 @@ class GestionEmpresarialController extends Controller
         );
         }
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:diagnostico-nuevo.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:diagnostico-nuevo.html.twig',
+         array('form' => $form->createView(),
+        
+            )
+         );
     }
    
 
@@ -3729,34 +3739,23 @@ class GestionEmpresarialController extends Controller
         $Diagnosticoorganizacional= $em->getRepository('AppBundle:DiagnosticoOrganizacional')->findOneBy(
             array('id' =>$idDiagnosticoOrganizacional) );
 
-
-        $form = $this->createForm(new DiagnosticoOrganizacionalResultadoType(), $Diagnosticoorganizacional);
-
-        $resultadoproductiva = ($Diagnosticoorganizacional->getProductivaA())+($Diagnosticoorganizacional->getProductivaB())+($Diagnosticoorganizacional->getProductivaC())+($Diagnosticoorganizacional->getProductivaD())+($Diagnosticoorganizacional->getProductivaE())+($Diagnosticoorganizacional->getProductivaF());
-        $resultadocomercial = ($Diagnosticoorganizacional->getComercialA())+($Diagnosticoorganizacional->getComercialB())+($Diagnosticoorganizacional->getComercialC())+($Diagnosticoorganizacional->getComercialD())+($Diagnosticoorganizacional->getComercialE());
-        $resultadofinanciera = ($Diagnosticoorganizacional->getFinancieraA())+($Diagnosticoorganizacional->getFinancieraB())+($Diagnosticoorganizacional->getFinancieraC())+($Diagnosticoorganizacional->getFinancieraD())+($Diagnosticoorganizacional->getFinancieraE())+($Diagnosticoorganizacional->getFinancieraF());
-        $resultadoadministrativa = ($Diagnosticoorganizacional->getAdministrativaA())+($Diagnosticoorganizacional->getAdministrativaB())+($Diagnosticoorganizacional->getAdministrativaC())+($Diagnosticoorganizacional->getAdministrativaD())+($Diagnosticoorganizacional->getAdministrativaE());
-        $resultadoorganizacional = ($Diagnosticoorganizacional->getOrganizacionalA())+($Diagnosticoorganizacional->getOrganizacionalB())+($Diagnosticoorganizacional->getOrganizacionalC())+($Diagnosticoorganizacional->getOrganizacionalD())+($Diagnosticoorganizacional->getOrganizacionalE())+($Diagnosticoorganizacional->getOrganizacionalF());
-        $resultadototal=$resultadoproductiva+$resultadocomercial+ $resultadofinanciera+$resultadoadministrativa+$resultadoorganizacional +$resultadoorganizacional;
-
-        $Diagnosticoorganizacional->setTotalProductiva($resultadoproductiva);
-        $Diagnosticoorganizacional->setTotalComercial($resultadocomercial);
-        $Diagnosticoorganizacional->setTotalFinanciera($resultadofinanciera);
-        $Diagnosticoorganizacional->setTotalAdministrativa($resultadoadministrativa);
-        $Diagnosticoorganizacional->setTotalOrganizacional($resultadoorganizacional);
-        $Diagnosticoorganizacional->setTotal($resultadototal);
+        $resultadoproductiva=$Diagnosticoorganizacional->getTotalProductiva();
+        $resultadocomercial=$Diagnosticoorganizacional->getTotalComercial();
+        $resultadofinanciera=$Diagnosticoorganizacional->getTotalFinanciera();
+        $resultadoadministrativa=$Diagnosticoorganizacional->getTotalAdministrativa();
+        $resultadoorganizacional=$Diagnosticoorganizacional->getTotalOrganizacional();
+        $resultadototal=$Diagnosticoorganizacional->getTotal();
 
 
-
-
-        $em->persist($Diagnosticoorganizacional);
-        $em->flush();
-
-        $form->handleRequest($request);
-
-              
+                 ;   
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:diagnostico-resultado.html.twig',array('form' => $form->createView()));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:diagnostico-resultado.html.twig', 
+            array(  'resultadoproductiva'=>$resultadoproductiva,
+                    'resultadocomercial'=>$resultadocomercial,
+                    'resultadofinanciera'=>$resultadofinanciera,
+                    'resultadoadministrativa'=>$resultadoadministrativa,
+                    'resultadoorganizacional'=>$resultadoorganizacional,
+                    'resultadototal'=>$resultadototal));
     }
 
 

@@ -32,6 +32,6 @@ class DiagnosticoOrganizacionalResultadoType extends AbstractType
     
     public function getName()
     {
-        return 'diagramaorganizacional';
+        return 'diagnosticoorganizacionalresultado';
     }
 }
