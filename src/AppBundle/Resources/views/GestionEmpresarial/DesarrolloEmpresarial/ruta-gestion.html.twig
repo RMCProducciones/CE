@@ -122,15 +122,30 @@
                       {{ruta.observaciones}}
                     </td>  
 
-                    <td class="text-center">
+                    <td class="text-center" ng-controller = "asignarOrganizacionRutaCtrl">
 
-                     <a href="{{ path('rutaOrganizacion', {'idRuta': ruta.id}) }}" alt="Asignacion Organizaciones" title="Asignacion Organizaciones"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span></a> |
+                     <a href="{{ path('rutaTerritorio', {'idRuta': ruta.id}) }}" alt="Asignacion Territorio" title="Asignacion Territorio"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a> 
 
-                     <a href="{{ path('rutaGrupo', {'idRuta': ruta.id}) }}" alt="Asignacion Grupos" title="Asignacion Grupos"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a> |
+                    {% if ruta.territorioAprendizaje != NULL and ruta.grupo != NULL %}  
+                    
+                     | 
+                     <a href="{{ path('rutaOrganizacion', {'idRuta': ruta.id}) }}" id="asignarOrganizacion{{consecutivo}}" alt="Asignacion Organizaciones" title="Asignacion Organizaciones" ng-init="habilitarAsignarOrganizacion('asignarOrganizacion{{consecutivo}}', {{ruta.id}})"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span></a> 
+
+                    {% endif %}
+
+                     |
+
+                     <a href="{{ path('rutaGrupo', {'idRuta': ruta.id}) }}" alt="Asignacion Grupos" title="Asignacion Grupos"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a> 
+
+                     |
                      
-                     <a href="{{ path('rutaSoporte', {'idRuta': ruta.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> | 
+                     <a href="{{ path('rutaSoporte', {'idRuta': ruta.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> 
 
-                     <a title="Editar" alt="Editar" href="{{ path('rutaEditar', {'idRuta': ruta.id}) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> |  
+                     | 
+
+                     <a title="Editar" alt="Editar" href="{{ path('rutaEditar', {'idRuta': ruta.id}) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> 
+
+                     |  
                     
                      <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarRuta({{ruta.id}}, {{consecutivo}});" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true" ng-click="idRuta = {{ruta.id}};"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                      
