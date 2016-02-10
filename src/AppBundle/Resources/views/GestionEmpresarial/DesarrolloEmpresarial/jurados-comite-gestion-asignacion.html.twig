@@ -97,7 +97,7 @@
                   <td>
                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ integrante.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                     <br>                    
-                    <a href="{{ path('comiteAsignarIntegrante', {'idComite': idComite, 'idIntegrante': integrante.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
+                    <a href="#" title="Asignar" alt="Asignar" data-toggle="modal" data-target="#asignarRol{{ integrante.id }}"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
                     <br>                    
                   </td>
                 </tr>
@@ -163,7 +163,7 @@
                     
                   </td>
                   <td>{{asignacionIntegranteComite.integrante.primernombre}} {{asignacionIntegranteComite.integrante.segundonombre}}</td>
-                  <td>{{asignacionIntegranteComite.integrante.cargo}}</td>
+                  <td>{{asignacionIntegranteComite.rol}}</td>
           
                   <td>
                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ asignacionIntegranteComite.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
@@ -249,7 +249,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ asignacionIntegranteComite.integrante.id }} | {{ asignacionIntegranteComite.integrante.primerNombre }} {{ asignacionIntegranteComite.integrante.segundoNombre }} {{ asignacionIntegranteComite.integrante.primerApellido }} {{ asignacionIntegranteComite.integrante.segundoApellido }}</h4>
+            <h4 class="modal-title" id="myModalLabel">{{ asignacionIntegranteComite.integrante.id }} | {{asignacionIntegranteComite.rol}} | {{ asignacionIntegranteComite.integrante.primerNombre }} {{ asignacionIntegranteComite.integrante.segundoNombre }} {{ asignacionIntegranteComite.integrante.primerApellido }} {{ asignacionIntegranteComite.integrante.segundoApellido }}</h4>
           </div>
           <div class="modal-body">
             <b>Tipo de documento:{{ asignacionIntegranteComite.integrante.tipoDocumento }}</b>
@@ -272,6 +272,8 @@
             <br>
             <b>Cargo: {{ asignacionIntegranteComite.integrante.cargo }}</b>            
             <br>
+            <b>Rol: {{ asignacionIntegranteComite.rol }}</b>            
+            <br>
             <b>Dirección:  {{ asignacionIntegranteComite.integrante.direccion }}</b>
             <br>
             <b>Telefono fijo: {{ asignacionIntegranteComite.integrante.telefonoFijo }}</b>
@@ -291,7 +293,13 @@
         </div>
       </div>
     </div>
-{% endfor %}         
+{% endfor %} 
+
+{% for integrante in integrantes %}
+ 
+  {% render url('formularioRolIntegranteComite', {'idComite': idComite, 'idIntegrante': integrante.id }) %}
+
+{% endfor %}        
       
 
 {% endblock %}

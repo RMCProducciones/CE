@@ -15,6 +15,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 use AppBundle\Entity\Rol;
+use AppBundle\Entity\Usuario;
 
 use AppBundle\Form\Backend\Parametrizacion\RolType;
 
@@ -200,6 +201,32 @@ class ParametrizacionController extends Controller
         $em->flush();
 
         return $this->redirect($this->generateUrl('rolGestion'));
+
+    }
+
+
+
+
+    /**
+     * @Route("/parametrizacion/usuario", name="usuarioGestion")
+     */
+    public function usuarioGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+       
+        $usuarios = $em->getRepository('AppBundle:Usuario')->findBY(
+            array('active' => 1)         
+        );
+
+
+        
+        return $this->render(
+            'AppBundle:GestionParametro:usuario-gestion.html.twig', 
+            array( 
+                'usuarios' => $usuarios
+            )
+        );
 
     }
 

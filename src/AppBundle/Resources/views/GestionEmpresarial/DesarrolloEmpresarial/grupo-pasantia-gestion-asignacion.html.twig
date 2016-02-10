@@ -8,7 +8,7 @@
     <ul class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
-      <li class="active">Concrusos de Mejoramiento</li>
+      <li class="active">Servicio Complementario</li>
 	   <li><a href="{{ path('pasantiaGestion') }}">Pasantias</a></li>
       <li class="active">Grupos</li>
     </ul>
@@ -76,7 +76,7 @@
                   <th>
                     
                   </th>
-                  <th>Opcionado</th>
+                  <th>Grupos</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
@@ -159,7 +159,7 @@
                   <th>
                     
                   </th>
-                  <th>Integrante del Comite</th>
+                  <th>Grupo</th>
                   <th>Localización</th>
                   <th>Acciones</th>
                 </tr>
@@ -167,30 +167,35 @@
               </thead>
               <tbody>
         {% set consecutivo = 1 %}
+    
+
+
         
-          {% for asignacionGrupoPasantia in asignacionesGrupoPasantia %}
+          {% for asignacionGrupoPasantia in asignacionesGrupoPasantia %}          
+
                 <tr id="filaIntegranteCLEAR{{ consecutivo }}">
                   <td>{{ consecutivo }}</td>
                   <td>
                     
                   </td>
                   <td>
-                    {{ asignacionGrupoPasantia.grupo.codigo }}
+                    {{ asignacionGrupoPasantia.codigo }}
                     <br />
-                    {{ asignacionGrupoPasantia.grupo.nombre }}
+                    {{ asignacionGrupoPasantia.nombre }}
                     <br />
                   </td>
                   <td>
-                    <b>M</b> {{ asignacionGrupoPasantia.grupo.municipio }}
+                    <b>M</b> {{ asignacionGrupoPasantia.municipio }}
                     <br>
-                    <b>D</b> {{ asignacionGrupoPasantia.grupo.municipio.departamento }}
+                    <b>D</b> {{ asignacionGrupoPasantia.municipio.departamento }}
                     <br>
-                    <b>Z</b> {{ asignacionGrupoPasantia.grupo.municipio.zona }}    
+                    <b>Z</b> {{ asignacionGrupoPasantia.municipio.zona }}    
                   </td>
           
                   <td>
+                    <a href="{{ path('pasantiaGrupoBeneficiario', {'idPasantia': idPasantia, 'idGrupo': asignacionGrupoPasantia.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span></a> |                     
                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ asignacionGrupoPasantia.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
-                    <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarGrupoPasantia('{{ path('pasantiaEliminarGrupo', {'idPasantia': idPasantia, 'idAsignacionGrupoPasantia': asignacionGrupoPasantia.id}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>                                   
+                    <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarGrupoPasantia('{{ path('pasantiaEliminarGrupo', {'idPasantia': idPasantia, 'idGrupo': asignacionGrupoPasantia.id}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>                                   
                   </td>
                 </tr>
         
@@ -274,44 +279,44 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ asignacionGrupoPasantia.grupo.codigo }} | {{ asignacionGrupoPasantia.grupo.nombre }}</h4>
+            <h4 class="modal-title" id="myModalLabel">{{ asignacionGrupoPasantia.codigo }} | {{ asignacionGrupoPasantia.nombre }}</h4>
           </div>
           <div class="modal-body">
-            <b>Departamento:{{ asignacionGrupoPasantia.grupo.municipio.departamento.nombre }}</b>
+            <b>Departamento:{{ asignacionGrupoPasantia.municipio.departamento.nombre }}</b>
             <br>
-            <b>Municipio: {{ asignacionGrupoPasantia.grupo.municipio }}</b>
+            <b>Municipio: {{ asignacionGrupoPasantia.municipio }}</b>
             <br>
-            <b>Zona: Oriente {{ asignacionGrupoPasantia.grupo.municipio.zona.nombre }}</b>
+            <b>Zona: Oriente {{ asignacionGrupoPasantia.municipio.zona.nombre }}</b>
             <br>
-            <b>Tipo de grupo: {{ asignacionGrupoPasantia.grupo.tipo }}</b>
+            <b>Tipo de grupo: {{ asignacionGrupoPasantia.tipo }}</b>
             <br>
-            <b>Codigo de grupo: {{ asignacionGrupoPasantia.grupo.codigo }}</b>
+            <b>Codigo de grupo: {{ asignacionGrupoPasantia.codigo }}</b>
             <br>
-            <b>Nombre grupo: {{ asignacionGrupoPasantia.grupo.nombre }}</b>
+            <b>Nombre grupo: {{ asignacionGrupoPasantia.nombre }}</b>
             <br>
-            <b>Corregimiento: {{ asignacionGrupoPasantia.grupo.corregimiento }}</b>
+            <b>Corregimiento: {{ asignacionGrupoPasantia.corregimiento }}</b>
             <br>
-            <b>Vereda: {{ asignacionGrupoPasantia.grupo.vereda }}</b>
+            <b>Vereda: {{ asignacionGrupoPasantia.vereda }}</b>
             <br>
-            <b>Cacerio: {{ asignacionGrupoPasantia.grupo.cacerio }}</b>
+            <b>Cacerio: {{ asignacionGrupoPasantia.cacerio }}</b>
             <br>
-            <b>Direccion:  {{ asignacionGrupoPasantia.grupo.direccion }}</b>
+            <b>Direccion:  {{ asignacionGrupoPasantia.direccion }}</b>
             <br>
-            <b>Barrio:  {{ asignacionGrupoPasantia.grupo.barrio }}</b>
+            <b>Barrio:  {{ asignacionGrupoPasantia.barrio }}</b>
             <br>
-            <b>Tipo de organización: {{ asignacionGrupoPasantia.grupo.codigo }}</b>
+            <b>Tipo de organización: {{ asignacionGrupoPasantia.codigo }}</b>
             <br>
-            <b>NIT: {{ asignacionGrupoPasantia.grupo.numeroIdentificacionTributaria }}</b>
+            <b>NIT: {{ asignacionGrupoPasantia.numeroIdentificacionTributaria }}</b>
             <br>
-            <b>Telefono Movil: {{ asignacionGrupoPasantia.grupo.telefonoCelular }}</b>
+            <b>Telefono Movil: {{ asignacionGrupoPasantia.telefonoCelular }}</b>
             <br>
-            <b>Telefono Fijo: {{ asignacionGrupoPasantia.grupo.telefonoFijo }}</b>
+            <b>Telefono Fijo: {{ asignacionGrupoPasantia.telefonoFijo }}</b>
             <br>
-            <b>Cuenta Bancaria: {{ asignacionGrupoPasantia.grupo.entidadFinancieraCuenta }}</b>
+            <b>Cuenta Bancaria: {{ asignacionGrupoPasantia.entidadFinancieraCuenta }}</b>
             <br>
-            <b>Tipo de cuenta:  {{ asignacionGrupoPasantia.grupo.tipoCuenta }}</b>
+            <b>Tipo de cuenta:  {{ asignacionGrupoPasantia.tipoCuenta }}</b>
             <br>
-            <b>Numero de cuenta: {{ asignacionGrupoPasantia.grupo.numeroCuenta }}</b>            
+            <b>Numero de cuenta: {{ asignacionGrupoPasantia.numeroCuenta }}</b>            
           </div>
 
           <div class="modal-footer">

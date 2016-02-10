@@ -68,5 +68,15 @@ app.controller('gestionOrganizacionRutaCtrl', ['$scope', '$http', function($scop
 	};	
 }]);
 
+app.controller('gestionGrupoBeneficiarioRutaCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.eliminarGrupoBeneficiarioRuta = function(ruta){
+
+		window.location.replace(ruta);
+
+	};	
+}]);
+
+
 
 

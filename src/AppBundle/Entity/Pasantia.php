@@ -154,6 +154,11 @@ class Pasantia
         return $this;
     }
 
+    public function setNullGrupo()
+    {
+        $this->grupo = null;
+    }
+
     /**
      * Get grupo
      *
