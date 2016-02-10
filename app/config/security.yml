@@ -6,7 +6,9 @@ security:
         #FOS\UserBundle\Model\UserInterface: sha512
 
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
+        ROLE_PROMOTOR: ROLE_USER
+        ROLE_COORDINADOR_TERRITORIAL: ROLE_PROMOTOR
+        ROLE_ADMIN: ROLE_COORDINADOR_TERRITORIAL
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
