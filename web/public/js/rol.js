@@ -8,14 +8,12 @@ app.controller('gestionRolCtrl', ['$scope', '$http', function($scope, $http) {
 
 	$scope.idRol = 0;	
 
-	console.log($scope.estadoMensaje);
-
 	$scope.eliminarRol = function(idRol, consecutivo){
 
 		$scope.idRol = idRol;
 		$scope.consecutivoGrupo = consecutivo;
 
-		$http.get($scope.rutaServidor + "gestion-empresarial/desarrollo-empresarial/grupo/" + $scope.idGrupo + "/eliminar")
+		$http.get($scope.rutaServidor + "backend/rol/eliminar/" + $scope.idRol)
 		.success(function(data, status, headers, config) {
 
   			$("#filaRol" + $scope.consecutivoGrupo).fadeOut("slow");
@@ -23,8 +21,6 @@ app.controller('gestionRolCtrl', ['$scope', '$http', function($scope, $http) {
 
 		
 		}).error(function(data, status, headers, config) {
-
-			console.log($(data).filter("title").html());
 
 			$scope.mostrarMensaje("warning", true, $(data).filter("title").html());
 

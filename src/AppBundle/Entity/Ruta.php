@@ -101,6 +101,11 @@ class Ruta
         return $this;
     }
 
+    public function setNullTerritorioAprendizaje()
+    {
+        $this->territorio_aprendizaje = null;
+    }
+
     /**
      * Get territorioAprendizaje
      *
@@ -123,6 +128,11 @@ class Ruta
         $this->grupo = $grupo;
     
         return $this;
+    }
+
+    public function setNullGrupo()
+    {
+        $this->grupo = null;
     }
 
     /**

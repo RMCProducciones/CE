@@ -12,146 +12,36 @@ class DiagnosticoOrganizacionalType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-			
-	 	->add('productivaA', 'choice', array(
-        'label' => 'Ámbito',
-        'choices'  => array(
-
-        'cada una de las personas' => 1,        
-        '2' => 2,
-        '3' => 3,
-
-    ),
-        'multiple'  => false,
-        'expanded'  => true,
-    // *this line is important*
-    'choices_as_values' => true,
-))
-        ->add('productivaB', 'choice', array(
-        'choices'  => array(
-            
-        '1' => 1, 
-        '2' => 2,
-        '3' => 3,
-    ),
-        'multiple'  => false,
-        'expanded'  => true,
-    // *this line is important*
-    'choices_as_values' => true,
-))
-        ->add('productivaC', 'choice', array(
-        'choices'  => array(
-            
-        '1' => 1,
-        '2' => 2,
-        '3' => 3,
-    ),
-        'multiple'  => false,
-        'expanded'  => true,
-    // *this line is important*
-    'choices_as_values' => true,
-))
-        ->add('productivaD', 'choice', array(
-        'choices'  => array(
-            
-        '1' => 1,
-        '2' => 2,
-        '3' => 3,
-    ),
-        'multiple'  => false,
-        'expanded'  => true,
-    // *this line is important*
-    'choices_as_values' => true,
-))
-        ->add('productivaE', 'choice', array(
-        'choices'  => array(
-            
-        '1' => 1,
-        '2' => 2,
-        '3' => 3,
-    ),
-        'multiple'  => false,
-        'expanded'  => true,
-    // *this line is important*
-    'choices_as_values' => true,
-))
-        ->add('productivaF', 'choice', array(
-        'choices'  => array(
-            
-        '1' => 1,
-        '2' => 2,
-        '3' => 3,
-    ),
-        'multiple'  => false,
-        'expanded'  => true,
-    // *this line is important*
-    'choices_as_values' => true,
-))
-
-        ->add('comercialA', 'choice', array(
-        'label' => 'Ámbito',
-        'choices'  => array(
-
-        'cada una de las personas' => 1,        
-        '2' => 2,
-        '3' => 3,
-
-    ),
-        'multiple'  => false,
-        'expanded'  => true,
-    // *this line is important*
-    'choices_as_values' => true,
-))
-        ->add('comercialB', 'choice', array(
-        'choices'  => array(
-            
-        '1' => 1, 
-        '2' => 2,
-        '3' => 3,
-    ),
-        'multiple'  => false,
-        'expanded'  => true,
-    // *this line is important*
-    'choices_as_values' => true,
-))
-        ->add('comercialC', 'choice', array(
-        'choices'  => array(
-            
-        '1' => 1,
-        '2' => 2,
-        '3' => 3,
-    ),
-        'multiple'  => false,
-        'expanded'  => true,
-    // *this line is important*
-    'choices_as_values' => true,
-))
-        ->add('comercialD', 'choice', array(
-        'choices'  => array(
-            
-        '1' => 1,
-        '2' => 2,
-        '3' => 3,
-    ),
-        'multiple'  => false,
-        'expanded'  => true,
-    // *this line is important*
-    'choices_as_values' => true,
-))
-        ->add('comercialE', 'choice', array(
-        'choices'  => array(
-            
-        '1' => 1,
-        '2' => 2,
-        '3' => 3,
-    ),
-        'multiple'  => false,
-        'expanded'  => true,
-    // *this line is important*
-    'choices_as_values' => true,
-))
-       
-			
+		
+        ->add('productivaA')	
+        ->add('productivaB')
+        ->add('productivaC')
+        ->add('productivaD')
+        ->add('productivaE')
+        ->add('productivaF')
+        ->add('comercialA')    
+        ->add('comercialB')
+        ->add('comercialC')
+        ->add('comercialD')
+        ->add('comercialE')
+        ->add('financieraA')    
+        ->add('financieraB')
+        ->add('financieraC')
+        ->add('financieraD')
+        ->add('financieraE')
+        ->add('financieraF')
+        ->add('administrativaA')    
+        ->add('administrativaB')
+        ->add('administrativaC')
+        ->add('administrativaD')
+        ->add('administrativaE')
+        ->add('organizacionalA')    
+        ->add('organizacionalB')
+        ->add('organizacionalC')
+        ->add('organizacionalD')
+        ->add('organizacionalE')
+        ->add('organizacionalF')
+    
 			->add('fecha_visita', 'date', array('label' => 'Fecha de la Visita', 'widget' => 'single_text'))
 						
 			

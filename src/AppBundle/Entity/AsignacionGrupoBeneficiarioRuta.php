@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AsignacionOrganizacionRuta
+ * AsignacionGrupoBeneficiarioRuta
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\AsignacionOrganizacionRutaRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\AsignacionGrupoBeneficiarioRutaRepository")
  */
-class AsignacionOrganizacionRuta
+class AsignacionGrupoBeneficiarioRuta
 {
     /**
      * @var integer
@@ -21,16 +21,15 @@ class AsignacionOrganizacionRuta
      */
     private $id;
 
-   
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Organizacion")
-     */
-    private $organizacion;
-
-     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ruta")
      */
     private $ruta;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Beneficiario")
+     */
+    private $beneficiario;
 
     /**
      * @var boolean
@@ -96,35 +95,11 @@ class AsignacionOrganizacionRuta
     }
 
     /**
-     * Set organizacion
-     *
-     * @param AppBundle\Entity\Organizacion $organizacion
-     *
-     * @return AsignacionOrganizacionRuta
-     */
-    public function setOrganizacion(\AppBundle\Entity\Organizacion $organizacion)
-    {
-        $this->organizacion = $organizacion;
-
-        return $this;
-    }
-
-    /**
-     * Get organizacion
-     *
-     * @return AppBundle\Entity\Organizacion
-     */
-    public function getOrganizacion()
-    {
-        return $this->organizacion;
-    }
-
-    /**
      * Set ruta
      *
      * @param AppBundle\Entity\Ruta $ruta
      *
-     * @return AsignacionOrganizacionRuta
+     * @return AsignacionGrupoBeneficiarioRuta
      */
     public function setRuta(\AppBundle\Entity\Ruta $ruta)
     {
@@ -144,11 +119,35 @@ class AsignacionOrganizacionRuta
     }
 
     /**
+     * Set beneficiario
+     *
+     * @param AppBundle\Entity\Beneficiario $beneficiario
+     *
+     * @return AsignacionGrupoBeneficiarioRuta
+     */
+    public function setBeneficiario(\AppBundle\Entity\Beneficiario $beneficiario)
+    {
+        $this->beneficiario = $beneficiario;
+
+        return $this;
+    }
+
+    /**
+     * Get beneficiario
+     *
+     * @return AppBundle\Entity\Beneficiario
+     */
+    public function getBeneficiario()
+    {
+        return $this->beneficiario;
+    }
+
+    /**
      * Set habilitacion
      *
      * @param boolean $habilitacion
      *
-     * @return AsignacionOrganizacionRuta
+     * @return AsignacionGrupoBeneficiarioRuta
      */
     public function setHabilitacion($habilitacion)
     {
@@ -172,7 +171,7 @@ class AsignacionOrganizacionRuta
      *
      * @param boolean $asignacion
      *
-     * @return AsignacionOrganizacionRuta
+     * @return AsignacionGrupoBeneficiarioRuta
      */
     public function setAsignacion($asignacion)
     {
@@ -196,7 +195,7 @@ class AsignacionOrganizacionRuta
      *
      * @param boolean $contraloriaSocial
      *
-     * @return AsignacionOrganizacionRuta
+     * @return AsignacionGrupoBeneficiarioRuta
      */
     public function setContraloriaSocial($contraloriaSocial)
     {
@@ -220,7 +219,7 @@ class AsignacionOrganizacionRuta
      *
      * @param boolean $active
      *
-     * @return AsignacionOrganizacionRuta
+     * @return AsignacionGrupoBeneficiarioRuta
      */
     public function setActive($active)
     {
@@ -244,7 +243,7 @@ class AsignacionOrganizacionRuta
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return AsignacionOrganizacionRuta
+     * @return AsignacionGrupoBeneficiarioRuta
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
@@ -268,7 +267,7 @@ class AsignacionOrganizacionRuta
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return AsignacionOrganizacionRuta
+     * @return AsignacionGrupoBeneficiarioRuta
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -292,7 +291,7 @@ class AsignacionOrganizacionRuta
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return AsignacionOrganizacionRuta
+     * @return AsignacionGrupoBeneficiarioRuta
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
@@ -316,7 +315,7 @@ class AsignacionOrganizacionRuta
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return AsignacionOrganizacionRuta
+     * @return AsignacionGrupoBeneficiarioRuta
      */
     public function setFechaCreacion($fechaCreacion)
     {

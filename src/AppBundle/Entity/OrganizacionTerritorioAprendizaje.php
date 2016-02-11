@@ -22,16 +22,12 @@ class OrganizacionTerritorioAprendizaje
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="territorio_aprendizaje", type="string")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\TerritorioAprendizaje")
      */
     private $territorio_aprendizaje;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="organizacion", type="string")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Organizacion")
      */
     private $organizacion;
 
@@ -43,9 +39,7 @@ class OrganizacionTerritorioAprendizaje
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
@@ -57,9 +51,7 @@ class OrganizacionTerritorioAprendizaje
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -84,11 +76,11 @@ class OrganizacionTerritorioAprendizaje
     /**
      * Set territorioAprendizaje
      *
-     * @param string $territorioAprendizaje
+     * @param AppBundle\Entity\TerritorioAprendizaje $territorioAprendizaje
      *
      * @return OrganizacionTerritorioAprendizaje
      */
-    public function setTerritorioAprendizaje($territorioAprendizaje)
+    public function setTerritorioAprendizaje(\AppBundle\Entity\TerritorioAprendizaje $territorioAprendizaje)
     {
         $this->territorio_aprendizaje = $territorioAprendizaje;
     
@@ -98,7 +90,7 @@ class OrganizacionTerritorioAprendizaje
     /**
      * Get territorioAprendizaje
      *
-     * @return string
+     * @return AppBundle\Entity\TerritorioAprendizaje
      */
     public function getTerritorioAprendizaje()
     {
@@ -108,11 +100,11 @@ class OrganizacionTerritorioAprendizaje
     /**
      * Set organizacion
      *
-     * @param string $organizacion
+     * @param AppBundle\Entity\Organizacion $organizacion
      *
      * @return OrganizacionTerritorioAprendizaje
      */
-    public function setOrganizacion($organizacion)
+    public function setOrganizacion(\AppBundle\Entity\Organizacion $organizacion)
     {
         $this->organizacion = $organizacion;
     
@@ -122,7 +114,7 @@ class OrganizacionTerritorioAprendizaje
     /**
      * Get organizacion
      *
-     * @return string
+     * @return AppBundle\Entity\Organizacion
      */
     public function getOrganizacion()
     {
@@ -156,11 +148,11 @@ class OrganizacionTerritorioAprendizaje
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return OrganizacionTerritorioAprendizaje
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
     
@@ -170,7 +162,7 @@ class OrganizacionTerritorioAprendizaje
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -204,11 +196,11 @@ class OrganizacionTerritorioAprendizaje
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return OrganizacionTerritorioAprendizaje
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
     
@@ -218,7 +210,7 @@ class OrganizacionTerritorioAprendizaje
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {

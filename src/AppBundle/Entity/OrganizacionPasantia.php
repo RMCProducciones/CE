@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AsignacionOrganizacionRuta
+ * OrganizacionPasantia
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\AsignacionOrganizacionRutaRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\OrganizacionPasantiaRepository")
  */
-class AsignacionOrganizacionRuta
+class OrganizacionPasantia
 {
     /**
      * @var integer
@@ -21,37 +21,15 @@ class AsignacionOrganizacionRuta
      */
     private $id;
 
-   
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Pasantia")
+     */
+    private $pasantia;
+
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Organizacion")
      */
     private $organizacion;
-
-     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ruta")
-     */
-    private $ruta;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="habilitacion", type="boolean", nullable = true)
-     */
-    private $habilitacion;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="asignacion", type="boolean", nullable = true)
-     */
-    private $asignacion;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="contraloria_social", type="boolean", nullable = true)
-     */
-    private $contraloria_social;
 
     /**
      * @var boolean
@@ -60,7 +38,7 @@ class AsignacionOrganizacionRuta
      */
     private $active;
 
-     /**
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
@@ -68,11 +46,11 @@ class AsignacionOrganizacionRuta
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable = true)
+     * @ORM\Column(name="fecha_modificacion", type="datetime")
      */
     private $fecha_modificacion;
 
-     /**
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
@@ -96,16 +74,40 @@ class AsignacionOrganizacionRuta
     }
 
     /**
+     * Set pasantia
+     *
+     * @param AppBundle\Entity\Pasantia $pasantia
+     *
+     * @return OrganizacionPasantia
+     */
+    public function setPasantia(\AppBundle\Entity\Pasantia $pasantia)
+    {
+        $this->pasantia = $pasantia;
+    
+        return $this;
+    }
+
+    /**
+     * Get pasantia
+     *
+     * @return AppBundle\Entity\Pasantia
+     */
+    public function getPasantia()
+    {
+        return $this->pasantia;
+    }
+
+    /**
      * Set organizacion
      *
      * @param AppBundle\Entity\Organizacion $organizacion
      *
-     * @return AsignacionOrganizacionRuta
+     * @return OrganizacionPasantia
      */
     public function setOrganizacion(\AppBundle\Entity\Organizacion $organizacion)
     {
         $this->organizacion = $organizacion;
-
+    
         return $this;
     }
 
@@ -120,112 +122,16 @@ class AsignacionOrganizacionRuta
     }
 
     /**
-     * Set ruta
-     *
-     * @param AppBundle\Entity\Ruta $ruta
-     *
-     * @return AsignacionOrganizacionRuta
-     */
-    public function setRuta(\AppBundle\Entity\Ruta $ruta)
-    {
-        $this->ruta = $ruta;
-
-        return $this;
-    }
-
-    /**
-     * Get ruta
-     *
-     * @return AppBundle\Entity\Ruta
-     */
-    public function getRuta()
-    {
-        return $this->ruta;
-    }
-
-    /**
-     * Set habilitacion
-     *
-     * @param boolean $habilitacion
-     *
-     * @return AsignacionOrganizacionRuta
-     */
-    public function setHabilitacion($habilitacion)
-    {
-        $this->habilitacion = $habilitacion;
-
-        return $this;
-    }
-
-    /**
-     * Get habilitacion
-     *
-     * @return boolean
-     */
-    public function getHabilitacion()
-    {
-        return $this->habilitacion;
-    }
-
-    /**
-     * Set asignacion
-     *
-     * @param boolean $asignacion
-     *
-     * @return AsignacionOrganizacionRuta
-     */
-    public function setAsignacion($asignacion)
-    {
-        $this->asignacion = $asignacion;
-
-        return $this;
-    }
-
-    /**
-     * Get asignacion
-     *
-     * @return boolean
-     */
-    public function getAsignacion()
-    {
-        return $this->asignacion;
-    }
-
-    /**
-     * Set contraloriaSocial
-     *
-     * @param boolean $contraloriaSocial
-     *
-     * @return AsignacionOrganizacionRuta
-     */
-    public function setContraloriaSocial($contraloriaSocial)
-    {
-        $this->contraloria_social = $contraloriaSocial;
-
-        return $this;
-    }
-
-    /**
-     * Get contraloriaSocial
-     *
-     * @return boolean
-     */
-    public function getContraloriaSocial()
-    {
-        return $this->contraloria_social;
-    }
-
-    /**
      * Set active
      *
      * @param boolean $active
      *
-     * @return AsignacionOrganizacionRuta
+     * @return OrganizacionPasantia
      */
     public function setActive($active)
     {
         $this->active = $active;
-
+    
         return $this;
     }
 
@@ -244,12 +150,12 @@ class AsignacionOrganizacionRuta
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return AsignacionOrganizacionRuta
+     * @return OrganizacionPasantia
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
-
+    
         return $this;
     }
 
@@ -268,12 +174,12 @@ class AsignacionOrganizacionRuta
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return AsignacionOrganizacionRuta
+     * @return OrganizacionPasantia
      */
     public function setFechaModificacion($fechaModificacion)
     {
         $this->fecha_modificacion = $fechaModificacion;
-
+    
         return $this;
     }
 
@@ -292,12 +198,12 @@ class AsignacionOrganizacionRuta
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return AsignacionOrganizacionRuta
+     * @return OrganizacionPasantia
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
-
+    
         return $this;
     }
 
@@ -316,12 +222,12 @@ class AsignacionOrganizacionRuta
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return AsignacionOrganizacionRuta
+     * @return OrganizacionPasantia
      */
     public function setFechaCreacion($fechaCreacion)
     {
         $this->fecha_creacion = $fechaCreacion;
-
+    
         return $this;
     }
 

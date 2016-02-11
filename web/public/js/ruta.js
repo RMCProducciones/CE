@@ -68,5 +68,36 @@ app.controller('gestionOrganizacionRutaCtrl', ['$scope', '$http', function($scop
 	};	
 }]);
 
+app.controller('gestionGrupoBeneficiarioRutaCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.eliminarGrupoBeneficiarioRuta = function(ruta){
+
+		window.location.replace(ruta);
+
+	};	
+}]);
+
+app.controller('gestionTerritorioRutaCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.eliminarTerritorioRuta = function(ruta){		
+		window.location.replace(ruta);
+
+	};	
+}]);
+
+app.controller('asignarOrganizacionRutaCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.habilitarAsignarOrganizacion = function(id, idRuta){		
+
+		$scope.idBoton = id;
+		$scope.idRuta = idRuta;
+
+		//if(#ruta_territorio)
+
+		console.log($scope.idBoton);
+		console.log($scope.idRuta);
+
+	};	
+}]);
 
 

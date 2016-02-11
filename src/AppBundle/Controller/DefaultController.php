@@ -59,9 +59,9 @@ class DefaultController extends Controller
 
 
     /**
-     * @Route("/menu", name="menuRol")
+     * @Route("/menu", name="menu")
      */
-    public function menuRolAction()
+    public function menuAction()
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -144,7 +144,7 @@ class DefaultController extends Controller
         }
 
         return $this->render(
-            'AppBundle:default:main-menu.html.twig', 
+            'AppBundle:default:menu.html.twig', 
             array( 
                 'permisoRol' =>  $jsonPermisoRol
             )

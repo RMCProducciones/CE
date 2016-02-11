@@ -33,8 +33,10 @@ use AppBundle\Entity\AsignacionGrupoComite;
 use AppBundle\Entity\Integrante;
 use AppBundle\Entity\IntegranteSoporte;
 use AppBundle\Entity\Ruta;
+use AppBundle\Entity\OrganizacionTerritorioAprendizaje;
 use AppBundle\Entity\AsignacionGrupoRuta;
 use AppBundle\Entity\AsignacionOrganizacionRuta;
+use AppBundle\Entity\AsignacionGrupoBeneficiarioRuta;
 use AppBundle\Entity\RutaSoporte;
 use AppBundle\Entity\Pasantia;
 use AppBundle\Entity\AsignacionOrganizacionPasantia;
@@ -49,6 +51,7 @@ use AppBundle\Entity\Organizacion;
 use AppBundle\Entity\OrganizacionSoporte;
 use AppBundle\Entity\TerritorioAprendizaje;
 use AppBundle\Entity\DiagnosticoOrganizacional;
+use AppBundle\Entity\AsignacionOrganizacionTerritorioAprendizaje;
 
 use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
 use AppBundle\Form\GestionEmpresarial\AsignacionIntegranteCLEARType;
@@ -75,7 +78,7 @@ use AppBundle\Form\GestionEmpresarial\OrganizacionSoporteType;
 use AppBundle\Form\GestionEmpresarial\ListaRolType;
 use AppBundle\Form\GestionEmpresarial\TerritorioAprendizajeType;
 use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalType;
-
+use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalResultadoType;
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -108,6 +111,8 @@ class GestionEmpresarialController extends Controller
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id' => $idGrupo)
         );
+
+        $nit = explode("-", $grupo->getNumeroIdentificacionTributaria());
 
         $form = $this->createForm(new GrupoType(), $grupo);
         
@@ -158,6 +163,9 @@ class GestionEmpresarialController extends Controller
                     'form' => $form->createView(),
                     'idGrupo' => $idGrupo,
                     'grupo' => $grupo,
+                    'numeroIdentificacion' => $nit[0],
+                    'digitoVerificacion' => $nit[1],
+
             )
         );
 
@@ -2273,6 +2281,7 @@ class GestionEmpresarialController extends Controller
     public function rutaGestionAction()
     {
         $em = $this->getDoctrine()->getManager();
+
         $rutas = $em->getRepository('AppBundle:Ruta')->findBy(
             array('active' => '1'),
             array('fecha_creacion' => 'ASC')
@@ -2363,13 +2372,13 @@ class GestionEmpresarialController extends Controller
 
             $ruta->setFechaModificacion(new \DateTime());
 
-            $usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            /*$usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
                 array(
                     'id' => 1
                 )
             );
             
-            $ruta->setUsuarioModificacion($usuarioModificacion);
+            $ruta->setUsuarioModificacion($usuarioModificacion);*/
 
             $em->flush();
 
@@ -2513,6 +2522,102 @@ class GestionEmpresarialController extends Controller
     }
 
     /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-territorio", name="rutaTerritorio")
+     */
+    public function rutaTerritorioAction($idRuta)
+    {
+         $em = $this->getDoctrine()->getManager();
+
+        $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
+            array('id' => $idRuta)
+        );
+
+        if($ruta->getTerritorioAprendizaje() != null){            
+            $idTerritorioAprendizaje = $ruta->getTerritorioAprendizaje()->getId();        
+
+            $territorioAsignado = $em->getRepository('AppBundle:TerritorioAprendizaje')->findBy(
+                array('id' => $idTerritorioAprendizaje)
+            );
+            
+        }else{
+
+            $territorioAsignado = null;
+        }       
+
+        if($ruta->getTerritorioAprendizaje() == null){            
+            $query = $em->createQuery('SELECT t FROM AppBundle:TerritorioAprendizaje t WHERE t.id NOT IN (SELECT territorioAprendizaje.id FROM AppBundle:TerritorioAprendizaje territorioAprendizaje JOIN AppBundle:Ruta arc WHERE territorioAprendizaje = arc.territorio_aprendizaje AND arc.territorio_aprendizaje = :territorio_aprendizaje) AND t.active = 1');
+            $query->setParameter('territorio_aprendizaje', $ruta);
+            $territorios = $query->getResult();
+        }else{
+            $territorios = null; 
+        }
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:territorio-ruta-gestion-asignacion.html.twig', 
+            array(
+                'territorios' => $territorios,
+                'asignacionesTerritorioRuta' => $territorioAsignado,
+                'idRuta' => $idRuta
+            ));        
+        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-territorio/{idTerritorio}/nueva-asignacion", name="rutaAsignarTerritorio")
+     */
+    public function rutaAsignarTerritorioAction($idRuta, $idTerritorio)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $territorios = $em->getRepository('AppBundle:TerritorioAprendizaje')->findOneBy(
+            array('id' => $idTerritorio)
+        );  
+
+        $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
+            array('id' => $idRuta)
+        );     
+
+        $ruta->setTerritorioAprendizaje($territorios);
+        $ruta->setActive(true);
+        $ruta->setFechaCreacion(new \DateTime());
+
+        $em->persist($ruta);
+        $em->flush();
+
+        return $this->redirectToRoute('rutaTerritorio', 
+            array(
+                'territorios' => $territorios,
+                'asignacionesTerritorioRuta' => $ruta,                 
+                'idRuta' => $idRuta
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-territorio/{idTerritorio}/eliminar", name="rutaEliminarTerritorio")
+     */
+    public function rutaEliminarTerritorioAction(Request $request, $idRuta)
+    {
+        $em = $this->getDoctrine()->getManager();                
+
+        $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
+            array('id' => $idRuta)
+        );                    
+
+        $ruta->setNullTerritorioAprendizaje();
+
+        $em->persist($ruta);
+        $em->flush();
+
+        return $this->redirectToRoute('rutaTerritorio',
+             array(
+                'idRuta' => $idRuta
+            ));    
+        
+    }
+
+    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-organizacion", name="rutaOrganizacion")
      */
     public function rutaOrganizacionAction($idRuta)
@@ -2521,25 +2626,30 @@ class GestionEmpresarialController extends Controller
 
         $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
             array('id' => $idRuta)
-        );
-
-        $asignacionesOrganizacionRuta = $em->getRepository('AppBundle:AsignacionOrganizacionRuta')->findBy(
-            array('ruta' => $ruta)
-        );  
-
-        $query = $em->createQuery('SELECT o FROM AppBundle:Organizacion o WHERE o.id NOT IN (SELECT organizacion.id FROM AppBundle:Organizacion organizacion JOIN AppBundle:AsignacionOrganizacionRuta aoc WHERE organizacion = aoc.organizacion AND aoc.ruta = :ruta) AND o.active = 1');
-        $query->setParameter('ruta', $ruta);
-
-        $organizaciones = $query->getResult();      
+        );   
         
+        $territorioAprendizaje = $ruta->getTerritorioAprendizaje()->getId();
+
+        
+        $organizacionRuta = $em->getRepository('AppBundle:AsignacionOrganizacionRuta')->findBy(
+            array('ruta' => $idRuta)
+        );        
+
+        $query = $em->createQuery('SELECT o FROM AppBundle:Organizacion o WHERE o.id NOT IN (SELECT organizacion.id FROM AppBundle:Organizacion organizacion JOIN AppBundle:AsignacionOrganizacionRuta aoc WHERE organizacion = aoc.organizacion AND aoc.ruta = :ruta) AND o.active = 1 AND o.ruta = 1');
+            $query->setParameter('ruta', $ruta);
+            $organizaciones = $query->getResult();
+
+        $mostrarOrganizacion = $em->getRepository('AppBundle:AsignacionOrganizacionTerritorioAprendizaje')->findBy(
+            array('organizacion' => $organizaciones, 'territorio_aprendizaje' => $territorioAprendizaje));
+       
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:organizacion-ruta-gestion-asignacion.html.twig', 
             array(
-                'organizaciones' => $organizaciones,
-                'asignacionesOrganizacionRuta' => $asignacionesOrganizacionRuta,
-                'idRuta' => $idRuta
+                'organizaciones' => $mostrarOrganizacion, 
+                'asignacionesOrganizacionRuta' => $organizacionRuta,
+                'idRuta' => $idRuta                              
             ));        
         
-    }
+    }    
 
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-organizacion/{idOrganizacion}/nueva-asignacion", name="rutaAsignarOrganizacion")
@@ -2619,27 +2729,39 @@ class GestionEmpresarialController extends Controller
      */
     public function rutaGrupoAction($idRuta)
     {
-        $em = $this->getDoctrine()->getManager();
+         $em = $this->getDoctrine()->getManager();
 
         $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
             array('id' => $idRuta)
         );
 
-        $asignacionesGrupoRuta = $em->getRepository('AppBundle:AsignacionGrupoRuta')->findBy(
-            array('ruta' => $ruta)
-        );  
+        if($ruta->getGrupo() != null){            
+            $idGrupo = $ruta->getGrupo()->getId();        
 
-        $query = $em->createQuery('SELECT g FROM AppBundle:Grupo g WHERE g.id NOT IN (SELECT grupo.id FROM AppBundle:Grupo grupo JOIN AppBundle:AsignacionGrupoRuta agc WHERE grupo = agc.grupo AND agc.ruta = :ruta) AND g.active = 1');
-        $query->setParameter('ruta', $ruta);
+            $grupoAsignado = $em->getRepository('AppBundle:Grupo')->findBy(
+                array('id' => $idGrupo)
+            );
+            
+        }else{
 
-        $grupos = $query->getResult();     
-        
+            $grupoAsignado = null;
+        }       
+
+        if($ruta->getGrupo() == null){            
+            $query = $em->createQuery('SELECT g FROM AppBundle:Grupo g WHERE g.id NOT IN (SELECT grupo.id FROM AppBundle:Grupo grupo JOIN AppBundle:Ruta arc WHERE grupo = arc.grupo AND arc.grupo = :grupo) AND g.active = 1');
+            $query->setParameter('grupo', $ruta);
+            $grupos = $query->getResult();      
+        }else{
+            $grupos = null; 
+        }
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-ruta-gestion-asignacion.html.twig', 
             array(
                 'grupos' => $grupos,
-                'asignacionesGrupoRuta' => $asignacionesGrupoRuta,
+                'asignacionesGrupoRuta' => $grupoAsignado,
                 'idRuta' => $idRuta
             ));        
+        
         
     }
 
@@ -2649,7 +2771,7 @@ class GestionEmpresarialController extends Controller
     public function rutaAsignarGrupoAction($idRuta, $idGrupo)
     {
 
-        $em = $this->getDoctrine()->getManager();
+       $em = $this->getDoctrine()->getManager();
 
         $grupos = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id' => $idGrupo)
@@ -2659,14 +2781,13 @@ class GestionEmpresarialController extends Controller
             array('id' => $idRuta)
         );  
            
-        $asignacionesGrupoRuta = new AsignacionGrupoRuta();
+        //$asignacionesGrupoPasantia = new Pasantia();
 
-        $asignacionesGrupoRuta->setGrupo($grupos);
-        $asignacionesGrupoRuta->setRuta($ruta);           
-        $asignacionesGrupoRuta->setActive(true);
-        $asignacionesGrupoRuta->setFechaCreacion(new \DateTime());
+        $ruta->setGrupo($grupos);        
+        $ruta->setActive(true);
+        $ruta->setFechaCreacion(new \DateTime());
 
-        $em->persist($asignacionesGrupoRuta);
+        $em->persist($ruta);
         $em->flush();
 
 
@@ -2674,47 +2795,177 @@ class GestionEmpresarialController extends Controller
         return $this->redirectToRoute('rutaGrupo', 
             array(
                 'grupos' => $grupos, 
-                'asignacionesGrupoRuta' => $asignacionesGrupoRuta,
+                'asignacionesGrupoRuta' => $ruta,
                 'idRuta' => $idRuta
             ));        
         
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-grupo/{idAsignacionGrupoRuta}/eliminar", name="rutaEliminarGrupo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-grupo/{idGrupo}/eliminar", name="rutaEliminarGrupo")
      */
-    public function rutaEliminarGrupoAction(Request $request, $idRuta, $idAsignacionGrupoRuta)
+    public function rutaEliminarGrupoAction(Request $request, $idRuta)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $asignacionesGrupoRuta = new AsignacionGrupoRuta();
-
-        $asignacionesGrupoRuta = $em->getRepository('AppBundle:AsignacionGrupoRuta')->find($idAsignacionGrupoRuta); 
-
-        $grupos = $em->getRepository('AppBundle:Grupo')->findBy(
-            array('active' => '1'),
-            array('fecha_creacion' => 'ASC')
-        );      
-
-        $em->remove($asignacionesGrupoRuta);
-        $em->flush();
+        $em = $this->getDoctrine()->getManager();                
 
         $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
             array('id' => $idRuta)
-        );
+        );                    
 
-        $asignacionesGrupoRuta = $em->getRepository('AppBundle:AsignacionGrupoRuta')->findBy(
-            array('ruta' => $ruta)
-        );  
+        $ruta->setNullGrupo();
+
+        $em->persist($ruta);
+        $em->flush();
 
         return $this->redirectToRoute('rutaGrupo',
              array(
-                'grupos' => $grupos,
-                'asignacionesGrupoRuta' => $asignacionesGrupoRuta,
                 'idRuta' => $idRuta
             ));    
         
     }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-grupo/{idGrupo}/asignacion-beneficiario", name="rutaGrupoBeneficiario")
+     */
+    public function rutaGrupoBeneficiarioAction($idRuta, $idGrupo)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
+            array('id' => $idRuta)
+        );   
+      
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );                
+
+        $beneficiarioGrupo = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('grupo' => $grupo));
+
+        $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('id' => $beneficiarioGrupo));
+        
+        
+        $beneficiariosRuta = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioRuta')->findBy(
+            array('ruta' => $idRuta)
+        );
+
+        $beneficiariosPrueba = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioRuta')->find($ruta->getId());
+
+        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionGrupoBeneficiarioRuta abc WHERE beneficiario = abc.beneficiario AND abc.ruta = :ruta) AND b.active = 1');
+        $query->setParameter(':ruta', $ruta);
+        $beneficiarios = $query->getResult();
+
+        $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('id' => $beneficiarios, 'grupo' => $grupo )
+        );
+       
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiario-grupo-ruta-gestion-asignacion.html.twig', 
+            array(
+                'beneficiarios' => $mostrarBeneficiarios,                
+                'beneficiariosRuta' => $beneficiariosRuta,
+                'idRuta' => $idRuta, 
+                'idGrupo' => $idGrupo,                               
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-grupo/{idGrupo}/{idBeneficiario}/asignacion-beneficiario/nueva-asignacion", name="rutaAsignarGrupoBeneficiario")
+     */
+    public function rutaAsignarGrupoBeneficiarioAction($idRuta, $idGrupo, $idBeneficiario)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
+            array('id' => $idBeneficiario)
+        );      
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
+            array('id' => $idRuta)
+        );  
+           
+        $asignacionesGrupoBeneficiarioRuta = new AsignacionGrupoBeneficiarioRuta();
+
+        $asignacionesGrupoBeneficiarioRuta->setBeneficiario($beneficiario);        
+        $asignacionesGrupoBeneficiarioRuta->setRuta($ruta);           
+        $asignacionesGrupoBeneficiarioRuta->setActive(true);
+        $asignacionesGrupoBeneficiarioRuta->setFechaCreacion(new \DateTime());
+
+        $em->persist($asignacionesGrupoBeneficiarioRuta);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('rutaGrupoBeneficiario', 
+            array(
+                'beneficiario' => $beneficiario,          
+                'asignacionesGrupoBeneficiarioRuta' => $asignacionesGrupoBeneficiarioRuta,
+                'idRuta' => $idRuta,
+                'idGrupo' => $idGrupo
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-grupo/{idGrupo}/{idBeneficiario}/asignacion-beneficiario/{idBeneficiarioRuta}/eliminar", name="rutaEliminarGrupoBeneficiario")
+     */
+    public function rutaEliminarGrupoBeneficiarioAction(Request $request, $idRuta, $idGrupo, $idBeneficiario, $idBeneficiarioRuta)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionesGrupoBeneficiarioRuta = new AsignacionGrupoBeneficiarioPasantia();
+
+        $asignacionesGrupoBeneficiarioRuta = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioRuta')->find($idBeneficiarioRuta); 
+
+        $em->remove($asignacionesGrupoBeneficiarioRuta);
+        $em->flush();
+
+        $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
+            array('id' => $idRuta)
+        );   
+      
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );                
+
+        $beneficiarioGrupo = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('grupo' => $grupo));
+
+        $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('id' => $beneficiarioGrupo));
+        
+        
+        $beneficiariosRuta = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioRuta')->findBy(
+            array('ruta' => $idRuta)
+        );
+
+        $beneficiariosPrueba = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioRuta')->find($ruta->getId());
+
+        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionGrupoBeneficiarioRuta abc WHERE beneficiario = abc.beneficiario AND abc.ruta = :ruta) AND b.active = 1');
+        $query->setParameter(':ruta', $ruta);
+        $beneficiarios = $query->getResult();
+
+        $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('id' => $beneficiarios, 'grupo' => $grupo )
+        );
+
+        return $this->redirectToRoute('rutaGrupoBeneficiario',
+            array(
+                'beneficiarios' => $mostrarBeneficiarios,                
+                'beneficiariosRuta' => $beneficiariosRuta,
+                'idRuta' => $idRuta, 
+                'idGrupo' => $idGrupo,     
+            ));      
+        
+    } 
 
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/gestion", name="pasantiaGestion")
@@ -3162,7 +3413,7 @@ class GestionEmpresarialController extends Controller
         
     }
 
-     /**
+    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-grupo/{idGrupo}/asignacion-beneficiario", name="pasantiaGrupoBeneficiario")
      */
     public function pasantiaGrupoBeneficiarioAction($idPasantia, $idGrupo)
@@ -3172,43 +3423,36 @@ class GestionEmpresarialController extends Controller
         $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
             array('id' => $idPasantia)
         );   
+      
 
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id' => $idGrupo)
-        );         
+        );                
 
         $beneficiarioGrupo = $em->getRepository('AppBundle:Beneficiario')->findBy(
-            array('grupo' => $idGrupo));
+            array('grupo' => $grupo));
 
-        $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
-            array('id' => 13));
-
-        echo $beneficiario->getPrimerApellido();
+        $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('id' => $beneficiarioGrupo));
         
-
+        
         $beneficiariosPasantia = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioPasantia')->findBy(
-            array('pasantia' => $pasantia)
+            array('pasantia' => $idPasantia)
         );
 
-        /*$asignacionGrupoBeneficiarioPasantia = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioPasantia')->findOneBy(
-            array('beneficiario' => $beneficiario));*/
+        $beneficiariosPrueba = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioPasantia')->find($pasantia->getId());
 
-        //echo $asignacionGrupoBeneficiarioPasantia->beneficiario();
-
-        /*$beneficiarioAsignado = $em->getRepository('AppBundle:Beneficiario')->findBy(
-            array('id' => $beneficiariosPasantia->getBeneficiario()->getId()));*/
-
-
-        //echo $asignacionGrupoBeneficiarioPasantia->getBeneficiario();        
-        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionGrupoBeneficiarioPasantia abc WHERE beneficiario = abc.beneficiario AND abc.beneficiario = :beneficiario) AND b.active = 1');
-        $query->setParameter('beneficiario', $beneficiario);
+        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionGrupoBeneficiarioPasantia abc WHERE beneficiario = abc.beneficiario AND abc.pasantia = :pasantia) AND b.active = 1');
+        $query->setParameter(':pasantia', $pasantia);
         $beneficiarios = $query->getResult();
 
-        //echo $beneficiarios->getId();
-        
+        $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('id' => $beneficiarios, 'grupo' => $grupo )
+        );
+       
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiario-grupo-pasantia-gestion-asignacion.html.twig', 
             array(
-                'beneficiarios' => $beneficiarios,                
+                'beneficiarios' => $mostrarBeneficiarios,                
                 'beneficiariosPasantia' => $beneficiariosPasantia,
                 'idPasantia' => $idPasantia, 
                 'idGrupo' => $idGrupo,               
@@ -3255,6 +3499,60 @@ class GestionEmpresarialController extends Controller
                 'idPasantia' => $idPasantia,
                 'idGrupo' => $idGrupo
             ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-grupo/{idGrupo}/{idBeneficiario}/asignacion-beneficiario/{idBeneficiarioPasantia}/eliminar", name="pasantiaEliminarGrupoBeneficiario")
+     */
+    public function pasantiaEliminarGrupoBeneficiarioAction(Request $request, $idPasantia, $idGrupo, $idBeneficiario, $idBeneficiarioPasantia)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionesGrupoBeneficiarioPasantia = new AsignacionGrupoBeneficiarioPasantia();
+
+        $asignacionesGrupoBeneficiarioPasantia = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioPasantia')->find($idBeneficiarioPasantia); 
+
+        $em->remove($asignacionesGrupoBeneficiarioPasantia);
+        $em->flush();
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+            array('id' => $idPasantia)
+        );   
+      
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );                
+
+        $beneficiarioGrupo = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('grupo' => $grupo));
+
+        $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('id' => $beneficiarioGrupo));
+        
+        
+        $beneficiariosPasantia = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioPasantia')->findBy(
+            array('pasantia' => $idPasantia)
+        );
+
+        $beneficiariosPrueba = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioPasantia')->find($pasantia->getId());
+
+        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionGrupoBeneficiarioPasantia abc WHERE beneficiario = abc.beneficiario AND abc.pasantia = :pasantia) AND b.active = 1');
+        $query->setParameter(':pasantia', $pasantia);
+        $beneficiarios = $query->getResult();
+
+        $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('id' => $beneficiarios, 'grupo' => $grupo )
+        );
+
+        return $this->redirectToRoute('pasantiaGrupoBeneficiario',
+            array(
+                'beneficiarios' => $mostrarBeneficiarios,                
+                'beneficiariosPasantia' => $beneficiariosPasantia,
+                'idPasantia' => $idPasantia, 
+                'idGrupo' => $idGrupo,     
+            ));      
         
     } 
 
@@ -3365,15 +3663,27 @@ class GestionEmpresarialController extends Controller
 
             $organizacion = $form->getData();
 
-            $organizacion->setFechaModificacion(new \DateTime());
+            if($organizacion->getRural() == true){             
+                $organizacion->setBarrio(null);
+            }
+            else
+            {
+                $organizacion->setCorregimiento(null);
+                $organizacion->setVereda(null);
+                $organizacion->setCacerio(null);
+            }
 
-            $usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            $organizacion->setActive(true);
+            $organizacion->setFechaCreacion(new \DateTime());
+
+
+            /*$usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
                 array(
                     'id' => 1
                 )
             );
             
-            $organizacion->setUsuarioModificacion($usuarioModificacion);
+            $organizacion->setUsuarioModificacion($usuarioModificacion);*/
 
             $em->flush();
 
@@ -3659,8 +3969,111 @@ class GestionEmpresarialController extends Controller
     }
 
 
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/territorio/{idTerritorioAprendizaje}/asignacion-organizacion", name="territorioAprendizajeOrganizacion")
+     */
+    public function territorioAprendizajeOrganizacionAction($idTerritorioAprendizaje)
+    {
+        $em = $this->getDoctrine()->getManager();
 
-/**
+        $territorioAprendizaje = $em->getRepository('AppBundle:TerritorioAprendizaje')->findOneBy(
+            array('id' => $idTerritorioAprendizaje)
+        );     
+
+        $asignacionesTerritoriosOrganizacion = $em->getRepository('AppBundle:AsignacionOrganizacionTerritorioAprendizaje')->findBy(
+            array('territorio_aprendizaje' => $territorioAprendizaje)
+        ); 
+
+        $query = $em->createQuery('SELECT o FROM AppBundle:Organizacion o WHERE o.id NOT IN (SELECT organizacion.id FROM AppBundle:Organizacion organizacion JOIN AppBundle:AsignacionOrganizacionTerritorioAprendizaje atc WHERE organizacion = atc.organizacion AND atc.territorio_aprendizaje = :territorio_aprendizaje) AND o.active = 1');
+        $query->setParameter('territorio_aprendizaje', $territorioAprendizaje);
+        $organizaciones = $query->getResult();      
+
+
+        return $this->render('AppBundle:GestionParametro:organizacion-territorio-gestion-asignacion.html.twig', 
+            array(
+                'organizaciones' => $organizaciones,
+                'asignacionesTerritoriosOrganizacion' => $asignacionesTerritoriosOrganizacion,
+                'idTerritorioAprendizaje' => $idTerritorioAprendizaje
+            ));        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/territorio/{idTerritorioAprendizaje}/asignacion-organizacion/{idOrganizacion}/nueva-asignacion", name="territorioAprendizajeAsignarOrganizacion")
+     */
+    public function territorioAprendizajeAsignarOrganizacionAction($idTerritorioAprendizaje, $idOrganizacion)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $organizaciones = $em->getRepository('AppBundle:Organizacion')->findOneBy(
+            array('id' => $idOrganizacion)
+        );  
+
+        $territorioAprendizaje = $em->getRepository('AppBundle:TerritorioAprendizaje')->findOneBy(
+            array('id' => $idTerritorioAprendizaje)
+        );  
+           
+        $asignacionesTerritorioOrganizacion = new AsignacionOrganizacionTerritorioAprendizaje();
+
+        $asignacionesTerritorioOrganizacion->setOrganizacion($organizaciones);
+        $asignacionesTerritorioOrganizacion->setTerritorioAprendizaje($territorioAprendizaje);        
+        $asignacionesTerritorioOrganizacion->setActive(true);
+        $asignacionesTerritorioOrganizacion->setFechaCreacion(new \DateTime());
+
+        $em->persist($asignacionesTerritorioOrganizacion);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('territorioAprendizajeOrganizacion', 
+            array(
+                'organizaciones' => $organizaciones,
+                'asignacionesTerritoriosOrganizacion' => $asignacionesTerritorioOrganizacion,
+                'idTerritorioAprendizaje' => $idTerritorioAprendizaje
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/territorio/{idTerritorioAprendizaje}/asignacion-organizacion/{idTerritorioOrganizacion}/eliminar", name="territorioAprendizajeEliminarOrganizacion")
+     */
+    public function territorioAprendizajeEliminarOrganizacionAction(Request $request, $idTerritorioAprendizaje, $idTerritorioOrganizacion)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionesTerritorioOrganizacion = new AsignacionOrganizacionTerritorioAprendizaje();
+
+        $asignacionesTerritorioOrganizacion = $em->getRepository('AppBundle:AsignacionOrganizacionTerritorioAprendizaje')->find(
+            $idTerritorioOrganizacion); 
+
+        $organizaciones = $em->getRepository('AppBundle:Organizacion')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );      
+
+        $em->remove($asignacionesTerritorioOrganizacion);
+        $em->flush();
+
+        $territorioAprendizaje = $em->getRepository('AppBundle:TerritorioAprendizaje')->findOneBy(
+            array('id' => $idTerritorioAprendizaje)
+        );     
+
+        $asignacionesTerritoriosOrganizacion = $em->getRepository('AppBundle:AsignacionOrganizacionTerritorioAprendizaje')->findBy(
+            array('territorio_aprendizaje' => $territorioAprendizaje)
+        ); 
+
+        return $this->redirectToRoute('territorioAprendizajeOrganizacion',
+             array(
+                'organizaciones' => $organizaciones,
+                'asignacionesTerritoriosOrganizacion' => $asignacionesTerritorioOrganizacion,
+                'idTerritorioAprendizaje' => $idTerritorioAprendizaje
+            ));    
+        
+    }   
+
+
+
+    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/diagnostico/nuevo", name="diagnosticoNuevo")
      */
     public function diagnosticoNuevoAction(Request $request)
@@ -3690,24 +4103,72 @@ class GestionEmpresarialController extends Controller
             $Diagnosticoorganizacional->setActive(true);
             $Diagnosticoorganizacional->setFechaCreacion(new \DateTime());
 
-            /*$usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
-                array(
-                    'id' => 1
-                )
-            );
-            
-            $pasantia->setUsuarioCreacion($usuarioCreacion);*/
+            $resultadoproductiva = ($Diagnosticoorganizacional->getProductivaA())+($Diagnosticoorganizacional->getProductivaB())+($Diagnosticoorganizacional->getProductivaC())+($Diagnosticoorganizacional->getProductivaD())+($Diagnosticoorganizacional->getProductivaE())+($Diagnosticoorganizacional->getProductivaF());
+            $resultadocomercial = ($Diagnosticoorganizacional->getComercialA())+($Diagnosticoorganizacional->getComercialB())+($Diagnosticoorganizacional->getComercialC())+($Diagnosticoorganizacional->getComercialD())+($Diagnosticoorganizacional->getComercialE());
+            $resultadofinanciera = ($Diagnosticoorganizacional->getFinancieraA())+($Diagnosticoorganizacional->getFinancieraB())+($Diagnosticoorganizacional->getFinancieraC())+($Diagnosticoorganizacional->getFinancieraD())+($Diagnosticoorganizacional->getFinancieraE())+($Diagnosticoorganizacional->getFinancieraF());
+            $resultadoadministrativa = ($Diagnosticoorganizacional->getAdministrativaA())+($Diagnosticoorganizacional->getAdministrativaB())+($Diagnosticoorganizacional->getAdministrativaC())+($Diagnosticoorganizacional->getAdministrativaD())+($Diagnosticoorganizacional->getAdministrativaE());
+            $resultadoorganizacional = ($Diagnosticoorganizacional->getOrganizacionalA())+($Diagnosticoorganizacional->getOrganizacionalB())+($Diagnosticoorganizacional->getOrganizacionalC())+($Diagnosticoorganizacional->getOrganizacionalD())+($Diagnosticoorganizacional->getOrganizacionalE())+($Diagnosticoorganizacional->getOrganizacionalF());
+            $resultadototal=$resultadoproductiva+$resultadocomercial+ $resultadofinanciera+$resultadoadministrativa+$resultadoorganizacional +$resultadoorganizacional;
+
+            $Diagnosticoorganizacional->setTotalProductiva($resultadoproductiva);
+            $Diagnosticoorganizacional->setTotalComercial($resultadocomercial);
+            $Diagnosticoorganizacional->setTotalFinanciera($resultadofinanciera);
+            $Diagnosticoorganizacional->setTotalAdministrativa($resultadoadministrativa);
+            $Diagnosticoorganizacional->setTotalOrganizacional($resultadoorganizacional);
+            $Diagnosticoorganizacional->setTotal($resultadototal);
 
             $em->persist($Diagnosticoorganizacional);
             $em->flush();
 
-            return $this->redirectToRoute('pasantiaGestion');
+            return $this->redirectToRoute(
+            'diagnosticoCalcular', 
+            array(
+                    'idDiagnosticoOrganizacional' => $Diagnosticoorganizacional->getId()
+            )
+        );
         }
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:diagnostico-nuevo.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:diagnostico-nuevo.html.twig',
+         array('form' => $form->createView(),
+        
+            )
+         );
     }
    
 
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/diagnostico/{idDiagnosticoOrganizacional}/resultado", name="diagnosticoCalcular")
+     */
+    public function diagnosticoCalcularAction(Request $request, $idDiagnosticoOrganizacional)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $Diagnosticoorganizacional= $em->getRepository('AppBundle:DiagnosticoOrganizacional')->findOneBy(
+            array('id' =>$idDiagnosticoOrganizacional) );
+
+        $resultadoproductiva=$Diagnosticoorganizacional->getTotalProductiva();
+        $resultadocomercial=$Diagnosticoorganizacional->getTotalComercial();
+        $resultadofinanciera=$Diagnosticoorganizacional->getTotalFinanciera();
+        $resultadoadministrativa=$Diagnosticoorganizacional->getTotalAdministrativa();
+        $resultadoorganizacional=$Diagnosticoorganizacional->getTotalOrganizacional();
+        $resultadototal=$Diagnosticoorganizacional->getTotal();
+
+
+                 ;   
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:diagnostico-resultado.html.twig', 
+            array(  
+                'resultadoproductiva'=>$resultadoproductiva,
+                'resultadocomercial'=>$resultadocomercial,
+                'resultadofinanciera'=>$resultadofinanciera,
+                'resultadoadministrativa'=>$resultadoadministrativa,
+                'resultadoorganizacional'=>$resultadoorganizacional,
+                'resultadototal'=>$resultadototal,
+                'DiagnosticoOrganizacional' => $Diagnosticoorganizacional
+            )
+        );
+    }
 
 
 

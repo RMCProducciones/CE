@@ -104,13 +104,11 @@ class Organizacion
     private $cacerio;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="municipio", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Municipio")
      */
     private $municipio;
 
-   /**
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $tipo_documento_contacto;
@@ -174,14 +172,14 @@ class Organizacion
     /**
      * @var boolean
      *
-     * @ORM\Column(name="ruta", type="boolean", nullable=true)
+     * @ORM\Column(name="ruta", type="boolean")
      */
     private $ruta;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="pasantia", type="boolean", nullable=true)
+     * @ORM\Column(name="pasantia", type="boolean")
      */
     private $pasantia;
 
@@ -525,11 +523,11 @@ class Organizacion
     /**
      * Set municipio
      *
-     * @param integer $municipio
+     * @param AppBundle\Entity\Municipio $municipio
      *
      * @return Organizacion
      */
-    public function setMunicipio($municipio)
+    public function setMunicipio(\AppBundle\Entity\Municipio $municipio)
     {
         $this->municipio = $municipio;
     
@@ -539,7 +537,7 @@ class Organizacion
     /**
      * Get municipio
      *
-     * @return integer
+     * @return AppBundle\Entity\Municipio
      */
     public function getMunicipio()
     {
