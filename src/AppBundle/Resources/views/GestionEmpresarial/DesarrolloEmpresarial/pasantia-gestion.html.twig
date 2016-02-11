@@ -124,11 +124,15 @@
 
                     <td class="text-center">
 
-                   <a href="{{ path('pasantiaGrupo', {'idPasantia': pasantia.id}) }}" alt="Asignacion Grupos" title="Asignacion Grupos"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a> |
+                   <a href="{{ path('pasantiaTerritorio', {'idPasantia': pasantia.id}) }}" alt="Asignacion Territorio" title="Asignacion Territorio"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a> | 
 
-                   <a href="#" alt="Asignacion Territorio" title="Asignacion Territorio"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a> | 
+                   {% if pasantia.territorioAprendizaje != NULL and pasantia.grupo != NULL %}                   
 
                    <a href="{{ path('pasantiaOrganizacion', {'idPasantia': pasantia.id}) }}" alt="Asignacion Organizaciones" title="Asignacion Organizaciones"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span></a> |  
+
+                   {% endif %}
+
+                   <a href="{{ path('pasantiaGrupo', {'idPasantia': pasantia.id}) }}" alt="Asignacion Grupos" title="Asignacion Grupos"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a> |  
  
                    <a href="{{ path('pasantiaSoporte', {'idPasantia': pasantia.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> | 
 

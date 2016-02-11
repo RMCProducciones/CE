@@ -133,7 +133,7 @@
                 </div>      
     </div>  
 <br/> 
-    <div ng-controller="ListasLocalizacionCtrl" ng-init="valoresInicialesLocalizacion(true, 0, 0, 0)">
+    <div ng-controller="ListasLocalizacionCtrl"  ng-init="valoresInicialesLocalizacion(false, {{organizacion.municipio.departamento.id}}, {{organizacion.municipio.zona.id}}, {{organizacion.municipio.id}})">
       
       <div class="row">
         <div class="col-md-4">
@@ -163,7 +163,7 @@
       </div>  
       </div>  
 <br/> 
-      <div ng-controller = "CamposDireccionCtrl">
+      <div ng-controller = "CamposDireccionOrganizacionCtrl">
         <div class="row">
             <div class="col-md-4">
               {{ form_label(form.rural) }}<br/>
@@ -211,10 +211,10 @@
       </div>  
 <br/> 
 
-      <div class="row">
+      <div class="row" ng-controller="CamposRutalPasantiaOrganizacionCtrl">
         <div class="col-md-4">
                   {{ form_label(form.correo_electronico_contacto) }}
-          {{ form_errors(form.correo_electronico_contacto) }}
+                  {{ form_errors(form.correo_electronico_contacto) }}
                   {{ form_widget(form.correo_electronico_contacto, { 'attr': {'class': 'form-control', 'placeholder': 'Correo Electronico'} }) }}
                 </div>
 

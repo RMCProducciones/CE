@@ -8,7 +8,7 @@
     <ul class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Parametrización</li>      
-	   <li><a href="{{ path('rutaGestion') }}">Territorios de Aprendizaje</a></li>
+	   <li><a href="{{ path('territorioaprendizajeGestion') }}">Territorios de Aprendizaje</a></li>
       <li class="active">Organizaciones</li>
     </ul>
 
@@ -34,7 +34,7 @@
         <div class="row">
             <div class="col-md-6">
               <div class="btn-group">
-                <a href="{{ path('rutaGestion') }}" class="btn btn-warning">Volver</a>                             
+                <a href="{{ path('territorioaprendizajeGestion') }}" class="btn btn-warning">Volver</a>                             
               </div>
             </div>
         </div>
@@ -101,7 +101,7 @@
                   <td>
                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ organizacion.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                     <br>                    
-                    
+                    <a href="{{ path('territorioAprendizajeAsignarOrganizacion', {'idTerritorioAprendizaje': idTerritorioAprendizaje, 'idOrganizacion': organizacion.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
                     <br>                    
                   </td>
                 </tr>
@@ -145,7 +145,7 @@
           </div>
 
           <div class="col-md-6 col-md-offset-1 well">            
-            <table class="table table-striped table-hover" ng-controller="gestionOrganizacionRutaCtrl">
+            <table class="table table-striped table-hover" ng-controller="gestionTerritorioAprendizajeOrganizacionCtrl">
               <thead>           
                 <tr>
                   <th>#</th>
@@ -181,7 +181,8 @@
           
                   <td>
                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ asignacionTerritoriosOrganizacion.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
-                    <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarOrganizacionRuta('{{ path('rutaEliminarOrganizacion', {'idRuta': idRuta, 'idAsignacionOrganizacionRuta': asignacionTerritoriosOrganizacion.id}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>                                   
+                    <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarTerritorioAprendizajeOrganizacion('{{ path('territorioAprendizajeEliminarOrganizacion', {'idTerritorioAprendizaje': idTerritorioAprendizaje, 'idTerritorioOrganizacion': asignacionTerritoriosOrganizacion.id}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
+                                   
                   </td>
                 </tr>
         

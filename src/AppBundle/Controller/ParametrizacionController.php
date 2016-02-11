@@ -187,6 +187,24 @@ class ParametrizacionController extends Controller
 
     }
 
+    /**
+     * @Route("/backend/rol/eliminar/{idRol}", name="rolEliminar")
+     */
+    public function rolEliminarAction(Request $request, $idRol)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $rol = new Rol();
+
+        $rol = $em->getRepository('AppBundle:Rol')->find($idRol);              
+
+        $em->remove($rol);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('rolGestion'));
+
+    }
+
+
 
 
     /**
