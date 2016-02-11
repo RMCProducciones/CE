@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Feria
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\FeriaRepository")
  */
 class Feria
 {
@@ -22,9 +22,7 @@ class Feria
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="tipo", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $tipo;
 
@@ -36,9 +34,7 @@ class Feria
     private $fecha_propuesta;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="municipio", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Municipio")
      */
     private $municipio;
 
@@ -252,11 +248,11 @@ class Feria
     /**
      * Set tipo
      *
-     * @param integer $tipo
+     * @param AppBundle\Entity\Listas $tipo
      *
      * @return Feria
      */
-    public function setTipo($tipo)
+    public function setTipo(\AppBundle\Entity\Listas $tipo)
     {
         $this->tipo = $tipo;
 
@@ -266,7 +262,7 @@ class Feria
     /**
      * Get tipo
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getTipo()
     {
@@ -300,11 +296,11 @@ class Feria
     /**
      * Set municipio
      *
-     * @param integer $municipio
+     * @param AppBundle\Entity\Municipio $municipio
      *
      * @return Feria
      */
-    public function setMunicipio($municipio)
+    public function setMunicipio(\AppBundle\Entity\Municipio $municipio)
     {
         $this->municipio = $municipio;
 
@@ -314,7 +310,7 @@ class Feria
     /**
      * Get municipio
      *
-     * @return integer
+     * @return AppBundle\Entity\Municipio
      */
     public function getMunicipio()
     {
