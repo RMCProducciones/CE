@@ -3290,16 +3290,40 @@ class GestionEmpresarialController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/pasantias/{idPasantia}/asignacion-territorio/{idTerritorio}/eliminar", name="pasantiaEliminarTerritorio")
      */
-    public function pasantiaEliminarTerritorioAction(Request $request, $idPasantia)
+    public function pasantiaEliminarTerritorioAction(Request $request, $idPasantia, $idTerritorio)
     {
         $em = $this->getDoctrine()->getManager();                
 
         $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
             array('id' => $idPasantia)
-        );                    
+        );
+
+        $asignacionOrganizacionPasantia = new AsignacionOrganizacionPasantia();
+
+        $asignacionOrganizacionPasantia = $em->getRepository('AppBundle:AsignacionOrganizacionPasantia')->findOneBy(
+            array('pasantia' => $idPasantia));       
+
+        if($asignacionOrganizacionPasantia != null){
+
+            if($asignacionOrganizacionPasantia->getPasantia()->getId() == $idPasantia){            
+
+            $idAsignacionOrganizacionPasantia = $em->getRepository('AppBundle:AsignacionOrganizacionPasantia')->find(
+                array('id' => $asignacionOrganizacionPasantia->getId()));
+
+            $em->remove($idAsignacionOrganizacionPasantia);
+            $em->flush();
+
+            return $this->redirectToRoute('pasantiaEliminarTerritorio',
+                 array(
+                    'idPasantia' => $idPasantia,
+                    'idTerritorio' => $idTerritorio
+                ));    
+            }
+
+        }    
 
         $pasantia->setNullTerritorioAprendizaje();
-
+        
         $em->persist($pasantia);
         $em->flush();
 
