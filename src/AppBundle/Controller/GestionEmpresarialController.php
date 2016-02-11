@@ -2526,7 +2526,7 @@ class GestionEmpresarialController extends Controller
      */
     public function rutaTerritorioAction($idRuta)
     {
-         $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
             array('id' => $idRuta)
@@ -3212,6 +3212,102 @@ class GestionEmpresarialController extends Controller
     }
 
     /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-territorio", name="pasantiaTerritorio")
+     */
+    public function pasantiaTerritorioAction($idPasantia)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+            array('id' => $idPasantia)
+        );
+
+        if($pasantia->getTerritorioAprendizaje() != null){            
+            $idTerritorioAprendizaje = $pasantia->getTerritorioAprendizaje()->getId();        
+
+            $territorioAsignado = $em->getRepository('AppBundle:TerritorioAprendizaje')->findBy(
+                array('id' => $idTerritorioAprendizaje)
+            );
+            
+        }else{
+
+            $territorioAsignado = null;
+        }       
+
+        if($pasantia->getTerritorioAprendizaje() == null){            
+            $query = $em->createQuery('SELECT t FROM AppBundle:TerritorioAprendizaje t WHERE t.id NOT IN (SELECT territorioAprendizaje.id FROM AppBundle:TerritorioAprendizaje territorioAprendizaje JOIN AppBundle:Pasantia apc WHERE territorioAprendizaje = apc.territorio_aprendizaje AND apc.territorio_aprendizaje = :territorio_aprendizaje) AND t.active = 1');
+            $query->setParameter('territorio_aprendizaje', $pasantia);
+            $territorios = $query->getResult();
+        }else{
+            $territorios = null; 
+        }
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:territorio-pasantia-gestion-asignacion.html.twig', 
+            array(
+                'territorios' => $territorios,
+                'asignacionesTerritorioPasantia' => $territorioAsignado,
+                'idPasantia' => $idPasantia
+            ));        
+        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-territorio/{idTerritorio}/nueva-asignacion", name="pasantiaAsignarTerritorio")
+     */
+    public function pasantiaAsignarTerritorioAction($idPasantia, $idTerritorio)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $territorios = $em->getRepository('AppBundle:TerritorioAprendizaje')->findOneBy(
+            array('id' => $idTerritorio)
+        );  
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+            array('id' => $idPasantia)
+        );     
+
+        $pasantia->setTerritorioAprendizaje($territorios);
+        $pasantia->setActive(true);
+        $pasantia->setFechaCreacion(new \DateTime());
+
+        $em->persist($pasantia);
+        $em->flush();
+
+        return $this->redirectToRoute('pasantiaTerritorio', 
+            array(
+                'territorios' => $territorios,
+                'asignacionesTerritorioPasantia' => $pasantia,                 
+                'idPasantia' => $idPasantia
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantias/{idPasantia}/asignacion-territorio/{idTerritorio}/eliminar", name="pasantiaEliminarTerritorio")
+     */
+    public function pasantiaEliminarTerritorioAction(Request $request, $idPasantia)
+    {
+        $em = $this->getDoctrine()->getManager();                
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+            array('id' => $idPasantia)
+        );                    
+
+        $pasantia->setNullTerritorioAprendizaje();
+
+        $em->persist($pasantia);
+        $em->flush();
+
+        return $this->redirectToRoute('pasantiaTerritorio',
+             array(
+                'idPasantia' => $idPasantia
+            ));    
+        
+    }
+
+    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-organizacion", name="pasantiaOrganizacion")
      */
     public function pasantiaOrganizacionAction($idPasantia)
@@ -3220,22 +3316,27 @@ class GestionEmpresarialController extends Controller
 
         $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
             array('id' => $idPasantia)
-        );
-
-        $asignacionesOrganizacionPasantia = $em->getRepository('AppBundle:AsignacionOrganizacionPasantia')->findBy(
-            array('pasantia' => $pasantia)
-        );  
-
-        $query = $em->createQuery('SELECT o FROM AppBundle:Organizacion o WHERE o.id NOT IN (SELECT organizacion.id FROM AppBundle:Organizacion organizacion JOIN AppBundle:AsignacionOrganizacionPasantia aoc WHERE organizacion = aoc.organizacion AND aoc.pasantia = :pasantia) AND o.active = 1');
-        $query->setParameter('pasantia', $pasantia);
-
-        $organizaciones = $query->getResult();         
+        );   
         
+        $territorioAprendizaje = $pasantia->getTerritorioAprendizaje()->getId();
+
+        
+        $organizacionPasantia = $em->getRepository('AppBundle:AsignacionOrganizacionPasantia')->findBy(
+            array('pasantia' => $idPasantia)
+        );        
+
+        $query = $em->createQuery('SELECT o FROM AppBundle:Organizacion o WHERE o.id NOT IN (SELECT organizacion.id FROM AppBundle:Organizacion organizacion JOIN AppBundle:AsignacionOrganizacionPasantia aoc WHERE organizacion = aoc.organizacion AND aoc.pasantia = :pasantia) AND o.active = 1 AND o.pasantia = 1');
+            $query->setParameter('pasantia', $pasantia);
+            $organizaciones = $query->getResult();
+
+        $mostrarOrganizacion = $em->getRepository('AppBundle:AsignacionOrganizacionTerritorioAprendizaje')->findBy(
+            array('organizacion' => $organizaciones, 'territorio_aprendizaje' => $territorioAprendizaje));
+       
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:organizacion-pasantia-gestion-asignacion.html.twig', 
             array(
-                'organizaciones' => $organizaciones,
-                'asignacionesOrganizacionPasantia' => $asignacionesOrganizacionPasantia,
-                'idPasantia' => $idPasantia
+                'organizaciones' => $mostrarOrganizacion, 
+                'asignacionesOrganizacionPasantia' => $organizacionPasantia,
+                'idPasantia' => $idPasantia                              
             ));        
         
     }
