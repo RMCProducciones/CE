@@ -103,7 +103,9 @@ php app/console doctrine:generate:entity --entity="AppBundle:PatrocinadorFeria" 
 
 php app/console doctrine:generate:entity --entity="AppBundle:IEA" --fields="grupo:integer calificacion:decimal fecha_inicio:datetime fecha_finalizacion:datetime linea_productiva:string actividad_productiva:string descripcion_actividad_productiva:text logros:text resultado_componente_organizacional:text resultado_componente_productivo:text resultado_componente_comercial:text resultado_componente_administrativo:text resultado_componente_financiero:text observaciones:text active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
-php app/console doctrine:generate:entity --entity="AppBundle:EstructuraOrganizacional" --fields="tipo:integer beneficiario:integer fecha_inicio fecha_finalizacion estado:integer active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+php app/console doctrine:generate:entity --entity="AppBundle:EstructuraOrganizacional" --fields="tipo:integer cargo:integer beneficiario:integer fecha_inicio fecha_finalizacion estado:integer active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 php app/console doctrine:generate:entity --entity="AppBundle:Activos" --fields="grupo:integer rubro:integer descripcion:string unidad_medida:integer cantidad:decimal valor:decimal iniciales:boolean active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
 
