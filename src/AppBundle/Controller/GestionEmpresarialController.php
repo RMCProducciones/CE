@@ -52,6 +52,7 @@ use AppBundle\Entity\OrganizacionSoporte;
 use AppBundle\Entity\TerritorioAprendizaje;
 use AppBundle\Entity\DiagnosticoOrganizacional;
 use AppBundle\Entity\Feria;
+use AppBundle\Entity\FeriaSoporte;
 use AppBundle\Entity\AsignacionOrganizacionTerritorioAprendizaje;
 
 
@@ -82,6 +83,8 @@ use AppBundle\Form\GestionEmpresarial\TerritorioAprendizajeType;
 use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalType;
 use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalResultadoType;
 use AppBundle\Form\GestionEmpresarial\FeriaType;
+use AppBundle\Form\GestionEmpresarial\FeriaSoporteType;
+
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -4393,7 +4396,7 @@ class GestionEmpresarialController extends Controller
                 $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
                     array(
                         'descripcion' => $feriaSoporte->getTipoSoporte()->getDescripcion(), 
-                        'dominio' => 'feria_tipo_soporte'
+                        'dominio' => 'grupo_tipo_soporte'
                     )
                 );
                 
@@ -4455,6 +4458,62 @@ class GestionEmpresarialController extends Controller
         return $this->redirectToRoute('feriaSoporte', array( 'idFeria' => $idFeria));
         
     }
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/feria/{idFeria}/editar", name="feriaEditar")
+     */
+    public function feriaEditarAction(Request $request, $idFeria)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $feria = new Feria();
+
+        $feria = $em->getRepository('AppBundle:Feria')->findOneBy(
+            array('id' => $idFeria)
+        );
+        //echo $integrantes->getPertenenciaEtnica();
+        $form = $this->createForm(new FeriaType(), $feria);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $feria = $form->getData();
+
+            $feria->setFechaModificacion(new \DateTime());
+
+            
+
+            $em->flush();
+
+            return $this->redirectToRoute('feriaGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:feria-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idFeria' => $idFeria,
+                    'feria' => $feria,
+            )
+        );
+
+               
+    }
+
+
+
 
 	
 }
