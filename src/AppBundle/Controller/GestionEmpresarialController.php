@@ -949,7 +949,7 @@ class GestionEmpresarialController extends Controller
             'submit', 
             array(
                 'attr' => array(
-                    'style' => 'visibility:visible'
+                    'style' => 'visibility:hidden'
                 ),
             )
         );
@@ -1735,7 +1735,7 @@ class GestionEmpresarialController extends Controller
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/", name="comiteGestion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/gestion", name="comiteGestion")
      */
     public function ComiteGestionAction()
     {
@@ -2081,7 +2081,7 @@ class GestionEmpresarialController extends Controller
         );
 
         $form->add(
-            'Asignar', 
+            'Asignar_'.$idIntegrante, 
             'submit', 
             array(
                 'attr' => array(
@@ -2600,13 +2600,37 @@ class GestionEmpresarialController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-territorio/{idTerritorio}/eliminar", name="rutaEliminarTerritorio")
      */
-    public function rutaEliminarTerritorioAction(Request $request, $idRuta)
+    public function rutaEliminarTerritorioAction(Request $request, $idRuta, $idTerritorio)
     {
         $em = $this->getDoctrine()->getManager();                
 
         $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
             array('id' => $idRuta)
         );                    
+
+        $asignacionOrganizacionRuta = new AsignacionOrganizacionRuta();
+
+        $asignacionOrganizacionRuta = $em->getRepository('AppBundle:AsignacionOrganizacionRuta')->findOneBy(
+            array('ruta' => $idRuta));       
+
+        if($asignacionOrganizacionRuta != null){
+
+            if($asignacionOrganizacionRuta->getRuta()->getId() == $idRuta){            
+
+            $idAsignacionOrganizacionRuta = $em->getRepository('AppBundle:AsignacionOrganizacionRuta')->find(
+                array('id' => $asignacionOrganizacionRuta->getId()));
+
+            $em->remove($idAsignacionOrganizacionRuta);
+            $em->flush();
+
+            return $this->redirectToRoute('RutaEliminarTerritorio',
+                 array(
+                    'idRuta' => $idRuta,
+                    'idTerritorio' => $idTerritorio
+                ));    
+            }
+
+        }    
 
         $ruta->setNullTerritorioAprendizaje();
 
@@ -2807,13 +2831,37 @@ class GestionEmpresarialController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-grupo/{idGrupo}/eliminar", name="rutaEliminarGrupo")
      */
-    public function rutaEliminarGrupoAction(Request $request, $idRuta)
+    public function rutaEliminarGrupoAction(Request $request, $idRuta, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();                
 
         $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
             array('id' => $idRuta)
-        );                    
+        );
+
+        $asignacionGrupoBeneficiarioRuta = new AsignacionGrupoBeneficiarioRuta();
+
+        $asignacionGrupoBeneficiarioRuta = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioRuta')->findOneBy(
+            array('ruta' => $idRuta));       
+
+        if($asignacionGrupoBeneficiarioRuta != null){
+
+            if($asignacionGrupoBeneficiarioRuta->getRuta()->getId() == $idRuta){            
+
+            $idAsignacionGrupoBeneficiarioRuta = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioRuta')->find(
+                array('id' => $asignacionGrupoBeneficiarioRuta->getId()));
+
+            $em->remove($idAsignacionGrupoBeneficiarioRuta);
+            $em->flush();
+
+            return $this->redirectToRoute('rutaEliminarGrupo',
+                 array(
+                    'idRuta' => $idRuta,
+                    'idGrupo' => $idGrupo
+                ));    
+            }
+
+        }    
 
         $ruta->setNullGrupo();
 
@@ -3521,13 +3569,37 @@ class GestionEmpresarialController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-grupo/{idGrupo}/eliminar", name="pasantiaEliminarGrupo")
      */
-    public function pasantiaEliminarGrupoAction(Request $request, $idPasantia)
+    public function pasantiaEliminarGrupoAction(Request $request, $idPasantia, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();                
 
         $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
             array('id' => $idPasantia)
-        );                    
+        );    
+
+        $asignacionGrupoBeneficiarioPasantia = new AsignacionGrupoBeneficiarioPasantia();
+
+        $asignacionGrupoBeneficiarioPasantia = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioPasantia')->findOneBy(
+            array('pasantia' => $idPasantia));       
+
+        if($asignacionGrupoBeneficiarioPasantia != null){
+
+            if($asignacionGrupoBeneficiarioPasantia->getPasantia()->getId() == $idPasantia){            
+
+            $idAsignacionGrupoBeneficiarioPasantia = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioPasantia')->find(
+                array('id' => $asignacionGrupoBeneficiarioPasantia->getId()));
+
+            $em->remove($idAsignacionGrupoBeneficiarioPasantia);
+            $em->flush();
+
+            return $this->redirectToRoute('pasantiaEliminarGrupo',
+                 array(
+                    'idPasantia' => $idPasantia,
+                    'idGrupo' => $idGrupo
+                ));    
+            }
+
+        }    
 
         $pasantia->setNullGrupo();
 
