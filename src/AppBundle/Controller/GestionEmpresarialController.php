@@ -54,6 +54,7 @@ use AppBundle\Entity\DiagnosticoOrganizacional;
 use AppBundle\Entity\Feria;
 use AppBundle\Entity\FeriaSoporte;
 use AppBundle\Entity\AsignacionOrganizacionTerritorioAprendizaje;
+use AppBundle\Entity\IEA;
 
 
 use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
@@ -84,6 +85,7 @@ use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalType;
 use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalResultadoType;
 use AppBundle\Form\GestionEmpresarial\FeriaType;
 use AppBundle\Form\GestionEmpresarial\FeriaSoporteType;
+use AppBundle\Form\GestionEmpresarial\IEAType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -4534,6 +4536,63 @@ class GestionEmpresarialController extends Controller
         );
 
                
+    }
+
+
+
+
+
+ /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/IEA/gestion", name="ieaGestion")
+     */
+    public function ieaGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $iea = $em->getRepository('AppBundle:IEA')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:IEA-gestion.html.twig', array( 'iea' => $iea));
+    }
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/IEA/nuevo", name="ieaNuevo")
+     */
+    public function ieaNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $iea= new IEA();
+        
+        $form = $this->createForm(new IEAType(), $iea);
+        
+        $form->add(
+            'guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $iea = $form->getData();
+
+
+            $iea->setActive(true);
+            $iea->setFechaCreacion(new \DateTime());
+            $em->persist($iea);
+            $em->flush();
+
+            return $this->redirectToRoute('ieaGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:IEA-nuevo.html.twig', array('form' => $form->createView()));
     }
 
 
