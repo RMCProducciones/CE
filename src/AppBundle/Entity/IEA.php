@@ -22,16 +22,14 @@ class IEA
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="grupo", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
      */
     private $grupo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="calificacion", type="decimal")
+     * @ORM\Column(name="calificacion", type="decimal", nullable = true)
      */
     private $calificacion;
 
@@ -127,23 +125,19 @@ class IEA
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable = true)
      */
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -168,11 +162,11 @@ class IEA
     /**
      * Set grupo
      *
-     * @param integer $grupo
+     * @param AppBundle\Entity\Grupo $grupo
      *
      * @return IEA
      */
-    public function setGrupo($grupo)
+    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
     {
         $this->grupo = $grupo;
 
@@ -182,7 +176,7 @@ class IEA
     /**
      * Get grupo
      *
-     * @return integer
+     * @return AppBundle\Entity\Grupo
      */
     public function getGrupo()
     {
@@ -528,11 +522,11 @@ class IEA
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return IEA
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -542,7 +536,7 @@ class IEA
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -576,11 +570,11 @@ class IEA
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return IEA
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -590,7 +584,7 @@ class IEA
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {

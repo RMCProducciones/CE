@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * AsignacionGrupoBeneficiarioRuta
  *
- * @ORM\Table()
+ * @ORM\Table() 
  * @ORM\Entity(repositoryClass="AppBundle\Entity\AsignacionGrupoBeneficiarioRutaRepository")
  */
 class AsignacionGrupoBeneficiarioRuta
@@ -22,7 +22,7 @@ class AsignacionGrupoBeneficiarioRuta
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ruta")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Ruta")     
      */
     private $ruta;
 
