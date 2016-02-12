@@ -542,6 +542,7 @@ active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_
 
 php app/console doctrine:generate:entity --entity="AppBundle:EstructuraOrganizacional" --fields="
 tipo:integer
+cargo:integer
 beneficiario:integer
 fecha_inicio
 fecha_finalizacion
