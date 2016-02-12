@@ -92,17 +92,17 @@
 
                   </td>
                   <td>                    
-                    {{ organizacion.nombreorganizacion }}
+                    {{ organizacion.organizacion.nombreorganizacion }}
                     <br />
-                    Linea Productiva: {{organizacion.lineaproductiva}}
+                    Linea Productiva: {{organizacion.organizacion.lineaproductiva}}
                     <br>
-                    Tipo de Producto: {{organizacion.tipoproducto}}
+                    Tipo de Producto: {{organizacion.organizacion.tipoproducto}}
                     <br>
                     <br>
                   <td>
                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ organizacion.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                     <br>                    
-                    <a href="{{ path('pasantiaAsignarOrganizacion', {'idPasantia': idPasantia, 'idOrganizacion': organizacion.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
+                    <a href="{{ path('pasantiaAsignarOrganizacion', {'idPasantia': idPasantia, 'idOrganizacion': organizacion.organizacion.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
                     <br>                    
                   </td>
                 </tr>
@@ -209,49 +209,49 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ organizacion.id }} | {{ organizacion.nombreorganizacion }}</h4>
+            <h4 class="modal-title" id="myModalLabel">{{ organizacion.organizacion.id }} | {{ organizacion.organizacion.nombreorganizacion }}</h4>
           </div>
           <div class="modal-body">
-            <b>Nombre de la Organización:{{ organizacion.nombreorganizacion }}</b>
+            <b>Nombre de la Organización:{{ organizacion.organizacion.nombreorganizacion }}</b>
             <br>
-            <b>Linea Productiva: {{organizacion.lineaproductiva}}</b>
+            <b>Linea Productiva: {{organizacion.organizacion.lineaproductiva}}</b>
             <br>
-            <b>Tipo de Producto: Oriente {{organizacion.tipoproducto}}</b>
+            <b>Tipo de Producto: Oriente {{organizacion.organizacion.tipoproducto}}</b>
             <br>
             
-            <b>Dirección: {{organizacion.direccion}}</b>
+            <b>Dirección: {{organizacion.organizacion.direccion}}</b>
             <br>
-            <b>Corregimiento: {{organizacion.corregimiento}}</b>
+            <b>Corregimiento: {{organizacion.organizacion.corregimiento}}</b>
             <br>
-            <b>Barrio: {{organizacion.barrio}}</b>
+            <b>Barrio: {{organizacion.organizacion.barrio}}</b>
             <br>
-            <b>Vereda: {{organizacion.vereda}}</b>
+            <b>Vereda: {{organizacion.organizacion.vereda}}</b>
             <br>
-            <b>Cacerio: {{organizacion.cacerio}}</b>
+            <b>Cacerio: {{organizacion.organizacion.cacerio}}</b>
             <br>
-            <b>Municipio: {{organizacion.municipio}}</b>  
+            <b>Municipio: {{organizacion.organizacion.municipio}}</b>  
             <br>
-            <b>Numero Documento Contacto: {{organizacion.numerodocumentocontacto}}</b>
+            <b>Numero Documento Contacto: {{organizacion.organizacion.numerodocumentocontacto}}</b>
             <br>
-            <b>Primer Apellido Contacto: {{organizacion.primerapellidocontacto}}</b>
+            <b>Primer Apellido Contacto: {{organizacion.organizacion.primerapellidocontacto}}</b>
             <br>
-            <b>Segundo Apellido Contacto: {{organizacion.segundoapellidocontacto}}</b>
+            <b>Segundo Apellido Contacto: {{organizacion.organizacion.segundoapellidocontacto}}</b>
             <br>
-            <b>Primer Nombre Contacto: {{organizacion.primernombrecontacto}}</b>
+            <b>Primer Nombre Contacto: {{organizacion.organizacion.primernombrecontacto}}</b>
             <br>
-            <b>Segundo Nombre Contacto: {{organizacion.segundonombrecontacto}}</b>
+            <b>Segundo Nombre Contacto: {{organizacion.organizacion.segundonombrecontacto}}</b>
             <br>
-            <b>Telefono Fijo Contacto: {{organizacion.telefonofijocontacto}}</b>  
+            <b>Telefono Fijo Contacto: {{organizacion.organizacion.telefonofijocontacto}}</b>  
             <br>
-            <b>Telefono celular Contacto: {{organizacion.telefonocelularcontacto}}</b>
+            <b>Telefono celular Contacto: {{organizacion.organizacion.telefonocelularcontacto}}</b>
             <br>
-            <b>Correo electronico Contacto: {{organizacion.correoelectronicocontacto}}</b>
+            <b>Correo electronico Contacto: {{organizacion.organizacion.correoelectronicocontacto}}</b>
             <br>
-            <b>Ruta: {{organizacion.ruta}}</b>
+            <b>Ruta: {{organizacion.organizacion.ruta}}</b>
             <br>
-            <b>Pasantia: {{organizacion.pasantia}}</b>
+            <b>Pasantia: {{organizacion.organizacion.pasantia}}</b>
             <br>
-            <b>Observaciones: {{organizacion.observaciones}}</b> 
+            <b>Observaciones: {{organizacion.organizacion.observaciones}}</b> 
 
 
           </div>

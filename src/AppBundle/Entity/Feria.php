@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Feria
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\FeriaRepository")
  */
 class Feria
 {
@@ -22,9 +22,7 @@ class Feria
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="tipo", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $tipo;
 
@@ -36,9 +34,7 @@ class Feria
     private $fecha_propuesta;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="municipio", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Municipio")
      */
     private $municipio;
 
@@ -87,119 +83,119 @@ class Feria
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_aprobacion", type="datetime")
+     * @ORM\Column(name="fecha_aprobacion", type="datetime", nullable=true)
      */
     private $fecha_aprobacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_aprobada", type="datetime")
+     * @ORM\Column(name="fecha_aprobada", type="datetime", nullable=true)
      */
     private $fecha_aprobada;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="aprobacion", type="boolean")
+     * @ORM\Column(name="aprobacion", type="boolean", nullable=true)
      */
     private $aprobacion;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="coordinador", type="integer")
+     * @ORM\Column(name="coordinador", type="integer", nullable=true)
      */
     private $coordinador;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="numero_proyectos_produccion_agropecuaria", type="integer")
+     * @ORM\Column(name="numero_proyectos_produccion_agropecuaria", type="integer", nullable=true)
      */
     private $numero_proyectos_produccion_agropecuaria;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="numero_proyectos_agroindustria", type="integer")
+     * @ORM\Column(name="numero_proyectos_agroindustria", type="integer", nullable=true)
      */
     private $numero_proyectos_agroindustria;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="numero_proyectos_turismo_rural", type="integer")
+     * @ORM\Column(name="numero_proyectos_turismo_rural", type="integer", nullable=true)
      */
     private $numero_proyectos_turismo_rural;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="numero_proyectos_artesanias", type="integer")
+     * @ORM\Column(name="numero_proyectos_artesanias", type="integer", nullable=true)
      */
     private $numero_proyectos_artesanias;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="numero_proyectos_otros_servicios", type="integer")
+     * @ORM\Column(name="numero_proyectos_otros_servicios", type="integer", nullable=true)
      */
     private $numero_proyectos_otros_servicios;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="valor_ventas_produccion_agropecuaria", type="decimal")
+     * @ORM\Column(name="valor_ventas_produccion_agropecuaria", type="decimal", nullable=true)
      */
     private $valor_ventas_produccion_agropecuaria;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="valor_ventas_agroindustria", type="decimal")
+     * @ORM\Column(name="valor_ventas_agroindustria", type="decimal", nullable=true)
      */
     private $valor_ventas_agroindustria;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="valor_ventas_turismo_rural", type="decimal")
+     * @ORM\Column(name="valor_ventas_turismo_rural", type="decimal", nullable=true)
      */
     private $valor_ventas_turismo_rural;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="valor_ventas_artesanias", type="decimal")
+     * @ORM\Column(name="valor_ventas_artesanias", type="decimal", nullable=true)
      */
     private $valor_ventas_artesanias;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="valor_ventas_otros_servicios", type="decimal")
+     * @ORM\Column(name="valor_ventas_otros_servicios", type="decimal", nullable=true)
      */
     private $valor_ventas_otros_servicios;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="personas_atendidas", type="integer")
+     * @ORM\Column(name="personas_atendidas", type="integer", nullable=true)
      */
     private $personas_atendidas;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="representantes_instituciones", type="integer")
+     * @ORM\Column(name="representantes_instituciones", type="integer", nullable=true)
      */
     private $representantes_instituciones;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="comentarios", type="text")
+     * @ORM\Column(name="comentarios", type="text", nullable=true)
      */
     private $comentarios;
 
@@ -213,28 +209,28 @@ class Feria
     /**
      * @var integer
      *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\Column(name="usuario_modificacion", type="integer", nullable=true)
      */
     private $usuario_modificacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
      */
     private $fecha_modificacion;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\Column(name="usuario_creacion", type="integer", nullable=true)
      */
     private $usuario_creacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_creacion", type="datetime")
+     * @ORM\Column(name="fecha_creacion", type="datetime", nullable=true)
      */
     private $fecha_creacion;
 
@@ -252,11 +248,11 @@ class Feria
     /**
      * Set tipo
      *
-     * @param integer $tipo
+     * @param AppBundle\Entity\Listas $tipo
      *
      * @return Feria
      */
-    public function setTipo($tipo)
+    public function setTipo(\AppBundle\Entity\Listas $tipo)
     {
         $this->tipo = $tipo;
 
@@ -266,7 +262,7 @@ class Feria
     /**
      * Get tipo
      *
-     * @return integer
+     * @return AppBundle\Entity\Listas
      */
     public function getTipo()
     {
@@ -300,11 +296,11 @@ class Feria
     /**
      * Set municipio
      *
-     * @param integer $municipio
+     * @param AppBundle\Entity\Municipio $municipio
      *
      * @return Feria
      */
-    public function setMunicipio($municipio)
+    public function setMunicipio(\AppBundle\Entity\Municipio $municipio)
     {
         $this->municipio = $municipio;
 
@@ -314,7 +310,7 @@ class Feria
     /**
      * Get municipio
      *
-     * @return integer
+     * @return AppBundle\Entity\Municipio
      */
     public function getMunicipio()
     {

@@ -51,7 +51,10 @@ use AppBundle\Entity\Organizacion;
 use AppBundle\Entity\OrganizacionSoporte;
 use AppBundle\Entity\TerritorioAprendizaje;
 use AppBundle\Entity\DiagnosticoOrganizacional;
+use AppBundle\Entity\Feria;
+use AppBundle\Entity\FeriaSoporte;
 use AppBundle\Entity\AsignacionOrganizacionTerritorioAprendizaje;
+
 
 use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
 use AppBundle\Form\GestionEmpresarial\AsignacionIntegranteCLEARType;
@@ -79,6 +82,9 @@ use AppBundle\Form\GestionEmpresarial\ListaRolType;
 use AppBundle\Form\GestionEmpresarial\TerritorioAprendizajeType;
 use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalType;
 use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalResultadoType;
+use AppBundle\Form\GestionEmpresarial\FeriaType;
+use AppBundle\Form\GestionEmpresarial\FeriaSoporteType;
+
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -2526,7 +2532,7 @@ class GestionEmpresarialController extends Controller
      */
     public function rutaTerritorioAction($idRuta)
     {
-         $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
             array('id' => $idRuta)
@@ -3212,6 +3218,126 @@ class GestionEmpresarialController extends Controller
     }
 
     /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-territorio", name="pasantiaTerritorio")
+     */
+    public function pasantiaTerritorioAction($idPasantia)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+            array('id' => $idPasantia)
+        );
+
+        if($pasantia->getTerritorioAprendizaje() != null){            
+            $idTerritorioAprendizaje = $pasantia->getTerritorioAprendizaje()->getId();        
+
+            $territorioAsignado = $em->getRepository('AppBundle:TerritorioAprendizaje')->findBy(
+                array('id' => $idTerritorioAprendizaje)
+            );
+            
+        }else{
+
+            $territorioAsignado = null;
+        }       
+
+        if($pasantia->getTerritorioAprendizaje() == null){            
+            $query = $em->createQuery('SELECT t FROM AppBundle:TerritorioAprendizaje t WHERE t.id NOT IN (SELECT territorioAprendizaje.id FROM AppBundle:TerritorioAprendizaje territorioAprendizaje JOIN AppBundle:Pasantia apc WHERE territorioAprendizaje = apc.territorio_aprendizaje AND apc.territorio_aprendizaje = :territorio_aprendizaje) AND t.active = 1');
+            $query->setParameter('territorio_aprendizaje', $pasantia);
+            $territorios = $query->getResult();
+        }else{
+            $territorios = null; 
+        }
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:territorio-pasantia-gestion-asignacion.html.twig', 
+            array(
+                'territorios' => $territorios,
+                'asignacionesTerritorioPasantia' => $territorioAsignado,
+                'idPasantia' => $idPasantia
+            ));        
+        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-territorio/{idTerritorio}/nueva-asignacion", name="pasantiaAsignarTerritorio")
+     */
+    public function pasantiaAsignarTerritorioAction($idPasantia, $idTerritorio)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $territorios = $em->getRepository('AppBundle:TerritorioAprendizaje')->findOneBy(
+            array('id' => $idTerritorio)
+        );  
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+            array('id' => $idPasantia)
+        );     
+
+        $pasantia->setTerritorioAprendizaje($territorios);
+        $pasantia->setActive(true);
+        $pasantia->setFechaCreacion(new \DateTime());
+
+        $em->persist($pasantia);
+        $em->flush();
+
+        return $this->redirectToRoute('pasantiaTerritorio', 
+            array(
+                'territorios' => $territorios,
+                'asignacionesTerritorioPasantia' => $pasantia,                 
+                'idPasantia' => $idPasantia
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantias/{idPasantia}/asignacion-territorio/{idTerritorio}/eliminar", name="pasantiaEliminarTerritorio")
+     */
+    public function pasantiaEliminarTerritorioAction(Request $request, $idPasantia, $idTerritorio)
+    {
+        $em = $this->getDoctrine()->getManager();                
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+            array('id' => $idPasantia)
+        );
+
+        $asignacionOrganizacionPasantia = new AsignacionOrganizacionPasantia();
+
+        $asignacionOrganizacionPasantia = $em->getRepository('AppBundle:AsignacionOrganizacionPasantia')->findOneBy(
+            array('pasantia' => $idPasantia));       
+
+        if($asignacionOrganizacionPasantia != null){
+
+            if($asignacionOrganizacionPasantia->getPasantia()->getId() == $idPasantia){            
+
+            $idAsignacionOrganizacionPasantia = $em->getRepository('AppBundle:AsignacionOrganizacionPasantia')->find(
+                array('id' => $asignacionOrganizacionPasantia->getId()));
+
+            $em->remove($idAsignacionOrganizacionPasantia);
+            $em->flush();
+
+            return $this->redirectToRoute('pasantiaEliminarTerritorio',
+                 array(
+                    'idPasantia' => $idPasantia,
+                    'idTerritorio' => $idTerritorio
+                ));    
+            }
+
+        }    
+
+        $pasantia->setNullTerritorioAprendizaje();
+        
+        $em->persist($pasantia);
+        $em->flush();
+
+        return $this->redirectToRoute('pasantiaTerritorio',
+             array(
+                'idPasantia' => $idPasantia
+            ));    
+        
+    }
+
+    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-organizacion", name="pasantiaOrganizacion")
      */
     public function pasantiaOrganizacionAction($idPasantia)
@@ -3220,22 +3346,27 @@ class GestionEmpresarialController extends Controller
 
         $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
             array('id' => $idPasantia)
-        );
-
-        $asignacionesOrganizacionPasantia = $em->getRepository('AppBundle:AsignacionOrganizacionPasantia')->findBy(
-            array('pasantia' => $pasantia)
-        );  
-
-        $query = $em->createQuery('SELECT o FROM AppBundle:Organizacion o WHERE o.id NOT IN (SELECT organizacion.id FROM AppBundle:Organizacion organizacion JOIN AppBundle:AsignacionOrganizacionPasantia aoc WHERE organizacion = aoc.organizacion AND aoc.pasantia = :pasantia) AND o.active = 1');
-        $query->setParameter('pasantia', $pasantia);
-
-        $organizaciones = $query->getResult();         
+        );   
         
+        $territorioAprendizaje = $pasantia->getTerritorioAprendizaje()->getId();
+
+        
+        $organizacionPasantia = $em->getRepository('AppBundle:AsignacionOrganizacionPasantia')->findBy(
+            array('pasantia' => $idPasantia)
+        );        
+
+        $query = $em->createQuery('SELECT o FROM AppBundle:Organizacion o WHERE o.id NOT IN (SELECT organizacion.id FROM AppBundle:Organizacion organizacion JOIN AppBundle:AsignacionOrganizacionPasantia aoc WHERE organizacion = aoc.organizacion AND aoc.pasantia = :pasantia) AND o.active = 1 AND o.pasantia = 1');
+            $query->setParameter('pasantia', $pasantia);
+            $organizaciones = $query->getResult();
+
+        $mostrarOrganizacion = $em->getRepository('AppBundle:AsignacionOrganizacionTerritorioAprendizaje')->findBy(
+            array('organizacion' => $organizaciones, 'territorio_aprendizaje' => $territorioAprendizaje));
+       
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:organizacion-pasantia-gestion-asignacion.html.twig', 
             array(
-                'organizaciones' => $organizaciones,
-                'asignacionesOrganizacionPasantia' => $asignacionesOrganizacionPasantia,
-                'idPasantia' => $idPasantia
+                'organizaciones' => $mostrarOrganizacion, 
+                'asignacionesOrganizacionPasantia' => $organizacionPasantia,
+                'idPasantia' => $idPasantia                              
             ));        
         
     }
@@ -4170,6 +4301,240 @@ class GestionEmpresarialController extends Controller
         );
     }
 
+
+ /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/feria/gestion", name="feriaGestion")
+     */
+    public function feriaGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ferias = $em->getRepository('AppBundle:Feria')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:feria-gestion.html.twig', array( 'ferias' => $ferias));
+    }
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/feria/nuevo", name="feriaNuevo")
+     */
+    public function feriaNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $feria= new Feria();
+        
+        $form = $this->createForm(new FeriaType(), $feria);
+        
+        $form->add(
+            'guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $feria = $form->getData();
+
+
+            $feria->setActive(true);
+            $feria->setFechaCreacion(new \DateTime());
+            $em->persist($feria);
+            $em->flush();
+
+            return $this->redirectToRoute('feriaGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:feria-nuevo.html.twig', array('form' => $form->createView()));
+    }
+
+
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/feria/{idFeria}/eliminar", name="feriaEliminar")
+     */
+    public function feriaEliminarAction(Request $request, $idFeria)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $feria = new Feria();
+
+        $feria = $em->getRepository('AppBundle:Feria')->find($idFeria);              
+
+        $em->remove($feria);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('feriaGestion'));
+
+    }
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/feria/{idFeria}/documentos-soporte", name="feriaSoporte")
+     */
+    public function feriaSoporteAction(Request $request, $idFeria)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $feriaSoporte = new FeriaSoporte();
+        
+        $form = $this->createForm(new FeriaSoporteType(), $feriaSoporte);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $soportesActivos = $em->getRepository('AppBundle:FeriaSoporte')->findBy(
+            array('active' => '1', 'feria' => $idFeria),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $histotialSoportes = $em->getRepository('AppBundle:FeriaSoporte')->findBy(
+            array('active' => '0', 'feria' => $idFeria),
+            array('fecha_creacion' => 'ASC')
+        );
+        
+        $feria = $em->getRepository('AppBundle:Feria')->findOneBy(
+            array('id' => $idFeria)
+        );
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+
+                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                    array(
+                        'descripcion' => $feriaSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'grupo_tipo_soporte'
+                    )
+                );
+                
+                $actualizarFeriaSoportes = $em->getRepository('AppBundle:FeriaSoporte')->findBy(
+                    array(
+                        'active' => '1' , 
+                        'tipo_soporte' => $tipoSoporte->getId(), 
+                        'feria' => $idFeria
+                    )
+                );  
+            
+                foreach ($actualizarFeriaSoportes as $actualizarFeriaSoporte){
+                    echo $actualizarFeriaSoporte->getId()." ".$actualizarFeriaSoporte->getTipoSoporte()."<br />";
+                    $actualizarFeriaSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarFeriaSoporte->setActive(0);
+                    $em->flush();
+                }
+                
+                $feriaSoporte->setFeria($feria);
+                $feriaSoporte->setActive(true);
+                $feriaSoporte->setFechaCreacion(new \DateTime());
+                //$grupoSoporte->setUsuarioCreacion(1);
+
+                $em->persist($feriaSoporte);
+                $em->flush();
+
+                return $this->redirectToRoute('feriaSoporte', array( 'idFeria' => $idFeria));
+            }
+        }   
+        
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:feria-soporte.html.twig', 
+            array(
+                'form' => $form->createView(), 
+                'soportesActivos' => $soportesActivos, 
+                'histotialSoportes' => $histotialSoportes
+            )
+        );
+        
+    }
+    
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/feria/{idFeria}/documentos-soporte/{idFeriaSoporte}/borrar", name="feriaSoporteBorrar")
+     */
+    public function feriaSoporteBorrarAction(Request $request, $idFeria, $idFeriaSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $FeriaSoporte = new FeriaSoporte();
+        
+        $feriaSoporte = $em->getRepository('AppBundle:FeriaSoporte')->findOneBy(
+            array('id' => $idFeriaSoporte)
+        );
+        
+        $feriaSoporte->setFechaModificacion(new \DateTime());
+        $feriaSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('feriaSoporte', array( 'idFeria' => $idFeria));
+        
+    }
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/feria/{idFeria}/editar", name="feriaEditar")
+     */
+    public function feriaEditarAction(Request $request, $idFeria)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $feria = new Feria();
+
+        $feria = $em->getRepository('AppBundle:Feria')->findOneBy(
+            array('id' => $idFeria)
+        );
+        //echo $integrantes->getPertenenciaEtnica();
+        $form = $this->createForm(new FeriaType(), $feria);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $feria = $form->getData();
+
+            $feria->setFechaModificacion(new \DateTime());
+
+            
+
+            $em->flush();
+
+            return $this->redirectToRoute('feriaGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:feria-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idFeria' => $idFeria,
+                    'feria' => $feria,
+            )
+        );
+
+               
+    }
 
 
 
