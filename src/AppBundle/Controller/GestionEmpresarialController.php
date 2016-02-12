@@ -2615,28 +2615,14 @@ class GestionEmpresarialController extends Controller
 
         $asignacionOrganizacionRuta = new AsignacionOrganizacionRuta();
 
-        $asignacionOrganizacionRuta = $em->getRepository('AppBundle:AsignacionOrganizacionRuta')->findOneBy(
-            array('ruta' => $idRuta));       
+        $asignacionOrganizacionRuta = $em->getRepository('AppBundle:AsignacionOrganizacionRuta')->findBy(
+            array('ruta' => $idRuta)
+        );       
 
-        if($asignacionOrganizacionRuta != null){
-
-            if($asignacionOrganizacionRuta->getRuta()->getId() == $idRuta){            
-
-            $idAsignacionOrganizacionRuta = $em->getRepository('AppBundle:AsignacionOrganizacionRuta')->find(
-                array('id' => $asignacionOrganizacionRuta->getId()));
-
-            $em->remove($idAsignacionOrganizacionRuta);
-            $em->flush();
-
-            return $this->redirectToRoute('RutaEliminarTerritorio',
-                 array(
-                    'idRuta' => $idRuta,
-                    'idTerritorio' => $idTerritorio
-                ));    
-            }
-
-        }    
-
+        foreach($asignacionOrganizacionRuta as $asignacionOrganizacionRutaActual){
+            $em->remove($asignacionOrganizacionRutaActual);
+        }
+        
         $ruta->setNullTerritorioAprendizaje();
 
         $em->persist($ruta);

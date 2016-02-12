@@ -31,6 +31,13 @@ class EstructuraOrganizacional
     /**
      * @var integer
      *
+     * @ORM\Column(name="cargo", type="integer")
+     */
+    private $cargo;
+
+    /**
+     * @var integer
+     *
      * @ORM\Column(name="beneficiario", type="integer")
      */
     private $beneficiario;
@@ -124,6 +131,30 @@ class EstructuraOrganizacional
     public function getTipo()
     {
         return $this->tipo;
+    }
+
+    /**
+     * Set cargo
+     *
+     * @param integer $cargo
+     *
+     * @return EstructuraOrganizacional
+     */
+    public function setCargo($cargo)
+    {
+        $this->cargo = $cargo;
+
+        return $this;
+    }
+
+    /**
+     * Get cargo
+     *
+     * @return integer
+     */
+    public function getCargo()
+    {
+        return $this->cargo;
     }
 
     /**
