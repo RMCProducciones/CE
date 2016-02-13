@@ -606,6 +606,45 @@ active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_
 
 
 
+php app/console doctrine:generate:entity --entity="AppBundle:Visita" --fields="
+seguimientoFase:integer
+fecha:datetime
+objetivo:text
+agenda:text
+lugar:text
+asistentes:integer
+comite_compras:boolean
+funcionamiento_comite_compras:integer
+comite_vamos_bien:boolean
+funcionamiento_comite_vamos_bien:integer
+logros_compras:text
+logros_vamos_bien:text
+contador:boolean
+desempeno_contador:integer
+observaciones_contador:text
+observaciones_presupuesto_asignado:text
+cambios_presupuesto_asignado:boolean
+cambios_razones_presupuesto_asignado:text
+desempeno_organizacional:text
+desempeno_productivo:text
+desempeno_comercial:text
+desempeno_administrativo:text
+desempeno_financiero:text
+cambios_integrantes_grupo:boolean
+cambios_razones_integrantes_grupo:text
+observaciones:text
+compromisos:text
+interventoria:boolean
+razones_interventoria:text
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:AsignacionBeneficiarioVisita" --fields="
+visita:integer
+beneficiario:integer
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
+
 PENDIENTE POR DEFINIR
 
 php app/console doctrine:generate:entity --entity="AppBundle:Configuracion" --fields="
