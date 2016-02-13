@@ -540,11 +540,11 @@ fecha_finalizacion:datetime
 actividad_productiva:string
 descripcion_actividad_productiva:text
 logros:text
-resultado_componente_organizacional:text
-resultado_componente_productivo:text
-resultado_componente_comercial:text
-resultado_componente_administrativo:text
-resultado_componente_financiero:text
+resultado_area_organizacional:text
+resultado_area_productivo:text
+resultado_area_comercial:text
+resultado_area_administrativo:text
+resultado_area_financiero:text
 observaciones:text
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
@@ -642,6 +642,33 @@ php app/console doctrine:generate:entity --entity="AppBundle:AsignacionBeneficia
 visita:integer
 beneficiario:integer
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
+php app/console doctrine:generate:entity --entity="AppBundle:PlanInversion" --fields="
+seguimientoFase:integer
+area:integer
+actividad:string
+unidad_medida:integer
+cantidad:decimal
+valor_unitario:decimal
+valor_total:decimal
+tiempo_ejecucion:integer
+cantidad_visita1:decimal
+valor_unitario_visita1:decimal
+valor_total_visita1:decimal
+tiempo_ejecucion_visita1:integer
+cantidad_visita2:decimal
+valor_unitario_visita2:decimal
+valor_total_visita2:decimal
+tiempo_ejecucion_visita2:integer
+cantidad_visita3:decimal
+valor_unitario_visita3:decimal
+valor_total_visita3:decimal
+tiempo_ejecucion_visita3:integer
+cumplio:boolean
+observaciones:text
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
 
 
 

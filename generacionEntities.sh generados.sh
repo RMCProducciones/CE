@@ -104,7 +104,7 @@ php app/console doctrine:generate:entity --entity="AppBundle:PatrocinadorFeria" 
 
 php app/console doctrine:generate:entity --entity="AppBundle:EstructuraOrganizacional" --fields="tipo:integer cargo:integer beneficiario:integer fecha_inicio fecha_finalizacion estado:integer active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
-php app/console doctrine:generate:entity --entity="AppBundle:SeguimientoFase" --fields="grupo:integer fase:integer calificacion:decimal fecha_inicio:datetime fecha_finalizacion:datetime actividad_productiva:string descripcion_actividad_productiva:text logros:text resultado_componente_organizacional:text resultado_componente_productivo:text resultado_componente_comercial:text resultado_componente_administrativo:text resultado_componente_financiero:text observaciones:text active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+php app/console doctrine:generate:entity --entity="AppBundle:SeguimientoFase" --fields="grupo:integer fase:integer calificacion:decimal fecha_inicio:datetime fecha_finalizacion:datetime actividad_productiva:string descripcion_actividad_productiva:text logros:text resultado_area_organizacional:text resultado_area_productivo:text resultado_area_comercial:text resultado_area_administrativo:text resultado_area_financiero:text observaciones:text active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 php app/console doctrine:generate:entity --entity="AppBundle:Activos" --fields="seguimientoFase:integer rubro:integer descripcion:string unidad_medida:integer cantidad_inicial:decimal valor_inicial:decimal cantidad_final:decimal valor_final:decimal active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
@@ -122,7 +122,7 @@ php app/console doctrine:generate:entity --entity="AppBundle:Visita" --fields="s
 php app/console doctrine:generate:entity --entity="AppBundle:AsignacionBeneficiarioVisita" --fields="visita:integer beneficiario:integer active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 
-
+php app/console doctrine:generate:entity --entity="AppBundle:PlanInversion" --fields="seguimientoFase:integer area:integer actividad:string unidad_medida:integer cantidad:decimal valor_unitario:decimal valor_total:decimal tiempo_ejecucion:integer cantidad_visita1:decimal valor_unitario_visita1:decimal valor_total_visita1:decimal tiempo_ejecucion_visita1:integer cantidad_visita2:decimal valor_unitario_visita2:decimal valor_total_visita2:decimal tiempo_ejecucion_visita2:integer cantidad_visita3:decimal valor_unitario_visita3:decimal valor_total_visita3:decimal tiempo_ejecucion_visita3:integer cumplio:boolean observaciones:text active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 
 
