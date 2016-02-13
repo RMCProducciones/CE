@@ -34,13 +34,6 @@ class SeguimientoFase
     private $fase;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="calificacion", type="decimal")
-     */
-    private $calificacion;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="fecha_inicio", type="datetime")
@@ -205,30 +198,6 @@ class SeguimientoFase
     public function getFase()
     {
         return $this->fase;
-    }
-
-    /**
-     * Set calificacion
-     *
-     * @param string $calificacion
-     *
-     * @return SeguimientoFase
-     */
-    public function setCalificacion($calificacion)
-    {
-        $this->calificacion = $calificacion;
-
-        return $this;
-    }
-
-    /**
-     * Get calificacion
-     *
-     * @return string
-     */
-    public function getCalificacion()
-    {
-        return $this->calificacion;
     }
 
     /**

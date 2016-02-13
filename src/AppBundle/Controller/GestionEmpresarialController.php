@@ -2836,27 +2836,13 @@ class GestionEmpresarialController extends Controller
 
         $asignacionGrupoBeneficiarioRuta = new AsignacionGrupoBeneficiarioRuta();
 
-        $asignacionGrupoBeneficiarioRuta = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioRuta')->findOneBy(
-            array('ruta' => $idRuta));       
+        $asignacionGrupoBeneficiarioRuta = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioRuta')->findBy(
+            array('ruta' => $idRuta)
+        );       
 
-        if($asignacionGrupoBeneficiarioRuta != null){
-
-            if($asignacionGrupoBeneficiarioRuta->getRuta()->getId() == $idRuta){            
-
-            $idAsignacionGrupoBeneficiarioRuta = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioRuta')->find(
-                array('id' => $asignacionGrupoBeneficiarioRuta->getId()));
-
-            $em->remove($idAsignacionGrupoBeneficiarioRuta);
-            $em->flush();
-
-            return $this->redirectToRoute('rutaEliminarGrupo',
-                 array(
-                    'idRuta' => $idRuta,
-                    'idGrupo' => $idGrupo
-                ));    
-            }
-
-        }    
+        foreach($asignacionGrupoBeneficiarioRuta as $asignacionGrupoBeneficiarioRutaActual){
+            $em->remove($asignacionGrupoBeneficiarioRutaActual);
+        }
 
         $ruta->setNullGrupo();
 
@@ -3268,6 +3254,8 @@ class GestionEmpresarialController extends Controller
             array('id' => $idPasantia)
         );
 
+        echo $idPasantia;
+
         if($pasantia->getTerritorioAprendizaje() != null){            
             $idTerritorioAprendizaje = $pasantia->getTerritorioAprendizaje()->getId();        
 
@@ -3343,27 +3331,13 @@ class GestionEmpresarialController extends Controller
 
         $asignacionOrganizacionPasantia = new AsignacionOrganizacionPasantia();
 
-        $asignacionOrganizacionPasantia = $em->getRepository('AppBundle:AsignacionOrganizacionPasantia')->findOneBy(
-            array('pasantia' => $idPasantia));       
+        $asignacionOrganizacionPasantia = $em->getRepository('AppBundle:AsignacionOrganizacionPasantia')->findBy(
+            array('pasantia' => $idPasantia)
+        );       
 
-        if($asignacionOrganizacionPasantia != null){
-
-            if($asignacionOrganizacionPasantia->getPasantia()->getId() == $idPasantia){            
-
-            $idAsignacionOrganizacionPasantia = $em->getRepository('AppBundle:AsignacionOrganizacionPasantia')->find(
-                array('id' => $asignacionOrganizacionPasantia->getId()));
-
-            $em->remove($idAsignacionOrganizacionPasantia);
-            $em->flush();
-
-            return $this->redirectToRoute('pasantiaEliminarTerritorio',
-                 array(
-                    'idPasantia' => $idPasantia,
-                    'idTerritorio' => $idTerritorio
-                ));    
-            }
-
-        }    
+        foreach($asignacionOrganizacionPasantia as $asignacionOrganizacionPasantiaActual){
+            $em->remove($asignacionOrganizacionPasantiaActual);
+        }
 
         $pasantia->setNullTerritorioAprendizaje();
         
@@ -3574,27 +3548,13 @@ class GestionEmpresarialController extends Controller
 
         $asignacionGrupoBeneficiarioPasantia = new AsignacionGrupoBeneficiarioPasantia();
 
-        $asignacionGrupoBeneficiarioPasantia = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioPasantia')->findOneBy(
-            array('pasantia' => $idPasantia));       
+        $asignacionGrupoBeneficiarioPasantia = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioPasantia')->findBy(
+            array('pasantia' => $idPasantia)
+        );       
 
-        if($asignacionGrupoBeneficiarioPasantia != null){
-
-            if($asignacionGrupoBeneficiarioPasantia->getPasantia()->getId() == $idPasantia){            
-
-            $idAsignacionGrupoBeneficiarioPasantia = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioPasantia')->find(
-                array('id' => $asignacionGrupoBeneficiarioPasantia->getId()));
-
-            $em->remove($idAsignacionGrupoBeneficiarioPasantia);
-            $em->flush();
-
-            return $this->redirectToRoute('pasantiaEliminarGrupo',
-                 array(
-                    'idPasantia' => $idPasantia,
-                    'idGrupo' => $idGrupo
-                ));    
-            }
-
-        }    
+        foreach($asignacionGrupoBeneficiarioPasantia as $asignacionGrupoBeneficiarioPasantiaActual){
+            $em->remove($asignacionGrupoBeneficiarioPasantiaActual);
+        }
 
         $pasantia->setNullGrupo();
 
