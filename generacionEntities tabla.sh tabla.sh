@@ -672,6 +672,24 @@ active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_
 
 
 
+php app/console doctrine:generate:entity --entity="AppBundle:Nodo" --fields="
+nombre:string
+fase:integer
+formal:boolean
+negocio:boolean
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
+php app/console doctrine:generate:entity --entity="AppBundle:Camino" --fields="
+grupo:integer
+nodo:integer
+estado:integer
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
+
+
+
 PENDIENTE POR DEFINIR
 
 php app/console doctrine:generate:entity --entity="AppBundle:Configuracion" --fields="
