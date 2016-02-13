@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\ORM\EntityRepository;
 
-class IEAType extends AbstractType
+class SeguimientoFaseType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -21,18 +21,11 @@ class IEAType extends AbstractType
 				'widget' => 'single_text'
 			))
 
-			->add('linea_productiva', 'entity', array('label' => 'Linea Productiva', 
-											'class' => 'AppBundle:Listas',
-										    'query_builder' => function(EntityRepository $er) {
-										        return $er->createQueryBuilder('l')
-										        	->where('l.dominio = :dominio')
-										        	->andWhere('l.active = 1')
-										        	->setParameter('dominio', 'linea_productiva')
-										            ->orderBy('l.orden', 'ASC');
-										    },))
+			
 			->add('actividad_productiva','text', array('label' => 'Actividad Productiva'))
-			->add('descripcion_actividad_productiva','text', array('label' => 'Actividad Productiva'))
+			->add('descripcion_actividad_productiva','text', array('label' => 'Descripción Actividad'))
 			->add('logros','text', array('label' => 'Logros'))
+			->add('calificacion','text', array('label' => 'Calificacion'))
 			->add('observaciones','text', array('label' => 'Observaciones'))
 			->add('resultado_componente_organizacional','text', array('label' => 'Resultado Componente Organizacional'))
 			->add('resultado_componente_productivo','text', array('label' => 'Resultado Componente Productivo'))
@@ -47,6 +40,6 @@ class IEAType extends AbstractType
     
     public function getName()
     {
-        return 'IEA';
+        return 'seguimientofase';
     }
 }

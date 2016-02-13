@@ -54,7 +54,8 @@ use AppBundle\Entity\DiagnosticoOrganizacional;
 use AppBundle\Entity\Feria;
 use AppBundle\Entity\FeriaSoporte;
 use AppBundle\Entity\AsignacionOrganizacionTerritorioAprendizaje;
-use AppBundle\Entity\IEA;
+use AppBundle\Entity\SeguimientoFase;
+use AppBundle\Entity\Activos;
 
 
 use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
@@ -85,7 +86,8 @@ use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalType;
 use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalResultadoType;
 use AppBundle\Form\GestionEmpresarial\FeriaType;
 use AppBundle\Form\GestionEmpresarial\FeriaSoporteType;
-use AppBundle\Form\GestionEmpresarial\IEAType;
+use AppBundle\Form\GestionEmpresarial\SeguimientoFaseType;
+use AppBundle\Form\GestionEmpresarial\ActivosType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -1110,6 +1112,8 @@ class GestionEmpresarialController extends Controller
             ));    
         
     }
+
+
 
 
 	/**
@@ -4596,34 +4600,35 @@ class GestionEmpresarialController extends Controller
                
     }
 
-
-
-
-
  /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/IEA/gestion", name="ieaGestion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/seguimiento-fase/{idFase}/gestion", name="seguimientofaseGestion")
      */
-    public function ieaGestionAction()
+    public function seguimientofaseGestionAction($idFase)
     {
         $em = $this->getDoctrine()->getManager();
-        $iea = $em->getRepository('AppBundle:IEA')->findBy(
+        $seguimientofase = $em->getRepository('AppBundle:SeguimientoFase')->findBy(
             array('active' => '1'),
             array('fecha_creacion' => 'ASC')
         );
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:IEA-gestion.html.twig', array( 'iea' => $iea));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimientofase-gestion.html.twig', 
+            array( 'seguimientofase' => $seguimientofase,
+                    'idFase' => $idFase
+          
+                )
+            );
     }
 
 
 /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/IEA/nuevo", name="ieaNuevo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/seguimiento-fase/{idFase}/nuevo", name="seguimientofaseNuevo")
      */
-    public function ieaNuevoAction(Request $request)
+    public function seguimientofaseNuevoAction(Request $request, $idFase)
     {
         $em = $this->getDoctrine()->getManager();
-        $iea= new IEA();
+        $seguimientofase= new SeguimientoFase();
         
-        $form = $this->createForm(new IEAType(), $iea);
+        $form = $this->createForm(new SeguimientoFaseType(), $seguimientofase);
         
         $form->add(
             'guardar', 
@@ -4639,22 +4644,157 @@ class GestionEmpresarialController extends Controller
 
         if ($form->isValid()) {
             
-            $iea = $form->getData();
+            $seguimientofase = $form->getData();
 
 
-            $iea->setActive(true);
-            $iea->setFechaCreacion(new \DateTime());
-            $em->persist($iea);
+            $seguimientofase->setActive(true);
+            $seguimientofase->setFechaCreacion(new \DateTime());
+            $em->persist($seguimientofase);
             $em->flush();
 
-            return $this->redirectToRoute('ieaGestion');
+            return $this->redirect(
+                $this->generateUrl(
+                    'seguimientofaseGestion', 
+                    array(
+                        'idFase' => $idFase
+                    )
+                )
+            );
         }
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:IEA-nuevo.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimientofase-nuevo.html.twig',
+         array('form' => $form->createView(),
+               'idFase' => $idFase,
+
+
+            ));
     }
 
 
 
 
 	
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/activos/gestion", name="activosGestion")
+     */
+    public function activosGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $activos = $em->getRepository('AppBundle:Activos')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:activos-gestion.html.twig', array( 'activos' => $activos));
+    }
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/activos/nuevo", name="activosNuevo")
+     */
+    public function activosNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $activos= new Activos();
+        
+        $form = $this->createForm(new ActivosType(), $activos);
+        
+        $form->add(
+            'guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $activos = $form->getData();
+
+
+            $activos->setActive(true);
+            $activos->setFechaCreacion(new \DateTime());
+            $em->persist($activos);
+            $em->flush();
+
+            return $this->redirectToRoute('activosGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:activos-nuevo.html.twig', array('form' => $form->createView()));
+    }
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/activos/{idActivos}/eliminar", name="activosEliminar")
+     */
+    public function activosEliminarAction(Request $request, $idActivos)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $activos = new Activos();
+
+        $activos = $em->getRepository('AppBundle:Activos')->find($idActivos);              
+
+        $em->remove($activos);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('activosGestion'));
+
+    }
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/activos/{idActivos}/editar", name="activosEditar")
+     */
+    public function activosEditarAction(Request $request, $idActivos)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $activos = new Activos();
+
+        $activos = $em->getRepository('AppBundle:Activos')->findOneBy(
+            array('id' => $idActivos)
+        );
+        //echo $integrantes->getPertenenciaEtnica();
+        $form = $this->createForm(new ActivosType(), $activos);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $activos = $form->getData();
+
+            $activos->setFechaModificacion(new \DateTime());
+
+            
+
+            $em->flush();
+
+            return $this->redirectToRoute('activosGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:activos-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idActivos' => $idActivos,
+                    'activos' => $activos,
+            )
+        );
+
+               
+    }
+
+
+
+
 }
