@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * IEA
+ * SeguimientoFase
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class IEA
+class SeguimientoFase
 {
     /**
      * @var integer
@@ -22,14 +22,23 @@ class IEA
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
+     * @var integer
+     *
+     * @ORM\Column(name="grupo", type="integer")
      */
     private $grupo;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="fase", type="integer")
+     */
+    private $fase;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="calificacion", type="decimal", nullable = true)
+     * @ORM\Column(name="calificacion", type="decimal")
      */
     private $calificacion;
 
@@ -46,13 +55,6 @@ class IEA
      * @ORM\Column(name="fecha_finalizacion", type="datetime")
      */
     private $fecha_finalizacion;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="linea_productiva", type="string")
-     */
-    private $linea_productiva;
 
     /**
      * @var string
@@ -125,19 +127,23 @@ class IEA
     private $active;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
+     * @var integer
+     *
+     * @ORM\Column(name="usuario_modificacion", type="integer")
      */
     private $usuario_modificacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable = true)
+     * @ORM\Column(name="fecha_modificacion", type="datetime")
      */
     private $fecha_modificacion;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
+     * @var integer
+     *
+     * @ORM\Column(name="usuario_creacion", type="integer")
      */
     private $usuario_creacion;
 
@@ -162,11 +168,11 @@ class IEA
     /**
      * Set grupo
      *
-     * @param AppBundle\Entity\Grupo $grupo
+     * @param integer $grupo
      *
-     * @return IEA
+     * @return SeguimientoFase
      */
-    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
+    public function setGrupo($grupo)
     {
         $this->grupo = $grupo;
 
@@ -176,7 +182,7 @@ class IEA
     /**
      * Get grupo
      *
-     * @return AppBundle\Entity\Grupo
+     * @return integer
      */
     public function getGrupo()
     {
@@ -184,11 +190,35 @@ class IEA
     }
 
     /**
+     * Set fase
+     *
+     * @param integer $fase
+     *
+     * @return SeguimientoFase
+     */
+    public function setFase($fase)
+    {
+        $this->fase = $fase;
+
+        return $this;
+    }
+
+    /**
+     * Get fase
+     *
+     * @return integer
+     */
+    public function getFase()
+    {
+        return $this->fase;
+    }
+
+    /**
      * Set calificacion
      *
      * @param string $calificacion
      *
-     * @return IEA
+     * @return SeguimientoFase
      */
     public function setCalificacion($calificacion)
     {
@@ -212,7 +242,7 @@ class IEA
      *
      * @param \DateTime $fechaInicio
      *
-     * @return IEA
+     * @return SeguimientoFase
      */
     public function setFechaInicio($fechaInicio)
     {
@@ -236,7 +266,7 @@ class IEA
      *
      * @param \DateTime $fechaFinalizacion
      *
-     * @return IEA
+     * @return SeguimientoFase
      */
     public function setFechaFinalizacion($fechaFinalizacion)
     {
@@ -256,35 +286,11 @@ class IEA
     }
 
     /**
-     * Set lineaProductiva
-     *
-     * @param string $lineaProductiva
-     *
-     * @return IEA
-     */
-    public function setLineaProductiva($lineaProductiva)
-    {
-        $this->linea_productiva = $lineaProductiva;
-
-        return $this;
-    }
-
-    /**
-     * Get lineaProductiva
-     *
-     * @return string
-     */
-    public function getLineaProductiva()
-    {
-        return $this->linea_productiva;
-    }
-
-    /**
      * Set actividadProductiva
      *
      * @param string $actividadProductiva
      *
-     * @return IEA
+     * @return SeguimientoFase
      */
     public function setActividadProductiva($actividadProductiva)
     {
@@ -308,7 +314,7 @@ class IEA
      *
      * @param string $descripcionActividadProductiva
      *
-     * @return IEA
+     * @return SeguimientoFase
      */
     public function setDescripcionActividadProductiva($descripcionActividadProductiva)
     {
@@ -332,7 +338,7 @@ class IEA
      *
      * @param string $logros
      *
-     * @return IEA
+     * @return SeguimientoFase
      */
     public function setLogros($logros)
     {
@@ -356,7 +362,7 @@ class IEA
      *
      * @param string $resultadoComponenteOrganizacional
      *
-     * @return IEA
+     * @return SeguimientoFase
      */
     public function setResultadoComponenteOrganizacional($resultadoComponenteOrganizacional)
     {
@@ -380,7 +386,7 @@ class IEA
      *
      * @param string $resultadoComponenteProductivo
      *
-     * @return IEA
+     * @return SeguimientoFase
      */
     public function setResultadoComponenteProductivo($resultadoComponenteProductivo)
     {
@@ -404,7 +410,7 @@ class IEA
      *
      * @param string $resultadoComponenteComercial
      *
-     * @return IEA
+     * @return SeguimientoFase
      */
     public function setResultadoComponenteComercial($resultadoComponenteComercial)
     {
@@ -428,7 +434,7 @@ class IEA
      *
      * @param string $resultadoComponenteAdministrativo
      *
-     * @return IEA
+     * @return SeguimientoFase
      */
     public function setResultadoComponenteAdministrativo($resultadoComponenteAdministrativo)
     {
@@ -452,7 +458,7 @@ class IEA
      *
      * @param string $resultadoComponenteFinanciero
      *
-     * @return IEA
+     * @return SeguimientoFase
      */
     public function setResultadoComponenteFinanciero($resultadoComponenteFinanciero)
     {
@@ -476,7 +482,7 @@ class IEA
      *
      * @param string $observaciones
      *
-     * @return IEA
+     * @return SeguimientoFase
      */
     public function setObservaciones($observaciones)
     {
@@ -500,7 +506,7 @@ class IEA
      *
      * @param boolean $active
      *
-     * @return IEA
+     * @return SeguimientoFase
      */
     public function setActive($active)
     {
@@ -522,11 +528,11 @@ class IEA
     /**
      * Set usuarioModificacion
      *
-     * @param AppBundle\Entity\Usuario $usuarioModificacion
+     * @param integer $usuarioModificacion
      *
-     * @return IEA
+     * @return SeguimientoFase
      */
-    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
+    public function setUsuarioModificacion($usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -536,7 +542,7 @@ class IEA
     /**
      * Get usuarioModificacion
      *
-     * @return AppBundle\Entity\Usuario
+     * @return integer
      */
     public function getUsuarioModificacion()
     {
@@ -548,7 +554,7 @@ class IEA
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return IEA
+     * @return SeguimientoFase
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -570,11 +576,11 @@ class IEA
     /**
      * Set usuarioCreacion
      *
-     * @param AppBundle\Entity\Usuario $usuarioCreacion
+     * @param integer $usuarioCreacion
      *
-     * @return IEA
+     * @return SeguimientoFase
      */
-    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
+    public function setUsuarioCreacion($usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -584,7 +590,7 @@ class IEA
     /**
      * Get usuarioCreacion
      *
-     * @return AppBundle\Entity\Usuario
+     * @return integer
      */
     public function getUsuarioCreacion()
     {
@@ -596,7 +602,7 @@ class IEA
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return IEA
+     * @return SeguimientoFase
      */
     public function setFechaCreacion($fechaCreacion)
     {

@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Activos
+ * Empleado
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class Activos
+class Empleado
 {
     /**
      * @var integer
@@ -31,51 +31,65 @@ class Activos
     /**
      * @var integer
      *
-     * @ORM\Column(name="rubro", type="integer")
+     * @ORM\Column(name="periodicidad", type="integer")
      */
-    private $rubro;
+    private $periodicidad;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="string")
+     * @ORM\Column(name="nombre", type="string")
      */
-    private $descripcion;
+    private $nombre;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="socio_organizacion", type="boolean")
+     */
+    private $socio_organizacion;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_ingreso", type="datetime")
+     */
+    private $fecha_ingreso;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_nacimiento", type="datetime")
+     */
+    private $fecha_nacimiento;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="edad_al_ingreso", type="decimal")
+     */
+    private $edad_al_ingreso;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="unidad_medida", type="integer")
+     * @ORM\Column(name="sexo", type="integer")
      */
-    private $unidad_medida;
+    private $sexo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="cantidad_inicial", type="decimal")
+     * @ORM\Column(name="remuneracion__bruta_anual", type="decimal")
      */
-    private $cantidad_inicial;
+    private $remuneracion__bruta_anual;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="valor_inicial", type="decimal")
+     * @ORM\Column(name="periodo_pago", type="string")
      */
-    private $valor_inicial;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="cantidad_final", type="decimal")
-     */
-    private $cantidad_final;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="valor_final", type="decimal")
-     */
-    private $valor_final;
+    private $periodo_pago;
 
     /**
      * @var boolean
@@ -128,7 +142,7 @@ class Activos
      *
      * @param integer $seguimientoFase
      *
-     * @return Activos
+     * @return Empleado
      */
     public function setSeguimientoFase($seguimientoFase)
     {
@@ -148,171 +162,219 @@ class Activos
     }
 
     /**
-     * Set rubro
+     * Set periodicidad
      *
-     * @param integer $rubro
+     * @param integer $periodicidad
      *
-     * @return Activos
+     * @return Empleado
      */
-    public function setRubro($rubro)
+    public function setPeriodicidad($periodicidad)
     {
-        $this->rubro = $rubro;
+        $this->periodicidad = $periodicidad;
 
         return $this;
     }
 
     /**
-     * Get rubro
+     * Get periodicidad
      *
      * @return integer
      */
-    public function getRubro()
+    public function getPeriodicidad()
     {
-        return $this->rubro;
+        return $this->periodicidad;
     }
 
     /**
-     * Set descripcion
+     * Set nombre
      *
-     * @param string $descripcion
+     * @param string $nombre
      *
-     * @return Activos
+     * @return Empleado
      */
-    public function setDescripcion($descripcion)
+    public function setNombre($nombre)
     {
-        $this->descripcion = $descripcion;
+        $this->nombre = $nombre;
 
         return $this;
     }
 
     /**
-     * Get descripcion
+     * Get nombre
      *
      * @return string
      */
-    public function getDescripcion()
+    public function getNombre()
     {
-        return $this->descripcion;
+        return $this->nombre;
     }
 
     /**
-     * Set unidadMedida
+     * Set socioOrganizacion
      *
-     * @param integer $unidadMedida
+     * @param boolean $socioOrganizacion
      *
-     * @return Activos
+     * @return Empleado
      */
-    public function setUnidadMedida($unidadMedida)
+    public function setSocioOrganizacion($socioOrganizacion)
     {
-        $this->unidad_medida = $unidadMedida;
+        $this->socio_organizacion = $socioOrganizacion;
 
         return $this;
     }
 
     /**
-     * Get unidadMedida
+     * Get socioOrganizacion
+     *
+     * @return boolean
+     */
+    public function getSocioOrganizacion()
+    {
+        return $this->socio_organizacion;
+    }
+
+    /**
+     * Set fechaIngreso
+     *
+     * @param \DateTime $fechaIngreso
+     *
+     * @return Empleado
+     */
+    public function setFechaIngreso($fechaIngreso)
+    {
+        $this->fecha_ingreso = $fechaIngreso;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaIngreso
+     *
+     * @return \DateTime
+     */
+    public function getFechaIngreso()
+    {
+        return $this->fecha_ingreso;
+    }
+
+    /**
+     * Set fechaNacimiento
+     *
+     * @param \DateTime $fechaNacimiento
+     *
+     * @return Empleado
+     */
+    public function setFechaNacimiento($fechaNacimiento)
+    {
+        $this->fecha_nacimiento = $fechaNacimiento;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaNacimiento
+     *
+     * @return \DateTime
+     */
+    public function getFechaNacimiento()
+    {
+        return $this->fecha_nacimiento;
+    }
+
+    /**
+     * Set edadAlIngreso
+     *
+     * @param string $edadAlIngreso
+     *
+     * @return Empleado
+     */
+    public function setEdadAlIngreso($edadAlIngreso)
+    {
+        $this->edad_al_ingreso = $edadAlIngreso;
+
+        return $this;
+    }
+
+    /**
+     * Get edadAlIngreso
+     *
+     * @return string
+     */
+    public function getEdadAlIngreso()
+    {
+        return $this->edad_al_ingreso;
+    }
+
+    /**
+     * Set sexo
+     *
+     * @param integer $sexo
+     *
+     * @return Empleado
+     */
+    public function setSexo($sexo)
+    {
+        $this->sexo = $sexo;
+
+        return $this;
+    }
+
+    /**
+     * Get sexo
      *
      * @return integer
      */
-    public function getUnidadMedida()
+    public function getSexo()
     {
-        return $this->unidad_medida;
+        return $this->sexo;
     }
 
     /**
-     * Set cantidadInicial
+     * Set remuneracionBrutaAnual
      *
-     * @param string $cantidadInicial
+     * @param string $remuneracionBrutaAnual
      *
-     * @return Activos
+     * @return Empleado
      */
-    public function setCantidadInicial($cantidadInicial)
+    public function setRemuneracionBrutaAnual($remuneracionBrutaAnual)
     {
-        $this->cantidad_inicial = $cantidadInicial;
+        $this->remuneracion__bruta_anual = $remuneracionBrutaAnual;
 
         return $this;
     }
 
     /**
-     * Get cantidadInicial
+     * Get remuneracionBrutaAnual
      *
      * @return string
      */
-    public function getCantidadInicial()
+    public function getRemuneracionBrutaAnual()
     {
-        return $this->cantidad_inicial;
+        return $this->remuneracion__bruta_anual;
     }
 
     /**
-     * Set valorInicial
+     * Set periodoPago
      *
-     * @param string $valorInicial
+     * @param string $periodoPago
      *
-     * @return Activos
+     * @return Empleado
      */
-    public function setValorInicial($valorInicial)
+    public function setPeriodoPago($periodoPago)
     {
-        $this->valor_inicial = $valorInicial;
+        $this->periodo_pago = $periodoPago;
 
         return $this;
     }
 
     /**
-     * Get valorInicial
+     * Get periodoPago
      *
      * @return string
      */
-    public function getValorInicial()
+    public function getPeriodoPago()
     {
-        return $this->valor_inicial;
-    }
-
-    /**
-     * Set cantidadFinal
-     *
-     * @param string $cantidadFinal
-     *
-     * @return Activos
-     */
-    public function setCantidadFinal($cantidadFinal)
-    {
-        $this->cantidad_final = $cantidadFinal;
-
-        return $this;
-    }
-
-    /**
-     * Get cantidadFinal
-     *
-     * @return string
-     */
-    public function getCantidadFinal()
-    {
-        return $this->cantidad_final;
-    }
-
-    /**
-     * Set valorFinal
-     *
-     * @param string $valorFinal
-     *
-     * @return Activos
-     */
-    public function setValorFinal($valorFinal)
-    {
-        $this->valor_final = $valorFinal;
-
-        return $this;
-    }
-
-    /**
-     * Get valorFinal
-     *
-     * @return string
-     */
-    public function getValorFinal()
-    {
-        return $this->valor_final;
+        return $this->periodo_pago;
     }
 
     /**
@@ -320,7 +382,7 @@ class Activos
      *
      * @param boolean $active
      *
-     * @return Activos
+     * @return Empleado
      */
     public function setActive($active)
     {
@@ -344,7 +406,7 @@ class Activos
      *
      * @param integer $usuarioModificacion
      *
-     * @return Activos
+     * @return Empleado
      */
     public function setUsuarioModificacion($usuarioModificacion)
     {
@@ -368,7 +430,7 @@ class Activos
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return Activos
+     * @return Empleado
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -392,7 +454,7 @@ class Activos
      *
      * @param integer $usuarioCreacion
      *
-     * @return Activos
+     * @return Empleado
      */
     public function setUsuarioCreacion($usuarioCreacion)
     {
@@ -416,7 +478,7 @@ class Activos
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return Activos
+     * @return Empleado
      */
     public function setFechaCreacion($fechaCreacion)
     {

@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Activos
+ * AsignacionTalentoSeguimientoFase
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class Activos
+class AsignacionTalentoSeguimientoFase
 {
     /**
      * @var integer
@@ -31,51 +31,9 @@ class Activos
     /**
      * @var integer
      *
-     * @ORM\Column(name="rubro", type="integer")
+     * @ORM\Column(name="talento", type="integer")
      */
-    private $rubro;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="descripcion", type="string")
-     */
-    private $descripcion;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="unidad_medida", type="integer")
-     */
-    private $unidad_medida;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="cantidad_inicial", type="decimal")
-     */
-    private $cantidad_inicial;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="valor_inicial", type="decimal")
-     */
-    private $valor_inicial;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="cantidad_final", type="decimal")
-     */
-    private $cantidad_final;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="valor_final", type="decimal")
-     */
-    private $valor_final;
+    private $talento;
 
     /**
      * @var boolean
@@ -128,7 +86,7 @@ class Activos
      *
      * @param integer $seguimientoFase
      *
-     * @return Activos
+     * @return AsignacionTalentoSeguimientoFase
      */
     public function setSeguimientoFase($seguimientoFase)
     {
@@ -148,171 +106,27 @@ class Activos
     }
 
     /**
-     * Set rubro
+     * Set talento
      *
-     * @param integer $rubro
+     * @param integer $talento
      *
-     * @return Activos
+     * @return AsignacionTalentoSeguimientoFase
      */
-    public function setRubro($rubro)
+    public function setTalento($talento)
     {
-        $this->rubro = $rubro;
+        $this->talento = $talento;
 
         return $this;
     }
 
     /**
-     * Get rubro
+     * Get talento
      *
      * @return integer
      */
-    public function getRubro()
+    public function getTalento()
     {
-        return $this->rubro;
-    }
-
-    /**
-     * Set descripcion
-     *
-     * @param string $descripcion
-     *
-     * @return Activos
-     */
-    public function setDescripcion($descripcion)
-    {
-        $this->descripcion = $descripcion;
-
-        return $this;
-    }
-
-    /**
-     * Get descripcion
-     *
-     * @return string
-     */
-    public function getDescripcion()
-    {
-        return $this->descripcion;
-    }
-
-    /**
-     * Set unidadMedida
-     *
-     * @param integer $unidadMedida
-     *
-     * @return Activos
-     */
-    public function setUnidadMedida($unidadMedida)
-    {
-        $this->unidad_medida = $unidadMedida;
-
-        return $this;
-    }
-
-    /**
-     * Get unidadMedida
-     *
-     * @return integer
-     */
-    public function getUnidadMedida()
-    {
-        return $this->unidad_medida;
-    }
-
-    /**
-     * Set cantidadInicial
-     *
-     * @param string $cantidadInicial
-     *
-     * @return Activos
-     */
-    public function setCantidadInicial($cantidadInicial)
-    {
-        $this->cantidad_inicial = $cantidadInicial;
-
-        return $this;
-    }
-
-    /**
-     * Get cantidadInicial
-     *
-     * @return string
-     */
-    public function getCantidadInicial()
-    {
-        return $this->cantidad_inicial;
-    }
-
-    /**
-     * Set valorInicial
-     *
-     * @param string $valorInicial
-     *
-     * @return Activos
-     */
-    public function setValorInicial($valorInicial)
-    {
-        $this->valor_inicial = $valorInicial;
-
-        return $this;
-    }
-
-    /**
-     * Get valorInicial
-     *
-     * @return string
-     */
-    public function getValorInicial()
-    {
-        return $this->valor_inicial;
-    }
-
-    /**
-     * Set cantidadFinal
-     *
-     * @param string $cantidadFinal
-     *
-     * @return Activos
-     */
-    public function setCantidadFinal($cantidadFinal)
-    {
-        $this->cantidad_final = $cantidadFinal;
-
-        return $this;
-    }
-
-    /**
-     * Get cantidadFinal
-     *
-     * @return string
-     */
-    public function getCantidadFinal()
-    {
-        return $this->cantidad_final;
-    }
-
-    /**
-     * Set valorFinal
-     *
-     * @param string $valorFinal
-     *
-     * @return Activos
-     */
-    public function setValorFinal($valorFinal)
-    {
-        $this->valor_final = $valorFinal;
-
-        return $this;
-    }
-
-    /**
-     * Get valorFinal
-     *
-     * @return string
-     */
-    public function getValorFinal()
-    {
-        return $this->valor_final;
+        return $this->talento;
     }
 
     /**
@@ -320,7 +134,7 @@ class Activos
      *
      * @param boolean $active
      *
-     * @return Activos
+     * @return AsignacionTalentoSeguimientoFase
      */
     public function setActive($active)
     {
@@ -344,7 +158,7 @@ class Activos
      *
      * @param integer $usuarioModificacion
      *
-     * @return Activos
+     * @return AsignacionTalentoSeguimientoFase
      */
     public function setUsuarioModificacion($usuarioModificacion)
     {
@@ -368,7 +182,7 @@ class Activos
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return Activos
+     * @return AsignacionTalentoSeguimientoFase
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -392,7 +206,7 @@ class Activos
      *
      * @param integer $usuarioCreacion
      *
-     * @return Activos
+     * @return AsignacionTalentoSeguimientoFase
      */
     public function setUsuarioCreacion($usuarioCreacion)
     {
@@ -416,7 +230,7 @@ class Activos
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return Activos
+     * @return AsignacionTalentoSeguimientoFase
      */
     public function setFechaCreacion($fechaCreacion)
     {

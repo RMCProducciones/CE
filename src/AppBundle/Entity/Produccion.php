@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Activos
+ * Produccion
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class Activos
+class Produccion
 {
     /**
      * @var integer
@@ -31,16 +31,16 @@ class Activos
     /**
      * @var integer
      *
-     * @ORM\Column(name="rubro", type="integer")
+     * @ORM\Column(name="periodicidad", type="integer")
      */
-    private $rubro;
+    private $periodicidad;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="string")
+     * @ORM\Column(name="producto", type="string")
      */
-    private $descripcion;
+    private $producto;
 
     /**
      * @var integer
@@ -128,7 +128,7 @@ class Activos
      *
      * @param integer $seguimientoFase
      *
-     * @return Activos
+     * @return Produccion
      */
     public function setSeguimientoFase($seguimientoFase)
     {
@@ -148,51 +148,51 @@ class Activos
     }
 
     /**
-     * Set rubro
+     * Set periodicidad
      *
-     * @param integer $rubro
+     * @param integer $periodicidad
      *
-     * @return Activos
+     * @return Produccion
      */
-    public function setRubro($rubro)
+    public function setPeriodicidad($periodicidad)
     {
-        $this->rubro = $rubro;
+        $this->periodicidad = $periodicidad;
 
         return $this;
     }
 
     /**
-     * Get rubro
+     * Get periodicidad
      *
      * @return integer
      */
-    public function getRubro()
+    public function getPeriodicidad()
     {
-        return $this->rubro;
+        return $this->periodicidad;
     }
 
     /**
-     * Set descripcion
+     * Set producto
      *
-     * @param string $descripcion
+     * @param string $producto
      *
-     * @return Activos
+     * @return Produccion
      */
-    public function setDescripcion($descripcion)
+    public function setProducto($producto)
     {
-        $this->descripcion = $descripcion;
+        $this->producto = $producto;
 
         return $this;
     }
 
     /**
-     * Get descripcion
+     * Get producto
      *
      * @return string
      */
-    public function getDescripcion()
+    public function getProducto()
     {
-        return $this->descripcion;
+        return $this->producto;
     }
 
     /**
@@ -200,7 +200,7 @@ class Activos
      *
      * @param integer $unidadMedida
      *
-     * @return Activos
+     * @return Produccion
      */
     public function setUnidadMedida($unidadMedida)
     {
@@ -224,7 +224,7 @@ class Activos
      *
      * @param string $cantidadInicial
      *
-     * @return Activos
+     * @return Produccion
      */
     public function setCantidadInicial($cantidadInicial)
     {
@@ -248,7 +248,7 @@ class Activos
      *
      * @param string $valorInicial
      *
-     * @return Activos
+     * @return Produccion
      */
     public function setValorInicial($valorInicial)
     {
@@ -272,7 +272,7 @@ class Activos
      *
      * @param string $cantidadFinal
      *
-     * @return Activos
+     * @return Produccion
      */
     public function setCantidadFinal($cantidadFinal)
     {
@@ -296,7 +296,7 @@ class Activos
      *
      * @param string $valorFinal
      *
-     * @return Activos
+     * @return Produccion
      */
     public function setValorFinal($valorFinal)
     {
@@ -320,7 +320,7 @@ class Activos
      *
      * @param boolean $active
      *
-     * @return Activos
+     * @return Produccion
      */
     public function setActive($active)
     {
@@ -344,7 +344,7 @@ class Activos
      *
      * @param integer $usuarioModificacion
      *
-     * @return Activos
+     * @return Produccion
      */
     public function setUsuarioModificacion($usuarioModificacion)
     {
@@ -368,7 +368,7 @@ class Activos
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return Activos
+     * @return Produccion
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -392,7 +392,7 @@ class Activos
      *
      * @param integer $usuarioCreacion
      *
-     * @return Activos
+     * @return Produccion
      */
     public function setUsuarioCreacion($usuarioCreacion)
     {
@@ -416,7 +416,7 @@ class Activos
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return Activos
+     * @return Produccion
      */
     public function setFechaCreacion($fechaCreacion)
     {

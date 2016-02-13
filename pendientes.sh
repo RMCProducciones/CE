@@ -1,0 +1,12 @@
+php app/console doctrine:generate:entity --entity="AppBundle:SeguimientoFase" --fields="grupo:integer fase:integer calificacion:decimal fecha_inicio:datetime fecha_finalizacion:datetime actividad_productiva:string descripcion_actividad_productiva:text logros:text resultado_componente_organizacional:text resultado_componente_productivo:text resultado_componente_comercial:text resultado_componente_administrativo:text resultado_componente_financiero:text observaciones:text active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:Activos" --fields="seguimientoFase:integer rubro:integer descripcion:string unidad_medida:integer cantidad_inicial:decimal valor_inicial:decimal cantidad_final:decimal valor_final:decimal active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:Produccion" --fields="seguimientoFase:integer periodicidad:integer producto:string unidad_medida:integer cantidad_inicial:decimal valor_inicial:decimal cantidad_final:decimal valor_final:decimal active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:Ventas" --fields="seguimientoFase:integer periodicidad:integer producto:string unidad_medida:integer valor_unitario_inicial:decimal cantidad_vendida_inicial:decimal valor_ventas_inicial:decimal cantidad_consumo_inicial:decimal valor_unitario_final:decimal cantidad_vendida_final:decimal valor_ventas_final:decimal cantidad_consumo_final:decimal active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:Empleado" --fields="seguimientoFase:integer periodicidad:integer nombre:string socio_organizacion:boolean fecha_ingreso:datetime fecha_nacimiento:datetime edad_al_ingreso:decimal sexo:integer remuneracion__bruta_anual:decimal periodo_pago active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:AsignacionTalentoSeguimientoFase" --fields="seguimientoFase:integer talento:integer active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+

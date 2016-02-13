@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Activos
+ * Ventas
  *
  * @ORM\Table()
  * @ORM\Entity
  */
-class Activos
+class Ventas
 {
     /**
      * @var integer
@@ -31,16 +31,16 @@ class Activos
     /**
      * @var integer
      *
-     * @ORM\Column(name="rubro", type="integer")
+     * @ORM\Column(name="periodicidad", type="integer")
      */
-    private $rubro;
+    private $periodicidad;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="string")
+     * @ORM\Column(name="producto", type="string")
      */
-    private $descripcion;
+    private $producto;
 
     /**
      * @var integer
@@ -52,30 +52,58 @@ class Activos
     /**
      * @var string
      *
-     * @ORM\Column(name="cantidad_inicial", type="decimal")
+     * @ORM\Column(name="valor_unitario_inicial", type="decimal")
      */
-    private $cantidad_inicial;
+    private $valor_unitario_inicial;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="valor_inicial", type="decimal")
+     * @ORM\Column(name="cantidad_vendida_inicial", type="decimal")
      */
-    private $valor_inicial;
+    private $cantidad_vendida_inicial;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="cantidad_final", type="decimal")
+     * @ORM\Column(name="valor_ventas_inicial", type="decimal")
      */
-    private $cantidad_final;
+    private $valor_ventas_inicial;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="valor_final", type="decimal")
+     * @ORM\Column(name="cantidad_consumo_inicial", type="decimal")
      */
-    private $valor_final;
+    private $cantidad_consumo_inicial;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="valor_unitario_final", type="decimal")
+     */
+    private $valor_unitario_final;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cantidad_vendida_final", type="decimal")
+     */
+    private $cantidad_vendida_final;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="valor_ventas_final", type="decimal")
+     */
+    private $valor_ventas_final;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cantidad_consumo_final", type="decimal")
+     */
+    private $cantidad_consumo_final;
 
     /**
      * @var boolean
@@ -128,7 +156,7 @@ class Activos
      *
      * @param integer $seguimientoFase
      *
-     * @return Activos
+     * @return Ventas
      */
     public function setSeguimientoFase($seguimientoFase)
     {
@@ -148,51 +176,51 @@ class Activos
     }
 
     /**
-     * Set rubro
+     * Set periodicidad
      *
-     * @param integer $rubro
+     * @param integer $periodicidad
      *
-     * @return Activos
+     * @return Ventas
      */
-    public function setRubro($rubro)
+    public function setPeriodicidad($periodicidad)
     {
-        $this->rubro = $rubro;
+        $this->periodicidad = $periodicidad;
 
         return $this;
     }
 
     /**
-     * Get rubro
+     * Get periodicidad
      *
      * @return integer
      */
-    public function getRubro()
+    public function getPeriodicidad()
     {
-        return $this->rubro;
+        return $this->periodicidad;
     }
 
     /**
-     * Set descripcion
+     * Set producto
      *
-     * @param string $descripcion
+     * @param string $producto
      *
-     * @return Activos
+     * @return Ventas
      */
-    public function setDescripcion($descripcion)
+    public function setProducto($producto)
     {
-        $this->descripcion = $descripcion;
+        $this->producto = $producto;
 
         return $this;
     }
 
     /**
-     * Get descripcion
+     * Get producto
      *
      * @return string
      */
-    public function getDescripcion()
+    public function getProducto()
     {
-        return $this->descripcion;
+        return $this->producto;
     }
 
     /**
@@ -200,7 +228,7 @@ class Activos
      *
      * @param integer $unidadMedida
      *
-     * @return Activos
+     * @return Ventas
      */
     public function setUnidadMedida($unidadMedida)
     {
@@ -220,99 +248,195 @@ class Activos
     }
 
     /**
-     * Set cantidadInicial
+     * Set valorUnitarioInicial
      *
-     * @param string $cantidadInicial
+     * @param string $valorUnitarioInicial
      *
-     * @return Activos
+     * @return Ventas
      */
-    public function setCantidadInicial($cantidadInicial)
+    public function setValorUnitarioInicial($valorUnitarioInicial)
     {
-        $this->cantidad_inicial = $cantidadInicial;
+        $this->valor_unitario_inicial = $valorUnitarioInicial;
 
         return $this;
     }
 
     /**
-     * Get cantidadInicial
+     * Get valorUnitarioInicial
      *
      * @return string
      */
-    public function getCantidadInicial()
+    public function getValorUnitarioInicial()
     {
-        return $this->cantidad_inicial;
+        return $this->valor_unitario_inicial;
     }
 
     /**
-     * Set valorInicial
+     * Set cantidadVendidaInicial
      *
-     * @param string $valorInicial
+     * @param string $cantidadVendidaInicial
      *
-     * @return Activos
+     * @return Ventas
      */
-    public function setValorInicial($valorInicial)
+    public function setCantidadVendidaInicial($cantidadVendidaInicial)
     {
-        $this->valor_inicial = $valorInicial;
+        $this->cantidad_vendida_inicial = $cantidadVendidaInicial;
 
         return $this;
     }
 
     /**
-     * Get valorInicial
+     * Get cantidadVendidaInicial
      *
      * @return string
      */
-    public function getValorInicial()
+    public function getCantidadVendidaInicial()
     {
-        return $this->valor_inicial;
+        return $this->cantidad_vendida_inicial;
     }
 
     /**
-     * Set cantidadFinal
+     * Set valorVentasInicial
      *
-     * @param string $cantidadFinal
+     * @param string $valorVentasInicial
      *
-     * @return Activos
+     * @return Ventas
      */
-    public function setCantidadFinal($cantidadFinal)
+    public function setValorVentasInicial($valorVentasInicial)
     {
-        $this->cantidad_final = $cantidadFinal;
+        $this->valor_ventas_inicial = $valorVentasInicial;
 
         return $this;
     }
 
     /**
-     * Get cantidadFinal
+     * Get valorVentasInicial
      *
      * @return string
      */
-    public function getCantidadFinal()
+    public function getValorVentasInicial()
     {
-        return $this->cantidad_final;
+        return $this->valor_ventas_inicial;
     }
 
     /**
-     * Set valorFinal
+     * Set cantidadConsumoInicial
      *
-     * @param string $valorFinal
+     * @param string $cantidadConsumoInicial
      *
-     * @return Activos
+     * @return Ventas
      */
-    public function setValorFinal($valorFinal)
+    public function setCantidadConsumoInicial($cantidadConsumoInicial)
     {
-        $this->valor_final = $valorFinal;
+        $this->cantidad_consumo_inicial = $cantidadConsumoInicial;
 
         return $this;
     }
 
     /**
-     * Get valorFinal
+     * Get cantidadConsumoInicial
      *
      * @return string
      */
-    public function getValorFinal()
+    public function getCantidadConsumoInicial()
     {
-        return $this->valor_final;
+        return $this->cantidad_consumo_inicial;
+    }
+
+    /**
+     * Set valorUnitarioFinal
+     *
+     * @param string $valorUnitarioFinal
+     *
+     * @return Ventas
+     */
+    public function setValorUnitarioFinal($valorUnitarioFinal)
+    {
+        $this->valor_unitario_final = $valorUnitarioFinal;
+
+        return $this;
+    }
+
+    /**
+     * Get valorUnitarioFinal
+     *
+     * @return string
+     */
+    public function getValorUnitarioFinal()
+    {
+        return $this->valor_unitario_final;
+    }
+
+    /**
+     * Set cantidadVendidaFinal
+     *
+     * @param string $cantidadVendidaFinal
+     *
+     * @return Ventas
+     */
+    public function setCantidadVendidaFinal($cantidadVendidaFinal)
+    {
+        $this->cantidad_vendida_final = $cantidadVendidaFinal;
+
+        return $this;
+    }
+
+    /**
+     * Get cantidadVendidaFinal
+     *
+     * @return string
+     */
+    public function getCantidadVendidaFinal()
+    {
+        return $this->cantidad_vendida_final;
+    }
+
+    /**
+     * Set valorVentasFinal
+     *
+     * @param string $valorVentasFinal
+     *
+     * @return Ventas
+     */
+    public function setValorVentasFinal($valorVentasFinal)
+    {
+        $this->valor_ventas_final = $valorVentasFinal;
+
+        return $this;
+    }
+
+    /**
+     * Get valorVentasFinal
+     *
+     * @return string
+     */
+    public function getValorVentasFinal()
+    {
+        return $this->valor_ventas_final;
+    }
+
+    /**
+     * Set cantidadConsumoFinal
+     *
+     * @param string $cantidadConsumoFinal
+     *
+     * @return Ventas
+     */
+    public function setCantidadConsumoFinal($cantidadConsumoFinal)
+    {
+        $this->cantidad_consumo_final = $cantidadConsumoFinal;
+
+        return $this;
+    }
+
+    /**
+     * Get cantidadConsumoFinal
+     *
+     * @return string
+     */
+    public function getCantidadConsumoFinal()
+    {
+        return $this->cantidad_consumo_final;
     }
 
     /**
@@ -320,7 +444,7 @@ class Activos
      *
      * @param boolean $active
      *
-     * @return Activos
+     * @return Ventas
      */
     public function setActive($active)
     {
@@ -344,7 +468,7 @@ class Activos
      *
      * @param integer $usuarioModificacion
      *
-     * @return Activos
+     * @return Ventas
      */
     public function setUsuarioModificacion($usuarioModificacion)
     {
@@ -368,7 +492,7 @@ class Activos
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return Activos
+     * @return Ventas
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -392,7 +516,7 @@ class Activos
      *
      * @param integer $usuarioCreacion
      *
-     * @return Activos
+     * @return Ventas
      */
     public function setUsuarioCreacion($usuarioCreacion)
     {
@@ -416,7 +540,7 @@ class Activos
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return Activos
+     * @return Ventas
      */
     public function setFechaCreacion($fechaCreacion)
     {
