@@ -24,8 +24,7 @@ class SeguimientoFaseType extends AbstractType
 			
 			->add('actividad_productiva','text', array('label' => 'Actividad Productiva'))
 			->add('descripcion_actividad_productiva','text', array('label' => 'Descripción Actividad'))
-			->add('logros','text', array('label' => 'Logros'))
-			->add('calificacion','text', array('label' => 'Calificacion'))
+			->add('logros','text', array('label' => 'Logros'))			
 			->add('observaciones','text', array('label' => 'Observaciones'))
 			->add('resultado_componente_organizacional','text', array('label' => 'Resultado Componente Organizacional'))
 			->add('resultado_componente_productivo','text', array('label' => 'Resultado Componente Productivo'))

@@ -534,7 +534,7 @@ active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_
 php app/console doctrine:generate:entity --entity="AppBundle:SeguimientoFase" --fields="
 grupo:integer 
 fase:integer
-calificacion:decimal
+
 fecha_inicio:datetime
 fecha_finalizacion:datetime
 actividad_productiva:string

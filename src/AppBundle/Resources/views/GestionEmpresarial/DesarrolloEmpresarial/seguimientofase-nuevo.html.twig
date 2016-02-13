@@ -50,17 +50,16 @@
 
     <div class="section">
       <div class="container">
-        
-		
-			<div class="row">
-				<div class="col-md-12">
-					<fieldset>
-						<legend>Datos básicos del seguimiento </legend>
-					</fieldset>            
-				</div>
-			</div>	
 
-<div class="row">
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Inicio de fase</a></li>
+          <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Cierre de fase</a></li>
+        </ul>
+
+        </br>   
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane active" id="home">
+  <div class="row">
         
             <div class="col-md-4">
                   {{ form_label(form.fecha_inicio) }}
@@ -72,26 +71,18 @@
                   {{ form_label(form.fecha_finalizacion) }}
                   {{ form_errors(form.fecha_finalizacion) }}
                   {{ form_widget(form.fecha_finalizacion, { 'attr': {'class': 'form-control', 'placeholder': 'Fecha Finalizacion '} }) }}
-            </div>
+            </div>       
+
             <div class="col-md-4">
-                  {{ form_label(form.calificacion) }}
-                  {{ form_errors(form.calificacion) }}
-                  {{ form_widget(form.calificacion, { 'attr': {'class': 'form-control', 'placeholder': 'Calificacion '} }) }}
-            </div>
-                
-           
+                  {{ form_label(form.actividad_productiva) }}
+                  {{ form_errors(form.actividad_productiva) }}
+                  {{ form_widget(form.actividad_productiva, { 'attr': {'class': 'form-control', 'placeholder': 'Actividad Productiva'} }) }}
+            </div>    
          
 </div>
 <br/>
 
 <div class="row">
-        
-            <div class="col-md-4">
-                  {{ form_label(form.actividad_productiva) }}
-                  {{ form_errors(form.actividad_productiva) }}
-                  {{ form_widget(form.actividad_productiva, { 'attr': {'class': 'form-control', 'placeholder': 'Actividad Productiva'} }) }}
-            </div>
-               
             <div class="col-md-4">
                   {{ form_label(form.descripcion_actividad_productiva) }}
                   {{ form_errors(form.descripcion_actividad_productiva) }}
@@ -105,16 +96,13 @@
             </div>
          
 </div>
+
+</div>
+
 <br/>
 
+<div role="tabpanel" class="tab-pane" id="profile">
   <div class="row">
-        <div class="col-md-12">
-          <fieldset>
-            <legend>Resultados</legend>
-          </fieldset>            
-        </div>
-      </div>  
-<div class="row">
         
             <div class="col-md-4">
                   {{ form_label(form.resultado_componente_organizacional) }}
@@ -131,7 +119,7 @@
                   {{ form_errors(form.resultado_componente_comercial) }}
                   {{ form_widget(form.resultado_componente_comercial, { 'attr': {'class': 'form-control', 'placeholder': 'Resultado Componente comercial'} }) }}
             </div>           
-			<br/>				
+      <br/>       
        <br/>  
 </div>
 <div class="row">
@@ -155,6 +143,13 @@
       <br/>       
        
 </div>
+
+</div>
+
+
+</div>             
+
+
 
 
 
