@@ -540,11 +540,11 @@ fecha_finalizacion:datetime
 actividad_productiva:string
 descripcion_actividad_productiva:text
 logros:text
-resultado_componente_organizacional:text
-resultado_componente_productivo:text
-resultado_componente_comercial:text
-resultado_componente_administrativo:text
-resultado_componente_financiero:text
+resultado_area_organizacional:text
+resultado_area_productivo:text
+resultado_area_comercial:text
+resultado_area_administrativo:text
+resultado_area_financiero:text
 observaciones:text
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
@@ -603,6 +603,90 @@ php app/console doctrine:generate:entity --entity="AppBundle:AsignacionTalentoSe
 seguimientoFase:integer
 talento:integer
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
+
+php app/console doctrine:generate:entity --entity="AppBundle:Visita" --fields="
+seguimientoFase:integer
+fecha:datetime
+objetivo:text
+agenda:text
+lugar:text
+asistentes:integer
+comite_compras:boolean
+funcionamiento_comite_compras:integer
+comite_vamos_bien:boolean
+funcionamiento_comite_vamos_bien:integer
+logros_compras:text
+logros_vamos_bien:text
+contador:boolean
+desempeno_contador:integer
+observaciones_contador:text
+observaciones_presupuesto_asignado:text
+cambios_presupuesto_asignado:boolean
+cambios_razones_presupuesto_asignado:text
+desempeno_organizacional:text
+desempeno_productivo:text
+desempeno_comercial:text
+desempeno_administrativo:text
+desempeno_financiero:text
+cambios_integrantes_grupo:boolean
+cambios_razones_integrantes_grupo:text
+observaciones:text
+compromisos:text
+interventoria:boolean
+razones_interventoria:text
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:AsignacionBeneficiarioVisita" --fields="
+visita:integer
+beneficiario:integer
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
+php app/console doctrine:generate:entity --entity="AppBundle:PlanInversion" --fields="
+seguimientoFase:integer
+area:integer
+actividad:string
+unidad_medida:integer
+cantidad:decimal
+valor_unitario:decimal
+valor_total:decimal
+tiempo_ejecucion:integer
+cantidad_visita1:decimal
+valor_unitario_visita1:decimal
+valor_total_visita1:decimal
+tiempo_ejecucion_visita1:integer
+cantidad_visita2:decimal
+valor_unitario_visita2:decimal
+valor_total_visita2:decimal
+tiempo_ejecucion_visita2:integer
+cantidad_visita3:decimal
+valor_unitario_visita3:decimal
+valor_total_visita3:decimal
+tiempo_ejecucion_visita3:integer
+cumplio:boolean
+observaciones:text
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
+
+
+php app/console doctrine:generate:entity --entity="AppBundle:Nodo" --fields="
+nombre:string
+fase:integer
+formal:boolean
+negocio:boolean
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
+php app/console doctrine:generate:entity --entity="AppBundle:Camino" --fields="
+grupo:integer
+nodo:integer
+estado:integer
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
 
 
 
