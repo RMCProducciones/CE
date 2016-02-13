@@ -57,6 +57,9 @@ use AppBundle\Entity\AsignacionOrganizacionTerritorioAprendizaje;
 use AppBundle\Entity\SeguimientoFase;
 use AppBundle\Entity\Activos;
 
+use AppBundle\Entity\Camino;
+use AppBundle\Entity\Nodo;
+
 
 use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
 use AppBundle\Form\GestionEmpresarial\AsignacionIntegranteCLEARType;
@@ -240,6 +243,21 @@ class GestionEmpresarialController extends Controller
             $grupo->setActive(true);
             $grupo->setFechaCreacion(new \DateTime());
 
+
+            //SEGUIMIENTO, Entidad Camino
+
+            $nodo = $em->getRepository('AppBundle:Nodo')->findBy(
+                array('id' => 1)
+            );
+
+            $nodoCamino = new Camino();
+            $nodoCamino->setGrupo($grupo);
+            $nodoCamino->setNodo($nodo);
+            $nodoCamino->setEstado(2);
+            $nodoCamino->setActive(true);
+            $nodoCamino->setFechaCreacion(new \DateTime());
+
+            $em->persist($nodoCamino);
             /*$usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
                 array(
                     'id' => 1
@@ -1048,17 +1066,38 @@ class GestionEmpresarialController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $grupos = $em->getRepository('AppBundle:Grupo')->findOneBy(
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id' => $idGrupo)
         );  
 
         $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
             array('id' => $idCLEAR)
-        );  
+        );
+
+        $camino = $em->getRepository('AppBundle:Camino')->findBy(
+            array('grupo' => $grupo)
+        );
+
+        if (count($camino)==1){
+
+            $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+                array('id' => 2)
+            );
+
+            $nodoCamino = new Camino();
+            $nodoCamino->setGrupo($grupo);
+            $nodoCamino->setNodo($nodo);
+            $nodoCamino->setEstado(1);
+            $nodoCamino->setActive(true);
+            $nodoCamino->setFechaCreacion(new \DateTime());
+
+            $em->persist($nodoCamino);
+        }
+
            
         $asignacionesGrupoCLEAR = new AsignacionGrupoCLEAR();
 
-        $asignacionesGrupoCLEAR->setGrupo($grupos);
+        $asignacionesGrupoCLEAR->setGrupo($grupo);
         $asignacionesGrupoCLEAR->setClear($clear);           
         $asignacionesGrupoCLEAR->setActive(true);
         $asignacionesGrupoCLEAR->setFechaCreacion(new \DateTime());
@@ -1070,7 +1109,7 @@ class GestionEmpresarialController extends Controller
 
         return $this->redirectToRoute('clearGrupo', 
             array(
-                'grupos' => $grupos, 
+                'grupos' => $grupo, 
                 'asignacionesGrupoCLEAR' => $asignacionesGrupoCLEAR,
                 'idCLEAR' => $idCLEAR
             ));        
