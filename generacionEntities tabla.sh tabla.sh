@@ -687,6 +687,23 @@ estado:integer
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 
+php app/console doctrine:generate:entity --entity="AppBundle:HabilitacionFases" --fields="
+grupo:integer
+mot_formal:boolean
+mot_no_formal:boolean
+iea:boolean
+pi:boolean
+pn:boolean
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
+php app/console doctrine:generate:entity --entity="AppBundle:EvaluacionFase" --fields="
+grupo:integer
+fase:integer
+calificacion:decimal
+aprobado:boolean
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
 
 
 

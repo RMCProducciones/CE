@@ -1132,6 +1132,13 @@ class GestionEmpresarialController extends Controller
             array('fecha_creacion' => 'ASC')
         );      
 
+        $camino = $em->getRepository('AppBundle:Camino')->findOneBy(
+            array('grupo' => $asignacionesGrupoCLEAR->getGrupo(), 
+                'estado' => '1'
+            )
+        );
+
+        $em->remove($camino);
         $em->remove($asignacionesGrupoCLEAR);
         $em->flush();
 
@@ -1779,7 +1786,13 @@ class GestionEmpresarialController extends Controller
             array('id' => $idGrupo)
         );
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-seguimiento.html.twig', array( 'grupo' => $grupo));
+        $camino = $em->getRepository('AppBundle:Camino')->findBy(
+            array('grupo' => $grupo)
+        );
+        
+       // die();
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-seguimiento.html.twig', array( 'grupo' => $grupo, 'camino' => $camino));
     }
 
     /**
