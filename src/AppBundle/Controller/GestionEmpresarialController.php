@@ -3293,8 +3293,6 @@ class GestionEmpresarialController extends Controller
             array('id' => $idPasantia)
         );
 
-        echo $idPasantia;
-
         if($pasantia->getTerritorioAprendizaje() != null){            
             $idTerritorioAprendizaje = $pasantia->getTerritorioAprendizaje()->getId();        
 
@@ -3308,8 +3306,29 @@ class GestionEmpresarialController extends Controller
         }       
 
         if($pasantia->getTerritorioAprendizaje() == null){            
-            $query = $em->createQuery('SELECT t FROM AppBundle:TerritorioAprendizaje t WHERE t.id NOT IN (SELECT territorioAprendizaje.id FROM AppBundle:TerritorioAprendizaje territorioAprendizaje JOIN AppBundle:Pasantia apc WHERE territorioAprendizaje = apc.territorio_aprendizaje AND apc.territorio_aprendizaje = :territorio_aprendizaje) AND t.active = 1');
+            $query = $em->createQuery('
+                SELECT 
+                    t 
+                FROM 
+                    AppBundle:TerritorioAprendizaje t 
+                WHERE 
+                    t.id NOT IN (
+                        SELECT 
+                            territorioAprendizaje.id 
+                        FROM 
+                            AppBundle:TerritorioAprendizaje territorioAprendizaje 
+                            JOIN AppBundle:Pasantia pasantia 
+                        WHERE 
+                            territorioAprendizaje = pasantia.territorio_aprendizaje 
+                            AND pasantia.territorio_aprendizaje = :territorio_aprendizaje
+                            AND pasantia.id = :idPasantia
+                    ) 
+                    AND t.active = 1
+            ');
+
             $query->setParameter('territorio_aprendizaje', $pasantia);
+            $query->setParameter('idPasantia', $idPasantia);
+
             $territorios = $query->getResult();
         }else{
             $territorios = null; 
@@ -3521,12 +3540,37 @@ class GestionEmpresarialController extends Controller
             $grupoAsignado = null;
         }       
 
-        if($pasantia->getGrupo() == null){            
-            $query = $em->createQuery('SELECT g FROM AppBundle:Grupo g WHERE g.id NOT IN (SELECT grupo.id FROM AppBundle:Grupo grupo JOIN AppBundle:Pasantia apc WHERE grupo = apc.grupo AND apc.grupo = :grupo) AND g.active = 1');
-            $query->setParameter('grupo', $pasantia);
+        if($pasantia->getGrupo() == null){ 
+
+            $query = $em->createQuery('
+                SELECT 
+                    g 
+                FROM 
+                    AppBundle:Grupo g 
+                WHERE 
+                    g.id NOT IN (
+                        SELECT 
+                            grupo.id 
+                        FROM 
+                            AppBundle:Grupo grupo 
+                            JOIN AppBundle:Pasantia pasantia 
+                        WHERE 
+                            grupo = pasantia.grupo 
+                            AND pasantia.grupo = :grupo_pasantia
+                            AND pasantia.id = :idPasantia
+                    ) 
+                    AND g.active = 1
+            ');
+
+            $query->setParameter('grupo_pasantia', $pasantia); //Se compara el grupo que tiene la pasantia
+            $query->setParameter('idPasantia', $idPasantia);
+
             $grupos = $query->getResult();      
+
         }else{
+
             $grupos = null; 
+
         }
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-pasantia-gestion-asignacion.html.twig', 
@@ -4599,30 +4643,11 @@ class GestionEmpresarialController extends Controller
                
     }
 
- /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/seguimiento-fase/{idFase}/gestion", name="seguimientofaseGestion")
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/seguimiento-fase/{idFase}/{idNodo}/nuevo", name="seguimientofaseNuevo")
      */
-    public function seguimientofaseGestionAction($idFase)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $seguimientofase = $em->getRepository('AppBundle:SeguimientoFase')->findBy(
-            array('active' => '1'),
-            array('fecha_creacion' => 'ASC')
-        );
-
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimientofase-gestion.html.twig', 
-            array( 'seguimientofase' => $seguimientofase,
-                    'idFase' => $idFase
-          
-                )
-            );
-    }
-
-
-/**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/seguimiento-fase/{idFase}/nuevo", name="seguimientofaseNuevo")
-     */
-    public function seguimientofaseNuevoAction(Request $request, $idFase)
+    public function seguimientofaseNuevoAction(Request $request, $idFase, $idNodo)
     {
         $em = $this->getDoctrine()->getManager();
         $seguimientofase= new SeguimientoFase();
@@ -4664,7 +4689,7 @@ class GestionEmpresarialController extends Controller
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimientofase-nuevo.html.twig',
          array('form' => $form->createView(),
                'idFase' => $idFase,
-
+               'idNodo' => $idNodo
 
             ));
     }
