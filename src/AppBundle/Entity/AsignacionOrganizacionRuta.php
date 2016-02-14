@@ -98,7 +98,7 @@ class AsignacionOrganizacionRuta
     /**
      * Set organizacion
      *
-     * @param AppBundle\Entity\Grupo $organizacion
+     * @param AppBundle\Entity\Organizacion $organizacion
      *
      * @return AsignacionOrganizacionRuta
      */

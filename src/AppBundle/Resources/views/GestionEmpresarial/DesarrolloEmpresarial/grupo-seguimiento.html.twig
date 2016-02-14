@@ -63,6 +63,14 @@
               var c = document.getElementById("myCanvas");
               var ctx = c.getContext("2d");
               
+              var camino = []
+
+              for(var nodo=1; nodo<32; nodo++)
+                camino.push(0);
+
+              {% for nodoCamino in camino %}
+                camino[{{nodoCamino.nodo.id}}] = {{nodoCamino.estado}};
+              {% endfor %}
 
               var escX = .5;
               var escY = .5;
@@ -170,7 +178,7 @@
 
                 ctx.fillStyle = "#999"; 
                 ctx.textAlign="left"; ctx.fillText("Convocatoria",10*escX,408*escY);
-                circulo(200, 400, 1);   // 1    Convocatoria
+                circulo(200, 400);   // 1    Convocatoria
 
                 ctx.font = 15*(escX+escY)/2+"px Arial";
 
@@ -178,13 +186,13 @@
                 circulo(280, 400);   // 2    CLEAR Habilitación
                 
                 ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Visita previa",380*escX,150*escY);
-                circulo(380, 180);      // 3    Visita previa
+                circulo(380, 180);      // 3    Visita previa Formal PN
 
                 ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Visita previa",280*escX,670*escY);
-                circulo(280, 630);      // 4    Visita previa
+                circulo(280, 630);      // 4    Visita previa No Formal PI
 
                 ctx.fillStyle = "#999"; ctx.textAlign="left"; ctx.fillText("Visita previa",330*escX,550*escY);
-                circulo(330, 580);      // 5    Visita previa
+                circulo(330, 580);      // 5    Visita previa No Formal IEA
 
                 ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("CLEAR",480*escX,210*escY); ctx.fillText("Asignación",480*escX,230*escY); ctx.fillText("$ 760.000",480*escX,250*escY);
                 circulo(480, 280);      // 6    Formal MOT Clear Asignación
@@ -195,51 +203,56 @@
                 ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Legalización",780*escX,320*escY); ctx.fillText("Fase",780*escX,340*escY);
                 circulo(780, 280);      // 8    Formal MOT Legalización Fase
 
+
+                circulo(900, 280);     // 9 Contraloría Social
+
                 ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("CLEAR",480*escX,460*escY); ctx.fillText("Asignación",480*escX,480*escY); ctx.fillText("$ 760.000",480*escX,500*escY);
-                circulo(480, 530);      // 9    No Formal MOT Clear Asignación
+                circulo(480, 530);      // 10    No Formal MOT Clear Asignación
 
                 ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Talleres",630*escX,500*escY);
-                circulo(630, 530);      // 10   No Formal MOT Talleres
+                circulo(630, 530);      // 11   No Formal MOT Talleres
 
                 ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Legalización",780*escX,570*escY); ctx.fillText("Fase",780*escX,590*escY);
-                circulo(780, 530);      // 11   No Formal MOT Legalización Fase 
+                circulo(780, 530);      // 12   No Formal MOT Legalización Fase 
 
                 ctx.fillStyle = "#999"; ctx.textAlign="right"; ctx.fillText("CLEAR",900*escX,460*escY); ctx.fillText("Convocatoria",900*escX,480*escY); ctx.fillText("Social",900*escX,500*escY);
-                circulo(900, 530);      // 12    
+                circulo(900, 530);      // 13   No Formal CLEAR Contraloría Social MOT 
 
                 ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("CLEAR",970*escX,460*escY); ctx.fillText("Asignación 5:1",970*escX,480*escY); ctx.fillText("max $ 5'700.000",970*escX,500*escY);
-                circulo(950, 530);      // 13 
+                circulo(950, 530);      // 14  No Formal CLEAR Asignacion IEA
 
                 
                 ctx.fillStyle = "#999"; ctx.save(); ctx.translate( 1050*escX, 500*escY ); ctx.rotate(-Math.PI / 4); ctx.textAlign="left"; ctx.fillText("Visita 1",0,0); ctx.restore();
-                circulo(1050, 530);     // 14    
+                circulo(1050, 530);     // 15    
                 
                 ctx.fillStyle = "#999"; ctx.save(); ctx.translate( 1100*escX, 500*escY ); ctx.rotate(-Math.PI / 4); ctx.textAlign="left"; ctx.fillText("Visita 2",0,0); ctx.restore();
-                circulo(1100, 530);     // 15
+                circulo(1100, 530);     // 16
 
                 ctx.fillStyle = "#999"; ctx.save(); ctx.translate( 1150*escX, 500*escY ); ctx.rotate(-Math.PI / 4); ctx.textAlign="left"; ctx.fillText("Visita 3",0,0); ctx.restore(); 
-                circulo(1150, 530);     // 16
+                circulo(1150, 530);     // 17
 
                 ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Legalización",1250*escX,570*escY); ctx.fillText("Fase",1250*escX,590*escY);
-                circulo(1250, 530);     // 17    
+                circulo(1250, 530);     // 18    
 
-                circulo(1350, 530);     // 18    
+                circulo(1350, 530);     // 19    
 
-                circulo(1400, 530);     // 19
-                circulo(1500, 530);     // 20    
-                circulo(1550, 530);     // 21    
-                circulo(1600, 530);     // 22    
-                circulo(1700, 530);     // 23    
+                circulo(1400, 530);     // 20
+                circulo(1500, 530);     // 21    
+                circulo(1550, 530);     // 22    
+                circulo(1600, 530);     // 23    
+                circulo(1700, 530);     // 24    
 
-                circulo(1800, 400);     // 24
+                
 
-                circulo(1850, 280);     // 25
-                circulo(1950, 280);     // 26    
-                circulo(2000, 280);     // 27    
-                circulo(2050, 280);     // 28    
-                circulo(2150, 280);     // 29   
+                circulo(1800, 400);     // 25
 
-                circulo(2250, 280);     // 30
+                circulo(1850, 280);     // 26
+                circulo(1950, 280);     // 27    
+                circulo(2000, 280);     // 28    
+                circulo(2050, 280);     // 29    
+                circulo(2150, 280);     // 30   
+
+                circulo(2250, 280);     // 31
 
 
 
@@ -257,11 +270,11 @@
                   this.bottom = y + radius;
               };
 
-              function circulo(x, y, estado){
+              function circulo(x, y){
 
                 var radius = 45/2*(escX+escY)/2;
 
-                ctx.fillStyle = color(estado);
+                ctx.fillStyle = color(camino[circles.length+1]);
                 ctx.beginPath(); 
                 ctx.arc(x*escX,y*escY, radius,0,2*Math.PI, true); 
                 ctx.closePath();
@@ -293,16 +306,21 @@
               function color(estado){
 
                 var colorHexa = "#E0E0D5";    
-                if(estado == 1)
+                if(estado == 1) // Programado : Gris Oscuro
+                  colorHexa = "#999";
+                else if(estado == 2) // Ejecutado Ok: Verde
                   colorHexa = "#A1D44A";
-                else if(estado == 2)
-                  colorHexa = "#DCDC00";
-                else if(estado == 3)
+                else if(estado == 3) // Rechazado: Café
+                  colorHexa = "#B28500";
+                else if(estado == 4)  // Finalizado: Rojo
                   colorHexa = "#DB0041";
+                else if(estado == 5) // Ejecutado con observaciones: Azul
+                  colorHexa = "#00BFFF";
+                else if(estado == 6) // Intervenido: Naraja
+                  colorHexa = "#DCDC00";  
                 else if(estado == -1)
                   colorHexa = "transparent";
-
-                
+    
                 return colorHexa;
               }
 

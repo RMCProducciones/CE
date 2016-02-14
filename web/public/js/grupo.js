@@ -1,7 +1,5 @@
 app.controller('CamposDireccionGrupoCtrl', ['$scope', '$http', function($scope, $http) {
 
-	console.log("hola dfdddd");
-
 	if($('#grupo_rural').prop('checked')==false){
 		
 		$scope.swRural = false;	
@@ -68,6 +66,13 @@ app.controller('datosEmpresaGrupoCtrl', ['$scope', '$location', function($scope,
 
 	$scope.numeroIdentificacion = 0;
 	$scope.digitoVerificacion = 0;
+
+	$scope.iniciarNIT = function(numeroIdentificacion, digitoVerificacion) { 
+
+		$scope.numeroIdentificacion = numeroIdentificacion;
+		$scope.digitoVerificacion = digitoVerificacion;
+
+	};	
 
 	$scope.calcularDigitoVerificacion = function() { 
 	

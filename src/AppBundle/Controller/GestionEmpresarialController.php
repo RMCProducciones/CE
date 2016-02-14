@@ -33,6 +33,7 @@ use AppBundle\Entity\AsignacionGrupoComite;
 use AppBundle\Entity\Integrante;
 use AppBundle\Entity\IntegranteSoporte;
 use AppBundle\Entity\Ruta;
+use AppBundle\Entity\OrganizacionTerritorioAprendizaje;
 use AppBundle\Entity\AsignacionGrupoRuta;
 use AppBundle\Entity\AsignacionOrganizacionRuta;
 use AppBundle\Entity\AsignacionGrupoBeneficiarioRuta;
@@ -50,6 +51,17 @@ use AppBundle\Entity\Organizacion;
 use AppBundle\Entity\OrganizacionSoporte;
 use AppBundle\Entity\TerritorioAprendizaje;
 use AppBundle\Entity\DiagnosticoOrganizacional;
+use AppBundle\Entity\Feria;
+use AppBundle\Entity\FeriaSoporte;
+use AppBundle\Entity\AsignacionOrganizacionTerritorioAprendizaje;
+use AppBundle\Entity\SeguimientoFase;
+use AppBundle\Entity\Activos;
+
+use AppBundle\Entity\Camino;
+use AppBundle\Entity\Nodo;
+
+use AppBundle\Entity\HabilitacionFases;
+
 
 use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
 use AppBundle\Form\GestionEmpresarial\AsignacionIntegranteCLEARType;
@@ -77,6 +89,11 @@ use AppBundle\Form\GestionEmpresarial\ListaRolType;
 use AppBundle\Form\GestionEmpresarial\TerritorioAprendizajeType;
 use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalType;
 use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalResultadoType;
+use AppBundle\Form\GestionEmpresarial\FeriaType;
+use AppBundle\Form\GestionEmpresarial\FeriaSoporteType;
+use AppBundle\Form\GestionEmpresarial\SeguimientoFaseType;
+use AppBundle\Form\GestionEmpresarial\ActivosType;
+
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -109,6 +126,8 @@ class GestionEmpresarialController extends Controller
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id' => $idGrupo)
         );
+
+        $nit = explode("-", $grupo->getNumeroIdentificacionTributaria());
 
         $form = $this->createForm(new GrupoType(), $grupo);
         
@@ -159,6 +178,9 @@ class GestionEmpresarialController extends Controller
                     'form' => $form->createView(),
                     'idGrupo' => $idGrupo,
                     'grupo' => $grupo,
+                    'numeroIdentificacion' => $nit[0],
+                    'digitoVerificacion' => $nit[1],
+
             )
         );
 
@@ -223,6 +245,21 @@ class GestionEmpresarialController extends Controller
             $grupo->setActive(true);
             $grupo->setFechaCreacion(new \DateTime());
 
+
+            //SEGUIMIENTO, Entidad Camino
+
+            $nodo = $em->getRepository('AppBundle:Nodo')->findBy(
+                array('id' => 1)
+            );
+
+            $nodoCamino = new Camino();
+            $nodoCamino->setGrupo($grupo);
+            $nodoCamino->setNodo($nodo);
+            $nodoCamino->setEstado(2);
+            $nodoCamino->setActive(true);
+            $nodoCamino->setFechaCreacion(new \DateTime());
+
+            $em->persist($nodoCamino);
             /*$usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
                 array(
                     'id' => 1
@@ -802,6 +839,39 @@ class GestionEmpresarialController extends Controller
                 $clearSoporte->setClear($clear);
                 $clearSoporte->setActive(true);
                 $clearSoporte->setFechaCreacion(new \DateTime());
+
+                //if($clearSoporte->getDescripcion()=="Acta final Clear"){
+                if(true){
+                    $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+                        array('id' => 2)
+                    );
+
+                    $asignacionGruposClear = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
+                        array('clear' => $clear) 
+                    );  
+
+                    foreach ($asignacionGruposClear as $asignacionGrupoClear){
+                        $nodoCamino = new Camino();
+                        $nodoCamino->setGrupo($asignacionGrupoClear->getGrupo());
+                        $nodoCamino->setNodo($nodo);
+
+                        $habilitacionFases = $em->getRepository('AppBundle:HabilitacionFases')->findOneBy(
+                            array('grupo' => $asignacionGrupoClear->getGrupo()) 
+                        );  
+
+                        $nodoCamino->setEstado(3);
+                        //if según HabilitacionFases alguno en true
+                        if($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPi() || $habilitacionFases->getPn())
+                            $nodoCamino->setEstado(2);
+
+                            
+                        $nodoCamino->setActive(true);
+                        $nodoCamino->setFechaCreacion(new \DateTime());
+
+                        $em->persist($nodoCamino);
+                    }
+
+                }
                 //$grupoSoporte->setUsuarioCreacion(1);
 
                 $em->persist($clearSoporte);
@@ -939,7 +1009,7 @@ class GestionEmpresarialController extends Controller
             'submit', 
             array(
                 'attr' => array(
-                    'style' => 'visibility:visible'
+                    'style' => 'visibility:hidden'
                 ),
             )
         );
@@ -1031,20 +1101,45 @@ class GestionEmpresarialController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $grupos = $em->getRepository('AppBundle:Grupo')->findOneBy(
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id' => $idGrupo)
         );  
 
         $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
             array('id' => $idCLEAR)
-        );  
+        );
            
         $asignacionesGrupoCLEAR = new AsignacionGrupoCLEAR();
 
-        $asignacionesGrupoCLEAR->setGrupo($grupos);
+        $asignacionesGrupoCLEAR->setGrupo($grupo);
         $asignacionesGrupoCLEAR->setClear($clear);           
         $asignacionesGrupoCLEAR->setActive(true);
         $asignacionesGrupoCLEAR->setFechaCreacion(new \DateTime());
+
+
+        $camino = $em->getRepository('AppBundle:Camino')->findBy(
+            array('grupo' => $grupo)
+        );
+
+        //Asignacion para Habilitación
+        if (count($camino)==1){
+
+            $asignacionesGrupoCLEAR->setHabilitacion(true); 
+
+            $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+                array('id' => 2)
+            );
+
+            $nodoCamino = new Camino();
+            $nodoCamino->setGrupo($grupo);
+            $nodoCamino->setNodo($nodo);
+            $nodoCamino->setEstado(1);
+            $nodoCamino->setActive(true);
+            $nodoCamino->setFechaCreacion(new \DateTime());
+
+            $em->persist($nodoCamino);
+        }
+
 
         $em->persist($asignacionesGrupoCLEAR);
         $em->flush();
@@ -1053,7 +1148,7 @@ class GestionEmpresarialController extends Controller
 
         return $this->redirectToRoute('clearGrupo', 
             array(
-                'grupos' => $grupos, 
+                'grupos' => $grupo, 
                 'asignacionesGrupoCLEAR' => $asignacionesGrupoCLEAR,
                 'idCLEAR' => $idCLEAR
             ));        
@@ -1076,6 +1171,13 @@ class GestionEmpresarialController extends Controller
             array('fecha_creacion' => 'ASC')
         );      
 
+        $camino = $em->getRepository('AppBundle:Camino')->findOneBy(
+            array('grupo' => $asignacionesGrupoCLEAR->getGrupo(), 
+                'estado' => '1'
+            )
+        );
+
+        $em->remove($camino);
         $em->remove($asignacionesGrupoCLEAR);
         $em->flush();
 
@@ -1094,6 +1196,31 @@ class GestionEmpresarialController extends Controller
                 'idCLEAR' => $idCLEAR
             ));    
         
+    }
+
+
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/{idGrupo}/habilitacion-fases/", name="habilitacionFases")
+     */
+    public function habilitacionFasesAction(Request $request, $idGrupo)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $habilitacionFases = new HabilitacionFases();
+        $habilitacionFases->setGrupo($grupo);
+        //$habilitacionFases->setPi(true);
+        $habilitacionFases->setActive(true);
+        $habilitacionFases->setFechaCreacion(new \DateTime());
+
+        $em->persist($habilitacionFases);
+        $em->flush();
+
+        die("ya!");
     }
 
 
@@ -1721,11 +1848,17 @@ class GestionEmpresarialController extends Controller
             array('id' => $idGrupo)
         );
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-seguimiento.html.twig', array( 'grupo' => $grupo));
+        $camino = $em->getRepository('AppBundle:Camino')->findBy(
+            array('grupo' => $grupo)
+        );
+        
+       // die();
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-seguimiento.html.twig', array( 'grupo' => $grupo, 'camino' => $camino));
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/", name="comiteGestion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/gestion", name="comiteGestion")
      */
     public function ComiteGestionAction()
     {
@@ -2071,7 +2204,7 @@ class GestionEmpresarialController extends Controller
         );
 
         $form->add(
-            'Asignar', 
+            'Asignar_'.$idIntegrante, 
             'submit', 
             array(
                 'attr' => array(
@@ -2274,6 +2407,7 @@ class GestionEmpresarialController extends Controller
     public function rutaGestionAction()
     {
         $em = $this->getDoctrine()->getManager();
+
         $rutas = $em->getRepository('AppBundle:Ruta')->findBy(
             array('active' => '1'),
             array('fecha_creacion' => 'ASC')
@@ -2364,13 +2498,13 @@ class GestionEmpresarialController extends Controller
 
             $ruta->setFechaModificacion(new \DateTime());
 
-            $usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            /*$usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
                 array(
                     'id' => 1
                 )
             );
             
-            $ruta->setUsuarioModificacion($usuarioModificacion);
+            $ruta->setUsuarioModificacion($usuarioModificacion);*/
 
             $em->flush();
 
@@ -2514,6 +2648,112 @@ class GestionEmpresarialController extends Controller
     }
 
     /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-territorio", name="rutaTerritorio")
+     */
+    public function rutaTerritorioAction($idRuta)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
+            array('id' => $idRuta)
+        );
+
+        if($ruta->getTerritorioAprendizaje() != null){            
+            $idTerritorioAprendizaje = $ruta->getTerritorioAprendizaje()->getId();        
+
+            $territorioAsignado = $em->getRepository('AppBundle:TerritorioAprendizaje')->findBy(
+                array('id' => $idTerritorioAprendizaje)
+            );
+            
+        }else{
+
+            $territorioAsignado = null;
+        }       
+
+        if($ruta->getTerritorioAprendizaje() == null){            
+            $query = $em->createQuery('SELECT t FROM AppBundle:TerritorioAprendizaje t WHERE t.id NOT IN (SELECT territorioAprendizaje.id FROM AppBundle:TerritorioAprendizaje territorioAprendizaje JOIN AppBundle:Ruta arc WHERE territorioAprendizaje = arc.territorio_aprendizaje AND arc.territorio_aprendizaje = :territorio_aprendizaje) AND t.active = 1');
+            $query->setParameter('territorio_aprendizaje', $ruta);
+            $territorios = $query->getResult();
+        }else{
+            $territorios = null; 
+        }
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:territorio-ruta-gestion-asignacion.html.twig', 
+            array(
+                'territorios' => $territorios,
+                'asignacionesTerritorioRuta' => $territorioAsignado,
+                'idRuta' => $idRuta
+            ));        
+        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-territorio/{idTerritorio}/nueva-asignacion", name="rutaAsignarTerritorio")
+     */
+    public function rutaAsignarTerritorioAction($idRuta, $idTerritorio)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $territorios = $em->getRepository('AppBundle:TerritorioAprendizaje')->findOneBy(
+            array('id' => $idTerritorio)
+        );  
+
+        $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
+            array('id' => $idRuta)
+        );     
+
+        $ruta->setTerritorioAprendizaje($territorios);
+        $ruta->setActive(true);
+        $ruta->setFechaCreacion(new \DateTime());
+
+        $em->persist($ruta);
+        $em->flush();
+
+        return $this->redirectToRoute('rutaTerritorio', 
+            array(
+                'territorios' => $territorios,
+                'asignacionesTerritorioRuta' => $ruta,                 
+                'idRuta' => $idRuta
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-territorio/{idTerritorio}/eliminar", name="rutaEliminarTerritorio")
+     */
+    public function rutaEliminarTerritorioAction(Request $request, $idRuta, $idTerritorio)
+    {
+        $em = $this->getDoctrine()->getManager();                
+
+        $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
+            array('id' => $idRuta)
+        );                    
+
+        $asignacionOrganizacionRuta = new AsignacionOrganizacionRuta();
+
+        $asignacionOrganizacionRuta = $em->getRepository('AppBundle:AsignacionOrganizacionRuta')->findBy(
+            array('ruta' => $idRuta)
+        );       
+
+        foreach($asignacionOrganizacionRuta as $asignacionOrganizacionRutaActual){
+            $em->remove($asignacionOrganizacionRutaActual);
+        }
+        
+        $ruta->setNullTerritorioAprendizaje();
+
+        $em->persist($ruta);
+        $em->flush();
+
+        return $this->redirectToRoute('rutaTerritorio',
+             array(
+                'idRuta' => $idRuta
+            ));    
+        
+    }
+
+    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-organizacion", name="rutaOrganizacion")
      */
     public function rutaOrganizacionAction($idRuta)
@@ -2522,25 +2762,30 @@ class GestionEmpresarialController extends Controller
 
         $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
             array('id' => $idRuta)
-        );
-
-        $asignacionesOrganizacionRuta = $em->getRepository('AppBundle:AsignacionOrganizacionRuta')->findBy(
-            array('ruta' => $ruta)
-        );  
-
-        $query = $em->createQuery('SELECT o FROM AppBundle:Organizacion o WHERE o.id NOT IN (SELECT organizacion.id FROM AppBundle:Organizacion organizacion JOIN AppBundle:AsignacionOrganizacionRuta aoc WHERE organizacion = aoc.organizacion AND aoc.ruta = :ruta) AND o.active = 1');
-        $query->setParameter('ruta', $ruta);
-
-        $organizaciones = $query->getResult();      
+        );   
         
+        $territorioAprendizaje = $ruta->getTerritorioAprendizaje()->getId();
+
+        
+        $organizacionRuta = $em->getRepository('AppBundle:AsignacionOrganizacionRuta')->findBy(
+            array('ruta' => $idRuta)
+        );        
+
+        $query = $em->createQuery('SELECT o FROM AppBundle:Organizacion o WHERE o.id NOT IN (SELECT organizacion.id FROM AppBundle:Organizacion organizacion JOIN AppBundle:AsignacionOrganizacionRuta aoc WHERE organizacion = aoc.organizacion AND aoc.ruta = :ruta) AND o.active = 1 AND o.ruta = 1');
+            $query->setParameter('ruta', $ruta);
+            $organizaciones = $query->getResult();
+
+        $mostrarOrganizacion = $em->getRepository('AppBundle:AsignacionOrganizacionTerritorioAprendizaje')->findBy(
+            array('organizacion' => $organizaciones, 'territorio_aprendizaje' => $territorioAprendizaje));
+       
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:organizacion-ruta-gestion-asignacion.html.twig', 
             array(
-                'organizaciones' => $organizaciones,
-                'asignacionesOrganizacionRuta' => $asignacionesOrganizacionRuta,
-                'idRuta' => $idRuta
+                'organizaciones' => $mostrarOrganizacion, 
+                'asignacionesOrganizacionRuta' => $organizacionRuta,
+                'idRuta' => $idRuta                              
             ));        
         
-    }
+    }    
 
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-organizacion/{idOrganizacion}/nueva-asignacion", name="rutaAsignarOrganizacion")
@@ -2695,13 +2940,23 @@ class GestionEmpresarialController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-grupo/{idGrupo}/eliminar", name="rutaEliminarGrupo")
      */
-    public function rutaEliminarGrupoAction(Request $request, $idRuta)
+    public function rutaEliminarGrupoAction(Request $request, $idRuta, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();                
 
         $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
             array('id' => $idRuta)
-        );                    
+        );
+
+        $asignacionGrupoBeneficiarioRuta = new AsignacionGrupoBeneficiarioRuta();
+
+        $asignacionGrupoBeneficiarioRuta = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioRuta')->findBy(
+            array('ruta' => $idRuta)
+        );       
+
+        foreach($asignacionGrupoBeneficiarioRuta as $asignacionGrupoBeneficiarioRutaActual){
+            $em->remove($asignacionGrupoBeneficiarioRutaActual);
+        }
 
         $ruta->setNullGrupo();
 
@@ -2722,7 +2977,7 @@ class GestionEmpresarialController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $ruta = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+        $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
             array('id' => $idRuta)
         );   
       
@@ -3103,6 +3358,114 @@ class GestionEmpresarialController extends Controller
     }
 
     /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-territorio", name="pasantiaTerritorio")
+     */
+    public function pasantiaTerritorioAction($idPasantia)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+            array('id' => $idPasantia)
+        );
+
+        echo $idPasantia;
+
+        if($pasantia->getTerritorioAprendizaje() != null){            
+            $idTerritorioAprendizaje = $pasantia->getTerritorioAprendizaje()->getId();        
+
+            $territorioAsignado = $em->getRepository('AppBundle:TerritorioAprendizaje')->findBy(
+                array('id' => $idTerritorioAprendizaje)
+            );
+            
+        }else{
+
+            $territorioAsignado = null;
+        }       
+
+        if($pasantia->getTerritorioAprendizaje() == null){            
+            $query = $em->createQuery('SELECT t FROM AppBundle:TerritorioAprendizaje t WHERE t.id NOT IN (SELECT territorioAprendizaje.id FROM AppBundle:TerritorioAprendizaje territorioAprendizaje JOIN AppBundle:Pasantia apc WHERE territorioAprendizaje = apc.territorio_aprendizaje AND apc.territorio_aprendizaje = :territorio_aprendizaje) AND t.active = 1');
+            $query->setParameter('territorio_aprendizaje', $pasantia);
+            $territorios = $query->getResult();
+        }else{
+            $territorios = null; 
+        }
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:territorio-pasantia-gestion-asignacion.html.twig', 
+            array(
+                'territorios' => $territorios,
+                'asignacionesTerritorioPasantia' => $territorioAsignado,
+                'idPasantia' => $idPasantia
+            ));        
+        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-territorio/{idTerritorio}/nueva-asignacion", name="pasantiaAsignarTerritorio")
+     */
+    public function pasantiaAsignarTerritorioAction($idPasantia, $idTerritorio)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $territorios = $em->getRepository('AppBundle:TerritorioAprendizaje')->findOneBy(
+            array('id' => $idTerritorio)
+        );  
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+            array('id' => $idPasantia)
+        );     
+
+        $pasantia->setTerritorioAprendizaje($territorios);
+        $pasantia->setActive(true);
+        $pasantia->setFechaCreacion(new \DateTime());
+
+        $em->persist($pasantia);
+        $em->flush();
+
+        return $this->redirectToRoute('pasantiaTerritorio', 
+            array(
+                'territorios' => $territorios,
+                'asignacionesTerritorioPasantia' => $pasantia,                 
+                'idPasantia' => $idPasantia
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantias/{idPasantia}/asignacion-territorio/{idTerritorio}/eliminar", name="pasantiaEliminarTerritorio")
+     */
+    public function pasantiaEliminarTerritorioAction(Request $request, $idPasantia, $idTerritorio)
+    {
+        $em = $this->getDoctrine()->getManager();                
+
+        $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
+            array('id' => $idPasantia)
+        );
+
+        $asignacionOrganizacionPasantia = new AsignacionOrganizacionPasantia();
+
+        $asignacionOrganizacionPasantia = $em->getRepository('AppBundle:AsignacionOrganizacionPasantia')->findBy(
+            array('pasantia' => $idPasantia)
+        );       
+
+        foreach($asignacionOrganizacionPasantia as $asignacionOrganizacionPasantiaActual){
+            $em->remove($asignacionOrganizacionPasantiaActual);
+        }
+
+        $pasantia->setNullTerritorioAprendizaje();
+        
+        $em->persist($pasantia);
+        $em->flush();
+
+        return $this->redirectToRoute('pasantiaTerritorio',
+             array(
+                'idPasantia' => $idPasantia
+            ));    
+        
+    }
+
+    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-organizacion", name="pasantiaOrganizacion")
      */
     public function pasantiaOrganizacionAction($idPasantia)
@@ -3111,22 +3474,27 @@ class GestionEmpresarialController extends Controller
 
         $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
             array('id' => $idPasantia)
-        );
-
-        $asignacionesOrganizacionPasantia = $em->getRepository('AppBundle:AsignacionOrganizacionPasantia')->findBy(
-            array('pasantia' => $pasantia)
-        );  
-
-        $query = $em->createQuery('SELECT o FROM AppBundle:Organizacion o WHERE o.id NOT IN (SELECT organizacion.id FROM AppBundle:Organizacion organizacion JOIN AppBundle:AsignacionOrganizacionPasantia aoc WHERE organizacion = aoc.organizacion AND aoc.pasantia = :pasantia) AND o.active = 1');
-        $query->setParameter('pasantia', $pasantia);
-
-        $organizaciones = $query->getResult();         
+        );   
         
+        $territorioAprendizaje = $pasantia->getTerritorioAprendizaje()->getId();
+
+        
+        $organizacionPasantia = $em->getRepository('AppBundle:AsignacionOrganizacionPasantia')->findBy(
+            array('pasantia' => $idPasantia)
+        );        
+
+        $query = $em->createQuery('SELECT o FROM AppBundle:Organizacion o WHERE o.id NOT IN (SELECT organizacion.id FROM AppBundle:Organizacion organizacion JOIN AppBundle:AsignacionOrganizacionPasantia aoc WHERE organizacion = aoc.organizacion AND aoc.pasantia = :pasantia) AND o.active = 1 AND o.pasantia = 1');
+            $query->setParameter('pasantia', $pasantia);
+            $organizaciones = $query->getResult();
+
+        $mostrarOrganizacion = $em->getRepository('AppBundle:AsignacionOrganizacionTerritorioAprendizaje')->findBy(
+            array('organizacion' => $organizaciones, 'territorio_aprendizaje' => $territorioAprendizaje));
+       
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:organizacion-pasantia-gestion-asignacion.html.twig', 
             array(
-                'organizaciones' => $organizaciones,
-                'asignacionesOrganizacionPasantia' => $asignacionesOrganizacionPasantia,
-                'idPasantia' => $idPasantia
+                'organizaciones' => $mostrarOrganizacion, 
+                'asignacionesOrganizacionPasantia' => $organizacionPasantia,
+                'idPasantia' => $idPasantia                              
             ));        
         
     }
@@ -3284,13 +3652,23 @@ class GestionEmpresarialController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-grupo/{idGrupo}/eliminar", name="pasantiaEliminarGrupo")
      */
-    public function pasantiaEliminarGrupoAction(Request $request, $idPasantia)
+    public function pasantiaEliminarGrupoAction(Request $request, $idPasantia, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();                
 
         $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
             array('id' => $idPasantia)
-        );                    
+        );    
+
+        $asignacionGrupoBeneficiarioPasantia = new AsignacionGrupoBeneficiarioPasantia();
+
+        $asignacionGrupoBeneficiarioPasantia = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioPasantia')->findBy(
+            array('pasantia' => $idPasantia)
+        );       
+
+        foreach($asignacionGrupoBeneficiarioPasantia as $asignacionGrupoBeneficiarioPasantiaActual){
+            $em->remove($asignacionGrupoBeneficiarioPasantiaActual);
+        }
 
         $pasantia->setNullGrupo();
 
@@ -3554,15 +3932,27 @@ class GestionEmpresarialController extends Controller
 
             $organizacion = $form->getData();
 
-            $organizacion->setFechaModificacion(new \DateTime());
+            if($organizacion->getRural() == true){             
+                $organizacion->setBarrio(null);
+            }
+            else
+            {
+                $organizacion->setCorregimiento(null);
+                $organizacion->setVereda(null);
+                $organizacion->setCacerio(null);
+            }
 
-            $usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            $organizacion->setActive(true);
+            $organizacion->setFechaCreacion(new \DateTime());
+
+
+            /*$usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
                 array(
                     'id' => 1
                 )
             );
             
-            $organizacion->setUsuarioModificacion($usuarioModificacion);
+            $organizacion->setUsuarioModificacion($usuarioModificacion);*/
 
             $em->flush();
 
@@ -3863,8 +4253,8 @@ class GestionEmpresarialController extends Controller
             array('territorio_aprendizaje' => $territorioAprendizaje)
         ); 
 
-        $query = $em->createQuery('SELECT o FROM AppBundle:Organizacion o WHERE o.id NOT IN (SELECT organizacion.id FROM AppBundle:Organizacion organizacion JOIN AppBundle:AsignacionOrganizacionTerritorioAprendizaje atc WHERE organizacion = atc.organizacion AND atc.organizacion = :organizacion) AND o.active = 1');
-        $query->setParameter('organizacion', $territorioAprendizaje);
+        $query = $em->createQuery('SELECT o FROM AppBundle:Organizacion o WHERE o.id NOT IN (SELECT organizacion.id FROM AppBundle:Organizacion organizacion JOIN AppBundle:AsignacionOrganizacionTerritorioAprendizaje atc WHERE organizacion = atc.organizacion AND atc.territorio_aprendizaje = :territorio_aprendizaje) AND o.active = 1');
+        $query->setParameter('territorio_aprendizaje', $territorioAprendizaje);
         $organizaciones = $query->getResult();      
 
 
@@ -3875,6 +4265,80 @@ class GestionEmpresarialController extends Controller
                 'idTerritorioAprendizaje' => $idTerritorioAprendizaje
             ));        
     }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/territorio/{idTerritorioAprendizaje}/asignacion-organizacion/{idOrganizacion}/nueva-asignacion", name="territorioAprendizajeAsignarOrganizacion")
+     */
+    public function territorioAprendizajeAsignarOrganizacionAction($idTerritorioAprendizaje, $idOrganizacion)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $organizaciones = $em->getRepository('AppBundle:Organizacion')->findOneBy(
+            array('id' => $idOrganizacion)
+        );  
+
+        $territorioAprendizaje = $em->getRepository('AppBundle:TerritorioAprendizaje')->findOneBy(
+            array('id' => $idTerritorioAprendizaje)
+        );  
+           
+        $asignacionesTerritorioOrganizacion = new AsignacionOrganizacionTerritorioAprendizaje();
+
+        $asignacionesTerritorioOrganizacion->setOrganizacion($organizaciones);
+        $asignacionesTerritorioOrganizacion->setTerritorioAprendizaje($territorioAprendizaje);        
+        $asignacionesTerritorioOrganizacion->setActive(true);
+        $asignacionesTerritorioOrganizacion->setFechaCreacion(new \DateTime());
+
+        $em->persist($asignacionesTerritorioOrganizacion);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('territorioAprendizajeOrganizacion', 
+            array(
+                'organizaciones' => $organizaciones,
+                'asignacionesTerritoriosOrganizacion' => $asignacionesTerritorioOrganizacion,
+                'idTerritorioAprendizaje' => $idTerritorioAprendizaje
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/territorio/{idTerritorioAprendizaje}/asignacion-organizacion/{idTerritorioOrganizacion}/eliminar", name="territorioAprendizajeEliminarOrganizacion")
+     */
+    public function territorioAprendizajeEliminarOrganizacionAction(Request $request, $idTerritorioAprendizaje, $idTerritorioOrganizacion)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionesTerritorioOrganizacion = new AsignacionOrganizacionTerritorioAprendizaje();
+
+        $asignacionesTerritorioOrganizacion = $em->getRepository('AppBundle:AsignacionOrganizacionTerritorioAprendizaje')->find(
+            $idTerritorioOrganizacion); 
+
+        $organizaciones = $em->getRepository('AppBundle:Organizacion')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );      
+
+        $em->remove($asignacionesTerritorioOrganizacion);
+        $em->flush();
+
+        $territorioAprendizaje = $em->getRepository('AppBundle:TerritorioAprendizaje')->findOneBy(
+            array('id' => $idTerritorioAprendizaje)
+        );     
+
+        $asignacionesTerritoriosOrganizacion = $em->getRepository('AppBundle:AsignacionOrganizacionTerritorioAprendizaje')->findBy(
+            array('territorio_aprendizaje' => $territorioAprendizaje)
+        ); 
+
+        return $this->redirectToRoute('territorioAprendizajeOrganizacion',
+             array(
+                'organizaciones' => $organizaciones,
+                'asignacionesTerritoriosOrganizacion' => $asignacionesTerritorioOrganizacion,
+                'idTerritorioAprendizaje' => $idTerritorioAprendizaje
+            ));    
+        
+    }   
 
 
 
@@ -3976,8 +4440,435 @@ class GestionEmpresarialController extends Controller
     }
 
 
+ /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/feria/gestion", name="feriaGestion")
+     */
+    public function feriaGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ferias = $em->getRepository('AppBundle:Feria')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:feria-gestion.html.twig', array( 'ferias' => $ferias));
+    }
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/feria/nuevo", name="feriaNuevo")
+     */
+    public function feriaNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $feria= new Feria();
+        
+        $form = $this->createForm(new FeriaType(), $feria);
+        
+        $form->add(
+            'guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $feria = $form->getData();
+
+
+            $feria->setActive(true);
+            $feria->setFechaCreacion(new \DateTime());
+            $em->persist($feria);
+            $em->flush();
+
+            return $this->redirectToRoute('feriaGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:feria-nuevo.html.twig', array('form' => $form->createView()));
+    }
+
+
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/feria/{idFeria}/eliminar", name="feriaEliminar")
+     */
+    public function feriaEliminarAction(Request $request, $idFeria)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $feria = new Feria();
+
+        $feria = $em->getRepository('AppBundle:Feria')->find($idFeria);              
+
+        $em->remove($feria);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('feriaGestion'));
+
+    }
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/feria/{idFeria}/documentos-soporte", name="feriaSoporte")
+     */
+    public function feriaSoporteAction(Request $request, $idFeria)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $feriaSoporte = new FeriaSoporte();
+        
+        $form = $this->createForm(new FeriaSoporteType(), $feriaSoporte);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $soportesActivos = $em->getRepository('AppBundle:FeriaSoporte')->findBy(
+            array('active' => '1', 'feria' => $idFeria),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $histotialSoportes = $em->getRepository('AppBundle:FeriaSoporte')->findBy(
+            array('active' => '0', 'feria' => $idFeria),
+            array('fecha_creacion' => 'ASC')
+        );
+        
+        $feria = $em->getRepository('AppBundle:Feria')->findOneBy(
+            array('id' => $idFeria)
+        );
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+
+                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                    array(
+                        'descripcion' => $feriaSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'grupo_tipo_soporte'
+                    )
+                );
+                
+                $actualizarFeriaSoportes = $em->getRepository('AppBundle:FeriaSoporte')->findBy(
+                    array(
+                        'active' => '1' , 
+                        'tipo_soporte' => $tipoSoporte->getId(), 
+                        'feria' => $idFeria
+                    )
+                );  
+            
+                foreach ($actualizarFeriaSoportes as $actualizarFeriaSoporte){
+                    echo $actualizarFeriaSoporte->getId()." ".$actualizarFeriaSoporte->getTipoSoporte()."<br />";
+                    $actualizarFeriaSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarFeriaSoporte->setActive(0);
+                    $em->flush();
+                }
+                
+                $feriaSoporte->setFeria($feria);
+                $feriaSoporte->setActive(true);
+                $feriaSoporte->setFechaCreacion(new \DateTime());
+                //$grupoSoporte->setUsuarioCreacion(1);
+
+                $em->persist($feriaSoporte);
+                $em->flush();
+
+                return $this->redirectToRoute('feriaSoporte', array( 'idFeria' => $idFeria));
+            }
+        }   
+        
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:feria-soporte.html.twig', 
+            array(
+                'form' => $form->createView(), 
+                'soportesActivos' => $soportesActivos, 
+                'histotialSoportes' => $histotialSoportes
+            )
+        );
+        
+    }
+    
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/feria/{idFeria}/documentos-soporte/{idFeriaSoporte}/borrar", name="feriaSoporteBorrar")
+     */
+    public function feriaSoporteBorrarAction(Request $request, $idFeria, $idFeriaSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $FeriaSoporte = new FeriaSoporte();
+        
+        $feriaSoporte = $em->getRepository('AppBundle:FeriaSoporte')->findOneBy(
+            array('id' => $idFeriaSoporte)
+        );
+        
+        $feriaSoporte->setFechaModificacion(new \DateTime());
+        $feriaSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('feriaSoporte', array( 'idFeria' => $idFeria));
+        
+    }
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/feria/{idFeria}/editar", name="feriaEditar")
+     */
+    public function feriaEditarAction(Request $request, $idFeria)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $feria = new Feria();
+
+        $feria = $em->getRepository('AppBundle:Feria')->findOneBy(
+            array('id' => $idFeria)
+        );
+        //echo $integrantes->getPertenenciaEtnica();
+        $form = $this->createForm(new FeriaType(), $feria);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $feria = $form->getData();
+
+            $feria->setFechaModificacion(new \DateTime());
+
+            
+
+            $em->flush();
+
+            return $this->redirectToRoute('feriaGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:feria-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idFeria' => $idFeria,
+                    'feria' => $feria,
+            )
+        );
+
+               
+    }
+
+ /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/seguimiento-fase/{idFase}/gestion", name="seguimientofaseGestion")
+     */
+    public function seguimientofaseGestionAction($idFase)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $seguimientofase = $em->getRepository('AppBundle:SeguimientoFase')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimientofase-gestion.html.twig', 
+            array( 'seguimientofase' => $seguimientofase,
+                    'idFase' => $idFase
+          
+                )
+            );
+    }
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/seguimiento-fase/{idFase}/nuevo", name="seguimientofaseNuevo")
+     */
+    public function seguimientofaseNuevoAction(Request $request, $idFase)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $seguimientofase= new SeguimientoFase();
+        
+        $form = $this->createForm(new SeguimientoFaseType(), $seguimientofase);
+        
+        $form->add(
+            'guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $seguimientofase = $form->getData();
+
+
+            $seguimientofase->setActive(true);
+            $seguimientofase->setFechaCreacion(new \DateTime());
+            $em->persist($seguimientofase);
+            $em->flush();
+
+            return $this->redirect(
+                $this->generateUrl(
+                    'seguimientofaseGestion', 
+                    array(
+                        'idFase' => $idFase
+                    )
+                )
+            );
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimientofase-nuevo.html.twig',
+         array('form' => $form->createView(),
+               'idFase' => $idFase,
+
+
+            ));
+    }
+
 
 
 
 	
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/activos/gestion", name="activosGestion")
+     */
+    public function activosGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $activos = $em->getRepository('AppBundle:Activos')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:activos-gestion.html.twig', array( 'activos' => $activos));
+    }
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/activos/nuevo", name="activosNuevo")
+     */
+    public function activosNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $activos= new Activos();
+        
+        $form = $this->createForm(new ActivosType(), $activos);
+        
+        $form->add(
+            'guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $activos = $form->getData();
+
+
+            $activos->setActive(true);
+            $activos->setFechaCreacion(new \DateTime());
+            $em->persist($activos);
+            $em->flush();
+
+            return $this->redirectToRoute('activosGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:activos-nuevo.html.twig', array('form' => $form->createView()));
+    }
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/activos/{idActivos}/eliminar", name="activosEliminar")
+     */
+    public function activosEliminarAction(Request $request, $idActivos)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $activos = new Activos();
+
+        $activos = $em->getRepository('AppBundle:Activos')->find($idActivos);              
+
+        $em->remove($activos);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('activosGestion'));
+
+    }
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/activos/{idActivos}/editar", name="activosEditar")
+     */
+    public function activosEditarAction(Request $request, $idActivos)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $activos = new Activos();
+
+        $activos = $em->getRepository('AppBundle:Activos')->findOneBy(
+            array('id' => $idActivos)
+        );
+        //echo $integrantes->getPertenenciaEtnica();
+        $form = $this->createForm(new ActivosType(), $activos);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $activos = $form->getData();
+
+            $activos->setFechaModificacion(new \DateTime());
+
+            
+
+            $em->flush();
+
+            return $this->redirectToRoute('activosGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:activos-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idActivos' => $idActivos,
+                    'activos' => $activos,
+            )
+        );
+
+               
+    }
+
+
+
+
 }

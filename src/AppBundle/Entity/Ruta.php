@@ -101,6 +101,11 @@ class Ruta
         return $this;
     }
 
+    public function setNullTerritorioAprendizaje()
+    {
+        $this->territorio_aprendizaje = null;
+    }
+
     /**
      * Get territorioAprendizaje
      *

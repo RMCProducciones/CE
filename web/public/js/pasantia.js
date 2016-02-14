@@ -76,6 +76,14 @@ app.controller('gestionGrupoBeneficiarioPasantiaCtrl', ['$scope', '$http', funct
 	};	
 }]);
 
+app.controller('gestionTerritorioPasantiaCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.eliminarTerritorioPasantia = function(ruta){		
+		window.location.replace(ruta);
+
+	};	
+}]);
+
 
 
 

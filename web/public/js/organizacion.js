@@ -132,3 +132,13 @@ app.controller('CamposRutalPasantiaOrganizacionCtrl', ['$scope', '$http', functi
 	
 }]);
 
+
+app.controller('gestionTerritorioAprendizajeOrganizacionCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.eliminarTerritorioAprendizajeOrganizacion = function(ruta){
+
+		window.location.replace(ruta);
+
+	};	
+}]);
+
