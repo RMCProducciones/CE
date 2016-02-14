@@ -27,134 +27,154 @@
   {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
 
     {{ form_errors(form) }}
-
-    <div class="section">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="btn-group">
-  
-              <button name="grupo[guardar]" id="grupo_guardar" type="submit" class="btn btn-success">Guardar</button>
-              
-              <a href="{{ path('seguimientofaseGestion' , {'idFase':idFase}) }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
     
     <br>
-        
-
-
     <div class="section">
-      <div class="container">
-
-        <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Inicio de fase</a></li>
-          <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Cierre de fase</a></li>
-        </ul>
-
-        </br>   
-<div class="tab-content">
-  <div role="tabpanel" class="tab-pane active" id="home">
-  <div class="row">
-        
-            <div class="col-md-4">
-                  {{ form_label(form.fecha_inicio) }}
-                  {{ form_errors(form.fecha_inicio) }}
-                  {{ form_widget(form.fecha_inicio, { 'attr': {'class': 'form-control', 'placeholder': 'Fecha de inicio'} }) }}
-            </div>
-               
-            <div class="col-md-4">
-                  {{ form_label(form.fecha_finalizacion) }}
-                  {{ form_errors(form.fecha_finalizacion) }}
-                  {{ form_widget(form.fecha_finalizacion, { 'attr': {'class': 'form-control', 'placeholder': 'Fecha Finalizacion '} }) }}
-            </div>       
-
-            <div class="col-md-4">
-                  {{ form_label(form.actividad_productiva) }}
-                  {{ form_errors(form.actividad_productiva) }}
-                  {{ form_widget(form.actividad_productiva, { 'attr': {'class': 'form-control', 'placeholder': 'Actividad Productiva'} }) }}
-            </div>    
-         
-</div>
-<br/>
-
-<div class="row">
-            <div class="col-md-4">
-                  {{ form_label(form.descripcion_actividad_productiva) }}
-                  {{ form_errors(form.descripcion_actividad_productiva) }}
-                  {{ form_widget(form.descripcion_actividad_productiva, { 'attr': {'class': 'form-control', 'placeholder': 'Descripcion actividad'} }) }}
-            </div>
-                
-            <div class="col-md-4">
-                  {{ form_label(form.logros) }}
-                  {{ form_errors(form.logros) }}
-                  {{ form_widget(form.logros, { 'attr': {'class': 'form-control', 'placeholder': 'Logros '} }) }}
-            </div>
-         
-</div>
-
-</div>
-
-<br/>
-
-<div role="tabpanel" class="tab-pane" id="profile">
-  <div class="row">
-        
-            <div class="col-md-4">
-                  {{ form_label(form.resultado_componente_organizacional) }}
-                  {{ form_errors(form.resultado_componente_organizacional) }}
-                  {{ form_widget(form.resultado_componente_organizacional, { 'attr': {'class': 'form-control', 'placeholder': 'Resultado Componente organizacional'} }) }}
-            </div>
-            <div class="col-md-4">
-                  {{ form_label(form.resultado_componente_productivo) }}
-                  {{ form_errors(form.resultado_componente_productivo) }}
-                  {{ form_widget(form.resultado_componente_productivo, { 'attr': {'class': 'form-control', 'placeholder': 'Resultado Componente productivo'} }) }}
-            </div>
-            <div class="col-md-4">
-                  {{ form_label(form.resultado_componente_comercial) }}
-                  {{ form_errors(form.resultado_componente_comercial) }}
-                  {{ form_widget(form.resultado_componente_comercial, { 'attr': {'class': 'form-control', 'placeholder': 'Resultado Componente comercial'} }) }}
-            </div>           
-      <br/>       
-       <br/>  
-</div>
-<div class="row">
-        <br/> 
-            <div class="col-md-4">
-                  {{ form_label(form.resultado_componente_administrativo) }}
-                  {{ form_errors(form.resultado_componente_administrativo) }}
-                  {{ form_widget(form.resultado_componente_administrativo, { 'attr': {'class': 'form-control', 'placeholder': 'Resultado Componente administrativo'} }) }}
-            </div>
-            <div class="col-md-4">
-                  {{ form_label(form.resultado_componente_financiero) }}
-                  {{ form_errors(form.resultado_componente_financiero) }}
-                  {{ form_widget(form.resultado_componente_financiero, { 'attr': {'class': 'form-control', 'placeholder': 'Resultado Componente financiero'} }) }}
-            </div>
-            <div class="col-md-4">
-                  {{ form_label(form.observaciones) }}
-                  {{ form_errors(form.observaciones) }}
-                  {{ form_widget(form.observaciones, { 'attr': {'class': 'form-control', 'placeholder': 'Observaciones'} }) }}
-            </div>
-                      
-      <br/>       
-       
-</div>
-
-</div>
-
-
-</div>             
-
-
-
-
-
-    </div>
+      <div class="container">     
+        <div class="row">
+              <div class="col-md-6">
+                <div class="btn-group">
+      
+                  <button name="seguimientoFase[guardar]" id="seguimientoFase_guardar" type="submit" class="btn btn-success">Guardar</button>
+                  
+                  <a href="{{ path('seguimientofaseGestion' , {'idFase':idFase}) }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+                  
+                </div>
+              </div>
+            </div>   
       </div>
+    </div> 
+        
+
+
+       
+        </br>   
+{% set activar = idNodo %}
+
+{% set atributo1 = 'visible' %}
+{% set atributo2 = 'hidden' %}
+
+{% if activar == 8 or activar == 12 or activar == 18 or activar == 24 or activar == 33 %}
+  {% set atributo1 = 'hidden' %}
+  {% set atributo2 = 'visible' %}
+{% endif %}
+
+<br>
+
+<div class="section">
+  <div class="container">    
+
+    {% if atributo1 == 'visible' %}
+
+      <div class="row">
+       
+        <div class="col-md-4">
+              {{ form_label(form.fecha_inicio) }}
+              {{ form_errors(form.fecha_inicio) }}
+              {{ form_widget(form.fecha_inicio, { 'attr': {'class': 'form-control', 'placeholder': 'Fecha de inicio'} }) }}
+        </div>        
+  
+        <div class="col-md-4">
+              {{ form_label(form.actividad_productiva) }}
+              {{ form_errors(form.actividad_productiva) }}
+              {{ form_widget(form.actividad_productiva, { 'attr': {'class': 'form-control', 'placeholder': 'Actividad Productiva'} }) }}
+        </div>    
+
+        <div class="col-md-4">
+              {{ form_label(form.descripcion_actividad_productiva) }}
+              {{ form_errors(form.descripcion_actividad_productiva) }}
+              {{ form_widget(form.descripcion_actividad_productiva, { 'attr': {'class': 'form-control', 'placeholder': 'Descripcion actividad'} }) }}
+        </div>
+         
+      </div>
+
+      <br/>
+
+      <div class="row">                    
+        <div class="col-md-4">
+              {{ form_label(form.logros) }}
+              {{ form_errors(form.logros) }}
+              {{ form_widget(form.logros, { 'attr': {'class': 'form-control', 'placeholder': 'Logros '} }) }}
+        </div>
+         
+      </div> 
+
+      {{ form_widget(form.resultado_componente_organizacional, { 'attr': {'style': 'visibility:hidden'} }) }}
+      {{ form_widget(form.resultado_componente_productivo, { 'attr': {'style': 'visibility:hidden'} }) }}
+      {{ form_widget(form.resultado_componente_comercial, { 'attr': {'style': 'visibility:hidden'} }) }}
+      {{ form_widget(form.resultado_componente_administrativo, { 'attr': {'style': 'visibility:hidden'} }) }}
+      {{ form_widget(form.resultado_componente_financiero, { 'attr': {'style': 'visibility:hidden'} }) }}
+      {{ form_widget(form.observaciones, { 'attr': {'style': 'visibility:hidden'} }) }}
+      {{ form_widget(form.fecha_finalizacion, { 'attr': {'style': 'visibility:hidden'} }) }}
+
+
+    {% else %}
+
+      <div class="row">
+        
+        <div class="col-md-4">
+              {{ form_label(form.resultado_componente_organizacional) }}
+              {{ form_errors(form.resultado_componente_organizacional) }}
+              {{ form_widget(form.resultado_componente_organizacional, { 'attr': {'class': 'form-control', 'placeholder': 'Resultado Componente organizacional'} }) }}
+        </div>
+        <div class="col-md-4">
+              {{ form_label(form.resultado_componente_productivo) }}
+              {{ form_errors(form.resultado_componente_productivo) }}
+              {{ form_widget(form.resultado_componente_productivo, { 'attr': {'class': 'form-control', 'placeholder': 'Resultado Componente productivo'} }) }}
+        </div>
+        <div class="col-md-4">
+              {{ form_label(form.resultado_componente_comercial) }}
+              {{ form_errors(form.resultado_componente_comercial) }}
+              {{ form_widget(form.resultado_componente_comercial, { 'attr': {'class': 'form-control', 'placeholder': 'Resultado Componente comercial'} }) }}
+        </div>           
+        <br/>       
+        <br/>  
+      </div>
+
+      <br/> 
+
+      <div class="row">
+        <div class="col-md-4">
+              {{ form_label(form.resultado_componente_administrativo) }}
+              {{ form_errors(form.resultado_componente_administrativo) }}
+              {{ form_widget(form.resultado_componente_administrativo, { 'attr': {'class': 'form-control', 'placeholder': 'Resultado Componente administrativo'} }) }}
+        </div>
+        <div class="col-md-4">
+              {{ form_label(form.resultado_componente_financiero) }}
+              {{ form_errors(form.resultado_componente_financiero) }}
+              {{ form_widget(form.resultado_componente_financiero, { 'attr': {'class': 'form-control', 'placeholder': 'Resultado Componente financiero'} }) }}
+        </div>
+        <div class="col-md-4">
+              {{ form_label(form.observaciones) }}
+              {{ form_errors(form.observaciones) }}
+              {{ form_widget(form.observaciones, { 'attr': {'class': 'form-control', 'placeholder': 'Observaciones'} }) }}
+        </div>
+                      
+        <br/>       
+       
+      </div>
+
+        <br/>       
+
+      <div class="row">
+        <div class="col-md-4">
+              {{ form_label(form.fecha_finalizacion) }}
+              {{ form_errors(form.fecha_finalizacion) }}
+              {{ form_widget(form.fecha_finalizacion, { 'attr': {'class': 'form-control', 'placeholder': 'Fecha Finalizacion '} }) }}
+        </div>       
+      </div>
+
+      {{ form_widget(form.fecha_inicio, { 'attr': {'style': 'visibility:hidden'} }) }}      
+      {{ form_widget(form.actividad_productiva, { 'attr': {'style': 'visibility:hidden'} }) }}
+      {{ form_widget(form.descripcion_actividad_productiva, { 'attr': {'style': 'visibility:hidden'} }) }}
+      {{ form_widget(form.logros, { 'attr': {'style': 'visibility:hidden'} }) }}
+
+
+    {% endif %}
+
+
+  </div>
+</div>
 
   {{ form_end(form) }}
                
