@@ -58,11 +58,11 @@ use AppBundle\Entity\SeguimientoFase;
 use AppBundle\Entity\Activos;
 use AppBundle\Entity\Produccion;
 use AppBundle\Entity\Ventas;
-
 use AppBundle\Entity\Camino;
 use AppBundle\Entity\Nodo;
-
 use AppBundle\Entity\HabilitacionFases;
+use AppBundle\Entity\Empleado;
+
 
 
 use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
@@ -95,10 +95,10 @@ use AppBundle\Form\GestionEmpresarial\FeriaType;
 use AppBundle\Form\GestionEmpresarial\FeriaSoporteType;
 use AppBundle\Form\GestionEmpresarial\SeguimientoFaseType;
 use AppBundle\Form\GestionEmpresarial\ActivosType;
-
 use AppBundle\Form\GestionEmpresarial\ProduccionType;
 use AppBundle\Form\GestionEmpresarial\VentasType;
 use AppBundle\Form\GestionEmpresarial\HabilitacionFasesType;
+use AppBundle\Form\GestionEmpresarial\EmpleadoType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -836,35 +836,23 @@ class GestionEmpresarialController extends Controller
                 $clearSoporte->setActive(true);
                 $clearSoporte->setFechaCreacion(new \DateTime());
 
-                //if($clearSoporte->getDescripcion()=="Acta final Clear"){
+                //if($clearSoporte->getDescripcion()=="Acta final Clear"){ //Despúes de subir el Acta final del CLEAR toma lo que esté almacenado en habilitacionFases de cada grupo para asignar un nodo Ejecutado o un nodo Rechazado
                 if(true){
-                    $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
-                        array('id' => 2)
-                    );
-
                     $asignacionGruposClear = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
                         array('clear' => $clear) 
                     );  
 
                     foreach ($asignacionGruposClear as $asignacionGrupoClear){
-                        $nodoCamino = new Camino();
-                        $nodoCamino->setGrupo($asignacionGrupoClear->getGrupo());
-                        $nodoCamino->setNodo($nodo);
-
+                    
                         $habilitacionFases = $em->getRepository('AppBundle:HabilitacionFases')->findOneBy(
                             array('grupo' => $asignacionGrupoClear->getGrupo()) 
                         );  
 
-                        $nodoCamino->setEstado(3);
+                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 3);
+                        
                         //if según HabilitacionFases alguno en true
                         if($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPi() || $habilitacionFases->getPn())
-                            $nodoCamino->setEstado(2);
-
-                            
-                        $nodoCamino->setActive(true);
-                        $nodoCamino->setFechaCreacion(new \DateTime());
-
-                        $em->persist($nodoCamino);
+                            self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 2);
                     }
 
                 }
@@ -1117,30 +1105,35 @@ class GestionEmpresarialController extends Controller
             array('grupo' => $grupo)
         );
 
-        //Asignacion para Habilitación
-        if (count($camino)==1){
-
+        $ultimoNodo = $camino[count($camino)-1];
+        $idUltimoNodo = $ultimoNodo->getNodo()->getId();
+        $estado = $ultimoNodo->getEstado();
+        
+        die("estado ".$idNodo);
+        //die("cantidad ".count($camino));
+   
+        //PARTICIPACIÓN PARA HABILITACIÓN
+        if ($idUltimoNodo == 1){
             $asignacionesGrupoCLEAR->setHabilitacion(true); 
-
-            $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
-                array('id' => 2)
-            );
-
-            $nodoCamino = new Camino();
-            $nodoCamino->setGrupo($grupo);
-            $nodoCamino->setNodo($nodo);
-            $nodoCamino->setEstado(1);
-            $nodoCamino->setActive(true);
-            $nodoCamino->setFechaCreacion(new \DateTime());
-
-            $em->persist($nodoCamino);
+                                self::nodoCamino($idGrupo, 2, 1);
         }
-
+        //PARTICIPACIÓN PARA ASIGNACIÓN
+             
+            //Si el último nodo es 3, 4, 5(Visita Previa), 
+            //si es 9, 13, 19, 25(Contraloria) y tuvieron los estados 2(Ejecutado)
+        elseif($idUltimoNodo == 2 ){ // Si el ultimo nodo es 2(Habilitación) en HabilitaciónFases permita MOT Formal o MOT no Formal
+            //Buscar hasta el ultimo nodo para saber donde está
+            $asignacionesGrupoCLEAR->setAsignacion(true); 
+            self::nodoCamino($idGrupo, 2, 1);
+        }
+        //PARTICIPACIÓN PARA CONTRALORÍA
+        elseif(true){ 
+            $asignacionesGrupoCLEAR->setContraloria(true); 
+            self::nodoCamino($idGrupo, 2, 1);
+        }
 
         $em->persist($asignacionesGrupoCLEAR);
         $em->flush();
-
-
 
         return $this->redirectToRoute('clearGrupo', 
             array(
@@ -1173,7 +1166,8 @@ class GestionEmpresarialController extends Controller
             )
         );
 
-        $em->remove($camino);
+        if($camino)
+            $em->remove($camino);
         $em->remove($asignacionesGrupoCLEAR);
         $em->flush();
 
@@ -1210,7 +1204,7 @@ class GestionEmpresarialController extends Controller
             array('grupo' => $grupo)
         );
 
-        if(!$habilitacionFases)
+        if(!$habilitacionFases)//ESTO NO FUNCIONA
            // die("tiene habilitacion fase");
             $habilitacionFases = new HabilitacionFases();
         
@@ -5224,7 +5218,7 @@ class GestionEmpresarialController extends Controller
 /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/ventas/{idVentas}/eliminar", name="ventasEliminar")
      */
-    public function ventasEliminarAction(Request $request, $Ventas)
+    public function ventasEliminarAction(Request $request, $idVentas)
     {
         $em = $this->getDoctrine()->getManager();
         $ventas = new Ventas();
@@ -5282,6 +5276,126 @@ class GestionEmpresarialController extends Controller
                     'form' => $form->createView(),
                     'idVentas' => $idVentas,
                     'ventas' => $ventas,
+            )
+        );
+
+               
+    }
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/empleado/gestion", name="empleadoGestion")
+     */
+    public function empleadoGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $empleado = $em->getRepository('AppBundle:Empleado')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:empleado-gestion.html.twig', array( 'empleado' => $empleado));
+    }
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/empleado/nuevo", name="empleadoNuevo")
+     */
+    public function empleadoNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $empleado= new Empleado();
+        
+        $form = $this->createForm(new EmpleadoType(), $empleado);
+        
+        $form->add(
+            'guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $empleado = $form->getData();
+
+
+            $empleado->setActive(true);
+            $empleado->setFechaCreacion(new \DateTime());
+            $em->persist($empleado);
+            $em->flush();
+
+            return $this->redirectToRoute('empleadoGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:empleado-nuevo.html.twig', array('form' => $form->createView()));
+    }
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/empleado/{idEmpleado}/eliminar", name="empleadoEliminar")
+     */
+    public function empleadoEliminarAction(Request $request, $idEmpleado)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $empleado = new Empleado();
+
+        $empleado = $em->getRepository('AppBundle:Empleado')->find($idEmpleado);              
+
+        $em->remove($empleado);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('empleadoGestion'));
+
+    }
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/empleado/{idEmpleado}/editar", name="empleadoEditar")
+     */
+    public function empleadoEditarAction(Request $request, $idEmpleado)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $empleado = new Empleado();
+
+        $empleado = $em->getRepository('AppBundle:Empleado')->findOneBy(
+            array('id' => $idEmpleado)
+        );
+        //echo $integrantes->getPertenenciaEtnica();
+        $form = $this->createForm(new EmpleadoType(), $empleado);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $empleado = $form->getData();
+
+            $empleado->setFechaModificacion(new \DateTime());
+
+            
+
+            $em->flush();
+
+            return $this->redirectToRoute('empleadoGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:empleado-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idEmpleado' => $idEmpleado,
+                    'empleado' => $empleado,
             )
         );
 

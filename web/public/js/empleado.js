@@ -1,19 +1,18 @@
+app.controller('gestionEmpleadoCtrl', ['$scope', '$http', function($scope, $http) {
 
-app.controller('gestionVentasCtrl', ['$scope', '$http', function($scope, $http) {
-
-	$scope.idVentas = 0;	
+	$scope.idEmpleado = 0;	
 
 	console.log($scope.estadoMensaje);
 
-	$scope.eliminarVentas = function(idVentas, consecutivo){
+	$scope.eliminarEmpleado = function(idEmpleado, consecutivo){
 
-		$scope.idVentas = idVentas;
-		$scope.consecutivoVentas = consecutivo;
+		$scope.idEmpleado = idEmpleado;
+		$scope.consecutivoEmpleado = consecutivo;
 
-		$http.get($scope.rutaServidor + "gestion-empresarial/desarrollo-empresarial/ventas/" + $scope.idVentas + "/eliminar")
+		$http.get($scope.rutaServidor + "gestion-empresarial/desarrollo-empresarial/empleado/" + $scope.idEmpleado + "/eliminar")
 		.success(function(data, status, headers, config) {
 
-  			$("#filaVentas" + $scope.consecutivoVentas).fadeOut("slow");
+  			$("#filaEmpleado" + $scope.consecutivoEmpleado).fadeOut("slow");
 			$scope.mostrarMensaje("success", true, "Registro Eliminado");
 
 		

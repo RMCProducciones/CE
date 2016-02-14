@@ -189,6 +189,15 @@
                     <b>Z</b> {{ asignacionGrupoCLEAR.grupo.municipio.zona }}    
                   </td>
                   <td>
+                    {% if asignacionGrupoCLEAR.habilitacion %}
+                      Habilitación
+                    {% endif%}
+                    {% if asignacionGrupoCLEAR.asignacion %}
+                      Asignación
+                    {% endif%}
+                    {% if asignacionGrupoCLEAR.contraloriaSocial %}
+                      Contraloria Social
+                    {% endif%}
                   </td>
           
                   <td>
