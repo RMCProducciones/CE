@@ -58,11 +58,11 @@ use AppBundle\Entity\SeguimientoFase;
 use AppBundle\Entity\Activos;
 use AppBundle\Entity\Produccion;
 use AppBundle\Entity\Ventas;
-
 use AppBundle\Entity\Camino;
 use AppBundle\Entity\Nodo;
-
 use AppBundle\Entity\HabilitacionFases;
+use AppBundle\Entity\Empleado;
+
 
 
 use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
@@ -95,10 +95,10 @@ use AppBundle\Form\GestionEmpresarial\FeriaType;
 use AppBundle\Form\GestionEmpresarial\FeriaSoporteType;
 use AppBundle\Form\GestionEmpresarial\SeguimientoFaseType;
 use AppBundle\Form\GestionEmpresarial\ActivosType;
-
 use AppBundle\Form\GestionEmpresarial\ProduccionType;
 use AppBundle\Form\GestionEmpresarial\VentasType;
 use AppBundle\Form\GestionEmpresarial\HabilitacionFasesType;
+use AppBundle\Form\GestionEmpresarial\EmpleadoType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -5158,7 +5158,7 @@ class GestionEmpresarialController extends Controller
 /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/ventas/{idVentas}/eliminar", name="ventasEliminar")
      */
-    public function ventasEliminarAction(Request $request, $Ventas)
+    public function ventasEliminarAction(Request $request, $idVentas)
     {
         $em = $this->getDoctrine()->getManager();
         $ventas = new Ventas();
@@ -5216,6 +5216,126 @@ class GestionEmpresarialController extends Controller
                     'form' => $form->createView(),
                     'idVentas' => $idVentas,
                     'ventas' => $ventas,
+            )
+        );
+
+               
+    }
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/empleado/gestion", name="empleadoGestion")
+     */
+    public function empleadoGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $empleado = $em->getRepository('AppBundle:Empleado')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:empleado-gestion.html.twig', array( 'empleado' => $empleado));
+    }
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/empleado/nuevo", name="empleadoNuevo")
+     */
+    public function empleadoNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $empleado= new Empleado();
+        
+        $form = $this->createForm(new EmpleadoType(), $empleado);
+        
+        $form->add(
+            'guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $empleado = $form->getData();
+
+
+            $empleado->setActive(true);
+            $empleado->setFechaCreacion(new \DateTime());
+            $em->persist($empleado);
+            $em->flush();
+
+            return $this->redirectToRoute('empleadoGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:empleado-nuevo.html.twig', array('form' => $form->createView()));
+    }
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/empleado/{idEmpleado}/eliminar", name="empleadoEliminar")
+     */
+    public function empleadoEliminarAction(Request $request, $idEmpleado)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $empleado = new Empleado();
+
+        $empleado = $em->getRepository('AppBundle:Empleado')->find($idEmpleado);              
+
+        $em->remove($empleado);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('empleadoGestion'));
+
+    }
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/empleado/{idEmpleado}/editar", name="empleadoEditar")
+     */
+    public function empleadoEditarAction(Request $request, $idEmpleado)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $empleado = new Empleado();
+
+        $empleado = $em->getRepository('AppBundle:Empleado')->findOneBy(
+            array('id' => $idEmpleado)
+        );
+        //echo $integrantes->getPertenenciaEtnica();
+        $form = $this->createForm(new EmpleadoType(), $empleado);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $empleado = $form->getData();
+
+            $empleado->setFechaModificacion(new \DateTime());
+
+            
+
+            $em->flush();
+
+            return $this->redirectToRoute('empleadoGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:empleado-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idEmpleado' => $idEmpleado,
+                    'empleado' => $empleado,
             )
         );
 
