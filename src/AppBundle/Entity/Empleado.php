@@ -22,16 +22,14 @@ class Empleado
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="seguimientoFase", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SeguimientoFase")
      */
     private $seguimientoFase;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="periodicidad", type="integer")
+     * @ORM\Column(name="periodicidad", type="integer",nullable=true)
      */
     private $periodicidad;
 
@@ -99,23 +97,19 @@ class Empleado
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime",nullable=true)
      */
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -140,11 +134,11 @@ class Empleado
     /**
      * Set seguimientoFase
      *
-     * @param integer $seguimientoFase
+     * @param AppBundle\Entity\SeguimientoFase $seguimientoFase
      *
      * @return Empleado
      */
-    public function setSeguimientoFase($seguimientoFase)
+    public function setSeguimientoFase(\AppBundle\Entity\SeguimientoFase $seguimientoFase)
     {
         $this->seguimientoFase = $seguimientoFase;
 
@@ -154,7 +148,7 @@ class Empleado
     /**
      * Get seguimientoFase
      *
-     * @return integer
+     * @return AppBundle\Entity\SeguimientoFase
      */
     public function getSeguimientoFase()
     {
@@ -404,11 +398,11 @@ class Empleado
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return Empleado
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -418,7 +412,7 @@ class Empleado
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -452,11 +446,11 @@ class Empleado
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return Empleado
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -466,7 +460,7 @@ class Empleado
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
