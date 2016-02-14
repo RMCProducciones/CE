@@ -22,16 +22,19 @@ class AsignacionTalentoSeguimientoFase
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="seguimientoFase", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SeguimientoFase")
      */
     private $seguimientoFase;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="talento", type="integer")
+     * @ORM\Column(name="seguimientoFase", type="integer")
+     */
+    private $seguimientoMOT;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Talento")
      */
     private $talento;
 
@@ -84,11 +87,11 @@ class AsignacionTalentoSeguimientoFase
     /**
      * Set seguimientoFase
      *
-     * @param integer $seguimientoFase
+     * @param AppBundle\Entity\SeguimientoFase $seguimientoFase
      *
      * @return AsignacionTalentoSeguimientoFase
      */
-    public function setSeguimientoFase($seguimientoFase)
+    public function setSeguimientoFase(\AppBundle\Entity\SeguimientoFase $seguimientoFase)
     {
         $this->seguimientoFase = $seguimientoFase;
 
@@ -98,7 +101,7 @@ class AsignacionTalentoSeguimientoFase
     /**
      * Get seguimientoFase
      *
-     * @return integer
+     * @return AppBundle\Entity\SeguimientoFase
      */
     public function getSeguimientoFase()
     {
@@ -106,13 +109,37 @@ class AsignacionTalentoSeguimientoFase
     }
 
     /**
-     * Set talento
+     * Set seguimientoMOT
      *
-     * @param integer $talento
+     * @param integer $seguimientoMOT
      *
      * @return AsignacionTalentoSeguimientoFase
      */
-    public function setTalento($talento)
+    public function setSeguimientoMOT($seguimientoMOT)
+    {
+        $this->seguimientoMOT = $seguimientoMOT;
+
+        return $this;
+    }
+
+    /**
+     * Get seguimientoMOT
+     *
+     * @return integer
+     */
+    public function getSeguimientoMOT()
+    {
+        return $this->seguimientoMOT;
+    }
+
+    /**
+     * Set talento
+     *
+     * @param AppBundle\Entity\Talento $talento
+     *
+     * @return AsignacionTalentoSeguimientoFase
+     */
+    public function setTalento(\AppBundle\Entity\Talento $talento)
     {
         $this->talento = $talento;
 
@@ -122,7 +149,7 @@ class AsignacionTalentoSeguimientoFase
     /**
      * Get talento
      *
-     * @return integer
+     * @return AppBundle\Entity\Talento
      */
     public function getTalento()
     {
