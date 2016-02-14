@@ -548,6 +548,18 @@ resultado_area_financiero:text
 observaciones:text
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
+php app/console doctrine:generate:entity --entity="AppBundle:SeguimientoMOT" --fields="
+grupo:integer 
+fecha_inicio:datetime
+fecha_finalizacion:datetime
+indentificacion_recursos_tangibles:text
+indentificacion_recursos_financieros:text
+indentificacion_recursos_intangibles:text
+indentificacion_opciones_viables:text
+viabilidad_negocio:text
+observaciones:text
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
 
 php app/console doctrine:generate:entity --entity="AppBundle:Activos" --fields="
 seguimientoFase:integer
@@ -601,6 +613,7 @@ active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_
 
 php app/console doctrine:generate:entity --entity="AppBundle:AsignacionTalentoSeguimientoFase" --fields="
 seguimientoFase:integer
+seguimientoMOT:integer
 talento:integer
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 

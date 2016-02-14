@@ -1120,22 +1120,43 @@ class GestionEmpresarialController extends Controller
         die("estado ".$idNodo);
         //die("cantidad ".count($camino));
    
-        //PROGRAMACIÓN(1) PARTICIPACIÓN PARA HABILITACIÓN
+        //PROGRAMACIÓN(1) PARTICIPACIÓN PARA HABILITACIÓN ******** ******** ******** ********
         if ($idUltimoNodo == 1){
             $asignacionesGrupoCLEAR->setHabilitacion(true); 
-            self::nodoCamino($idGrupo, 2, 1);
+            self::nodoCamino($idGrupo, 2, 1);//Programación(1) a Clear de Habilitación
         }
-        //PROGRAMACIÓN(1) PARTICIPACIÓN PARA ASIGNACIÓN
-             
-            //Si el último nodo es 3, 4, 5(Visita Previa), 
-            //si es 9, 13, 19, 25(Contraloria) y tuvieron los estados 2(Ejecutado)
+        //PROGRAMACIÓN(1) PARTICIPACIÓN PARA ASIGNACIÓN ******** ******** ********  ********      
         elseif($idUltimoNodo == 2 && ($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal())){ // Si el ultimo nodo es 2(Habilitación) y en HabilitaciónFases permita MOT Formal o MOT no Formal
-            //Buscar hasta el ultimo nodo para saber donde está
-            $asignacionesGrupoCLEAR->setAsignacion(true); 
-            self::nodoCamino($idGrupo, 2, 1);
+            $asignacionesGrupoCLEAR->setAsignacion(true);
+            if($habilitacionFases->getMotFormal()) 
+                self::nodoCamino($idGrupo, 6, 1); //Programación(1) a Clear de Asignación MOT Formal
+            else
+                self::nodoCamino($idGrupo, 10, 1); //Programación(1) a Clear de Asignación MOT Formal
         }
-        //PROGRAMACIÓN(1) PARTICIPACIÓN PARA CONTRALORÍA
-        elseif(true){ 
+        elseif($idUltimoNodo == 3 || $idUltimoNodo == 4 || $idUltimoNodo == 5){//Si el último nodo es 3, 4, 5(Visita Previa)
+            $asignacionesGrupoCLEAR->setAsignacion(true);
+            if($idUltimoNodo == 3)
+                self::nodoCamino($idGrupo, 26, 1); //Programación(1) a Clear de Asignación PN
+            if($idUltimoNodo == 4)//No se usa elseif porque mas de un camino puede ser válido
+                self::nodoCamino($idGrupo, 20, 1); //Programación(1) a Clear de Asignación PI
+            if($idUltimoNodo == 5)
+                self::nodoCamino($idGrupo, 14, 1); //Programación(1) a Clear de Asignación IEA
+        }
+        elseif ($estado == 2 && ($idUltimoNodo == 9 || $idUltimoNodo == 13 || $idUltimoNodo == 19 || $idUltimoNodo == 25)) {//Si el último nodo es 9, 13, 19, 25(Contraloria) y tuvieron los estados 2(Ejecutado)
+            $asignacionesGrupoCLEAR->setAsignacion(true);
+            if($idUltimoNodo == 9)
+                self::nodoCamino($idGrupo, 26, 1); //Programación(1) a Clear de Asignación PN
+            if($idUltimoNodo == 13)
+                self::nodoCamino($idGrupo, 14, 1); //Programación(1) a Clear de Asignación IEA
+            if($idUltimoNodo == 19){
+                self::nodoCamino($idGrupo, 20, 1); //Programación(1) a Clear de Asignación PI
+                self::nodoCamino($idGrupo, 26, 1); //Programación(1) a Clear de Asignación PN
+            }
+            if($idUltimoNodo == 25)
+                self::nodoCamino($idGrupo, 26, 1); //Programación(1) a Clear de Asignación PN
+        }
+        //PROGRAMACIÓN(1) PARTICIPACIÓN PARA CONTRALORÍA ******** ******** ******** ********
+        elseif($estado == 2 && ($idUltimoNodo == 8 || $idUltimoNodo == 12 || $idUltimoNodo == 18 || $idUltimoNodo == 24 || $idUltimoNodo == 30)){ //Si el último nodo es 8, 12, 18, 24 o 30 (Legalización Fase) y tuvieron los estados 2(Ejecutado)
             $asignacionesGrupoCLEAR->setContraloria(true); 
             self::nodoCamino($idGrupo, 2, 1);
         }
