@@ -1199,9 +1199,8 @@ class GestionEmpresarialController extends Controller
     }
 
 
-
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/{idGrupo}/habilitacion-fases/", name="habilitacionFases")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/habilitacion-fases/", name="habilitacionFases")
      */
     public function habilitacionFasesAction(Request $request, $idGrupo)
     {
