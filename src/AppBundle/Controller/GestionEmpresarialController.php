@@ -4754,15 +4754,22 @@ class GestionEmpresarialController extends Controller
 
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idFase}/{idNodo}/inicio-fase/nuevo", name="seguimientofaseInicio")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/inicio-fase/nuevo", name="seguimientofaseInicio")
      */
-    public function seguimientofaseInicioAction(Request $request, $idGrupo, $idFase, $idNodo)
+    public function seguimientofaseInicioAction(Request $request, $idGrupo, $idNodo)
     {
         $em = $this->getDoctrine()->getManager();
         $seguimientofase= new SeguimientoFase();
 
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
-            array('id'=>$idGrupo));
+            array('id'=>$idGrupo)
+        );
+
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id'=>$idNodo)
+        );        
+
+        $fase = $nodo->getFase();
         
         $form = $this->createForm(new SeguimientoFaseType(), $seguimientofase);
         
@@ -4783,6 +4790,7 @@ class GestionEmpresarialController extends Controller
             $seguimientofase = $form->getData();
 
             $seguimientofase->setGrupo($grupo);
+            $seguimientofase->setFase($fase);
             $seguimientofase->setActive(true);
             $seguimientofase->setFechaCreacion(new \DateTime());
             $em->persist($seguimientofase);
@@ -4804,8 +4812,7 @@ class GestionEmpresarialController extends Controller
         }
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimientofase-nuevo.html.twig',
-            array('form' => $form->createView(),
-                   'idFase' => $idFase,
+            array('form' => $form->createView(),                   
                    'idNodo' => $idNodo,
                    'idGrupo' => $idGrupo
             )
@@ -4813,15 +4820,23 @@ class GestionEmpresarialController extends Controller
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idFase}/{idNodo}/cierre-fase/nuevo", name="seguimientofaseCierre")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/cierre-fase/nuevo", name="seguimientofaseCierre")
      */
-    public function seguimientofaseCierreAction(Request $request, $idGrupo, $idFase, $idNodo)
+    public function seguimientofaseCierreAction(Request $request, $idGrupo, $idNodo)
     {
         $em = $this->getDoctrine()->getManager();
         $seguimientofase= new SeguimientoFase();
 
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id'=>$idNodo)
+        );        
+
+        $fase = $nodo->getFase();
+
         $seguimientofase = $em->getRepository('AppBundle:SeguimientoFase')->findOneBy(
-            array('grupo' => $idGrupo)
+            array('grupo' => $idGrupo,
+                  'fase' => $fase
+                )
         );
         
         $seguimientoFaseCierre = $em->getRepository('AppBundle:SeguimientoFase')->findOneBy(
@@ -4863,8 +4878,7 @@ class GestionEmpresarialController extends Controller
         }
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimientofase-nuevo.html.twig',
-            array('form' => $form->createView(),
-                   'idFase' => $idFase,
+            array('form' => $form->createView(),                   
                    'idNodo' => $idNodo,
                    'idGrupo' => $idGrupo
             )
