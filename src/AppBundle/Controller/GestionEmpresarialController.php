@@ -56,6 +56,8 @@ use AppBundle\Entity\FeriaSoporte;
 use AppBundle\Entity\AsignacionOrganizacionTerritorioAprendizaje;
 use AppBundle\Entity\SeguimientoFase;
 use AppBundle\Entity\Activos;
+use AppBundle\Entity\Produccion;
+use AppBundle\Entity\Ventas;
 
 use AppBundle\Entity\Camino;
 use AppBundle\Entity\Nodo;
@@ -93,6 +95,9 @@ use AppBundle\Form\GestionEmpresarial\FeriaType;
 use AppBundle\Form\GestionEmpresarial\FeriaSoporteType;
 use AppBundle\Form\GestionEmpresarial\SeguimientoFaseType;
 use AppBundle\Form\GestionEmpresarial\ActivosType;
+
+use AppBundle\Form\GestionEmpresarial\ProduccionType;
+use AppBundle\Form\GestionEmpresarial\VentasType;
 use AppBundle\Form\GestionEmpresarial\HabilitacionFasesType;
 
 /*Para autenticación por código*/
@@ -4762,11 +4767,14 @@ class GestionEmpresarialController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $seguimientofase= new SeguimientoFase();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id'=>$idGrupo));
         
         $form = $this->createForm(new SeguimientoFaseType(), $seguimientofase);
         
         $form->add(
-            'guardar', 
+            'Guardar', 
             'submit', 
             array(
                 'attr' => array(
@@ -4781,11 +4789,16 @@ class GestionEmpresarialController extends Controller
             
             $seguimientofase = $form->getData();
 
-
+            $seguimientofase->setGrupo($grupo);
             $seguimientofase->setActive(true);
             $seguimientofase->setFechaCreacion(new \DateTime());
             $em->persist($seguimientofase);
+
+
+            self::logicaEncendidoNodoSeguimento($idGrupo, $idNodo);         
+           
             $em->flush();
+
 
             return $this->redirect(
                 $this->generateUrl(
@@ -4806,6 +4819,47 @@ class GestionEmpresarialController extends Controller
             ));
     }
 
+
+    private function nodoCamino($idGrupo, $idNodo, $estado)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id' => $idNodo)
+        );
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $nodoCaminoAccion = new Camino();
+        $nodoCaminoAccion->setGrupo($grupo);
+        $nodoCaminoAccion->setNodo($nodo);
+        $nodoCaminoAccion->setEstado($estado);
+        $nodoCaminoAccion->setActive(true);
+        $nodoCaminoAccion->setFechaCreacion(new \DateTime());
+
+        $em->persist($nodoCaminoAccion);
+    }
+
+    private function logicaEncendidoNodoSeguimento($idGrupo, $idNodo){
+
+        if($idNodo == 6)
+            self::nodoCamino($idGrupo, 7, 1);
+        elseif ($idNodo == 10) {
+            self::nodoCamino($idGrupo, 11, 1);
+        }
+        elseif ($idNodo == 14) {
+            self::nodoCamino($idGrupo, 15, 1);
+        }
+        elseif ($idNodo == 20){
+            self::nodoCamino($idGrupo, 21, 1);
+        }
+        else{
+            self::nodoCamino($idGrupo, 27, 1);
+        }
+
+    }
 
 
 
@@ -4932,5 +4986,246 @@ class GestionEmpresarialController extends Controller
 
 
 
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/produccion/gestion", name="produccionGestion")
+     */
+    public function produccionGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $produccion = $em->getRepository('AppBundle:Produccion')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:produccion-gestion.html.twig', array( 'produccion' => $produccion));
+    }
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/produccion/nuevo", name="produccionNuevo")
+     */
+    public function produccionNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $produccion= new Produccion();
+        
+        $form = $this->createForm(new ProduccionType(), $produccion);
+        
+        $form->add(
+            'guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $produccion = $form->getData();
+
+
+            $produccion->setActive(true);
+            $produccion->setFechaCreacion(new \DateTime());
+            $em->persist($produccion);
+            $em->flush();
+
+            return $this->redirectToRoute('produccionGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:produccion-nuevo.html.twig', array('form' => $form->createView()));
+    }
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/produccion/{idProduccion}/eliminar", name="produccionEliminar")
+     */
+    public function produccionEliminarAction(Request $request, $idProduccion)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $produccion = new Produccion();
+
+        $produccion = $em->getRepository('AppBundle:Produccion')->find($idProduccion);              
+
+        $em->remove($produccion);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('produccionGestion'));
+
+    }
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/produccion/{idProduccion}/editar", name="produccionEditar")
+     */
+    public function produccionEditarAction(Request $request, $idProduccion)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $produccion = new Produccion();
+
+        $produccion = $em->getRepository('AppBundle:Produccion')->findOneBy(
+            array('id' => $idProduccion)
+        );
+        //echo $integrantes->getPertenenciaEtnica();
+        $form = $this->createForm(new ProduccionType(), $produccion);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $produccion = $form->getData();
+
+            $produccion->setFechaModificacion(new \DateTime());
+
+            
+
+            $em->flush();
+
+            return $this->redirectToRoute('produccionGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:produccion-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idProduccion' => $idProduccion,
+                    'produccion' => $produccion,
+            )
+        );
+
+               
+    }
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ventas/gestion", name="ventasGestion")
+     */
+    public function ventasGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ventas = $em->getRepository('AppBundle:Ventas')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:ventas-gestion.html.twig', array( 'ventas' => $ventas));
+    }
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ventas/nuevo", name="ventasNuevo")
+     */
+    public function ventasNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ventas= new Ventas();
+        
+        $form = $this->createForm(new VentasType(), $ventas);
+        
+        $form->add(
+            'guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $ventas = $form->getData();
+
+
+            $ventas->setActive(true);
+            $ventas->setFechaCreacion(new \DateTime());
+            $em->persist($ventas);
+            $em->flush();
+
+            return $this->redirectToRoute('ventasGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:ventas-nuevo.html.twig', array('form' => $form->createView()));
+    }
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ventas/{idVentas}/eliminar", name="ventasEliminar")
+     */
+    public function ventasEliminarAction(Request $request, $Ventas)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ventas = new Ventas();
+
+        $ventas = $em->getRepository('AppBundle:Ventas')->find($idVentas);              
+
+        $em->remove($ventas);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('ventasGestion'));
+
+    }
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ventas/{idVentas}/editar", name="ventasEditar")
+     */
+    public function ventasEditarAction(Request $request, $idVentas)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ventas = new Ventas();
+
+        $ventas = $em->getRepository('AppBundle:Ventas')->findOneBy(
+            array('id' => $idVentas)
+        );
+        //echo $integrantes->getPertenenciaEtnica();
+        $form = $this->createForm(new VentasType(), $ventas);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $ventas = $form->getData();
+
+            $ventas->setFechaModificacion(new \DateTime());
+
+            
+
+            $em->flush();
+
+            return $this->redirectToRoute('ventasGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:ventas-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idVentas' => $idVentas,
+                    'ventas' => $ventas,
+            )
+        );
+
+               
+    }
 
 }
