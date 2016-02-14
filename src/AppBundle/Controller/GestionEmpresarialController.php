@@ -1108,29 +1108,38 @@ class GestionEmpresarialController extends Controller
         $ultimoNodo = $camino[count($camino)-1];
         $idUltimoNodo = $ultimoNodo->getNodo()->getId();
         $estado = $ultimoNodo->getEstado();
-        
+
+        $habilitacionFases = $em->getRepository('AppBundle:HabilitacionFases')->findOneBy(
+            array('grupo' => $asignacionGrupoClear->getGrupo()) 
+        );  
+
+       
+        //if según HabilitacionFases alguno en true
+        //$habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPi() || $habilitacionFases->getPn()
+            
         die("estado ".$idNodo);
         //die("cantidad ".count($camino));
    
-        //PARTICIPACIÓN PARA HABILITACIÓN
+        //PROGRAMACIÓN(1) PARTICIPACIÓN PARA HABILITACIÓN
         if ($idUltimoNodo == 1){
             $asignacionesGrupoCLEAR->setHabilitacion(true); 
-                                self::nodoCamino($idGrupo, 2, 1);
+            self::nodoCamino($idGrupo, 2, 1);
         }
-        //PARTICIPACIÓN PARA ASIGNACIÓN
+        //PROGRAMACIÓN(1) PARTICIPACIÓN PARA ASIGNACIÓN
              
             //Si el último nodo es 3, 4, 5(Visita Previa), 
             //si es 9, 13, 19, 25(Contraloria) y tuvieron los estados 2(Ejecutado)
-        elseif($idUltimoNodo == 2 ){ // Si el ultimo nodo es 2(Habilitación) en HabilitaciónFases permita MOT Formal o MOT no Formal
+        elseif($idUltimoNodo == 2 && ($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal())){ // Si el ultimo nodo es 2(Habilitación) y en HabilitaciónFases permita MOT Formal o MOT no Formal
             //Buscar hasta el ultimo nodo para saber donde está
             $asignacionesGrupoCLEAR->setAsignacion(true); 
             self::nodoCamino($idGrupo, 2, 1);
         }
-        //PARTICIPACIÓN PARA CONTRALORÍA
+        //PROGRAMACIÓN(1) PARTICIPACIÓN PARA CONTRALORÍA
         elseif(true){ 
             $asignacionesGrupoCLEAR->setContraloria(true); 
             self::nodoCamino($idGrupo, 2, 1);
         }
+
 
         $em->persist($asignacionesGrupoCLEAR);
         $em->flush();
