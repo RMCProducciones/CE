@@ -60,6 +60,8 @@ use AppBundle\Entity\Activos;
 use AppBundle\Entity\Camino;
 use AppBundle\Entity\Nodo;
 
+use AppBundle\Entity\HabilitacionFases;
+
 
 use AppBundle\Form\GestionEmpresarial\IntegranteCLEARType;
 use AppBundle\Form\GestionEmpresarial\AsignacionIntegranteCLEARType;
@@ -837,6 +839,39 @@ class GestionEmpresarialController extends Controller
                 $clearSoporte->setClear($clear);
                 $clearSoporte->setActive(true);
                 $clearSoporte->setFechaCreacion(new \DateTime());
+
+                //if($clearSoporte->getDescripcion()=="Acta final Clear"){
+                if(true){
+                    $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+                        array('id' => 2)
+                    );
+
+                    $asignacionGruposClear = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
+                        array('clear' => $clear) 
+                    );  
+
+                    foreach ($asignacionGruposClear as $asignacionGrupoClear){
+                        $nodoCamino = new Camino();
+                        $nodoCamino->setGrupo($asignacionGrupoClear->getGrupo());
+                        $nodoCamino->setNodo($nodo);
+
+                        $habilitacionFases = $em->getRepository('AppBundle:HabilitacionFases')->findOneBy(
+                            array('grupo' => $asignacionGrupoClear->getGrupo()) 
+                        );  
+
+                        $nodoCamino->setEstado(3);
+                        //if según HabilitacionFases alguno en true
+                        if($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPi() || $habilitacionFases->getPn())
+                            $nodoCamino->setEstado(2);
+
+                            
+                        $nodoCamino->setActive(true);
+                        $nodoCamino->setFechaCreacion(new \DateTime());
+
+                        $em->persist($nodoCamino);
+                    }
+
+                }
                 //$grupoSoporte->setUsuarioCreacion(1);
 
                 $em->persist($clearSoporte);
@@ -1073,12 +1108,23 @@ class GestionEmpresarialController extends Controller
         $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
             array('id' => $idCLEAR)
         );
+           
+        $asignacionesGrupoCLEAR = new AsignacionGrupoCLEAR();
+
+        $asignacionesGrupoCLEAR->setGrupo($grupo);
+        $asignacionesGrupoCLEAR->setClear($clear);           
+        $asignacionesGrupoCLEAR->setActive(true);
+        $asignacionesGrupoCLEAR->setFechaCreacion(new \DateTime());
+
 
         $camino = $em->getRepository('AppBundle:Camino')->findBy(
             array('grupo' => $grupo)
         );
 
+        //Asignacion para Habilitación
         if (count($camino)==1){
+
+            $asignacionesGrupoCLEAR->setHabilitacion(true); 
 
             $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
                 array('id' => 2)
@@ -1094,13 +1140,6 @@ class GestionEmpresarialController extends Controller
             $em->persist($nodoCamino);
         }
 
-           
-        $asignacionesGrupoCLEAR = new AsignacionGrupoCLEAR();
-
-        $asignacionesGrupoCLEAR->setGrupo($grupo);
-        $asignacionesGrupoCLEAR->setClear($clear);           
-        $asignacionesGrupoCLEAR->setActive(true);
-        $asignacionesGrupoCLEAR->setFechaCreacion(new \DateTime());
 
         $em->persist($asignacionesGrupoCLEAR);
         $em->flush();
@@ -1132,6 +1171,13 @@ class GestionEmpresarialController extends Controller
             array('fecha_creacion' => 'ASC')
         );      
 
+        $camino = $em->getRepository('AppBundle:Camino')->findOneBy(
+            array('grupo' => $asignacionesGrupoCLEAR->getGrupo(), 
+                'estado' => '1'
+            )
+        );
+
+        $em->remove($camino);
         $em->remove($asignacionesGrupoCLEAR);
         $em->flush();
 
@@ -1153,6 +1199,29 @@ class GestionEmpresarialController extends Controller
     }
 
 
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/{idGrupo}/habilitacion-fases/", name="habilitacionFases")
+     */
+    public function habilitacionFasesAction(Request $request, $idGrupo)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $habilitacionFases = new HabilitacionFases();
+        $habilitacionFases->setGrupo($grupo);
+        //$habilitacionFases->setPi(true);
+        $habilitacionFases->setActive(true);
+        $habilitacionFases->setFechaCreacion(new \DateTime());
+
+        $em->persist($habilitacionFases);
+        $em->flush();
+
+        die("ya!");
+    }
 
 
 	/**
@@ -1779,7 +1848,13 @@ class GestionEmpresarialController extends Controller
             array('id' => $idGrupo)
         );
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-seguimiento.html.twig', array( 'grupo' => $grupo));
+        $camino = $em->getRepository('AppBundle:Camino')->findBy(
+            array('grupo' => $grupo)
+        );
+        
+       // die();
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-seguimiento.html.twig', array( 'grupo' => $grupo, 'camino' => $camino));
     }
 
     /**
