@@ -22,44 +22,42 @@ class HabilitacionFases
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="grupo", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
      */
     private $grupo;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="mot_formal", type="boolean")
+     * @ORM\Column(name="mot_formal", type="boolean", nullable = true)
      */
     private $mot_formal;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="mot_no_formal", type="boolean")
+     * @ORM\Column(name="mot_no_formal", type="boolean", nullable = true)
      */
     private $mot_no_formal;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="iea", type="boolean")
+     * @ORM\Column(name="iea", type="boolean", nullable = true)
      */
     private $iea;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="pi", type="boolean")
+     * @ORM\Column(name="pi", type="boolean", nullable = true)
      */
     private $pi;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="pn", type="boolean")
+     * @ORM\Column(name="pn", type="boolean", nullable = true)
      */
     private $pn;
 
@@ -71,23 +69,19 @@ class HabilitacionFases
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable = true)
      */
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -112,11 +106,11 @@ class HabilitacionFases
     /**
      * Set grupo
      *
-     * @param integer $grupo
+     * @param AppBundle\Entity\Grupo $grupo
      *
      * @return HabilitacionFases
      */
-    public function setGrupo($grupo)
+    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
     {
         $this->grupo = $grupo;
 
@@ -126,7 +120,7 @@ class HabilitacionFases
     /**
      * Get grupo
      *
-     * @return integer
+     * @return AppBundle\Entity\Grupo
      */
     public function getGrupo()
     {
@@ -280,11 +274,11 @@ class HabilitacionFases
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return HabilitacionFases
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -294,7 +288,7 @@ class HabilitacionFases
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -328,11 +322,11 @@ class HabilitacionFases
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return HabilitacionFases
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -342,7 +336,7 @@ class HabilitacionFases
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
