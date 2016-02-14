@@ -106,6 +106,9 @@ php app/console doctrine:generate:entity --entity="AppBundle:EstructuraOrganizac
 
 php app/console doctrine:generate:entity --entity="AppBundle:SeguimientoFase" --fields="grupo:integer fase:integer calificacion:decimal fecha_inicio:datetime fecha_finalizacion:datetime actividad_productiva:string descripcion_actividad_productiva:text logros:text resultado_area_organizacional:text resultado_area_productivo:text resultado_area_comercial:text resultado_area_administrativo:text resultado_area_financiero:text observaciones:text active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
+php app/console doctrine:generate:entity --entity="AppBundle:SeguimientoMOT" --fields="grupo:integer  fecha_inicio:datetime fecha_finalizacion:datetime indentificacion_recursos_tangibles:text indentificacion_recursos_financieros:text indentificacion_recursos_intangibles:text indentificacion_opciones_viables:text viabilidad_negocio:text observaciones:text active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
 php app/console doctrine:generate:entity --entity="AppBundle:Activos" --fields="seguimientoFase:integer rubro:integer descripcion:string unidad_medida:integer cantidad_inicial:decimal valor_inicial:decimal cantidad_final:decimal valor_final:decimal active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 php app/console doctrine:generate:entity --entity="AppBundle:Produccion" --fields="seguimientoFase:integer periodicidad:integer producto:string unidad_medida:integer cantidad_inicial:decimal valor_inicial:decimal cantidad_final:decimal valor_final:decimal active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
