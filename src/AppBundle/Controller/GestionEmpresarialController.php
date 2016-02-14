@@ -1211,7 +1211,13 @@ class GestionEmpresarialController extends Controller
             array('id' => $idGrupo)
         );
 
-        $habilitacionFases = new HabilitacionFases();
+        $habilitacionFases = $em->getRepository('AppBundle:HabilitacionFases')->findOneBy(
+            array('grupo' => $grupo)
+        );
+
+        if(!$habilitacionFases)
+           // die("tiene habilitacion fase");
+            $habilitacionFases = new HabilitacionFases();
         
       
         $form = $this->createForm(new HabilitacionFasesType(), $habilitacionFases);
