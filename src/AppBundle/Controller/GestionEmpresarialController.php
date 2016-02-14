@@ -1838,7 +1838,7 @@ class GestionEmpresarialController extends Controller
 
 
     /**
-     * @Route("/gestion-empresarial/gestion-seguimiento/grupo/{idGrupo}", name="seguimientoGrupo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento", name="seguimientoGrupo")
      */
     public function seguimientoGrupoAction($idGrupo)
     {
