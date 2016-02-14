@@ -95,9 +95,10 @@ use AppBundle\Form\GestionEmpresarial\FeriaType;
 use AppBundle\Form\GestionEmpresarial\FeriaSoporteType;
 use AppBundle\Form\GestionEmpresarial\SeguimientoFaseType;
 use AppBundle\Form\GestionEmpresarial\ActivosType;
+
 use AppBundle\Form\GestionEmpresarial\ProduccionType;
 use AppBundle\Form\GestionEmpresarial\VentasType;
-
+use AppBundle\Form\GestionEmpresarial\HabilitacionFasesType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -1204,9 +1205,8 @@ class GestionEmpresarialController extends Controller
     }
 
 
-
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/{idGrupo}/habilitacion-fases/", name="habilitacionFases")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/habilitacion-fases/", name="habilitacionFases")
      */
     public function habilitacionFasesAction(Request $request, $idGrupo)
     {
@@ -1217,15 +1217,45 @@ class GestionEmpresarialController extends Controller
         );
 
         $habilitacionFases = new HabilitacionFases();
-        $habilitacionFases->setGrupo($grupo);
-        //$habilitacionFases->setPi(true);
-        $habilitacionFases->setActive(true);
-        $habilitacionFases->setFechaCreacion(new \DateTime());
+        
+      
+        $form = $this->createForm(new HabilitacionFasesType(), $habilitacionFases);
 
-        $em->persist($habilitacionFases);
-        $em->flush();
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
 
-        die("ya!");
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $habilitacionFases = $form->getData();
+
+            $habilitacionFases->setGrupo($grupo);
+
+            //$habilitacionFases->setPi(true);
+
+            $habilitacionFases->setActive(true);
+            $habilitacionFases->setFechaCreacion(new \DateTime());
+
+            $em->persist($habilitacionFases);
+            $em->flush();
+
+            return $this->redirectToRoute('seguimientoGrupo', array( 'idGrupo' => $idGrupo));
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-habilitar-fases.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'grupo' => $grupo
+            )
+        );
     }
 
 
@@ -1843,7 +1873,7 @@ class GestionEmpresarialController extends Controller
 
 
     /**
-     * @Route("/gestion-empresarial/gestion-seguimiento/grupo/{idGrupo}", name="seguimientoGrupo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento", name="seguimientoGrupo")
      */
     public function seguimientoGrupoAction($idGrupo)
     {
@@ -4725,17 +4755,20 @@ class GestionEmpresarialController extends Controller
 
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/seguimiento-fase/{idFase}/{idNodo}/nuevo", name="seguimientofaseNuevo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idFase}/{idNodo}/nuevo", name="seguimientofaseNuevo")
      */
-    public function seguimientofaseNuevoAction(Request $request, $idFase, $idNodo)
+    public function seguimientofaseNuevoAction(Request $request, $idGrupo, $idFase, $idNodo)
     {
         $em = $this->getDoctrine()->getManager();
         $seguimientofase= new SeguimientoFase();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id'=>$idGrupo));
         
         $form = $this->createForm(new SeguimientoFaseType(), $seguimientofase);
         
         $form->add(
-            'guardar', 
+            'Guardar', 
             'submit', 
             array(
                 'attr' => array(
@@ -4750,17 +4783,22 @@ class GestionEmpresarialController extends Controller
             
             $seguimientofase = $form->getData();
 
-
+            $seguimientofase->setGrupo($grupo);
             $seguimientofase->setActive(true);
             $seguimientofase->setFechaCreacion(new \DateTime());
             $em->persist($seguimientofase);
+
+
+            self::logicaEncendidoNodoSeguimento($idGrupo, $idNodo);         
+           
             $em->flush();
+
 
             return $this->redirect(
                 $this->generateUrl(
-                    'seguimientofaseGestion', 
+                    'seguimientoGrupo', 
                     array(
-                        'idFase' => $idFase
+                        'idGrupo' => $idGrupo
                     )
                 )
             );
@@ -4769,11 +4807,53 @@ class GestionEmpresarialController extends Controller
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimientofase-nuevo.html.twig',
          array('form' => $form->createView(),
                'idFase' => $idFase,
-               'idNodo' => $idNodo
+               'idNodo' => $idNodo,
+               'idGrupo' => $idGrupo
 
             ));
     }
 
+
+    private function nodoCamino($idGrupo, $idNodo, $estado)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id' => $idNodo)
+        );
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $nodoCaminoAccion = new Camino();
+        $nodoCaminoAccion->setGrupo($grupo);
+        $nodoCaminoAccion->setNodo($nodo);
+        $nodoCaminoAccion->setEstado($estado);
+        $nodoCaminoAccion->setActive(true);
+        $nodoCaminoAccion->setFechaCreacion(new \DateTime());
+
+        $em->persist($nodoCaminoAccion);
+    }
+
+    private function logicaEncendidoNodoSeguimento($idGrupo, $idNodo){
+
+        if($idNodo == 6)
+            self::nodoCamino($idGrupo, 7, 1);
+        elseif ($idNodo == 10) {
+            self::nodoCamino($idGrupo, 11, 1);
+        }
+        elseif ($idNodo == 14) {
+            self::nodoCamino($idGrupo, 15, 1);
+        }
+        elseif ($idNodo == 20){
+            self::nodoCamino($idGrupo, 21, 1);
+        }
+        else{
+            self::nodoCamino($idGrupo, 27, 1);
+        }
+
+    }
 
 
 

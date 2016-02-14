@@ -43,7 +43,7 @@ class SeguimientoFase
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_finalizacion", type="datetime")
+     * @ORM\Column(name="fecha_finalizacion", type="datetime", nullable=true)
      */
     private $fecha_finalizacion;
 
@@ -71,42 +71,42 @@ class SeguimientoFase
     /**
      * @var string
      *
-     * @ORM\Column(name="resultado_componente_organizacional", type="text")
+     * @ORM\Column(name="resultado_componente_organizacional", type="text", nullable=true)
      */
     private $resultado_componente_organizacional;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="resultado_componente_productivo", type="text")
+     * @ORM\Column(name="resultado_componente_productivo", type="text", nullable=true)
      */
     private $resultado_componente_productivo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="resultado_componente_comercial", type="text")
+     * @ORM\Column(name="resultado_componente_comercial", type="text", nullable=true)
      */
     private $resultado_componente_comercial;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="resultado_componente_administrativo", type="text")
+     * @ORM\Column(name="resultado_componente_administrativo", type="text", nullable=true)
      */
     private $resultado_componente_administrativo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="resultado_componente_financiero", type="text")
+     * @ORM\Column(name="resultado_componente_financiero", type="text", nullable=true)
      */
     private $resultado_componente_financiero;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="observaciones", type="text")
+     * @ORM\Column(name="observaciones", type="text", nullable=true)
      */
     private $observaciones;
 
