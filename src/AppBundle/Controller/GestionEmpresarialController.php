@@ -846,35 +846,23 @@ class GestionEmpresarialController extends Controller
                 $clearSoporte->setActive(true);
                 $clearSoporte->setFechaCreacion(new \DateTime());
 
-                //if($clearSoporte->getDescripcion()=="Acta final Clear"){
+                //if($clearSoporte->getDescripcion()=="Acta final Clear"){ //Despúes de subir el Acta final del CLEAR toma lo que esté almacenado en habilitacionFases de cada grupo para asignar un nodo Ejecutado o un nodo Rechazado
                 if(true){
-                    $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
-                        array('id' => 2)
-                    );
-
                     $asignacionGruposClear = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
                         array('clear' => $clear) 
                     );  
 
                     foreach ($asignacionGruposClear as $asignacionGrupoClear){
-                        $nodoCamino = new Camino();
-                        $nodoCamino->setGrupo($asignacionGrupoClear->getGrupo());
-                        $nodoCamino->setNodo($nodo);
-
+                    
                         $habilitacionFases = $em->getRepository('AppBundle:HabilitacionFases')->findOneBy(
                             array('grupo' => $asignacionGrupoClear->getGrupo()) 
                         );  
 
-                        $nodoCamino->setEstado(3);
+                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 3);
+                        
                         //if según HabilitacionFases alguno en true
                         if($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPi() || $habilitacionFases->getPn())
-                            $nodoCamino->setEstado(2);
-
-                            
-                        $nodoCamino->setActive(true);
-                        $nodoCamino->setFechaCreacion(new \DateTime());
-
-                        $em->persist($nodoCamino);
+                            self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 2);
                     }
 
                 }
@@ -1127,30 +1115,35 @@ class GestionEmpresarialController extends Controller
             array('grupo' => $grupo)
         );
 
-        //Asignacion para Habilitación
-        if (count($camino)==1){
-
+        $ultimoNodo = $camino[count($camino)-1];
+        $idUltimoNodo = $ultimoNodo->getNodo()->getId();
+        $estado = $ultimoNodo->getEstado();
+        
+        die("estado ".$idNodo);
+        //die("cantidad ".count($camino));
+   
+        //PARTICIPACIÓN PARA HABILITACIÓN
+        if ($idUltimoNodo == 1){
             $asignacionesGrupoCLEAR->setHabilitacion(true); 
-
-            $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
-                array('id' => 2)
-            );
-
-            $nodoCamino = new Camino();
-            $nodoCamino->setGrupo($grupo);
-            $nodoCamino->setNodo($nodo);
-            $nodoCamino->setEstado(1);
-            $nodoCamino->setActive(true);
-            $nodoCamino->setFechaCreacion(new \DateTime());
-
-            $em->persist($nodoCamino);
+                                self::nodoCamino($idGrupo, 2, 1);
         }
-
+        //PARTICIPACIÓN PARA ASIGNACIÓN
+             
+            //Si el último nodo es 3, 4, 5(Visita Previa), 
+            //si es 9, 13, 19, 25(Contraloria) y tuvieron los estados 2(Ejecutado)
+        elseif($idUltimoNodo == 2 ){ // Si el ultimo nodo es 2(Habilitación) en HabilitaciónFases permita MOT Formal o MOT no Formal
+            //Buscar hasta el ultimo nodo para saber donde está
+            $asignacionesGrupoCLEAR->setAsignacion(true); 
+            self::nodoCamino($idGrupo, 2, 1);
+        }
+        //PARTICIPACIÓN PARA CONTRALORÍA
+        elseif(true){ 
+            $asignacionesGrupoCLEAR->setContraloria(true); 
+            self::nodoCamino($idGrupo, 2, 1);
+        }
 
         $em->persist($asignacionesGrupoCLEAR);
         $em->flush();
-
-
 
         return $this->redirectToRoute('clearGrupo', 
             array(
@@ -1183,7 +1176,8 @@ class GestionEmpresarialController extends Controller
             )
         );
 
-        $em->remove($camino);
+        if($camino)
+            $em->remove($camino);
         $em->remove($asignacionesGrupoCLEAR);
         $em->flush();
 
@@ -1220,7 +1214,7 @@ class GestionEmpresarialController extends Controller
             array('grupo' => $grupo)
         );
 
-        if(!$habilitacionFases)
+        if(!$habilitacionFases)//ESTO NO FUNCIONA
            // die("tiene habilitacion fase");
             $habilitacionFases = new HabilitacionFases();
         
