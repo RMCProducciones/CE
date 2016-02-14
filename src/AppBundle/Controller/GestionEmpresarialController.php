@@ -93,6 +93,7 @@ use AppBundle\Form\GestionEmpresarial\FeriaType;
 use AppBundle\Form\GestionEmpresarial\FeriaSoporteType;
 use AppBundle\Form\GestionEmpresarial\SeguimientoFaseType;
 use AppBundle\Form\GestionEmpresarial\ActivosType;
+use AppBundle\Form\GestionEmpresarial\HabilitacionFasesType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -1199,9 +1200,8 @@ class GestionEmpresarialController extends Controller
     }
 
 
-
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupos/{idGrupo}/habilitacion-fases/", name="habilitacionFases")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/habilitacion-fases/", name="habilitacionFases")
      */
     public function habilitacionFasesAction(Request $request, $idGrupo)
     {
@@ -1212,15 +1212,45 @@ class GestionEmpresarialController extends Controller
         );
 
         $habilitacionFases = new HabilitacionFases();
-        $habilitacionFases->setGrupo($grupo);
-        //$habilitacionFases->setPi(true);
-        $habilitacionFases->setActive(true);
-        $habilitacionFases->setFechaCreacion(new \DateTime());
+        
+      
+        $form = $this->createForm(new HabilitacionFasesType(), $habilitacionFases);
 
-        $em->persist($habilitacionFases);
-        $em->flush();
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
 
-        die("ya!");
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $habilitacionFases = $form->getData();
+
+            $habilitacionFases->setGrupo($grupo);
+
+            //$habilitacionFases->setPi(true);
+
+            $habilitacionFases->setActive(true);
+            $habilitacionFases->setFechaCreacion(new \DateTime());
+
+            $em->persist($habilitacionFases);
+            $em->flush();
+
+            return $this->redirectToRoute('seguimientoGrupo', array( 'idGrupo' => $idGrupo));
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-habilitar-fases.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'grupo' => $grupo
+            )
+        );
     }
 
 
