@@ -339,7 +339,9 @@
                         //ctx.fillText(Math.round(circles[i].left)+" a "+Math.round(circles[i].right)+"    ,    "+Math.round(circles[i].top)+" a "+Math.round(circles[i].bottom),circles[i].left,circles[i].top);
             
                         if (clickedX < circles[i].right && clickedX > circles[i].left && clickedY > circles[i].top && clickedY < circles[i].bottom) {
-                            alert ('clicked number ' + (i + 1));
+                            console.log ('clicked number ' + (i + 1));
+                            if((i+1) == 2)
+                              $('#myModalNodo2').modal('show')
                         }
                     }
                 });
@@ -359,9 +361,9 @@
 
 
     
-    <!-- Modal -->
-    <div class="modal fade" id="myModal{{ grupo.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-      <div class="modal-dialog modal-lg" role="document">
+    <!-- Modal NODO 2 -->
+    <div class="modal fade" id="myModalNodo2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -370,41 +372,11 @@
             <h4 class="modal-title" id="myModalLabel">{{ grupo.codigo }} | {{ grupo.nombre }}</h4>
           </div>
           <div class="modal-body">
-            <b>Departamento:{{ grupo.municipio.departamento.nombre }}</b>
+            <b>Acciones en CLEAR Habilitación</b>
             <br>
-            <b>Municipio: {{ grupo.municipio }}</b>
             <br>
-            <b>Zona: Oriente {{ grupo.municipio.zona.nombre }}</b>
-            <br>
-            <b>Tipo de grupo: {{ grupo.tipo }}</b>
-            <br>
-            <b>Codigo de grupo: {{ grupo.codigo }}</b>
-            <br>
-            <b>Nombre grupo: {{ grupo.nombre }}</b>
-            <br>
-            <b>Corregimiento: {{ grupo.corregimiento }}</b>
-            <br>
-            <b>Vereda: {{ grupo.vereda }}</b>
-            <br>
-            <b>Cacerio: {{ grupo.cacerio }}</b>
-            <br>
-            <b>Direccion:  {{ grupo.direccion }}</b>
-            <br>
-			      <b>Barrio:  {{ grupo.barrio }}</b>
-            <br>
-            <b>Tipo de organización: {{ grupo.codigo }}</b>
-            <br>
-            <b>NIT: {{ grupo.numeroIdentificacionTributaria }}</b>
-            <br>
-            <b>Telefono Movil: {{ grupo.telefonoCelular }}</b>
-            <br>
-            <b>Telefono Fijo: {{ grupo.telefonoFijo }}</b>
-            <br>
-            <b>Cuenta Bancaria: {{ grupo.entidadFinancieraCuenta }}</b>
-            <br>
-            <b>Tipo de cuenta:  {{ grupo.tipoCuenta }}</b>
-            <br>
-            <b>Numero de cuenta: {{ grupo.numeroCuenta }}</b>            
+            <b><a href="{{ path('habilitacionFases', {'idGrupo': grupo.id}) }}">Habilitación de fases</a></b>
+            <br>           
           </div>
 
           <div class="modal-footer">

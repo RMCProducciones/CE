@@ -47,121 +47,131 @@
     </div>
     
     <br>
-        
-
 
     <div class="section">
-      <div class="container">
-        
-		
-		<div class="row">
-			<div class="col-md-12">
-				<fieldset>
-					<legend>Requisitos habilitantes individuales</legend>
-							
-					<div class="col-md-4">
-						Copia de documento de identificación
-					</div>
-					<div class="col-md-3">
-						Cada integrante
-					</div>
-					<div class="col-md-1">
-						<img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}">
-					</div>
-					<div class="col-md-1">
-						<img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}">
-					</div>	
-	                <div class="col-md-1">
-	                	<img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}">
-	                </div>
-	                <div class="col-md-1">
-						<img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}">
-					</div>
-	                <div class="col-md-1">
-	                	<img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}">
-	                </div>		
+      <div class="container">        
+        <div class="row">
+          <div class="col-md-12 table-responsive">
+            <table class="table table-striped table-hover" ng-controller="gestionBeneficiariosCtrl">
+              	<thead>
+                	<tr>
+	                   	<th>Requisito</th>
+					   	<th>No formal sin negocio MOT</th>
+	                   	<th>Formal sin negocio MOT</th>
+	                   	<th>No formal con negocio IEA</th>
+	                   	<th>No formal con negocio PI</th>
+	                   	<th>Formal con negocio PN</th>
+	                </tr>
+	           	</thead>
+	           	<tbody>
 
-					<br/>
-					<br/>
+	           		<tr>
+	                  	<td colspan="6" class="info">Requisitos habilitantes individuales</td>
+	                </tr>
+                
+	                <tr>
+	                	<td>Copia de documento de identificación</td>
+						<td><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+	                	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                </tr>
 
-					<div class="col-md-4">
-						SISBEN o
+	                <tr>
+	                  	<td>SISBEN o
 						RED UNIDOS o
 						Pertenecia étnica o
-						Población desplazada
-					</div>
-					<div class="col-md-3">
-						Cada integrante
-					</div>
-					<div class="col-md-1">
-						<img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}">
-					</div>
-					<div class="col-md-1">
-						<img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}">
-					</div>	
-	                <div class="col-md-1">
-	                	<img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}">
-	                </div>
-	                <div class="col-md-1">
-						<img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}">
-					</div>
-	                <div class="col-md-1">
-	                	<img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}">
-	                </div>
-			
-				</fieldset>            
-			</div>
-		</div>
+						Población desplazada</td>
+					 	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td> 
+	                </tr>
 
-			<br/>
+	                <tr>
+	                  	<td colspan="6" class="info">Requisitos habilitantes representante del grupo</td>
+	                </tr>
 
-			<div class="row">
-				<div class="col-md-12">
-					<fieldset>
-						<legend>Habilitación</legend>
-					</fieldset>            
-				</div>
-			</div>
+	                <tr>
+	                  	<td>Copia de documento de identificación</td>
+					  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                </tr>
 
-			<div class="row">
-				<div class="col-md-4">
-					Habilitación:
-				</div>
-				<div class="col-md-3">
-					
-				</div>
-				<div class="col-md-1">
-					{{ form_label(form.mot_no_formal) }}
-					{{ form_errors(form.mot_no_formal) }}
-					{{ form_widget(form.mot_no_formal, { 'attr': {'class': 'form-control'} }) }}
-				</div>
-				<div class="col-md-1">
-					{{ form_label(form.mot_formal) }}
-					{{ form_errors(form.mot_formal) }}
-					{{ form_widget(form.mot_formal, { 'attr': {'class': 'form-control'} }) }}
-				</div>	
-                <div class="col-md-1">
-                  {{ form_label(form.iea) }}
-                  {{ form_errors(form.iea) }}
-                  {{ form_widget(form.iea, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-                <div class="col-md-1">
-					{{ form_label(form.pi) }}
-					{{ form_errors(form.pi) }}
-					{{ form_widget(form.pi, { 'attr': {'class': 'form-control'} }) }}
-				</div>
-                <div class="col-md-1">
-                  {{ form_label(form.pn) }}
-                  {{ form_errors(form.pn) }}
-                  {{ form_widget(form.pn, { 'attr': {'class': 'form-control'} }) }}
-                </div>
-			</div>	
+	                <tr>
+	                  	<td>Copia de documento de identificación</td>
+					  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+        	        </tr>
 
+	                <tr>
+	                  	<td colspan="6" class="info">Requisitos habilitantes grupales</td>
+	                </tr>
 
-			<br/>				
-       
+	                <tr>
+	                  	<td>Copia de documento de identificación</td>
+					  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                </tr>
+
+	                <tr>
+	                  	<td>Copia de documento de identificación</td>
+					  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+        	        </tr>
+      
+        	        <tr>
+	                  	<td colspan="6" class="info">Habilitación</td>
+	                </tr>
+
+	                <tr>
+	                  	<td></td>
+					  	<td>
+					  		{{ form_label(form.mot_no_formal) }}
+							{{ form_errors(form.mot_no_formal) }}
+							{{ form_widget(form.mot_no_formal, { 'attr': {'class': 'form-control'} }) }}
+						</td>
+	                  	<td>
+	                  		{{ form_label(form.mot_formal) }}
+							{{ form_errors(form.mot_formal) }}
+							{{ form_widget(form.mot_formal, { 'attr': {'class': 'form-control'} }) }}
+						</td>
+	                  	<td>
+	                  		{{ form_label(form.iea) }}
+			                {{ form_errors(form.iea) }}
+			                {{ form_widget(form.iea, { 'attr': {'class': 'form-control'} }) }}
+	                  	</td>
+	                  	<td>
+	                  		{{ form_label(form.pi) }}
+							{{ form_errors(form.pi) }}
+							{{ form_widget(form.pi, { 'attr': {'class': 'form-control'} }) }}
+						</td>
+	                  	<td>
+	                  		{{ form_label(form.pn) }}
+			                {{ form_errors(form.pn) }}
+			                {{ form_widget(form.pn, { 'attr': {'class': 'form-control'} }) }}
+	                  	</td> 
+	      			</tr>  
+	           </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-    </div>
+    </div>  
 
   {{ form_end(form) }}
                
