@@ -1110,14 +1110,13 @@ class GestionEmpresarialController extends Controller
         $estado = $ultimoNodo->getEstado();
 
         $habilitacionFases = $em->getRepository('AppBundle:HabilitacionFases')->findOneBy(
-            array('grupo' => $asignacionGrupoClear->getGrupo()) 
+            array('grupo' => $asignacionesGrupoCLEAR->getGrupo()) 
         );  
 
        
         //if según HabilitacionFases alguno en true
         //$habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPi() || $habilitacionFases->getPn()
             
-        die("estado ".$idNodo);
         //die("cantidad ".count($camino));
    
         //PROGRAMACIÓN(1) PARTICIPACIÓN PARA HABILITACIÓN ******** ******** ******** ********
@@ -1131,7 +1130,7 @@ class GestionEmpresarialController extends Controller
             if($habilitacionFases->getMotFormal()) 
                 self::nodoCamino($idGrupo, 6, 1); //Programación(1) a Clear de Asignación MOT Formal
             else
-                self::nodoCamino($idGrupo, 10, 1); //Programación(1) a Clear de Asignación MOT Formal
+                self::nodoCamino($idGrupo, 10, 1); //Programación(1) a Clear de Asignación MOT No Formal
         }
         elseif($idUltimoNodo == 3 || $idUltimoNodo == 4 || $idUltimoNodo == 5){//Si el último nodo es 3, 4, 5(Visita Previa)
             $asignacionesGrupoCLEAR->setAsignacion(true);
@@ -1158,7 +1157,16 @@ class GestionEmpresarialController extends Controller
         //PROGRAMACIÓN(1) PARTICIPACIÓN PARA CONTRALORÍA ******** ******** ******** ********
         elseif($estado == 2 && ($idUltimoNodo == 8 || $idUltimoNodo == 12 || $idUltimoNodo == 18 || $idUltimoNodo == 24 || $idUltimoNodo == 30)){ //Si el último nodo es 8, 12, 18, 24 o 30 (Legalización Fase) y tuvieron los estados 2(Ejecutado)
             $asignacionesGrupoCLEAR->setContraloria(true); 
-            self::nodoCamino($idGrupo, 2, 1);
+            if($idUltimoNodo == 8)
+                self::nodoCamino($idGrupo, 9, 1); //Programación(1) a Clear de Contraloria MOT Formal
+            if($idUltimoNodo == 12)
+                self::nodoCamino($idGrupo, 13, 1); //Programación(1) a Clear de Contraloria MOT No Formal
+            if($idUltimoNodo == 18)
+                self::nodoCamino($idGrupo, 19, 1); //Programación(1) a Clear de Contraloria IEA
+            if($idUltimoNodo == 24)
+                self::nodoCamino($idGrupo, 25, 1); //Programación(1) a Clear de Contraloria PI
+            if($idUltimoNodo == 30)
+                self::nodoCamino($idGrupo, 31, 1); //Programación(1) a Clear de Contraloria PN
         }
 
 
