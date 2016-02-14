@@ -4719,9 +4719,9 @@ class GestionEmpresarialController extends Controller
 
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/seguimiento-fase/{idFase}/{idNodo}/nuevo", name="seguimientofaseNuevo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idFase}/{idNodo}/nuevo", name="seguimientofaseNuevo")
      */
-    public function seguimientofaseNuevoAction(Request $request, $idFase, $idNodo)
+    public function seguimientofaseNuevoAction(Request $request, $idGrupo, $idFase, $idNodo)
     {
         $em = $this->getDoctrine()->getManager();
         $seguimientofase= new SeguimientoFase();
@@ -4752,9 +4752,9 @@ class GestionEmpresarialController extends Controller
 
             return $this->redirect(
                 $this->generateUrl(
-                    'seguimientofaseGestion', 
+                    'seguimientoGrupo', 
                     array(
-                        'idFase' => $idFase
+                        'idGrupo' => $idGrupo
                     )
                 )
             );
@@ -4763,7 +4763,8 @@ class GestionEmpresarialController extends Controller
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimientofase-nuevo.html.twig',
          array('form' => $form->createView(),
                'idFase' => $idFase,
-               'idNodo' => $idNodo
+               'idNodo' => $idNodo,
+               'idGrupo' => $idGrupo
 
             ));
     }
