@@ -113,6 +113,8 @@ app.controller('CamposRutalPasantiaOrganizacionCtrl', ['$scope', '$http', functi
 		
 	});
 
+	
+
 	if($('#organizacion_pasantia').prop('checked')==false){
 		
 		$scope.swPasantia = false;	
