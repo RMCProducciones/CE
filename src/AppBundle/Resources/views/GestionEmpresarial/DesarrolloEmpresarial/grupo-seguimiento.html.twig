@@ -342,6 +342,18 @@
                             console.log ('clicked number ' + (i + 1));
                             if((i+1) == 2)
                               $('#myModalNodo2').modal('show')
+                            if((i+1) == 14)
+                              $('#myModalNodo14').modal('show')
+                            if((i+1) == 18)
+                              $('#myModalNodo18').modal('show')
+                            if((i+1) == 20)
+                              $('#myModalNodo20').modal('show')
+                            if((i+1) == 24)
+                              $('#myModalNodo24').modal('show')
+                            if((i+1) == 26)
+                              $('#myModalNodo26').modal('show')
+                            if((i+1) == 30)
+                              $('#myModalNodo30').modal('show')
                         }
                     }
                 });
@@ -376,6 +388,156 @@
             <br>
             <br>
             <b><a href="{{ path('habilitacionFases', {'idGrupo': grupo.id}) }}">Habilitación de fases</a></b>
+            <br>           
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal NODO 14 -->
+    <div class="modal fade" id="myModalNodo14" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">{{ grupo.codigo }} | {{ grupo.nombre }}</h4>
+          </div>
+          <div class="modal-body">
+            <b>Inicio de Fase</b>
+            <br>
+            <br>
+            <b><a href="{{ path('seguimientofaseInicio', {'idGrupo': grupo.id, 'idNodo' : 14}) }}">Nuevo Inicio de Fase</a></b>
+            <br>           
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal NODO 18 -->
+    <div class="modal fade" id="myModalNodo18" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">{{ grupo.codigo }} | {{ grupo.nombre }}</h4>
+          </div>
+          <div class="modal-body">
+            <b>Cierre de Fase</b>
+            <br>
+            <br>
+            <b><a href="{{ path('seguimientofaseCierre', {'idGrupo': grupo.id, 'idNodo' : 18}) }}">Nuevo Cierre de Fase</a></b>
+            <br>           
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal NODO 20 -->
+    <div class="modal fade" id="myModalNodo20" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">{{ grupo.codigo }} | {{ grupo.nombre }}</h4>
+          </div>
+          <div class="modal-body">
+            <b>Inicio de Fase</b>
+            <br>
+            <br>
+            <b><a href="{{ path('seguimientofaseInicio', {'idGrupo': grupo.id, 'idNodo' : 20}) }}">Nuevo Inicio de Fase</a></b>
+            <br>           
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal NODO 24 -->
+    <div class="modal fade" id="myModalNodo24" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">{{ grupo.codigo }} | {{ grupo.nombre }}</h4>
+          </div>
+          <div class="modal-body">
+            <b>Cierre de Fase</b>
+            <br>
+            <br>
+            <b><a href="{{ path('seguimientofaseCierre', {'idGrupo': grupo.id, 'idNodo' : 24}) }}">Nuevo Cierre de Fase</a></b>
+            <br>           
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal NODO 26 -->
+    <div class="modal fade" id="myModalNodo26" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">{{ grupo.codigo }} | {{ grupo.nombre }}</h4>
+          </div>
+          <div class="modal-body">
+            <b>Inicio de Fase</b>
+            <br>
+            <br>
+            <b><a href="{{ path('seguimientofaseInicio', {'idGrupo': grupo.id, 'idNodo' : 26}) }}">Nuevo Inicio de Fase</a></b>
+            <br>           
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal NODO 30 -->
+    <div class="modal fade" id="myModalNodo30" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">{{ grupo.codigo }} | {{ grupo.nombre }}</h4>
+          </div>
+          <div class="modal-body">
+            <b>Cierre de Fase</b>
+            <br>
+            <br>
+            <b><a href="{{ path('seguimientofaseCierre', {'idGrupo': grupo.id, 'idNodo' : 30}) }}">Nuevo Cierre de Fase</a></b>
             <br>           
           </div>
 
