@@ -1220,6 +1220,7 @@ class GestionEmpresarialController extends Controller
             array('fecha_creacion' => 'ASC')
         );      
 
+        //Mejorar el siguiente código (Puede ser buscando el ultimo en 1(Programado))
         $camino = $em->getRepository('AppBundle:Camino')->findOneBy(
             array('grupo' => $asignacionesGrupoCLEAR->getGrupo(), 
                 'estado' => '1'
