@@ -16,6 +16,7 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 use AppBundle\Entity\Grupo;
 use AppBundle\Entity\GrupoSoporte;
+use AppBundle\Entity\AsignacionBeneficiarioComiteVamosBien;
 use AppBundle\Entity\BeneficiarioSoporte;
 use AppBundle\Entity\Beneficiario;
 use AppBundle\Entity\CLEAR;
@@ -102,12 +103,10 @@ use AppBundle\Form\GestionEmpresarial\ProduccionType;
 use AppBundle\Form\GestionEmpresarial\VentasType;
 use AppBundle\Form\GestionEmpresarial\HabilitacionFasesType;
 use AppBundle\Form\GestionEmpresarial\EmpleadoType;
-<<<<<<< HEAD
 use AppBundle\Form\GestionEmpresarial\EvaluacionFaseType;
 use AppBundle\Form\GestionEmpresarial\EvaluacionFaseSoporteType;
-=======
 use AppBundle\Form\GestionEmpresarial\SeguimientoMOTType;
->>>>>>> c4675a95da11188138779c28193929ad01d47738
+
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -404,6 +403,126 @@ class GestionEmpresarialController extends Controller
         return $this->redirectToRoute('gruposSoporte', array( 'idGrupo' => $idGrupo));
 		
     }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/comite-vamos-bien", name="grupoBeneficiarioCVB")
+     */
+    public function comiteVamosBienGrupoBeneficiarioAction($idGrupo)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $beneficiarios = new Beneficiario();
+
+        $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('grupo' => $grupo)
+        );     
+
+        $asignacionesBeneficiariosCVB = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteVamosBien')->findBy(
+            array('grupo' => $grupo)
+        ); 
+
+        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioComiteVamosBien abc WHERE beneficiario = abc.beneficiario AND abc.grupo = :grupo) AND b.active = 1');
+        $query->setParameter(':grupo', $grupo);
+        $beneficiarios = $query->getResult();
+
+        $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('id' => $beneficiarios, 'grupo' => $grupo )
+        );
+
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiario-grupo-cvb-gestion-asignacion.html.twig', 
+            array(
+                'beneficiarios' => $mostrarBeneficiarios,
+                'asignacionesBeneficiariosCVB' => $asignacionesBeneficiariosCVB,
+                'idGrupo' => $idGrupo
+            ));        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/comite-vamos-bien/{idBeneficiario}/nueva-asignacion", name="grupoBeneficiarioCVBAsignacion")
+     */
+    public function comiteVamosBienAsignarGrupoBeneficiarioAction($idGrupo, $idBeneficiario)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
+            array('id' => $idBeneficiario)
+        );      
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );        
+           
+        $asignacionBeneficiarioComiteVamosBien = new AsignacionBeneficiarioComiteVamosBien();
+
+        $asignacionBeneficiarioComiteVamosBien->setGrupo($grupo);        
+        $asignacionBeneficiarioComiteVamosBien->setBeneficiario($beneficiario);
+        $asignacionBeneficiarioComiteVamosBien->setActive(true);
+        $asignacionBeneficiarioComiteVamosBien->setFechaCreacion(new \DateTime());
+
+        $em->persist($asignacionBeneficiarioComiteVamosBien);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('grupoBeneficiarioCVB', 
+            array(
+                'beneficiario' => $beneficiario,          
+                'asignacionesBeneficiarioComiteVamosBien' => $asignacionBeneficiarioComiteVamosBien,                
+                'idGrupo' => $idGrupo
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/comite-vamos-bien/{idAsignacionBeneficiariosCVB}/eliminar", name="grupoBeneficiarioCVBEliminar")
+     */
+    public function comiteVamosBienEliminarGrupoBeneficiarioAction($idGrupo, $idAsignacionBeneficiariosCVB)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionBeneficiarioComiteVamosBien = new AsignacionBeneficiarioComiteVamosBien();
+
+        $asignacionBeneficiarioComiteVamosBien = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteVamosBien')->find($idAsignacionBeneficiariosCVB); 
+
+        $em->remove($asignacionBeneficiarioComiteVamosBien);
+        $em->flush();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $beneficiarios = new Beneficiario();
+
+        $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('grupo' => $grupo)
+        );     
+
+        $asignacionesBeneficiariosCVB = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteVamosBien')->findBy(
+            array('grupo' => $grupo)
+        ); 
+
+        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioComiteVamosBien abc WHERE beneficiario = abc.beneficiario AND abc.grupo = :grupo) AND b.active = 1');
+        $query->setParameter(':grupo', $grupo);
+        $beneficiarios = $query->getResult();
+
+        $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('id' => $beneficiarios, 'grupo' => $grupo )
+        );
+
+        return $this->redirectToRoute('grupoBeneficiarioCVB',
+            array(
+                'beneficiarios' => $mostrarBeneficiarios,
+                'asignacionesBeneficiariosCVB' => $asignacionesBeneficiariosCVB,
+                'idGrupo' => $idGrupo
+            ));      
+        
+    } 
 	
 
     /**
