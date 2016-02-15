@@ -18,3 +18,24 @@ app.controller('CierreFaseCtrl', ['$scope', function($scope) {
 	}		
 	
 }]);
+
+app.controller('CierreMotCtrl', ['$scope', function($scope) {
+
+	$scope.camposRequeridosMot = function(valorInicial) {
+
+		console.log("ingreso: " + valorInicial);
+
+		if(!valorInicial){
+			$('#seguimientomot_indentificacion_recursos_tangibles').attr('required', 'required');
+			$('#seguimientomot_indentificacion_recursos_financieros').attr('required', 'required');
+			$('#seguimientomot_indentificacion_recursos_intangibles').attr('required', 'required');
+			$('#seguimientomot_indentificacion_opciones_viables').attr('required', 'required');
+			$('#seguimientomot_viabilidad_negocio').attr('required', 'required');
+			$('#seguimientomot_observaciones').attr('required', 'required');
+			$('#seguimientomot_fecha_finalizacion').attr('required', 'required');
+		}
+
+
+	}		
+	
+}]);

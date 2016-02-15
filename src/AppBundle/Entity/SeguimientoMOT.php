@@ -27,6 +27,13 @@ class SeguimientoMOT
     private $grupo;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="fase", type="integer", nullable=true)
+     */
+    private $fase;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="fecha_inicio", type="datetime")
@@ -146,6 +153,30 @@ class SeguimientoMOT
     public function getGrupo()
     {
         return $this->grupo;
+    }
+
+    /**
+     * Set fase
+     *
+     * @param integer $fase
+     *
+     * @return SeguimientoFase
+     */
+    public function setFase($fase)
+    {
+        $this->fase = $fase;
+
+        return $this;
+    }
+
+    /**
+     * Get fase
+     *
+     * @return integer
+     */
+    public function getFase()
+    {
+        return $this->fase;
     }
 
     /**

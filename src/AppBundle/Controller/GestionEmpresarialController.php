@@ -16,6 +16,7 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 use AppBundle\Entity\Grupo;
 use AppBundle\Entity\GrupoSoporte;
+use AppBundle\Entity\AsignacionBeneficiarioComiteVamosBien;
 use AppBundle\Entity\BeneficiarioSoporte;
 use AppBundle\Entity\Beneficiario;
 use AppBundle\Entity\CLEAR;
@@ -405,6 +406,126 @@ class GestionEmpresarialController extends Controller
         return $this->redirectToRoute('gruposSoporte', array( 'idGrupo' => $idGrupo));
 		
     }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/comite-vamos-bien", name="grupoBeneficiarioCVB")
+     */
+    public function comiteVamosBienGrupoBeneficiarioAction($idGrupo)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $beneficiarios = new Beneficiario();
+
+        $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('grupo' => $grupo)
+        );     
+
+        $asignacionesBeneficiariosCVB = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteVamosBien')->findBy(
+            array('grupo' => $grupo)
+        ); 
+
+        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioComiteVamosBien abc WHERE beneficiario = abc.beneficiario AND abc.grupo = :grupo) AND b.active = 1');
+        $query->setParameter(':grupo', $grupo);
+        $beneficiarios = $query->getResult();
+
+        $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('id' => $beneficiarios, 'grupo' => $grupo )
+        );
+
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiario-grupo-cvb-gestion-asignacion.html.twig', 
+            array(
+                'beneficiarios' => $mostrarBeneficiarios,
+                'asignacionesBeneficiariosCVB' => $asignacionesBeneficiariosCVB,
+                'idGrupo' => $idGrupo
+            ));        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/comite-vamos-bien/{idBeneficiario}/nueva-asignacion", name="grupoBeneficiarioCVBAsignacion")
+     */
+    public function comiteVamosBienAsignarGrupoBeneficiarioAction($idGrupo, $idBeneficiario)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
+            array('id' => $idBeneficiario)
+        );      
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );        
+           
+        $asignacionBeneficiarioComiteVamosBien = new AsignacionBeneficiarioComiteVamosBien();
+
+        $asignacionBeneficiarioComiteVamosBien->setGrupo($grupo);        
+        $asignacionBeneficiarioComiteVamosBien->setBeneficiario($beneficiario);
+        $asignacionBeneficiarioComiteVamosBien->setActive(true);
+        $asignacionBeneficiarioComiteVamosBien->setFechaCreacion(new \DateTime());
+
+        $em->persist($asignacionBeneficiarioComiteVamosBien);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('grupoBeneficiarioCVB', 
+            array(
+                'beneficiario' => $beneficiario,          
+                'asignacionesBeneficiarioComiteVamosBien' => $asignacionBeneficiarioComiteVamosBien,                
+                'idGrupo' => $idGrupo
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/comite-vamos-bien/{idAsignacionBeneficiariosCVB}/eliminar", name="grupoBeneficiarioCVBEliminar")
+     */
+    public function comiteVamosBienEliminarGrupoBeneficiarioAction($idGrupo, $idAsignacionBeneficiariosCVB)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionBeneficiarioComiteVamosBien = new AsignacionBeneficiarioComiteVamosBien();
+
+        $asignacionBeneficiarioComiteVamosBien = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteVamosBien')->find($idAsignacionBeneficiariosCVB); 
+
+        $em->remove($asignacionBeneficiarioComiteVamosBien);
+        $em->flush();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $beneficiarios = new Beneficiario();
+
+        $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('grupo' => $grupo)
+        );     
+
+        $asignacionesBeneficiariosCVB = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteVamosBien')->findBy(
+            array('grupo' => $grupo)
+        ); 
+
+        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioComiteVamosBien abc WHERE beneficiario = abc.beneficiario AND abc.grupo = :grupo) AND b.active = 1');
+        $query->setParameter(':grupo', $grupo);
+        $beneficiarios = $query->getResult();
+
+        $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('id' => $beneficiarios, 'grupo' => $grupo )
+        );
+
+        return $this->redirectToRoute('grupoBeneficiarioCVB',
+            array(
+                'beneficiarios' => $mostrarBeneficiarios,
+                'asignacionesBeneficiariosCVB' => $asignacionesBeneficiariosCVB,
+                'idGrupo' => $idGrupo
+            ));      
+        
+    } 
 	
 
     /**
@@ -4816,7 +4937,13 @@ class GestionEmpresarialController extends Controller
 
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id'=>$idGrupo)
-        );       
+        );   
+
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id'=>$idNodo)
+        );        
+
+        $fase = $nodo->getFase();    
 
         $form = $this->createForm(new SeguimientoMOTType(), $seguimientoMot);
         
@@ -4836,7 +4963,8 @@ class GestionEmpresarialController extends Controller
             
             $seguimientoMot = $form->getData();
 
-            $seguimientoMot->setGrupo($grupo);            
+            $seguimientoMot->setGrupo($grupo);
+            $seguimientoMot->setFase($fase);            
             $seguimientoMot->setActive(true);
             $seguimientoMot->setFechaCreacion(new \DateTime());
             $em->persist($seguimientoMot);
@@ -4864,6 +4992,73 @@ class GestionEmpresarialController extends Controller
             )
         );
     }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/cierre-mot/nuevo", name="seguimientoMotCierre")
+     */
+    public function seguimientoMotCierreAction(Request $request, $idGrupo, $idNodo)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $seguimientoMot= new SeguimientoMot(); 
+
+       $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id'=>$idNodo)
+        );        
+
+        $fase = $nodo->getFase();    
+
+        $seguimientoMot = $em->getRepository('AppBundle:SeguimientoMot')->findOneBy(
+            array('grupo' => $idGrupo,
+                  'fase' => $fase                  
+                )
+        );
+        
+        $seguimientoMotCierre = $em->getRepository('AppBundle:SeguimientoMot')->findOneBy(
+            array('id' => $seguimientoMot->getId())
+        );
+
+        $form = $this->createForm(new SeguimientoMotType(), $seguimientoMotCierre);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $seguimientoMotCierre = $form->getData();
+
+            $seguimientoMotCierre->setFechaModificacion(new \DateTime());
+
+            self::nodoCamino($idGrupo, $idNodo, 2);            
+
+            $em->flush();
+
+            return $this->redirect(
+                $this->generateUrl(
+                    'seguimientoGrupo', 
+                    array(
+                        'idGrupo' => $idGrupo
+                    )
+                )
+            );
+        }
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimiento-mot-nuevo.html.twig',
+            array('form' => $form->createView(),                   
+                   'idNodo' => $idNodo,
+                   'idGrupo' => $idGrupo
+            )
+        );
+    }
+
 
 
     /**
@@ -4990,7 +5185,7 @@ class GestionEmpresarialController extends Controller
             );
         }
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimientofase-nuevo.html.twig',
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimiento-fase-nuevo.html.twig',
             array('form' => $form->createView(),                   
                    'idNodo' => $idNodo,
                    'idGrupo' => $idGrupo
