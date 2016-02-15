@@ -838,6 +838,9 @@ class GestionEmpresarialController extends Controller
 
                 //if($clearSoporte->getDescripcion()=="Acta final Clear"){ //Despúes de subir el Acta final del CLEAR toma lo que esté almacenado en habilitacionFases de cada grupo para asignar un nodo Ejecutado o un nodo Rechazado
                 if(true){
+
+                    
+
                     $asignacionGruposClear = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
                         array('clear' => $clear) 
                     );  
@@ -846,13 +849,32 @@ class GestionEmpresarialController extends Controller
                     
                         $habilitacionFases = $em->getRepository('AppBundle:HabilitacionFases')->findOneBy(
                             array('grupo' => $asignacionGrupoClear->getGrupo()) 
-                        );  
+                        );
 
-                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 3);
-                        
-                        //if según HabilitacionFases alguno en true
-                        if($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPi() || $habilitacionFases->getPn())
-                            self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 2);
+                        $camino = $em->getRepository('AppBundle:Camino')->findBy(
+                            array('grupo' => $asignacionGrupoClear->getGrupo())
+                        );
+
+                        $ultimoNodo = $camino[count($camino)-1];
+                        $idUltimoNodo = $ultimoNodo->getNodo()->getId();
+                        $estado = $ultimoNodo->getEstado();
+
+                        //EJECUCIÓN O RECHAZO(2 o 3) CIERRE DE CLEAR HABILITACIÓN ******** ******** ******** ********
+                        if ($idUltimoNodo == 2){
+                            //if según HabilitacionFases alguno en true
+                            if($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPi() || $habilitacionFases->getPn()){
+                                self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 2);//Ejecutada(2) Clear de Habilitación
+                                if($habilitacionFases->getIea())
+                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 5, 1);//Programación(1) a Visita previa IEA
+                                if($habilitacionFases->getPi())
+                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 4, 1);//Programación(1) a Visita previa PI
+                                if($habilitacionFases->getPn())
+                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 3, 1);//Programación(1) a Visita previa PN
+                            }
+                            else
+                                self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 3);//Rechazado(3) Clear de Habilitación
+                        }
+
                     }
 
                 }
