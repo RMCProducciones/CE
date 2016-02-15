@@ -52,119 +52,214 @@
       <div class="container">        
         <div class="row">
           <div class="col-md-12 table-responsive">
-            <table class="table table-striped table-hover" ng-controller="gestionBeneficiariosCtrl">
+            <table class="table table-bordered" ng-controller="gestionBeneficiariosCtrl">
               	<thead>
-                	<tr>
-	                   	<th>Requisito</th>
-					   	<th>No formal sin negocio MOT</th>
-	                   	<th>Formal sin negocio MOT</th>
-	                   	<th>No formal con negocio IEA</th>
-	                   	<th>No formal con negocio PI</th>
-	                   	<th>Formal con negocio PN</th>
+                	<tr class="bg-primary">
+	                   	<th class="text-center">Requisitos Habilitantes</th>
+					   	<th class="text-center">MOT <br />No Formal</th>
+	                   	<th class="text-center">MOT <br />Formal</th>
+	                   	<th class="text-center">IEA <br />Formal</th>
+	                   	<th class="text-center">PI <br />Formal</th>
+	                   	<th class="text-center">PN <br />Formal</th>
 	                </tr>
 	           	</thead>
 	           	<tbody>
 
 	           		<tr>
-	                  	<td colspan="6" class="info">Requisitos habilitantes individuales</td>
+	                  	<th colspan="6" class="text-center bg-primary">Requisitos por beneficiario</th>
 	                </tr>
                 
-	                <tr>
-	                	<td>Copia de documento de identificación</td>
-						<td><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
-	                	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                <tr class="active text-muted">
+	                	<td>Documento de identificación</td>
+						<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+	                	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                </tr>
+
+	                <tr class="active text-muted">
+	                  	<td>
+	                  	Condiciones básicas
+						</td>
+					 	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td> 
+	                </tr>
+
+	                <tr class="active text-muted">
+	                  	<td>
+	                  	Antecedentes judiciales
+						</td>
+					 	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td> 
 	                </tr>
 
 	                <tr>
-	                  	<td>SISBEN o
-						RED UNIDOS o
-						Pertenecia étnica o
-						Población desplazada</td>
-					 	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td> 
+	                  	<th colspan="6" class="text-center bg-primary">Requisitos del grupo</th>
 	                </tr>
 
-	                <tr>
-	                  	<td colspan="6" class="info">Requisitos habilitantes representante del grupo</td>
+	                <tr class="active text-muted">
+	                  	<td>Acta de interés</td>
+					  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
 	                </tr>
 
-	                <tr>
-	                  	<td>Copia de documento de identificación</td>
-					  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                <tr class="active text-muted">
+	                  	<td>Formato registro de beneficiarios</td>
+					  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
 	                </tr>
 
-	                <tr>
-	                  	<td>Copia de documento de identificación</td>
-					  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-        	        </tr>
-
-	                <tr>
-	                  	<td colspan="6" class="info">Requisitos habilitantes grupales</td>
-	                </tr>
-
-	                <tr>
-	                  	<td>Copia de documento de identificación</td>
-					  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                </tr>
-
-	                <tr>
-	                  	<td>Copia de documento de identificación</td>
-					  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-        	        </tr>
-      
         	        <tr>
-	                  	<td colspan="6" class="info">Habilitación</td>
+	                  	<th colspan="6" class="text-center bg-primary">Requisitos de la organización</th>
 	                </tr>
 
-	                <tr>
-	                  	<td></td>
-					  	<td>
-					  		{{ form_label(form.mot_no_formal) }}
+	                <tr class="active text-muted">
+	                  	<td>Certificación bancaria</td>
+					  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+        	        </tr>
+
+	                <tr class="active text-muted">
+	                  	<td>Certificado de Existencia (Camara de Comercio)</td>
+					  	<td class="text-center"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"></td>
+	                  	<td class="text-center"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+        	        </tr>
+
+	                <tr class="active text-muted">
+	                  	<td>Registro Único Tributario (RUT)</td>
+					  	<td class="text-center"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"></td>
+	                  	<td class="text-center"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+        	        </tr>
+
+	                <tr class="active text-muted">
+	                  	<td>Declaración de renta (Año anterior)</td>
+					  	<td class="text-center"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"></td>
+	                  	<td class="text-center"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+        	        </tr>
+
+	                <tr class="active text-muted">
+	                  	<td>Balance general y estado de resultados</td>
+					  	<td class="text-center"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"></td>
+	                  	<td class="text-center"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+        	        </tr>
+
+	                <tr class="active text-muted">
+	                  	<td>Antecedentes disciplinarios (Procuraduría)</td>
+					  	<td class="text-center"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"></td>
+	                  	<td class="text-center"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+        	        </tr>
+
+	                <tr class="active text-muted">
+	                  	<td>Antecedentes fiscales (Contraloría)</td>
+					  	<td class="text-center"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"></td>
+	                  	<td class="text-center"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+        	        </tr>
+
+        	        <tr>
+	                  	<th colspan="6" class="text-center bg-primary">Requisitos del representante legal</th>
+	                </tr>
+
+	                <tr class="active text-muted">
+	                  	<td>Registro Único Tributario (RUT)</td>
+					  	<td class="text-center"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"></td>
+	                  	<td class="text-center"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+        	        </tr>
+
+	                <tr class="active text-muted">
+	                  	<td>Formato de no RUT</td>
+					  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"></td>
+        	        </tr>
+
+	                <tr class="active text-muted">
+	                  	<td>Antecedentes disciplinarios (Procuraduría)</td>
+					  	<td class="text-center"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"></td>
+	                  	<td class="text-center"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+        	        </tr>
+
+	                <tr class="active text-muted">
+	                  	<td>Antecedentes fiscales (Contraloría)</td>
+					  	<td class="text-center"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	<td class="text-center"></td>
+	                  	<td class="text-center"></td>
+	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+        	        </tr>
+
+        	        <tr>
+	                  	<th colspan="6" class="text-center bg-primary">Habilitación de la fase</th>
+	                </tr>
+
+	                <tr class="active text-muted vertical-align">
+	                  	<td>Seleccione la fase(s) a habilitar</td>
+					  	<th class="text-center">
+					  		MOT <br />No Formal <br />
 							{{ form_errors(form.mot_no_formal) }}
-							{{ form_widget(form.mot_no_formal, { 'attr': {'class': 'form-control'} }) }}
-						</td>
-	                  	<td>
-	                  		{{ form_label(form.mot_formal) }}
+							{{ form_widget(form.mot_no_formal) }}
+						</th>
+	                  	<th class="text-center">
+	                  		MOT <br />Formal <br />
 							{{ form_errors(form.mot_formal) }}
-							{{ form_widget(form.mot_formal, { 'attr': {'class': 'form-control'} }) }}
-						</td>
-	                  	<td>
-	                  		{{ form_label(form.iea) }}
+							{{ form_widget(form.mot_formal) }}
+						</th>
+	                  	<th class="text-center">
+	                  		IEA <br />Formal <br />
 			                {{ form_errors(form.iea) }}
-			                {{ form_widget(form.iea, { 'attr': {'class': 'form-control'} }) }}
-	                  	</td>
-	                  	<td>
-	                  		{{ form_label(form.pi) }}
+			                {{ form_widget(form.iea) }}
+	                  	</th>
+	                  	<th class="text-center">
+	                  		PI <br />Formal <br />
 							{{ form_errors(form.pi) }}
-							{{ form_widget(form.pi, { 'attr': {'class': 'form-control'} }) }}
-						</td>
-	                  	<td>
-	                  		{{ form_label(form.pn) }}
+							{{ form_widget(form.pi) }}
+						</th>
+	                  	<th class="text-center">
+	                  		PN <br />Formal <br />
 			                {{ form_errors(form.pn) }}
-			                {{ form_widget(form.pn, { 'attr': {'class': 'form-control'} }) }}
-	                  	</td> 
+			                {{ form_widget(form.pn) }}
+	                  	</th> 
 	      			</tr>  
 	           </tbody>
             </table>

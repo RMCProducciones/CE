@@ -840,6 +840,9 @@ class GestionEmpresarialController extends Controller
 
                 //if($clearSoporte->getDescripcion()=="Acta final Clear"){ //Despúes de subir el Acta final del CLEAR toma lo que esté almacenado en habilitacionFases de cada grupo para asignar un nodo Ejecutado o un nodo Rechazado
                 if(true){
+
+                    
+
                     $asignacionGruposClear = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
                         array('clear' => $clear) 
                     );  
@@ -848,13 +851,32 @@ class GestionEmpresarialController extends Controller
                     
                         $habilitacionFases = $em->getRepository('AppBundle:HabilitacionFases')->findOneBy(
                             array('grupo' => $asignacionGrupoClear->getGrupo()) 
-                        );  
+                        );
 
-                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 3);
-                        
-                        //if según HabilitacionFases alguno en true
-                        if($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPi() || $habilitacionFases->getPn())
-                            self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 2);
+                        $camino = $em->getRepository('AppBundle:Camino')->findBy(
+                            array('grupo' => $asignacionGrupoClear->getGrupo())
+                        );
+
+                        $ultimoNodo = $camino[count($camino)-1];
+                        $idUltimoNodo = $ultimoNodo->getNodo()->getId();
+                        $estado = $ultimoNodo->getEstado();
+
+                        //EJECUCIÓN O RECHAZO(2 o 3) CIERRE DE CLEAR HABILITACIÓN ******** ******** ******** ********
+                        if ($idUltimoNodo == 2){
+                            //if según HabilitacionFases alguno en true
+                            if($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPi() || $habilitacionFases->getPn()){
+                                self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 2);//Ejecutada(2) Clear de Habilitación
+                                if($habilitacionFases->getIea())
+                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 5, 1);//Programación(1) a Visita previa IEA
+                                if($habilitacionFases->getPi())
+                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 4, 1);//Programación(1) a Visita previa PI
+                                if($habilitacionFases->getPn())
+                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 3, 1);//Programación(1) a Visita previa PN
+                            }
+                            else
+                                self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 3);//Rechazado(3) Clear de Habilitación
+                        }
+
                     }
 
                 }
@@ -1112,14 +1134,13 @@ class GestionEmpresarialController extends Controller
         $estado = $ultimoNodo->getEstado();
 
         $habilitacionFases = $em->getRepository('AppBundle:HabilitacionFases')->findOneBy(
-            array('grupo' => $asignacionGrupoClear->getGrupo()) 
+            array('grupo' => $asignacionesGrupoCLEAR->getGrupo()) 
         );  
 
        
         //if según HabilitacionFases alguno en true
         //$habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPi() || $habilitacionFases->getPn()
             
-        die("estado ".$idNodo);
         //die("cantidad ".count($camino));
    
         //PROGRAMACIÓN(1) PARTICIPACIÓN PARA HABILITACIÓN ******** ******** ******** ********
@@ -1133,7 +1154,7 @@ class GestionEmpresarialController extends Controller
             if($habilitacionFases->getMotFormal()) 
                 self::nodoCamino($idGrupo, 6, 1); //Programación(1) a Clear de Asignación MOT Formal
             else
-                self::nodoCamino($idGrupo, 10, 1); //Programación(1) a Clear de Asignación MOT Formal
+                self::nodoCamino($idGrupo, 10, 1); //Programación(1) a Clear de Asignación MOT No Formal
         }
         elseif($idUltimoNodo == 3 || $idUltimoNodo == 4 || $idUltimoNodo == 5){//Si el último nodo es 3, 4, 5(Visita Previa)
             $asignacionesGrupoCLEAR->setAsignacion(true);
@@ -1160,7 +1181,16 @@ class GestionEmpresarialController extends Controller
         //PROGRAMACIÓN(1) PARTICIPACIÓN PARA CONTRALORÍA ******** ******** ******** ********
         elseif($estado == 2 && ($idUltimoNodo == 8 || $idUltimoNodo == 12 || $idUltimoNodo == 18 || $idUltimoNodo == 24 || $idUltimoNodo == 30)){ //Si el último nodo es 8, 12, 18, 24 o 30 (Legalización Fase) y tuvieron los estados 2(Ejecutado)
             $asignacionesGrupoCLEAR->setContraloria(true); 
-            self::nodoCamino($idGrupo, 2, 1);
+            if($idUltimoNodo == 8)
+                self::nodoCamino($idGrupo, 9, 1); //Programación(1) a Clear de Contraloria MOT Formal
+            if($idUltimoNodo == 12)
+                self::nodoCamino($idGrupo, 13, 1); //Programación(1) a Clear de Contraloria MOT No Formal
+            if($idUltimoNodo == 18)
+                self::nodoCamino($idGrupo, 19, 1); //Programación(1) a Clear de Contraloria IEA
+            if($idUltimoNodo == 24)
+                self::nodoCamino($idGrupo, 25, 1); //Programación(1) a Clear de Contraloria PI
+            if($idUltimoNodo == 30)
+                self::nodoCamino($idGrupo, 31, 1); //Programación(1) a Clear de Contraloria PN
         }
 
 
@@ -1192,6 +1222,7 @@ class GestionEmpresarialController extends Controller
             array('fecha_creacion' => 'ASC')
         );      
 
+        //Mejorar el siguiente código (Puede ser buscando el ultimo en 1(Programado))
         $camino = $em->getRepository('AppBundle:Camino')->findOneBy(
             array('grupo' => $asignacionesGrupoCLEAR->getGrupo(), 
                 'estado' => '1'
