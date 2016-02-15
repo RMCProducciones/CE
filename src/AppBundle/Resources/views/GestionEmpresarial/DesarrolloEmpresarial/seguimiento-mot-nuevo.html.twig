@@ -1,0 +1,176 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+{% block title %}Seguimiento MOT{% endblock %}
+
+{% block breadcrumb_ul %}
+
+    <ul class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Empresarial</li>
+      <li>Ferias</li>
+      <li class="active">Nuevo</li>
+    </ul>
+
+{% endblock %}
+
+
+{% block section %}
+<div class="container">
+    <h1> Gestión de Seguimiento </h1>
+    <hr>
+    <h3> Nuevo Registro</h3>
+    <br />
+    <br />
+  </div>
+     
+
+  {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+    {{ form_errors(form) }}
+    
+    <br>
+    <div class="section">
+      <div class="container">     
+        <div class="row">
+              <div class="col-md-6">
+                <div class="btn-group">
+      
+                  <button name="grupo[Guardar]" id="grupo_Guardar" type="submit" class="btn btn-success">Guardar</button>
+                  
+                  <a href="{{ path('seguimientoGrupo' , {'idGrupo':idGrupo}) }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+                  
+                </div>
+              </div>
+            </div>   
+      </div>
+    </div> 
+        
+
+
+       
+        </br>   
+{% set activar = idNodo %}
+
+{% set valorInicial = 1 %}
+
+{% if activar == 6 %}
+  {% set valorInicial = 0 %}
+{% endif %}
+
+<br>
+
+<div class="section" ng-controller="CierreFaseCtrl" ng-init="camposRequeridos({{valorInicial}})">
+  <div class="container">    
+
+    {% if valorInicial == 1 %}
+
+      <div class="row">
+        <div class="col-md-12">
+          <fieldset>
+            <legend>Inicio Fase</legend>
+          </fieldset>            
+        </div>
+      </div> 
+
+      <br />
+
+      <div class="row">
+       
+        <div class="col-md-4">
+              {{ form_label(form.fecha_inicio) }}
+              {{ form_errors(form.fecha_inicio) }}
+              {{ form_widget(form.fecha_inicio, { 'attr': {'class': 'form-control', 'placeholder': 'Fecha de inicio'} }) }}
+        </div>                
+         
+      </div>
+
+      <br/>
+      
+
+      {{ form_widget(form.indentificacion_recursos_tangibles, { 'attr': {'style': 'opacity:0'} }) }}
+      {{ form_widget(form.indentificacion_recursos_financieros, { 'attr': {'style': 'opacity:0'} }) }}
+      {{ form_widget(form.indentificacion_recursos_intangibles, { 'attr': {'style': 'opacity:0'} }) }}
+      {{ form_widget(form.indentificacion_opciones_viables, { 'attr': {'style': 'opacity:0'} }) }}
+      {{ form_widget(form.viabilidad_negocio, { 'attr': {'style': 'opacity:0'} }) }}
+      {{ form_widget(form.observaciones, { 'attr': {'style': 'opacity:0'} }) }}
+      {{ form_widget(form.fecha_finalizacion, { 'attr': {'style': 'opacity:0'} }) }}
+
+
+    {% else %}    
+    
+      <div class="row">
+        <div class="col-md-12">
+          <fieldset>
+            <legend>Cierre Fase</legend>
+          </fieldset>            
+        </div>
+      </div>  
+
+      <br />
+
+      <div class="row">
+        
+        <div class="col-md-4">
+              {{ form_label(form.indentificacion_recursos_tangibles) }}
+              {{ form_errors(form.indentificacion_recursos_tangibles) }}
+              {{ form_widget(form.indentificacion_recursos_tangibles, { 'attr': {'class': 'form-control', 'placeholder': 'Resultado Componente organizacional'} }) }}
+        </div>
+        <div class="col-md-4">
+              {{ form_label(form.indentificacion_recursos_financieros) }}
+              {{ form_errors(form.indentificacion_recursos_financieros) }}
+              {{ form_widget(form.indentificacion_recursos_financieros, { 'attr': {'class': 'form-control', 'placeholder': 'Resultado Componente productivo'} }) }}
+        </div>
+        <div class="col-md-4">
+              {{ form_label(form.indentificacion_recursos_intangibles) }}
+              {{ form_errors(form.indentificacion_recursos_intangibles) }}
+              {{ form_widget(form.indentificacion_recursos_intangibles, { 'attr': {'class': 'form-control', 'placeholder': 'Resultado Componente comercial'} }) }}
+        </div>           
+        <br/>       
+        <br/>  
+      </div>
+
+      <br/> 
+
+      <div class="row">
+        <div class="col-md-4">
+              {{ form_label(form.indentificacion_opciones_viables) }}
+              {{ form_errors(form.indentificacion_opciones_viables) }}
+              {{ form_widget(form.indentificacion_opciones_viables, { 'attr': {'class': 'form-control', 'placeholder': 'Resultado Componente administrativo'} }) }}
+        </div>
+        <div class="col-md-4">
+              {{ form_label(form.viabilidad_negocio) }}
+              {{ form_errors(form.viabilidad_negocio) }}
+              {{ form_widget(form.viabilidad_negocio, { 'attr': {'class': 'form-control', 'placeholder': 'Resultado Componente financiero'} }) }}
+        </div>
+        <div class="col-md-4">
+              {{ form_label(form.observaciones) }}
+              {{ form_errors(form.observaciones) }}
+              {{ form_widget(form.observaciones, { 'attr': {'class': 'form-control', 'placeholder': 'Observaciones'} }) }}
+        </div>
+                      
+        <br/>       
+       
+      </div>
+
+        <br/>       
+
+      <div class="row">
+        <div class="col-md-4">
+              {{ form_label(form.fecha_finalizacion) }}
+              {{ form_errors(form.fecha_finalizacion) }}
+              {{ form_widget(form.fecha_finalizacion, { 'attr': {'class': 'form-control', 'placeholder': 'Fecha Finalizacion '} }) }}
+        </div>       
+      </div>
+
+      {{ form_widget(form.fecha_inicio, { 'attr': {'style': 'visibility:hidden'} }) }}            
+
+    {% endif %}
+
+
+  </div>
+</div>
+
+  {{ form_end(form) }}
+               
+{% endblock %}
+

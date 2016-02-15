@@ -64,6 +64,7 @@ use AppBundle\Entity\HabilitacionFases;
 use AppBundle\Entity\Empleado;
 use AppBundle\Entity\EvaluacionFase;
 use AppBundle\Entity\EvaluacionFaseSoporte;
+use AppBundle\Entity\SeguimientoMOT;
 
 
 
@@ -101,8 +102,12 @@ use AppBundle\Form\GestionEmpresarial\ProduccionType;
 use AppBundle\Form\GestionEmpresarial\VentasType;
 use AppBundle\Form\GestionEmpresarial\HabilitacionFasesType;
 use AppBundle\Form\GestionEmpresarial\EmpleadoType;
+<<<<<<< HEAD
 use AppBundle\Form\GestionEmpresarial\EvaluacionFaseType;
 use AppBundle\Form\GestionEmpresarial\EvaluacionFaseSoporteType;
+=======
+use AppBundle\Form\GestionEmpresarial\SeguimientoMOTType;
+>>>>>>> c4675a95da11188138779c28193929ad01d47738
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -840,35 +845,45 @@ class GestionEmpresarialController extends Controller
                 $clearSoporte->setActive(true);
                 $clearSoporte->setFechaCreacion(new \DateTime());
 
-                //if($clearSoporte->getDescripcion()=="Acta final Clear"){
+                //if($clearSoporte->getDescripcion()=="Acta final Clear"){ //Despúes de subir el Acta final del CLEAR toma lo que esté almacenado en habilitacionFases de cada grupo para asignar un nodo Ejecutado o un nodo Rechazado
                 if(true){
-                    $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
-                        array('id' => 2)
-                    );
+
+                    
 
                     $asignacionGruposClear = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
                         array('clear' => $clear) 
                     );  
 
                     foreach ($asignacionGruposClear as $asignacionGrupoClear){
-                        $nodoCamino = new Camino();
-                        $nodoCamino->setGrupo($asignacionGrupoClear->getGrupo());
-                        $nodoCamino->setNodo($nodo);
-
+                    
                         $habilitacionFases = $em->getRepository('AppBundle:HabilitacionFases')->findOneBy(
                             array('grupo' => $asignacionGrupoClear->getGrupo()) 
-                        );  
+                        );
 
-                        $nodoCamino->setEstado(3);
-                        //if según HabilitacionFases alguno en true
-                        if($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPi() || $habilitacionFases->getPn())
-                            $nodoCamino->setEstado(2);
+                        $camino = $em->getRepository('AppBundle:Camino')->findBy(
+                            array('grupo' => $asignacionGrupoClear->getGrupo())
+                        );
 
-                            
-                        $nodoCamino->setActive(true);
-                        $nodoCamino->setFechaCreacion(new \DateTime());
+                        $ultimoNodo = $camino[count($camino)-1];
+                        $idUltimoNodo = $ultimoNodo->getNodo()->getId();
+                        $estado = $ultimoNodo->getEstado();
 
-                        $em->persist($nodoCamino);
+                        //EJECUCIÓN O RECHAZO(2 o 3) CIERRE DE CLEAR HABILITACIÓN ******** ******** ******** ********
+                        if ($idUltimoNodo == 2){
+                            //if según HabilitacionFases alguno en true
+                            if($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPi() || $habilitacionFases->getPn()){
+                                self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 2);//Ejecutada(2) Clear de Habilitación
+                                if($habilitacionFases->getIea())
+                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 5, 1);//Programación(1) a Visita previa IEA
+                                if($habilitacionFases->getPi())
+                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 4, 1);//Programación(1) a Visita previa PI
+                                if($habilitacionFases->getPn())
+                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 3, 1);//Programación(1) a Visita previa PN
+                            }
+                            else
+                                self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 3);//Rechazado(3) Clear de Habilitación
+                        }
+
                     }
 
                 }
@@ -1121,30 +1136,73 @@ class GestionEmpresarialController extends Controller
             array('grupo' => $grupo)
         );
 
-        //Asignacion para Habilitación
-        if (count($camino)==1){
+        $ultimoNodo = $camino[count($camino)-1];
+        $idUltimoNodo = $ultimoNodo->getNodo()->getId();
+        $estado = $ultimoNodo->getEstado();
 
+        $habilitacionFases = $em->getRepository('AppBundle:HabilitacionFases')->findOneBy(
+            array('grupo' => $asignacionesGrupoCLEAR->getGrupo()) 
+        );  
+
+       
+        //if según HabilitacionFases alguno en true
+        //$habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPi() || $habilitacionFases->getPn()
+            
+        //die("cantidad ".count($camino));
+   
+        //PROGRAMACIÓN(1) PARTICIPACIÓN PARA HABILITACIÓN ******** ******** ******** ********
+        if ($idUltimoNodo == 1){
             $asignacionesGrupoCLEAR->setHabilitacion(true); 
-
-            $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
-                array('id' => 2)
-            );
-
-            $nodoCamino = new Camino();
-            $nodoCamino->setGrupo($grupo);
-            $nodoCamino->setNodo($nodo);
-            $nodoCamino->setEstado(1);
-            $nodoCamino->setActive(true);
-            $nodoCamino->setFechaCreacion(new \DateTime());
-
-            $em->persist($nodoCamino);
+            self::nodoCamino($idGrupo, 2, 1);//Programación(1) a Clear de Habilitación
+        }
+        //PROGRAMACIÓN(1) PARTICIPACIÓN PARA ASIGNACIÓN ******** ******** ********  ********      
+        elseif($idUltimoNodo == 2 && ($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal())){ // Si el ultimo nodo es 2(Habilitación) y en HabilitaciónFases permita MOT Formal o MOT no Formal
+            $asignacionesGrupoCLEAR->setAsignacion(true);
+            if($habilitacionFases->getMotFormal()) 
+                self::nodoCamino($idGrupo, 6, 1); //Programación(1) a Clear de Asignación MOT Formal
+            else
+                self::nodoCamino($idGrupo, 10, 1); //Programación(1) a Clear de Asignación MOT No Formal
+        }
+        elseif($idUltimoNodo == 3 || $idUltimoNodo == 4 || $idUltimoNodo == 5){//Si el último nodo es 3, 4, 5(Visita Previa)
+            $asignacionesGrupoCLEAR->setAsignacion(true);
+            if($idUltimoNodo == 3)
+                self::nodoCamino($idGrupo, 26, 1); //Programación(1) a Clear de Asignación PN
+            if($idUltimoNodo == 4)//No se usa elseif porque mas de un camino puede ser válido
+                self::nodoCamino($idGrupo, 20, 1); //Programación(1) a Clear de Asignación PI
+            if($idUltimoNodo == 5)
+                self::nodoCamino($idGrupo, 14, 1); //Programación(1) a Clear de Asignación IEA
+        }
+        elseif ($estado == 2 && ($idUltimoNodo == 9 || $idUltimoNodo == 13 || $idUltimoNodo == 19 || $idUltimoNodo == 25)) {//Si el último nodo es 9, 13, 19, 25(Contraloria) y tuvieron los estados 2(Ejecutado)
+            $asignacionesGrupoCLEAR->setAsignacion(true);
+            if($idUltimoNodo == 9)
+                self::nodoCamino($idGrupo, 26, 1); //Programación(1) a Clear de Asignación PN
+            if($idUltimoNodo == 13)
+                self::nodoCamino($idGrupo, 14, 1); //Programación(1) a Clear de Asignación IEA
+            if($idUltimoNodo == 19){
+                self::nodoCamino($idGrupo, 20, 1); //Programación(1) a Clear de Asignación PI
+                self::nodoCamino($idGrupo, 26, 1); //Programación(1) a Clear de Asignación PN
+            }
+            if($idUltimoNodo == 25)
+                self::nodoCamino($idGrupo, 26, 1); //Programación(1) a Clear de Asignación PN
+        }
+        //PROGRAMACIÓN(1) PARTICIPACIÓN PARA CONTRALORÍA ******** ******** ******** ********
+        elseif($estado == 2 && ($idUltimoNodo == 8 || $idUltimoNodo == 12 || $idUltimoNodo == 18 || $idUltimoNodo == 24 || $idUltimoNodo == 30)){ //Si el último nodo es 8, 12, 18, 24 o 30 (Legalización Fase) y tuvieron los estados 2(Ejecutado)
+            $asignacionesGrupoCLEAR->setContraloria(true); 
+            if($idUltimoNodo == 8)
+                self::nodoCamino($idGrupo, 9, 1); //Programación(1) a Clear de Contraloria MOT Formal
+            if($idUltimoNodo == 12)
+                self::nodoCamino($idGrupo, 13, 1); //Programación(1) a Clear de Contraloria MOT No Formal
+            if($idUltimoNodo == 18)
+                self::nodoCamino($idGrupo, 19, 1); //Programación(1) a Clear de Contraloria IEA
+            if($idUltimoNodo == 24)
+                self::nodoCamino($idGrupo, 25, 1); //Programación(1) a Clear de Contraloria PI
+            if($idUltimoNodo == 30)
+                self::nodoCamino($idGrupo, 31, 1); //Programación(1) a Clear de Contraloria PN
         }
 
 
         $em->persist($asignacionesGrupoCLEAR);
         $em->flush();
-
-
 
         return $this->redirectToRoute('clearGrupo', 
             array(
@@ -1171,13 +1229,15 @@ class GestionEmpresarialController extends Controller
             array('fecha_creacion' => 'ASC')
         );      
 
+        //Mejorar el siguiente código (Puede ser buscando el ultimo en 1(Programado))
         $camino = $em->getRepository('AppBundle:Camino')->findOneBy(
             array('grupo' => $asignacionesGrupoCLEAR->getGrupo(), 
                 'estado' => '1'
             )
         );
 
-        $em->remove($camino);
+        if($camino)
+            $em->remove($camino);
         $em->remove($asignacionesGrupoCLEAR);
         $em->flush();
 
@@ -1214,7 +1274,7 @@ class GestionEmpresarialController extends Controller
             array('grupo' => $grupo)
         );
 
-        if(!$habilitacionFases)
+        if(!$habilitacionFases)//ESTO NO FUNCIONA
            // die("tiene habilitacion fase");
             $habilitacionFases = new HabilitacionFases();
         
@@ -4755,15 +4815,82 @@ class GestionEmpresarialController extends Controller
 
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idFase}/{idNodo}/inicio-fase/nuevo", name="seguimientofaseInicio")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/inicio-mot/nuevo", name="seguimientoMotInicio")
      */
-    public function seguimientofaseInicioAction(Request $request, $idGrupo, $idFase, $idNodo)
+    public function seguimientoMotInicioAction(Request $request, $idGrupo, $idNodo)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $seguimientoMot= new SeguimientoMOT();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id'=>$idGrupo)
+        );       
+
+        $form = $this->createForm(new SeguimientoMOTType(), $seguimientoMot);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $seguimientoMot = $form->getData();
+
+            $seguimientoMot->setGrupo($grupo);            
+            $seguimientoMot->setActive(true);
+            $seguimientoMot->setFechaCreacion(new \DateTime());
+            $em->persist($seguimientoMot);
+
+
+            self::encendidoNodoSeguimento($idGrupo, $idNodo);         
+           
+            $em->flush();
+
+
+            return $this->redirect(
+                $this->generateUrl(
+                    'seguimientoGrupo', 
+                    array(
+                        'idGrupo' => $idGrupo
+                    )
+                )
+            );
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimiento-mot-nuevo.html.twig',
+            array('form' => $form->createView(),                   
+                   'idNodo' => $idNodo,
+                   'idGrupo' => $idGrupo
+            )
+        );
+    }
+
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/inicio-fase/nuevo", name="seguimientofaseInicio")
+     */
+    public function seguimientofaseInicioAction(Request $request, $idGrupo, $idNodo)
     {
         $em = $this->getDoctrine()->getManager();
         $seguimientofase= new SeguimientoFase();
 
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
-            array('id'=>$idGrupo));
+            array('id'=>$idGrupo)
+        );
+
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id'=>$idNodo)
+        );        
+
+        $fase = $nodo->getFase();
         
         $form = $this->createForm(new SeguimientoFaseType(), $seguimientofase);
         
@@ -4784,6 +4911,7 @@ class GestionEmpresarialController extends Controller
             $seguimientofase = $form->getData();
 
             $seguimientofase->setGrupo($grupo);
+            $seguimientofase->setFase($fase);
             $seguimientofase->setActive(true);
             $seguimientofase->setFechaCreacion(new \DateTime());
             $em->persist($seguimientofase);
@@ -4804,9 +4932,8 @@ class GestionEmpresarialController extends Controller
             );
         }
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimientofase-nuevo.html.twig',
-            array('form' => $form->createView(),
-                   'idFase' => $idFase,
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimiento-fase-nuevo.html.twig',
+            array('form' => $form->createView(),                   
                    'idNodo' => $idNodo,
                    'idGrupo' => $idGrupo
             )
@@ -4814,15 +4941,23 @@ class GestionEmpresarialController extends Controller
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idFase}/{idNodo}/cierre-fase/nuevo", name="seguimientofaseCierre")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/cierre-fase/nuevo", name="seguimientofaseCierre")
      */
-    public function seguimientofaseCierreAction(Request $request, $idGrupo, $idFase, $idNodo)
+    public function seguimientofaseCierreAction(Request $request, $idGrupo, $idNodo)
     {
         $em = $this->getDoctrine()->getManager();
         $seguimientofase= new SeguimientoFase();
 
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id'=>$idNodo)
+        );        
+
+        $fase = $nodo->getFase();
+
         $seguimientofase = $em->getRepository('AppBundle:SeguimientoFase')->findOneBy(
-            array('grupo' => $idGrupo)
+            array('grupo' => $idGrupo,
+                  'fase' => $fase
+                )
         );
         
         $seguimientoFaseCierre = $em->getRepository('AppBundle:SeguimientoFase')->findOneBy(
@@ -4864,8 +4999,7 @@ class GestionEmpresarialController extends Controller
         }
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimientofase-nuevo.html.twig',
-            array('form' => $form->createView(),
-                   'idFase' => $idFase,
+            array('form' => $form->createView(),                   
                    'idNodo' => $idNodo,
                    'idGrupo' => $idGrupo
             )
