@@ -62,6 +62,7 @@ use AppBundle\Entity\Camino;
 use AppBundle\Entity\Nodo;
 use AppBundle\Entity\HabilitacionFases;
 use AppBundle\Entity\Empleado;
+use AppBundle\Entity\SeguimientoMOT;
 
 
 
@@ -99,6 +100,7 @@ use AppBundle\Form\GestionEmpresarial\ProduccionType;
 use AppBundle\Form\GestionEmpresarial\VentasType;
 use AppBundle\Form\GestionEmpresarial\HabilitacionFasesType;
 use AppBundle\Form\GestionEmpresarial\EmpleadoType;
+use AppBundle\Form\GestionEmpresarial\SeguimientoMOTType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -4775,6 +4777,66 @@ class GestionEmpresarialController extends Controller
 
 
     /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/inicio-mot/nuevo", name="seguimientoMotInicio")
+     */
+    public function seguimientoMotInicioAction(Request $request, $idGrupo, $idNodo)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $seguimientoMot= new SeguimientoMOT();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id'=>$idGrupo)
+        );       
+
+        $form = $this->createForm(new SeguimientoMOTType(), $seguimientoMot);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $seguimientoMot = $form->getData();
+
+            $seguimientoMot->setGrupo($grupo);            
+            $seguimientoMot->setActive(true);
+            $seguimientoMot->setFechaCreacion(new \DateTime());
+            $em->persist($seguimientoMot);
+
+
+            self::encendidoNodoSeguimento($idGrupo, $idNodo);         
+           
+            $em->flush();
+
+
+            return $this->redirect(
+                $this->generateUrl(
+                    'seguimientoGrupo', 
+                    array(
+                        'idGrupo' => $idGrupo
+                    )
+                )
+            );
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimiento-mot-nuevo.html.twig',
+            array('form' => $form->createView(),                   
+                   'idNodo' => $idNodo,
+                   'idGrupo' => $idGrupo
+            )
+        );
+    }
+
+
+    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/inicio-fase/nuevo", name="seguimientofaseInicio")
      */
     public function seguimientofaseInicioAction(Request $request, $idGrupo, $idNodo)
@@ -4832,7 +4894,7 @@ class GestionEmpresarialController extends Controller
             );
         }
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimientofase-nuevo.html.twig',
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimiento-fase-nuevo.html.twig',
             array('form' => $form->createView(),                   
                    'idNodo' => $idNodo,
                    'idGrupo' => $idGrupo

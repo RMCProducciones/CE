@@ -22,9 +22,7 @@ class SeguimientoMOT
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="grupo", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
      */
     private $grupo;
 
@@ -38,49 +36,49 @@ class SeguimientoMOT
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_finalizacion", type="datetime")
+     * @ORM\Column(name="fecha_finalizacion", type="datetime", nullable = true)
      */
     private $fecha_finalizacion;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="indentificacion_recursos_tangibles", type="text")
+     * @ORM\Column(name="indentificacion_recursos_tangibles", type="text", nullable = true)
      */
     private $indentificacion_recursos_tangibles;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="indentificacion_recursos_financieros", type="text")
+     * @ORM\Column(name="indentificacion_recursos_financieros", type="text", nullable = true)
      */
     private $indentificacion_recursos_financieros;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="indentificacion_recursos_intangibles", type="text")
+     * @ORM\Column(name="indentificacion_recursos_intangibles", type="text", nullable = true)
      */
     private $indentificacion_recursos_intangibles;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="indentificacion_opciones_viables", type="text")
+     * @ORM\Column(name="indentificacion_opciones_viables", type="text", nullable = true)
      */
     private $indentificacion_opciones_viables;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="viabilidad_negocio", type="text")
+     * @ORM\Column(name="viabilidad_negocio", type="text", nullable = true)
      */
     private $viabilidad_negocio;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="observaciones", type="text")
+     * @ORM\Column(name="observaciones", type="text", nullable = true)
      */
     private $observaciones;
 
@@ -92,23 +90,19 @@ class SeguimientoMOT
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable = true)
      */
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\usuario")
      */
     private $usuario_creacion;
 
@@ -133,11 +127,11 @@ class SeguimientoMOT
     /**
      * Set grupo
      *
-     * @param integer $grupo
+     * @param AppBundle\Entity\Grupo $grupo
      *
      * @return SeguimientoMOT
      */
-    public function setGrupo($grupo)
+    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
     {
         $this->grupo = $grupo;
 
@@ -147,7 +141,7 @@ class SeguimientoMOT
     /**
      * Get grupo
      *
-     * @return integer
+     * @return AppBundle\Entity\Grupo
      */
     public function getGrupo()
     {
@@ -373,11 +367,11 @@ class SeguimientoMOT
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return SeguimientoMOT
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -387,7 +381,7 @@ class SeguimientoMOT
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -421,11 +415,11 @@ class SeguimientoMOT
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return SeguimientoMOT
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -435,7 +429,7 @@ class SeguimientoMOT
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {
