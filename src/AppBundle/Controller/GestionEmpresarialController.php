@@ -102,12 +102,9 @@ use AppBundle\Form\GestionEmpresarial\ProduccionType;
 use AppBundle\Form\GestionEmpresarial\VentasType;
 use AppBundle\Form\GestionEmpresarial\HabilitacionFasesType;
 use AppBundle\Form\GestionEmpresarial\EmpleadoType;
-<<<<<<< HEAD
 use AppBundle\Form\GestionEmpresarial\EvaluacionFaseType;
 use AppBundle\Form\GestionEmpresarial\EvaluacionFaseSoporteType;
-=======
 use AppBundle\Form\GestionEmpresarial\SeguimientoMOTType;
->>>>>>> c4675a95da11188138779c28193929ad01d47738
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
