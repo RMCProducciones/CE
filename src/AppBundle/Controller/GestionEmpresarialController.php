@@ -4817,7 +4817,13 @@ class GestionEmpresarialController extends Controller
 
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id'=>$idGrupo)
-        );       
+        );   
+
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id'=>$idNodo)
+        );        
+
+        $fase = $nodo->getFase();    
 
         $form = $this->createForm(new SeguimientoMOTType(), $seguimientoMot);
         
@@ -4837,7 +4843,8 @@ class GestionEmpresarialController extends Controller
             
             $seguimientoMot = $form->getData();
 
-            $seguimientoMot->setGrupo($grupo);            
+            $seguimientoMot->setGrupo($grupo);
+            $seguimientoMot->setFase($fase);            
             $seguimientoMot->setActive(true);
             $seguimientoMot->setFechaCreacion(new \DateTime());
             $em->persist($seguimientoMot);
@@ -4865,6 +4872,73 @@ class GestionEmpresarialController extends Controller
             )
         );
     }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/cierre-mot/nuevo", name="seguimientoMotCierre")
+     */
+    public function seguimientoMotCierreAction(Request $request, $idGrupo, $idNodo)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $seguimientoMot= new SeguimientoMot(); 
+
+       $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id'=>$idNodo)
+        );        
+
+        $fase = $nodo->getFase();    
+
+        $seguimientoMot = $em->getRepository('AppBundle:SeguimientoMot')->findOneBy(
+            array('grupo' => $idGrupo,
+                  'fase' => $fase                  
+                )
+        );
+        
+        $seguimientoMotCierre = $em->getRepository('AppBundle:SeguimientoMot')->findOneBy(
+            array('id' => $seguimientoMot->getId())
+        );
+
+        $form = $this->createForm(new SeguimientoMotType(), $seguimientoMotCierre);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $seguimientoMotCierre = $form->getData();
+
+            $seguimientoMotCierre->setFechaModificacion(new \DateTime());
+
+            self::nodoCamino($idGrupo, $idNodo, 2);            
+
+            $em->flush();
+
+            return $this->redirect(
+                $this->generateUrl(
+                    'seguimientoGrupo', 
+                    array(
+                        'idGrupo' => $idGrupo
+                    )
+                )
+            );
+        }
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimiento-mot-nuevo.html.twig',
+            array('form' => $form->createView(),                   
+                   'idNodo' => $idNodo,
+                   'idGrupo' => $idGrupo
+            )
+        );
+    }
+
 
 
     /**
@@ -4991,7 +5065,7 @@ class GestionEmpresarialController extends Controller
             );
         }
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimientofase-nuevo.html.twig',
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:seguimiento-fase-nuevo.html.twig',
             array('form' => $form->createView(),                   
                    'idNodo' => $idNodo,
                    'idGrupo' => $idGrupo

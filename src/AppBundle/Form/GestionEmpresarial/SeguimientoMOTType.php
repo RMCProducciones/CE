@@ -36,6 +36,6 @@ class SeguimientoMOTType extends AbstractType
     
     public function getName()
     {
-        return 'seguimientofase';
+        return 'seguimientomot';
     }
 }

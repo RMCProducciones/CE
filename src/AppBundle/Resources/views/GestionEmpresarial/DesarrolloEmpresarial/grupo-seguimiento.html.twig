@@ -342,6 +342,14 @@
                             console.log ('clicked number ' + (i + 1));
                             if((i+1) == 2)
                               $('#myModalNodo2').modal('show')
+                            if((i+1) == 6)
+                              $('#myModalNodo6').modal('show')
+                            if((i+1) == 8)
+                              $('#myModalNodo8').modal('show')
+                            if((i+1) == 10)
+                              $('#myModalNodo10').modal('show')
+                            if((i+1) == 12)
+                              $('#myModalNodo12').modal('show')
                             if((i+1) == 14)
                               $('#myModalNodo14').modal('show')
                             if((i+1) == 18)
@@ -397,6 +405,116 @@
         </div>
       </div>
     </div>
+
+    <!-- Modal NODO 6 -->
+    <div class="modal fade" id="myModalNodo6" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">{{ grupo.codigo }} | {{ grupo.nombre }}</h4>
+          </div>
+          <div class="modal-body">
+            <b>Inicio de MOT</b>
+            <br>
+            <b>Grupo Formal</b>
+            <br>
+            <br>
+            <b><a href="{{ path('seguimientoMotInicio', {'idGrupo': grupo.id, 'idNodo' : 6}) }}">Nuevo Inicio de MOT</a></b>
+            <br>           
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal NODO 8 -->
+    <div class="modal fade" id="myModalNodo8" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">{{ grupo.codigo }} | {{ grupo.nombre }}</h4>
+          </div>
+          <div class="modal-body">
+            <b>Cierre de MOT</b>            
+            <br>
+            <b>Grupo Formal</b>
+            <br>
+            <br>
+            <b><a href="{{ path('seguimientoMotCierre', {'idGrupo': grupo.id, 'idNodo' : 8}) }}">Nuevo Cierre de MOT</a></b>
+            <br>           
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal NODO 10 -->
+    <div class="modal fade" id="myModalNodo10" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">{{ grupo.codigo }} | {{ grupo.nombre }}</h4>
+          </div>
+          <div class="modal-body">
+            <b>Inicio de MOT</b>            
+            <br>
+            <b>Grupo No Formal</b>
+            <br>
+            <br>
+            <b><a href="{{ path('seguimientoMotInicio', {'idGrupo': grupo.id, 'idNodo' : 10}) }}">Nuevo Inicio de MOT</a></b>
+            <br>           
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Modal NODO 12 -->
+    <div class="modal fade" id="myModalNodo12" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">{{ grupo.codigo }} | {{ grupo.nombre }}</h4>
+          </div>
+          <div class="modal-body">
+            <b>Cierre de MOT</b>            
+            <br>
+            <b>Grupo No Formal</b>
+            <br>
+            <br>
+            <b><a href="{{ path('seguimientoMotCierre', {'idGrupo': grupo.id, 'idNodo' : 12}) }}">Nuevo Cierre de MOT</a></b>
+            <br>           
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <!-- Modal NODO 14 -->
     <div class="modal fade" id="myModalNodo14" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
