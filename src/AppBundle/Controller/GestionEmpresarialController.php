@@ -4933,7 +4933,7 @@ class GestionEmpresarialController extends Controller
         }
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:diagnostico-nuevo.html.twig',
-         array('form' => $form->createView(),
+         array('form' => $form->createView(), 'grupo' => $grupo,
         
             )
          );
@@ -4969,8 +4969,9 @@ class GestionEmpresarialController extends Controller
 
                  ;   
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:diagnostico-resultado.html.twig', 
-            array(  
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:diagnostico-visualizacion.html.twig', 
+            array(
+                'grupo' => $grupo,
                 'resultadoproductiva'=>$resultadoproductiva,
                 'resultadocomercial'=>$resultadocomercial,
                 'resultadofinanciera'=>$resultadofinanciera,

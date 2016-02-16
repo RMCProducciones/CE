@@ -8,8 +8,9 @@
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
       <li>Formacion de capital social asociativo y desarrollo empresarial</li>
-      <li><a href="#">Diagnostico Organizacional</a></li>
-      <li class="active">Resultados</li>
+      <li><a href="{{ path('gruposGestion') }}">Grupos</a></li>
+      <li><a href="{{ path('seguimientoGrupo', {'idGrupo': grupo.id}) }}">Seguimiento</a></li>
+      <li class="active">Diagnóstico Organizacional</li>
     </ul>
 
 {% endblock %}

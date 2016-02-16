@@ -8,8 +8,10 @@
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
       <li>Formacion de capital social asociativo y desarrollo empresarial</li>
-      <li><a href="#">Diagnostico Organizacional</a></li>
-      <li class="active">Nuevo Formulario</li>
+      <li><a href="{{ path('gruposGestion') }}">Grupos</a></li>
+      <li><a href="{{ path('seguimientoGrupo', {'idGrupo': grupo.id}) }}">Seguimiento</a></li>
+      <li><a href="{{ path('diagnosticoVisualizar', {'idGrupo': grupo.id}) }}">Diagnóstico Organizacional</a></li>
+      <li class="active">Nuevo</li>
     </ul>
 
 {% endblock %}
@@ -42,7 +44,7 @@
   
               <button name="concurso[Guardar]" id="grupo_Guardar" type="submit" class="btn btn-success">Guardar</button>
               
-              <a href="{{ path('concursoGestion') }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+              <a href="{{ path('seguimientoGrupo', {'idGrupo': grupo.id}) }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
               
             </div>
           </div>
