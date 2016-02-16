@@ -8,13 +8,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * BeneficiarioSoporte
+ * EvaluacionFaseSoporte
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\BeneficiarioSoporteRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\EvaluacionFaseSoporteRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class BeneficiarioSoporte
+class EvaluacionFaseSoporte
 {
     /**
      * @var integer
@@ -26,9 +26,9 @@ class BeneficiarioSoporte
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Beneficiario")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\EvaluacionFase")
      */
-    private $beneficiario;
+    private $evaluacionfase;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\DocumentoSoporte")
@@ -95,27 +95,27 @@ class BeneficiarioSoporte
     }
 
     /**
-     * Set beneficiario
+     * Set evaluacionfase
      *
-     * @param AppBundle\Entity\Beneficiario $beneficiario
+     * @param AppBundle\Entity\EvaluacionFase $evaluacionfase
      *
-     * @return BeneficiarioSoporte
+     * @return EvaluacionFaseSoporte
      */
-    public function setBeneficiario(\AppBundle\Entity\Beneficiario $beneficiario)
+    public function setEvaluacionFase(\AppBundle\Entity\EvaluacionFase $evaluacionfase)
     {
-        $this->beneficiario = $beneficiario;
+        $this->evaluacionfase = $evaluacionfase;
     
         return $this;
     }
 
     /**
-     * Get beneficiario
+     * Get evaluacionfase
      *
-     * @return AppBundle\Entity\Beneficiario
+     * @return AppBundle\Entity\EvaluacionFase
      */
-    public function getBeneficiario()
+    public function getEvaluacionFase()
     {
-        return $this->beneficiario;
+        return $this->evaluacionfase;
     }
 
     /**
@@ -123,7 +123,7 @@ class BeneficiarioSoporte
      *
      * @param AppBundle\Entity\DocumentoSoporte $tipoSoporte
      *
-     * @return BeneficiarioSoporte
+     * @return  EvaluacionFaseSoporte
      */
     public function setTipoSoporte(\AppBundle\Entity\DocumentoSoporte $tipoSoporte)
     {
@@ -147,7 +147,7 @@ class BeneficiarioSoporte
      *
      * @param string $path
      *
-     * @return BeneficiarioSoporte
+     * @return EvaluacionFaseSoporte
      */
     public function setPath($path)
     {
@@ -171,7 +171,7 @@ class BeneficiarioSoporte
      *
      * @param boolean $active
      *
-     * @return BeneficiarioSoporte
+     * @return EvaluacionFaseSoporte
      */
     public function setActive($active)
     {
@@ -195,7 +195,7 @@ class BeneficiarioSoporte
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return BeneficiarioSoporte
+     * @return EvaluacionFaseSoporte
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
@@ -219,7 +219,7 @@ class BeneficiarioSoporte
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return BeneficiarioSoporte
+     * @return EvaluacionFaseSoporte
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -243,7 +243,7 @@ class BeneficiarioSoporte
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return BeneficiarioSoporte
+     * @return EvaluacionFaseSoporte
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
@@ -267,7 +267,7 @@ class BeneficiarioSoporte
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return BeneficiarioSoporte
+     * @return EvaluacionFaseSoporte
      */
     public function setFechaCreacion($fechaCreacion)
     {

@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * EvaluacionFase
+ * AsignacionBeneficiarioComiteVamosBien
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\AsignacionBeneficiarioComiteVamosBienRepository")
  */
-class EvaluacionFase
+class AsignacionBeneficiarioComiteVamosBien
 {
     /**
      * @var integer
@@ -21,31 +21,37 @@ class EvaluacionFase
      */
     private $id;
 
+   
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
      */
     private $grupo;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="fase", type="integer",nullable=true)
+     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Beneficiario")
      */
-    private $fase;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="calificacion", type="decimal")
-     */
-    private $calificacion;
+    private $beneficiario;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="aprobado", type="boolean")
+     * @ORM\Column(name="habilitacion", type="boolean", nullable = true)
      */
-    private $aprobado;
+    private $habilitacion;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="asignacion", type="boolean", nullable = true)
+     */
+    private $asignacion;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="contraloria_social", type="boolean", nullable = true)
+     */
+    private $contraloria_social;
 
     /**
      * @var boolean
@@ -54,7 +60,7 @@ class EvaluacionFase
      */
     private $active;
 
-   /**
+     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
@@ -62,14 +68,13 @@ class EvaluacionFase
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime",nullable=true)
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable = true)
      */
     private $fecha_modificacion;
 
-    /**
+     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
-
     private $usuario_creacion;
 
     /**
@@ -95,9 +100,9 @@ class EvaluacionFase
      *
      * @param AppBundle\Entity\Grupo $grupo
      *
-     * @return EvaluacionFase
+     * @return AsignacionBeneficiarioComiteVamosBien
      */
-    public function setGrupo(\AppBundle\Entity\Usuario $grupo)
+    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
     {
         $this->grupo = $grupo;
 
@@ -115,75 +120,99 @@ class EvaluacionFase
     }
 
     /**
-     * Set fase
+     * Set beneficiario
      *
-     * @param integer $fase
+     * @param AppBundle\Entity\Beneficiario $beneficiario
      *
-     * @return EvaluacionFase
+     * @return AsignacionBeneficiarioComiteVamosBien
      */
-    public function setFase($fase)
+    public function setBeneficiario(\AppBundle\Entity\Beneficiario $beneficiario)
     {
-        $this->fase = $fase;
+        $this->beneficiario = $beneficiario;
 
         return $this;
     }
 
     /**
-     * Get fase
+     * Get beneficiario
      *
-     * @return integer
+     * @return AppBundle\Entity\Beneficiario
      */
-    public function getFase()
+    public function getBeneficiario()
     {
-        return $this->fase;
+        return $this->beneficiario;
     }
 
     /**
-     * Set calificacion
+     * Set habilitacion
      *
-     * @param string $calificacion
+     * @param boolean $habilitacion
      *
-     * @return EvaluacionFase
+     * @return AsignacionBeneficiarioComiteVamosBien
      */
-    public function setCalificacion($calificacion)
+    public function setHabilitacion($habilitacion)
     {
-        $this->calificacion = $calificacion;
+        $this->habilitacion = $habilitacion;
 
         return $this;
     }
 
     /**
-     * Get calificacion
-     *
-     * @return string
-     */
-    public function getCalificacion()
-    {
-        return $this->calificacion;
-    }
-
-    /**
-     * Set aprobado
-     *
-     * @param boolean $aprobado
-     *
-     * @return EvaluacionFase
-     */
-    public function setAprobado($aprobado)
-    {
-        $this->aprobado = $aprobado;
-
-        return $this;
-    }
-
-    /**
-     * Get aprobado
+     * Get habilitacion
      *
      * @return boolean
      */
-    public function getAprobado()
+    public function getHabilitacion()
     {
-        return $this->aprobado;
+        return $this->habilitacion;
+    }
+
+    /**
+     * Set asignacion
+     *
+     * @param boolean $asignacion
+     *
+     * @return AsignacionBeneficiarioComiteVamosBien
+     */
+    public function setAsignacion($asignacion)
+    {
+        $this->asignacion = $asignacion;
+
+        return $this;
+    }
+
+    /**
+     * Get asignacion
+     *
+     * @return boolean
+     */
+    public function getAsignacion()
+    {
+        return $this->asignacion;
+    }
+
+    /**
+     * Set contraloriaSocial
+     *
+     * @param boolean $contraloriaSocial
+     *
+     * @return AsignacionBeneficiarioComiteVamosBien
+     */
+    public function setContraloriaSocial($contraloriaSocial)
+    {
+        $this->contraloria_social = $contraloriaSocial;
+
+        return $this;
+    }
+
+    /**
+     * Get contraloriaSocial
+     *
+     * @return boolean
+     */
+    public function getContraloriaSocial()
+    {
+        return $this->contraloria_social;
     }
 
     /**
@@ -191,7 +220,7 @@ class EvaluacionFase
      *
      * @param boolean $active
      *
-     * @return EvaluacionFase
+     * @return AsignacionBeneficiarioComiteVamosBien
      */
     public function setActive($active)
     {
@@ -215,7 +244,7 @@ class EvaluacionFase
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return EvaluacionFase
+     * @return AsignacionBeneficiarioComiteVamosBien
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
@@ -239,7 +268,7 @@ class EvaluacionFase
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return EvaluacionFase
+     * @return AsignacionBeneficiarioComiteVamosBien
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -263,7 +292,7 @@ class EvaluacionFase
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return EvaluacionFase
+     * @return AsignacionBeneficiarioComiteVamosBien
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
@@ -287,7 +316,7 @@ class EvaluacionFase
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return EvaluacionFase
+     * @return AsignacionBeneficiarioComiteVamosBien
      */
     public function setFechaCreacion($fechaCreacion)
     {

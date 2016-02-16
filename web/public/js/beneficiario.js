@@ -106,3 +106,49 @@ SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a 
 
 }]);
 
+app.controller('CamposDireccionBeneficiarioCtrl', ['$scope', '$http', function($scope, $http) {
+
+	if($('#beneficiario_rural').prop('checked')==false){
+		
+		$scope.swRural = false;	
+
+		$('#swRural').removeClass('checked');
+
+		$('#beneficiario_barrio').attr('required', 'required');
+		$('#beneficiario_corregimiento').removeAttr('required');
+		$('#beneficiario_vereda').removeAttr('required');
+		$('#beneficiario_cacerio').removeAttr('required');
+	}
+	else
+	{
+		$scope.swRural = true;	
+
+		$('#swRural').addClass('checked');
+
+		$('#beneficiario_barrio').removeAttr('required');
+		$('#beneficiario_corregimiento').attr('required', 'required');
+		$('#beneficiario_vereda').attr('required', 'required');
+		$('#beneficiario_cacerio').attr('required', 'required');
+	}
+
+	$scope.$watch('swRural', function() {
+
+		$('#beneficiario_rural').prop('checked', $scope.swRural);
+		
+		if($scope.swRural == false)
+		{
+			$('#beneficiario_barrio').attr('required', 'required');
+			$('#beneficiario_corregimiento').removeAttr('required');
+			$('#beneficiario_vereda').removeAttr('required');
+			$('#beneficiario_cacerio').removeAttr('required');
+		}
+		else
+		{
+			$('#beneficiario_barrio').removeAttr('required');
+			$('#beneficiario_corregimiento').attr('required', 'required');
+			$('#beneficiario_vereda').attr('required', 'required');
+			$('#beneficiario_cacerio').attr('required', 'required');
+		}		
+	});
+
+}]);

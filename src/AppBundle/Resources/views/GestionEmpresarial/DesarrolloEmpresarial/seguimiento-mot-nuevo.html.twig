@@ -53,13 +53,13 @@
 
 {% set valorInicial = 1 %}
 
-{% if activar == 6 %}
+{% if activar == 8 or activar == 12 %}
   {% set valorInicial = 0 %}
 {% endif %}
 
 <br>
 
-<div class="section" ng-controller="CierreFaseCtrl" ng-init="camposRequeridos({{valorInicial}})">
+<div class="section" ng-controller="CierreMotCtrl" ng-init="camposRequeridosMot({{valorInicial}})">
   <div class="container">    
 
     {% if valorInicial == 1 %}
@@ -162,7 +162,7 @@
         </div>       
       </div>
 
-      {{ form_widget(form.fecha_inicio, { 'attr': {'style': 'visibility:hidden'} }) }}            
+      {{ form_widget(form.fecha_inicio, { 'attr': {'style': 'visibility:hidden'} }) }}
 
     {% endif %}
 

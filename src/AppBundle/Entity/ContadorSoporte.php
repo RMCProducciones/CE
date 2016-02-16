@@ -8,13 +8,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * BeneficiarioSoporte
+ * ContadorSoporte
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\BeneficiarioSoporteRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\ContadorSoporteRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class BeneficiarioSoporte
+class ContadorSoporte
 {
     /**
      * @var integer
@@ -26,9 +26,9 @@ class BeneficiarioSoporte
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Beneficiario")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Contador")
      */
-    private $beneficiario;
+    private $contador;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\DocumentoSoporte")
@@ -95,27 +95,27 @@ class BeneficiarioSoporte
     }
 
     /**
-     * Set beneficiario
+     * Set contador
      *
-     * @param AppBundle\Entity\Beneficiario $beneficiario
+     * @param AppBundle\Entity\Contador $contador
      *
-     * @return BeneficiarioSoporte
+     * @return ContadorSoporte
      */
-    public function setBeneficiario(\AppBundle\Entity\Beneficiario $beneficiario)
+    public function setContador(\AppBundle\Entity\Contador $contador)
     {
-        $this->beneficiario = $beneficiario;
+        $this->contador = $contador;
     
         return $this;
     }
 
     /**
-     * Get beneficiario
+     * Get contador
      *
-     * @return AppBundle\Entity\Beneficiario
+     * @return AppBundle\Entity\Contador
      */
-    public function getBeneficiario()
+    public function getContador()
     {
-        return $this->beneficiario;
+        return $this->contador;
     }
 
     /**
@@ -123,7 +123,7 @@ class BeneficiarioSoporte
      *
      * @param AppBundle\Entity\DocumentoSoporte $tipoSoporte
      *
-     * @return BeneficiarioSoporte
+     * @return GrupoSoporte
      */
     public function setTipoSoporte(\AppBundle\Entity\DocumentoSoporte $tipoSoporte)
     {
@@ -147,7 +147,7 @@ class BeneficiarioSoporte
      *
      * @param string $path
      *
-     * @return BeneficiarioSoporte
+     * @return GrupoSoporte
      */
     public function setPath($path)
     {
@@ -171,7 +171,7 @@ class BeneficiarioSoporte
      *
      * @param boolean $active
      *
-     * @return BeneficiarioSoporte
+     * @return GrupoSoporte
      */
     public function setActive($active)
     {
@@ -195,7 +195,7 @@ class BeneficiarioSoporte
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return BeneficiarioSoporte
+     * @return GrupoSoporte
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
@@ -219,7 +219,7 @@ class BeneficiarioSoporte
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return BeneficiarioSoporte
+     * @return GrupoSoporte
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -243,7 +243,7 @@ class BeneficiarioSoporte
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return BeneficiarioSoporte
+     * @return GrupoSoporte
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
@@ -267,7 +267,7 @@ class BeneficiarioSoporte
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return BeneficiarioSoporte
+     * @return GrupoSoporte
      */
     public function setFechaCreacion($fechaCreacion)
     {
