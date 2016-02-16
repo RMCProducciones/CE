@@ -99,11 +99,7 @@
       <br/>
 
       <div class="row">                    
-        <div class="col-md-4">
-              {{ form_label(form.logros) }}
-              {{ form_errors(form.logros) }}
-              {{ form_widget(form.logros, { 'attr': {'class': 'form-control', 'placeholder': 'Logros '} }) }}
-        </div>
+        
          
       </div> 
 
@@ -113,7 +109,8 @@
       {{ form_widget(form.resultado_componente_administrativo, { 'attr': {'style': 'opacity:0'} }) }}
       {{ form_widget(form.resultado_componente_financiero, { 'attr': {'style': 'opacity:0'} }) }}
       {{ form_widget(form.observaciones, { 'attr': {'style': 'opacity:0'} }) }}
-      {{ form_widget(form.fecha_finalizacion, { 'attr': {'style': 'opacity:0'} }) }}
+      {{ form_widget(form.logros, { 'attr': {'style': 'opacity:0'} }) }}
+      {{ form_widget(form.fecha_finalizacion, { 'attr': {'style': 'opacity:0'} }) }}      
 
 
     {% else %}    
@@ -176,16 +173,21 @@
 
       <div class="row">
         <div class="col-md-4">
+              {{ form_label(form.logros) }}
+              {{ form_errors(form.logros) }}
+              {{ form_widget(form.logros, { 'attr': {'class': 'form-control', 'placeholder': 'Logros '} }) }}
+        </div>
+        <div class="col-md-4">
               {{ form_label(form.fecha_finalizacion) }}
               {{ form_errors(form.fecha_finalizacion) }}
               {{ form_widget(form.fecha_finalizacion, { 'attr': {'class': 'form-control', 'placeholder': 'Fecha Finalizacion '} }) }}
-        </div>       
+        </div>
       </div>
 
       {{ form_widget(form.fecha_inicio, { 'attr': {'style': 'visibility:hidden'} }) }}      
       {{ form_widget(form.actividad_productiva, { 'attr': {'style': 'visibility:hidden'} }) }}
       {{ form_widget(form.descripcion_actividad_productiva, { 'attr': {'style': 'visibility:hidden'} }) }}
-      {{ form_widget(form.logros, { 'attr': {'style': 'visibility:hidden'} }) }}
+      
 
 
     {% endif %}

@@ -171,3 +171,11 @@ app.controller('gestionComiteVamosBienCtrl', ['$scope', '$http', function($scope
 	};	
 }]);
 
+app.controller('gestionComiteComprasCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.eliminarBeneficiarioComiteCompras = function(ruta){		
+		window.location.replace(ruta);
+
+	};	
+}]);
+

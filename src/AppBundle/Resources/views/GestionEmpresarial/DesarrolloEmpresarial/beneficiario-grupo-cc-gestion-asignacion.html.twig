@@ -1,7 +1,7 @@
 {% extends 'AppBundle::frontend.html.twig' %}
 
 
-{% block title %}Comite Vamos Bien{% endblock %}
+{% block title %}Comite Compras{% endblock %}
 
 {% block breadcrumb_ul %}
 
@@ -10,7 +10,7 @@
       <li>Gestión Empresarial</li>
       <li>Formacion de capital social asociativo y desarrollo empresarial</li>
       <li><a href="{{ path('gruposGestion') }}">Grupos</a></li>
-      <li class="active">Comite Vamos Bien</li>
+      <li class="active">Comite Compras</li>
     </ul>
 
 {% endblock %}
@@ -20,7 +20,7 @@
  <div class="container">
     <h1>Gestión Grupos</h1>
     <hr>
-    <h3>Asignación Beneficiarios-Comite Vamos Bien</h3>
+    <h3>Asignación Beneficiarios-Comite Compras</h3>
   </div>
 
   <br />
@@ -110,7 +110,7 @@
                   <td>
                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ beneficiario.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                     <br>                    
-                    <a href="{{ path('grupoBeneficiarioCVBAsignacion', {'idGrupo': idGrupo, 'idBeneficiario': beneficiario.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
+                    <a href="{{ path('grupoBeneficiarioComiteComprasAsignacion', {'idGrupo': idGrupo, 'idBeneficiario': beneficiario.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
                     <br>                      
                   </td>
                 </tr>
@@ -160,7 +160,7 @@
           </div>
 
           <div class="col-md-6 col-md-offset-1 well">            
-            <table class="table table-striped table-hover" ng-controller="gestionComiteVamosBienCtrl">
+            <table class="table table-striped table-hover" ng-controller="gestionComiteComprasCtrl">
               <thead>           
                 <tr>
                   <th>#</th>
@@ -176,28 +176,28 @@
               <tbody>
         {% set consecutivo = 1 %}
         
-          {% for asignacionBeneficiariosCVB in asignacionesBeneficiariosCVB %}
+          {% for asignacionBeneficiariosCC in asignacionesBeneficiariosCC %}
                 <tr id="filaIntegranteCLEAR{{ consecutivo }}">
                   <td>{{ consecutivo }}</td>
                   <td>
                     
                   </td>
                   <td>
-                    {{ asignacionBeneficiariosCVB.beneficiario.grupo.nombre }}
+                    {{ asignacionBeneficiariosCC.beneficiario.grupo.nombre }}
                   </td>
                   <td>
-                    Primero Apellido: {{ asignacionBeneficiariosCVB.beneficiario.primerApellido }}
+                    Primero Apellido: {{ asignacionBeneficiariosCC.beneficiario.primerApellido }}
                     <br>
-                    Segundo Apellido: {{ asignacionBeneficiariosCVB.beneficiario.segundoApellido }}
+                    Segundo Apellido: {{ asignacionBeneficiariosCC.beneficiario.segundoApellido }}
                     <br>
-                    Primero Nombre: {{ asignacionBeneficiariosCVB.beneficiario.primerNombre }}
+                    Primero Nombre: {{ asignacionBeneficiariosCC.beneficiario.primerNombre }}
                     <br>
-                    Segundo Nombre: {{ asignacionBeneficiariosCVB.beneficiario.segundoNombre }}
+                    Segundo Nombre: {{ asignacionBeneficiariosCC.beneficiario.segundoNombre }}
                   </td>
           
                   <td>
-                    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ asignacionBeneficiariosCVB.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
-                    <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarBeneficiarioComiteVamosBien('{{ path('grupoBeneficiarioCVBEliminar', {'idGrupo': idGrupo, 'idAsignacionBeneficiariosCVB': asignacionBeneficiariosCVB.id}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
+                    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ asignacionBeneficiariosCC.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
+                    <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarBeneficiarioComiteCompras('{{ path('grupoBeneficiarioComiteComprasEliminar', {'idGrupo': idGrupo, 'idAsignacionBeneficiariosCVB': asignacionBeneficiariosCC.id}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
                   </td>
                 </tr>
         
@@ -322,103 +322,103 @@
     </div>
    {% endfor %}             
 
-   {% for asignacionBeneficiariosCVB in asignacionesBeneficiariosCVB %}
+   {% for asignacionBeneficiariosCC in asignacionesBeneficiariosCC %}
     <!-- Modal -->
-    <div class="modal fade" id="myModal{{ asignacionBeneficiariosCVB.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal fade" id="myModal{{ asignacionBeneficiariosCC.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ asignacionBeneficiariosCVB.beneficiario.grupo.id }} | {{ asignacionBeneficiariosCVB.beneficiario.grupo.nombre }}</h4>
+            <h4 class="modal-title" id="myModalLabel">{{ asignacionBeneficiariosCC.beneficiario.grupo.id }} | {{ asignacionBeneficiariosCC.beneficiario.grupo.nombre }}</h4>
           </div>
           <div class="modal-body">
-            <b>Tipo de Documento:{{ asignacionBeneficiariosCVB.beneficiario.tipoDocumento }}</b>
+            <b>Tipo de Documento:{{ asignacionBeneficiariosCC.beneficiario.tipoDocumento }}</b>
             <br>
-            <b>Numero de Documento: {{ asignacionBeneficiariosCVB.beneficiario.numeroDocumento }}</b>
+            <b>Numero de Documento: {{ asignacionBeneficiariosCC.beneficiario.numeroDocumento }}</b>
             <br>
-            <b>Primero Apellido: {{ asignacionBeneficiariosCVB.beneficiario.primerApellido }}</b>
+            <b>Primero Apellido: {{ asignacionBeneficiariosCC.beneficiario.primerApellido }}</b>
             <br>
-            <b>Segundo Apellido: {{ asignacionBeneficiariosCVB.beneficiario.segundoApellido }}</b>
+            <b>Segundo Apellido: {{ asignacionBeneficiariosCC.beneficiario.segundoApellido }}</b>
             <br>
-            <b>Primero Nombre: {{ asignacionBeneficiariosCVB.beneficiario.primerNombre }}</b>
+            <b>Primero Nombre: {{ asignacionBeneficiariosCC.beneficiario.primerNombre }}</b>
             <br>
-            <b>Segundo Nombre: {{ asignacionBeneficiariosCVB.beneficiario.segundoNombre }}</b>
+            <b>Segundo Nombre: {{ asignacionBeneficiariosCC.beneficiario.segundoNombre }}</b>
             <br>
-            <b>Genero: {{ asignacionBeneficiariosCVB.beneficiario.genero }}</b>
+            <b>Genero: {{ asignacionBeneficiariosCC.beneficiario.genero }}</b>
             <br>
-            <b>Fecha de Nacimiento: {{ asignacionBeneficiariosCVB.beneficiario.fechaNacimiento |  date('d - m - Y') }}</b>
+            <b>Fecha de Nacimiento: {{ asignacionBeneficiariosCC.beneficiario.fechaNacimiento |  date('d - m - Y') }}</b>
             <br>
-            <b>Edad al momento de la inscripcion: {{ asignacionBeneficiariosCVB.beneficiario.edadInscripcion }}</b>
+            <b>Edad al momento de la inscripcion: {{ asignacionBeneficiariosCC.beneficiario.edadInscripcion }}</b>
             <br>
-            <b>Deplazado por la violencia: {{ asignacionBeneficiariosCVB.beneficiario.desplazado }}</b>
+            <b>Deplazado por la violencia: {{ asignacionBeneficiariosCC.beneficiario.desplazado }}</b>
             <br>            
-            <b>Pertenencia Etnica: {{ asignacionBeneficiariosCVB.beneficiario.pertenenciaEtnica }}</b>
+            <b>Pertenencia Etnica: {{ asignacionBeneficiariosCC.beneficiario.pertenenciaEtnica }}</b>
             <br>
-            <b>Grupo indigena: {{ asignacionBeneficiariosCVB.beneficiario.grupoIndigena }}</b>
+            <b>Grupo indigena: {{ asignacionBeneficiariosCC.beneficiario.grupoIndigena }}</b>
             <br>
-            <b>Pertenece a la red unidos: {{ asignacionBeneficiariosCVB.beneficiario.redUnidos }}</b>
+            <b>Pertenece a la red unidos: {{ asignacionBeneficiariosCC.beneficiario.redUnidos }}</b>
             <br>
-            <b>Sabe leer: {{ asignacionBeneficiariosCVB.beneficiario.sabeLeer }}</b>
+            <b>Sabe leer: {{ asignacionBeneficiariosCC.beneficiario.sabeLeer }}</b>
             <br>
-            <b>Sabe escribir: {{ asignacionBeneficiariosCVB.beneficiario.sabeEscribir }}</b>
+            <b>Sabe escribir: {{ asignacionBeneficiariosCC.beneficiario.sabeEscribir }}</b>
             <br>
-             <b>Puntaje del sisben: {{ asignacionBeneficiariosCVB.beneficiario.puntajeSisben }}</b>
+             <b>Puntaje del sisben: {{ asignacionBeneficiariosCC.beneficiario.puntajeSisben }}</b>
             <br>
-            <b>Corte sisben: {{ asignacionBeneficiariosCVB.beneficiario.corteSisben }}</b>
+            <b>Corte sisben: {{ asignacionBeneficiariosCC.beneficiario.corteSisben }}</b>
             <br>
-            <b>Discapacidad: {{ asignacionBeneficiariosCVB.beneficiario.discapacidad }}</b>
+            <b>Discapacidad: {{ asignacionBeneficiariosCC.beneficiario.discapacidad }}</b>
             <br>
-            <b>Rol grupo familiar: {{ asignacionBeneficiariosCVB.beneficiario.rolGrupoFamiliar }}</b>
+            <b>Rol grupo familiar: {{ asignacionBeneficiariosCC.beneficiario.rolGrupoFamiliar }}</b>
             <br>
-            <b>Mimebros nucleo familiar: {{ asignacionBeneficiariosCVB.beneficiario.miembrosNucleoFamiliar }}</b>
+            <b>Mimebros nucleo familiar: {{ asignacionBeneficiariosCC.beneficiario.miembrosNucleoFamiliar }}</b>
             <br>
-            <b>Hijos menores 5: {{ asignacionBeneficiariosCVB.beneficiario.hijosMenores5 }}</b>
+            <b>Hijos menores 5: {{ asignacionBeneficiariosCC.beneficiario.hijosMenores5 }}</b>
             <br>
-            <b>Nivel de estudios: {{ asignacionBeneficiariosCVB.beneficiario.nivelEstudios }}</b>
+            <b>Nivel de estudios: {{ asignacionBeneficiariosCC.beneficiario.nivelEstudios }}</b>
             <br>
-            <b>Ocupacion: {{ asignacionBeneficiariosCVB.beneficiario.ocupacion }}</b>
+            <b>Ocupacion: {{ asignacionBeneficiariosCC.beneficiario.ocupacion }}</b>
             <br>
-            <b>Tipo de vivienda: {{ asignacionBeneficiariosCVB.beneficiario.tipoVivienda }}</b>
+            <b>Tipo de vivienda: {{ asignacionBeneficiariosCC.beneficiario.tipoVivienda }}</b>
       <br>
-            <b>Rural: {{ asignacionBeneficiariosCVB.beneficiario.rural }}</b>
+            <b>Rural: {{ asignacionBeneficiariosCC.beneficiario.rural }}</b>
       <br>
-            <b>Direccion: {{ asignacionBeneficiariosCVB.beneficiario.direccion }}</b>
+            <b>Direccion: {{ asignacionBeneficiariosCC.beneficiario.direccion }}</b>
       <br>
-            <b>Barrio: {{ asignacionBeneficiariosCVB.beneficiario.barrio }}</b>
+            <b>Barrio: {{ asignacionBeneficiariosCC.beneficiario.barrio }}</b>
       <br>
-            <b>Corregimiento: {{ asignacionBeneficiariosCVB.beneficiario.corregimiento }}</b>
+            <b>Corregimiento: {{ asignacionBeneficiariosCC.beneficiario.corregimiento }}</b>
       <br>
-            <b>Vereda: {{ asignacionBeneficiariosCVB.beneficiario.vereda }}</b>
+            <b>Vereda: {{ asignacionBeneficiariosCC.beneficiario.vereda }}</b>
       <br>
-            <b>Cacerio: {{ asignacionBeneficiariosCVB.beneficiario.cacerio }}</b>
+            <b>Cacerio: {{ asignacionBeneficiariosCC.beneficiario.cacerio }}</b>
       <br>
-            <b>Telefono Fijo: {{ asignacionBeneficiariosCVB.beneficiario.telefonoFijo }}</b>
+            <b>Telefono Fijo: {{ asignacionBeneficiariosCC.beneficiario.telefonoFijo }}</b>
       <br>
-            <b>Telefono Celular: {{ asignacionBeneficiariosCVB.beneficiario.telefonoCelular }}</b>
+            <b>Telefono Celular: {{ asignacionBeneficiariosCC.beneficiario.telefonoCelular }}</b>
       <br>
-            <b>Correo electronico: {{ asignacionBeneficiariosCVB.beneficiario.correoElectronico }}</b>
+            <b>Correo electronico: {{ asignacionBeneficiariosCC.beneficiario.correoElectronico }}</b>
       <br>
-            <b>Estado civil: {{ asignacionBeneficiariosCVB.beneficiario.estadoCivil }}</b>
+            <b>Estado civil: {{ asignacionBeneficiariosCC.beneficiario.estadoCivil }}</b>
       <br>
             <b>Información del Conyuge</b>
       <br>
-            <b>Tipo de documento del conyuge: {{ asignacionBeneficiariosCVB.beneficiario.tipoDocumentoConyugue }}</b>
+            <b>Tipo de documento del conyuge: {{ asignacionBeneficiariosCC.beneficiario.tipoDocumentoConyugue }}</b>
       <br>
-            <b>Numero de documento del conyuge: {{ asignacionBeneficiariosCVB.beneficiario.numeroDocumentoConyugue }}</b>
+            <b>Numero de documento del conyuge: {{ asignacionBeneficiariosCC.beneficiario.numeroDocumentoConyugue }}</b>
       <br>
-            <b>Primer apellido del conyuge: {{ asignacionBeneficiariosCVB.beneficiario.primerApellidoConyugue }}</b>
+            <b>Primer apellido del conyuge: {{ asignacionBeneficiariosCC.beneficiario.primerApellidoConyugue }}</b>
       <br>
-            <b>Segundo apellido del conyuge: {{ asignacionBeneficiariosCVB.beneficiario.segundoApellidoConyugue }}</b>
+            <b>Segundo apellido del conyuge: {{ asignacionBeneficiariosCC.beneficiario.segundoApellidoConyugue }}</b>
       <br>
-            <b>Primer nombre del conyuge: {{ asignacionBeneficiariosCVB.beneficiario.primerNombreConyugue }}</b>
+            <b>Primer nombre del conyuge: {{ asignacionBeneficiariosCC.beneficiario.primerNombreConyugue }}</b>
       <br>
-            <b>Segundo nombre del conyuge: {{ asignacionBeneficiariosCVB.beneficiario.segundoNombreConyugue }}</b>
+            <b>Segundo nombre del conyuge: {{ asignacionBeneficiariosCC.beneficiario.segundoNombreConyugue }}</b>
       <br>
-            <b>Telefono fijo del conyuge: {{ asignacionBeneficiariosCVB.beneficiario.telefonoFijoConyugue }}</b>
+            <b>Telefono fijo del conyuge: {{ asignacionBeneficiariosCC.beneficiario.telefonoFijoConyugue }}</b>
       <br>
-            <b>Telefono celular del conyuge: {{ asignacionBeneficiariosCVB.beneficiario.telefonoCelularConyugue }}</b>
+            <b>Telefono celular del conyuge: {{ asignacionBeneficiariosCC.beneficiario.telefonoCelularConyugue }}</b>
           </div>
 
           <div class="modal-footer">

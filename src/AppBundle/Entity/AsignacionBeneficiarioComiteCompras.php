@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AsignacionBeneficiarioComiteVamosBien
+ * AsignacionBeneficiarioComiteCompras
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\AsignacionBeneficiarioComiteVamosBienRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\AsignacionBeneficiarioComiteComprasRepository")
  */
-class AsignacionBeneficiarioComiteVamosBien
+class AsignacionBeneficiarioComiteCompras
 {
     /**
      * @var integer
@@ -99,7 +99,7 @@ class AsignacionBeneficiarioComiteVamosBien
      *
      * @param AppBundle\Entity\Grupo $grupo
      *
-     * @return AsignacionBeneficiarioComiteVamosBien
+     * @return AsignacionBeneficiarioComiteCompras
      */
     public function setGrupo(\AppBundle\Entity\Grupo $grupo)
     {
@@ -123,7 +123,7 @@ class AsignacionBeneficiarioComiteVamosBien
      *
      * @param AppBundle\Entity\Beneficiario $beneficiario
      *
-     * @return AsignacionBeneficiarioComiteVamosBien
+     * @return AsignacionBeneficiarioComiteCompras
      */
     public function setBeneficiario(\AppBundle\Entity\Beneficiario $beneficiario)
     {
@@ -147,7 +147,7 @@ class AsignacionBeneficiarioComiteVamosBien
      *
      * @param boolean $habilitacion
      *
-     * @return AsignacionBeneficiarioComiteVamosBien
+     * @return AsignacionBeneficiarioComiteCompras
      */
     public function setHabilitacion($habilitacion)
     {
@@ -171,7 +171,7 @@ class AsignacionBeneficiarioComiteVamosBien
      *
      * @param boolean $asignacion
      *
-     * @return AsignacionBeneficiarioComiteVamosBien
+     * @return AsignacionBeneficiarioComiteCompras
      */
     public function setAsignacion($asignacion)
     {
@@ -195,7 +195,7 @@ class AsignacionBeneficiarioComiteVamosBien
      *
      * @param boolean $contraloriaSocial
      *
-     * @return AsignacionBeneficiarioComiteVamosBien
+     * @return AsignacionBeneficiarioComiteCompras
      */
     public function setContraloriaSocial($contraloriaSocial)
     {
@@ -219,7 +219,7 @@ class AsignacionBeneficiarioComiteVamosBien
      *
      * @param boolean $active
      *
-     * @return AsignacionBeneficiarioComiteVamosBien
+     * @return AsignacionBeneficiarioComiteCompras
      */
     public function setActive($active)
     {
@@ -243,7 +243,7 @@ class AsignacionBeneficiarioComiteVamosBien
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return AsignacionBeneficiarioComiteVamosBien
+     * @return AsignacionBeneficiarioComiteCompras
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
@@ -267,7 +267,7 @@ class AsignacionBeneficiarioComiteVamosBien
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return AsignacionBeneficiarioComiteVamosBien
+     * @return AsignacionBeneficiarioComiteCompras
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -291,7 +291,7 @@ class AsignacionBeneficiarioComiteVamosBien
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return AsignacionBeneficiarioComiteVamosBien
+     * @return AsignacionBeneficiarioComiteCompras
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
@@ -315,7 +315,7 @@ class AsignacionBeneficiarioComiteVamosBien
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return AsignacionBeneficiarioComiteVamosBien
+     * @return AsignacionBeneficiarioComiteCompras
      */
     public function setFechaCreacion($fechaCreacion)
     {

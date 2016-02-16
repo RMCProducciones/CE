@@ -17,6 +17,7 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use AppBundle\Entity\Grupo;
 use AppBundle\Entity\GrupoSoporte;
 use AppBundle\Entity\AsignacionBeneficiarioComiteVamosBien;
+use AppBundle\Entity\AsignacionBeneficiarioComiteCompras;
 use AppBundle\Entity\BeneficiarioSoporte;
 use AppBundle\Entity\Beneficiario;
 use AppBundle\Entity\CLEAR;
@@ -519,6 +520,126 @@ class GestionEmpresarialController extends Controller
             array(
                 'beneficiarios' => $mostrarBeneficiarios,
                 'asignacionesBeneficiariosCVB' => $asignacionesBeneficiariosCVB,
+                'idGrupo' => $idGrupo
+            ));      
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/comite-compras", name="grupoBeneficiarioComiteCompras")
+     */
+    public function comiteComprasGrupoBeneficiarioAction($idGrupo)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $beneficiarios = new Beneficiario();
+
+        $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('grupo' => $grupo)
+        );     
+
+        $asignacionesBeneficiariosCC = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteCompras')->findBy(
+            array('grupo' => $grupo)
+        ); 
+
+        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioComiteCompras abc WHERE beneficiario = abc.beneficiario AND abc.grupo = :grupo) AND b.active = 1');
+        $query->setParameter(':grupo', $grupo);
+        $beneficiarios = $query->getResult();
+
+        $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('id' => $beneficiarios, 'grupo' => $grupo )
+        );
+
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiario-grupo-cc-gestion-asignacion.html.twig', 
+            array(
+                'beneficiarios' => $mostrarBeneficiarios,
+                'asignacionesBeneficiariosCC' => $asignacionesBeneficiariosCC,
+                'idGrupo' => $idGrupo
+            ));        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/comite-compras/{idBeneficiario}/nueva-asignacion", name="grupoBeneficiarioComiteComprasAsignacion")
+     */
+    public function comiteComprasAsignarGrupoBeneficiarioAction($idGrupo, $idBeneficiario)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
+            array('id' => $idBeneficiario)
+        );      
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );        
+           
+        $asignacionBeneficiarioComiteCompras = new AsignacionBeneficiarioComiteCompras();
+
+        $asignacionBeneficiarioComiteCompras->setGrupo($grupo);        
+        $asignacionBeneficiarioComiteCompras->setBeneficiario($beneficiario);
+        $asignacionBeneficiarioComiteCompras->setActive(true);
+        $asignacionBeneficiarioComiteCompras->setFechaCreacion(new \DateTime());
+
+        $em->persist($asignacionBeneficiarioComiteCompras);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('grupoBeneficiarioComiteCompras', 
+            array(
+                'beneficiario' => $beneficiario,          
+                'asignacionesBeneficiarioComiteCompras' => $asignacionBeneficiarioComiteCompras,                
+                'idGrupo' => $idGrupo
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/comite-compras/{idAsignacionBeneficiariosCVB}/eliminar", name="grupoBeneficiarioComiteComprasEliminar")
+     */
+    public function comiteComprasEliminarGrupoBeneficiarioAction($idGrupo, $idAsignacionBeneficiariosCVB)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionBeneficiarioComiteCompras = new AsignacionBeneficiarioComiteCompras();
+
+        $asignacionBeneficiarioComiteCompras = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteCompras')->find($idAsignacionBeneficiariosCVB); 
+
+        $em->remove($asignacionBeneficiarioComiteCompras);
+        $em->flush();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $beneficiarios = new Beneficiario();
+
+        $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('grupo' => $grupo)
+        );     
+
+        $asignacionBeneficiarioComiteCompras = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteCompras')->findBy(
+            array('grupo' => $grupo)
+        ); 
+
+        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioComiteCompras abc WHERE beneficiario = abc.beneficiario AND abc.grupo = :grupo) AND b.active = 1');
+        $query->setParameter(':grupo', $grupo);
+        $beneficiarios = $query->getResult();
+
+        $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('id' => $beneficiarios, 'grupo' => $grupo )
+        );
+
+        return $this->redirectToRoute('grupoBeneficiarioCVB',
+            array(
+                'beneficiarios' => $mostrarBeneficiarios,
+                'asignacionesBeneficiarioComiteCompras' => $asignacionBeneficiarioComiteCompras,
                 'idGrupo' => $idGrupo
             ));      
         
@@ -5913,27 +6034,36 @@ class GestionEmpresarialController extends Controller
 
 
 /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/contador/gestion", name="contadorGestion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/contador/gestion", name="contadorGestion")
      */
-    public function contadorGestionAction()
+    public function contadorGestionAction($idGrupo)
     {
         $em = $this->getDoctrine()->getManager();
         $contador = $em->getRepository('AppBundle:Contador')->findBy(
-            array('active' => '1'),
-            array('fecha_creacion' => 'ASC')
+            array('grupo' => $idGrupo)            
         );
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:contador-gestion.html.twig', array( 'contador' => $contador));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:contador-gestion.html.twig', 
+            array( 
+                'contador' => $contador,
+                'idGrupo' => $idGrupo
+            )
+        );
     }
 /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/contador/nuevo", name="contadorNuevo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/contador/nuevo", name="contadorNuevo")
      */
-    public function contadorNuevoAction(Request $request)
+    public function contadorNuevoAction(Request $request, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();
         $contador = new Contador();
-        
+
         $form = $this->createForm(new ContadorType(), $contador);
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+        
         
         $form->add(
             'guardar', 
@@ -5949,8 +6079,9 @@ class GestionEmpresarialController extends Controller
 
         if ($form->isValid()) {
             
-            $contador = $form->getData();         
+            $contador = $form->getData();                     
 
+            $contador->setGrupo($grupo);
             $contador->setActive(true);
             $contador->setFechaCreacion(new \DateTime());
 
@@ -5958,16 +6089,21 @@ class GestionEmpresarialController extends Controller
             $em->persist($contador);
             $em->flush();
 
-            return $this->redirectToRoute('contadorGestion');
+            return $this->redirectToRoute('contadorGestion', array( 'idGrupo' => $idGrupo));
         }
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:contador-nuevo.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:contador-nuevo.html.twig', 
+            array(
+                'form' => $form->createView(),
+                'idGrupo' => $idGrupo
+            )
+        );
     }
 
 /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/contador/{idContador}/editar", name="contadorEditar")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/contador/{idContador}/editar", name="contadorEditar")
      */
-    public function contadorEditarAction(Request $request, $idContador)
+    public function contadorEditarAction(Request $request, $idGrupo, $idContador)
     {
         $em = $this->getDoctrine()->getManager();
         $contador = new Contador();
@@ -5999,7 +6135,7 @@ class GestionEmpresarialController extends Controller
 
             $em->flush();
 
-            return $this->redirectToRoute('contadorGestion');
+            return $this->redirectToRoute('contadorGestion', array( 'idGrupo' => $idGrupo));
         }
 
         return $this->render(
@@ -6008,6 +6144,7 @@ class GestionEmpresarialController extends Controller
                     'form' => $form->createView(),
                     'idContador' => $idContador,
                     'contador' => $contador,
+                    'idGrupo' => $idGrupo
             )
         );
 
@@ -6015,9 +6152,9 @@ class GestionEmpresarialController extends Controller
 
 
 /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/contador/{idContador}/eliminar", name="contadorEliminar")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/contador/{idContador}/eliminar", name="contadorEliminar")
      */
-    public function contadorEliminarAction(Request $request, $idContador)
+    public function contadorEliminarAction(Request $request, $idGrupo, $idContador)
     {
         $em = $this->getDoctrine()->getManager();
         $contador = new Contador();
@@ -6027,14 +6164,14 @@ class GestionEmpresarialController extends Controller
         $em->remove($contador);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('contadorGestion'));
+        return $this->redirect($this->generateUrl('contadorGestion', array('idGrupo' => $idGrupo)));
 
     }
 
 /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/contador/{idContador}/documentos-soporte", name="contadorSoporte")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/contador/{idContador}/documentos-soporte", name="contadorSoporte")
      */
-    public function contadorSoporteAction(Request $request, $idContador)
+    public function contadorSoporteAction(Request $request, $idGrupo, $idContador)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -6100,7 +6237,8 @@ class GestionEmpresarialController extends Controller
                 $em->persist($contadorSoporte);
                 $em->flush();
 
-                return $this->redirectToRoute('contadorSoporte', array( 'idContador' => $idContador));
+                return $this->redirectToRoute('contadorSoporte', array( 'idContador' => $idContador,
+                                                                        'idGrupo' => $idGrupo));
             }
         }   
         
@@ -6109,7 +6247,8 @@ class GestionEmpresarialController extends Controller
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
-                'histotialSoportes' => $histotialSoportes
+                'histotialSoportes' => $histotialSoportes,
+                'idGrupo' => $idGrupo
             )
         );
         

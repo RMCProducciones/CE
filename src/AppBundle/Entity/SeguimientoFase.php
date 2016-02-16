@@ -64,7 +64,7 @@ class SeguimientoFase
     /**
      * @var string
      *
-     * @ORM\Column(name="logros", type="text")
+     * @ORM\Column(name="logros", type="text", nullable = true)
      */
     private $logros;
 
