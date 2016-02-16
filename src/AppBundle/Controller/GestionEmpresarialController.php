@@ -96,6 +96,7 @@ use AppBundle\Form\GestionEmpresarial\PasantiaSoporteType;
 use AppBundle\Form\GestionEmpresarial\OrganizacionType;
 use AppBundle\Form\GestionEmpresarial\OrganizacionSoporteType;
 use AppBundle\Form\GestionEmpresarial\ListaRolType;
+use AppBundle\Form\GestionEmpresarial\ListaRolBeneficiarioType;
 use AppBundle\Form\GestionEmpresarial\TerritorioAprendizajeType;
 use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalType;
 use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalResultadoType;
@@ -647,15 +648,48 @@ class GestionEmpresarialController extends Controller
     } 
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/estructura-organizacional", name="grupoBeneficiarioEstructuraOrganizacional")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/estructura-organizacional", name="grupoBeneficiarioOrganizacional")
      */
-    public function estructuraOrganizacionalGrupoBeneficiarioAction($idGrupo)
+    public function estructuraOrganizacionalGrupoBeneficiarioAction(Request $request, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();
 
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id' => $idGrupo)
         );
+
+        if ($request->getMethod() == 'POST') {
+
+
+            if(isset($_POST["idRolBeneficiario"])){
+
+                //echo ($_POST["idRolBeneficiario"]["idBeneficiario"]);
+
+
+                $asignacionBeneficiarioEstructuraOrganizacional = new AsignacionBeneficiarioEstructuraOrganizacional();
+
+                $rolBeneficiario = $em->getRepository('AppBundle:Listas')->findOneBy(
+                    array('id' => $_POST["idRolBeneficiario"]["rol"])
+                );  
+
+                $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
+                    array('id' => $_POST["idRolBeneficiario"]["idBeneficiario"])
+                );  
+
+                $asignacionBeneficiarioEstructuraOrganizacional->setGrupo($grupo);                
+                $asignacionBeneficiarioEstructuraOrganizacional->setBeneficiario($beneficiario);
+                $asignacionBeneficiarioEstructuraOrganizacional->setRol($rolBeneficiario);                
+
+                $asignacionBeneficiarioEstructuraOrganizacional->setFechaCreacion(new \DateTime());
+                $asignacionBeneficiarioEstructuraOrganizacional->setActive(0);
+
+
+                $em->persist($asignacionBeneficiarioEstructuraOrganizacional);
+                $em->flush();
+
+            }
+
+        }       
 
         $beneficiarios = new Beneficiario();
 
@@ -732,17 +766,17 @@ class GestionEmpresarialController extends Controller
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/comite-compras/{idAsignacionBeneficiariosCVB}/eliminar", name="grupoBeneficiarioEstructuraOrganizacionalEliminar")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/estructura-organizacional/{idAsignacionBeneficiariosEO}/eliminar", name="grupoBeneficiarioEstructuraOrganizacionalEliminar")
      */
-    public function estructuraOrganizacionalEliminarGrupoBeneficiarioAction($idGrupo, $idAsignacionBeneficiariosCVB)
+    public function estructuraOrganizacionalEliminarGrupoBeneficiarioAction($idGrupo, $idAsignacionBeneficiariosEO)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $asignacionBeneficiarioComiteCompras = new AsignacionBeneficiarioComiteCompras();
+        $asignacionBeneficiarioEstructuraOrganizacional = new AsignacionBeneficiarioEstructuraOrganizacional();
 
-        $asignacionBeneficiarioComiteCompras = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteCompras')->find($idAsignacionBeneficiariosCVB); 
+        $asignacionBeneficiarioEstructuraOrganizacional = $em->getRepository('AppBundle:AsignacionBeneficiarioEstructuraOrganizacional')->find($idAsignacionBeneficiariosEO);         
 
-        $em->remove($asignacionBeneficiarioComiteCompras);
+        $em->remove($asignacionBeneficiarioEstructuraOrganizacional);
         $em->flush();
 
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
@@ -755,7 +789,7 @@ class GestionEmpresarialController extends Controller
             array('grupo' => $grupo)
         );     
 
-        $asignacionBeneficiarioComiteCompras = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteCompras')->findBy(
+        $asignacionBeneficiarioEstructuraOrganizacional = $em->getRepository('AppBundle:AsignacionBeneficiarioEstructuraOrganizacional')->findBy(
             array('grupo' => $grupo)
         ); 
 
@@ -767,10 +801,10 @@ class GestionEmpresarialController extends Controller
             array('id' => $beneficiarios, 'grupo' => $grupo )
         );
 
-        return $this->redirectToRoute('grupoBeneficiarioCVB',
+        return $this->redirectToRoute('grupoBeneficiarioOrganizacional',
             array(
                 'beneficiarios' => $mostrarBeneficiarios,
-                'asignacionesBeneficiarioComiteCompras' => $asignacionBeneficiarioComiteCompras,
+                'asignacionesBeneficiarioEstructuraOrganizacional' => $asignacionBeneficiarioEstructuraOrganizacional,
                 'idGrupo' => $idGrupo
             ));      
         
