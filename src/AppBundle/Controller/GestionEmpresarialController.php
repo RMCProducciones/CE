@@ -4623,11 +4623,15 @@ class GestionEmpresarialController extends Controller
 
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/diagnostico/nuevo", name="diagnosticoNuevo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/diagnostico/nuevo", name="diagnosticoNuevo")
      */
-    public function diagnosticoNuevoAction(Request $request)
+    public function diagnosticoNuevoAction(Request $request, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();
+
+        $grupo= $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' =>$idGrupo) );
+
         $Diagnosticoorganizacional= new DiagnosticoOrganizacional();
         
         $form = $this->createForm(new DiagnosticoOrganizacionalType(), $Diagnosticoorganizacional);
@@ -4648,9 +4652,7 @@ class GestionEmpresarialController extends Controller
             
             $Diagnosticoorganizacional = $form->getData();
 
-
-            $Diagnosticoorganizacional->setActive(true);
-            $Diagnosticoorganizacional->setFechaCreacion(new \DateTime());
+            $Diagnosticoorganizacional->setGrupo($grupo);         
 
             $resultadoproductiva = ($Diagnosticoorganizacional->getProductivaA())+($Diagnosticoorganizacional->getProductivaB())+($Diagnosticoorganizacional->getProductivaC())+($Diagnosticoorganizacional->getProductivaD())+($Diagnosticoorganizacional->getProductivaE())+($Diagnosticoorganizacional->getProductivaF());
             $resultadocomercial = ($Diagnosticoorganizacional->getComercialA())+($Diagnosticoorganizacional->getComercialB())+($Diagnosticoorganizacional->getComercialC())+($Diagnosticoorganizacional->getComercialD())+($Diagnosticoorganizacional->getComercialE());
@@ -4666,13 +4668,17 @@ class GestionEmpresarialController extends Controller
             $Diagnosticoorganizacional->setTotalOrganizacional($resultadoorganizacional);
             $Diagnosticoorganizacional->setTotal($resultadototal);
 
+
+            $Diagnosticoorganizacional->setActive(true);
+            $Diagnosticoorganizacional->setFechaCreacion(new \DateTime());
+
             $em->persist($Diagnosticoorganizacional);
             $em->flush();
 
             return $this->redirectToRoute(
-            'diagnosticoCalcular', 
+            'diagnosticoVisualizar', 
             array(
-                    'idDiagnosticoOrganizacional' => $Diagnosticoorganizacional->getId()
+                    'idGrupo' => $idGrupo
             )
         );
         }
@@ -4686,15 +4692,23 @@ class GestionEmpresarialController extends Controller
    
 
 
-/**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/diagnostico/{idDiagnosticoOrganizacional}/resultado", name="diagnosticoCalcular")
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/diagnostico/visualizar", name="diagnosticoVisualizar")
      */
-    public function diagnosticoCalcularAction(Request $request, $idDiagnosticoOrganizacional)
+    public function diagnosticoCalcularAction(Request $request, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();
 
+        $grupo= $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' =>$idGrupo) );
+
         $Diagnosticoorganizacional= $em->getRepository('AppBundle:DiagnosticoOrganizacional')->findOneBy(
-            array('id' =>$idDiagnosticoOrganizacional) );
+            array('grupo' =>$grupo) );
+
+
+        if(!$Diagnosticoorganizacional){
+            return $this->redirectToRoute('diagnosticoNuevo', array( 'idGrupo' => $idGrupo));
+        }
 
         $resultadoproductiva=$Diagnosticoorganizacional->getTotalProductiva();
         $resultadocomercial=$Diagnosticoorganizacional->getTotalComercial();
