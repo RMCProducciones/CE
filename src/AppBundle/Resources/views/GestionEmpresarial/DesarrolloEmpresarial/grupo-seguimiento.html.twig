@@ -342,6 +342,8 @@
                             console.log ('clicked number ' + (i + 1));
                             if((i+1) == 2)
                               $('#myModalNodo2').modal('show')
+                            if((i+1) == 3)
+                              $('#myModalNodo3').modal('show')
                             if((i+1) == 6)
                               $('#myModalNodo6').modal('show')
                             if((i+1) == 8)
@@ -396,6 +398,38 @@
             <br>
             <br>
             <b><a href="{{ path('habilitacionFases', {'idGrupo': grupo.id}) }}">Habilitación de fases</a></b>
+            <br>           
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal NODO 3 -->
+    <div class="modal fade" id="myModalNodo3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">{{ grupo.codigo }} | {{ grupo.nombre }}</h4>
+          </div>
+          <div class="modal-body">
+            <b>Acciones en CLEAR Habilitación</b>
+            <br>
+            <br>
+            <b><a href="{{ path('diagnosticoVisualizar', {'idGrupo': grupo.id}) }}">Diagnóstico organizacional</a></b>
+            <hr>
+            <br>
+            <b>Acciones</b>
+            <br>
+            <br>
+            <a href="#{#{ path('diagnosticoSoporte', {'idGrupo': grupo.id}) }#}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"> Subir soportes</a>
+            <br>
             <br>           
           </div>
 
