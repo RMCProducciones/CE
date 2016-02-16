@@ -670,7 +670,6 @@ class GestionEmpresarialController extends Controller
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:clear-gestion.html.twig', array( 'cleares' => $cleares));
     }
 
-	
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/clear/nuevo", name="clearNuevo")
      */
@@ -1142,57 +1141,75 @@ class GestionEmpresarialController extends Controller
         //$habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPi() || $habilitacionFases->getPn()
             
         //die("cantidad ".count($camino));
-   
+        
         //PROGRAMACIÓN(1) PARTICIPACIÓN PARA HABILITACIÓN ******** ******** ******** ********
         if ($idUltimoNodo == 1){
             $asignacionesGrupoCLEAR->setHabilitacion(true); 
             self::nodoCamino($idGrupo, 2, 1);//Programación(1) a Clear de Habilitación
         }
         //PROGRAMACIÓN(1) PARTICIPACIÓN PARA ASIGNACIÓN ******** ******** ********  ********      
-        elseif($idUltimoNodo == 2 && ($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal())){ // Si el ultimo nodo es 2(Habilitación) y en HabilitaciónFases permita MOT Formal o MOT no Formal
+        elseif($estado == 2 && $idUltimoNodo == 2 && ($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal())){ // Si el ultimo nodo es 2(Habilitación) y tiene estado 2(Ejecutado) y en HabilitaciónFases permita MOT Formal o MOT no Formal
             $asignacionesGrupoCLEAR->setAsignacion(true);
             if($habilitacionFases->getMotFormal()) 
                 self::nodoCamino($idGrupo, 6, 1); //Programación(1) a Clear de Asignación MOT Formal
             else
                 self::nodoCamino($idGrupo, 10, 1); //Programación(1) a Clear de Asignación MOT No Formal
         }
-        elseif($idUltimoNodo == 3 || $idUltimoNodo == 4 || $idUltimoNodo == 5){//Si el último nodo es 3, 4, 5(Visita Previa)
+        elseif($estado == 2 && ($idUltimoNodo == 3 || $idUltimoNodo == 4 || $idUltimoNodo == 5)) {//Si el último nodo es 3, 4, 5(Visita Previa) y tiene estado 2(Ejecutado)
             $asignacionesGrupoCLEAR->setAsignacion(true);
             if($idUltimoNodo == 3)
                 self::nodoCamino($idGrupo, 26, 1); //Programación(1) a Clear de Asignación PN
-            if($idUltimoNodo == 4)//No se usa elseif porque mas de un camino puede ser válido
+            elseif($idUltimoNodo == 4)
                 self::nodoCamino($idGrupo, 20, 1); //Programación(1) a Clear de Asignación PI
-            if($idUltimoNodo == 5)
+            elseif($idUltimoNodo == 5)
                 self::nodoCamino($idGrupo, 14, 1); //Programación(1) a Clear de Asignación IEA
         }
-        elseif ($estado == 2 && ($idUltimoNodo == 9 || $idUltimoNodo == 13 || $idUltimoNodo == 19 || $idUltimoNodo == 25)) {//Si el último nodo es 9, 13, 19, 25(Contraloria) y tuvieron los estados 2(Ejecutado)
+        elseif($estado == 2 && ($idUltimoNodo == 9 || $idUltimoNodo == 13 || $idUltimoNodo == 19 || $idUltimoNodo == 25)) {//Si el último nodo es 9, 13, 19 o 25(Contraloria) y tiene estado 2(Ejecutado)
             $asignacionesGrupoCLEAR->setAsignacion(true);
             if($idUltimoNodo == 9)
                 self::nodoCamino($idGrupo, 26, 1); //Programación(1) a Clear de Asignación PN
-            if($idUltimoNodo == 13)
+            elseif($idUltimoNodo == 13)
                 self::nodoCamino($idGrupo, 14, 1); //Programación(1) a Clear de Asignación IEA
-            if($idUltimoNodo == 19){
+            elseif($idUltimoNodo == 19){
                 self::nodoCamino($idGrupo, 20, 1); //Programación(1) a Clear de Asignación PI
                 self::nodoCamino($idGrupo, 26, 1); //Programación(1) a Clear de Asignación PN
             }
-            if($idUltimoNodo == 25)
+            elseif($idUltimoNodo == 25)
                 self::nodoCamino($idGrupo, 26, 1); //Programación(1) a Clear de Asignación PN
         }
         //PROGRAMACIÓN(1) PARTICIPACIÓN PARA CONTRALORÍA ******** ******** ******** ********
-        elseif($estado == 2 && ($idUltimoNodo == 8 || $idUltimoNodo == 12 || $idUltimoNodo == 18 || $idUltimoNodo == 24 || $idUltimoNodo == 30)){ //Si el último nodo es 8, 12, 18, 24 o 30 (Legalización Fase) y tuvieron los estados 2(Ejecutado)
+        elseif($estado == 2 && ($idUltimoNodo == 8 || $idUltimoNodo == 12 || $idUltimoNodo == 18 || $idUltimoNodo == 24 || $idUltimoNodo == 30)){ //Si el último nodo es 8, 12, 18, 24 o 30 (Legalización Fase) y tiene estado 2(Ejecutado)
             $asignacionesGrupoCLEAR->setContraloria(true); 
             if($idUltimoNodo == 8)
                 self::nodoCamino($idGrupo, 9, 1); //Programación(1) a Clear de Contraloria MOT Formal
-            if($idUltimoNodo == 12)
+            elseif($idUltimoNodo == 12)
                 self::nodoCamino($idGrupo, 13, 1); //Programación(1) a Clear de Contraloria MOT No Formal
-            if($idUltimoNodo == 18)
+            elseif($idUltimoNodo == 18)
                 self::nodoCamino($idGrupo, 19, 1); //Programación(1) a Clear de Contraloria IEA
-            if($idUltimoNodo == 24)
+            elseif($idUltimoNodo == 24)
                 self::nodoCamino($idGrupo, 25, 1); //Programación(1) a Clear de Contraloria PI
-            if($idUltimoNodo == 30)
+            elseif($idUltimoNodo == 30)
                 self::nodoCamino($idGrupo, 31, 1); //Programación(1) a Clear de Contraloria PN
         }
-
+        else{
+            //No se puede asignar a CLEAR
+             $this->addFlash('warning', 'Este grupo no se puede asignar a un CLEAR, favor consulte el mapa de seguimiento.');
+             return $this->redirectToRoute('clearGrupo', 
+                array(
+                    'grupos' => $grupo, 
+                    'asignacionesGrupoCLEAR' => $asignacionesGrupoCLEAR,
+                    'idCLEAR' => $idCLEAR
+                ));   
+        }
+        /*
+        $this->addFlash('info',  
+                array(
+                    'title' => "hola",
+                    'message' => "asdfsadf")
+                );
+        $this->addFlash('warning', 'Mensaje 2');
+        $this->addFlash('success', 'Mensaje 3');
+        */
 
         $em->persist($asignacionesGrupoCLEAR);
         $em->flush();
@@ -1222,15 +1239,26 @@ class GestionEmpresarialController extends Controller
             array('fecha_creacion' => 'ASC')
         );      
 
-        //Mejorar el siguiente código (Puede ser buscando el ultimo en 1(Programado))
-        $camino = $em->getRepository('AppBundle:Camino')->findOneBy(
+        //buscando el ultimo en 1(Programado)
+        $camino = $em->getRepository('AppBundle:Camino')->findBy(
             array('grupo' => $asignacionesGrupoCLEAR->getGrupo(), 
                 'estado' => '1'
             )
         );
+        $ultimoNodo = $camino[count($camino)-1];
+        if(count($camino))
+            $em->remove($ultimoNodo);
 
-        if($camino)
-            $em->remove($camino);
+        //Validar si el ultimo nodo es 26, puede existir un posible nodo doble programado en el nodo 20 el cual deberá ser eliminado
+        $idUltimoNodo = $ultimoNodo->getNodo()->getId();
+        if($idUltimoNodo == 26){
+            $penultimoNodo = $camino[count($camino)-2];
+            $idPenultimoNodo = $penultimoNodo->getNodo()->getId();
+            if($idUltimoNodo == 20)
+                $em->remove($penultimoNodo);
+        } 
+
+        
         $em->remove($asignacionesGrupoCLEAR);
         $em->flush();
 

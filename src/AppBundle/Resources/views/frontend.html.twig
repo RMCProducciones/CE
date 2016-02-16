@@ -94,34 +94,27 @@
     </div>
   	{% endblock %}
 
-    {# % if app.request.hasPreviousSession %}
-        {% for type, messages in app.session.flashbag.all() %}
-            {% for message in messages %}
-                <div class="flash-{{ type }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endfor %}
-    {% endif % #}
-
     {% if app.request.hasPreviousSession %}
         <div class="section">
           <div class="container">
             <div class="row">
               <div class="col-md-12">
-                {% for type, flashMessage in app.session.flashbag.all() %}
+                {% for type, messages in app.session.flashbag.all() %}
                    
+                   {% for message in messages %}
                     <div class="alert alert-{{ type }} fade in">
                         <button class="close" data-dismiss="alert" type="button">×</button>
-                        {% if flashMessage.title is defined %}
-                            <strong>{{ flashMessage.title }}</strong>
-                            {{ flashMessage.message }}
+                        {% if message.title is defined %}
+                            <strong>{{ message.title }}</strong>
+                            {{ message.message }}
                         {% else %}
-                            {{ type }}
+                            {{ message }}
                         {% endif %}
-                    </div>   
+                    </div> 
+                    {% endfor %}  
                     
                 {% endfor %}
+
               </div>
             </div>
           </div>
