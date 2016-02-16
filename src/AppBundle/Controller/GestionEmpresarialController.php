@@ -647,7 +647,7 @@ class GestionEmpresarialController extends Controller
     } 
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/estructura-organizacional", name="grupoBeneficiarioEstructuraOrganizacional")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/estructura-organizacional", name="grupoBeneficiarioOrganizacional")
      */
     public function estructuraOrganizacionalGrupoBeneficiarioAction($idGrupo)
     {
