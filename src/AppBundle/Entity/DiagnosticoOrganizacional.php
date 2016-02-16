@@ -22,7 +22,7 @@ class DiagnosticoOrganizacional
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Grupo")
      */
     private $grupo;
 

@@ -35,8 +35,15 @@ class IntegranteType extends AbstractType
 										            ->orderBy('l.orden', 'ASC');
 										    },))
 			->add('fecha_nacimiento', 'date', array('label' => 'Fecha de nacimiento', 'widget' => 'single_text'))
-			->add('entidad')
-			->add('cargo', 'text', array('label' => 'Cargo dentro del comite de concursos'))						
+			->add('entidad', 'entity', array('class' => 'AppBundle:Listas',
+										    'query_builder' => function(EntityRepository $er) {
+										        return $er->createQueryBuilder('l')
+										        	->where('l.dominio = :dominio')
+										        	->andWhere('l.active = 1')
+										        	->setParameter('dominio', 'entidad')
+										            ->orderBy('l.orden', 'ASC');
+										    },))
+			->add('cargo', 'text', array('label' => 'Cargo dentro de la entidad'))						
 			->add('direccion', 'text', array('label' => 'Dirección'))
 			->add('telefono_fijo', 'text', array('label' => 'Teléfono fijo'))
 			->add('telefono_celular', 'text', array('label' => 'Teléfono celular'))

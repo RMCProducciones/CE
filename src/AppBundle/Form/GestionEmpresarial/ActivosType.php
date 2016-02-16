@@ -24,7 +24,17 @@ class ActivosType extends AbstractType
 			))
 											
 			->add('descripcion', 'text', array('label' => 'Descripción'))			
-			->add('unidad_medida', 'text', array('label' => 'Unidad de Medida'))
+			->add('unidad_medida', 'entity', array(			
+				  'class' => 'AppBundle:Listas',
+				  'label' => 'Unidad de Medida',
+				  'query_builder' => function(EntityRepository $er) {
+					return $er->createQueryBuilder('l')
+						->where('l.dominio = :dominio')
+						->andWhere('l.active = 1')
+						->setParameter('dominio', 'unidad')
+						->orderBy('l.orden', 'ASC');
+				},
+			))
 			->add('cantidad_inicial', 'text', array('label' => 'Cantidad Inicial'))
 			->add('valor_inicial', 'text', array('label' => 'Valor Inicial'))
 			->add('cantidad_final', 'text', array('label' => 'Cantidad Final'))
