@@ -265,17 +265,14 @@ class GestionEmpresarialController extends Controller
 
             //SEGUIMIENTO, Entidad Camino
 
-            self::nodoCamino($grupo, 1, 2);
-            
-            /*$usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
-                array(
-                    'id' => 1
-                )
-            );
-            
-            $grupo->setUsuarioCreacion($usuarioCreacion);*/
-
+           
             $em->persist($grupo);
+            $em->flush();
+
+            $idGrupo=$grupo->getId();
+
+
+            self::nodoCamino($idGrupo, 1, 2);
             $em->flush();
 
             return $this->redirectToRoute('gruposGestion');
@@ -675,7 +672,8 @@ class GestionEmpresarialController extends Controller
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
                 'histotialSoportes' => $histotialSoportes,
-                'idGrupo' => $idGrupo
+                'idGrupo' => $idGrupo,
+                'idBeneficiario' => $idBeneficiario
             )
         );
         
@@ -691,7 +689,7 @@ class GestionEmpresarialController extends Controller
         $beneficiarioSoporte = new BeneficiarioSoporte();
         
         $beneficiarioSoporte = $em->getRepository('AppBundle:BeneficiarioSoporte')->findOneBy(
-            array('id' => $idGrupoSoporte)
+            array('id' => $idBeneficiarioSoporte)
         );
         
         $beneficiarioSoporte->setFechaModificacion(new \DateTime());
