@@ -11,6 +11,7 @@ app.controller('CierreFaseCtrl', ['$scope', function($scope) {
 			$('#seguimientofase_resultado_componente_administrativo').attr('required', 'required');
 			$('#seguimientofase_resultado_componente_financiero').attr('required', 'required');
 			$('#seguimientofase_observaciones').attr('required', 'required');
+			$('#seguimientofase_logros').attr('required', 'required');
 			$('#seguimientofase_fecha_finalizacion').attr('required', 'required');
 		}
 
