@@ -17,6 +17,7 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use AppBundle\Entity\Grupo;
 use AppBundle\Entity\GrupoSoporte;
 use AppBundle\Entity\AsignacionBeneficiarioComiteVamosBien;
+use AppBundle\Entity\AsignacionBeneficiarioEstructuraOrganizacional;
 use AppBundle\Entity\AsignacionBeneficiarioComiteCompras;
 use AppBundle\Entity\BeneficiarioSoporte;
 use AppBundle\Entity\Beneficiario;
@@ -662,11 +663,11 @@ class GestionEmpresarialController extends Controller
             array('grupo' => $grupo)
         );     
 
-        $asignacionesBeneficiariosCC = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteCompras')->findBy(
+        $asignacionesBeneficiariosEO = $em->getRepository('AppBundle:AsignacionBeneficiarioEstructuraOrganizacional')->findBy(
             array('grupo' => $grupo)
         ); 
 
-        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioComiteCompras abc WHERE beneficiario = abc.beneficiario AND abc.grupo = :grupo) AND b.active = 1');
+        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioEstructuraOrganizacional abc WHERE beneficiario = abc.beneficiario AND abc.grupo = :grupo) AND b.active = 1');
         $query->setParameter(':grupo', $grupo);
         $beneficiarios = $query->getResult();
 
@@ -675,40 +676,40 @@ class GestionEmpresarialController extends Controller
         );
 
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiario-grupo-cc-gestion-asignacion.html.twig', 
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiario-grupo-eo-gestion-asignacion.html.twig', 
             array(
                 'beneficiarios' => $mostrarBeneficiarios,
-                'asignacionesBeneficiariosCC' => $asignacionesBeneficiariosCC,
+                'asignacionesBeneficiariosEO' => $asignacionesBeneficiariosEO,
                 'idGrupo' => $idGrupo
             ));        
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-integrante/{idIntegrante}/formulario", name="formularioRolIntegranteClear")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/estructura-organizacional/{idBeneficiario}/nueva-asignacion", name="formularioRolBeneficiarioOrganizacional")
      */
-    public function formularioRolBeneficiarioEstructuraOrganizacionalAction(Request $request, $idCLEAR, $idIntegrante)
+    public function formularioRolBeneficiarioEstructuraOrganizacionalAction(Request $request, $idGrupo, $idBeneficiario)
     {
 
         $em = $this->getDoctrine()->getManager();
 
-        $asignacionesIntegranteCLEAR = new AsignacionIntegranteCLEAR();
+        $asignacionBeneficiarioEstructuraOrganizacional = new AsignacionBeneficiarioEstructuraOrganizacional();
 
-        $form = $this->createForm(new ListaRolType(), $asignacionesIntegranteCLEAR);
+        $form = $this->createForm(new ListaRolBeneficiarioType(), $asignacionBeneficiarioEstructuraOrganizacional);
 
         $form->add(
-            'idIntegrante', 
+            'idBeneficiario', 
             'hidden', 
             array(
                 'mapped' => false,
                 'attr' => array(      
-                    'value' => $idIntegrante,              
+                    'value' => $idBeneficiario,              
                     'style' => 'visibility:hidden'
                 )
             )
         );
 //El boton tiene un error al enviar el ID del beneficiario
         $form->add(
-            'Asignar_'.$idIntegrante, 
+            'Asignar_'.$idBeneficiario, 
             'submit', 
             array(
                 'attr' => array(
@@ -721,11 +722,11 @@ class GestionEmpresarialController extends Controller
         $form->handleRequest($request);
 
         return $this->render(
-            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:asignarRolIntegranteClear.html.twig',
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:asignarRolBeneficiarioEstructuraOrganizacional.html.twig',
             array(
                 'form' => $form->createView(),
-                'idIntegrante' => $idIntegrante,
-                'idCLEAR' => $idCLEAR
+                'idBeneficiario' => $idBeneficiario,
+                'idGrupo' => $idGrupo
                 )
         );
     }
