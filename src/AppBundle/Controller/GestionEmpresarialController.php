@@ -1558,7 +1558,7 @@ class GestionEmpresarialController extends Controller
         }
         //PROGRAMACIÓN(1) PARTICIPACIÓN PARA CONTRALORÍA ******** ******** ******** ********
         elseif($estado == 2 && ($idUltimoNodo == 8 || $idUltimoNodo == 12 || $idUltimoNodo == 18 || $idUltimoNodo == 24 || $idUltimoNodo == 30)){ //Si el último nodo es 8, 12, 18, 24 o 30 (Legalización Fase) y tiene estado 2(Ejecutado)
-            $asignacionesGrupoCLEAR->setContraloria(true); 
+            $asignacionesGrupoCLEAR->setContraloriaSocial(true); 
             if($idUltimoNodo == 8)
                 self::nodoCamino($idGrupo, 9, 1); //Programación(1) a Clear de Contraloria MOT Formal
             elseif($idUltimoNodo == 12)
@@ -4921,6 +4921,20 @@ class GestionEmpresarialController extends Controller
 
             $Diagnosticoorganizacional->setActive(true);
             $Diagnosticoorganizacional->setFechaCreacion(new \DateTime());
+
+
+            $camino = $em->getRepository('AppBundle:Camino')->findBy(
+                array('grupo' => $grupo)
+            );
+
+            foreach ($camino as $nodoCamino){
+                if ($nodoCamino->getNodo()->getId() == 3 && $nodoCamino->getEstado() == 1) //Si el nodo es 3(Visita previa) y sus estado es 1(Siguiente/programado)
+                    self::nodoCamino($idGrupo, 3, 2);
+                if ($nodoCamino->getNodo()->getId() == 4 && $nodoCamino->getEstado() == 1) //Si el nodo es 4(Visita previa) y sus estado es 1(Siguiente/programado)
+                    self::nodoCamino($idGrupo, 4, 2);
+                if ($nodoCamino->getNodo()->getId() == 5 && $nodoCamino->getEstado() == 1) //Si el nodo es 5(Visita previa) y sus estado es 1(Siguiente/programado)
+                    self::nodoCamino($idGrupo, 5, 2);
+            }
 
             $em->persist($Diagnosticoorganizacional);
             $em->flush();

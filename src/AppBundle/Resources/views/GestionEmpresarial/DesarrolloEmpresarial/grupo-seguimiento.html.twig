@@ -149,9 +149,9 @@
                 linea(280, 400, 330, 580)       // 2 a 5
 
                 linea(280, 400, 480, 280)       // 2 a 6
-                linea(280, 400, 480, 530)       // 2 a 9
-                linea(480, 530, 630, 530)       // 9 a 10
-                linea(630, 530, 780, 530)       // 10 a 11
+                linea(280, 400, 480, 530)       // 2 a 10
+                linea(480, 530, 630, 530)       // 10 a 11  //corregir a partir de aca
+                linea(630, 530, 780, 530)       // 10 a 11  //11 a 12 y etc
                 linea(780, 530, 900, 530)       // 11 a 12
                 linea(900, 530, 950, 530)       // 12 a 13
                 linea(950, 530, 1050, 530)      // 13 a 14
@@ -174,6 +174,11 @@
 
                 linea(480, 280, 630, 280)       // 6 a 7
                 linea(630, 280, 780, 280)       // 7 a 8
+                linea(780, 280, 900, 280)       // 8 a 9
+                linea(900, 280, 1850, 280)       // 9 a 26
+
+                linea(380, 180, 1800, 180)       // 3 a 26
+                linea(1800, 180, 1850, 280)       // 3 a 26
 
 
 
@@ -225,7 +230,7 @@
                 ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Legalización",780*escX,570*escY); ctx.fillText("Fase",780*escX,590*escY);
                 circulo(780, 530);      // 12   No Formal MOT Legalización Fase 
 
-                ctx.fillStyle = "#999"; ctx.textAlign="right"; ctx.fillText("CLEAR",900*escX,460*escY); ctx.fillText("Convocatoria",900*escX,480*escY); ctx.fillText("Social",900*escX,500*escY);
+                ctx.fillStyle = "#999"; ctx.textAlign="right"; ctx.fillText("CLEAR",900*escX,460*escY); ctx.fillText("Contraloría",900*escX,480*escY); ctx.fillText("Social",900*escX,500*escY);
                 circulo(900, 530);      // 13   No Formal CLEAR Contraloría Social MOT 
 
                 ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("CLEAR",970*escX,460*escY); ctx.fillText("Asignación 5:1",970*escX,480*escY); ctx.fillText("max $ 5'700.000",970*escX,500*escY);
@@ -244,10 +249,13 @@
                 ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Legalización",1250*escX,570*escY); ctx.fillText("Fase",1250*escX,590*escY);
                 circulo(1250, 530);     // 18    
 
+                ctx.fillStyle = "#999"; ctx.textAlign="right"; ctx.fillText("CLEAR",1350*escX,460*escY); ctx.fillText("Contraloría",1350*escX,480*escY); ctx.fillText("Social",1350*escX,500*escY);
                 circulo(1350, 530);     // 19    
 
                 circulo(1400, 530);     // 20
-                circulo(1500, 530);     // 21    
+                circulo(1500, 530);     // 21
+
+                ctx.fillStyle = "#999"; ctx.save(); ctx.translate( 1550*escX, 500*escY ); ctx.rotate(-Math.PI / 4); ctx.textAlign="left"; ctx.fillText("Visita 2",0,0); ctx.restore();    
                 circulo(1550, 530);     // 22    
                 circulo(1600, 530);     // 23    
                 circulo(1700, 530);     // 24    
