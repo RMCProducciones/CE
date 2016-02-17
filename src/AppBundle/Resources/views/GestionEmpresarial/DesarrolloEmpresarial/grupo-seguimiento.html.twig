@@ -191,7 +191,17 @@
                 linea(1350, 530, 1380, 430)     // 19 a 26
                 linea(1380, 430, 1850, 280)     // 19 a 26
 
+                linea1(1050, 530, 1050, 595)     // 15 a 38
+                linea1(1100, 530, 1100, 595)     // 16 a 39
+                linea1(1150, 530, 1150, 595)     // 17 a 40
 
+                linea1(1500, 530, 1500, 595)     // 21 a 35
+                linea1(1550, 530, 1550, 595)     // 22 a 36
+                linea1(1600, 530, 1600, 595)     // 23 a 37
+
+                linea1(1950, 280, 1950, 345)     // 27 a 32
+                linea1(2000, 280, 2000, 345)     // 28 a 33
+                linea1(2050, 280, 2050, 345)     // 29 a 34
 
 
 
@@ -302,6 +312,24 @@
                 circulo(2250, 280);     // 31
 
 
+                circulo1(1950, 345);     // 32 interventoria
+                circulo1(2000, 345);     // 33 interventoria
+                circulo1(2050, 345);     // 34 interventoria
+
+
+                circulo1(1500, 595);     // 35 interventoria
+                circulo1(1550, 595);     // 36 interventoria
+                circulo1(1600, 595);     // 37 interventoria
+
+
+                circulo1(1050, 595);     // 38 interventoria
+                circulo1(1100, 595);     // 39 interventoria
+                circulo1(1150, 595);     // 40 interventoria
+
+
+
+
+
                 ctx.fillStyle = "#999"; ctx.font="10px Verdana"; ctx.textAlign="center"; ctx.fillText("FASE 0",670*escX,50*escY);ctx.fillText("MOT",670*escX,70*escY); // FASE 0 MOT
 
                  ctx.fillStyle = "#999"; ctx.font="10px Verdana"; ctx.textAlign="center"; ctx.fillText("FASE I",1120*escX,50*escY);ctx.fillText("IEA",1120*escX,70*escY); // FASE I IEA
@@ -349,6 +377,21 @@
                 circles.push(circle);
               }
 
+              function circulo1(x, y){  //circulo interventoria
+
+                var radius = 45/2*(escX+escY)/2;
+
+                ctx.fillStyle = "#e6e6e6"
+                ctx.beginPath(); 
+                ctx.arc(x*escX,y*escY, radius,0,2*Math.PI, true); 
+                ctx.closePath();
+                ctx.fill();
+
+                var circle = new Circle(x*escX, y*escY, radius);
+                circles.push(circle);
+              }
+
+
               var vinculo = function(x, y, radius) {
                 this.left = x - radius;
                 this.top = y - radius;
@@ -361,6 +404,17 @@
         
                 ctx.strokeStyle=color(estado); 
                 ctx.lineWidth=4; 
+                ctx.beginPath(); 
+                ctx.moveTo(x1*escX, y1*escY); 
+                ctx.lineTo(x2*escX, y2*escY); 
+                ctx.closePath();
+                ctx.stroke(); 
+              }
+
+              function linea1(x1, y1, x2, y2, estado){  //Linea interventoria
+        
+                ctx.strokeStyle="#e6e6e6"; 
+                ctx.lineWidth=2; 
                 ctx.beginPath(); 
                 ctx.moveTo(x1*escX, y1*escY); 
                 ctx.lineTo(x2*escX, y2*escY); 
