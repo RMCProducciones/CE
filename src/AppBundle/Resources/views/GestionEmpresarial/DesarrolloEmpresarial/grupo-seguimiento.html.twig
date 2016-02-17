@@ -188,7 +188,8 @@
                 linea(450, 660, 1350, 660)      // 4 a 20
                 linea(1350,660, 1400, 530)       // 4 a 20
 
-
+                linea(1350, 530, 1380, 430)     // 19 a 26
+                linea(1380, 430, 1850, 280)     // 19 a 26
 
 
 
@@ -230,7 +231,7 @@
                 ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Legalización",780*escX,320*escY); ctx.fillText("Fase",780*escX,340*escY);
                 circulo(780, 280);      // 8    Formal MOT Legalización Fase
 
-
+                ctx.fillStyle = "#999"; ctx.textAlign="right"; ctx.fillText("CLEAR  ",900*escX,210*escY); ctx.fillText("Contraloría",900*escX,230*escY); ctx.fillText("Social  ",900*escX,250*escY);
                 circulo(900, 280);     // 9 Contraloría Social
 
                 ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("CLEAR",480*escX,460*escY); ctx.fillText("Asignación",480*escX,480*escY); ctx.fillText("$ 760.000",480*escX,500*escY);
@@ -242,7 +243,7 @@
                 ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Legalización",780*escX,570*escY); ctx.fillText("Fase",780*escX,590*escY);
                 circulo(780, 530);      // 12   No Formal MOT Legalización Fase 
 
-                ctx.fillStyle = "#999"; ctx.textAlign="right"; ctx.fillText("CLEAR",900*escX,460*escY); ctx.fillText("Contraloría",900*escX,480*escY); ctx.fillText("Social",900*escX,500*escY);
+                ctx.fillStyle = "#999"; ctx.textAlign="right"; ctx.fillText("CLEAR  ",900*escX,460*escY); ctx.fillText("Contraloría",900*escX,480*escY); ctx.fillText("Social  ",900*escX,500*escY);
                 circulo(900, 530);      // 13   No Formal CLEAR Contraloría Social MOT 
 
                 ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("CLEAR",970*escX,460*escY); ctx.fillText("Asignación 5:1",970*escX,480*escY); ctx.fillText("max $ 5'700.000",970*escX,500*escY);
@@ -261,28 +262,62 @@
                 ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Legalización",1250*escX,570*escY); ctx.fillText("Fase",1250*escX,590*escY);
                 circulo(1250, 530);     // 18    
 
-                ctx.fillStyle = "#999"; ctx.textAlign="right"; ctx.fillText("CLEAR",1350*escX,460*escY); ctx.fillText("Contraloría",1350*escX,480*escY); ctx.fillText("Social",1350*escX,500*escY);
+                ctx.fillStyle = "#999"; ctx.textAlign="right"; ctx.fillText("CLEAR  ",1350*escX,460*escY); ctx.fillText("Contraloría",1350*escX,480*escY); ctx.fillText("Social  ",1350*escX,500*escY);
                 circulo(1350, 530);     // 19    
 
+                ctx.fillStyle = "#999"; ctx.textAlign="right"; ctx.fillText("CLEAR ",1450*escX,460*escY); ctx.fillText("Asignación 2:1 ",1475*escX,480*escY); ctx.fillText("max. $5'440.000",1475*escX,500*escY);
                 circulo(1400, 530);     // 20
+
+                ctx.fillStyle = "#999"; ctx.save(); ctx.translate( 1500*escX, 500*escY ); ctx.rotate(-Math.PI / 4); ctx.textAlign="left"; ctx.fillText("Visita 1",0,0); ctx.restore();
                 circulo(1500, 530);     // 21
 
                 ctx.fillStyle = "#999"; ctx.save(); ctx.translate( 1550*escX, 500*escY ); ctx.rotate(-Math.PI / 4); ctx.textAlign="left"; ctx.fillText("Visita 2",0,0); ctx.restore();    
                 circulo(1550, 530);     // 22    
+
+                ctx.fillStyle = "#999"; ctx.save(); ctx.translate( 1600*escX, 500*escY ); ctx.rotate(-Math.PI / 4); ctx.textAlign="left"; ctx.fillText("Visita 3",0,0); ctx.restore();
                 circulo(1600, 530);     // 23    
+
+                ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Legalización",1700*escX,570*escY); ctx.fillText("Fase",1700*escX,590*escY);
                 circulo(1700, 530);     // 24    
 
-                
-
+                ctx.fillStyle = "#999"; ctx.textAlign="right"; ctx.fillText("CLEAR  ",1760*escX,385*escY); ctx.fillText(" Contraloría",1760*escX,405*escY); ctx.fillText("Social  ",1760*escX,425*escY);
                 circulo(1800, 400);     // 25
 
+                ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("CLEAR",1890*escX,180*escY); ctx.fillText("Asignación 3:1",1890*escX,200*escY); ctx.fillText("max. $10'300.000",1890*escX,220*escY);
                 circulo(1850, 280);     // 26
+                
+                ctx.fillStyle = "#999"; ctx.save(); ctx.translate( 1950*escX, 250*escY ); ctx.rotate(-Math.PI / 4); ctx.textAlign="left"; ctx.fillText("Visita 1",0,0); ctx.restore();
                 circulo(1950, 280);     // 27    
+
+                ctx.fillStyle = "#999"; ctx.save(); ctx.translate( 2000*escX, 250*escY ); ctx.rotate(-Math.PI / 4); ctx.textAlign="left"; ctx.fillText("Visita 2",0,0); ctx.restore();
                 circulo(2000, 280);     // 28    
+
+                ctx.fillStyle = "#999"; ctx.save(); ctx.translate( 2050*escX, 250*escY ); ctx.rotate(-Math.PI / 4); ctx.textAlign="left"; ctx.fillText("Visita 3",0,0); ctx.restore();
                 circulo(2050, 280);     // 29    
+
+                ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Legalización",2150*escX,320*escY); ctx.fillText("Fase",2150*escX,340*escY);
                 circulo(2150, 280);     // 30   
 
+                 ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("CLEAR",2250*escX,320*escY); ctx.fillText("Contraloria",2250*escX,340*escY); ctx.fillText("Social",2250*escX,360*escY);
                 circulo(2250, 280);     // 31
+
+
+                ctx.fillStyle = "#999"; ctx.font="10px Verdana"; ctx.textAlign="center"; ctx.fillText("FASE 0",670*escX,50*escY);ctx.fillText("MOT",670*escX,70*escY); // FASE 0 MOT
+
+                 ctx.fillStyle = "#999"; ctx.font="10px Verdana"; ctx.textAlign="center"; ctx.fillText("FASE I",1120*escX,50*escY);ctx.fillText("IEA",1120*escX,70*escY); // FASE I IEA
+
+                 ctx.fillStyle = "#999"; ctx.font="10px Verdana"; ctx.textAlign="center"; ctx.fillText("FASE II",1570*escX,50*escY);ctx.fillText("PI",1570*escX,70*escY); // FASE II PI
+
+                 ctx.fillStyle = "#999"; ctx.font="10px Verdana"; ctx.textAlign="center"; ctx.fillText("FASE III",2020*escX,50*escY);ctx.fillText("PN",2020*escX,70*escY); // FASE III PN
+
+
+                 ctx.fillStyle = "#999"; ctx.font="15px Verdana"; ctx.textAlign="center"; ctx.fillText("Sin Negocio",670*escX,750*escY); // Sin Negocio
+
+                 ctx.fillStyle = "#999"; ctx.font="15px Verdana"; ctx.textAlign="center"; ctx.fillText("Con Negocio",1570*escX,750*escY); // Con Negocio
+
+                 ctx.fillStyle = "#999"; ctx.font="10px Verdana"; ctx.textAlign="center"; ctx.fillText("Formal",2375*escX,270*escY); // Formal
+
+                 ctx.fillStyle = "#999"; ctx.font="10px Verdana"; ctx.textAlign="center"; ctx.fillText("No Formal",2375*escX,550*escY); // No Formal
 
 
 
