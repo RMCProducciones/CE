@@ -72,26 +72,28 @@
   <div class="col-md-4">
           {{ form_label(form.objetivo) }}
 				  {{ form_errors(form.objetivo) }}
-          {{ form_widget(form.objetivo, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
+          {{ form_widget(form.objetivo, { 'attr': {'class': 'form-control', 'placeholder': 'Objetivo de la visita'} }) }}
   </div>
   <div class="col-md-4">
           {{ form_label(form.agenda) }}
           {{ form_errors(form.agenda) }}
-          {{ form_widget(form.agenda, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
+          {{ form_widget(form.agenda, { 'attr': {'class': 'form-control', 'placeholder': 'Agenda de la visita'} }) }}
   </div>         
 </div>
+<br>
+
 <div class="row">
   <div class="col-md-4">
 
           {{ form_label(form.lugar) }}
           {{ form_errors(form.lugar) }}
-          {{ form_widget(form.lugar, { 'attr': {'class': 'form-control', 'placeholder': 'Nomnre territorio aprendizaje'} }) }}
+          {{ form_widget(form.lugar, { 'attr': {'class': 'form-control', 'placeholder': 'Lugar de la visita'} }) }}
   </div>
                 
   <div class="col-md-4">
           {{ form_label(form.asistentes) }}
           {{ form_errors(form.asistentes) }}
-          {{ form_widget(form.asistentes, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
+          {{ form_widget(form.asistentes, { 'attr': {'class': 'form-control', 'placeholder': 'Numero asistentes de la visita'} }) }}
   </div>
   <div class="col-md-4">
           {{ form_label(form.comite_compras) }}
@@ -99,6 +101,8 @@
           {{ form_widget(form.comite_compras, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
   </div>         
 </div>
+<br>
+
 <div class="row">
   <div class="col-md-4">
 
@@ -118,18 +122,20 @@
           {{ form_widget(form.funcionamiento_comite_vamos_bien, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
   </div>         
 </div>
+<br>
+
 <div class="row">
   <div class="col-md-4">
 
           {{ form_label(form.logros_compras) }}
           {{ form_errors(form.logros_compras) }}
-          {{ form_widget(form.logros_compras, { 'attr': {'class': 'form-control', 'placeholder': 'Nomnre territorio aprendizaje'} }) }}
+          {{ form_widget(form.logros_compras, { 'attr': {'class': 'form-control', 'placeholder': 'Logros compras'} }) }}
   </div>
                 
   <div class="col-md-4">
           {{ form_label(form.logros_vamos_bien) }}
           {{ form_errors(form.logros_vamos_bien) }}
-          {{ form_widget(form.logros_vamos_bien, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
+          {{ form_widget(form.logros_vamos_bien, { 'attr': {'class': 'form-control', 'placeholder': 'Logros comite vamos bien '} }) }}
   </div>
   <div class="col-md-4">
           {{ form_label(form.contador) }}
@@ -137,6 +143,8 @@
           {{ form_widget(form.contador, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
   </div>         
 </div>
+<br>
+
 <div class="row">
   <div class="col-md-4">
 
@@ -148,14 +156,16 @@
   <div class="col-md-4">
           {{ form_label(form.observaciones_contador) }}
           {{ form_errors(form.observaciones_contador) }}
-          {{ form_widget(form.observaciones_contador, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
+          {{ form_widget(form.observaciones_contador, { 'attr': {'class': 'form-control', 'placeholder': 'Observaciones contador'} }) }}
   </div>
   <div class="col-md-4">
           {{ form_label(form.observaciones_presupuesto_asignado) }}
           {{ form_errors(form.observaciones_presupuesto_asignado) }}
-          {{ form_widget(form.observaciones_presupuesto_asignado, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
+          {{ form_widget(form.observaciones_presupuesto_asignado, { 'attr': {'class': 'form-control', 'placeholder': 'Observaciones presupuesto asignado '} }) }}
   </div>         
 </div>
+<br>
+
 <div class="row">
   <div class="col-md-4">
 
@@ -167,39 +177,43 @@
   <div class="col-md-4">
           {{ form_label(form.cambios_razones_presupuesto_asignado) }}
           {{ form_errors(form.cambios_razones_presupuesto_asignado) }}
-          {{ form_widget(form.cambios_razones_presupuesto_asignado, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
+          {{ form_widget(form.cambios_razones_presupuesto_asignado, { 'attr': {'class': 'form-control', 'placeholder': 'Cambios presupuesto asignado'} }) }}
   </div>
   <div class="col-md-4">
           {{ form_label(form.desempeno_organizacional) }}
           {{ form_errors(form.desempeno_organizacional) }}
-          {{ form_widget(form.desempeno_organizacional, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
+          {{ form_widget(form.desempeno_organizacional, { 'attr': {'class': 'form-control', 'placeholder': 'Desempeño organizacional'} }) }}
   </div>         
 </div>
+<br>
+
 <div class="row">
   <div class="col-md-4">
 
           {{ form_label(form.desempeno_productivo) }}
           {{ form_errors(form.desempeno_productivo) }}
-          {{ form_widget(form.desempeno_productivo, { 'attr': {'class': 'form-control', 'placeholder': 'Nomnre territorio aprendizaje'} }) }}
+          {{ form_widget(form.desempeno_productivo, { 'attr': {'class': 'form-control', 'placeholder': 'Desempeño productivo'} }) }}
   </div>
                 
   <div class="col-md-4">
           {{ form_label(form.desempeno_comercial) }}
           {{ form_errors(form.desempeno_comercial) }}
-          {{ form_widget(form.desempeno_comercial, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
+          {{ form_widget(form.desempeno_comercial, { 'attr': {'class': 'form-control', 'placeholder': 'Desempeño comercial'} }) }}
   </div>
   <div class="col-md-4">
           {{ form_label(form.desempeno_administrativo) }}
           {{ form_errors(form.desempeno_administrativo) }}
-          {{ form_widget(form.desempeno_administrativo, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
+          {{ form_widget(form.desempeno_administrativo, { 'attr': {'class': 'form-control', 'placeholder': 'Desempeño administrativo'} }) }}
   </div>         
 </div>
+<br>
+
 <div class="row">
   <div class="col-md-4">
 
           {{ form_label(form.desempeno_financiero) }}
           {{ form_errors(form.desempeno_financiero) }}
-          {{ form_widget(form.desempeno_financiero, { 'attr': {'class': 'form-control', 'placeholder': 'Nomnre territorio aprendizaje'} }) }}
+          {{ form_widget(form.desempeno_financiero, { 'attr': {'class': 'form-control', 'placeholder': 'Desempeño financiero'} }) }}
   </div>
                 
   <div class="col-md-4">
@@ -210,21 +224,23 @@
   <div class="col-md-4">
           {{ form_label(form.cambios_razones_integrantes_grupo) }}
           {{ form_errors(form.cambios_razones_integrantes_grupo) }}
-          {{ form_widget(form.cambios_razones_integrantes_grupo, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
+          {{ form_widget(form.cambios_razones_integrantes_grupo, { 'attr': {'class': 'form-control', 'placeholder': 'Razones cambio integrantes '} }) }}
   </div>         
 </div>
+<br>
+
 <div class="row">
   <div class="col-md-3">
 
           {{ form_label(form.observaciones) }}
           {{ form_errors(form.observaciones) }}
-          {{ form_widget(form.observaciones, { 'attr': {'class': 'form-control', 'placeholder': 'Nomnre territorio aprendizaje'} }) }}
+          {{ form_widget(form.observaciones, { 'attr': {'class': 'form-control', 'placeholder': 'Observaciones'} }) }}
   </div>
                 
   <div class="col-md-3">
           {{ form_label(form.compromisos) }}
           {{ form_errors(form.compromisos) }}
-          {{ form_widget(form.compromisos, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
+          {{ form_widget(form.compromisos, { 'attr': {'class': 'form-control', 'placeholder': 'Compromisos '} }) }}
   </div>
   <div class="col-md-3">
           {{ form_label(form.interventoria) }}
@@ -234,9 +250,11 @@
   <div class="col-md-3">
           {{ form_label(form.razones_interventoria) }}
           {{ form_errors(form.razones_interventoria) }}
-          {{ form_widget(form.razones_interventoria, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
+          {{ form_widget(form.razones_interventoria, { 'attr': {'class': 'form-control', 'placeholder': 'Razones interventoria'} }) }}
   </div>        
 </div>
+<br>
+
 <div class="row">
   <div class="col-md-3">
 
