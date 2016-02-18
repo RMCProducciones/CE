@@ -13,7 +13,7 @@ class VisitaType extends AbstractType
         $builder
 		     
 		    ->add('fecha', 'date', array('label' => 'Fecha de la Visita', 'widget' => 'single_text')) 								
-			->add('objetivo', 'text', array('label' => 'Objetivo de la Visita'))	
+			->add('objetivo', 'textarea', array('label' => 'Objetivo de la Visita'))	
 			->add('agenda', 'text', array('label' => 'Agenda de la Visita'))
 			->add('lugar', 'text', array('label' => 'Lugar de la Visita'))		
 		    ->add('asistentes', 'text', array('label' => 'Numero asistentes de la Visita'))	
