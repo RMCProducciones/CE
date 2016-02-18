@@ -60,7 +60,7 @@ class BeneficiarioType extends AbstractType
 										    },))
 			
 
-			->add('desplazado', 'checkbox', array('label' => 'Desplazado por la violencia' , 'required' => false))
+			->add('desplazado', 'checkbox', array('label' => 'Desplazado por la violencia', 'required' => false))
 			->add('discapacidad', 'entity', array('class' => 'AppBundle:Listas',
 										    'query_builder' => function(EntityRepository $er) {
 										        return $er->createQueryBuilder('l')

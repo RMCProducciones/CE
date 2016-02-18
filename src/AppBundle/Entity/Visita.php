@@ -22,9 +22,19 @@ class Visita
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
+     */
+    private $grupo;
+
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\SeguimientoFase")
      */
     private $seguimientoFase;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Nodo")
+     */
+    private $nodo;
 
     /**
      * @var \DateTime
@@ -71,7 +81,7 @@ class Visita
     /**
      * @var integer
      *
-     * @ORM\Column(name="funcionamiento_comite_compras", type="integer")
+     * @ORM\Column(name="funcionamiento_comite_compras", type="integer", nullable = true)
      */
     private $funcionamiento_comite_compras;
 
@@ -85,7 +95,7 @@ class Visita
     /**
      * @var integer
      *
-     * @ORM\Column(name="funcionamiento_comite_vamos_bien", type="integer")
+     * @ORM\Column(name="funcionamiento_comite_vamos_bien", type="integer", nullable = true)
      */
     private $funcionamiento_comite_vamos_bien;
 
@@ -113,7 +123,7 @@ class Visita
     /**
      * @var integer
      *
-     * @ORM\Column(name="desempeno_contador", type="integer")
+     * @ORM\Column(name="desempeno_contador", type="integer", nullable = true)
      */
     private $desempeno_contador;
 
@@ -237,7 +247,7 @@ class Visita
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable = true)
      */
     private $fecha_modificacion;
 
@@ -265,13 +275,37 @@ class Visita
     }
 
     /**
+     * Set grupo
+     *
+     * @param AppBundle\Entity\Grupo $grupo
+     *
+     * @return Visita
+     */
+    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
+    {
+        $this->grupo = $grupo;
+
+        return $this;
+    }
+
+    /**
+     * Get grupo
+     *
+     * @return AppBundle\Entity\Grupo
+     */
+    public function getGrupo()
+    {
+        return $this->grupo;
+    }
+
+    /**
      * Set seguimientoFase
      *
      * @param AppBundle\Entity\SeguimientoFase $seguimientoFase
      *
      * @return Visita
      */
-    public function setSeguimientoFase(AppBundle\Entity\SeguimientoFase $seguimientoFase)
+    public function setSeguimientoFase(\AppBundle\Entity\SeguimientoFase $seguimientoFase)
     {
         $this->seguimientoFase = $seguimientoFase;
 
@@ -286,6 +320,30 @@ class Visita
     public function getSeguimientoFase()
     {
         return $this->seguimientoFase;
+    }
+
+    /**
+     * Set nodo
+     *
+     * @param AppBundle\Entity\Nodo $nodo
+     *
+     * @return Visita
+     */
+    public function setNodo(\AppBundle\Entity\Nodo $nodo)
+    {
+        $this->nodo = $nodo;
+
+        return $this;
+    }
+
+    /**
+     * Get nodo
+     *
+     * @return AppBundle\Entity\Nodo
+     */
+    public function getNodo()
+    {
+        return $this->nodo;
     }
 
     /**
