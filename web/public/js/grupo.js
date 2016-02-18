@@ -179,3 +179,11 @@ app.controller('gestionComiteComprasCtrl', ['$scope', '$http', function($scope, 
 	};	
 }]);
 
+app.controller('gestionEstructuraOrganizacionalCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.eliminarBeneficiarioEstructuraOrganizacional = function(ruta){		
+		window.location.replace(ruta);
+
+	};	
+}]);
+
