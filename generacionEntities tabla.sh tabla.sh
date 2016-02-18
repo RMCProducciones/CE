@@ -618,6 +618,21 @@ talento:integer
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 
+php app/console doctrine:generate:entity --entity="AppBundle:Taller" --fields="
+grupo:integer
+fecha:datetime
+objetivo:text
+agenda:text
+lugar:text
+asistentes:integer
+observaciones:text
+compromisos:text
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:AsignacionBeneficiarioTaller" --fields="
+taller:integer
+beneficiario:integer
+active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 php app/console doctrine:generate:entity --entity="AppBundle:Visita" --fields="
 seguimientoFase:integer
