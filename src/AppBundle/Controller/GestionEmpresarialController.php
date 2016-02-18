@@ -69,6 +69,7 @@ use AppBundle\Entity\EvaluacionFaseSoporte;
 use AppBundle\Entity\SeguimientoMOT;
 use AppBundle\Entity\Contador;
 use AppBundle\Entity\ContadorSoporte;
+use AppBundle\Entity\Visita;
 
 
 
@@ -111,6 +112,7 @@ use AppBundle\Form\GestionEmpresarial\EvaluacionFaseSoporteType;
 use AppBundle\Form\GestionEmpresarial\SeguimientoMOTType;
 use AppBundle\Form\GestionEmpresarial\ContadorSoporteType;
 use AppBundle\Form\GestionEmpresarial\ContadorType;
+use AppBundle\Form\GestionEmpresarial\VisitaType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -6274,4 +6276,55 @@ class GestionEmpresarialController extends Controller
         return $this->redirectToRoute('contadorSoporte', array( 'idContador' => $idContador));
         
     }
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/visita/nuevo", name="visitaNuevo")
+     */
+    public function visitaNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $visita= new Visita();
+        
+        $form = $this->createForm(new VisitaType(), $visita);
+        
+        $form->add(
+            'guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $visita = $form->getData();
+
+
+            $visita->setActive(true);
+            $visita->setFechaCreacion(new \DateTime());
+
+            /*$usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
+            
+            $pasantia->setUsuarioCreacion($usuarioCreacion);*/
+
+            $em->persist($visita);
+            $em->flush();
+
+     
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:visita-nuevo.html.twig', array('form' => $form->createView()));
+    }
+
 }
+
