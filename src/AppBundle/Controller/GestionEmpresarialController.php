@@ -71,6 +71,8 @@ use AppBundle\Entity\SeguimientoMOT;
 use AppBundle\Entity\Contador;
 use AppBundle\Entity\ContadorSoporte;
 use AppBundle\Entity\Visita;
+use AppBundle\Entity\Taller;
+use AppBundle\Entity\TallerSoporte;
 
 
 
@@ -115,6 +117,8 @@ use AppBundle\Form\GestionEmpresarial\SeguimientoMOTType;
 use AppBundle\Form\GestionEmpresarial\ContadorSoporteType;
 use AppBundle\Form\GestionEmpresarial\ContadorType;
 use AppBundle\Form\GestionEmpresarial\VisitaType;
+use AppBundle\Form\GestionEmpresarial\TallerType;
+use AppBundle\Form\GestionEmpresarial\TallerSoporteType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -1024,7 +1028,7 @@ class GestionEmpresarialController extends Controller
         if ($form->isValid()) {
 
             $beneficiarios = $form->getData();
-            $beneficiarios->$setActive(true);
+            
             $beneficiarios->setFechaModificacion(new \DateTime());
 
             /*$usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
@@ -1033,13 +1037,13 @@ class GestionEmpresarialController extends Controller
                 )
             );*/
             
-            $beneficiarios->setUsuarioModificacion($usuarioModificacion);
+            /*$beneficiarios->setUsuarioModificacion($usuarioModificacion);*/
 
             $em->persist($beneficiarios);
             $em->flush();
 
 
-            return $this->redirectToRoute('beneficiariosGestion');
+            return $this->redirectToRoute('beneficiariosGestion', array('idGrupo' => $idGrupo));
         }
 
         return $this->render(
@@ -1242,7 +1246,7 @@ class GestionEmpresarialController extends Controller
                 );  
             
                 foreach ($actualizarClearSoportes as $actualizarClearSoporte){
-                    echo $actualizarClearSoporte->getId()." ".$actualizarClearSoporte->getTipoSoporte()."<br />";
+                    //echo $actualizarClearSoporte->getId()." ".$actualizarClearSoporte->getTipoSoporte()."<br />";
                     $actualizarClearSoporte->setFechaModificacion(new \DateTime());
                     $actualizarClearSoporte->setActive(0);
                     $em->flush();
@@ -1253,9 +1257,11 @@ class GestionEmpresarialController extends Controller
                 $clearSoporte->setFechaCreacion(new \DateTime());
 
                 //if($clearSoporte->getDescripcion()=="Acta final Clear"){ //Despúes de subir el Acta final del CLEAR toma lo que esté almacenado en habilitacionFases de cada grupo para asignar un nodo Ejecutado o un nodo Rechazado
+
+
                 if(true){
 
-                    
+                    //echo "entra";
 
                     $asignacionGruposClear = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
                         array('clear' => $clear) 
@@ -1276,10 +1282,22 @@ class GestionEmpresarialController extends Controller
                         $estado = $ultimoNodo->getEstado();
 
                         //EJECUCIÓN O RECHAZO(2 o 3) CIERRE DE CLEAR HABILITACIÓN ******** ******** ******** ********
-                        if ($idUltimoNodo == 2){
+                        if ($idUltimoNodo == 2 || $idUltimoNodo == 6 || $idUltimoNodo == 10){
                             //if según HabilitacionFases alguno en true
                             if($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPi() || $habilitacionFases->getPn()){
-                                self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 2);//Ejecutada(2) Clear de Habilitación
+                                
+                                echo "hola ".$idUltimoNodo;
+
+                                if($idUltimoNodo == 2)
+                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 2);//Ejecutada(2) Clear de Habilitación
+                                
+                                if($idUltimoNodo == 6)
+                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 6, 2);//Ejecutada(2) Clear de Habilitación
+
+                                if($idUltimoNodo == 10)
+                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 10, 2);//Ejecutada(2) Clear de Habilitación
+
+
                                 if($habilitacionFases->getIea())
                                     self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 5, 1);//Programación(1) a Visita previa IEA
                                 if($habilitacionFases->getPi())
@@ -1299,7 +1317,7 @@ class GestionEmpresarialController extends Controller
                 $em->persist($clearSoporte);
                 $em->flush();
 
-                return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR) );
+                //return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR) );
             }
         }   
         
@@ -5446,7 +5464,6 @@ class GestionEmpresarialController extends Controller
             $seguimientofase->setFechaCreacion(new \DateTime());
             $em->persist($seguimientofase);
 
-
             self::encendidoNodoSeguimento($idGrupo, $idNodo);         
            
             $em->flush();
@@ -6458,13 +6475,33 @@ class GestionEmpresarialController extends Controller
 
 
 
-/**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/visita/nuevo", name="visitaNuevo")
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/visita/nuevo", name="visitaNuevo")
      */
-    public function visitaNuevoAction(Request $request)
+    public function visitaNuevoAction(Request $request, $idGrupo, $idNodo)
     {
         $em = $this->getDoctrine()->getManager();
         $visita= new Visita();
+        $seguimientoFase= new SeguimientoFase();
+        $idSeguimientoFase= new SeguimientoFase();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo));
+
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id' => $idNodo));
+
+        $fase = $nodo->getFase();
+
+        $seguimientoFase = $em->getRepository('AppBundle:SeguimientoFase')->findOneBy(
+            array('grupo' => $idGrupo,
+                  'fase' => $fase
+                 )
+        );       
+
+        $idSeguimientoFase = $em->getRepository('AppBundle:SeguimientoFase')->findOneBy(
+            array('id' => $seguimientoFase->getId())
+        );
         
         $form = $this->createForm(new VisitaType(), $visita);
         
@@ -6484,7 +6521,9 @@ class GestionEmpresarialController extends Controller
             
             $visita = $form->getData();
 
-
+            $visita->setGrupo($grupo);
+            $visita->setSeguimientoFase($seguimientoFase);
+            $visita->setNodo($nodo);
             $visita->setActive(true);
             $visita->setFechaCreacion(new \DateTime());
 
@@ -6499,10 +6538,259 @@ class GestionEmpresarialController extends Controller
             $em->persist($visita);
             $em->flush();
 
+            return $this->redirect(
+                $this->generateUrl(
+                    'seguimientoGrupo', 
+                    array(
+                        'idGrupo' => $idGrupo
+                    )
+                )
+            );
+
      
         }
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:visita-nuevo.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:visita-nuevo.html.twig',
+                                array(
+                                        'form' => $form->createView(),
+                                        'idGrupo' => $idGrupo
+                                    )
+                            );
+    }
+
+
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/taller/gestion", name="tallerGestion")
+     */
+    public function tallerGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $taller = $em->getRepository('AppBundle:Taller')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:taller-gestion.html.twig', array( 'taller' => $taller));
+    }
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/taller/nuevo", name="tallerNuevo")
+     */
+    public function tallerNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $taller = new Taller();
+        
+        $form = $this->createForm(new TallerType(), $taller);
+        
+        $form->add(
+            'guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            
+            $taller = $form->getData();
+
+
+            $taller->setActive(true);
+            $taller->setFechaCreacion(new \DateTime());
+
+
+            $em->persist($taller);
+            $em->flush();
+
+            return $this->redirectToRoute('tallerGestion');
+        }
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:taller-nuevo.html.twig', array('form' => $form->createView()));
+    }
+
+    
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/taller/{idTaller}/editar", name="tallerEditar")
+     */
+    public function tallerEditarAction(Request $request, $idTaller)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $taller = new Taller();
+
+        $taller = $em->getRepository('AppBundle:Taller')->findOneBy(
+            array('id' => $idTaller)
+        );
+
+        $form = $this->createForm(new TallerType(), $taller);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $taller = $form->getData();
+
+            $taller->setFechaModificacion(new \DateTime());
+
+            
+
+            $em->flush();
+
+            return $this->redirectToRoute('tallerGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:taller-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idTaller' => $idTaller,
+                    'taller' => $taller,
+            )
+        );
+
+    }
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/taller/{idTaller}/eliminar", name="tallerEliminar")
+     */
+    public function tallerEliminarAction(Request $request, $idTaller)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $taller = new Taller();
+
+        $taller = $em->getRepository('AppBundle:Taller')->find($idTaller);              
+
+        $em->remove($taller);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('tallerGestion'));
+
+    }
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/taller/{idTaller}/documentos-soporte", name="tallerSoporte")
+     */
+    public function tallerSoporteAction(Request $request, $idTaller)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $tallerSoporte = new TallerSoporte();
+        
+        $form = $this->createForm(new TallerSoporteType(), $tallerSoporte);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $soportesActivos = $em->getRepository('AppBundle:TallerSoporte')->findBy(
+            array('active' => '1', 'taller' => $idTaller),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $histotialSoportes = $em->getRepository('AppBundle:TallerSoporte')->findBy(
+            array('active' => '0', 'taller' => $idTaller),
+            array('fecha_creacion' => 'ASC')
+        );
+        
+        $taller = $em->getRepository('AppBundle:Taller')->findOneBy(
+            array('id' => $idTaller)
+        );
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+
+                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                    array(
+                        'descripcion' => $tallerSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'grupo_tipo_soporte'
+                    )
+                );
+                
+                $actualizarTallerSoportes = $em->getRepository('AppBundle:TallerSoporte')->findBy(
+                    array(
+                        'active' => '1' , 
+                        'tipo_soporte' => $tipoSoporte->getId(), 
+                        'taller' => $idTaller
+                    )
+                );  
+            
+                foreach ($actualizarTallerSoportes as $actualizarTallerSoporte){
+                    echo $actualizarTallerSoporte->getId()." ".$actualizarTallerSoporte->getTipoSoporte()."<br />";
+                    $actualizarTallerSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarTallerSoporte->setActive(0);
+                    $em->flush();
+                }
+                
+                $tallerSoporte->setTaller($taller);
+                $tallerSoporte->setActive(true);
+                $tallerSoporte->setFechaCreacion(new \DateTime());
+                //$grupoSoporte->setUsuarioCreacion(1);
+
+                $em->persist($tallerSoporte);
+                $em->flush();
+
+                return $this->redirectToRoute('tallerSoporte', array( 'idTaller' => $idTaller));
+            }
+        }   
+        
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:taller-soporte.html.twig', 
+            array(
+                'form' => $form->createView(), 
+                'soportesActivos' => $soportesActivos, 
+                'histotialSoportes' => $histotialSoportes
+            )
+        );
+        
+    }
+    
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/taller/{idTaller}/documentos-soporte/{idTallerSoporte}/borrar", name="tallerSoporteBorrar")
+     */
+    public function tallerSoporteBorrarAction(Request $request, $idTaller, $idTallerSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $tallerSoporte = new TallerSoporte();
+        
+        $tallerSoporte = $em->getRepository('AppBundle:TallerSoporte')->findOneBy(
+            array('id' => $idTallerSoporte)
+        );
+        
+        $tallerSoporte->setFechaModificacion(new \DateTime());
+        $tallerSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('tallerSoporte', array( 'idTaller' => $idTaller));
+        
     }
 
 }

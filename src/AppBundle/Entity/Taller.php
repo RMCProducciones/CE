@@ -21,10 +21,8 @@ class Taller
      */
     private $id;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="grupo", type="integer")
+     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
      */
     private $grupo;
 
@@ -85,23 +83,19 @@ class Taller
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime",nullable=true)
      */
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -126,11 +120,11 @@ class Taller
     /**
      * Set grupo
      *
-     * @param integer $grupo
+     * @param AppBundle\Entity\Grupo $grupo
      *
      * @return Taller
      */
-    public function setGrupo($grupo)
+    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
     {
         $this->grupo = $grupo;
 
@@ -140,7 +134,7 @@ class Taller
     /**
      * Get grupo
      *
-     * @return integer
+     * @return AppBundle\Entity\Grupo
      */
     public function getGrupo()
     {
@@ -342,11 +336,11 @@ class Taller
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return Taller
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -356,7 +350,7 @@ class Taller
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -390,11 +384,11 @@ class Taller
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return Taller
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -404,7 +398,7 @@ class Taller
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {

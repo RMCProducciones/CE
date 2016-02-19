@@ -152,3 +152,79 @@ app.controller('CamposDireccionBeneficiarioCtrl', ['$scope', '$http', function($
 	});
 
 }]);
+
+app.controller('CamposDesplazadoBeneficiarioCtrl', ['$scope', '$http', function($scope, $http) {	
+	
+
+	if($('#beneficiario_desplazado').prop('checked')==false){
+		
+		$scope.swDesplazado = false;	
+		$('#swDesplazado').removeClass('checked');
+	}
+	else
+	{
+		$scope.swDesplazado = true;	
+		$('#swDesplazado').addClass('checked');		
+	}
+
+	$scope.$watch('swDesplazado', function() {
+
+		$('#beneficiario_desplazado').prop('checked', $scope.swDesplazado);
+		
+	});
+}]);
+
+app.controller('CamposBeneficiarioCtrl', ['$scope', '$http', function($scope, $http) {	
+	
+
+	if($('#beneficiario_red_unidos').prop('checked')==false){
+		
+		$scope.swRedUnidos = false;	
+		$('#swRedUnidos').removeClass('checked');
+	}
+	else
+	{
+		$scope.swRedUnidos = true;	
+		$('#swRedUnidos').addClass('checked');		
+	}
+
+	$scope.$watch('swRedUnidos', function() {
+
+		$('#beneficiario_red_unidos').prop('checked', $scope.swRedUnidos);
+		
+	});
+
+	if($('#beneficiario_sabe_leer').prop('checked')==false){
+		
+		$scope.swSabeLeer = false;	
+		$('#swSabeLeer').removeClass('checked');
+	}
+	else
+	{
+		$scope.swSabeLeer = true;	
+		$('#swSabeLeer').addClass('checked');		
+	}
+
+	$scope.$watch('swSabeLeer', function() {
+
+		$('#beneficiario_sabe_leer').prop('checked', $scope.swSabeLeer);
+		
+	});
+
+	if($('#beneficiario_sabe_escribir').prop('checked')==false){
+		
+		$scope.swSabeEscribir = false;	
+		$('#swSabeEscribir').removeClass('checked');
+	}
+	else
+	{
+		$scope.swSabeEscribir = true;	
+		$('#swSabeEscribir').addClass('checked');		
+	}
+
+	$scope.$watch('swSabeEscribir', function() {
+
+		$('#beneficiario_sabe_escribir').prop('checked', $scope.swSabeEscribir);
+		
+	});
+}]);

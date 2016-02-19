@@ -187,3 +187,4 @@ app.controller('gestionEstructuraOrganizacionalCtrl', ['$scope', '$http', functi
 	};	
 }]);
 
+

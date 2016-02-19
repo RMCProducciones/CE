@@ -58,6 +58,7 @@
   <script type="text/javascript" src="{{ asset('public/js/ventas.js') }}"></script>
   <script type="text/javascript" src="{{ asset('public/js/evaluacionfase.js') }}"></script>
   <script type="text/javascript" src="{{ asset('public/js/contador.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('public/js/taller.js') }}"></script>
 
 
 
@@ -79,7 +80,7 @@
 	{% endblock %}
 	
 	{% block nav %}
-  		{% render controller('AppBundle:Default:menu') %}
+  		{% render controller('AppBundle:Default:nav') %}
 	{% endblock %}
 
 	{% block breadcrumb %}
