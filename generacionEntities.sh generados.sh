@@ -27,6 +27,13 @@ php app/console doctrine:generate:entity --entity="AppBundle:Concurso" --fields=
 
 php app/console doctrine:generate:entity --entity="AppBundle:ActividadConcurso" --fields="concurso:integer actividad:string mejoras:string recursos:string duracion:integer semana_inicio:integer semana_finalizacion:integer active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
+php app/console doctrine:generate:entity --entity="AppBundle:DistribucionPremio" --fields="concurso:integer grupo:integer lugar:integer valor:decimal active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:CriterioCalificacion" --fields="concurso:integer criterio:string maximo_puntaje:integer active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+php app/console doctrine:generate:entity --entity="AppBundle:CalificacionCriterioGrupoConcurso" --fields="criterioCalificacion:integer asignacionGrupoConcurso:integer puntaje:integer active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
 php app/console doctrine:generate:entity --entity="AppBundle:ExperienciaExitosa" --fields="grupo:integer fecha_registro:datetime numero_empleos:integer ventas_mes:integer produccion_mensual:string fuentes_financiacion:string valor_recursos_financiacion:decimal tipo_poblacion:string proceso_productivo:string testimonio_poblacion:string acciones_minimizacion_impacto_ambiental:string impacto_comunidad:string innovacion:string observaciones:string active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 php app/console doctrine:generate:entity --entity="AppBundle:CalificacionExperienciaExitosa" --fields="experienciaExitosa:integer categoria:integer calificacion:integer active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
