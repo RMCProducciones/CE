@@ -29,6 +29,13 @@ class Departamento
     private $nombre;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="codigo", type="string")
+     */
+    private $codigo;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="active", type="boolean")
@@ -98,6 +105,30 @@ class Departamento
     public function getNombre()
     {
         return $this->nombre;
+    }
+
+    /**
+     * Set codigo
+     *
+     * @param string $codigo
+     *
+     * @return Municipio
+     */
+    public function setCodigo($codigo)
+    {
+        $this->codigo = $codigo;
+
+        return $this;
+    }
+
+    /**
+     * Get codigo
+     *
+     * @return string
+     */
+    public function getCodigo()
+    {
+        return $this->codigo;
     }
 
     /**
