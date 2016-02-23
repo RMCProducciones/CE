@@ -38,9 +38,9 @@ class DistribucionPremio
     /**
      * @var integer
      *
-     * @ORM\Column(name="lugar", type="integer")
+     * @ORM\Column(name="posicion", type="integer")
      */
-    private $lugar;
+    private $posicion;
 
     /**
      * @var string
@@ -144,27 +144,27 @@ class DistribucionPremio
     }
 
     /**
-     * Set lugar
+     * Set posicion
      *
-     * @param integer $lugar
+     * @param integer $posicion
      *
      * @return DistribucionPremio
      */
-    public function setLugar($lugar)
+    public function setPosicion($posicion)
     {
-        $this->lugar = $lugar;
+        $this->posicion = $posicion;
 
         return $this;
     }
 
     /**
-     * Get lugar
+     * Get posicion
      *
      * @return integer
      */
-    public function getLugar()
+    public function getPosicion()
     {
-        return $this->lugar;
+        return $this->posicion;
     }
 
     /**

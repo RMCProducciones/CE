@@ -27,7 +27,7 @@ php app/console doctrine:generate:entity --entity="AppBundle:Concurso" --fields=
 
 php app/console doctrine:generate:entity --entity="AppBundle:ActividadConcurso" --fields="concurso:integer actividad:string mejoras:string recursos:string duracion:integer semana_inicio:integer semana_finalizacion:integer active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
-php app/console doctrine:generate:entity --entity="AppBundle:DistribucionPremio" --fields="concurso:integer grupo:integer lugar:integer valor:decimal active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+php app/console doctrine:generate:entity --entity="AppBundle:DistribucionPremio" --fields="concurso:integer grupo:integer posicion:integer valor:decimal active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 php app/console doctrine:generate:entity --entity="AppBundle:CriterioCalificacion" --fields="concurso:integer criterio:string maximo_puntaje:integer active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 

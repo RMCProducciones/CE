@@ -147,9 +147,12 @@ valor:string
 distribucion:string
 criterios:string
 aprobacion:boolean
+coordinador:integer
 fecha_inicio:datetime
 fecha_finalizacion:datetime
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
+
+
 
 php app/console doctrine:generate:entity --entity="AppBundle:ActividadConcurso" --fields="
 concurso:integer
@@ -166,7 +169,7 @@ NUEVAS ENTIDADES PARA COMPLETAR CONCURSO COMPONENTE 1, quitar de concurso ditrib
 php app/console doctrine:generate:entity --entity="AppBundle:DistribucionPremio" --fields="
 concurso:integer
 grupo:integer
-lugar:integer
+posicion:integer
 valor:decimal
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
