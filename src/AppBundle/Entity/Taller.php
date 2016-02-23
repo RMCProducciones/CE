@@ -78,6 +78,13 @@ class Taller
     /**
      * @var boolean
      *
+     * @ORM\Column(name="comite_compras", type="boolean")
+     */
+    private $talento;
+
+    /**
+     * @var boolean
+     *
      * @ORM\Column(name="active", type="boolean")
      */
     private $active;
@@ -307,6 +314,30 @@ class Taller
     public function getCompromisos()
     {
         return $this->compromisos;
+    }
+
+    /**
+     * Set talento
+     *
+     * @param boolean $talento
+     *
+     * @return Taller
+     */
+    public function setTalento($talento)
+    {
+        $this->talento = $talento;
+
+        return $this;
+    }
+
+    /**
+     * Get talento
+     *
+     * @return boolean
+     */
+    public function getTalento()
+    {
+        return $this->talento;
     }
 
     /**
