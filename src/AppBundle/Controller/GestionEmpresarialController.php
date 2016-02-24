@@ -195,6 +195,47 @@ class GestionEmpresarialController extends Controller
 
             $em->flush();
 
+            $traerGrupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+                array('id' => $idGrupo));            
+
+            $idMunicipio = $em->getRepository('AppBundle:Municipio')->findOneBy(
+                array('id' => $traerGrupo->getMunicipio()));            
+
+            $zona = $idMunicipio->getZona()->getAbreviatura();            
+
+            if($traerGrupo->getId()<10){
+                $consecutivo = "00";
+            }
+
+            if($traerGrupo->getId() >= 10 && $traerGrupo->getId() < 100){
+                $consecutivo = "0";
+            }
+
+            if($traerGrupo->getId() >= 100){
+                $consecutivo = "";
+            }          
+
+            $tipoGrupo = $traerGrupo->getTipo();       
+
+            if($tipoGrupo == "No Formal Sin Negocio"){
+                $tipo = "1";                
+            }
+
+            if($tipoGrupo == "No Formal Con Negocio"){
+                $tipo = "2";                
+            }
+
+            if($tipoGrupo == "Formal Sin Negocio"){
+                $tipo = "3";                
+            }
+
+            if($tipoGrupo == "Formal con negocio"){
+                $tipo = "4";                
+            }
+
+            $traerGrupo->setCodigo($zona."-".$idMunicipio->getAbreviatura()."-".$tipo."-".date_format($traerGrupo->getFechaInscripcion(), 'Y/m')."-".$consecutivo.$idGrupo);
+            $em->flush();
+
             return $this->redirectToRoute('gruposGestion');
         }
 
