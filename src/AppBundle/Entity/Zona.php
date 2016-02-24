@@ -29,6 +29,13 @@ class Zona
     private $nombre;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="abreviatura", type="string")
+     */
+    private $abreviatura;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="active", type="boolean")
@@ -97,6 +104,30 @@ class Zona
     public function getNombre()
     {
         return $this->nombre;
+    }
+
+    /**
+     * Set abreviatura
+     *
+     * @param string $abreviatura
+     *
+     * @return Zona
+     */
+    public function setAbreviatura($abreviatura)
+    {
+        $this->abreviatura = $abreviatura;
+
+        return $this;
+    }
+
+    /**
+     * Get abreviatura
+     *
+     * @return string
+     */
+    public function getAbreviatura()
+    {
+        return $this->abreviatura;
     }
 
     /**

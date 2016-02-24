@@ -39,6 +39,20 @@ class Municipio
     private $nombre;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="abreviatura", type="string")
+     */
+    private $abreviatura;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="codigo", type="string")
+     */
+    private $codigo;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="active", type="boolean")
@@ -156,6 +170,54 @@ class Municipio
     public function getNombre()
     {
         return $this->nombre;
+    }
+
+    /**
+     * Set abreviatura
+     *
+     * @param string $abreviatura
+     *
+     * @return Municipio
+     */
+    public function setAbreviatura($abreviatura)
+    {
+        $this->abreviatura = $abreviatura;
+
+        return $this;
+    }
+
+    /**
+     * Get abreviatura
+     *
+     * @return string
+     */
+    public function getAbreviatura()
+    {
+        return $this->abreviatura;
+    }
+
+    /**
+     * Set codigo
+     *
+     * @param string $codigo
+     *
+     * @return Municipio
+     */
+    public function setCodigo($codigo)
+    {
+        $this->codigo = $codigo;
+
+        return $this;
+    }
+
+    /**
+     * Get codigo
+     *
+     * @return string
+     */
+    public function getCodigo()
+    {
+        return $this->codigo;
     }
 
     /**

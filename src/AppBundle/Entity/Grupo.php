@@ -46,7 +46,7 @@ class Grupo
     /**
      * @var string
      *
-     * @ORM\Column(name="codigo", type="string", unique=true )
+     * @ORM\Column(name="codigo", type="string", unique=true, nullable=true)
      */
     private $codigo;
 

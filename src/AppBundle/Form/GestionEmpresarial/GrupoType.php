@@ -50,7 +50,6 @@ class GrupoType extends AbstractType
 				'widget' => 'single_text'
 			))
 			
-			->add('codigo','text', array('label' => 'Código'))
 			->add('nombre')
 			->add('direccion','text', array('label' => 'Dirección'))
 			->add('rural', 'checkbox', array('required' => false))
