@@ -18,12 +18,16 @@ use AppBundle\Entity\Ahorro;
 use AppBundle\Entity\Poliza;
 use AppBundle\Entity\ProgramaCapacitacionFinanciera;
 use AppBundle\Entity\ProgramaCapacitacionFinancieraSoporte;
+use AppBundle\Entity\CapacitacionFinanciera;
+use AppBundle\Entity\CapacitacionFinancieraSoporte;
 use AppBundle\Entity\Participante;
 
 use AppBundle\Form\GestionFinanciera\AhorroType;
 use AppBundle\Form\GestionFinanciera\PolizaType;
 use AppBundle\Form\GestionFinanciera\ProgramaCapacitacionFinancieraType;
 use AppBundle\Form\GestionFinanciera\ProgramaCapacitacionFinancieraSoporteType;
+use AppBundle\Form\GestionFinanciera\CapacitacionFinancieraType;
+use AppBundle\Form\GestionFinanciera\CapacitacionFinancieraSoporteType;
 use AppBundle\Form\GestionFinanciera\ParticipanteType;
 
 
@@ -169,15 +173,15 @@ class GestionFinancieraController extends Controller
 
 
  /**
-     * @Route("/gestion-financiera/capacitacion-financiera/{idProgramaCapacitacionFinanciera}/editar", name="programaCapacitacionFinancieraEditar")
+     * @Route("/gestion-financiera/capacitacion-financiera/{idPCF}/editar", name="programaCapacitacionFinancieraEditar")
      */
-    public function programaCapacitacionFinancieraEditarAction(Request $request, $idProgramaCapacitacionFinanciera)
+    public function programaCapacitacionFinancieraEditarAction(Request $request, $idPCF)
     {
         $em = $this->getDoctrine()->getManager();
         $programaCapacitacionFinanciera = new ProgramaCapacitacionFinanciera();
 
         $programaCapacitacionFinanciera = $em->getRepository('AppBundle:ProgramaCapacitacionFinanciera')->findOneBy(
-            array('id' => $idProgramaCapacitacionFinanciera)
+            array('id' => $idPCF)
         );
 
         $form = $this->createForm(new ProgramaCapacitacionFinancieraType(), $programaCapacitacionFinanciera);
@@ -210,21 +214,21 @@ class GestionFinancieraController extends Controller
             'AppBundle:GestionFinanciera:capacitacion-financiera-editar.html.twig', 
             array(
                     'form' => $form->createView(),
-                    'idProgramaCapacitacionFinanciera' => $idProgramaCapacitacionFinanciera,
+                    'idPCF' => $idPCF,
                     'programaCapacitacionFinanciera' => $programaCapacitacionFinanciera,
             )
         );
 
     }
 /**
-     * @Route("/gestion-financiera/capacitacion-financiera/{idProgramaCapacitacionFinanciera}/eliminar", name="programaCapacitacionFinancieraEliminar")
+     * @Route("/gestion-financiera/capacitacion-financiera/{idPCF}/eliminar", name="programaCapacitacionFinancieraEliminar")
      */
-    public function programaCapacitacionFinancieraEliminarAction(Request $request, $idProgramaCapacitacionFinanciera)
+    public function programaCapacitacionFinancieraEliminarAction(Request $request, $idPCF)
     {
         $em = $this->getDoctrine()->getManager();
         $programaCapacitacionFinanciera = new ProgramaCapacitacionFinanciera();
 
-        $programaCapacitacionFinanciera = $em->getRepository('AppBundle:ProgramaCapacitacionFinanciera')->find($idProgramaCapacitacionFinanciera);              
+        $programaCapacitacionFinanciera = $em->getRepository('AppBundle:ProgramaCapacitacionFinanciera')->find($idPCF);              
 
         $em->remove($programaCapacitacionFinanciera);
         $em->flush();
@@ -236,9 +240,9 @@ class GestionFinancieraController extends Controller
 
 
 /**
-     * @Route("/gestion-financiera/capacitacion-financiera/{idProgramaCapacitacionFinanciera}/documentos-soporte", name="programaCapacitacionFinancieraSoporte")
+     * @Route("/gestion-financiera/capacitacion-financiera/{idPCF}/documentos-soporte", name="programaCapacitacionFinancieraSoporte")
      */
-    public function programaCapacitacionFinancieraSoporteAction(Request $request, $idProgramaCapacitacionFinanciera)
+    public function programaCapacitacionFinancieraSoporteAction(Request $request, $idPCF)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -257,17 +261,17 @@ class GestionFinancieraController extends Controller
         );
 
         $soportesActivos = $em->getRepository('AppBundle:ProgramaCapacitacionFinancieraSoporte')->findBy(
-            array('active' => '1', 'programaCapacitacionFinanciera' => $idProgramaCapacitacionFinanciera),
+            array('active' => '1', 'programaCapacitacionFinanciera' => $idPCF),
             array('fecha_creacion' => 'ASC')
         );
 
         $histotialSoportes = $em->getRepository('AppBundle:ProgramaCapacitacionFinancieraSoporte')->findBy(
-            array('active' => '0', 'programaCapacitacionFinanciera' => $idProgramaCapacitacionFinanciera),
+            array('active' => '0', 'programaCapacitacionFinanciera' => $idPCF),
             array('fecha_creacion' => 'ASC')
         );
         
         $programaCapacitacionFinanciera = $em->getRepository('AppBundle:ProgramaCapacitacionFinanciera')->findOneBy(
-            array('id' => $idProgramaCapacitacionFinanciera)
+            array('id' => $idPCF)
         );
         
         if ($this->getRequest()->isMethod('POST')) {
@@ -285,7 +289,7 @@ class GestionFinancieraController extends Controller
                     array(
                         'active' => '1' , 
                         'tipo_soporte' => $tipoSoporte->getId(), 
-                        'programaCapacitacionFinanciera' => $idProgramaCapacitacionFinanciera
+                        'programaCapacitacionFinanciera' => $idPCF
                     )
                 );  
             
@@ -304,7 +308,7 @@ class GestionFinancieraController extends Controller
                 $em->persist($programaCapacitacionFinancieraSoporte);
                 $em->flush();
 
-                return $this->redirectToRoute('programaCapacitacionFinancieraSoporte', array( 'idProgramaCapacitacionFinanciera' => $idProgramaCapacitacionFinanciera));
+                return $this->redirectToRoute('programaCapacitacionFinancieraSoporte', array( 'idPCF' => $idPCF));
             }
         }   
         
@@ -320,23 +324,242 @@ class GestionFinancieraController extends Controller
     }
     
     /**
-     * @Route("/gestion-financiera/capacitacion-financiera/{idProgramaCapacitacionFinanciera}/documentos-soporte/{idProgramaCapacitacionFinancieraSoporte}/borrar", name="programaCapacitacionFinancieraSoporteBorrar")
+     * @Route("/gestion-financiera/capacitacion-financiera/{idPCF}/documentos-soporte/{idPCFSoporte}/borrar", name="programaCapacitacionFinancieraSoporteBorrar")
      */
-    public function programaCapacitacionFinancieraSoporteBorrarAction(Request $request, $idProgramaCapacitacionFinanciera, $idProgramaCapacitacionFinancieraSoporte)
+    public function programaCapacitacionFinancieraSoporteBorrarAction(Request $request, $idPCF, $idPCFSoporte)
     {
         $em = $this->getDoctrine()->getManager();
 
         $programaCapacitacionFinancieraSoporte = new ProgramaCapacitacionFinancieraSoporte();
         
         $programaCapacitacionFinancieraSoporte = $em->getRepository('AppBundle:ProgramaCapacitacionFinancieraSoporte')->findOneBy(
-            array('id' => $idProgramaCapacitacionFinancieraSoporte)
+            array('id' => $idPCFSoporte)
         );
         
         $programaCapacitacionFinancieraSoporte->setFechaModificacion(new \DateTime());
         $programaCapacitacionFinancieraSoporte->setActive(0);
         $em->flush();
 
-        return $this->redirectToRoute('programaCapacitacionFinancieraSoporte', array( 'idProgramaCapacitacionFinanciera' => $idProgramaCapacitacionFinanciera));
+        return $this->redirectToRoute('programaCapacitacionFinancieraSoporte', array( 'idPCF' => $idPCF));
+        
+    }
+
+
+
+    /**
+     * @Route("/gestion-financiera/capacitacion-financiera/capacitacion", name="capacitacionFinancieraGestion")
+     */
+    public function capacitacionFinancieraGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $capacitacionFinancieras= $em->getRepository('AppBundle:CapacitacionFinanciera')->findBY(
+            array('active' => 1)
+            
+        ); 
+
+        return $this->render('AppBundle:GestionFinanciera:capacitacion-financiera-capacitacion-gestion.html.twig', array( 'capacitacionFinancieras' => $capacitacionFinancieras));
+    }  
+    
+     /**
+     * @Route("/gestion-financiera/capacitacion-financiera/capacitacion/nuevo", name="capacitacionFinancieraNuevo")
+     */
+    public function capacitacionFinancieraNuevoAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $capacitacionFinanciera = new CapacitacionFinanciera();
+        
+        $form = $this->createForm(new CapacitacionFinancieraType(), $capacitacionFinanciera);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $capacitacionFinanciera = $form->getData();
+
+            $capacitacionFinanciera->setActive(true);
+            $capacitacionFinanciera->setFechaCreacion(new \DateTime());
+
+
+            
+            $em->persist($capacitacionFinanciera);
+            $em->flush();
+
+            return $this->redirectToRoute('capacitacionFinancieraGestion');
+        }
+        
+        return $this->render('AppBundle:GestionFinanciera:capacitacion-financiera-capacitacion-nuevo.html.twig', array('form' => $form->createView()));
+    } 
+
+
+ /**
+     * @Route("/gestion-financiera/capacitacion-financiera/capacitacion/{idCapacitacionFinanciera}/editar", name="capacitacionFinancieraEditar")
+     */
+    public function capacitacionFinancieraEditarAction(Request $request, $idCapacitacionFinanciera)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $capacitacionFinanciera = new CapacitacionFinanciera();
+
+        $capacitacionFinanciera = $em->getRepository('AppBundle:CapacitacionFinanciera')->findOneBy(
+            array('id' => $idCapacitacionFinanciera)
+        );
+
+        $form = $this->createForm(new CapacitacionFinancieraType(), $capacitacionFinanciera);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $capacitacionFinanciera = $form->getData();
+
+            $capacitacionFinanciera->setFechaModificacion(new \DateTime());
+
+
+            $em->flush();
+
+            return $this->redirectToRoute('capacitacionFinancieraGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionFinanciera:capacitacion-financiera-capacitacion-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idCapacitacionFinanciera' => $idCapacitacionFinanciera,
+                    'capacitacionFinanciera' => $capacitacionFinanciera,
+            )
+        );
+
+    }
+/**
+     * @Route("/gestion-financiera/capacitacion-financiera/capacitacion/{idCapacitacionFinanciera}/eliminar", name="capacitacionFinancieraEliminar")
+     */
+    public function capacitacionFinancieraEliminarAction(Request $request, $idCapacitacionFinanciera)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $capacitacionFinanciera = new CapacitacionFinanciera();
+
+        $capacitacionFinanciera = $em->getRepository('AppBundle:CapacitacionFinanciera')->find($idCapacitacionFinanciera);              
+
+        $em->remove($capacitacionFinanciera);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('capacitacionFinancieraGestion'));
+
+    }
+
+
+
+/**
+     * @Route("/gestion-financiera/capacitacion-financiera/capacitacion/{idCapacitacionFinanciera}/documentos-soporte", name="capacitacionFinancieraSoporte")
+     */
+    public function capacitacionFinancieraSoporteAction(Request $request, $idCapacitacionFinanciera)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $capacitacionFinancieraSoporte = new CapacitacionFinancieraSoporte();
+        
+        $form = $this->createForm(new CapacitacionFinancieraSoporteType(), $capacitacionFinancieraSoporte);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $soportesActivos = $em->getRepository('AppBundle:CapacitacionFinancieraSoporte')->findBy(
+            array('active' => '1', 'capacitacionFinanciera' => $idCapacitacionFinanciera),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $histotialSoportes = $em->getRepository('AppBundle:CapacitacionFinancieraSoporte')->findBy(
+            array('active' => '0', 'capacitacionFinanciera' => $idCapacitacionFinanciera),
+            array('fecha_creacion' => 'ASC')
+        );
+        
+        $capacitacionFinanciera = $em->getRepository('AppBundle:CapacitacionFinanciera')->findOneBy(
+            array('id' => $idCapacitacionFinanciera)
+        );
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+
+                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                    array(
+                        'descripcion' => $capacitacionFinancieraSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'ruta_tipo_soporte'
+                    )
+                );
+                
+                $actualizarCapacitacionFinancieraSoportes = $em->getRepository('AppBundle:CapacitacionFinancieraSoporte')->findBy(
+                    array(
+                        'active' => '1' , 
+                        'tipo_soporte' => $tipoSoporte->getId(), 
+                        'capacitacionFinanciera' => $idCapacitacionFinanciera
+                    )
+                );  
+            
+                foreach ($actualizarCapacitacionFinancieraSoportes as $actualizarCapacitacionFinancieraSoporte){
+                    echo $actualizarCapacitacionFinancieraSoporte->getId()." ".$actualizarCapacitacionFinancieraSoporte->getTipoSoporte()."<br />";
+                    $actualizarCapacitacionFinancieraSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarCapacitacionFinancieraSoporte->setActive(0);
+                    $em->flush();
+                }
+                
+                $capacitacionFinancieraSoporte->setCapacitacionFinanciera($capacitacionFinanciera);
+                $capacitacionFinancieraSoporte->setActive(true);
+                $capacitacionFinancieraSoporte->setFechaCreacion(new \DateTime());
+                //$grupoSoporte->setUsuarioCreacion(1);
+
+                $em->persist($capacitacionFinancieraSoporte);
+                $em->flush();
+
+                return $this->redirectToRoute('capacitacionFinancieraSoporte', array( 'idCapacitacionFinanciera' => $idCapacitacionFinanciera));
+            }
+        }   
+        
+        return $this->render(
+            'AppBundle:GestionFinanciera:capacitacion-financiera-capacitacion-soporte.html.twig', 
+            array(
+                'form' => $form->createView(), 
+                'soportesActivos' => $soportesActivos, 
+                'histotialSoportes' => $histotialSoportes
+            )
+        );
+        
+    }
+    
+    /**
+     * @Route("/gestion-financiera/capacitacion-financiera/capacitacion/{idCapacitacionFinanciera}/documentos-soporte/{idCapacitacionFinancieraSoporte}/borrar", name="capacitacionFinancieraSoporteBorrar")
+     */
+    public function capacitacionFinancieraSoporteBorrarAction(Request $request, $idCapacitacionFinanciera, $idCapacitacionFinancieraSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $capacitacionFinancieraSoporte = new CapacitacionFinancieraSoporte();
+        
+        $capacitacionFinancieraSoporte = $em->getRepository('AppBundle:CapacitacionFinancieraSoporte')->findOneBy(
+            array('id' => $idCapacitacionFinancieraSoporte)
+        );
+        
+        $capacitacionFinancieraSoporte->setFechaModificacion(new \DateTime());
+        $capacitacionFinancieraSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('capacitacionFinancieraSoporte', array( 'idCapacitacionFinanciera' => $idCapacitacionFinanciera));
         
     }
 
