@@ -60,13 +60,10 @@ class Ahorro
     private $active;
 
     /**
-<<<<<<< HEAD
      * @var integer
      *
      * @ORM\Column(name="usuario_modificacion", type="integer", nullable=true)
-=======
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
->>>>>>> 1e98ef851e65e4fec1a0aa9afd30545a7f3677e7
      */
     private $usuario_modificacion;
 
@@ -78,13 +75,10 @@ class Ahorro
     private $fecha_modificacion;
 
     /**
-<<<<<<< HEAD
      * @var integer
      *
      * @ORM\Column(name="usuario_creacion", type="integer", nullable=true)
-=======
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
->>>>>>> 1e98ef851e65e4fec1a0aa9afd30545a7f3677e7
      */
     private $usuario_creacion;
 

@@ -15,6 +15,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 use AppBundle\Entity\Ahorro;
+use AppBundle\Entity\AhorroSoporte;
 use AppBundle\Entity\Poliza;
 use AppBundle\Entity\ProgramaCapacitacionFinanciera;
 use AppBundle\Entity\ProgramaCapacitacionFinancieraSoporte;
@@ -23,6 +24,7 @@ use AppBundle\Entity\CapacitacionFinancieraSoporte;
 use AppBundle\Entity\Participante;
 
 use AppBundle\Form\GestionFinanciera\AhorroType;
+use AppBundle\Form\GestionFinanciera\AhorroSoporteType;
 use AppBundle\Form\GestionFinanciera\PolizaType;
 use AppBundle\Form\GestionFinanciera\ProgramaCapacitacionFinancieraType;
 use AppBundle\Form\GestionFinanciera\ProgramaCapacitacionFinancieraSoporteType;
@@ -81,7 +83,183 @@ class GestionFinancieraController extends Controller
         return $this->render('AppBundle:GestionFinanciera:ahorro-nuevo.html.twig', array('form' => $form->createView()));
     } 
 	
-	
+ /**
+     * @Route("/gestion-financiera/ahorro/{idAhorro}/editar", name="ahorroEditar")
+     */
+    public function ahorroEditarAction(Request $request, $idAhorro)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ahorro = new Ahorro();
+
+        $ahorro = $em->getRepository('AppBundle:Ahorro')->findOneBy(
+            array('id' => $idAhorro)
+        );
+
+        $form = $this->createForm(new AhorroType(), $ahorro);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $ahorro = $form->getData();
+
+            $ahorro->setFechaModificacion(new \DateTime());
+
+
+            $em->flush();
+
+            return $this->redirectToRoute('ahorroGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionFinanciera:ahorro-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idAhorro' => $idAhorro,
+                    'ahorro' => $ahorro,
+            )
+        );
+
+    }
+/**
+     * @Route("/gestion-financiera/ahorro/{idAhorro}/eliminar", name="ahorroEliminar")
+     */
+    public function ahorroEliminarAction(Request $request, $idAhorro)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $ahorro = new Ahorro();
+
+        $ahorro = $em->getRepository('AppBundle:Ahorro')->find($idAhorro);              
+
+        $em->remove($ahorro);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('ahorroGestion'));
+
+    }
+
+
+
+/**
+     * @Route("/gestion-financiera/ahorro/{idAhorro}/documentos-soporte", name="ahorroSoporte")
+     */
+    public function ahorroSoporteAction(Request $request, $idAhorro)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $ahorroSoporte = new AhorroSoporte();
+        
+        $form = $this->createForm(new AhorroSoporteType(), $ahorroSoporte);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $soportesActivos = $em->getRepository('AppBundle:AhorroSoporte')->findBy(
+            array('active' => '1', 'ahorro' => $idAhorro),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $histotialSoportes = $em->getRepository('AppBundle:AhorroSoporte')->findBy(
+            array('active' => '0', 'ahorro' => $idAhorro),
+            array('fecha_creacion' => 'ASC')
+        );
+        
+        $ahorro = $em->getRepository('AppBundle:Ahorro')->findOneBy(
+            array('id' => $idAhorro)
+        );
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+
+                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                    array(
+                        'descripcion' => $ahorroSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'ruta_tipo_soporte'
+                    )
+                );
+                
+                $actualizarAhorroSoportes = $em->getRepository('AppBundle:AhorroSoporte')->findBy(
+                    array(
+                        'active' => '1' , 
+                        'tipo_soporte' => $tipoSoporte->getId(), 
+                        'ahorro' => $idAhorro
+                    )
+                );  
+            
+                foreach ($actualizarAhorroSoportes as $actualizarAhorroSoporte){
+                    echo $actualizarAhorroSoporte->getId()." ".$actualizarAhorroSoporte->getTipoSoporte()."<br />";
+                    $actualizarAhorroSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarAhorroSoporte->setActive(0);
+                    $em->flush();
+                }
+                
+                $ahorroSoporte->setAhorro($ahorro);
+                $ahorroSoporte->setActive(true);
+                $ahorroSoporte->setFechaCreacion(new \DateTime());
+                //$grupoSoporte->setUsuarioCreacion(1);
+
+                $em->persist($ahorroSoporte);
+                $em->flush();
+
+                return $this->redirectToRoute('ahorroSoporte', array( 'idAhorro' => $idAhorro));
+            }
+        }   
+        
+        return $this->render(
+            'AppBundle:GestionFinanciera:ahorro-soporte.html.twig', 
+            array(
+                'form' => $form->createView(), 
+                'soportesActivos' => $soportesActivos, 
+                'histotialSoportes' => $histotialSoportes
+            )
+        );
+        
+    }
+    
+    /**
+     * @Route("/gestion-financiera/ahorro/{idAhorro}/documentos-soporte/{idAhorroSoporte}/borrar", name="ahorroSoporteBorrar")
+     */
+    public function ahorroSoporteBorrarAction(Request $request, $idAhorro, $idAhorroSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $ahorro = new AhorroSoporte();
+        
+        $ahorroSoporte = $em->getRepository('AppBundle:AhorroSoporte')->findOneBy(
+            array('id' => $idAhorroSoporte)
+        );
+        
+        $ahorroSoporte->setFechaModificacion(new \DateTime());
+        $ahorroSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('ahorroSoporte', array( 'idAhorro' => $idAhorro));
+        
+    }
+
+
+
+
+
+
 	 /**
      * @Route("/gestion-financiera/poliza", name="polizasGestion")
      */
