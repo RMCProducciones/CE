@@ -27,6 +27,25 @@ class Poliza
     private $grupo;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
+     */
+    private $estado;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="consecutivo", type="integer")
+     */
+    private $consecutivo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cofinanciacion", type="decimal")
+     */
+    private $cofinanciacion;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="active", type="boolean")
@@ -90,6 +109,78 @@ class Poliza
     public function getGrupo()
     {
         return $this->grupo;
+    }
+
+     /**
+     * Set estado
+     *
+     * @param AppBundle\Entity\Listas $estado
+     *
+     * @return Poliza
+     */
+    public function setEstado(\AppBundle\Entity\Listas $estado)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return AppBundle\Entity\Listas
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+
+    /**
+     * Set consecutivo
+     *
+     * @param integer $consecutivo
+     *
+     * @return Poliza
+     */
+    public function setConsecutivo($consecutivo)
+    {
+        $this->consecutivo = $consecutivo;
+
+        return $this;
+    }
+
+    /**
+     * Get consecutivo
+     *
+     * @return integer
+     */
+    public function getConsecutivo()
+    {
+        return $this->consecutivo;
+    }
+
+    /**
+     * Set cofinanciacion
+     *
+     * @param string $cofinanciacion
+     *
+     * @return Poliza
+     */
+    public function setCofinanciacion($cofinanciacion)
+    {
+        $this->cofinanciacion = $cofinanciacion;
+
+        return $this;
+    }
+
+    /**
+     * Get cofinanciacion
+     *
+     * @return string
+     */
+    public function getCofinanciacion()
+    {
+        return $this->cofinanciacion;
     }
 
     /**

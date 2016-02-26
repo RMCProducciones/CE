@@ -2,7 +2,7 @@
 app.controller('gestionDocumentoSoporteAhorroCtrl', ['$scope', '$location', function($scope, $location) {
 
 	$scope.idAhorro = 0;
-	$scope.idAhorro = 0;
+	$scope.idAhorroSoporteActivo = 0;
 
 	$scope.anularSoporteAhorro = function() { 
 

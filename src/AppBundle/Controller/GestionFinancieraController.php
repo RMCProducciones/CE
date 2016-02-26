@@ -17,6 +17,7 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use AppBundle\Entity\Ahorro;
 use AppBundle\Entity\AhorroSoporte;
 use AppBundle\Entity\Poliza;
+use AppBundle\Entity\PolizaSoporte;
 use AppBundle\Entity\ProgramaCapacitacionFinanciera;
 use AppBundle\Entity\ProgramaCapacitacionFinancieraSoporte;
 use AppBundle\Entity\CapacitacionFinanciera;
@@ -26,6 +27,7 @@ use AppBundle\Entity\Participante;
 use AppBundle\Form\GestionFinanciera\AhorroType;
 use AppBundle\Form\GestionFinanciera\AhorroSoporteType;
 use AppBundle\Form\GestionFinanciera\PolizaType;
+use AppBundle\Form\GestionFinanciera\PolizaSoporteType;
 use AppBundle\Form\GestionFinanciera\ProgramaCapacitacionFinancieraType;
 use AppBundle\Form\GestionFinanciera\ProgramaCapacitacionFinancieraSoporteType;
 use AppBundle\Form\GestionFinanciera\CapacitacionFinancieraType;
@@ -261,9 +263,9 @@ class GestionFinancieraController extends Controller
 
 
 	 /**
-     * @Route("/gestion-financiera/poliza", name="polizasGestion")
+     * @Route("/gestion-financiera/poliza", name="polizaGestion")
      */
-    public function polizasGestionAction()
+    public function polizaGestionAction()
     {
         $em = $this->getDoctrine()->getManager();
         $polizas= $em->getRepository('AppBundle:Poliza')->findBY(
@@ -298,12 +300,188 @@ class GestionFinancieraController extends Controller
             $em->persist($poliza);
             $em->flush();
 
-            return $this->redirectToRoute('polizasGestion');
+            return $this->redirectToRoute('polizaGestion');
         }
         
         return $this->render('AppBundle:GestionFinanciera:poliza-nuevo.html.twig', array('form' => $form->createView()));
-    } 
-	
+    }
+
+
+
+
+	/**
+     * @Route("/gestion-financiera/poliza/{idPoliza}/editar", name="polizaEditar")
+     */
+    public function polizaEditarAction(Request $request, $idPoliza)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $poliza = new Poliza();
+
+        $poliza = $em->getRepository('AppBundle:Poliza')->findOneBy(
+            array('id' => $idPoliza)
+        );
+
+        $form = $this->createForm(new PolizaType(), $poliza);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $poliza = $form->getData();
+
+            $poliza->setFechaModificacion(new \DateTime());
+
+
+            $em->flush();
+
+            return $this->redirectToRoute('polizaGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionFinanciera:poliza-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idPoliza' => $idPoliza,
+                    'poliza' => $poliza,
+            )
+        );
+
+    }
+/**
+     * @Route("/gestion-financiera/poliza/{idPoliza}/eliminar", name="polizaEliminar")
+     */
+    public function polizaEliminarAction(Request $request, $idPoliza)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $poliza = new Poliza();
+
+        $poliza = $em->getRepository('AppBundle:Poliza')->find($idPoliza);              
+
+        $em->remove($poliza);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('polizaGestion'));
+
+    }
+
+
+
+/**
+     * @Route("/gestion-financiera/poliza/{idPoliza}/documentos-soporte", name="polizaSoporte")
+     */
+    public function polizaSoporteAction(Request $request, $idPoliza)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $polizaSoporte = new PolizaSoporte();
+        
+        $form = $this->createForm(new PolizaSoporteType(), $polizaSoporte);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $soportesActivos = $em->getRepository('AppBundle:PolizaSoporte')->findBy(
+            array('active' => '1', 'poliza' => $idPoliza),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $histotialSoportes = $em->getRepository('AppBundle:PolizaSoporte')->findBy(
+            array('active' => '0', 'poliza' => $idPoliza),
+            array('fecha_creacion' => 'ASC')
+        );
+        
+        $poliza = $em->getRepository('AppBundle:Poliza')->findOneBy(
+            array('id' => $idPoliza)
+        );
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+
+                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                    array(
+                        'descripcion' => $polizaSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'ruta_tipo_soporte'
+                    )
+                );
+                
+                $actualizarPolizaSoportes = $em->getRepository('AppBundle:PolizaSoporte')->findBy(
+                    array(
+                        'active' => '1' , 
+                        'tipo_soporte' => $tipoSoporte->getId(), 
+                        'poliza' => $idPoliza
+                    )
+                );  
+            
+                foreach ($actualizarPolizaSoportes as $actualizarPolizaSoporte){
+                    echo $actualizarPolizaSoporte->getId()." ".$actualizarPolizaSoporte->getTipoSoporte()."<br />";
+                    $actualizarPolizaSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarPolizaSoporte->setActive(0);
+                    $em->flush();
+                }
+                
+                $polizaSoporte->setPoliza($poliza);
+                $polizaSoporte->setActive(true);
+                $polizaSoporte->setFechaCreacion(new \DateTime());
+                //$grupoSoporte->setUsuarioCreacion(1);
+
+                $em->persist($polizaSoporte);
+                $em->flush();
+
+                return $this->redirectToRoute('polizaSoporte', array( 'idPoliza' => $idPoliza));
+            }
+        }   
+        
+        return $this->render(
+            'AppBundle:GestionFinanciera:poliza-soporte.html.twig', 
+            array(
+                'form' => $form->createView(), 
+                'soportesActivos' => $soportesActivos, 
+                'histotialSoportes' => $histotialSoportes
+            )
+        );
+        
+    }
+    
+    /**
+     * @Route("/gestion-financiera/poliza/{idPoliza}/documentos-soporte/{idPolizaSoporte}/borrar", name="polizaSoporteBorrar")
+     */
+    public function polizaSoporteBorrarAction(Request $request, $idPoliza, $idPolizaSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $poliza = new PolizaSoporte();
+        
+        $polizaSoporte = $em->getRepository('AppBundle:PolizaSoporte')->findOneBy(
+            array('id' => $idPolizaSoporte)
+        );
+        
+        $polizaSoporte->setFechaModificacion(new \DateTime());
+        $polizaSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('polizaSoporte', array( 'idPoliza' => $idPoliza));
+        
+    }
+
+
 	
 	/**
      * @Route("/gestion-financiera/capacitacion-financiera", name="programaCapacitacionFinancieraGestion")
