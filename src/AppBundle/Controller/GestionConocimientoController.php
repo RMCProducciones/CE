@@ -822,5 +822,181 @@ class GestionConocimientoController extends Controller
         
         return $this->render('AppBundle:GestionConocimiento:evento-nuevo.html.twig', array('form' => $form->createView()));
     } 
+
+    /**
+     * @Route("/gestion-conocimiento/evento/{idEvento}/editar", name="eventoEditar")
+     */
+    public function eventoEditarAction(Request $request, $idEvento)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $evento = new Evento();
+
+        $evento = $em->getRepository('AppBundle:Evento')->findOneBy(
+            array('id' => $idEvento)
+        );
+
+        $form = $this->createForm(new EventoType(), $evento);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $evento = $form->getData();
+
+            
+
+            $evento->setFechaModificacion(new \DateTime());
+
+  
+
+            $em->flush();
+
+            return $this->redirectToRoute('eventoGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionConocimiento:evento-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idEvento' => $idEvento,
+                    'evento' => $evento,
+            )
+        );
+
+    }
+
+
+
+    /**
+     * @Route("/gestion-conocimiento/evento/{idEvento}/eliminar", name="eventoEliminar")
+     */
+    public function eventoEliminarAction(Request $request, $idEvento)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $evento = new Evento();
+
+        $evento = $em->getRepository('AppBundle:Evento')->find($idEvento);              
+
+        $em->remove($evento);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('eventoGestion'));
+
+    }
+
+    /**
+     * @Route("/gestion-conocimiento/evento/{idEvento}/documentos-soporte", name="eventoSoporte")
+     */
+    public function eventoSoporteAction(Request $request, $idEvento)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $eventoSoporte = new EventoSoporte();
+        
+        $form = $this->createForm(new EventoSoporteType(), $eventoSoporte);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $soportesActivos = $em->getRepository('AppBundle:EventoSoporte')->findBy(
+            array('active' => '1', 'evento' => $idEvento),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $histotialSoportes = $em->getRepository('AppBundle:EventoSoporte')->findBy(
+            array('active' => '0', 'evento' => $idEvento),
+            array('fecha_creacion' => 'ASC')
+        );
+        
+        $evento = $em->getRepository('AppBundle:Evento')->findOneBy(
+            array('id' => $idEvento)
+        );
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+
+                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                    array(
+                        'descripcion' => $eventoSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'talento_tipo_soporte'
+                    )
+                );
+                
+                $actualizarEventoSoportes = $em->getRepository('AppBundle:EventoSoporte')->findBy(
+                    array(
+                        'active' => '1' , 
+                        'tipo_soporte' => $tipoSoporte->getId(), 
+                        'evento' => $idEvento
+                    )
+                );  
+            
+                foreach ($actualizarEventoSoportes as $actualizarEventoSoporte){
+                    echo $actualizarEventoSoporte->getId()." ".$actualizarEventoSoporte->getTipoSoporte()."<br />";
+                    $actualizarEventoSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarEventoSoporte->setActive(0);
+                    $em->flush();
+                }
+                
+                $eventoSoporte->setEvento($evento);
+                $eventoSoporte->setActive(true);
+                $eventoSoporte->setFechaCreacion(new \DateTime());
+                //$grupoSoporte->setUsuarioCreacion(1);
+
+                $em->persist($eventoSoporte);
+                $em->flush();
+
+                return $this->redirectToRoute('eventoSoporte', array( 'idEvento' => $idEvento));
+            }
+        }   
+        
+        return $this->render(
+            'AppBundle:GestionConocimiento:evento-soporte.html.twig', 
+            array(
+                'form' => $form->createView(), 
+                'soportesActivos' => $soportesActivos, 
+                'histotialSoportes' => $histotialSoportes
+            )
+        );
+        
+    }
+    
+    /**
+     * @Route("/gestion-conocimiento/evento/{idEvento}/documentos-soporte/{idEventoSoporte}/borrar", name="eventoSoporteBorrar")
+     */
+    public function eventoSoporteBorrarAction(Request $request, $idEvento, $idEventoSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $eventoSoporte = new EventoSoporte();
+        
+        $eventoSoporte = $em->getRepository('AppBundle:EventoSoporte')->findOneBy(
+            array('id' => $idEventoSoporte)
+        );
+        
+        $eventoSoporte->setFechaModificacion(new \DateTime());
+        $eventoSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('eventoSoporte', array( 'idEvento' => $idEvento));
+        
+    }
 	
 }
