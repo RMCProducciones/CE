@@ -18,64 +18,10 @@
 
 {% block section %}
 
-	<div class="section" ng-controller="FiltrosCtrl">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-7">
-            <div class="input-group">
-              <input class="form-control" placeholder="Buscar..." ng-model="txtBuscar" type="text">
-              <span class="input-group-btn">
-			  <button class="btn btn-default" type="button">Buscar</button>
-              </span>
-            </div>
-			
-                r:[[txtBuscar]]
-			  
-          </div>
-          <div class="col-md-3 text-center">
-		  
-            <div class="[[styleBuscarHerramientas]]">
-              <button class="btn btn-primary" ng-click="buttonBuscarHerramientas(count)">Filtros <span class="caret"></span></button>
-            </div>
-          </div>
-          <div class="col-md-2 text-center">
-            <a class="btn btn-default">Limpiar</a>
-          </div>
-        </div>
-      </div>
-      <br>
-      <div class="container well" ng-controller="ListasLocalizacionCtrl" ng-show="count === 1">
-        <div class="row" >
-          <div class="col-md-3">
-            <label>Departamento</label>
-            <br>
-			<select ng-model="selDepartamento" class="form-control" ng-change="cargarZonas()" ng-options="departamento.id as departamento.nombre for departamento in JSONDepartamento"></select>
-          </div>
-          <div class="col-md-3">
-            <label>Zona</label>
-            <br>
-			<select ng-model="selZona" class="form-control" ng-change="cargarMunicipios()" ng-options="zona.id as zona.nombre for zona in JSONZona"></select>
-          </div>
-          <div class="col-md-3">
-            <label>Municipio</label>
-            <br>
-			<select ng-model="selMunicipio" class="form-control" ng-options="municipio.id as municipio.nombre for municipio in JSONMunicipio"></select>           
-          </div>
-          <div class="col-md-3">
-            <label>Estado</label>
-            <br>
-            <input list="estado" placeholder="Estado..." class="form-control">
-            <datalist id="estado">
-              <option value="Activo"></option>
-              <option value="Inactivo"></option>
-            </datalist>
-          </div>
-        </div>
-      </div>
-    </div>
-    <br>
-     
-  	<br>
+<div class="container">
+    <h1>Gestión de Capacitaciones</h1>
+    <hr>
+  </div>
 
     <hr>
 
@@ -84,9 +30,8 @@
         <div class="row">
           <div class="col-md-6">
             <div class="btn-group">
+              <a href="{{ path('homepage') }}" class="btn btn-warning">Volver</a>
               <a href="{{ path('capacitacionNuevo') }}" class="btn btn-success">Nuevo</a>
-              
-              <a class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Eliminar</a>
             </div>
           </div>
         </div>

@@ -18,7 +18,9 @@ use AppBundle\Entity\POASoporte;
 use AppBundle\Form\GestionAdministrativa\POAType;
 use AppBundle\Form\GestionAdministrativa\POASoporteType;
 use AppBundle\Entity\Convocatoria;
+use AppBundle\Entity\ConvocatoriaSoporte;
 use AppBundle\Form\GestionAdministrativa\ConvocatoriaType;
+use AppBundle\Form\GestionAdministrativa\ConvocatoriaSoporteType;
 
 
 /*Para autenticación por código*/

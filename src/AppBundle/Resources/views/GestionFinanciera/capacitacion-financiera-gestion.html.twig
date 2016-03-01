@@ -17,65 +17,14 @@
 	
 
 {% block section %}
+<div class="container">
+    <h1>Gestión de Programas de Capacitacion Financiera</h1>
+    <hr>
+  </div>
 
-	<div class="section" ng-controller="FiltrosCtrl">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-7">
-            <div class="input-group">
-              <input class="form-control" placeholder="Buscar..." ng-model="txtBuscar" type="text">
-              <span class="input-group-btn">
-			  <button class="btn btn-default" type="button">Buscar</button>
-              </span>
-            </div>
-			
-                r:[[txtBuscar]]
-			  
-          </div>
-          <div class="col-md-3 text-center">
-		  
-            <div class="[[styleBuscarHerramientas]]">
-              <button class="btn btn-primary" ng-click="buttonBuscarHerramientas(count)">Filtros <span class="caret"></span></button>
-            </div>
-          </div>
-          <div class="col-md-2 text-center">
-            <a class="btn btn-default">Limpiar</a>
-          </div>
-        </div>
-      </div>
-      <br>
-      <div class="container well" ng-controller="ListasLocalizacionCtrl" ng-show="count === 1">
-        <div class="row" >
-          <div class="col-md-3">
-            <label>Departamento</label>
-            <br>
-			<select ng-model="selDepartamento" class="form-control" ng-change="cargarZonas()" ng-options="departamento.id as departamento.nombre for departamento in JSONDepartamento"></select>
-          </div>
-          <div class="col-md-3">
-            <label>Zona</label>
-            <br>
-			<select ng-model="selZona" class="form-control" ng-change="cargarMunicipios()" ng-options="zona.id as zona.nombre for zona in JSONZona"></select>
-          </div>
-          <div class="col-md-3">
-            <label>Municipio</label>
-            <br>
-			<select ng-model="selMunicipio" class="form-control" ng-options="municipio.id as municipio.nombre for municipio in JSONMunicipio"></select>           
-          </div>
-          <div class="col-md-3">
-            <label>Estado</label>
-            <br>
-            <input list="estado" placeholder="Estado..." class="form-control">
-            <datalist id="estado">
-              <option value="Activo"></option>
-              <option value="Inactivo"></option>
-            </datalist>
-          </div>
-        </div>
-      </div>
-    </div>
+	
     <br>
      
-  	<br>
 
     <hr>
 
