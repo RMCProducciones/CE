@@ -325,6 +325,7 @@ active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_
 
 php app/console doctrine:generate:entity --entity="AppBundle:Poliza" --fields="
 grupo:integer
+
 active:boolean usuario_modificacion:integer fecha_modificacion:datetime usuario_creacion:integer fecha_creacion:datetime"
 
 php app/console doctrine:generate:entity --entity="AppBundle:PolizaSoporte" --fields="
