@@ -1,0 +1,84 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+{% block title %}Grupos{% endblock %}
+
+{% block breadcrumb_ul %}
+
+  <ul class="breadcrumb">
+    <li><a href="{{ path('homepage') }}">Inicio</a></li>
+    <li>Gestión Administrativa</li>
+    <li>Plan Operativo Anual - POA</li>
+    <li><a href="{{ path('POAGestion') }}">Gestión POA</a></li>
+    <li class="active">Nuevo</li>
+  </ul>
+
+{% endblock %}
+
+
+{% block section %}
+
+     
+  <br>
+
+  <hr>
+
+    
+  {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+    {{ form_errors(form) }}
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="btn-group">
+              <a href="#" onclick="document.forms[0].submit();return false;" class="btn btn-success">Guardar</a>
+              
+              <a href="{{ path('POAGestion') }}"class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <br>
+
+    <div class="section">
+      <div class="container">
+	  <div class="row">
+			<div class="col-md-12">
+				<fieldset>
+					<legend>Datos del POA</legend>
+				</fieldset>            
+			</div>
+		</div>     
+            <!--form class="form-horizontal" role="form"-->
+		<br/>
+		
+		<div class="row">
+				<div class="col-sm-12">
+                  <div class="danger">{{ form_errors(form) }}</div>
+                </div>            
+
+              
+                <div class="col-md-4">
+                  {{ form_label(form.anio) }}
+				  {{ form_errors(form.anio) }}
+                  {{ form_widget(form.anio, { 'attr': {'class': 'form-control', 'placeholder': 'Año...'} }) }}
+                </div>
+                <div class="col-md-4">
+                  {{ form_label(form.presupuesto) }}
+				  {{ form_errors(form.presupuesto) }}
+                  {{ form_widget(form.presupuesto, { 'attr': {'class': 'form-control', 'placeholder': 'Presupuesto...'} }) }}
+                </div>          
+		</div>		
+		<br/>
+		<br/>               
+        <!--/form-->          
+      </div>
+    </div>
+
+  {{ form_end(form) }}
+  
+{% endblock %}
+
