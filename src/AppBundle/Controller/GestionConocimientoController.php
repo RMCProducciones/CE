@@ -16,19 +16,27 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 use AppBundle\Entity\ExperienciaExitosa;
+use AppBundle\Entity\ExperienciaExitosaSoporte;
 use AppBundle\Entity\Talento;
 use AppBundle\Entity\TalentoSoporte;
 use AppBundle\Entity\Beca;
+use AppBundle\Entity\BecaSoporte;
 use AppBundle\Entity\Capacitacion;
+use AppBundle\Entity\CapacitacionSoporte;
 use AppBundle\Entity\Evento;
+use AppBundle\Entity\EventoSoporte;
 
 
 use AppBundle\Form\GestionConocimiento\ExperienciaExitosaType;
+use AppBundle\Form\GestionConocimiento\ExperienciaExitosaSoporteType;
 use AppBundle\Form\GestionConocimiento\TalentoType;
 use AppBundle\Form\GestionConocimiento\TalentoSoporteType;
 use AppBundle\Form\GestionConocimiento\BecaType;
+use AppBundle\Form\GestionConocimiento\BecaSoporteType;
 use AppBundle\Form\GestionConocimiento\CapacitacionType;
+use AppBundle\Form\GestionConocimiento\CapacitacionSoporteType;
 use AppBundle\Form\GestionConocimiento\EventoType;
+use AppBundle\Form\GestionConocimiento\EventoSoporteType;
 
 
 
@@ -60,7 +68,7 @@ class GestionConocimientoController extends Controller
     public function experienciaNuevoAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $experienciaexitosa = new Experienciaexitosa();
+        $experienciaexitosa = new ExperienciaExitosa();
         
         $form = $this->createForm(new ExperienciaExitosaType(), $experienciaexitosa);
 
@@ -83,8 +91,185 @@ class GestionConocimientoController extends Controller
         
         return $this->render('AppBundle:GestionConocimiento:experiencia-nuevo.html.twig', array('form' => $form->createView()));
     } 
+
+    /**
+     * @Route("/gestion-conocimiento/experiencia-exitosa/{idExperienciaExitosa}/editar", name="experienciaEditar")
+     */
+    public function experienciaEditarAction(Request $request, $idExperienciaExitosa)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $experienciaexitosa = new ExperienciaExitosa();
+
+        $experienciaexitosa = $em->getRepository('AppBundle:ExperienciaExitosa')->findOneBy(
+            array('id' => $idExperienciaExitosa)
+        );
+
+        $form = $this->createForm(new ExperienciaExitosaType(), $experienciaexitosa);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $experienciaexitosa = $form->getData();
+
+            $experienciaexitosa->setFechaModificacion(new \DateTime());
+
+            
+
+            $em->flush();
+
+            return $this->redirectToRoute('experienciaGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionConocimiento:experiencia-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idExperienciaExitosa' => $idExperienciaExitosa,
+                    'experienciaexitosa' => $experienciaexitosa,
+            )
+        );
+
+    }
+
+
+
+    /**
+     * @Route("/gestion-conocimiento/experiencia-exitosa/{idExperienciaExitosa}/eliminar", name="experienciaEliminar")
+     */
+    public function experienciaEliminarAction(Request $request, $idExperienciaExitosa)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $experienciaexitosa = new ExperienciaExitosa();
+
+        $experienciaexitosa = $em->getRepository('AppBundle:ExperienciaExitosa')->find($idExperienciaExitosa);              
+
+        $em->remove($experienciaexitosa);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('experienciaGestion'));
+
+    }
+
+    /**
+     * @Route("/gestion-conocimiento/experiencia-exitosa/{idExperienciaExitosa}/documentos-soporte", name="experienciaSoporte")
+     */
+    public function experienciaSoporteAction(Request $request, $idExperienciaExitosa)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $experienciaexitosaSoporte = new ExperienciaExitosaSoporte();
+        
+        $form = $this->createForm(new ExperienciaExitosaSoporteType(), $experienciaexitosaSoporte);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $soportesActivos = $em->getRepository('AppBundle:ExperienciaExitosaSoporte')->findBy(
+            array('active' => '1', 'experienciaexitosa' => $idExperienciaExitosa),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $histotialSoportes = $em->getRepository('AppBundle:ExperienciaExitosaSoporte')->findBy(
+            array('active' => '0', 'experienciaexitosa' => $idExperienciaExitosa),
+            array('fecha_creacion' => 'ASC')
+        );
+        
+        $experienciaexitosa = $em->getRepository('AppBundle:ExperienciaExitosa')->findOneBy(
+            array('id' => $idExperienciaExitosa)
+        );
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+
+                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                    array(
+                        'descripcion' => $talentoSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'talento_tipo_soporte'
+                    )
+                );
+                
+                $actualizarExperienciaExitosaSoportes = $em->getRepository('AppBundle:ExperienciaExitosaSoporte')->findBy(
+                    array(
+                        'active' => '1' , 
+                        'tipo_soporte' => $tipoSoporte->getId(), 
+                        'experienciaexitosa' => $idExperienciaExitosa
+                    )
+                );  
+            
+                foreach ($actualizarExperienciaExitosaSoportes as $actualizarExperienciaExitosaSoporte){
+                    echo $actualizarExperienciaExitosaSoporte->getId()." ".$actualizarExperienciaExitosaSoporte->getTipoSoporte()."<br />";
+                    $actualizarExperienciaExitosaSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarExperienciaExitosaSoporte->setActive(0);
+                    $em->flush();
+                }
+                
+                $experienciaexitosaSoporte->setExperienciaExitosa($experienciaexitosa);
+                $experienciaexitosaSoporte->setActive(true);
+                $experienciaexitosaSoporte->setFechaCreacion(new \DateTime());
+                //$grupoSoporte->setUsuarioCreacion(1);
+
+                $em->persist($experienciaexitosaSoporte);
+                $em->flush();
+
+                return $this->redirectToRoute('experienciaSoporte', array( 'idExperienciaExitosa' => $idExperienciaExitosa));
+            }
+        }   
+        
+        return $this->render(
+            'AppBundle:GestionConocimiento:experiencia-soporte.html.twig', 
+            array(
+                'form' => $form->createView(), 
+                'soportesActivos' => $soportesActivos, 
+                'histotialSoportes' => $histotialSoportes
+            )
+        );
+        
+    }
+    
+    /**
+     * @Route("/gestion-conocimiento/experiencia-exitosa/{idExperienciaExitosa}/documentos-soporte/{idExperienciaExitosaSoporte}/borrar", name="experienciaSoporteBorrar")
+     */
+    public function experienciaSoporteBorrarAction(Request $request, $idExperienciaExitosa, $idExperienciaExitosaSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $experienciaexitosaSoporte = new ExperienciaExitosaSoporte();
+        
+        $experienciaexitosaSoporte = $em->getRepository('AppBundle:ExperienciaExitosaSoporte')->findOneBy(
+            array('id' => $idExperienciaExitosaSoporte)
+        );
+        
+        $experienciaexitosaSoporte->setFechaModificacion(new \DateTime());
+        $experienciaexitosaSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('experienciaSoporte', array( 'idExperienciaExitosa' => $idExperienciaExitosa));
+        
+    }
    
    
+
+
+
    /**
      * @Route("/gestion-conocimiento/talento", name="talentoGestion")
      */
@@ -331,7 +516,7 @@ class GestionConocimientoController extends Controller
 
 	
 	 /**
-     * @Route("/gestion-conocimiento/becas", name="becaGestion")
+     * @Route("/gestion-conocimiento/beca", name="becaGestion")
      */
     public function becaGestionAction()
     {
@@ -345,7 +530,7 @@ class GestionConocimientoController extends Controller
     }  
 	
 	 /**
-     * @Route("/gestion-conocimiento/becas/nuevo", name="becaNuevo")
+     * @Route("/gestion-conocimiento/beca/nuevo", name="becaNuevo")
      */
     public function becaNuevoAction(Request $request)
     {
@@ -374,6 +559,184 @@ class GestionConocimientoController extends Controller
         return $this->render('AppBundle:GestionConocimiento:beca-nuevo.html.twig', array('form' => $form->createView()));
     } 
 	
+
+    /**
+     * @Route("/gestion-conocimiento/beca/{idBeca}/editar", name="becaEditar")
+     */
+    public function becaEditarAction(Request $request, $idBeca)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $beca = new Beca();
+
+        $beca = $em->getRepository('AppBundle:Beca')->findOneBy(
+            array('id' => $idBeca)
+        );
+
+        $form = $this->createForm(new BecaType(), $beca);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $beca = $form->getData();
+
+            
+
+            $beca->setFechaModificacion(new \DateTime());
+
+  
+
+            $em->flush();
+
+            return $this->redirectToRoute('becaGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionConocimiento:beca-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idBeca' => $idBeca,
+                    'beca' => $beca,
+            )
+        );
+
+    }
+
+
+
+    /**
+     * @Route("/gestion-conocimiento/beca/{idBeca}/eliminar", name="becaEliminar")
+     */
+    public function becaEliminarAction(Request $request, $idBeca)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $beca = new Beca();
+
+        $beca = $em->getRepository('AppBundle:Beca')->find($idBeca);              
+
+        $em->remove($beca);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('becaGestion'));
+
+    }
+
+    /**
+     * @Route("/gestion-conocimiento/beca/{idBeca}/documentos-soporte", name="becaSoporte")
+     */
+    public function becaSoporteAction(Request $request, $idBeca)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $becaSoporte = new BecaSoporte();
+        
+        $form = $this->createForm(new BecaSoporteType(), $becaSoporte);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $soportesActivos = $em->getRepository('AppBundle:BecaSoporte')->findBy(
+            array('active' => '1', 'beca' => $idBeca),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $histotialSoportes = $em->getRepository('AppBundle:BecaSoporte')->findBy(
+            array('active' => '0', 'beca' => $idBeca),
+            array('fecha_creacion' => 'ASC')
+        );
+        
+        $beca = $em->getRepository('AppBundle:Beca')->findOneBy(
+            array('id' => $idBeca)
+        );
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+
+                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                    array(
+                        'descripcion' => $becaSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'talento_tipo_soporte'
+                    )
+                );
+                
+                $actualizarBecaSoportes = $em->getRepository('AppBundle:BecaSoporte')->findBy(
+                    array(
+                        'active' => '1' , 
+                        'tipo_soporte' => $tipoSoporte->getId(), 
+                        'beca' => $idBeca
+                    )
+                );  
+            
+                foreach ($actualizarBecaSoportes as $actualizarBecaSoporte){
+                    echo $actualizarBecaSoporte->getId()." ".$actualizarBecaSoporte->getTipoSoporte()."<br />";
+                    $actualizarBecaSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarBecaSoporte->setActive(0);
+                    $em->flush();
+                }
+                
+                $becaSoporte->setBeca($beca);
+                $becaSoporte->setActive(true);
+                $becaSoporte->setFechaCreacion(new \DateTime());
+                //$grupoSoporte->setUsuarioCreacion(1);
+
+                $em->persist($becaSoporte);
+                $em->flush();
+
+                return $this->redirectToRoute('becaSoporte', array( 'idBeca' => $idBeca));
+            }
+        }   
+        
+        return $this->render(
+            'AppBundle:GestionConocimiento:beca-soporte.html.twig', 
+            array(
+                'form' => $form->createView(), 
+                'soportesActivos' => $soportesActivos, 
+                'histotialSoportes' => $histotialSoportes
+            )
+        );
+        
+    }
+    
+    /**
+     * @Route("/gestion-conocimiento/beca/{idBeca}/documentos-soporte/{idBecaSoporte}/borrar", name="becaSoporteBorrar")
+     */
+    public function becaSoporteBorrarAction(Request $request, $idBeca, $idBecaSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $becaSoporte = new BecaSoporte();
+        
+        $becaSoporte = $em->getRepository('AppBundle:BecaSoporte')->findOneBy(
+            array('id' => $idBecaSoporte)
+        );
+        
+        $becaSoporte->setFechaModificacion(new \DateTime());
+        $becaSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('becaSoporte', array( 'idBeca' => $idBeca));
+        
+    }
+
+
 	
 	/**
      * @Route("/gestion-conocimiento/capacitacion", name="capacitacionGestion")
@@ -418,6 +781,183 @@ class GestionConocimientoController extends Controller
         
         return $this->render('AppBundle:GestionConocimiento:capacitacion-nuevo.html.twig', array('form' => $form->createView()));
     } 
+
+
+  /**
+     * @Route("/gestion-conocimiento/capacitacion/{idCapacitacion}/editar", name="capacitacionEditar")
+     */
+    public function capacitacionEditarAction(Request $request, $idCapacitacion)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $capacitacion = new Capacitacion();
+
+        $capacitacion = $em->getRepository('AppBundle:Capacitacion')->findOneBy(
+            array('id' => $idCapacitacion)
+        );
+
+        $form = $this->createForm(new CapacitacionType(), $capacitacion);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $capacitacion = $form->getData();
+
+            
+
+            $capacitacion->setFechaModificacion(new \DateTime());
+
+  
+
+            $em->flush();
+
+            return $this->redirectToRoute('capacitacionGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionConocimiento:capacitacion-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idCapacitacion' => $idCapacitacion,
+                    'capacitacion' => $capacitacion,
+            )
+        );
+
+    }
+
+
+
+    /**
+     * @Route("/gestion-conocimiento/capacitacion/{idCapacitacion}/eliminar", name="capacitacionEliminar")
+     */
+    public function capacitacionEliminarAction(Request $request, $idCapacitacion)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $capacitacion = new Capacitacion();
+
+        $capacitacion = $em->getRepository('AppBundle:Capacitacion')->find($idCapacitacion);              
+
+        $em->remove($capacitacion);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('capacitacionGestion'));
+
+    }
+
+    /**
+     * @Route("/gestion-conocimiento/capacitacion/{idCapacitacion}/documentos-soporte", name="capacitacionSoporte")
+     */
+    public function capacitacionSoporteAction(Request $request, $idCapacitacion)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $capacitacionSoporte = new CapacitacionSoporte();
+        
+        $form = $this->createForm(new CapacitacionSoporteType(), $capacitacionSoporte);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $soportesActivos = $em->getRepository('AppBundle:CapacitacionSoporte')->findBy(
+            array('active' => '1', 'capacitacion' => $idCapacitacion),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $histotialSoportes = $em->getRepository('AppBundle:CapacitacionSoporte')->findBy(
+            array('active' => '0', 'capacitacion' => $idCapacitacion),
+            array('fecha_creacion' => 'ASC')
+        );
+        
+        $capacitacion = $em->getRepository('AppBundle:Capacitacion')->findOneBy(
+            array('id' => $idCapacitacion)
+        );
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+
+                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                    array(
+                        'descripcion' => $capacitacionSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'talento_tipo_soporte'
+                    )
+                );
+                
+                $actualizarCapacitacionSoportes = $em->getRepository('AppBundle:CapacitacionSoporte')->findBy(
+                    array(
+                        'active' => '1' , 
+                        'tipo_soporte' => $tipoSoporte->getId(), 
+                        'capacitacion' => $idCapacitacion
+                    )
+                );  
+            
+                foreach ($actualizarCapacitacionSoportes as $actualizarCapacitacionSoporte){
+                    echo $actualizarCapacitacionSoporte->getId()." ".$actualizarCapacitacionSoporte->getTipoSoporte()."<br />";
+                    $actualizarCapacitacionSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarCapacitacionSoporte->setActive(0);
+                    $em->flush();
+                }
+                
+                $capacitacionSoporte->setEvento($capacitacion);
+                $capacitacionSoporte->setActive(true);
+                $capacitacionSoporte->setFechaCreacion(new \DateTime());
+                //$grupoSoporte->setUsuarioCreacion(1);
+
+                $em->persist($capacitacionSoporte);
+                $em->flush();
+
+                return $this->redirectToRoute('capacitacionSoporte', array( 'idCapacitacion' => $idCapacitacion));
+            }
+        }   
+        
+        return $this->render(
+            'AppBundle:GestionConocimiento:capacitacion-soporte.html.twig', 
+            array(
+                'form' => $form->createView(), 
+                'soportesActivos' => $soportesActivos, 
+                'histotialSoportes' => $histotialSoportes
+            )
+        );
+        
+    }
+    
+    /**
+     * @Route("/gestion-conocimiento/capacitacion/{idCapacitacion}/documentos-soporte/{idCapacitacionSoporte}/borrar", name="capacitacionSoporteBorrar")
+     */
+    public function capacitacionSoporteBorrarAction(Request $request, $idCapacitacion, $idCapacitacionSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $capacitacionSoporte = new CapacitacionSoporte();
+        
+        $capacitacionSoporte = $em->getRepository('AppBundle:CapacitacionSoporte')->findOneBy(
+            array('id' => $idCapacitacionSoporte)
+        );
+        
+        $capacitacionSoporte->setFechaModificacion(new \DateTime());
+        $capacitacionSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('capacitacionSoporte', array( 'idCapacitacion' => $idCapacitacion));
+        
+    }   
 	
 	
 	/**
@@ -463,5 +1003,181 @@ class GestionConocimientoController extends Controller
         
         return $this->render('AppBundle:GestionConocimiento:evento-nuevo.html.twig', array('form' => $form->createView()));
     } 
+
+    /**
+     * @Route("/gestion-conocimiento/evento/{idEvento}/editar", name="eventoEditar")
+     */
+    public function eventoEditarAction(Request $request, $idEvento)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $evento = new Evento();
+
+        $evento = $em->getRepository('AppBundle:Evento')->findOneBy(
+            array('id' => $idEvento)
+        );
+
+        $form = $this->createForm(new EventoType(), $evento);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $evento = $form->getData();
+
+            
+
+            $evento->setFechaModificacion(new \DateTime());
+
+  
+
+            $em->flush();
+
+            return $this->redirectToRoute('eventoGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionConocimiento:evento-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idEvento' => $idEvento,
+                    'evento' => $evento,
+            )
+        );
+
+    }
+
+
+
+    /**
+     * @Route("/gestion-conocimiento/evento/{idEvento}/eliminar", name="eventoEliminar")
+     */
+    public function eventoEliminarAction(Request $request, $idEvento)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $evento = new Evento();
+
+        $evento = $em->getRepository('AppBundle:Evento')->find($idEvento);              
+
+        $em->remove($evento);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('eventoGestion'));
+
+    }
+
+    /**
+     * @Route("/gestion-conocimiento/evento/{idEvento}/documentos-soporte", name="eventoSoporte")
+     */
+    public function eventoSoporteAction(Request $request, $idEvento)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $eventoSoporte = new EventoSoporte();
+        
+        $form = $this->createForm(new EventoSoporteType(), $eventoSoporte);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $soportesActivos = $em->getRepository('AppBundle:EventoSoporte')->findBy(
+            array('active' => '1', 'evento' => $idEvento),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $histotialSoportes = $em->getRepository('AppBundle:EventoSoporte')->findBy(
+            array('active' => '0', 'evento' => $idEvento),
+            array('fecha_creacion' => 'ASC')
+        );
+        
+        $evento = $em->getRepository('AppBundle:Evento')->findOneBy(
+            array('id' => $idEvento)
+        );
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+
+                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                    array(
+                        'descripcion' => $eventoSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'talento_tipo_soporte'
+                    )
+                );
+                
+                $actualizarEventoSoportes = $em->getRepository('AppBundle:EventoSoporte')->findBy(
+                    array(
+                        'active' => '1' , 
+                        'tipo_soporte' => $tipoSoporte->getId(), 
+                        'evento' => $idEvento
+                    )
+                );  
+            
+                foreach ($actualizarEventoSoportes as $actualizarEventoSoporte){
+                    echo $actualizarEventoSoporte->getId()." ".$actualizarEventoSoporte->getTipoSoporte()."<br />";
+                    $actualizarEventoSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarEventoSoporte->setActive(0);
+                    $em->flush();
+                }
+                
+                $eventoSoporte->setEvento($evento);
+                $eventoSoporte->setActive(true);
+                $eventoSoporte->setFechaCreacion(new \DateTime());
+                //$grupoSoporte->setUsuarioCreacion(1);
+
+                $em->persist($eventoSoporte);
+                $em->flush();
+
+                return $this->redirectToRoute('eventoSoporte', array( 'idEvento' => $idEvento));
+            }
+        }   
+        
+        return $this->render(
+            'AppBundle:GestionConocimiento:evento-soporte.html.twig', 
+            array(
+                'form' => $form->createView(), 
+                'soportesActivos' => $soportesActivos, 
+                'histotialSoportes' => $histotialSoportes
+            )
+        );
+        
+    }
+    
+    /**
+     * @Route("/gestion-conocimiento/evento/{idEvento}/documentos-soporte/{idEventoSoporte}/borrar", name="eventoSoporteBorrar")
+     */
+    public function eventoSoporteBorrarAction(Request $request, $idEvento, $idEventoSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $eventoSoporte = new EventoSoporte();
+        
+        $eventoSoporte = $em->getRepository('AppBundle:EventoSoporte')->findOneBy(
+            array('id' => $idEventoSoporte)
+        );
+        
+        $eventoSoporte->setFechaModificacion(new \DateTime());
+        $eventoSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('eventoSoporte', array( 'idEvento' => $idEvento));
+        
+    }
 	
 }

@@ -4,11 +4,15 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 /**
  * PolizaSoporte
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="AppBundle\Entity\PolizaSoporteRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class PolizaSoporte
 {
@@ -27,35 +31,26 @@ class PolizaSoporte
     private $poliza;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\DocumentoSoporte")
      */
     private $tipo_soporte;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
-     */
-    private $estado;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="consecutivo", type="integer")
-     */
-    private $consecutivo;
-
-    /**
      * @var string
      *
-     * @ORM\Column(name="cofinanciacion", type="decimal")
-     */
-    private $cofinanciacion;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="path", type="string")
+     * @ORM\Column(name="path", type="string", length=255, nullable=true)
      */
     private $path;
+
+	/**
+     * @Assert\File(maxSize="5000000",
+	 * mimeTypes = {"application/pdf", "application/x-pdf", "image/jpeg", "image/gif", "image/png", "image/tiff"},
+	 * maxSizeMessage = "El tamaño máximo permitido es de 6MB.",
+	 * mimeTypesMessage = "Ingrese documentos con formato válido")
+     */
+    private $file;
+	
+	private $temp;
 
     /**
      * @var boolean
@@ -72,7 +67,7 @@ class PolizaSoporte
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
      */
     private $fecha_modificacion;
 
@@ -109,7 +104,7 @@ class PolizaSoporte
     public function setPoliza(\AppBundle\Entity\Poliza $poliza)
     {
         $this->poliza = $poliza;
-
+    
         return $this;
     }
 
@@ -126,97 +121,25 @@ class PolizaSoporte
     /**
      * Set tipoSoporte
      *
-     * @param AppBundle\Entity\Listas $tipoSoporte
+     * @param AppBundle\Entity\DocumentoSoporte $tipoSoporte
      *
-     * @return PolizaSoporte
+     * @return GrupoSoporte
      */
-    public function setTipoSoporte(\AppBundle\Entity\Listas $tipoSoporte)
+    public function setTipoSoporte(\AppBundle\Entity\DocumentoSoporte $tipoSoporte)
     {
         $this->tipo_soporte = $tipoSoporte;
-
+    
         return $this;
     }
 
     /**
      * Get tipoSoporte
      *
-     * @return AppBundle\Entity\Listas
+     * @return AppBundle\Entity\DocumentoSoporte
      */
-    public function getTipoSoporte()
+	 public function getTipoSoporte()
     {
         return $this->tipo_soporte;
-    }
-
-    /**
-     * Set estado
-     *
-     * @param AppBundle\Entity\Listas $estado
-     *
-     * @return PolizaSoporte
-     */
-    public function setEstado(\AppBundle\Entity\Listas $estado)
-    {
-        $this->estado = $estado;
-
-        return $this;
-    }
-
-    /**
-     * Get estado
-     *
-     * @return AppBundle\Entity\Listas
-     */
-    public function getEstado()
-    {
-        return $this->estado;
-    }
-
-    /**
-     * Set consecutivo
-     *
-     * @param integer $consecutivo
-     *
-     * @return PolizaSoporte
-     */
-    public function setConsecutivo($consecutivo)
-    {
-        $this->consecutivo = $consecutivo;
-
-        return $this;
-    }
-
-    /**
-     * Get consecutivo
-     *
-     * @return integer
-     */
-    public function getConsecutivo()
-    {
-        return $this->consecutivo;
-    }
-
-    /**
-     * Set cofinanciacion
-     *
-     * @param string $cofinanciacion
-     *
-     * @return PolizaSoporte
-     */
-    public function setCofinanciacion($cofinanciacion)
-    {
-        $this->cofinanciacion = $cofinanciacion;
-
-        return $this;
-    }
-
-    /**
-     * Get cofinanciacion
-     *
-     * @return string
-     */
-    public function getCofinanciacion()
-    {
-        return $this->cofinanciacion;
     }
 
     /**
@@ -224,12 +147,12 @@ class PolizaSoporte
      *
      * @param string $path
      *
-     * @return PolizaSoporte
+     * @return GrupoSoporte
      */
     public function setPath($path)
     {
         $this->path = $path;
-
+    
         return $this;
     }
 
@@ -248,12 +171,12 @@ class PolizaSoporte
      *
      * @param boolean $active
      *
-     * @return PolizaSoporte
+     * @return GrupoSoporte
      */
     public function setActive($active)
     {
         $this->active = $active;
-
+    
         return $this;
     }
 
@@ -272,12 +195,12 @@ class PolizaSoporte
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return PolizaSoporte
+     * @return GrupoSoporte
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
-
+    
         return $this;
     }
 
@@ -296,12 +219,12 @@ class PolizaSoporte
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return PolizaSoporte
+     * @return GrupoSoporte
      */
     public function setFechaModificacion($fechaModificacion)
     {
         $this->fecha_modificacion = $fechaModificacion;
-
+    
         return $this;
     }
 
@@ -320,12 +243,12 @@ class PolizaSoporte
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return PolizaSoporte
+     * @return GrupoSoporte
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
-
+    
         return $this;
     }
 
@@ -344,12 +267,12 @@ class PolizaSoporte
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return PolizaSoporte
+     * @return GrupoSoporte
      */
     public function setFechaCreacion($fechaCreacion)
     {
         $this->fecha_creacion = $fechaCreacion;
-
+    
         return $this;
     }
 
@@ -362,5 +285,112 @@ class PolizaSoporte
     {
         return $this->fecha_creacion;
     }
+	
+    public function getAbsolutePath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadRootDir().'/'.$this->path;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadDir().'/'.$this->path;
+    }
+
+    protected function getUploadRootDir()
+    {
+        // la ruta absoluta del directorio donde se deben
+        // guardar los archivos cargados
+        return __DIR__.'/../../../'.$this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        // se deshace del __DIR__ para no meter la pata
+        // al mostrar el documento/imagen cargada en la vista.
+        return 'uploads/documents';
+    }	
+	
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+        // check if we have an old image path
+        if (isset($this->path)) {
+            // store the old name to delete after the update
+            $this->temp = $this->path;
+            $this->path = null;
+        } else {
+            $this->path = 'initial';
+        }
+    }
+	
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
+    {
+        if (null !== $this->getFile()) {
+            // haz lo que quieras para generar un nombre único
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->path = $filename.'.'.$this->getFile()->guessExtension();
+        }
+    }
+	
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload()
+    {
+        if (null === $this->getFile()) {
+            return;
+        }
+
+		//$this->getTipoSoporte();
+		//$this->getTipoSoporte();
+		
+        // si hay un error al mover el archivo, move() automáticamente
+        // envía una excepción. This will properly prevent
+        // the entity from being persisted to the database on error
+        $this->getFile()->move($this->getUploadRootDir(), $this->path);
+
+        // check if we have an old image
+        if (isset($this->temp)) {
+            // delete the old image
+            unlink($this->getUploadRootDir().'/'.$this->temp);
+            // clear the temp image path
+            $this->temp = null;
+        }
+        $this->file = null;
+    }
+	
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        if ($file = $this->getAbsolutePath()) {
+            unlink($file);
+        }
+    }	
 }
 

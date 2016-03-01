@@ -12,7 +12,19 @@ class PolizaType extends AbstractType
     {
         $builder
 		
-			 ->add('grupo')	;					
+			 
+			 ->add('estado', 'entity', array('label' => 'Estado', 
+											'class' => 'AppBundle:Listas',
+										    'query_builder' => function(EntityRepository $er) {
+										        return $er->createQueryBuilder('l')
+										        	->where('l.dominio = :dominio')
+										        	->andWhere('l.active = 1')
+										        	->setParameter('dominio', 'estado_ahorro')
+										            ->orderBy('l.orden', 'ASC');
+										    },))
+			 ->add('consecutivo', 'text', array('label' => ' Consecutivo'))
+			 ->add('cofinanciacion', 'text', array('label' => 'Coofinanciación'))
+			 ;					
 			 
 			 
             
@@ -27,6 +39,6 @@ class PolizaType extends AbstractType
 	
     public function getName()
     {
-        return 'Poliza';
+        return 'poliza';
     }
 }
