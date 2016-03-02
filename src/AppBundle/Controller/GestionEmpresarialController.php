@@ -1387,6 +1387,9 @@ class GestionEmpresarialController extends Controller
                             else
                                 self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 3);//Rechazado(3) Clear de Habilitación
                         }
+                        else{//PROGRAMACIÓN GENÉRICA DE CONTRALORÍA O ASIGNACIÓN
+                            self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), $idUltimoNodo, 2);
+                        }
 
                     }
 
@@ -1713,6 +1716,8 @@ class GestionEmpresarialController extends Controller
                     'idCLEAR' => $idCLEAR
                 ));   
         }
+
+        
         /*
         $this->addFlash('info',  
                 array(
@@ -6613,7 +6618,13 @@ class GestionEmpresarialController extends Controller
             );
             
             $pasantia->setUsuarioCreacion($usuarioCreacion);*/
-
+            if($visita->getInterventoria())
+                self::nodoCamino($idGrupo, $nodo->getId(), 6);
+            else{
+                self::nodoCamino($idGrupo, $nodo->getId(), 2);
+                self::nodoCamino($idGrupo, $nodo->getId()+1, 1);
+            }
+        
             $em->persist($visita);
             $em->flush();
 
