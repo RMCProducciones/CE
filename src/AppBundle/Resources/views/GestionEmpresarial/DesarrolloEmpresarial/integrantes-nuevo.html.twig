@@ -164,10 +164,10 @@
         <br />
 
         <div class="row">      
-            <div class="col-md-4">
+            <div class="col-md-4" style='opacity:0.0'>
               {{ form_label(form.pertenencia_etnica) }}
               {{ form_errors(form.pertenencia_etnica) }}
-              {{ form_widget(form.pertenencia_etnica, { 'attr': {'class': 'form-control'} }) }}
+              {{ form_widget(form.pertenencia_etnica, { 'attr': {'class': 'form-control', 'disabled': 'disabled'} }) }}
             </div>
         </div>
         <br />
