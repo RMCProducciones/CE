@@ -15,6 +15,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 use AppBundle\Entity\Grupo;
+
 use AppBundle\Entity\GrupoSoporte;
 use AppBundle\Entity\AsignacionBeneficiarioComiteVamosBien;
 use AppBundle\Entity\AsignacionBeneficiarioEstructuraOrganizacional;
@@ -30,6 +31,7 @@ use AppBundle\Entity\Concurso;
 use AppBundle\Entity\AsignacionGrupoConcurso;
 use AppBundle\Entity\ConcursoSoporte;
 use AppBundle\Entity\ActividadConcurso;
+use AppBundle\Entity\ActividadSoporte;
 use AppBundle\Entity\Listas;
 use AppBundle\Entity\Comite;
 use AppBundle\Entity\AsignacionGrupoComite;
@@ -87,6 +89,7 @@ use AppBundle\Form\GestionEmpresarial\CLEARType;
 use AppBundle\Form\GestionEmpresarial\ClearSoporteType;
 use AppBundle\Form\GestionEmpresarial\ConcursoType;
 use AppBundle\Form\GestionEmpresarial\ActividadConcursoType;
+use AppBundle\Form\GestionEmpresarial\ActividadSoporteType;
 use AppBundle\Form\GestionEmpresarial\ComiteType;
 use AppBundle\Form\GestionEmpresarial\IntegranteType;
 use AppBundle\Form\GestionEmpresarial\IntegranteSoporteType;
@@ -2332,6 +2335,19 @@ class GestionEmpresarialController extends Controller
     }
 
 
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/gestion-actividades", name="actividadGestion")
+     */
+    public function actividadGestionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $actividad = $em->getRepository('AppBundle:ActividadConcurso')->findBY(
+            array('active' => 1)
+          
+        ); 
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:concurso-actividades-gestion.html.twig', array( 'actividad' => $actividad));
+    }
 
 	
 	 /**
@@ -2363,6 +2379,185 @@ class GestionEmpresarialController extends Controller
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:concurso-actividades.html.twig', array('form' => $form->createView()));
     } 
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/actividades/{idActividad}/editar", name="actividadEditar")
+     */
+    public function actividadEditarAction(Request $request, $idActividad)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $actividad = new Actividadconcurso();
+
+        $actividad = $em->getRepository('AppBundle:Actividadconcurso')->findOneBy(
+            array('id' => $idActividad)
+        );
+
+        $form = $this->createForm(new ActividadconcursoType(), $actividad);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $actividad = $form->getData();
+
+            $actividad->setFechaModificacion(new \DateTime());
+
+            
+
+            $em->flush();
+
+            return $this->redirectToRoute('actividadGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:concurso-actividades-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idActividad' => $idActividad,
+                    'actividad' => $actividad,
+            )
+        );
+
+    }
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/actividades/{idActividad}/eliminar", name="actividadEliminar")
+     */
+    public function actividadEliminarAction(Request $request, $idActividad)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $actividad = new ActividadConcurso();
+
+        $actividad = $em->getRepository('AppBundle:ActividadConcurso')->find($idActividad);              
+
+        $em->remove($actividad);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('actividadGestion'));
+
+    }
+
+
+
+/**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/actividades/{idActividad}/documentos-soporte", name="actividadSoporte")
+     */
+    public function actividadSoporteAction(Request $request, $idActividad)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $actividadSoporte = new ActividadSoporte();
+        
+        $form = $this->createForm(new ActividadSoporteType(), $actividadSoporte);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $soportesActivos = $em->getRepository('AppBundle:ActividadSoporte')->findBy(
+            array('active' => '1', 'actividad' => $idActividad),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $histotialSoportes = $em->getRepository('AppBundle:ActividadSoporte')->findBy(
+            array('active' => '0', 'actividad' => $idActividad),
+            array('fecha_creacion' => 'ASC')
+        );
+        
+        $actividad = $em->getRepository('AppBundle:ActividadConcurso')->findOneBy(
+            array('id' => $idActividad)
+        );
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+
+                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                    array(
+                        'descripcion' => $actividadSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'grupo_tipo_soporte'
+                    )
+                );
+                
+                $actualizarActividadSoportes = $em->getRepository('AppBundle:ActividadSoporte')->findBy(
+                    array(
+                        'active' => '1' , 
+                        'tipo_soporte' => $tipoSoporte->getId(), 
+                        'actividad' => $idActividad
+                    )
+                );  
+            
+                foreach ($actualizarActividadSoportes as $actualizarActividadSoporte){
+                    echo $actualizarActividadSoporte->getId()." ".$actualizarActividadSoporte->getTipoSoporte()."<br />";
+                    $actualizarActividadSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarActividadSoporte->setActive(0);
+                    $em->flush();
+                }
+                
+                $actividadSoporte->setActividadConcurso($actividad);
+                $actividadSoporte->setActive(true);
+                $actividadSoporte->setFechaCreacion(new \DateTime());
+                //$grupoSoporte->setUsuarioCreacion(1);
+
+                $em->persist($actividadSoporte);
+                $em->flush();
+
+                return $this->redirectToRoute('actividadSoporte', array( 'idActividad' => $idActividad));
+            }
+        }   
+        
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:concurso-actividades-soporte.html.twig', 
+            array(
+                'form' => $form->createView(), 
+                'soportesActivos' => $soportesActivos, 
+                'histotialSoportes' => $histotialSoportes
+            )
+        );
+        
+    }
+    
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/actividades/{idActividad}/documentos-soporte/{idActividadSoporte}/borrar", name="actividadSoporteBorrar")
+     */
+    public function actividadSoporteBorrarAction(Request $request, $idActividad, $idActividadSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $actividadSoporte = new ActividadSoporte();
+        
+        $actividadSoporte = $em->getRepository('AppBundle:ActividadSoporte')->findOneBy(
+            array('id' => $idActividadSoporte)
+        );
+        
+        $actividadSoporte->setFechaModificacion(new \DateTime());
+        $actividadSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('actividadSoporte', array( 'idActividad' => $idActividad));
+        
+    }
+
+
+
+
 	
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/asignacion-grupo", name="concursoGrupo")

@@ -1,14 +1,14 @@
 {% extends 'AppBundle::frontend.html.twig' %}
 
-{% block title %}Concursos{% endblock %}
+{% block title %}Actividades{% endblock %}
 
 {% block breadcrumb_ul %}
 
     <ul class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
-      <li>Formacion de capital social asociativo y desarrollo empresarial</li>
-      <li><a href="{{ path('concursoGestion') }}">Concursos</a></li>
+      <li>Concursos</li>
+      <li><a href="{{ path('actividadGestion') }}">Actividades</a></li>
       <li class="active">Documentos Soporte</li>
     </ul>
 
@@ -33,7 +33,7 @@
   
               <button name="grupoSoporte[Guardar]" id="grupoSoporte_Guardar" type="submit" class="btn btn-success">Guardar</button>
               
-              <a href="{{ path('concursoGestion') }}" class="btn btn-danger" title="" alt="Cancelar" >Cancelar</a>
+              <a href="{{ path('actividadGestion') }}" class="btn btn-danger" title="" alt="Cancelar" >Cancelar</a>
               
             </div>
           </div>
@@ -45,7 +45,7 @@
     
     <div class="section">
       <div class="container">
-		<h2 class="page-header">Gestión de documentos soportes del Concurso</h2>
+		<h2 class="page-header">Gestión de documentos soportes de las actividades de Concurso</h2>
         <div class="row">
           <div class="col-md-12">
               
@@ -87,7 +87,7 @@
 		<h2 class="page-header">Documentos soportes activos</h2>
         <div class="row">
           <div class="col-md-12">
-            <table class="table" ng-controller="gestionDocumentoSoporteConcursoCtrl">
+            <table class="table" ng-controller="gestionDocumentoSoporteActividadCtrl">
               <thead>
                 	<tr>
 	                  <th>#</th>
@@ -113,8 +113,7 @@
 	                  <td>
 	                    <a href="{{ asset('../uploads/documents/'~ soporteActivo.path) }}" alt="Descargar" title="Descargar"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a> | 	 
 
-                      
-                      <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="anularSoporteConcurso();" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true" ng-click="idConcurso = {{soporteActivo.concurso.id}}; idConcursoSoporteActivo = {{soporteActivo.id}}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>              
+                      <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="anularSoporteActividad();" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true" ng-click="idActividad = {{soporteActivo.actividadconcurso.id}}; idActividadSoporteActivo = {{soporteActivo.id}}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>              
 	                 
                     </td>
 	                </tr>

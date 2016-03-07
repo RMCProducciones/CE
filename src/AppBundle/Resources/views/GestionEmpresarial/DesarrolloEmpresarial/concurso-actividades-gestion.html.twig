@@ -1,0 +1,146 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+
+{% block title %}Gestion de Actividades{% endblock %}
+
+{% block breadcrumb_ul %}
+
+    <ul class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Empresarial</li>
+      <li>Concursos</li>
+      <li class="active">Gestion Actividades</li>
+    </ul>
+{% endblock %}
+
+
+
+
+
+{% block section %}
+  <div class="container">
+    <h1>Gestión de Actividades</h1>
+    <hr>
+  </div>
+
+  <br />
+  <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="btn-group">
+              <a href="{{ path('concursoGestion') }}" class="btn btn-warning">Volver</a>
+              <a href="{{ path('actividadConcurso')}}" class="btn btn-success">Nuevo</a>
+            </div>
+
+          
+          </div>
+        </div>
+      </div>
+    </div>  
+
+
+    <div class="container">
+    <div class="alert alert-[[estadoMensaje]] alert-dismissible" id="MensajeCtrl" ng-show="mostrarMensaje === true" role="alert">[[textoMensaje]]<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+    </div>
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 table-responsive">
+            <table class="table table-striped table-hover" ng-controller="gestionActividadCtrl">
+              <thead>
+                	<tr>
+	                  <th class="text-center">#</th>	    
+                    <th></th> 
+                    <th></th>     
+	                  <th class="text-left">Actividad</th>
+                    <th></th>
+	                  <th class="text-left">Mejoras</th>
+                    <th></th>
+	                  <th class="text-left">Duración</th>                    
+	                  <th class="text-center">Acciones</th>
+	                </tr>
+	           </thead>
+	           <tbody>
+               
+                {% set consecutivo = 1 %}
+	    	
+	    		{% for actividad in actividad %}
+	                
+	                <tr id="filaActividad{{ consecutivo }}">
+	                  <td class="text-center">{{ consecutivo }}</td>
+                    <td></td>	    
+                    <th></th>              
+	                  <td class="text-left">{{ actividad.actividad}}</td>
+                    <th></th>
+	                  <td class="text-left">{{ actividad.mejoras}}</td>
+                    <th></th>
+	                  <td class="text-left">
+	                   {{actividad.duracion}}
+	                  </td>	 
+                     
+
+	                  <td class="text-center">
+
+	            <a href="{{ path('actividadSoporte', {'idActividad': actividad.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> |
+             
+              <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ actividad.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
+     
+              <a title="Editar" alt="Editar" href="{{ path('actividadEditar', {'idActividad': actividad.id}) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> |      
+
+              <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarActividad({'{{actividad.id}}, {{consecutivo}});" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true" ng-click="idActividad = {{actividad.id}};"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+               
+                   
+                    </td>
+	                </tr>
+	                {% set consecutivo = consecutivo + 1 %}
+	                {% else %}
+	                
+	                <tr>
+	                  	<td colspan="9" class="info">No se encontraron registros.</td>
+	                </tr>
+	                
+	                {% endfor %}
+              
+               </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>  
+
+	{% for actividad in actividad %}
+    <!-- Modal -->
+    <div class="modal fade" id="myModal{{ actividad.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">{{ actividad.id }} | {{ actividad.actividad}}</h4>
+          </div>
+          <div class="modal-body">
+            <b>Actividad:{{ actividad.actividad}}</b>
+            <br>
+            <b>Mejoras: {{ actividad.mejoras}}</b>
+            <br>
+            <b>Recursos: {{ actividad.recursos }}</b>
+            <br>
+            <b>Duracion: {{ actividad.duracion }}</b>
+            <br>
+            <b>Semana de inicio : {{ actividad.semanainicio}}</b>
+			<br>
+            <b>Semana de Finalización: {{ actividad.semanafinalizacion }}</b>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}  
+       
+{% endblock %}
