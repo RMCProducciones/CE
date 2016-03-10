@@ -13,19 +13,15 @@ app.controller('gestionDocumentoSoporteActividadCtrl', ['$scope', '$location', f
 
 }]);
 
-
-
-
-
-
-
 app.controller('gestionActividadCtrl', ['$scope', '$http', function($scope, $http) {
+
+	console.log("Cargo gestionActividadCtrl");
 
 	$scope.idActividad = 0;	
 
-	console.log($scope.estadoMensaje);
+	//console.log($scope.estadoMensaje);
 
-	$scope.eliminarActividad = function(idActividad, consecutivo){
+	/*$scope.eliminarActividad = function(idActividad, consecutivo){
 
 		$scope.idActividad= idActividad;
 		$scope.consecutivoActividad = consecutivo;
@@ -46,8 +42,7 @@ app.controller('gestionActividadCtrl', ['$scope', '$http', function($scope, $htt
 			
 		});
 
-		
-	};	
+	};	*/
 
 }]);
 

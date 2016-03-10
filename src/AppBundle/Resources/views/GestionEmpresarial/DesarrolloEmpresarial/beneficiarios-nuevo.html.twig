@@ -130,17 +130,20 @@
 				  <switch id="swDesplazado" name="swDesplazado" ng-model="swDesplazado"  class="green" on="Si" off="No"></switch>
                   {{ form_widget(form.desplazado, { 'attr': {'style':'visibility:hidden'} }) }}
 				  </center>				  
-                </div>               
-                <div class="col-md-4" > 
+                </div>  
+                <div ng show="mostrarGrupoIndigena" ng-controller="PertenenciaEtnicaCtrl">    
+
+                <div class="col-md-4"  > 
                   {{ form_label(form.pertenencia_etnica) }}
 				  {{ form_errors(form.pertenencia_etnica) }}
 				  {{ form_widget(form.pertenencia_etnica, { 'attr': {'class': 'form-control pertenencia_etnica','ng-model': 'pertenenciaEtnica', 'ng-change': 'grupoIndigena()'} }) }}	     	
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" >
                   {{ form_label(form.grupo_indigena) }}
 				  {{ form_errors(form.grupo_indigena) }}
-				  {{ form_widget(form.grupo_indigena, { 'attr': {'class': 'form-control', 'ng-show':'mostrarGrupoIndigena'} }) }}                  
-				  <select class ="form-control" ng-hide="mostrarGrupoIndigena" disabled></select>
+				  {{ form_widget(form.grupo_indigena, { 'attr': {'class': 'form-control','ng-show':'mostrarGrupoIndigena'} }) }}                  
+				  
+                </div>
                 </div>
 		</div>
 		
