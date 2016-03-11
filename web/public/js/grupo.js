@@ -188,3 +188,14 @@ app.controller('gestionEstructuraOrganizacionalCtrl', ['$scope', '$http', functi
 }]);
 
 
+app.controller('FormalCtrl', ['$scope', function($scope) {
+
+	$scope.mostrarFormal = false;	
+
+	$scope.infoFormal = function() { 
+		$scope.mostrarFormal = $(".tipo option[value='"+$('.tipo').val()+"']").text().toLowerCase() != "Formal Con Negocio"||$(".tipo option[value='"+$('.tipo').val()+"']").text().toLowerCase() !="Formal Sin Negocio";			
+	};	
+
+}]);
+
+

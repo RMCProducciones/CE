@@ -312,6 +312,13 @@ class GestionEmpresarialController extends Controller
                 $grupo->setCacerio(null);
             }
 
+            if($grupo->getTipo()->getDescripcion() != 'Formal con negocio'||$grupo->getTipo()->getDescripcion() != 'Formal Sin Negocio'){
+             $grupo->setNullFiguraLegalConstitucion();
+             $grupo->setNullNumeroIdentificacionTributaria();
+             $grupo->setNullNumeroFechaConstitucionLegal();
+                     
+            }  
+
             $grupo->setActive(true);
             $grupo->setFechaCreacion(new \DateTime());
 
