@@ -1,0 +1,290 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+{% block title %}Grupos{% endblock %}
+
+{% block breadcrumb_ul %}
+
+    <ul class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Empresarial</li>
+      <li>Formacion de capital social asociativo y desarrollo empresarial</li>
+      <li><a href="{{ path('gruposGestion') }}">Grupos</a></li>
+      <li class="active">Nuevo</li>
+    </ul>
+
+{% endblock %}
+
+
+{% block section %}
+<div class="container">
+    <h1> Gestión Grupos </h1>
+    <hr>
+    <h3> Nuevo Registro</h3>
+    <br />
+    <br />
+  </div>
+     
+
+  {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+    {{ form_errors(form) }}
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="btn-group">
+  
+              <button name="grupo[guardar]" id="grupo_guardar" type="submit" class="btn btn-success">Guardar</button>
+              
+              <a href="{{ path('gruposGestion') }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <br>
+        
+
+
+    <div class="section">
+      <div class="container">
+        
+		
+			<div class="row">
+				<div class="col-md-12">
+					<fieldset>
+						<legend>Datos básicos del grupo</legend>
+					</fieldset>            
+				</div>
+			</div>	
+
+			<div ng-controller="ListasLocalizacionCtrl" ng-init="valoresInicialesLocalizacion(true, 0, 0, 0)">
+			
+			<div class="row">
+				<div class="col-md-4">
+					  <label>* Departamento</label>
+						<select id="selDepartamento" ng-model="selDepartamento" class="form-control" ng-change="cargarZonas()">
+						<option ng-repeat="departamento in JSONDepartamento track by departamento.id" ng-selected="[[departamento.id == idDepartamento]]" value="[[departamento.id]]">[[departamento.nombre]]</option>
+					</select> 
+				</div>
+				<div class="col-md-4">
+					  <label>* Zona</label>
+					<select id="selZona" ng-model="selZona" class="form-control" ng-change="cargarMunicipios()">
+						<option ng-repeat="zona in JSONZona" ng-selected="[[zona.id == idZona]]" value="[[zona.id]]">[[zona.nombre]]</option>
+					</select>
+				</div>
+					<div class="col-md-4">
+					   {{ form_label(form.municipio) }}
+					   {{ form_errors(form.municipio) }}
+					<select id="selMunicipio" ng-model="selMunicipio" class="form-control" ng-change="cambiarMunicipio()">
+						<option ng-repeat="municipio in JSONMunicipio" ng-selected="[[municipio.id == idMunicipio]]" value="[[municipio.id]]">[[municipio.nombre]]</option>
+					</select>
+					   {{ form_widget(form.municipio, { 
+					   		'attr': {
+					   			'class': 'form-control selMunicipio',
+								'style': 'visibility:hidden'
+					   		} }) }}
+					</div>
+			</div>	
+			</div>	
+
+			<br/>
+			
+			<div class="row">
+				<div class="col-md-4">
+                  {{ form_label(form.nombre) }}
+                  {{ form_errors(form.nombre) }}
+                  {{ form_widget(form.nombre, { 'attr': {'class': 'form-control', 'placeholder': 'Nombre del grupo'} }) }}
+                </div>
+
+           
+                </div>
+
+			<br/>
+
+
+
+
+          <div ng-controller ="FormalCtrl">
+          	<div class="row">
+                <div class="col-md-4">
+                  {{ form_label(form.tipo) }}
+                  {{ form_errors(form.tipo) }}
+                  {{ form_widget(form.tipo, { 'attr': {'class': 'form-control Tipo','ng-model': 'Tipo', 'ng-change': 'infoFormal()'} }) }}
+                </div>
+                </div>
+
+         <div ng-show="mostrarFormal">
+				<div class="col-md-12" >
+					<fieldset>
+						<legend>Datos de constitución de la empresa</legend>
+					</fieldset>            
+				</div>	
+
+			<br/>
+			
+	<div class="row" ng-controller="datosEmpresaGrupoCtrl" >
+                <div class="col-md-4">
+                  {{ form_label(form.figura_legal_constitucion) }}
+                  {{ form_errors(form.figura_legal_constitucion) }}
+                  {{ form_widget(form.figura_legal_constitucion, { 'attr': {'class': 'form-control', 'placeholder': 'Figura legal de constitución','ng-show':'mostrarFormal'} }) }}
+                </div>
+
+                <div class="col-md-4">
+                  {{ form_label(form.numero_identificacion_tributaria) }}
+                  {{ form_errors(form.numero_identificacion_tributaria) }}
+				  <div class="input-group">
+                  	<input type="text" class="form-control" ng-model="numeroIdentificacion" ng-change="calcularDigitoVerificacion()" placeholder="Número de identificación tributaria...">
+					<div class="input-group-addon"> - [[digitoVerificacion]]</div>
+                  </div>
+
+                  <div style="visibility:hidden">
+	                  {{ form_widget(form.numero_identificacion_tributaria, { 'attr': {'class': 'form-control', 'placeholder': 'Número de identificación tributaria', 'value': '[[numeroIdentificacion]]-[[digitoVerificacion]]','ng-show':'mostrarFormal'} }) }}
+                  </div>  
+                </div>
+
+            <div class="col-md-4">
+                  {{ form_label(form.fecha_constitucion_legal) }}
+                  {{ form_errors(form.fecha_constitucion_legal) }}
+                  {{ form_widget(form.fecha_constitucion_legal, { 'attr': {'class': 'form-control','ng-show':'mostrarFormal'} }) }}
+            </div>
+	</div>
+			</div>
+			</div>
+				
+			
+		
+
+
+
+			<div class="row">
+				<div class="col-md-12">
+					<fieldset>
+						<legend>Localización del grupo</legend>
+					</fieldset>            
+				</div>
+			</div>	
+
+			<br/>
+
+			<div ng-controller = "CamposDireccionGrupoCtrl">
+				<div class="row">
+						<div class="col-md-4">
+						  {{ form_label(form.rural) }}<br/>
+						  {{ form_errors(form.rural) }}
+						  <switch id="swRural" name="swRural" ng-model="swRural" class="green" on="Si" off="No"></switch>
+						  {{ form_widget(form.rural, { 'attr': {'style':'visibility:hidden'} }) }}
+						</div>
+						<div class="col-md-4">
+						  {{ form_label(form.direccion) }}
+						  {{ form_errors(form.direccion) }}
+						  {{ form_widget(form.direccion, { 'attr': {'class': 'form-control', 'placeholder': 'Dirección'} }) }}
+						</div>
+						<div class="col-md-4">
+							<div ng-show="swRural === false">
+							  {{ form_label(form.barrio) }}
+							  {{ form_errors(form.barrio) }}
+							  {{ form_widget(form.barrio, { 'attr': {'class': 'form-control', 'placeholder': 'Barrio'} }) }}
+							</div>
+							<div ng-show="swRural === true">							
+							  {{ form_label(form.corregimiento) }}
+							  {{ form_errors(form.corregimiento) }}
+							  {{ form_widget(form.corregimiento, { 'attr': {'class': 'form-control', 'placeholder': 'Corregimiento'} }) }}							  
+						</div>
+						</div>
+				</div>	
+
+				<br/>
+	
+				<div class="row" ng-show="swRural === true">
+						<div class="col-md-4">							  
+						</div>
+
+						<div class="col-md-4">
+						  {{ form_label(form.vereda) }}
+						  {{ form_errors(form.vereda) }}
+						  {{ form_widget(form.vereda, { 'attr': {'class': 'form-control', 'placeholder': 'Vereda'} }) }}
+						</div>
+
+						<div class="col-md-4">
+						  {{ form_label(form.cacerio) }}
+						  {{ form_errors(form.cacerio) }}
+						  {{ form_widget(form.cacerio, { 'attr': {'class': 'form-control', 'placeholder': 'Cacerío'} }) }}
+						</div>
+				</div>	
+			</div>	
+			
+		
+			<br/>
+
+			<div class="row">
+				<div class="col-md-12">
+					<fieldset>
+						<legend>Información de contacto del grupo</legend>
+					</fieldset>            
+				</div>
+			</div>	
+
+			<br/>
+	
+			<div class="row">
+                <div class="col-md-4">
+                  {{ form_label(form.telefono_fijo) }}
+                  {{ form_errors(form.telefono_fijo) }}
+                  {{ form_widget(form.telefono_fijo, { 'attr': {'class': 'form-control', 'placeholder': 'Teléfono fijo'} }) }}
+                </div>
+                <div class="col-md-4">
+                  {{ form_label(form.telefono_celular) }}
+                  {{ form_errors(form.telefono_celular) }}
+                  {{ form_widget(form.telefono_celular, { 'attr': {'class': 'form-control', 'placeholder': 'Teléfono celular'} }) }}
+                </div>
+                <div class="col-md-4">
+                  {{ form_label(form.correo_electronico) }}
+                  {{ form_errors(form.correo_electronico) }}
+                  {{ form_widget(form.correo_electronico, { 'attr': {'class': 'form-control', 'placeholder': 'Correo electrónico'} }) }}
+                </div>
+			</div>
+	
+
+			<br/>
+			
+			<div class="row">
+				<div class="col-md-12">
+					<fieldset>
+						<legend>Información financiera</legend>
+					</fieldset>            
+				</div>
+			</div>	
+
+			<br/>
+	
+			<div class="row">
+                <div class="col-md-4">
+                  {{ form_label(form.entidad_financiera_cuenta) }}
+                  {{ form_errors(form.entidad_financiera_cuenta) }}
+                  {{ form_widget(form.entidad_financiera_cuenta, { 'attr': {'class': 'form-control', 'placeholder': 'Entidad financiera donde tiene la cuenta'} }) }}
+                </div>
+                <div class="col-md-4">
+                  {{ form_label(form.tipo_cuenta) }}
+                  {{ form_errors(form.tipo_cuenta) }}
+                  {{ form_widget(form.tipo_cuenta, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+				<div class="col-md-4">
+                  {{ form_label(form.numero_cuenta) }}
+                  {{ form_errors(form.numero_cuenta) }}
+                  {{ form_widget(form.numero_cuenta, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+			</div>
+
+			<br/>				
+       
+      </div>
+    </div>
+
+  {{ form_end(form) }}
+               
+{% endblock %}
+
