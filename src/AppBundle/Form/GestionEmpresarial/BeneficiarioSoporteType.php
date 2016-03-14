@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\ORM\EntityRepository;
 
-class IntegranteSoporteType extends AbstractType
+class BeneficiarioSoporteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -17,7 +17,7 @@ class IntegranteSoporteType extends AbstractType
 					return $er->createQueryBuilder('l')
 						->where('l.dominio = :dominio')
 						->andWhere('l.active = 1')
-						->setParameter('dominio', 'grupo_tipo_soporte')
+						->setParameter('dominio', 'beneficiario_tipo_soporte')
 						->orderBy('l.orden', 'ASC');
 				},
 			))
@@ -27,6 +27,6 @@ class IntegranteSoporteType extends AbstractType
     
     public function getName()
     {
-        return 'integranteSoporte';
+        return 'beneficiarioSoporte';
     }
 }

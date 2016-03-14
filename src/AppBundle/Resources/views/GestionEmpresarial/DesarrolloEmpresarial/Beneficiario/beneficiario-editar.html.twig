@@ -8,8 +8,8 @@
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
       <li>Formacion de capital social asociativo y desarrollo empresarial</li>
-      <li><a href="{{ path('gruposGestion') }}">Grupos</a></li>
-      <li><a href="{{ path('beneficiariosGestion', {'idGrupo': idGrupo}) }}">Beneficiarios</a></li>
+      <li><a href="{{ path('grupoGestion') }}">Grupos</a></li>
+      <li><a href="{{ path('beneficiarioGestion', {'idGrupo': idGrupo}) }}">Beneficiarios</a></li>
       <li class="active">Nuevo</li>
     </ul>
 
@@ -20,7 +20,7 @@
 <div class="container">
     <h1> Gestión Grupos -Beneficiario </h1>
     <hr>
-    <h3> Editar Registro</h3>
+    <h3> Nuevo Registro</h3>
     <br />
     <br />
   </div>
@@ -38,7 +38,7 @@
             <div class="btn-group">
               <a href="#" onclick="document.forms[0].submit();return false;" class="btn btn-success">Guardar</a>
               
-              <a href="{{ path('beneficiariosGestion', {'idGrupo': idGrupo}) }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+              <a href="{{ path('beneficiarioGestion', {'idGrupo': idGrupo}) }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
             </div>
           </div>
         </div>
@@ -85,17 +85,17 @@
 				<div class="col-md-4">
                   {{ form_label(form.segundo_apellido) }}
 				  {{ form_errors(form.segundo_apellido) }}
-                  {{ form_widget(form.segundo_apellido, { 'attr': {'class': 'form-control', 'placeholder': 'segundo apellido'} }) }}
+                  {{ form_widget(form.segundo_apellido, { 'attr': {'class': 'form-control', 'placeholder': 'Segundo apellido'} }) }}
                 </div>
                 <div class="col-md-4">
                   {{ form_label(form.primer_nombre) }}
 				  {{ form_errors(form.primer_nombre) }}
-                  {{ form_widget(form.primer_nombre, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
+                  {{ form_widget(form.primer_nombre, { 'attr': {'class': 'form-control', 'placeholder': 'Primer nombre '} }) }}
                 </div>
                 <div class="col-md-4">
                   {{ form_label(form.segundo_nombre) }}
 				  {{ form_errors(form.segundo_nombre) }}
-                  {{ form_widget(form.segundo_nombre, { 'attr': {'class': 'form-control', 'placeholder': 'segundo nombre'} }) }}
+                  {{ form_widget(form.segundo_nombre, { 'attr': {'class': 'form-control', 'placeholder': 'Segundo nombre'} }) }}
                 </div>
 		</div>
         
@@ -130,18 +130,22 @@
 				  <switch id="swDesplazado" name="swDesplazado" ng-model="swDesplazado"  class="green" on="Si" off="No"></switch>
                   {{ form_widget(form.desplazado, { 'attr': {'style':'visibility:hidden'} }) }}
 				  </center>				  
-                </div>               
-                <div class="col-md-4" > 
+                </div> 
+
+                <div ng show="mostrarGrupoIndigena" ng-controller="PertenenciaEtnicaCtrl"> 
+                <div class="col-md-4"  > 
                   {{ form_label(form.pertenencia_etnica) }}
 				  {{ form_errors(form.pertenencia_etnica) }}
 				  {{ form_widget(form.pertenencia_etnica, { 'attr': {'class': 'form-control pertenencia_etnica','ng-model': 'pertenenciaEtnica', 'ng-change': 'grupoIndigena()'} }) }}	     	
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" >
                   {{ form_label(form.grupo_indigena) }}
 				  {{ form_errors(form.grupo_indigena) }}
-				  {{ form_widget(form.grupo_indigena, { 'attr': {'class': 'form-control', 'ng-show':'mostrarGrupoIndigena'} }) }}                  
-				  <select class ="form-control" ng-hide="mostrarGrupoIndigena" disabled></select>
+				  {{ form_widget(form.grupo_indigena, { 'attr': {'class': 'form-control','ng-show':'mostrarGrupoIndigena'} }) }}                  
+				  
                 </div>
+                </div>
+
 		</div>
 		
 		<br/>
@@ -175,21 +179,23 @@
 
 		<br/>
                   <div class="row">
-				  <div class="col-md-4">
-                  {{ form_label(form.puntaje_sisben) }}
-				  {{ form_errors(form.puntaje_sisben) }}
-                  {{ form_widget(form.puntaje_sisben, { 'attr': {'class': 'form-control', 'placeholder': 'puntaje sisben'} }) }}
-                </div>
                 <div class="col-md-4">
                   {{ form_label(form.corte_sisben) }}
 				  {{ form_errors(form.corte_sisben) }}
-                  {{ form_widget(form.corte_sisben, { 'attr': {'class': 'form-control', 'placeholder': 'corte sisben'} }) }}
+                  {{ form_widget(form.corte_sisben, { 'attr': {'class': 'form-control', 'placeholder': 'Corte sisben'} }) }}
                 </div>
+				  <div class="col-md-4">
+                  {{ form_label(form.puntaje_sisben) }}
+				  {{ form_errors(form.puntaje_sisben) }}
+                  {{ form_widget(form.puntaje_sisben, { 'attr': {'class': 'form-control', 'placeholder': 'Puntaje sisben'} }) }}
+                </div>
+                
                 <div class="col-md-4">
 				  {{ form_label(form.discapacidad) }}
 				  {{ form_errors(form.discapacidad) }}
                   {{ form_widget(form.discapacidad, { 'attr': {'class': 'form-control'} }) }}
                 </div> 
+
 		</div>
 		
 		
@@ -235,7 +241,7 @@
 		
 		</br>
 		
-		<div ng-controller = "CamposDireccionCtrl">
+		<div ng-controller = "CamposDireccionBeneficiarioCtrl">
 				<div class="row">
 						<div class="col-md-4">
 						  {{ form_label(form.rural) }}<br/>
@@ -288,17 +294,17 @@
 				<div class="col-md-4">
                   {{ form_label(form.telefono_fijo) }}
 				  {{ form_errors(form.telefono_fijo) }}
-                  {{ form_widget(form.telefono_fijo, { 'attr': {'class': 'form-control', 'placeholder': 'telefono fijo'} }) }}
+                  {{ form_widget(form.telefono_fijo, { 'attr': {'class': 'form-control', 'placeholder': 'Telefono fijo'} }) }}
                 </div>
                 <div class="col-md-4">
                   {{ form_label(form.telefono_celular) }}
 				  {{ form_errors(form.telefono_celular) }}
-                  {{ form_widget(form.telefono_celular, { 'attr': {'class': 'form-control', 'placeholder': 'telefono celular'} }) }}
+                  {{ form_widget(form.telefono_celular, { 'attr': {'class': 'form-control', 'placeholder': 'Telefono celular'} }) }}
                 </div>
                 <div class="col-md-4">
                   {{ form_label(form.correo_electronico) }}
 				  {{ form_errors(form.correo_electronico) }}
-                  {{ form_widget(form.correo_electronico, { 'attr': {'class': 'form-control', 'placeholder': 'correo electronico'} }) }}
+                  {{ form_widget(form.correo_electronico, { 'attr': {'class': 'form-control', 'placeholder': 'Correo electronico'} }) }}
                 </div>
 		</div>
 		
@@ -326,7 +332,7 @@
 		</div>
 
 		<br/>
-
+		
 		<div class="row">
 				<div class="col-md-4">
                   {{ form_label(form.tipo_documento_conyugue) }}
@@ -382,6 +388,8 @@
                 </div>
 		</div>
 		</div>
+
+		
 		<br/>
 		<br/>
             <!--/form-->

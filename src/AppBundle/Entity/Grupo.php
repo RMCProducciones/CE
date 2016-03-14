@@ -39,7 +39,7 @@ class Grupo
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_inscripcion", type="datetime")
+     * @ORM\Column(name="fecha_inscripcion", type="datetime", nullable=true)
      */
     private $fecha_inscripcion;
 

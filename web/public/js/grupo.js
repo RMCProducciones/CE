@@ -54,7 +54,7 @@ app.controller('gestionDocumentoSoporteGrupoCtrl', ['$scope', '$location', funct
 
 	$scope.anularSoporteGrupo = function() { 
 	
-		window.location.replace($scope.rutaServidor  + "gestion-empresarial/desarrollo-empresarial/grupos/" + $scope.idGrupo + "/documentos-soporte/" + $scope.idGrupoSoporteActivo + "/borrar");
+		window.location.replace($scope.rutaServidor  + "gestion-empresarial/desarrollo-empresarial/grupo/" + $scope.idGrupo + "/documentos-soporte/" + $scope.idGrupoSoporteActivo + "/borrar");
 		
 	};	
 

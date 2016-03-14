@@ -8,8 +8,8 @@
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
       <li>Formacion de capital social asociativo y desarrollo empresarial</li>
-      <li><a href="{{ path('gruposGestion') }}">Grupos</a></li>
-      <li><a href="{{ path('beneficiariosGestion', {'idGrupo': idGrupo}) }}">Beneficiarios</a></li>
+      <li><a href="{{ path('grupoGestion') }}">Grupos</a></li>
+      <li><a href="{{ path('beneficiarioGestion', {'idGrupo': idGrupo}) }}">Beneficiarios</a></li>
       <li class="active">Nuevo</li>
     </ul>
 
@@ -38,7 +38,7 @@
             <div class="btn-group">
               <a href="#" onclick="document.forms[0].submit();return false;" class="btn btn-success">Guardar</a>
               
-              <a href="{{ path('beneficiariosGestion', {'idGrupo': idGrupo}) }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+              <a href="{{ path('beneficiarioGestion', {'idGrupo': idGrupo}) }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
             </div>
           </div>
         </div>

@@ -86,9 +86,8 @@ class GrupoController extends Controller
             }
 
             if($grupo->getTipo()->getDescripcion() != 'Formal con negocio'||$grupo->getTipo()->getDescripcion() != 'Formal Sin Negocio'){
-             $grupo->setNullFiguraLegalConstitucion();
-             $grupo->setNullNumeroIdentificacionTributaria();
-             $grupo->setNullNumeroFechaConstitucionLegal();
+   
+             
                      
             }  
 
@@ -141,9 +140,11 @@ class GrupoController extends Controller
                 $tipo = "4";                
             }
 
+/*
             $traerGrupo->setCodigo($zona."-".$idMunicipio->getAbreviatura()."-".$tipo."-".date_format($traerGrupo->getFechaInscripcion(), 'Y/m')."-".$consecutivo.$traerGrupo->getId());
-            
+
             self::nodoCamino($idGrupo, 1, 2);
+          */  
             $em->flush();
 
             return $this->redirectToRoute('grupoGestion');

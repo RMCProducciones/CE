@@ -8,7 +8,7 @@
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
       <li>Formacion de capital social asociativo y desarrollo empresarial</li>
-      <li><a href="{{ path('beneficiariosGestion', {'idGrupo': idGrupo}) }}">Beneficiarios</a></li>
+      <li><a href="{{ path('beneficiarioGestion', {'idGrupo': idGrupo}) }}">Beneficiarios</a></li>
       <li class="active">Documentos Soporte</li>
     </ul>
 
@@ -33,7 +33,7 @@
   
               <button name="grupoSoporte[Guardar]" id="grupoSoporte_Guardar" type="submit" class="btn btn-success">Guardar</button>
               
-              <a href="{{ path('beneficiariosGestion', {'idGrupo': idGrupo}) }}" class="btn btn-danger" title="" alt="Cancelar" >Cancelar</a>
+              <a href="{{ path('beneficiarioGestion', {'idGrupo': idGrupo}) }}" class="btn btn-danger" title="" alt="Cancelar" >Cancelar</a>
               
             </div>
           </div>

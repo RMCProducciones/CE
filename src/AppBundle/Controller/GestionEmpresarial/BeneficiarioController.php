@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\GestionEmpresarial;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,7 +15,9 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 use AppBundle\Entity\Grupo;
+use AppBundle\Entity\Listas;
 use AppBundle\Entity\Beneficiario;
+use AppBundle\Entity\BeneficiarioSoporte;
 use AppBundle\Entity\AsignacionBeneficiarioComiteVamosBien;
 use AppBundle\Entity\AsignacionBeneficiarioComiteCompras;
 use AppBundle\Entity\AsignacionBeneficiarioEstructuraOrganizacional; 
@@ -23,13 +25,15 @@ use AppBundle\Entity\GrupoSoporte;
 
 
 use AppBundle\Form\GestionEmpresarial\GrupoType;
+use AppBundle\Form\GestionEmpresarial\BeneficiarioType;
+use AppBundle\Form\GestionEmpresarial\BeneficiarioSoporteType;
 use AppBundle\Form\GestionEmpresarial\GrupoSoporteType;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-class GrupoController extends Controller
+class BeneficiarioController extends Controller
 {
 
     
@@ -90,7 +94,7 @@ class GrupoController extends Controller
             $em->persist($beneficiarios);
             $em->flush();
 
-            return $this->redirectToRoute('beneficiariosGestion', array( 'idGrupo' => $idGrupo));
+            return $this->redirectToRoute('beneficiarioGestion', array( 'idGrupo' => $idGrupo));
         }
         
         
@@ -279,7 +283,7 @@ class GrupoController extends Controller
         $em->remove($beneficiarios);
         $em->flush();
 
-        return $this->redirectToRoute('beneficiariosGestion', array( 'idGrupo' => $idGrupo));
+        return $this->redirectToRoute('beneficiarioGestion', array( 'idGrupo' => $idGrupo));
 
     }
     
