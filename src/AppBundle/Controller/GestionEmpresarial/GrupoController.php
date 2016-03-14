@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\GestionEmpresarial;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -24,6 +24,8 @@ use AppBundle\Entity\GrupoSoporte;
 
 use AppBundle\Form\GestionEmpresarial\GrupoType;
 use AppBundle\Form\GestionEmpresarial\GrupoSoporteType;
+use AppBundle\Form\GestionEmpresarial\ListaRolBeneficiarioType;
+
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -43,7 +45,7 @@ class GrupoController extends Controller
             array('fecha_creacion' => 'ASC')
         );
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-gestion.html.twig', array( 'grupos' => $grupos));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:grupo-gestion.html.twig', array( 'grupos' => $grupos));
     }
 
      /**
@@ -143,10 +145,10 @@ class GrupoController extends Controller
             self::nodoCamino($idGrupo, 1, 2);
             $em->flush();
 
-            return $this->redirectToRoute('gruposGestion');
+            return $this->redirectToRoute('grupoGestion');
         }
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-nuevo.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:grupo-nuevo.html.twig', array('form' => $form->createView()));
     }
 
     /**
@@ -240,7 +242,7 @@ class GrupoController extends Controller
         }
 
         return $this->render(
-            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-editar.html.twig', 
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:grupo-editar.html.twig', 
             array(
                     'form' => $form->createView(),
                     'idGrupo' => $idGrupo,
@@ -350,7 +352,7 @@ class GrupoController extends Controller
         }   
         
         return $this->render(
-            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:grupo-soporte.html.twig', 
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:grupo-soporte.html.twig', 
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
@@ -411,7 +413,7 @@ class GrupoController extends Controller
         );
 
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiario-grupo-cvb-gestion-asignacion.html.twig', 
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:beneficiario-grupo-cvb-gestion-asignacion.html.twig', 
             array(
                 'beneficiarios' => $mostrarBeneficiarios,
                 'asignacionesBeneficiariosCVB' => $asignacionesBeneficiariosCVB,
@@ -531,7 +533,7 @@ class GrupoController extends Controller
         );
 
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiario-grupo-cc-gestion-asignacion.html.twig', 
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:beneficiario-grupo-cc-gestion-asignacion.html.twig', 
             array(
                 'beneficiarios' => $mostrarBeneficiarios,
                 'asignacionesBeneficiariosCC' => $asignacionesBeneficiariosCC,
@@ -684,7 +686,7 @@ class GrupoController extends Controller
         );
 
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial:beneficiario-grupo-eo-gestion-asignacion.html.twig', 
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:beneficiario-grupo-eo-gestion-asignacion.html.twig', 
             array(
                 'beneficiarios' => $mostrarBeneficiarios,
                 'asignacionesBeneficiariosEO' => $asignacionesBeneficiariosEO,
@@ -730,7 +732,7 @@ class GrupoController extends Controller
         $form->handleRequest($request);
 
         return $this->render(
-            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial:asignarRolBeneficiarioEstructuraOrganizacional.html.twig',
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:asignarRolBeneficiarioEstructuraOrganizacional.html.twig',
             array(
                 'form' => $form->createView(),
                 'idBeneficiario' => $idBeneficiario,
