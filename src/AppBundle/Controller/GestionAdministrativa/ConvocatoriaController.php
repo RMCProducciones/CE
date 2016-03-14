@@ -13,10 +13,8 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
-use AppBundle\Entity\POA;
-use AppBundle\Entity\POASoporte;
-use AppBundle\Form\GestionAdministrativa\POAType;
-use AppBundle\Form\GestionAdministrativa\POASoporteType;
+
+
 use AppBundle\Entity\Convocatoria;
 use AppBundle\Entity\ConvocatoriaSoporte;
 use AppBundle\Form\GestionAdministrativa\ConvocatoriaType;
@@ -38,7 +36,7 @@ class ConvocatoriaController extends Controller
         $em = $this->getDoctrine()->getManager();
         $convocatoria = $em->getRepository('AppBundle:Convocatoria')->findAll(); 
 
-        return $this->render('AppBundle:GestionAdministrativa/GestionPOA:convocatoria-gestion.html.twig', array( 'convocatoria' => $convocatoria));
+        return $this->render('AppBundle:GestionAdministrativa/Convocatoria:convocatoria-gestion.html.twig', array( 'convocatoria' => $convocatoria));
     }
 
     /**
@@ -66,7 +64,7 @@ class ConvocatoriaController extends Controller
 
             return $this->redirectToRoute('convocatoriaGestion');
         }
-         return $this->render('AppBundle:GestionAdministrativa/GestionPOA:convocatoria-nuevo.html.twig', array('form' => $form->createView()));
+         return $this->render('AppBundle:GestionAdministrativa/Convocatoria:convocatoria-nuevo.html.twig', array('form' => $form->createView()));
     }
 
 
@@ -108,7 +106,7 @@ class ConvocatoriaController extends Controller
         }
 
         return $this->render(
-            'AppBundle:GestionAdministrativa/GestionPOA:convocatoria-editar.html.twig', 
+            'AppBundle:GestionAdministrativa/Convocatoria:convocatoria-editar.html.twig', 
             array(
                     'form' => $form->createView(),
                     'idConvocatoria' => $idConvocatoria,
@@ -209,7 +207,7 @@ class ConvocatoriaController extends Controller
         }   
         
         return $this->render(
-            'AppBundle:GestionAdministrativa/GestionPOA:convocatoria-soporte.html.twig', 
+            'AppBundle:GestionAdministrativa/Convocatoria:convocatoria-soporte.html.twig', 
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 

@@ -31,7 +31,7 @@
           <div class="col-md-6">
             <div class="btn-group">
               <a href="{{ path('homepage') }}" class="btn btn-warning">Volver</a>
-              <a href="{{ path('gruposNuevo') }}" class="btn btn-success">Nuevo</a>
+              <a href="{{ path('grupoNuevo') }}" class="btn btn-success">Nuevo</a>
             </div>
           </div>
 
@@ -130,7 +130,7 @@
 	                 
 	                  <td class="text-center">
                       
-	                    <a href="{{ path('beneficiariosGestion', {'idGrupo': grupo.id}) }}" alt="Beneficiarios" title="Beneficiarios"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a> | 
+	                    <a href="{{ path('beneficiarioGestion', {'idGrupo': grupo.id}) }}" alt="Beneficiarios" title="Beneficiarios"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a> | 
 
                       <a href="{{ path('contadorGestion', {'idGrupo': grupo.id}) }}" alt="Asignar Contador" title="Asignar Contador"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span></a> | 
 
@@ -144,7 +144,7 @@
 	                    
                       <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ grupo.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> |	                    
 
-                      <a href="{{ path('gruposSoporte', {'idGrupo': grupo.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> | 
+                      <a href="{{ path('grupoSoporte', {'idGrupo': grupo.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> | 
 
                       <a href="{{ path('seguimientoGrupo', {'idGrupo': grupo.id}) }}" alt="Seguimiento" title="Seguimiento"><span class="glyphicon glyphicon-random" aria-hidden="true"></span></a> 
 

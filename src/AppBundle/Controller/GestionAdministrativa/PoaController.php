@@ -28,14 +28,14 @@ class PoaController extends Controller
 {
     
 	/**
-     * @Route("/gestion-administrativa/poa/gestion", name="POAGestion")
+     * @Route("/gestion-administrativa/poa/POAGestion", name="POAGestion")
      */
     public function POAGestionAction()
     {
         $em = $this->getDoctrine()->getManager();
         $poas = $em->getRepository('AppBundle:POA')->findAll(); 
 
-        return $this->render('AppBundle:GestionAdministrativa/GestionPOA:POA-gestion.html.twig', array( 'poas' => $poas));
+        return $this->render('AppBundle:GestionAdministrativa/Poa:POA-gestion.html.twig', array( 'poas' => $poas));
     }
 
 	/**
@@ -65,7 +65,7 @@ class PoaController extends Controller
 
             return $this->redirectToRoute('POAGestion');
         }
-		 return $this->render('AppBundle:GestionAdministrativa/GestionPOA:POA-nuevo.html.twig', array('form' => $form->createView()));
+		 return $this->render('AppBundle:GestionAdministrativa/Poa:POA-nuevo.html.twig', array('form' => $form->createView()));
     }
 
 
@@ -111,7 +111,7 @@ class PoaController extends Controller
         }
 
         return $this->render(
-            'AppBundle:GestionAdministrativa/GestionPOA:POA-editar.html.twig', 
+            'AppBundle:GestionAdministrativa/Poa:POA-editar.html.twig', 
             array(
                     'form' => $form->createView(),
                     'idPOA' => $idPOA,
@@ -214,7 +214,7 @@ class PoaController extends Controller
         }   
         
         return $this->render(
-            'AppBundle:GestionAdministrativa/GestionPOA:POA-soporte.html.twig', 
+            'AppBundle:GestionAdministrativa/Poa:POA-soporte.html.twig', 
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
