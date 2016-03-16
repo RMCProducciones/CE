@@ -37,6 +37,7 @@
             </li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gestión Administrativa<strong class="caret"></strong></a>
+              
               <ul class="dropdown-menu">
                 <li class="dropdown dropdown-submenu">
                   <a href="#">Plan Operativo Anual - POA</a>
@@ -45,7 +46,15 @@
                       <a href="{{ path('POAGestion') }}">Gestión del POA</a>
                     </li>
                   </ul>
-                </li>                            
+                </li> 
+                <li class="dropdown dropdown-submenu">
+                  <a href="#">Gestión Convocatorias</a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href="{{ path('convocatoriaGestion') }}">Gestión de Convocatoria</a>
+                    </li>
+                  </ul>
+                </li>                           
               </ul>
             </li>
 
