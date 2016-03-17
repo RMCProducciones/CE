@@ -22,11 +22,6 @@ class Contador
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
-     */
-    private $grupo;
-
-    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $tipo_documento;
@@ -157,31 +152,6 @@ class Contador
     {
         return $this->id;
     }
-
-    /**
-     * Set grupo
-     *
-     * @param AppBundle\Entity\Grupo $grupo
-     *
-     * @return Contador
-     */
-    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
-    {
-        $this->grupo = $grupo;
-
-        return $this;
-    }
-
-    /**
-     * Get grupo
-     *
-     * @return AppBundle\Entity\Grupo
-     */
-    public function getGrupo()
-    {
-        return $this->grupo;
-    }
-
     
     /**
      * Set tipoDocumento
