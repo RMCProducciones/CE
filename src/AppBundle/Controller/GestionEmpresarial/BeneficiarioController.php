@@ -48,9 +48,12 @@ class BeneficiarioController extends Controller
             array('active' => '1', 'grupo' => $idGrupo),
             array('primer_apellido' => 'ASC')
         );
+        $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
+            array('id'=> $idGrupo)
+        );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/beneficiario:beneficiario-gestion.html.twig', 
-        array( 'idGrupo' => $idGrupo, 'beneficiarios' => $beneficiarios));
+        array( 'idGrupo' => $idGrupo, 'beneficiarios' => $beneficiarios, 'grupo'=>$grupo));
 
     }
 
@@ -66,7 +69,11 @@ class BeneficiarioController extends Controller
         $listas = new Listas();        
         $form = $this->createForm(new BeneficiarioType(), $beneficiarios);
 
-        $form->handleRequest($request);        
+        $form->handleRequest($request); 
+
+        $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
+            array('id'=> $idGrupo)
+        );       
                 
         if ($form->isValid()) {
             
@@ -94,11 +101,13 @@ class BeneficiarioController extends Controller
             $em->persist($beneficiarios);
             $em->flush();
 
+        
+
             return $this->redirectToRoute('beneficiarioGestion', array( 'idGrupo' => $idGrupo));
         }
         
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/beneficiario:beneficiario-nuevo.html.twig', array('form' => $form->createView(),'idGrupo' => $idGrupo));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/beneficiario:beneficiario-nuevo.html.twig', array('form' => $form->createView(),'idGrupo' => $idGrupo,'grupo'=>$grupo));
     }
 
 
@@ -176,6 +185,9 @@ class BeneficiarioController extends Controller
             }
         }   
         
+        $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
+            array('id'=> $idGrupo)
+        );
 
         //return new Response("Hola mundo");
         return $this->render(
@@ -185,7 +197,8 @@ class BeneficiarioController extends Controller
                 'soportesActivos' => $soportesActivos, 
                 'histotialSoportes' => $histotialSoportes,
                 'idGrupo' => $idGrupo,
-                'idBeneficiario' => $idBeneficiario
+                'idBeneficiario' => $idBeneficiario,
+                'grupo'=>$grupo
             )
         );
         
@@ -225,8 +238,10 @@ class BeneficiarioController extends Controller
         $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
             array('id' => $idBeneficiario)
         );
-
-        //print_r($idBeneficiario);
+        
+        $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
+            array('id'=> $idGrupo)
+        );   
 
 
         $form = $this->createForm(new BeneficiarioType(), $beneficiarios);
@@ -265,6 +280,7 @@ class BeneficiarioController extends Controller
                     'idGrupo' => $idGrupo,
                     'idBeneficiario' => $idBeneficiario,
                     'beneficiarios' => $beneficiarios,
+                    'grupo'=>$grupo
             )
         );
 
