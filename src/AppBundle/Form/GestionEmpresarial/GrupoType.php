@@ -11,24 +11,7 @@ class GrupoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-			->add('poa', 'entity', array(
-					'mapped'=>false,
-					'class' => 'AppBundle:POA',
-					'query_builder' => function(EntityRepository $er) {
-						return $er->createQueryBuilder('poa')
-							->where('poa.active = 1');
-					},
-				)
-			)
-
-			->add('convocatoria', 'entity', array(
-					'class' => 'AppBundle:Convocatoria',
-					'query_builder' => function(EntityRepository $er) {
-						return $er->createQueryBuilder('convocatoria')
-							->where('convocatoria.active = 1');
-					},
-				)
-			)
+		
 
 			->add('municipio', 'entity', array(
 				'class' => 'AppBundle:Municipio',
@@ -45,10 +28,7 @@ class GrupoType extends AbstractType
 				}
 			))
 											
-			->add('fecha_inscripcion', 'date', array(
-				'label' => 'Fecha de Inscripción', 
-				'widget' => 'single_text'
-			))
+			
 			
 			->add('nombre')
 			->add('direccion','text', array('label' => 'Dirección'))
@@ -59,13 +39,13 @@ class GrupoType extends AbstractType
 			->add('cacerio', 'text', array('required' => false))
 		
 			->add('numero_identificacion_tributaria', 'text', array('label' => 'Numero identificación tributaria','required' => false))
-			->add('fecha_constitucion_legal', 'date', array('label' => 'Fecha de constitución legal del grupo', 'widget' => 'single_text'))
+			->add('fecha_constitucion_legal', 'date', array('label' => 'Fecha de constitución legal del grupo', 'widget' => 'single_text','required' => false))
 			->add('telefono_fijo', 'text', array('required' => false,'label' => 'Teléfono fijo'))
-			->add('telefono_celular','text', array('label' => 'Teléfono celular'))
-			->add('correo_electronico', 'email', array('label' => 'Correo electrónico'))
+			->add('telefono_celular','text', array('label' => 'Teléfono celular','required' => false))
+			->add('correo_electronico', 'email', array('label' => 'Correo electrónico','required' => false))
 			
 			
-			->add('figura_legal_constitucion', 'entity', array('label' => 'Figura legal constitución','class' => 'AppBundle:Listas',
+			->add('figura_legal_constitucion', 'entity', array('label' => 'Figura legal constitución','class' => 'AppBundle:Listas','required' => false,
 										    'query_builder' => function(EntityRepository $er) {
 										        return $er->createQueryBuilder('l')
 										        	->where('l.dominio = :dominio')

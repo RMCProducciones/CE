@@ -5,17 +5,12 @@ app.controller('gestionDocumentoSoportePOACtrl', ['$scope', '$location', functio
 
 	$scope.anularSoportePOA = function() { 
 
-		window.location.replace($scope.rutaServidor  + "gestion-administrativa/gestion-POA/POA/" + $scope.idPOA + "/documentos-soporte/" + $scope.idPOASoporteActivo + "/borrar");
+		window.location.replace($scope.rutaServidor  + "gestion-administrativa/poa/" + $scope.idPOA + "/documentos-soporte/" + $scope.idPOASoporteActivo + "/borrar");
 		
 	};
 
 
 }]);
-
-
-
-
-
 
 
 app.controller('gestionPOACtrl', ['$scope', '$http', function($scope, $http) {
@@ -29,7 +24,7 @@ app.controller('gestionPOACtrl', ['$scope', '$http', function($scope, $http) {
 		$scope.idPOA = idPOA;
 		$scope.consecutivoPOA = consecutivo;
 
-		$http.get($scope.rutaServidor + "gestion-administrativa/gestion-POA/POA/" + $scope.idPOA + "/eliminar")
+		$http.get($scope.rutaServidor + "gestion-administrativa/poa/" + $scope.idPOA + "/eliminar")
 		.success(function(data, status, headers, config) {
 
   			$("#filaPOA" + $scope.consecutivoPOA).fadeOut("slow");

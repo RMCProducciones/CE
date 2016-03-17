@@ -41,7 +41,7 @@ class BeneficiarioType extends AbstractType
 			->add('edad_inscripcion', 'text', array('label' => 'Edad al momento de la inscripción'))
 			->add('corte_sisben')
 			->add('puntaje_sisben')
-			->add('grupo_indigena', 'entity', array('class' => 'AppBundle:Listas',
+			->add('grupo_indigena', 'entity', array('class' => 'AppBundle:Listas','required' => false,
 										    'query_builder' => function(EntityRepository $er) {
 										        return $er->createQueryBuilder('l')
 										        	->where('l.dominio = :dominio')
@@ -126,9 +126,9 @@ class BeneficiarioType extends AbstractType
 			->add('corregimiento', 'text', array('required' => false))
 			->add('vereda', 'text', array('required' => false))
 			->add('cacerio', 'text', array('required' => false))
-			->add('telefono_fijo', 'text', array('label' => 'Teléfono fijo'))
-			->add('telefono_celular', 'text', array('label' => 'Teléfono celular'))
-			->add('correo_electronico', 'email',array('label' => 'Correo eléctronico'))
+			->add('telefono_fijo', 'text', array('label' => 'Teléfono fijo','required' => false))
+			->add('telefono_celular', 'text', array('label' => 'Teléfono celular','required' => false))
+			->add('correo_electronico', 'email',array('label' => 'Correo eléctronico','required' => false))
 			->add('estado_civil', 'entity', array('class' => 'AppBundle:Listas',
 										    'query_builder' => function(EntityRepository $er) {
 										        return $er->createQueryBuilder('l')
@@ -137,7 +137,7 @@ class BeneficiarioType extends AbstractType
 										        	->setParameter('dominio', 'estado_civil')
 										            ->orderBy('l.orden', 'ASC');
 										    },))
-			->add('tipo_documento_conyugue', 'entity', array('class' => 'AppBundle:Listas',
+			->add('tipo_documento_conyugue', 'entity', array('class' => 'AppBundle:Listas','required' => false,
 										    'query_builder' => function(EntityRepository $er) {
 										        return $er->createQueryBuilder('l')
 										        	->where('l.dominio = :dominio')

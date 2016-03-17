@@ -5,7 +5,7 @@ app.controller('gestionDocumentoSoporteBeneficiarioCtrl', ['$scope', '$location'
 
 	$scope.anularSoporteBeneficiario = function() { 
 
-		window.location.replace($scope.rutaServidor  + "gestion-empresarial/desarrollo-empresarial/beneficiarios/" + $scope.idBeneficiario + "/documentos-soporte/" + $scope.idBeneficiarioSoporteActivo + "/borrar");
+		window.location.replace($scope.rutaServidor  + "gestion-empresarial/desarrollo-empresarial/beneficiario/" + $scope.idBeneficiario + "/documentos-soporte/" + $scope.idBeneficiarioSoporteActivo + "/borrar");
 		
 	};
 
@@ -16,8 +16,7 @@ app.controller('gestionDocumentoSoporteBeneficiarioCtrl', ['$scope', '$location'
 
 app.controller('PertenenciaEtnicaCtrl', ['$scope', function($scope) {
 
-	$scope.mostrarGrupoIndigena = false;
-	
+	$scope.mostrarGrupoIndigena = false;	
 	$scope.grupoIndigena = function() { 
 		$scope.mostrarGrupoIndigena = $(".pertenencia_etnica option[value='"+$('.pertenencia_etnica').val()+"']").text().toLowerCase() == "indígena";			
 	};	
@@ -78,7 +77,7 @@ app.controller('gestionBeneficiariosCtrl', ['$scope', '$http', function($scope, 
 		$scope.idGrupo = idGrupo;		
 		$scope.consecutivoBeneficiario = consecutivo;
 		console.log($scope.idGrupo);
-		$http.get($scope.rutaServidor + "gestion-empresarial/desarrollo-empresarial/grupos/" + $scope.idGrupo + "/" + $scope.idBeneficiario + "/beneficiarios/eliminar")
+		$http.get($scope.rutaServidor + "gestion-empresarial/desarrollo-empresarial/grupo/" + $scope.idGrupo + "/" + $scope.idBeneficiario + "/beneficiario/eliminar")
 		.success(function(data, status, headers, config) {
 
   			$("#filaBeneficiario" + $scope.consecutivoBeneficiario).fadeOut("slow");

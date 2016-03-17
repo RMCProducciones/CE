@@ -54,7 +54,7 @@ app.controller('gestionDocumentoSoporteGrupoCtrl', ['$scope', '$location', funct
 
 	$scope.anularSoporteGrupo = function() { 
 	
-		window.location.replace($scope.rutaServidor  + "gestion-empresarial/desarrollo-empresarial/grupos/" + $scope.idGrupo + "/documentos-soporte/" + $scope.idGrupoSoporteActivo + "/borrar");
+		window.location.replace($scope.rutaServidor  + "gestion-empresarial/desarrollo-empresarial/grupo/" + $scope.idGrupo + "/documentos-soporte/" + $scope.idGrupoSoporteActivo + "/borrar");
 		
 	};	
 
@@ -185,6 +185,17 @@ app.controller('gestionEstructuraOrganizacionalCtrl', ['$scope', '$http', functi
 		window.location.replace(ruta);
 
 	};	
+}]);
+
+
+app.controller('FormalCtrl', ['$scope', function($scope) {
+
+	$scope.mostrarFormal = false;	
+
+	$scope.infoFormal = function() { 
+		$scope.mostrarFormal = $(".tipo option[value='"+$('.tipo').val()+"']").text().toLowerCase() != "Formal Con Negocio"||$(".tipo option[value='"+$('.tipo').val()+"']").text().toLowerCase() !="Formal Sin Negocio";			
+	};	
+
 }]);
 
 

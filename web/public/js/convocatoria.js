@@ -5,7 +5,7 @@ app.controller('gestionDocumentoSoporteConvocatoriaCtrl', ['$scope', '$location'
 
 	$scope.anularSoporteConvocatoria = function() { 
 
-		window.location.replace($scope.rutaServidor  + "gestion-administrativa/gestion-POA/convocatoria/" + $scope.idConvocatoria + "/documentos-soporte/" + $scope.idConvocatoriaSoporteActivo + "/borrar");
+		window.location.replace($scope.rutaServidor  + "gestion-administrativa/poa/convocatoria/" + $scope.idConvocatoria + "/documentos-soporte/" + $scope.idConvocatoriaSoporteActivo + "/borrar");
 		
 	};
 
@@ -29,7 +29,7 @@ app.controller('gestionConvocatoriaCtrl', ['$scope', '$http', function($scope, $
 		$scope.idConvocatoria = idConvocatoria;
 		$scope.consecutivoConvocatoria = consecutivo;
 
-		$http.get($scope.rutaServidor + "gestion-administrativa/gestion-POA/convocatoria/" + $scope.idConvocatoria + "/eliminar")
+		$http.get($scope.rutaServidor + "gestion-administrativa/poa/convocatoria/" + $scope.idConvocatoria + "/eliminar")
 		.success(function(data, status, headers, config) {
 
   			$("#filaConvocatoria" + $scope.consecutivoConvocatoria).fadeOut("slow");

@@ -131,7 +131,7 @@ class Beneficiario
     /**
      * @var boolean
      *
-     * @ORM\Column(name="red_unidos", type="boolean", nullable=true)
+     * @ORM\Column(name="red_unidos", type="boolean")
      */
     private $red_unidos;
 
@@ -236,7 +236,7 @@ class Beneficiario
     /**
      * @var string
      *
-     * @ORM\Column(name="telefono_celular", type="string")
+     * @ORM\Column(name="telefono_celular", type="string", nullable=true)
      */
     private $telefono_celular;
 
