@@ -17,10 +17,17 @@
 
 
 {% block section %}
+
+
 <div class="container">
     <h1>Gestión Grupos - Beneficiarios </h1>
+    <br>
+    {% for grupos in grupo %}
+    <h2> Grupo: {{ grupos.nombre }}</h2>
+    {% endfor %}
     <hr>
   </div>
+   
  
   	<br>
 
