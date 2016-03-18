@@ -78,7 +78,7 @@ class Taller
     /**
      * @var boolean
      *
-     * @ORM\Column(name="comite_compras", type="boolean")
+     * @ORM\Column(name="talento", type="boolean",nullable=true)
      */
     private $talento;
 
