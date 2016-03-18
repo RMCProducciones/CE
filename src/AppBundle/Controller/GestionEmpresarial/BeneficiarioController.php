@@ -38,7 +38,7 @@ class BeneficiarioController extends Controller
 
     
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/beneficiarios/", name="beneficiarioGestion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/beneficiario/", name="beneficiarioGestion")
      */
     public function beneficiarioGestionAction($idGrupo)
     {
