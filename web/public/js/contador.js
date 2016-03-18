@@ -46,6 +46,14 @@ app.controller('gestionContadorCtrl', ['$scope', '$http', function($scope, $http
 
 }]);
 
+app.controller('gestionContadorGrupoCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.eliminarContadorGrupo = function(ruta){		
+		window.location.replace(ruta);
+
+	};	
+}]);
+
 
 
 
