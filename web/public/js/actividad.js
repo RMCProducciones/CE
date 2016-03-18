@@ -26,7 +26,7 @@ app.controller('gestionActividadCtrl', ['$scope', '$http', function($scope, $htt
 		$scope.idActividad= idActividad;
 		$scope.consecutivoActividad = consecutivo;
 
-		$http.get($scope.rutaServidor + "gestion-empresarial/desarrollo-empresarial/concurso/gestion-actividad/" + $scope.idActividad + "/eliminar")
+		$http.get($scope.rutaServidor + "gestion-empresarial/desarrollo-empresarial/concurso/actividad/" + $scope.idActividad + "/eliminar")
 		.success(function(data, status, headers, config) {
 
   			$("#filaActividad" + $scope.consecutivoActividad).fadeOut("slow");

@@ -72,7 +72,7 @@ class ActividadController extends Controller
             return $this->redirectToRoute('actividadGestion');
         }
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Actividad:actividad.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Actividad:actividad-nuevo.html.twig', array('form' => $form->createView()));
     } 
 
 /**
