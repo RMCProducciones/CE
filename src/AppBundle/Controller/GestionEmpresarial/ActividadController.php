@@ -14,20 +14,13 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
-use AppBundle\Entity\Grupo;
-use AppBundle\Entity\Listas;
-use AppBundle\Entity\Beneficiario;
-use AppBundle\Entity\BeneficiarioSoporte;
-use AppBundle\Entity\AsignacionBeneficiarioComiteVamosBien;
-use AppBundle\Entity\AsignacionBeneficiarioComiteCompras;
-use AppBundle\Entity\AsignacionBeneficiarioEstructuraOrganizacional; 
-use AppBundle\Entity\GrupoSoporte;
+use AppBundle\Entity\ActividadConcurso;
+use AppBundle\Entity\ActividadSoporte;
 
 
-use AppBundle\Form\GestionEmpresarial\GrupoType;
-use AppBundle\Form\GestionEmpresarial\BeneficiarioType;
-use AppBundle\Form\GestionEmpresarial\BeneficiarioSoporteType;
-use AppBundle\Form\GestionEmpresarial\GrupoSoporteType;
+use AppBundle\Form\GestionEmpresarial\ActividadConcursoType;
+use AppBundle\Form\GestionEmpresarial\ActividadSoporteType;
+
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -58,7 +51,7 @@ class ActividadController extends Controller
     public function actividadConcursoAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $actividadconcurso = new Actividadconcurso();
+        $actividadconcurso = new ActividadConcurso();
         
         $form = $this->createForm(new ActividadConcursoType(), $actividadconcurso);
 
@@ -76,7 +69,7 @@ class ActividadController extends Controller
             $em->persist($actividadconcurso);
             $em->flush();
 
-            return $this->redirectToRoute('concursoGestion');
+            return $this->redirectToRoute('actividadGestion');
         }
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Actividad:actividad.html.twig', array('form' => $form->createView()));
@@ -88,13 +81,13 @@ class ActividadController extends Controller
     public function actividadEditarAction(Request $request, $idActividad)
     {
         $em = $this->getDoctrine()->getManager();
-        $actividad = new Actividadconcurso();
+        $actividad = new ActividadConcurso();
 
         $actividad = $em->getRepository('AppBundle:Actividadconcurso')->findOneBy(
             array('id' => $idActividad)
         );
 
-        $form = $this->createForm(new ActividadconcursoType(), $actividad);
+        $form = $this->createForm(new ActividadConcursoType(), $actividad);
         
         $form->add(
             'Guardar', 
