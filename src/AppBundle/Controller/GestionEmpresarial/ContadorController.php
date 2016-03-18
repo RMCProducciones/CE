@@ -282,9 +282,15 @@ class ContadorController extends Controller
             array('grupo' => $grupo)
         ); 
 
-        $query = $em->createQuery('SELECT c FROM AppBundle:Contador c WHERE c.id NOT IN (SELECT contador.id FROM AppBundle:Contador contador JOIN AppBundle:AsignacionContadorGrupo acg WHERE contador = acg.contador AND acg.grupo = :grupo) AND c.active = 1');
-        $query->setParameter(':grupo', $grupo);
-        $contadores = $query->getResult();
+        if($asignacionesContadorGrupo == null){
+            $query = $em->createQuery('SELECT c FROM AppBundle:Contador c WHERE c.id NOT IN (SELECT contador.id FROM AppBundle:Contador contador JOIN AppBundle:AsignacionContadorGrupo acg WHERE contador = acg.contador AND acg.grupo = :grupo) AND c.active = 1');
+            $query->setParameter(':grupo', $grupo);
+            $contadores = $query->getResult();            
+        }else{
+            $contadores = null;
+        }
+
+        
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Contador:asignar-contador-grupo.html.twig', 
             array(
@@ -310,14 +316,14 @@ class ContadorController extends Controller
             array('id' => $idGrupo)
         );        
            
-        $AsignacionContadorGrupo = new AsignacionContadorGrupo();
+        $asignacionContadorGrupo = new AsignacionContadorGrupo();
 
-        $AsignacionContadorGrupo->setGrupo($grupo);        
-        $AsignacionContadorGrupo->setContador($contador);
-        $AsignacionContadorGrupo->setActive(true);
-        $AsignacionContadorGrupo->setFechaCreacion(new \DateTime());
+        $asignacionContadorGrupo->setGrupo($grupo);        
+        $asignacionContadorGrupo->setContador($contador);
+        $asignacionContadorGrupo->setActive(true);
+        $asignacionContadorGrupo->setFechaCreacion(new \DateTime());
 
-        $em->persist($AsignacionContadorGrupo);
+        $em->persist($asignacionContadorGrupo);
         $em->flush();
 
 
@@ -325,13 +331,48 @@ class ContadorController extends Controller
         return $this->redirectToRoute('grupoContador', 
             array(
                 'contador' => $contador,          
-                'AsignacionContadorGrupo' => $AsignacionContadorGrupo,                
+                'asignacionContadorGrupo' => $asignacionContadorGrupo,                
                 'idGrupo' => $idGrupo
             ));        
         
     }
 
-    
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-contador/{idAsignacionContador}/eliminar", name="grupoContadorEliminar")
+     */
+    public function eliminarContadorGrupoAction($idGrupo, $idAsignacionContador)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionContadorGrupo = new AsignacionContadorGrupo();
+
+        $asignacionContadorGrupo = $em->getRepository('AppBundle:AsignacionContadorGrupo')->find($idAsignacionContador); 
+
+        $em->remove($asignacionContadorGrupo);
+        $em->flush();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $contadores = new Contador();
+
+        $asignacionesContadorGrupo = $em->getRepository('AppBundle:AsignacionContadorGrupo')->findBy(
+            array('grupo' => $grupo)
+        ); 
+
+        $query = $em->createQuery('SELECT c FROM AppBundle:Contador c WHERE c.id NOT IN (SELECT contador.id FROM AppBundle:Contador contador JOIN AppBundle:AsignacionContadorGrupo acg WHERE contador = acg.contador AND acg.grupo = :grupo) AND c.active = 1');
+        $query->setParameter(':grupo', $grupo);
+        $contadores = $query->getResult();
+
+        return $this->redirectToRoute('grupoContador', 
+            array(
+                'contador' => $contadores,          
+                'asignacionContadorGrupo' => $asignacionContadorGrupo,                
+                'idGrupo' => $idGrupo
+            ));       
+        
+    }
     
 
 
