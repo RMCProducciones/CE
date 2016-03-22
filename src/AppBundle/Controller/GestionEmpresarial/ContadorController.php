@@ -372,9 +372,7 @@ class ContadorController extends Controller
                 'idGrupo' => $idGrupo
             ));       
         
-    }
-    
-
+    }   
 
 }
 
