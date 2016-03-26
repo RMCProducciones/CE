@@ -1,0 +1,118 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+
+{% block title %}Polizas{% endblock %}
+
+{% block breadcrumb_ul %}
+
+    <ul class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Financiera</li>
+      <li>Polizas</li>
+      
+    </ul>
+
+{% endblock %}
+
+	
+
+{% block section %}
+
+	<div class="container">
+    <h1>Gestión de Polizas</h1>
+    <hr>
+  </div>
+    <br>
+   
+
+    <hr>
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="btn-group">
+             <div class="btn-group">
+              <a href="{{ path('polizaGestion') }}" class="btn btn-warning">Volver</a>
+              <a href="{{ path('polizaNuevo') }}" class="btn btn-success">Nuevo</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <br>
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 table-responsive">
+            <table class="table table-striped table-hover" ng-controller="gestionPolizaCtrl">
+              <thead>
+                	<tr>
+	                  <th>#</th>  
+	                  <th>Estado</th>   
+                    <th>Consecutivo</th>  
+                    <th>Cofinanciacion</th>            
+	                  <th>Acciones</th>
+	                </tr>
+	           </thead>
+	           <tbody>
+                {% set consecutivo = 1 %}
+	    	
+	    		{% for poliza in polizas %}
+	    		
+	                
+	                <tr id="filaPoliza{{ consecutivo }}">
+	                  <td>{{consecutivo}}</td>
+	                  
+	                <td>
+	                {{poliza.estado}}
+	                  </td>
+                    <td>
+                  {{poliza.consecutivo}}
+                    </td>
+                    <td>
+                  {{poliza.cofinanciacion}}
+                    </td>
+	                
+					  
+	         
+	                  
+	                  <td>
+	                   
+	                   
+                     
+                     
+                     <a href="{{ path('polizaSoporte', {'idPoliza': poliza.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> 
+
+                     | 
+
+                     <a title="Editar" alt="Editar" href="{{ path('polizaEditar', {'idPoliza': poliza.id}) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> 
+
+                     |  
+                    
+                     <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarPoliza({{poliza.id}}, {{consecutivo}});" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true" ng-click="idPoliza = {{poliza.id}};"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                     
+                    </td>
+	                </tr>
+					{% set consecutivo = consecutivo + 1 %}	
+	                  {% else %}
+	                
+	                <tr>
+	                  	<td colspan="7" class="info">No se encontraron registros.</td>
+	                </tr>
+	                
+	                {% endfor %}
+              
+	             
+               </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>  
+
+	
+{% endblock %}
+

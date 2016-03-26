@@ -20,13 +20,12 @@ app.controller('gestionContadorCtrl', ['$scope', '$http', function($scope, $http
 
 	console.log($scope.estadoMensaje);
 
-	$scope.eliminarContador = function(idGrupo, idContador, consecutivo){
-
-		$scope.idGrupo = idGrupo;
+	$scope.eliminarContador = function(idContador, consecutivo){
+		
 		$scope.idContador = idContador;
 		$scope.consecutivoContador = consecutivo;
 
-		$http.get($scope.rutaServidor + "gestion-empresarial/desarrollo-empresarial/grupo/" +$scope.idGrupo + "/contador/" + $scope.idContador + "/eliminar")
+		$http.get($scope.rutaServidor + "gestion-empresarial/desarrollo-empresarial/contador/" + $scope.idContador + "/eliminar")
 		.success(function(data, status, headers, config) {
 
   			$("#filaContador" + $scope.consecutivoContador).fadeOut("slow");
@@ -45,6 +44,14 @@ app.controller('gestionContadorCtrl', ['$scope', '$http', function($scope, $http
 		
 	};	
 
+}]);
+
+app.controller('gestionContadorGrupoCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.eliminarContadorGrupo = function(ruta){		
+		window.location.replace(ruta);
+
+	};	
 }]);
 
 

@@ -385,7 +385,7 @@ class GrupoController extends Controller
         
     }
 
-       /**
+    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/comite-vamos-bien", name="grupoBeneficiarioCVB")
      */
     public function comiteVamosBienGrupoBeneficiarioAction($idGrupo)

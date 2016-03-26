@@ -18,6 +18,7 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use AppBundle\Entity\Contador;
 use AppBundle\Entity\Grupo;
 use AppBundle\Entity\ContadorSoporte;
+use AppBundle\Entity\AsignacionContadorGrupo;
 
 
 
@@ -32,36 +33,32 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 class ContadorController extends Controller
 {
 /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/contador/gestion", name="contadorGestion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/contador/gestion", name="contadorGestion")
      */
-    public function contadorGestionAction($idGrupo)
+    public function contadorGestionAction()
     {
         $em = $this->getDoctrine()->getManager();
+
         $contador = $em->getRepository('AppBundle:Contador')->findBy(
-            array('grupo' => $idGrupo)            
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Contador:contador-gestion.html.twig', 
             array( 
                 'contador' => $contador,
-                'idGrupo' => $idGrupo
             )
         );
     }
 /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/contador/nuevo", name="contadorNuevo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/contador/nuevo", name="contadorNuevo")
      */
-    public function contadorNuevoAction(Request $request, $idGrupo)
+    public function contadorNuevoAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $contador = new Contador();
 
         $form = $this->createForm(new ContadorType(), $contador);
-
-        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
-            array('id' => $idGrupo)
-        );
-        
         
         $form->add(
             'guardar', 
@@ -77,9 +74,7 @@ class ContadorController extends Controller
 
         if ($form->isValid()) {
             
-            $contador = $form->getData();                     
-
-            $contador->setGrupo($grupo);
+            $contador = $form->getData();                                 
             $contador->setActive(true);
             $contador->setFechaCreacion(new \DateTime());
 
@@ -87,21 +82,20 @@ class ContadorController extends Controller
             $em->persist($contador);
             $em->flush();
 
-            return $this->redirectToRoute('contadorGestion', array( 'idGrupo' => $idGrupo));
+            return $this->redirectToRoute('contadorGestion');
         }
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Contador:contador-nuevo.html.twig', 
             array(
-                'form' => $form->createView(),
-                'idGrupo' => $idGrupo
+                'form' => $form->createView(),                
             )
         );
     }
 
 /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/contador/{idContador}/editar", name="contadorEditar")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/contador/{idContador}/editar", name="contadorEditar")
      */
-    public function contadorEditarAction(Request $request, $idGrupo, $idContador)
+    public function contadorEditarAction(Request $request, $idContador)
     {
         $em = $this->getDoctrine()->getManager();
         $contador = new Contador();
@@ -133,7 +127,7 @@ class ContadorController extends Controller
 
             $em->flush();
 
-            return $this->redirectToRoute('contadorGestion', array( 'idGrupo' => $idGrupo));
+            return $this->redirectToRoute('contadorGestion');
         }
 
         return $this->render(
@@ -141,8 +135,7 @@ class ContadorController extends Controller
             array(
                     'form' => $form->createView(),
                     'idContador' => $idContador,
-                    'contador' => $contador,
-                    'idGrupo' => $idGrupo
+                    'contador' => $contador,                    
             )
         );
 
@@ -150,9 +143,9 @@ class ContadorController extends Controller
 
 
 /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/contador/{idContador}/eliminar", name="contadorEliminar")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/contador/{idContador}/eliminar", name="contadorEliminar")
      */
-    public function contadorEliminarAction(Request $request, $idGrupo, $idContador)
+    public function contadorEliminarAction(Request $request, $idContador)
     {
         $em = $this->getDoctrine()->getManager();
         $contador = new Contador();
@@ -162,14 +155,14 @@ class ContadorController extends Controller
         $em->remove($contador);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('contadorGestion', array('idGrupo' => $idGrupo)));
+        return $this->redirect($this->generateUrl('contadorGestion'));
 
     }
 
 /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/contador/{idContador}/documentos-soporte", name="contadorSoporte")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/contador/{idContador}/documentos-soporte", name="contadorSoporte")
      */
-    public function contadorSoporteAction(Request $request, $idGrupo, $idContador)
+    public function contadorSoporteAction(Request $request, $idContador)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -245,8 +238,7 @@ class ContadorController extends Controller
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
-                'histotialSoportes' => $histotialSoportes,
-                'idGrupo' => $idGrupo
+                'histotialSoportes' => $histotialSoportes                
             )
         );
         
@@ -272,8 +264,115 @@ class ContadorController extends Controller
         return $this->redirectToRoute('contadorSoporte', array( 'idContador' => $idContador));
         
     }
-    
 
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-contador", name="grupoContador")
+     */
+    public function contadorGrupoAction($idGrupo)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $contadores = new Contador();
+
+        $asignacionesContadorGrupo = $em->getRepository('AppBundle:AsignacionContadorGrupo')->findBy(
+            array('grupo' => $grupo)
+        ); 
+
+        if($asignacionesContadorGrupo == null){
+            $query = $em->createQuery('SELECT c FROM AppBundle:Contador c WHERE c.id NOT IN (SELECT contador.id FROM AppBundle:Contador contador JOIN AppBundle:AsignacionContadorGrupo acg WHERE contador = acg.contador AND acg.grupo = :grupo) AND c.active = 1');
+            $query->setParameter(':grupo', $grupo);
+            $contadores = $query->getResult();            
+        }else{
+            $contadores = null;
+        }
+
+        
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Contador:asignar-contador-grupo.html.twig', 
+            array(
+                'contadores' => $contadores,
+                'asignacionesContadorGrupo' => $asignacionesContadorGrupo,
+                'idGrupo' => $idGrupo
+            ));     
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-contador/{idContador}/nueva-asignacion", name="grupoContadorAsignacion")
+     */
+    public function asignarContadorGrupoAction($idGrupo, $idContador)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $contador = $em->getRepository('AppBundle:Contador')->findOneBy(
+            array('id' => $idContador)
+        );      
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );        
+           
+        $asignacionContadorGrupo = new AsignacionContadorGrupo();
+
+        $asignacionContadorGrupo->setGrupo($grupo);        
+        $asignacionContadorGrupo->setContador($contador);
+        $asignacionContadorGrupo->setActive(true);
+        $asignacionContadorGrupo->setFechaCreacion(new \DateTime());
+
+        $em->persist($asignacionContadorGrupo);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('grupoContador', 
+            array(
+                'contador' => $contador,          
+                'asignacionContadorGrupo' => $asignacionContadorGrupo,                
+                'idGrupo' => $idGrupo
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-contador/{idAsignacionContador}/eliminar", name="grupoContadorEliminar")
+     */
+    public function eliminarContadorGrupoAction($idGrupo, $idAsignacionContador)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionContadorGrupo = new AsignacionContadorGrupo();
+
+        $asignacionContadorGrupo = $em->getRepository('AppBundle:AsignacionContadorGrupo')->find($idAsignacionContador); 
+
+        $em->remove($asignacionContadorGrupo);
+        $em->flush();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $contadores = new Contador();
+
+        $asignacionesContadorGrupo = $em->getRepository('AppBundle:AsignacionContadorGrupo')->findBy(
+            array('grupo' => $grupo)
+        ); 
+
+        $query = $em->createQuery('SELECT c FROM AppBundle:Contador c WHERE c.id NOT IN (SELECT contador.id FROM AppBundle:Contador contador JOIN AppBundle:AsignacionContadorGrupo acg WHERE contador = acg.contador AND acg.grupo = :grupo) AND c.active = 1');
+        $query->setParameter(':grupo', $grupo);
+        $contadores = $query->getResult();
+
+        return $this->redirectToRoute('grupoContador', 
+            array(
+                'contador' => $contadores,          
+                'asignacionContadorGrupo' => $asignacionContadorGrupo,                
+                'idGrupo' => $idGrupo
+            ));       
+        
+    }   
 
 }
 
