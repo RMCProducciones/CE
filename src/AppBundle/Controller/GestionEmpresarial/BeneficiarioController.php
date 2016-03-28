@@ -205,9 +205,9 @@ class BeneficiarioController extends Controller
     }
     
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/beneficiario/{idBeneficiario}/documentos-soporte/{idBeneficiarioSoporte}/borrar", name="beneficiarioSoporteBorrar")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/beneficiario/{idGrupo}/{idBeneficiario}/documentos-soporte/{idBeneficiarioSoporte}/borrar", name="beneficiarioSoporteBorrar")
      */
-    public function beneficiarioSoporteBorrarAction(Request $request, $idBeneficiario, $idBeneficiarioSoporte)
+    public function beneficiarioSoporteBorrarAction(Request $request, $idBeneficiario, $idBeneficiarioSoporte, $idGrupo )
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -221,7 +221,10 @@ class BeneficiarioController extends Controller
         $beneficiarioSoporte->setActive(0);
         $em->flush();
 
-        return $this->redirectToRoute('beneficiarioSoporte', array( 'idBeneficiario' => $idBeneficiario));
+        return $this->redirectToRoute('beneficiarioSoporte', 
+            array( 
+            'idBeneficiario' => $idBeneficiario,
+            'idGrupo' => $idGrupo));
         
     }
 
