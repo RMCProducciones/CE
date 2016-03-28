@@ -52,7 +52,7 @@ class BeneficiarioController extends Controller
             array('id'=> $idGrupo)
         );
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/beneficiario:beneficiario-gestion.html.twig', 
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Beneficiario:beneficiario-gestion.html.twig', 
         array( 'idGrupo' => $idGrupo, 'beneficiarios' => $beneficiarios, 'grupo'=>$grupo));
 
     }

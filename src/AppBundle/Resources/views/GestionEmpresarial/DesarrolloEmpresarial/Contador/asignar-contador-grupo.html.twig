@@ -19,6 +19,12 @@
 
  <div class="container">
     <h1>Gestión Grupos</h1>
+    <br>
+
+    {% for grupos in grupo %}
+    <h2> Grupo: {{ grupos.nombre }}</h2>
+    {% endfor %}
+    <br>
     <hr>
     <h3>Asignación Contador</h3>
   </div>
