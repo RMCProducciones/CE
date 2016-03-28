@@ -229,7 +229,7 @@ class ContadorController extends Controller
                 $em->flush();
 
                 return $this->redirectToRoute('contadorSoporte', array( 'idContador' => $idContador,
-                                                                        'idGrupo' => $idGrupo));
+                                                                        ));
             }
         }   
         

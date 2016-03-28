@@ -1,11 +1,12 @@
 app.controller('gestionDocumentoSoporteBeneficiarioCtrl', ['$scope', '$location', function($scope, $location) {
 
 	$scope.idBeneficiario = 0;
+	$scope.idGrupo = 0;
 	$scope.idBeneficiarioSoporteActivo = 0;
 
 	$scope.anularSoporteBeneficiario = function() { 
 
-		window.location.replace($scope.rutaServidor  + "gestion-empresarial/desarrollo-empresarial/beneficiario/" + $scope.idBeneficiario + "/documentos-soporte/" + $scope.idBeneficiarioSoporteActivo + "/borrar");
+		window.location.replace($scope.rutaServidor  + "gestion-empresarial/desarrollo-empresarial/beneficiario/" + $scope.idGrupo + "/" + $scope.idBeneficiario + "/documentos-soporte/" + $scope.idBeneficiarioSoporteActivo + "/borrar");
 		
 	};
 
