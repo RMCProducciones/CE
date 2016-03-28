@@ -310,6 +310,10 @@ class GrupoController extends Controller
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id' => $idGrupo)
         );
+
+        $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
+            array('id'=> $idGrupo)
+        );
         
         if ($this->getRequest()->isMethod('POST')) {
             $form->bind($this->getRequest());
@@ -358,7 +362,8 @@ class GrupoController extends Controller
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
-                'histotialSoportes' => $histotialSoportes
+                'histotialSoportes' => $histotialSoportes,
+                'grupo' => $grupo
             )
         );
         
@@ -398,6 +403,10 @@ class GrupoController extends Controller
 
         $beneficiarios = new Beneficiario();
 
+        $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
+            array('id'=> $idGrupo)
+        );
+
         $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
             array('grupo' => $grupo)
         );     
@@ -419,7 +428,8 @@ class GrupoController extends Controller
             array(
                 'beneficiarios' => $mostrarBeneficiarios,
                 'asignacionesBeneficiariosCVB' => $asignacionesBeneficiariosCVB,
-                'idGrupo' => $idGrupo
+                'idGrupo' => $idGrupo,
+                'grupo' => $grupo
             ));        
     }
 
@@ -520,7 +530,11 @@ class GrupoController extends Controller
 
         $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
             array('grupo' => $grupo)
-        );     
+        );
+
+        $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
+            array('id'=> $idGrupo)
+        );
 
         $asignacionesBeneficiariosCC = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteCompras')->findBy(
             array('grupo' => $grupo)
@@ -539,7 +553,8 @@ class GrupoController extends Controller
             array(
                 'beneficiarios' => $mostrarBeneficiarios,
                 'asignacionesBeneficiariosCC' => $asignacionesBeneficiariosCC,
-                'idGrupo' => $idGrupo
+                'idGrupo' => $idGrupo,
+                'grupo' => $grupo
             ));        
     }
 
@@ -667,7 +682,11 @@ class GrupoController extends Controller
 
             }
 
-        }       
+        }
+
+        $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
+            array('id'=> $idGrupo)
+        );       
 
         $beneficiarios = new Beneficiario();
 
@@ -692,7 +711,8 @@ class GrupoController extends Controller
             array(
                 'beneficiarios' => $mostrarBeneficiarios,
                 'asignacionesBeneficiariosEO' => $asignacionesBeneficiariosEO,
-                'idGrupo' => $idGrupo
+                'idGrupo' => $idGrupo,
+                'grupo' => $grupo
             ));        
     }
 
