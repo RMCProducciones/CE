@@ -17,6 +17,10 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 use AppBundle\Entity\Convocatoria;
 use AppBundle\Entity\ConvocatoriaSoporte;
+use AppBundle\Entity\DocumentoSoporte;
+
+
+
 use AppBundle\Form\GestionAdministrativa\ConvocatoriaType;
 use AppBundle\Form\GestionAdministrativa\ConvocatoriaSoporteType;
 

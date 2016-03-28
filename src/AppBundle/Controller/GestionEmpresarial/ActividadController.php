@@ -46,7 +46,7 @@ class ActividadController extends Controller
 
     
      /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/actividad", name="actividadConcurso")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/actividad/nuevo", name="actividadConcurso")
      */
     public function actividadConcursoAction(Request $request)
     {
