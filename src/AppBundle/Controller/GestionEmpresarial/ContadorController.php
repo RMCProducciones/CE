@@ -229,7 +229,7 @@ class ContadorController extends Controller
                 $em->flush();
 
                 return $this->redirectToRoute('contadorSoporte', array( 'idContador' => $idContador,
-                                                                        'idGrupo' => $idGrupo));
+                                                                        ));
             }
         }   
         
@@ -276,6 +276,10 @@ class ContadorController extends Controller
             array('id' => $idGrupo)
         );
 
+        $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
+            array('id'=> $idGrupo)
+        );
+        
         $contadores = new Contador();
 
         $asignacionesContadorGrupo = $em->getRepository('AppBundle:AsignacionContadorGrupo')->findBy(
@@ -296,7 +300,8 @@ class ContadorController extends Controller
             array(
                 'contadores' => $contadores,
                 'asignacionesContadorGrupo' => $asignacionesContadorGrupo,
-                'idGrupo' => $idGrupo
+                'idGrupo' => $idGrupo,
+                'grupo'=>$grupo
             ));     
     }
 
