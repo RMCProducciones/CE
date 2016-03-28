@@ -21,6 +21,8 @@ use AppBundle\Entity\AsignacionBeneficiarioComiteVamosBien;
 use AppBundle\Entity\AsignacionBeneficiarioComiteCompras;
 use AppBundle\Entity\AsignacionBeneficiarioEstructuraOrganizacional; 
 use AppBundle\Entity\GrupoSoporte;
+use AppBundle\Entity\Camino;
+use AppBundle\Entity\Nodo;
 
 
 use AppBundle\Form\GestionEmpresarial\GrupoType;
@@ -140,11 +142,10 @@ class GrupoController extends Controller
                 $tipo = "4";                
             }
 
-/*
-            $traerGrupo->setCodigo($zona."-".$idMunicipio->getAbreviatura()."-".$tipo."-".date_format($traerGrupo->getFechaInscripcion(), 'Y/m')."-".$consecutivo.$traerGrupo->getId());
+            //$traerGrupo->setCodigo($zona."-".$idMunicipio->getAbreviatura()."-".$tipo."-".date_format($traerGrupo->getFechaInscripcion(), 'Y/m')."-".$consecutivo.$traerGrupo->getId());
 
             self::nodoCamino($idGrupo, 1, 2);
-          */  
+            
             $em->flush();
 
             return $this->redirectToRoute('grupoGestion');
@@ -807,6 +808,49 @@ class GrupoController extends Controller
             ));      
         
     } 
+
+
+    private function nodoCamino($idGrupo, $idNodo, $estado)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id' => $idNodo)
+        );
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $nodoCaminoAccion = new Camino();
+        $nodoCaminoAccion->setGrupo($grupo);
+        $nodoCaminoAccion->setNodo($nodo);
+        $nodoCaminoAccion->setEstado($estado);
+        $nodoCaminoAccion->setActive(true);
+        $nodoCaminoAccion->setFechaCreacion(new \DateTime());
+
+        $em->persist($nodoCaminoAccion);
+    }
+
+    private function encendidoNodoSeguimento($idGrupo, $idNodo){
+
+        if($idNodo == 6)
+            self::nodoCamino($idGrupo, 7, 1);
+        elseif ($idNodo == 10) {
+            self::nodoCamino($idGrupo, 11, 1);
+        }
+        elseif ($idNodo == 14) {
+            self::nodoCamino($idGrupo, 15, 1);
+        }
+        elseif ($idNodo == 20){
+            self::nodoCamino($idGrupo, 21, 1);
+        }
+        else{
+            self::nodoCamino($idGrupo, 27, 1);
+        }
+
+    }
+
     
 
 
