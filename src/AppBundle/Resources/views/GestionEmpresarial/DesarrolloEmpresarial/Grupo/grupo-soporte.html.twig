@@ -46,12 +46,14 @@
     <div class="section">
       <div class="container">
 		<h2 class="page-header">
-       {% for grupos in grupo %}
-        Grupo: {{ grupos.nombre }}
-       {% endfor %}
-    <br>
-    Gestión de documentos soportes del Grupo
 
+      <h1>Gestión de documentos soportes del Grupo</h1>
+      {% for grupos in grupo %}
+      <h2>  Grupo: {{ grupos.nombre }} </h2>
+      {% endfor %}
+    <br>
+      <h2>Gestión de documentos soportes del Grupo</h2>
+      <hr>
     </h2>
    
     <br>
