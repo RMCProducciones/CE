@@ -606,14 +606,18 @@ class SeguimientoGrupoController extends Controller
             );
             
             $pasantia->setUsuarioCreacion($usuarioCreacion);*/
-            if($visita->getInterventoria())
+            
+        
+            $em->persist($visita);
+            $em->flush();
+
+            if($visita->getInterventoria() != 1)
                 self::nodoCamino($idGrupo, $nodo->getId(), 6);
             else{
                 self::nodoCamino($idGrupo, $nodo->getId(), 2);
                 self::nodoCamino($idGrupo, $nodo->getId()+1, 1);
             }
-        
-            $em->persist($visita);
+
             $em->flush();
 
             return $this->redirect(
