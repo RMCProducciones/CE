@@ -7,7 +7,7 @@
     <ul class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Conocimientos</li>
-      <li><a href="{{ path('contadorGestion', {'idGrupo' : idGrupo}) }}">Contador</a></li>
+      <li><a href="{{ path('contadorGestion')}}">Contador</a></li>
       <li class="active">Documentos Soporte</li>
     </ul>
 
@@ -32,7 +32,7 @@
   
               <button name="grupoSoporte[Guardar]" id="grupoSoporte_Guardar" type="submit" class="btn btn-success">Guardar</button>
               
-              <a href="{{ path('contadorGestion', {'idGrupo' : idGrupo}) }}" class="btn btn-danger" title="" alt="Cancelar" >Cancelar</a>
+              <a href="{{ path('contadorGestion') }}" class="btn btn-danger" title="" alt="Cancelar" >Cancelar</a>
               
             </div>
           </div>
@@ -112,7 +112,7 @@
 	                  <td>
 	                    <a href="{{ asset('../uploads/documents/'~ soporteActivo.path) }}" alt="Descargar" title="Descargar"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a> | 	 
 
-                      <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="anularSoporteRuta();" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true" ng-click="idRuta = {{soporteActivo.ruta.id}}; idRutaSoporteActivo = {{soporteActivo.id}}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>              
+                      <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="anularSoporteContador();" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true" ng-click="idContador = {{soporteActivo.contador.id}}; idContadorSoporteActivo = {{soporteActivo.id}}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>              
 	                  </td>
 	                </tr>
 	                {% set consecutivo = consecutivo + 1 %}

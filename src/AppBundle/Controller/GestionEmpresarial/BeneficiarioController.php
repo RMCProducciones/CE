@@ -52,7 +52,7 @@ class BeneficiarioController extends Controller
             array('id'=> $idGrupo)
         );
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/beneficiario:beneficiario-gestion.html.twig', 
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Beneficiario:beneficiario-gestion.html.twig', 
         array( 'idGrupo' => $idGrupo, 'beneficiarios' => $beneficiarios, 'grupo'=>$grupo));
 
     }
@@ -107,7 +107,7 @@ class BeneficiarioController extends Controller
         }
         
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/beneficiario:beneficiario-nuevo.html.twig', array('form' => $form->createView(),'idGrupo' => $idGrupo,'grupo'=>$grupo));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Beneficiario:beneficiario-nuevo.html.twig', array('form' => $form->createView(),'idGrupo' => $idGrupo,'grupo'=>$grupo));
     }
 
 
@@ -191,7 +191,7 @@ class BeneficiarioController extends Controller
 
         //return new Response("Hola mundo");
         return $this->render(
-            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/beneficiario:beneficiario-soporte.html.twig', 
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Beneficiario:beneficiario-soporte.html.twig', 
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
@@ -205,9 +205,9 @@ class BeneficiarioController extends Controller
     }
     
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/beneficiario/{idBeneficiario}/documentos-soporte/{idBeneficiarioSoporte}/borrar", name="beneficiarioSoporteBorrar")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/beneficiario/{idGrupo}/{idBeneficiario}/documentos-soporte/{idBeneficiarioSoporte}/borrar", name="beneficiarioSoporteBorrar")
      */
-    public function beneficiarioSoporteBorrarAction(Request $request, $idBeneficiario, $idBeneficiarioSoporte)
+    public function beneficiarioSoporteBorrarAction(Request $request, $idBeneficiario, $idBeneficiarioSoporte, $idGrupo )
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -221,7 +221,10 @@ class BeneficiarioController extends Controller
         $beneficiarioSoporte->setActive(0);
         $em->flush();
 
-        return $this->redirectToRoute('beneficiarioSoporte', array( 'idBeneficiario' => $idBeneficiario));
+        return $this->redirectToRoute('beneficiarioSoporte', 
+            array( 
+            'idBeneficiario' => $idBeneficiario,
+            'idGrupo' => $idGrupo));
         
     }
 
@@ -270,11 +273,11 @@ class BeneficiarioController extends Controller
             $em->flush();
 
 
-            return $this->redirectToRoute('beneficiariosGestion', array('idGrupo' => $idGrupo));
+            return $this->redirectToRoute('beneficiarioGestion', array('idGrupo' => $idGrupo));
         }
 
         return $this->render(
-            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/beneficiario:beneficiario-editar.html.twig', 
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Beneficiario:beneficiario-editar.html.twig', 
             array(
                     'form' => $form->createView(),
                     'idGrupo' => $idGrupo,

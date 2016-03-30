@@ -21,6 +21,8 @@ use AppBundle\Entity\AsignacionBeneficiarioComiteVamosBien;
 use AppBundle\Entity\AsignacionBeneficiarioComiteCompras;
 use AppBundle\Entity\AsignacionBeneficiarioEstructuraOrganizacional; 
 use AppBundle\Entity\GrupoSoporte;
+use AppBundle\Entity\Camino;
+use AppBundle\Entity\Nodo;
 
 
 use AppBundle\Form\GestionEmpresarial\GrupoType;
@@ -140,11 +142,10 @@ class GrupoController extends Controller
                 $tipo = "4";                
             }
 
-/*
-            $traerGrupo->setCodigo($zona."-".$idMunicipio->getAbreviatura()."-".$tipo."-".date_format($traerGrupo->getFechaInscripcion(), 'Y/m')."-".$consecutivo.$traerGrupo->getId());
+            //$traerGrupo->setCodigo($zona."-".$idMunicipio->getAbreviatura()."-".$tipo."-".date_format($traerGrupo->getFechaInscripcion(), 'Y/m')."-".$consecutivo.$traerGrupo->getId());
 
             self::nodoCamino($idGrupo, 1, 2);
-          */  
+            
             $em->flush();
 
             return $this->redirectToRoute('grupoGestion');
@@ -310,6 +311,10 @@ class GrupoController extends Controller
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id' => $idGrupo)
         );
+
+        $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
+            array('id'=> $idGrupo)
+        );
         
         if ($this->getRequest()->isMethod('POST')) {
             $form->bind($this->getRequest());
@@ -358,7 +363,8 @@ class GrupoController extends Controller
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
-                'histotialSoportes' => $histotialSoportes
+                'histotialSoportes' => $histotialSoportes,
+                'grupo' => $grupo
             )
         );
         
@@ -398,6 +404,10 @@ class GrupoController extends Controller
 
         $beneficiarios = new Beneficiario();
 
+        $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
+            array('id'=> $idGrupo)
+        );
+
         $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
             array('grupo' => $grupo)
         );     
@@ -419,7 +429,8 @@ class GrupoController extends Controller
             array(
                 'beneficiarios' => $mostrarBeneficiarios,
                 'asignacionesBeneficiariosCVB' => $asignacionesBeneficiariosCVB,
-                'idGrupo' => $idGrupo
+                'idGrupo' => $idGrupo,
+                'grupo' => $grupo
             ));        
     }
 
@@ -520,7 +531,11 @@ class GrupoController extends Controller
 
         $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
             array('grupo' => $grupo)
-        );     
+        );
+
+        $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
+            array('id'=> $idGrupo)
+        );
 
         $asignacionesBeneficiariosCC = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteCompras')->findBy(
             array('grupo' => $grupo)
@@ -539,7 +554,8 @@ class GrupoController extends Controller
             array(
                 'beneficiarios' => $mostrarBeneficiarios,
                 'asignacionesBeneficiariosCC' => $asignacionesBeneficiariosCC,
-                'idGrupo' => $idGrupo
+                'idGrupo' => $idGrupo,
+                'grupo' => $grupo
             ));        
     }
 
@@ -667,7 +683,11 @@ class GrupoController extends Controller
 
             }
 
-        }       
+        }
+
+        $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
+            array('id'=> $idGrupo)
+        );       
 
         $beneficiarios = new Beneficiario();
 
@@ -692,7 +712,8 @@ class GrupoController extends Controller
             array(
                 'beneficiarios' => $mostrarBeneficiarios,
                 'asignacionesBeneficiariosEO' => $asignacionesBeneficiariosEO,
-                'idGrupo' => $idGrupo
+                'idGrupo' => $idGrupo,
+                'grupo' => $grupo
             ));        
     }
 
@@ -787,6 +808,49 @@ class GrupoController extends Controller
             ));      
         
     } 
+
+
+    private function nodoCamino($idGrupo, $idNodo, $estado)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id' => $idNodo)
+        );
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $nodoCaminoAccion = new Camino();
+        $nodoCaminoAccion->setGrupo($grupo);
+        $nodoCaminoAccion->setNodo($nodo);
+        $nodoCaminoAccion->setEstado($estado);
+        $nodoCaminoAccion->setActive(true);
+        $nodoCaminoAccion->setFechaCreacion(new \DateTime());
+
+        $em->persist($nodoCaminoAccion);
+    }
+
+    private function encendidoNodoSeguimento($idGrupo, $idNodo){
+
+        if($idNodo == 6)
+            self::nodoCamino($idGrupo, 7, 1);
+        elseif ($idNodo == 10) {
+            self::nodoCamino($idGrupo, 11, 1);
+        }
+        elseif ($idNodo == 14) {
+            self::nodoCamino($idGrupo, 15, 1);
+        }
+        elseif ($idNodo == 20){
+            self::nodoCamino($idGrupo, 21, 1);
+        }
+        else{
+            self::nodoCamino($idGrupo, 27, 1);
+        }
+
+    }
+
     
 
 

@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\ORM\EntityRepository;
 
-class ContadorSoporteType extends AbstractType
+class ComiteSoporteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -17,7 +17,7 @@ class ContadorSoporteType extends AbstractType
 					return $er->createQueryBuilder('l')
 						->where('l.dominio = :dominio')
 						->andWhere('l.active = 1')
-						->setParameter('dominio', 'contador_tipo_soporte')
+						->setParameter('dominio', 'concurso_tipo_soporte')
 						->orderBy('l.orden', 'ASC');
 				},
 			))
@@ -27,6 +27,6 @@ class ContadorSoporteType extends AbstractType
     
     public function getName()
     {
-        return 'contadorSoporte';
+        return 'comiteSoporte';
     }
 }

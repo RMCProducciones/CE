@@ -6,27 +6,26 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\ORM\EntityRepository;
 
-class ContadorSoporteType extends AbstractType
+class ListaRolType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-			->add('tipoSoporte', 'entity', array(
-				'class' => 'AppBundle:DocumentoSoporte',
+			->add('rol', 'entity', array(
+				'class' => 'AppBundle:Listas',
 				'query_builder' => function(EntityRepository $er) {
 					return $er->createQueryBuilder('l')
 						->where('l.dominio = :dominio')
 						->andWhere('l.active = 1')
-						->setParameter('dominio', 'contador_tipo_soporte')
+						->setParameter('dominio', 'rol')
 						->orderBy('l.orden', 'ASC');
-				},
-			))
-			->add('file', 'file', array('required' => true))
+				})
+			)
+
 		;
     }
-    
     public function getName()
     {
-        return 'contadorSoporte';
+        return 'idRolIntegrante';
     }
 }
