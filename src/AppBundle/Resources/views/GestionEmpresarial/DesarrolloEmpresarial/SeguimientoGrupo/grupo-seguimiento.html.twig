@@ -145,7 +145,6 @@
 
                 linea(200, 400, 280, 400)       // 1 a 2
                 linea(280, 400, 380, 180)       // 2 a 3
-                linea(280, 400, 280, 630)       // 2 a 4
                 linea(280, 400, 330, 580)       // 2 a 5
 
                 linea(280, 400, 480, 280)       // 2 a 6
@@ -184,12 +183,7 @@
                 linea(450, 610, 900, 610)       // 5 a 14
                 linea(900, 610, 950, 530)       // 5 a 14
 
-                linea(280, 630, 450, 660)       // 4 a 20
-                linea(450, 660, 1350, 660)      // 4 a 20
-                linea(1350,660, 1400, 530)       // 4 a 20
-
-                linea(1350, 530, 1380, 430)     // 19 a 26
-                linea(1380, 430, 1850, 280)     // 19 a 26
+               
 
                 
                 /*
@@ -222,14 +216,14 @@
 
                 ctx.font = 15*(escX+escY)/2+"px Arial";
 
-                ctx.fillStyle = "#999"; ctx.textAlign="right"; ctx.fillText("CLEAR",280*escX,350*escY); ctx.fillText("Habilitación",280*escX,370*escY);
+                ctx.fillStyle = "#999"; ctx.textAlign="right"; ctx.fillText("CREE",280*escX,350*escY); 
                 circulo(280, 400);   // 2    CLEAR Habilitación
                 
                 ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Visita previa",380*escX,150*escY);
                 circulo(380, 180);      // 3    Visita previa Formal PN
 
-                ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Visita previa",280*escX,670*escY);
-                circulo(280, 630);      // 4    Visita previa No Formal PI
+                ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Visita previa",-280*escX,-670*escY);
+                circulo(-280, -630);      // 4    Visita previa No Formal PI
 
                 ctx.fillStyle = "#999"; ctx.textAlign="left"; ctx.fillText("Visita previa",330*escX,550*escY);
                 circulo(330, 580);      // 5    Visita previa No Formal IEA
