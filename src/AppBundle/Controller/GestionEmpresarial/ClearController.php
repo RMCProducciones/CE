@@ -17,11 +17,20 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 use AppBundle\Entity\CLEAR;
 use AppBundle\Entity\ClearSoporte;
+use AppBundle\Entity\Listas;
+use AppBundle\Entity\Integrante;
+use AppBundle\Entity\AsignacionIntegranteCLEAR;
+use AppBundle\Entity\AsignacionGrupoCLEAR;
+use AppBundle\Entity\Camino;
+use AppBundle\Entity\HabilitacionFases;
 
 
 use AppBundle\Form\GestionEmpresarial\CLEARType;
 use AppBundle\Form\GestionEmpresarial\ClearSoporteType;
 use AppBundle\Form\GestionEmpresarial\ListaRolBeneficiarioType;
+use AppBundle\Form\GestionEmpresarial\ListaRolType;
+
+
 
 
 /*Para autenticación por código*/
@@ -213,7 +222,7 @@ class ClearController extends Controller
                 $clearSoporte->setActive(true);
                 $clearSoporte->setFechaCreacion(new \DateTime());
 
-                //if($clearSoporte->getDescripcion()=="Acta final Clear"){ //Despúes de subir el Acta final del CLEAR toma lo que esté almacenado en habilitacionFases de cada grupo para asignar un nodo Ejecutado o un nodo Rechazado
+                //if($clearSoporte->getDescripcion()=="Documento de legalización del Clear"){ //Despúes de subir el Acta final del CLEAR toma lo que esté almacenado en habilitacionFases de cada grupo para asignar un nodo Ejecutado o un nodo Rechazado
 
 
                 if(true){
@@ -238,32 +247,34 @@ class ClearController extends Controller
                         $idUltimoNodo = $ultimoNodo->getNodo()->getId();
                         $estado = $ultimoNodo->getEstado();
 
-                        //EJECUCIÓN O RECHAZO(2 o 3) CIERRE DE CLEAR HABILITACIÓN ******** ******** ******** ********
-                        if ($idUltimoNodo == 2 || $idUltimoNodo == 6 || $idUltimoNodo == 10){
+                        //EJECUCIÓN O RECHAZO(Estados 2 o 3) CIERRE DE CLEAR HABILITACIÓN (CREE) ******** ******** ******** ********
+                        if ($idUltimoNodo == 2){
                             //if según HabilitacionFases alguno en true
-                            if($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPi() || $habilitacionFases->getPn()){
+                            if($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPn()){
                                 
                                 echo "hola ".$idUltimoNodo;
 
                                 if($idUltimoNodo == 2)
                                     self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 2);//Ejecutada(2) Clear de Habilitación
                                 
-                                if($idUltimoNodo == 6)
-                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 6, 2);//Ejecutada(2) Clear de Habilitación
-
-                                if($idUltimoNodo == 10)
-                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 10, 2);//Ejecutada(2) Clear de Habilitación
-
-
                                 if($habilitacionFases->getIea())
                                     self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 5, 1);//Programación(1) a Visita previa IEA
-                                if($habilitacionFases->getPi())
-                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 4, 1);//Programación(1) a Visita previa PI
                                 if($habilitacionFases->getPn())
                                     self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 3, 1);//Programación(1) a Visita previa PN
                             }
                             else
                                 self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 3);//Rechazado(3) Clear de Habilitación
+                        }
+                        elseif($idUltimoNodo == 6 || $idUltimoNodo == 10){
+                                //Evaluar "Evaluación de Fase para definir el color", mientras tanto:
+                                self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), $idUltimoNodo, 2);//En verde temporalmente a todos mientras se evalua la fase
+
+                                /*if($idUltimoNodo == 6)
+                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 6, 2);//Ejecutada(2) Clear de Asignación MOT Formal
+
+                                if($idUltimoNodo == 10)
+                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 10, 2);//Ejecutada(2) Clear de Asignación MOT No Formal
+                                */
                         }
                         else{//PROGRAMACIÓN GENÉRICA DE CONTRALORÍA O ASIGNACIÓN
                             self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), $idUltimoNodo, 2);
@@ -316,5 +327,395 @@ class ClearController extends Controller
         
     }
     
+
+     /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-integrante", name="clearIntegrante")
+     */
+    public function clearIntegranteAction(Request $request, $idCLEAR)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
+            array('id' => $idCLEAR)
+        );
+
+        if ($request->getMethod() == 'POST') {
+
+
+            if(isset($_POST["idRolIntegrante"])){
+
+                echo ($_POST["idRolIntegrante"]["idIntegrante"]);
+
+
+                $asignacionIntegranteCLEAR = new AsignacionIntegranteCLEAR();
+
+                $rolIntegrante = $em->getRepository('AppBundle:Listas')->findOneBy(
+                    array('id' => $_POST["idRolIntegrante"]["rol"])
+                );  
+
+                $integrante = $em->getRepository('AppBundle:Integrante')->findOneBy(
+                    array('id' => $_POST["idRolIntegrante"]["idIntegrante"])
+                );  
+
+                $asignacionIntegranteCLEAR->setRol($rolIntegrante);
+                $asignacionIntegranteCLEAR->setClear($clear);
+                $asignacionIntegranteCLEAR->setIntegrante($integrante);
+
+                $asignacionIntegranteCLEAR->setFechaCreacion(new \DateTime());
+                $asignacionIntegranteCLEAR->setActive(0);
+
+
+                $em->persist($asignacionIntegranteCLEAR);
+                $em->flush();
+
+            }
+
+        }        
+
+        $asignacionesIntegranteCLEAR = new AsignacionIntegranteCLEAR();
+
+        $asignacionesIntegranteCLEAR = $em->getRepository('AppBundle:AsignacionIntegranteCLEAR')->findBy(
+            array('clear' => $clear)
+        );        
+
+        $query = $em->createQuery('SELECT i FROM AppBundle:Integrante i WHERE i.id NOT IN (SELECT integrante.id FROM AppBundle:Integrante integrante JOIN AppBundle:AsignacionIntegranteCLEAR agc WHERE integrante = agc.integrante AND agc.clear = :clear) AND i.active = 1');
+        $query->setParameter('clear', $clear);
+
+        $integrantes = $query->getResult();
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Clear:integrantes-clear-gestion-asignacion.html.twig', 
+            array(
+                'integrantes' => $integrantes,
+                'asignacionesIntegranteCLEAR' => $asignacionesIntegranteCLEAR,
+                'idCLEAR' => $idCLEAR
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-integrante/{idIntegrante}/formulario", name="formularioRolIntegranteClear")
+     */
+    public function formularioRolIntegranteClearAction(Request $request, $idCLEAR, $idIntegrante)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionesIntegranteCLEAR = new AsignacionIntegranteCLEAR();
+
+        $form = $this->createForm(new ListaRolType(), $asignacionesIntegranteCLEAR);
+
+        $form->add(
+            'idIntegrante', 
+            'hidden', 
+            array(
+                'mapped' => false,
+                'attr' => array(      
+                    'value' => $idIntegrante,              
+                    'style' => 'visibility:hidden'
+                )
+            )
+        );
+//El boton tiene un error al enviar el ID del beneficiario
+        $form->add(
+            'Asignar_'.$idIntegrante, 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+
+        $form->handleRequest($request);
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Clear:asignarRolIntegranteClear.html.twig',
+            array(
+                'form' => $form->createView(),
+                'idIntegrante' => $idIntegrante,
+                'idCLEAR' => $idCLEAR
+                )
+        );
+    }
+
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-integrante/{idAsignacionIntegranteCLEAR}/eliminar", name="clearEliminarIntegrante")
+     */
+    public function clearEliminarIntegranteAction(Request $request, $idCLEAR, $idAsignacionIntegranteCLEAR)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionIntegranteCLEAR = new AsignacionIntegranteCLEAR();
+
+        $asignacionIntegranteCLEAR = $em->getRepository('AppBundle:AsignacionIntegranteCLEAR')->find($idAsignacionIntegranteCLEAR); 
+
+        $integrantes = $em->getRepository('AppBundle:Integrante')->findBy(
+            array('active' => '1'),
+            array('primer_apellido' => 'ASC')            
+        );  
+
+        $em->remove($asignacionIntegranteCLEAR);
+        $em->flush();
+
+        $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
+            array('id' => $idCLEAR)
+        );
+
+        $asignacionesIntegranteCLEAR = $em->getRepository('AppBundle:AsignacionIntegranteCLEAR')->findBy(
+            array('clear' => $clear)
+        );  
+
+        return $this->redirectToRoute('clearIntegrante',
+             array(
+                'integrantes' => $integrantes,
+                'asignacionesIntegranteCLEAR' => $asignacionIntegranteCLEAR,
+                'idCLEAR' => $idCLEAR
+            ));    
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-grupo", name="clearGrupo")
+     */
+    public function clearGrupoAction($idCLEAR)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
+            array('id' => $idCLEAR)
+        );
+
+        $asignacionesGrupoCLEAR = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
+            array('clear' => $clear)
+        );  
+
+        $query = $em->createQuery('SELECT g FROM AppBundle:Grupo g WHERE g.id NOT IN (SELECT grupo.id FROM AppBundle:Grupo grupo JOIN AppBundle:AsignacionGrupoCLEAR agc WHERE grupo = agc.grupo AND agc.clear = :clear) AND g.active = 1');
+        $query->setParameter('clear', $clear);
+
+        $grupos = $query->getResult();
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Clear:grupo-clear-gestion-asignacion.html.twig', 
+            array(
+                'grupos' => $grupos,
+                'asignacionesGrupoCLEAR' => $asignacionesGrupoCLEAR,
+                'idCLEAR' => $idCLEAR
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-grupo/{idGrupo}/nueva-asignacion", name="clearAsignarGrupo")
+     */
+    public function clearAsignarGrupoAction($idCLEAR, $idGrupo)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );  
+
+        $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
+            array('id' => $idCLEAR)
+        );
+           
+        $asignacionesGrupoCLEAR = new AsignacionGrupoCLEAR();
+
+        $asignacionesGrupoCLEAR->setGrupo($grupo);
+        $asignacionesGrupoCLEAR->setClear($clear);           
+        $asignacionesGrupoCLEAR->setActive(true);
+        $asignacionesGrupoCLEAR->setFechaCreacion(new \DateTime());
+
+
+        $camino = $em->getRepository('AppBundle:Camino')->findBy(
+            array('grupo' => $grupo)
+        );
+
+        $ultimoNodo = $camino[count($camino)-1];
+        $idUltimoNodo = $ultimoNodo->getNodo()->getId();
+        $estado = $ultimoNodo->getEstado();
+
+        $habilitacionFases = $em->getRepository('AppBundle:HabilitacionFases')->findOneBy(
+            array('grupo' => $asignacionesGrupoCLEAR->getGrupo()) 
+        );  
+
+       
+        //if según HabilitacionFases alguno en true
+        //$habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPi() || $habilitacionFases->getPn()
+            
+        //die("cantidad ".count($camino));
+        
+        //PROGRAMACIÓN(1) PARTICIPACIÓN PARA HABILITACIÓN ******** ******** ******** ********
+        if ($idUltimoNodo == 1){
+            $asignacionesGrupoCLEAR->setHabilitacion(true); 
+            self::nodoCamino($idGrupo, 2, 1);//Programación(1) a Clear de Habilitación
+        }
+        //PROGRAMACIÓN(1) PARTICIPACIÓN PARA ASIGNACIÓN ******** ******** ********  ********      
+        elseif($estado == 2 && $idUltimoNodo == 2 && ($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal())){ // Si el ultimo nodo es 2(Habilitación) y tiene estado 2(Ejecutado) y en HabilitaciónFases permita MOT Formal o MOT no Formal
+            $asignacionesGrupoCLEAR->setAsignacion(true);
+            if($habilitacionFases->getMotFormal()) 
+                self::nodoCamino($idGrupo, 6, 1); //Programación(1) a Clear de Asignación MOT Formal
+            else
+                self::nodoCamino($idGrupo, 10, 1); //Programación(1) a Clear de Asignación MOT No Formal
+        }
+        elseif($estado == 2 && ($idUltimoNodo == 3 || $idUltimoNodo == 4 || $idUltimoNodo == 5)) {//Si el último nodo es 3, 4, 5(Visita Previa) y tiene estado 2(Ejecutado)
+            $asignacionesGrupoCLEAR->setAsignacion(true);
+            if($idUltimoNodo == 3)
+                self::nodoCamino($idGrupo, 26, 1); //Programación(1) a Clear de Asignación PN
+            elseif($idUltimoNodo == 4)
+                self::nodoCamino($idGrupo, 20, 1); //Programación(1) a Clear de Asignación PI
+            elseif($idUltimoNodo == 5)
+                self::nodoCamino($idGrupo, 14, 1); //Programación(1) a Clear de Asignación IEA
+        }
+        elseif($estado == 2 && ($idUltimoNodo == 9 || $idUltimoNodo == 13 || $idUltimoNodo == 19 || $idUltimoNodo == 25)) {//Si el último nodo es 9, 13, 19 o 25(Contraloria) y tiene estado 2(Ejecutado)
+            $asignacionesGrupoCLEAR->setAsignacion(true);
+            if($idUltimoNodo == 9)
+                self::nodoCamino($idGrupo, 26, 1); //Programación(1) a Clear de Asignación PN
+            elseif($idUltimoNodo == 13)
+                self::nodoCamino($idGrupo, 14, 1); //Programación(1) a Clear de Asignación IEA
+            elseif($idUltimoNodo == 19){
+                self::nodoCamino($idGrupo, 20, 1); //Programación(1) a Clear de Asignación PI
+            }
+            elseif($idUltimoNodo == 25)
+                self::nodoCamino($idGrupo, 26, 1); //Programación(1) a Clear de Asignación PN
+        }
+        //PROGRAMACIÓN(1) PARTICIPACIÓN PARA CONTRALORÍA ******** ******** ******** ********
+        elseif($estado == 2 && ($idUltimoNodo == 8 || $idUltimoNodo == 12 || $idUltimoNodo == 18 || $idUltimoNodo == 24 || $idUltimoNodo == 30)){ //Si el último nodo es 8, 12, 18, 24 o 30 (Legalización Fase) y tiene estado 2(Ejecutado)
+            $asignacionesGrupoCLEAR->setContraloriaSocial(true); 
+            if($idUltimoNodo == 8)
+                self::nodoCamino($idGrupo, 9, 1); //Programación(1) a Clear de Contraloria MOT Formal
+            elseif($idUltimoNodo == 12)
+                self::nodoCamino($idGrupo, 13, 1); //Programación(1) a Clear de Contraloria MOT No Formal
+            elseif($idUltimoNodo == 18)
+                self::nodoCamino($idGrupo, 19, 1); //Programación(1) a Clear de Contraloria IEA
+            elseif($idUltimoNodo == 24)
+                self::nodoCamino($idGrupo, 25, 1); //Programación(1) a Clear de Contraloria PI
+            elseif($idUltimoNodo == 30)
+                self::nodoCamino($idGrupo, 31, 1); //Programación(1) a Clear de Contraloria PN
+        }
+        else{
+            //No se puede asignar a CLEAR
+             $this->addFlash('warning', 'Este grupo no se puede asignar a un CLEAR, favor consulte el mapa de seguimiento.');
+             return $this->redirectToRoute('clearGrupo', 
+                array(
+                    'grupos' => $grupo, 
+                    'asignacionesGrupoCLEAR' => $asignacionesGrupoCLEAR,
+                    'idCLEAR' => $idCLEAR
+                ));   
+        }
+
+        
+        /*
+        $this->addFlash('info',  
+                array(
+                    'title' => "hola",
+                    'message' => "asdfsadf")
+                );
+        $this->addFlash('warning', 'Mensaje 2');
+        $this->addFlash('success', 'Mensaje 3');
+        */
+
+        $em->persist($asignacionesGrupoCLEAR);
+        $em->flush();
+
+        return $this->redirectToRoute('clearGrupo', 
+            array(
+                'grupos' => $grupo, 
+                'asignacionesGrupoCLEAR' => $asignacionesGrupoCLEAR,
+                'idCLEAR' => $idCLEAR
+            ));        
+        
+    }
+
+     /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-grupo/{idAsignacionGrupoCLEAR}/eliminar", name="clearEliminarGrupo")
+     */
+    public function clearEliminarGrupoAction(Request $request, $idCLEAR, $idAsignacionGrupoCLEAR)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionesGrupoCLEAR = new AsignacionGrupoCLEAR();
+
+        $asignacionesGrupoCLEAR = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->find($idAsignacionGrupoCLEAR); 
+
+        $grupos = $em->getRepository('AppBundle:Grupo')->findBy(
+            array('active' => '1'),
+            array('fecha_creacion' => 'ASC')
+        );      
+
+        //buscando el ultimo en 1(Programado)
+        $camino = $em->getRepository('AppBundle:Camino')->findBy(
+            array('grupo' => $asignacionesGrupoCLEAR->getGrupo(), 
+                'estado' => '1'
+            )
+        );
+        $ultimoNodo = $camino[count($camino)-1];
+        if(count($camino))
+            $em->remove($ultimoNodo);
+        
+        $em->remove($asignacionesGrupoCLEAR);
+        $em->flush();
+
+        $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
+            array('id' => $idCLEAR)
+        );
+
+        $asignacionesIntegranteCLEAR = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
+            array('clear' => $clear)
+        );  
+
+        return $this->redirectToRoute('clearGrupo',
+             array(
+                'grupos' => $grupos,
+                'asignacionesIntegranteCLEAR' => $asignacionesGrupoCLEAR,
+                'idCLEAR' => $idCLEAR
+            ));    
+        
+    }
+
+
+
+    private function nodoCamino($idGrupo, $idNodo, $estado)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id' => $idNodo)
+        );
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $nodoCaminoAccion = new Camino();
+        $nodoCaminoAccion->setGrupo($grupo);
+        $nodoCaminoAccion->setNodo($nodo);
+        $nodoCaminoAccion->setEstado($estado);
+        $nodoCaminoAccion->setActive(true);
+        $nodoCaminoAccion->setFechaCreacion(new \DateTime());
+
+        $em->persist($nodoCaminoAccion);
+    }
+
+    private function encendidoNodoSeguimento($idGrupo, $idNodo){
+
+        if($idNodo == 6)
+            self::nodoCamino($idGrupo, 7, 1);
+        elseif ($idNodo == 10) {
+            self::nodoCamino($idGrupo, 11, 1);
+        }
+        elseif ($idNodo == 14) {
+            self::nodoCamino($idGrupo, 15, 1);
+        }
+        elseif ($idNodo == 20){
+            self::nodoCamino($idGrupo, 21, 1);
+        }
+        else{
+            self::nodoCamino($idGrupo, 27, 1);
+        }
+
+    }
 
 }

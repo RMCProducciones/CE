@@ -15,7 +15,6 @@ class HabilitacionFasesType extends AbstractType
         	->add('mot_no_formal', 'checkbox', array('label' => 'MOT no formal', 'required' => false))
 			->add('mot_formal', 'checkbox', array('label' => 'MOT formal', 'required' => false))		
 			->add('iea', 'checkbox', array('label' => 'IEA', 'required' => false))
-			->add('pi', 'checkbox', array('label' => 'PI', 'required' => false))
 			->add('pn', 'checkbox', array('label' => 'PN', 'required' => false))	
 		;
     }
