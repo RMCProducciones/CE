@@ -487,7 +487,6 @@ class ClearController extends Controller
             array('grupo' => $asignacionesGrupoCLEAR->getGrupo()) 
         );  
 
-       
         //if según HabilitacionFases alguno en true
         //$habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPi() || $habilitacionFases->getPn()
             
