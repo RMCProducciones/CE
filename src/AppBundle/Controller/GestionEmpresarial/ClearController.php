@@ -315,5 +315,6 @@ class ClearController extends Controller
         return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR));
         
     }
+    
 
 }
