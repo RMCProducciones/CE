@@ -1,0 +1,135 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+
+{% block title %}Gestion Criterio Calificación {% endblock %}
+
+{% block breadcrumb_ul %}
+
+    <ul class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Empresarial</li>
+      <li>Concursos</li>
+      <li class="active">Gestion Criterio Calificación</li>
+    </ul>
+{% endblock %}
+
+
+
+
+
+{% block section %}
+  <div class="container">
+    <h1>Gestión Criterio Calificación</h1>
+    <hr>
+  </div>
+
+  <br />
+  <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="btn-group">
+              <a href="{{ path('concursoGestion') }}" class="btn btn-warning">Volver</a>
+              <a href="{{ path('criterioNuevo')}}" class="btn btn-success">Nuevo</a>
+            </div>
+
+          
+          </div>
+        </div>
+      </div>
+    </div>  
+
+
+    <div class="container">
+    <div class="alert alert-[[estadoMensaje]] alert-dismissible" id="MensajeCtrl" ng-show="mostrarMensaje === true" role="alert">[[textoMensaje]]<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+    </div>
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 table-responsive">
+            <table class="table table-striped table-hover" ng-controller="gestionCriterioCtrl">
+              <thead>
+                	<tr>
+	                  <th class="text-center">#</th>	    
+                    <th></th> 
+                    <th></th>     
+	                  <th class="text-left">Criterio</th>
+                    <th></th>
+	                  <th class="text-left">Maxima Calificación</th>
+                    <th></th>
+	                                 
+	                  <th class="text-center">Acciones</th>
+	                </tr>
+	           </thead>
+	           <tbody>
+               
+                {% set consecutivo = 1 %}
+	    	
+	    		{% for criterio in criterio %}
+	                
+	                <tr id="filaCriterio{{ consecutivo }}">
+	                  <td class="text-center">{{ consecutivo }}</td>
+                    <td></td>	    
+                    <th></th>              
+	                  <td class="text-left">{{ criterio.criterio}}</td>
+                    <th></th>
+	                  <td class="text-left">{{ criterio.maximopuntaje}}</td>
+                    <th></th>
+	                 
+                     
+
+	                  <td class="text-center">
+             
+              <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ criterio.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
+     
+              <a title="Editar" alt="Editar" href="{{ path('criterioEditar', {'idCriterioCalificacion': criterio.id}) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> |      
+
+              <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarCriterio({{criterio.id}}, {{consecutivo}});" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true" ng-click="idCriterio = {{criterio.id}};"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+               
+                   
+                    </td>
+	                </tr>
+	                {% set consecutivo = consecutivo + 1 %}
+	                {% else %}
+	                
+	                <tr>
+	                  	<td colspan="9" class="info">No se encontraron registros.</td>
+	                </tr>
+	                
+	                {% endfor %}
+              
+               </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>  
+
+	{% for criterio in criterio %}
+    <!-- Modal -->
+    <div class="modal fade" id="myModal{{ criterio.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">{{ criterio.id }} </h4>
+          </div>
+          <div class="modal-body">
+            <b>Posición:{{ criterio.criterio}}</b>
+            <br>
+            <b>Valor: {{ criterio.maximopuntaje}}</b>
+            <br>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}  
+       
+{% endblock %}
