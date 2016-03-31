@@ -691,7 +691,7 @@ class SeguimientoGrupoController extends Controller
 
         }
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/EvaluacionFase:evaluacionfase-nuevo.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:evaluacionfase-nuevo.html.twig', array('form' => $form->createView()));
     }
 
 
@@ -773,7 +773,7 @@ class SeguimientoGrupoController extends Controller
         }   
         
         return $this->render(
-            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/EvaluacionFase:evaluacionfase-soporte.html.twig', 
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:evaluacionfase-soporte.html.twig', 
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
