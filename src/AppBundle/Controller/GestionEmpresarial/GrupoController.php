@@ -86,11 +86,12 @@ class GrupoController extends Controller
                 $grupo->setVereda(null);
                 $grupo->setCacerio(null);
             }
-
-            if($grupo->getTipo()->getDescripcion() != 'Formal con negocio'||$grupo->getTipo()->getDescripcion() != 'Formal Sin Negocio'){
-   
-             
-                     
+            
+            
+            if($grupo->getTipo()->getDescripcion() == 'No Formal con negocio'|| $grupo->getTipo()->getDescripcion() == 'No Formal Sin Negocio'){
+                $grupo->setNullFiguraLegalConstitucion();
+                $grupo->setNumeroIdentificacionTributaria(null);
+                $grupo->setFechaConstitucionLegal(null);
             }  
 
             $grupo->setActive(true);
@@ -168,6 +169,10 @@ class GrupoController extends Controller
 
         $nit = explode("-", $grupo->getNumeroIdentificacionTributaria());
 
+        if($grupo->getTipo()->getDescripcion() == 'No Formal con negocio'|| $grupo->getTipo()->getDescripcion() == 'No Formal Sin Negocio'){
+            $nit[1] = 0;
+        }
+
         $form = $this->createForm(new GrupoType(), $grupo);
         
         $form->add(
@@ -195,6 +200,12 @@ class GrupoController extends Controller
                 $grupo->setVereda(null);
                 $grupo->setCacerio(null);
             }
+
+            if($grupo->getTipo()->getDescripcion() == 'No Formal con negocio'|| $grupo->getTipo()->getDescripcion() == 'No Formal Sin Negocio'){
+                $grupo->setNullFiguraLegalConstitucion();
+                $grupo->setNumeroIdentificacionTributaria(null);
+                $grupo->setFechaConstitucionLegal(null);
+            }  
 
             $grupo->setFechaModificacion(new \DateTime());
 

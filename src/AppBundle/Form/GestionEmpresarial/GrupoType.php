@@ -41,7 +41,7 @@ class GrupoType extends AbstractType
 			->add('numero_identificacion_tributaria', 'text', array('label' => 'Numero identificación tributaria','required' => false))
 			->add('fecha_constitucion_legal', 'date', array('label' => 'Fecha de constitución legal del grupo', 'widget' => 'single_text','required' => false))
 			->add('telefono_fijo', 'number', array('required' => false,'label' => 'Teléfono fijo'))
-			->add('telefono_celular','number', array('label' => 'Teléfono celular','required' => false))
+			->add('telefono_celular','text', array('label' => 'Teléfono celular','required' => false))
 			->add('correo_electronico', 'email', array('label' => 'Correo electrónico','required' => false))
 			
 			
@@ -73,7 +73,7 @@ class GrupoType extends AbstractType
 										        	->setParameter('dominio', 'tipo_cuenta')
 										            ->orderBy('l.orden', 'ASC');
 										    },))
-			->add('numero_cuenta','number', array('label' => 'Numero de Cuenta','required' => false))
+			->add('numero_cuenta','text', array('label' => 'Numero de Cuenta','required' => false))
 		;
     }
     

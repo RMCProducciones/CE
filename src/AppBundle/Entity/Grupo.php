@@ -506,6 +506,11 @@ class Grupo
         return $this;
     }
 
+    public function setNullFiguraLegalConstitucion()
+    {
+        $this->figura_legal_constitucion = null;        
+    }
+
     /**
      * Get figuraLegalConstitucion
      *
