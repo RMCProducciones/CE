@@ -222,65 +222,11 @@ class ClearController extends Controller
                 $clearSoporte->setActive(true);
                 $clearSoporte->setFechaCreacion(new \DateTime());
 
-                //if($clearSoporte->getDescripcion()=="Documento de legalización del Clear"){ //Despúes de subir el Acta final del CLEAR toma lo que esté almacenado en habilitacionFases de cada grupo para asignar un nodo Ejecutado o un nodo Rechazado
+                if($clearSoporte->getTipoSoporte()->getDescripcion()=="Documento de legalización del Clear"){ 
+                    //Despúes de subir el Acta final del CLEAR toma lo que esté almacenado en habilitacionFases de cada grupo 
+                    //para asignar un nodo Ejecutado o un nodo Rechazado
 
-
-                if(true){
-
-                    //echo "entra";
-
-                    $asignacionGruposClear = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
-                        array('clear' => $clear) 
-                    );  
-
-                    foreach ($asignacionGruposClear as $asignacionGrupoClear){
-                    
-                        $habilitacionFases = $em->getRepository('AppBundle:HabilitacionFases')->findOneBy(
-                            array('grupo' => $asignacionGrupoClear->getGrupo()) 
-                        );
-
-                        $camino = $em->getRepository('AppBundle:Camino')->findBy(
-                            array('grupo' => $asignacionGrupoClear->getGrupo())
-                        );
-
-                        $ultimoNodo = $camino[count($camino)-1];
-                        $idUltimoNodo = $ultimoNodo->getNodo()->getId();
-                        $estado = $ultimoNodo->getEstado();
-
-                        //EJECUCIÓN O RECHAZO(Estados 2 o 3) CIERRE DE CLEAR HABILITACIÓN (CREE) ******** ******** ******** ********
-                        if ($idUltimoNodo == 2){
-                            //if según HabilitacionFases alguno en true
-                            if($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPn()){
-                                
-                                echo "hola ".$idUltimoNodo;
-
-                                if($idUltimoNodo == 2)
-                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 2);//Ejecutada(2) Clear de Habilitación
-                                
-                                if($habilitacionFases->getIea())
-                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 5, 1);//Programación(1) a Visita previa IEA
-                                if($habilitacionFases->getPn())
-                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 3, 1);//Programación(1) a Visita previa PN
-                            }
-                            else
-                                self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 3);//Rechazado(3) Clear de Habilitación
-                        }
-                        elseif($idUltimoNodo == 6 || $idUltimoNodo == 10){
-                                //Evaluar "Evaluación de Fase para definir el color", mientras tanto:
-                                self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), $idUltimoNodo, 2);//En verde temporalmente a todos mientras se evalua la fase
-
-                                /*if($idUltimoNodo == 6)
-                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 6, 2);//Ejecutada(2) Clear de Asignación MOT Formal
-
-                                if($idUltimoNodo == 10)
-                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 10, 2);//Ejecutada(2) Clear de Asignación MOT No Formal
-                                */
-                        }
-                        else{//PROGRAMACIÓN GENÉRICA DE CONTRALORÍA O ASIGNACIÓN
-                            self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), $idUltimoNodo, 2);
-                        }
-
-                    }
+                    self::operacionesLegalizacionClear($clear);
 
                 }
                 //$grupoSoporte->setUsuarioCreacion(1);
@@ -716,6 +662,67 @@ class ClearController extends Controller
             self::nodoCamino($idGrupo, 27, 1);
         }
 
+    }
+
+    private function operacionesInstalacionClear(){
+
+    }
+
+    private function operacionesLegalizacionClear($clear){
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionGruposClear = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
+            array('clear' => $clear) 
+        );  
+
+        foreach ($asignacionGruposClear as $asignacionGrupoClear){  //Bucle de operaciones a realizar por cada grupo asignado al CLEAR
+        
+            $camino = $em->getRepository('AppBundle:Camino')->findBy(
+                array('grupo' => $asignacionGrupoClear->getGrupo())
+            );
+
+            $ultimoNodo = $camino[count($camino)-1];
+            $idUltimoNodo = $ultimoNodo->getNodo()->getId();
+            $estado = $ultimoNodo->getEstado();
+
+            //CIERRE DE CREE : EJECUCIÓN O RECHAZO(Estados 2 o 3)  ******** ******** (CREE - Comité Regional de Evaluación de Elegibilidad)
+            if ($idUltimoNodo == 2){
+                
+                $habilitacionFases = $em->getRepository('AppBundle:HabilitacionFases')->findOneBy(
+                    array('grupo' => $asignacionGrupoClear->getGrupo()) 
+                );
+                //if según HabilitacionFases alguno en true
+                if($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPn()){
+                    
+                    echo "hola ".$idUltimoNodo;
+
+                    if($idUltimoNodo == 2)
+                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 2);//Ejecutada(2) Clear de Habilitación
+                    
+                    if($habilitacionFases->getIea())
+                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 5, 1);//Programación(1) a Visita previa IEA
+                    if($habilitacionFases->getPn())
+                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 3, 1);//Programación(1) a Visita previa PN
+                }
+                else
+                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 3);//Rechazado(3) Clear de Habilitación
+            }
+            //CIERRE DE CLEAR DE EVALUACIÓN (ANTERIORMENTE LLAMADO CLEAR ASIGNACIÓN)
+            elseif($idUltimoNodo == 6 || $idUltimoNodo == 10){
+                    //Evaluar "Evaluación de Fase para definir el color", mientras tanto:
+                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), $idUltimoNodo, 2);//En verde temporalmente a todos mientras se evalua la fase
+
+                    /*if($idUltimoNodo == 6)
+                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 6, 2);//Ejecutada(2) Clear de Asignación MOT Formal
+
+                    if($idUltimoNodo == 10)
+                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 10, 2);//Ejecutada(2) Clear de Asignación MOT No Formal
+                    */
+            }
+            else{//PROGRAMACIÓN GENÉRICA DE CONTRALORÍA O ASIGNACIÓN
+                self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), $idUltimoNodo, 2);
+            }
+        }
     }
 
 }

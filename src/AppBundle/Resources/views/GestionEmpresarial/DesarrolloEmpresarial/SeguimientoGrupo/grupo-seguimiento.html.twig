@@ -46,11 +46,18 @@
   <div class="section">
     <div class="container">
       <div class="row">
-        <div class="col-md-12 table-responsive">
-          Mantener relación de aspecto <input id="aspecto" type = "checkbox" checked onclick="escalarX()"><br><br>
-          Ancho <input id="escalaX" type="range" style="width: 30vw; display:inline; margin-right:5vw;" min="15" max="200" step="1" value="50" width="200px" onChange="escalarX()">
-          Alto <input id="escalaY" type="range" style="width: 30vw; display:inline;" min="15" max="200" step="1" value="50" width="200px" onChange="escalarY()">
-          
+        <div class="col-md-12">
+          Mantener relación de aspecto <input id="aspecto" type = "checkbox" checked onclick="escalarX()"> 
+       </div>
+      </div>
+      <div class="row">
+       <div class="col-md-6">  
+          Ancho <br>
+          <input id="escalaX" type="range" style="display:inline; margin-right:5vw;" min="15" max="200" step="1" value="50" width="100%" onChange="escalarX()">      
+       </div>
+       <div class="col-md-6">      
+          Alto <br>
+          <input id="escalaY" type="range" style="display:inline;" min="15" max="200" step="1" value="50" width="100%" onChange="escalarY()">         
        </div>
       </div>
     </div>
@@ -183,9 +190,6 @@
                 linea(450, 610, 900, 610)       // 5 a 14
                 linea(900, 610, 950, 530)       // 5 a 14
 
-               
-
-                
                 /*
                 linea1(1050, 530, 1050, 595)     // 15 a 38 interventoria
                 linea1(1100, 530, 1100, 595)     // 16 a 39 interventoria
@@ -200,13 +204,6 @@
                 linea1(2050, 280, 2050, 345)     // 29 a 34 interventoria
                 */
 
-
-                // data for "hot points"
-                var dataTab = {
-                  0: 'circulo n0',
-                  1: 'circulo n1',
-                  2: 'circulo n2',
-                };
 
                 ctx.font = 26*(escX+escY)/2+"px Arial";
 
@@ -367,23 +364,6 @@
                 circles.push(circle);
               }
 
-              /*
-              function circulo1(x, y){  //circulo interventoria
-
-                var radius = 45/2*(escX+escY)/2;
-
-                ctx.fillStyle = "#e6e6e6"
-                ctx.beginPath(); 
-                ctx.arc(x*escX,y*escY, radius,0,2*Math.PI, true); 
-                ctx.closePath();
-                ctx.fill();
-
-                var circle = new Circle(x*escX, y*escY, radius);
-                circles.push(circle);
-              }
-              */
-
-
               var vinculo = function(x, y, radius) {
                 this.left = x - radius;
                 this.top = y - radius;
@@ -402,19 +382,6 @@
                 ctx.closePath();
                 ctx.stroke(); 
               }
-
-                /*     
-                function linea1(x1, y1, x2, y2, estado){  //Linea interventoria
-        
-                ctx.strokeStyle="#e6e6e6"; 
-                ctx.lineWidth=2; 
-                ctx.beginPath(); 
-                ctx.moveTo(x1*escX, y1*escY); 
-                ctx.lineTo(x2*escX, y2*escY); 
-                ctx.closePath();
-                ctx.stroke(); 
-              }   
-              */
 
               function color(estado){
 
@@ -451,13 +418,11 @@
                         
                         //ctx.fillText(Math.round(circles[i].left)+" a "+Math.round(circles[i].right)+"    ,    "+Math.round(circles[i].top)+" a "+Math.round(circles[i].bottom),circles[i].left,circles[i].top);
             
-                        if (clickedX < circles[i].right && clickedX > circles[i].left && clickedY > circles[i].top && clickedY < circles[i].bottom) {
+                        if (clickedX < circles[i].right && clickedX > circles[i].left && clickedY > circles[i].top && clickedY < circles[i].bottom && camino[i+1] != 0) {
                             console.log ('clicked number ' + (i + 1));
                             if((i+1) == 2)
                               $('#myModalNodo2').modal('show')
                             if((i+1) == 3)
-                              $('#myModalNodo3').modal('show')
-                            if((i+1) == 4)
                               $('#myModalNodo3').modal('show')
                             if((i+1) == 5)
                               $('#myModalNodo3').modal('show')

@@ -72,11 +72,25 @@ class SeguimientoGrupoController extends Controller
             array('grupo' => $grupo)
         );
 
-        if(!$habilitacionFases)//ESTO NO FUNCIONA
-           // die("tiene habilitacion fase");
-            $habilitacionFases = new HabilitacionFases();
-        
-      
+        if(!$habilitacionFases)
+            $habilitacionFases = new HabilitacionFases(); 
+
+        //Validar si el CLEAR aun está abierto para crear o editar el formulario de habilitación, sino solo visualización
+            
+        $nodoCREE =  $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id' => '2')
+        );
+
+        $nodosCaminoCREE = $em->getRepository('AppBundle:Camino')->findBy(
+            array('grupo' => $grupo, 'nodo' => $nodoCREE)
+        );
+ 
+        $nodoCaminoCREE = $nodosCaminoCREE[count($nodosCaminoCREE)-1];
+   
+        $clearFinalizado = false;
+        if($nodoCaminoCREE->getEstado()==2 || $nodoCaminoCREE->getEstado()==3) //Si se encuentra un nodoCREE en estados 2 o 3 se determina que el CLEAR está cerrado
+            $clearFinalizado = true;
+            
         $form = $this->createForm(new HabilitacionFasesType(), $habilitacionFases);
 
         $form->add(
