@@ -18,11 +18,14 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use AppBundle\Entity\Concurso;
 use AppBundle\Entity\Grupo;
 use AppBundle\Entity\ConcursoSoporte;
+use AppBundle\Entity\AsignacionGrupoConcurso;
 
 
 
 use AppBundle\Form\GestionEmpresarial\ConcursoSoporteType;
 use AppBundle\Form\GestionEmpresarial\ConcursoType;
+
+
 
 
 /*Para autenticación por código*/
@@ -352,6 +355,7 @@ class ConcursoController extends Controller
             ));    
         
     }
+
     
 
 

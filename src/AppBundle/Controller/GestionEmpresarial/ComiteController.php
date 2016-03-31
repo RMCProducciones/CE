@@ -19,6 +19,7 @@ use AppBundle\Entity\DocumentoSoporte;
 use AppBundle\Entity\Listas;
 use AppBundle\Entity\Integrante;
 use AppBundle\Entity\AsignacionIntegranteComite;
+use AppBundle\Entity\AsignacionGrupoComite;
 use AppBundle\Entity\Grupo;
 
 

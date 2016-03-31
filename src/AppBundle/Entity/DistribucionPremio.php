@@ -21,17 +21,13 @@ class DistribucionPremio
      */
     private $id;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="concurso", type="integer")
+   /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Concurso")
      */
     private $concurso;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="grupo", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
      */
     private $grupo;
 
@@ -59,28 +55,28 @@ class DistribucionPremio
     /**
      * @var integer
      *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\Column(name="usuario_modificacion", type="integer", nullable=true)
      */
     private $usuario_modificacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
      */
     private $fecha_modificacion;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\Column(name="usuario_creacion", type="integer", nullable=true)
      */
     private $usuario_creacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_creacion", type="datetime")
+     * @ORM\Column(name="fecha_creacion", type="datetime", nullable=true)
      */
     private $fecha_creacion;
 
@@ -98,11 +94,11 @@ class DistribucionPremio
     /**
      * Set concurso
      *
-     * @param integer $concurso
+     * @param AppBundle\Entity\Concurso $concurso
      *
      * @return DistribucionPremio
      */
-    public function setConcurso($concurso)
+    public function setConcurso(\AppBundle\Entity\Concurso $concurso)
     {
         $this->concurso = $concurso;
 
@@ -112,7 +108,7 @@ class DistribucionPremio
     /**
      * Get concurso
      *
-     * @return integer
+     * @return AppBundle\Entity\Concurso
      */
     public function getConcurso()
     {
@@ -122,11 +118,11 @@ class DistribucionPremio
     /**
      * Set grupo
      *
-     * @param integer $grupo
+     * @param AppBundle\Entity\Grupo $grupo
      *
      * @return DistribucionPremio
      */
-    public function setGrupo($grupo)
+    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
     {
         $this->grupo = $grupo;
 
@@ -136,7 +132,7 @@ class DistribucionPremio
     /**
      * Get grupo
      *
-     * @return integer
+     * @return AppBundle\Entity\Grupo
      */
     public function getGrupo()
     {
