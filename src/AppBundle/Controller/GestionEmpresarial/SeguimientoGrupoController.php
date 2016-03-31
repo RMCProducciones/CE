@@ -72,10 +72,26 @@ class SeguimientoGrupoController extends Controller
             array('grupo' => $grupo)
         );
 
-        if(!$habilitacionFases)//ESTO NO FUNCIONA
-           // die("tiene habilitacion fase");
-            $habilitacionFases = new HabilitacionFases();
+        if(!$habilitacionFases)
+            $habilitacionFases = new HabilitacionFases(); 
+
+        //Validar si el clear aun está abierto para crear o editar el formulario, sino solo visualización
+            //Validación mendiante consulta de la existencia de un "Documento de legalización del Clear" activo
         
+        $asignacionGrupoCLEAR = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(//Carga los CLEAR en los que se asigno el grupo
+            array('grupo' => $grupo)
+        );  
+
+        $ultimoClearAsignado = $asignacionGrupoCLEAR[count($asignacionGrupoCLEAR)-1]->getId(); //Se obtiene el último CLEAR al que fue asignado
+        
+        $soportesActivos = $em->getRepository('AppBundle:ClearSoporte')->findOneBy(//Se busca la existencia del soporte activo
+            array('active' => '1', 'clear' => $ultimoClearAsignado, ),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $clearCerrado = false;
+        if($soportesActivos) //Si se encuentra que existen un "Documento de legalización del Clear" activo, se determina que el CLEAR está cerrado
+            $clearCerrado = true;
       
         $form = $this->createForm(new HabilitacionFasesType(), $habilitacionFases);
 
