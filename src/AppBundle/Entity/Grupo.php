@@ -53,7 +53,7 @@ class Grupo
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string")
+     * @ORM\Column(name="nombre", type="string", unique=true)
      */
     private $nombre;
 

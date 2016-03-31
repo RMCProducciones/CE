@@ -23,6 +23,7 @@ use AppBundle\Entity\AsignacionIntegranteCLEAR;
 use AppBundle\Entity\AsignacionGrupoCLEAR;
 use AppBundle\Entity\Camino;
 use AppBundle\Entity\HabilitacionFases;
+use AppBundle\Entity\Grupo;
 
 
 use AppBundle\Form\GestionEmpresarial\CLEARType;
@@ -691,9 +692,15 @@ class ClearController extends Controller
                     array('grupo' => $asignacionGrupoClear->getGrupo()) 
                 );
                 //if según HabilitacionFases alguno en true
-                if($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPn()){
+                if($habilitacionFases != null){
                     
                     echo "hola ".$idUltimoNodo;
+
+                    if($asignacionGrupoClear->getGrupo()->getCodigo() == null){
+                        $asignacionGrupoClear->getGrupo()->setFechaInscripcion(new \DateTime());
+                        self::creacionCodigoGrupo($asignacionGrupoClear->getGrupo()->getId());
+                    }
+                    
 
                     if($idUltimoNodo == 2)
                         self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 2);//Ejecutada(2) Clear de Habilitación
@@ -701,10 +708,12 @@ class ClearController extends Controller
                     if($habilitacionFases->getIea())
                         self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 5, 1);//Programación(1) a Visita previa IEA
                     if($habilitacionFases->getPn())
-                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 3, 1);//Programación(1) a Visita previa PN
+                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 3, 1);//Programación(1) a Visita previa PN                    
                 }
-                else
-                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 3);//Rechazado(3) Clear de Habilitación
+                else{
+                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 3);//Rechazado(3) Clear de Habilitación                    
+                }
+                    
             }
             //CIERRE DE CLEAR DE EVALUACIÓN (ANTERIORMENTE LLAMADO CLEAR ASIGNACIÓN)
             elseif($idUltimoNodo == 6 || $idUltimoNodo == 10){
@@ -724,4 +733,47 @@ class ClearController extends Controller
         }
     }
 
+    private function creacionCodigoGrupo($idGrupo){          
+
+            $em = $this->getDoctrine()->getManager();
+
+            $traerGrupo = $em->getRepository('AppBundle:Grupo')->find($idGrupo);            
+
+            $idMunicipio = $em->getRepository('AppBundle:Municipio')->findOneBy(
+                array('id' => $traerGrupo->getMunicipio()));            
+
+            $zona = $idMunicipio->getZona()->getAbreviatura();            
+
+            if($traerGrupo->getId()<10){
+                $consecutivo = "00";
+            }
+
+            if($traerGrupo->getId() >= 10 && $traerGrupo->getId() < 100){
+                $consecutivo = "0";
+            }
+
+            if($traerGrupo->getId() >= 100){
+                $consecutivo = "";
+            }          
+
+            $tipoGrupo = $traerGrupo->getTipo();       
+
+            if($tipoGrupo == "No Formal Sin Negocio"){
+                $tipo = "1";                
+            }
+
+            if($tipoGrupo == "No Formal Con Negocio"){
+                $tipo = "2";                
+            }
+
+            if($tipoGrupo == "Formal Sin Negocio"){
+                $tipo = "3";                
+            }
+
+            if($tipoGrupo == "Formal con negocio"){
+                $tipo = "4";                
+            }
+
+            $traerGrupo->setCodigo($zona."-".$idMunicipio->getAbreviatura()."-".$tipo."-".date_format($traerGrupo->getFechaInscripcion(), 'Y/m')."-".$consecutivo.$traerGrupo->getId());  
+    }
 }
