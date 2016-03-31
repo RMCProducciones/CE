@@ -105,19 +105,31 @@
 	                  <th class="text-center">Código</th>
 	                  <th class="text-left">Grupo</th>
 	                  <th class="text-left">Localización</th>
-	                 
+	                 <th class="text-left">Seguimiento</th>
+                   <th class="text-left">Estado</th>
+                   <th></th>
+                   <th></th>
 	                  <th class="text-center">Acciones</th>
 	                </tr>
 	           </thead>
 	           <tbody>
                
-                {% set consecutivo = 1 %}
+                {% set consecutivo = 1 %}                
 	    	
 	    		{% for grupo in grupos %}
-	                
+           
+	               {% set seguimiento = "" %}
+                 {% set estado = "" %} 
+
 	                <tr id="filaGrupo{{ consecutivo }}">
 	                  <td class="text-center">{{ consecutivo }}</td>
-	                  <td class="text-center">{{ grupo.codigo }}</td>
+	                  <td class="text-center">
+                      {% if grupo.codigo != null %}
+                        {{ grupo.codigo }}
+                      {% else %}
+                        No habilitado                      
+                      {% endif %} 
+                      </td>
 	                  <td class="text-left">{{ grupo.nombre }}</td>
 	                  <td class="text-left">
 	                    <b>M</b> {{ grupo.municipio }}
@@ -127,6 +139,41 @@
 	                    <b>Z</b> {{ grupo.municipio.zona }}
 	                    <br>
 	                  </td>
+                    <td>                      
+                      {% for camino in caminos %}
+                        {% if grupo.id == camino.grupo.id %}
+                          {% set seguimiento = camino.nodo.nombre %}                              
+                        {% endif %}  
+                      {% endfor %}                                            
+                      {{seguimiento}}                                               
+                    </td>
+                    <td class="text-left">                      
+                      {% for camino in caminos %}
+                        {% if grupo.id == camino.grupo.id %}                          
+                          {% set estado = camino.estado %}       
+                        {% endif %}  
+                      {% endfor %}                                                                                           
+                      {% if estado == 1 %}
+                        Programado
+                      {% endif %}
+                      {% if estado == 2 %}
+                        Ejecutado
+                      {% endif %} 
+                      {% if estado == 3 %}
+                        Rechazado
+                      {% endif %} 
+                      {% if estado == 4 %}
+                        Finalizado
+                      {% endif %} 
+                      {% if estado == 5 %}
+                        Con Observación
+                      {% endif %} 
+                      {% if estado == 6 %}
+                        Intervenido
+                      {% endif %}                      
+                    </td>
+                    <td></td>
+                    <td></td>
 	                 
 	                  <td class="text-center">
                       
