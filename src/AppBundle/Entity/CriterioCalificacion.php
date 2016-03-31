@@ -22,9 +22,7 @@ class CriterioCalificacion
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="concurso", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Concurso")
      */
     private $concurso;
 
@@ -52,28 +50,28 @@ class CriterioCalificacion
     /**
      * @var integer
      *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\Column(name="usuario_modificacion", type="integer", nullable=true)
      */
     private $usuario_modificacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
      */
     private $fecha_modificacion;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\Column(name="usuario_creacion", type="integer", nullable=true)
      */
     private $usuario_creacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_creacion", type="datetime")
+     * @ORM\Column(name="fecha_creacion", type="datetime", nullable=true)
      */
     private $fecha_creacion;
 
@@ -91,11 +89,11 @@ class CriterioCalificacion
     /**
      * Set concurso
      *
-     * @param integer $concurso
+     * @param AppBundle\Entity\Concurso $concurso
      *
      * @return CriterioCalificacion
      */
-    public function setConcurso($concurso)
+    public function setConcurso(\AppBundle\Entity\Concurso $concurso)
     {
         $this->concurso = $concurso;
 
@@ -105,7 +103,7 @@ class CriterioCalificacion
     /**
      * Get concurso
      *
-     * @return integer
+     * @return AppBundle\Entity\Concurso
      */
     public function getConcurso()
     {
