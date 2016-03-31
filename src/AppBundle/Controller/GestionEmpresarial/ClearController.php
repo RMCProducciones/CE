@@ -33,8 +33,6 @@ use AppBundle\Form\GestionEmpresarial\ListaRolType;
 
 
 
-
-
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -224,7 +222,7 @@ class ClearController extends Controller
                 $clearSoporte->setActive(true);
                 $clearSoporte->setFechaCreacion(new \DateTime());
 
-                //if($clearSoporte->getDescripcion()=="Acta final Clear"){ //Despúes de subir el Acta final del CLEAR toma lo que esté almacenado en habilitacionFases de cada grupo para asignar un nodo Ejecutado o un nodo Rechazado
+                //if($clearSoporte->getDescripcion()=="Documento de legalización del Clear"){ //Despúes de subir el Acta final del CLEAR toma lo que esté almacenado en habilitacionFases de cada grupo para asignar un nodo Ejecutado o un nodo Rechazado
 
 
                 if(true){
@@ -249,32 +247,34 @@ class ClearController extends Controller
                         $idUltimoNodo = $ultimoNodo->getNodo()->getId();
                         $estado = $ultimoNodo->getEstado();
 
-                        //EJECUCIÓN O RECHAZO(2 o 3) CIERRE DE CLEAR HABILITACIÓN ******** ******** ******** ********
-                        if ($idUltimoNodo == 2 || $idUltimoNodo == 6 || $idUltimoNodo == 10){
+                        //EJECUCIÓN O RECHAZO(Estados 2 o 3) CIERRE DE CLEAR HABILITACIÓN (CREE) ******** ******** ******** ********
+                        if ($idUltimoNodo == 2){
                             //if según HabilitacionFases alguno en true
-                            if($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPi() || $habilitacionFases->getPn()){
+                            if($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPn()){
                                 
                                 echo "hola ".$idUltimoNodo;
 
                                 if($idUltimoNodo == 2)
                                     self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 2);//Ejecutada(2) Clear de Habilitación
                                 
-                                if($idUltimoNodo == 6)
-                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 6, 2);//Ejecutada(2) Clear de Habilitación
-
-                                if($idUltimoNodo == 10)
-                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 10, 2);//Ejecutada(2) Clear de Habilitación
-
-
                                 if($habilitacionFases->getIea())
                                     self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 5, 1);//Programación(1) a Visita previa IEA
-                                if($habilitacionFases->getPi())
-                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 4, 1);//Programación(1) a Visita previa PI
                                 if($habilitacionFases->getPn())
                                     self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 3, 1);//Programación(1) a Visita previa PN
                             }
                             else
                                 self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 3);//Rechazado(3) Clear de Habilitación
+                        }
+                        elseif($idUltimoNodo == 6 || $idUltimoNodo == 10){
+                                //Evaluar "Evaluación de Fase para definir el color", mientras tanto:
+                                self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), $idUltimoNodo, 2);//En verde temporalmente a todos mientras se evalua la fase
+
+                                /*if($idUltimoNodo == 6)
+                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 6, 2);//Ejecutada(2) Clear de Asignación MOT Formal
+
+                                if($idUltimoNodo == 10)
+                                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 10, 2);//Ejecutada(2) Clear de Asignación MOT No Formal
+                                */
                         }
                         else{//PROGRAMACIÓN GENÉRICA DE CONTRALORÍA O ASIGNACIÓN
                             self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), $idUltimoNodo, 2);
@@ -576,7 +576,6 @@ class ClearController extends Controller
                 self::nodoCamino($idGrupo, 14, 1); //Programación(1) a Clear de Asignación IEA
             elseif($idUltimoNodo == 19){
                 self::nodoCamino($idGrupo, 20, 1); //Programación(1) a Clear de Asignación PI
-                self::nodoCamino($idGrupo, 26, 1); //Programación(1) a Clear de Asignación PN
             }
             elseif($idUltimoNodo == 25)
                 self::nodoCamino($idGrupo, 26, 1); //Programación(1) a Clear de Asignación PN
@@ -654,16 +653,6 @@ class ClearController extends Controller
         $ultimoNodo = $camino[count($camino)-1];
         if(count($camino))
             $em->remove($ultimoNodo);
-
-        //Validar si el ultimo nodo es 26, puede existir un posible nodo doble programado en el nodo 20 el cual deberá ser eliminado
-        $idUltimoNodo = $ultimoNodo->getNodo()->getId();
-        if($idUltimoNodo == 26){
-            $penultimoNodo = $camino[count($camino)-2];
-            $idPenultimoNodo = $penultimoNodo->getNodo()->getId();
-            if($idUltimoNodo == 20)
-                $em->remove($penultimoNodo);
-        } 
-
         
         $em->remove($asignacionesGrupoCLEAR);
         $em->flush();
@@ -683,6 +672,49 @@ class ClearController extends Controller
                 'idCLEAR' => $idCLEAR
             ));    
         
+    }
+
+
+
+    private function nodoCamino($idGrupo, $idNodo, $estado)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id' => $idNodo)
+        );
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $nodoCaminoAccion = new Camino();
+        $nodoCaminoAccion->setGrupo($grupo);
+        $nodoCaminoAccion->setNodo($nodo);
+        $nodoCaminoAccion->setEstado($estado);
+        $nodoCaminoAccion->setActive(true);
+        $nodoCaminoAccion->setFechaCreacion(new \DateTime());
+
+        $em->persist($nodoCaminoAccion);
+    }
+
+    private function encendidoNodoSeguimento($idGrupo, $idNodo){
+
+        if($idNodo == 6)
+            self::nodoCamino($idGrupo, 7, 1);
+        elseif ($idNodo == 10) {
+            self::nodoCamino($idGrupo, 11, 1);
+        }
+        elseif ($idNodo == 14) {
+            self::nodoCamino($idGrupo, 15, 1);
+        }
+        elseif ($idNodo == 20){
+            self::nodoCamino($idGrupo, 21, 1);
+        }
+        else{
+            self::nodoCamino($idGrupo, 27, 1);
+        }
+
     }
 
 }
