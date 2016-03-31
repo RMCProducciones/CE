@@ -248,22 +248,40 @@
 	                  	</th>
                   	</tr>
                   	<tr class="active text-muted vertical-align" {% if not clearFinalizado %}style="display:none;"{% endif %}>
-                  		<th>Fase habilitada:</td>
+                  		<td><b>Fase habilitada: </b><br><br>
+                  			La fase habilitada se marcará con un icono en color verde como "<img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}">"
+                  		</td>
                   		<th class="text-center">
 				  			MOT <br />No Formal <br />
-							{% if habilitacionFases.motNoFormal %}<img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}">{% endif %}
+							{% if habilitacionFases.motNoFormal %}
+								<img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}">
+							{% else %}
+								<img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}">
+							{% endif %}
 						</th>
 	                  	<th class="text-center">
 	                  		MOT <br />Formal <br />
-							{% if habilitacionFases.motFormal %}<img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}">{% endif %}
+							{% if habilitacionFases.motFormal %}
+								<img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}">
+							{% else %}
+								<img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}">
+							{% endif %}
 						</th>
 	                  	<th class="text-center">
 	                  		IEA <br />Formal <br />
-			                {% if habilitacionFases.iea %}<img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}">{% endif %}
+			                {% if habilitacionFases.iea %}
+			                	<img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}">
+							{% else %}
+								<img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}">
+			                {% endif %}
 	                  	</th>
 	                  	<th class="text-center">
 	                  		PN <br />Formal <br />
-			                {% if habilitacionFases.pn %}<img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}">{% endif %}
+			                {% if habilitacionFases.pn %}
+			                	<img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}">
+							{% else %}
+								<img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}">
+			                {% endif %}
 	                  	</th>    	
 	      			</tr>  
 	           </tbody>

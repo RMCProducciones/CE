@@ -498,10 +498,24 @@
             <h4 class="modal-title" id="myModalLabel">{{ grupo.codigo }} | {{ grupo.nombre }}</h4>
           </div>
           <div class="modal-body">
-            <b>Acciones en CLEAR Habilitación</b>
+            <b>Acciones en CREE (Comité Regional de Evaluación de Elegibilidad)</b>
             <br>
             <br>
-            <b><a href="{{ path('habilitacionFases', {'idGrupo': grupo.id}) }}">Habilitación de fases</a></b>
+           
+            <b><a href="{{ path('habilitacionFases', {'idGrupo': grupo.id}) }}">
+              {% set mensaje = "Comprobación de requisitos habilitantes y habilitación de fase" %}
+              
+              {% for nodoCamino in camino %}
+                {% if nodoCamino.nodo.id == 2 %}
+                  {% if nodoCamino.estado == 2 or nodoCamino.estado == 3%}
+                    {% set mensaje = "Comprobación de requisitos habilitantes y Fase habilitada" %}     
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+              
+              {{ mensaje }}
+              
+            </a></b>
             <br>           
           </div>
 
