@@ -37,9 +37,30 @@ hr{
   margin-bottom: 0px;
 }
 
+.estado-programado{
+  color: #999;
+}
 
+.estado-ejecutado{
+  color: #A1D44A;
+}
 
-   
+.estado-rechazado{
+  color: #B28500;
+}
+
+.estado-finalizado{
+  color: #DB0041;
+}
+
+.estado-conObservación{
+  color: #00BFFF;
+}
+
+.estado-intervenido{
+  color: #DCDC00;
+}
+ 
 
 footer {
   background: url(../images/footer.png);
