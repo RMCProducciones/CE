@@ -193,7 +193,7 @@ app.controller('FormalCtrl', ['$scope', function($scope) {
 	$scope.mostrarFormal = false;	
 
 	$scope.infoFormal = function() { 
-		$scope.mostrarFormal = $(".tipo option[value='"+$('.tipo').val()+"']").text().toLowerCase() != "Formal Con Negocio"||$(".tipo option[value='"+$('.tipo').val()+"']").text().toLowerCase() !="Formal Sin Negocio";			
+		$scope.mostrarFormal = $(".tipo option[value='"+$('.tipo').val()+"']").text().toLowerCase() == "formal con negocio" ||$(".tipo option[value='"+$('.tipo').val()+"']").text().toLowerCase() == "formal sin negocio";			
 	};	
 
 }]);

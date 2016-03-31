@@ -190,9 +190,7 @@
             <br>
             <b>Municipio: {{ grupo.municipio }}</b>
             <br>
-            <b>Zona: Oriente {{ grupo.municipio.zona.nombre }}</b>
-            <br>
-            <b>Tipo de grupo: {{ grupo.tipo }}</b>
+            <b>Zona: Oriente {{ grupo.municipio.zona.nombre }}</b>            
             <br>
             <b>Codigo de grupo: {{ grupo.codigo }}</b>
             <br>
@@ -206,12 +204,18 @@
             <br>
             <b>Direccion:  {{ grupo.direccion }}</b>
             <br>
-			<b>Barrio:  {{ grupo.barrio }}</b>
+			      <b>Barrio:  {{ grupo.barrio }}</b>
             <br>
-            <b>Tipo de organización: {{ grupo.codigo }}</b>
+            <b>Tipo de grupo: {{ grupo.tipo }}</b>            
             <br>
+            {% if grupo.fechaConstitucionLegal != null %}
             <b>NIT: {{ grupo.numeroIdentificacionTributaria }}</b>
             <br>
+            {% endif %}
+            {% if grupo.fechaConstitucionLegal != null %} 
+            <b>Fecha de Constitución legal: {{ grupo.fechaConstitucionLegal |  date('d - m - Y') }}</b>
+            <br>
+            {% endif %}
             <b>Telefono Movil: {{ grupo.telefonoCelular }}</b>
             <br>
             <b>Telefono Fijo: {{ grupo.telefonoFijo }}</b>

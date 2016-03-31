@@ -90,35 +90,37 @@
 					</div>
 			</div>	
 			</div>	
-
-			<br/>
 			
 			<div class="row">
 				<div class="col-md-4">
                   {{ form_label(form.nombre) }}
                   {{ form_errors(form.nombre) }}
                   {{ form_widget(form.nombre, { 'attr': {'class': 'form-control', 'placeholder': 'Nombre del grupo'} }) }}
-                </div>
-
-           
-                </div>
+                </div>           
+             </div>
 
 			<br/>
-
-
 
 
           <div ng-controller ="FormalCtrl">
           	<div class="row">
                 <div class="col-md-4">
+                	
                   {{ form_label(form.tipo) }}
                   {{ form_errors(form.tipo) }}
-                  {{ form_widget(form.tipo, { 'attr': {'class': 'form-control Tipo','ng-model': 'Tipo', 'ng-change': 'infoFormal()'} }) }}
-                </div>
-                </div>
+                  {{ form_widget(form.tipo, { 'attr': {'class': 'form-control tipo','ng-model': 'Tipo', 'ng-change': 'infoFormal()'} }) }}
+                  
+                </div>	            
+            </div>
+
+         <br />
+
+                
+
+
 
          <div ng-show="mostrarFormal">
-				<div class="col-md-12" >
+				<div class="col-md-12">
 					<fieldset>
 						<legend>Datos de constitución de la empresa</legend>
 					</fieldset>            
@@ -154,6 +156,7 @@
 	</div>
 			</div>
 			</div>
+	
 				
 			
 		

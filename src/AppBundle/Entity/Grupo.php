@@ -128,14 +128,14 @@ class Grupo
     /**
      * @var string
      *
-     * @ORM\Column(name="telefono_celular", type="string")
+     * @ORM\Column(name="telefono_celular", type="string", nullable=true)
      */
     private $telefono_celular;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="correo_electronico", type="string")
+     * @ORM\Column(name="correo_electronico", type="string", nullable=true)
      */
     private $correo_electronico;
 
@@ -152,7 +152,7 @@ class Grupo
 	 /**
      * @var string
      *
-     * @ORM\Column(name="numero_cuenta", type="string")
+     * @ORM\Column(name="numero_cuenta", type="string", nullable=true)
      */
     private $numero_cuenta;
 
@@ -504,6 +504,11 @@ class Grupo
         $this->figura_legal_constitucion = $figuraLegalConstitucion;
 
         return $this;
+    }
+
+    public function setNullFiguraLegalConstitucion()
+    {
+        $this->figura_legal_constitucion = null;        
     }
 
     /**

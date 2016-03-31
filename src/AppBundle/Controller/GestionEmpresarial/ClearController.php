@@ -272,6 +272,7 @@ class ClearController extends Controller
         return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR));
         
     }
+    
 
      /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-integrante", name="clearIntegrante")
