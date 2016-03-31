@@ -89,7 +89,6 @@ class InfoFinancieraController extends Controller
             array('id'=> $idGrupo)
         ); 
 
-        echo $info->getId();
         $form = $this->createForm(new InfoFinancieraType(), $info);
         
         $form->add(
