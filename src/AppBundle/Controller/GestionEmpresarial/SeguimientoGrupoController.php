@@ -75,24 +75,22 @@ class SeguimientoGrupoController extends Controller
         if(!$habilitacionFases)
             $habilitacionFases = new HabilitacionFases(); 
 
-        //Validar si el clear aun está abierto para crear o editar el formulario, sino solo visualización
-            //Validación mendiante consulta de la existencia de un "Documento de legalización del Clear" activo
-        
-        $asignacionGrupoCLEAR = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(//Carga los CLEAR en los que se asigno el grupo
-            array('grupo' => $grupo)
-        );  
-
-        $ultimoClearAsignado = $asignacionGrupoCLEAR[count($asignacionGrupoCLEAR)-1]->getId(); //Se obtiene el último CLEAR al que fue asignado
-        
-        $soportesActivos = $em->getRepository('AppBundle:ClearSoporte')->findOneBy(//Se busca la existencia del soporte activo
-            array('active' => '1', 'clear' => $ultimoClearAsignado, ),
-            array('fecha_creacion' => 'ASC')
+        //Validar si el CLEAR aun está abierto para crear o editar el formulario de habilitación, sino solo visualización
+            
+        $nodoCREE =  $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id' => '2')
         );
 
-        $clearCerrado = false;
-        if($soportesActivos) //Si se encuentra que existen un "Documento de legalización del Clear" activo, se determina que el CLEAR está cerrado
-            $clearCerrado = true;
-      
+        $nodosCaminoCREE = $em->getRepository('AppBundle:Camino')->findBy(
+            array('grupo' => $grupo, 'nodo' => $nodoCREE)
+        );
+ 
+        $nodoCaminoCREE = $nodosCaminoCREE[count($nodosCaminoCREE)-1];
+   
+        $clearFinalizado = false;
+        if($nodoCaminoCREE->getEstado()==2 || $nodoCaminoCREE->getEstado()==3) //Si se encuentra un nodoCREE en estados 2 o 3 se determina que el CLEAR está cerrado
+            $clearFinalizado = true;
+            
         $form = $this->createForm(new HabilitacionFasesType(), $habilitacionFases);
 
         $form->add(
