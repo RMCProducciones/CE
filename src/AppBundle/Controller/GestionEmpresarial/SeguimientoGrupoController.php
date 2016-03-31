@@ -110,8 +110,6 @@ class SeguimientoGrupoController extends Controller
 
             $habilitacionFases->setGrupo($grupo);
 
-            //$habilitacionFases->setPi(true);
-
             $habilitacionFases->setActive(true);
             $habilitacionFases->setFechaCreacion(new \DateTime());
 
@@ -125,7 +123,9 @@ class SeguimientoGrupoController extends Controller
             'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:grupo-habilitar-fases.html.twig', 
             array(
                     'form' => $form->createView(),
-                    'grupo' => $grupo
+                    'grupo' => $grupo,
+                    'clearFinalizado' => $clearFinalizado,
+                    'habilitacionFases' => $habilitacionFases
             )
         );
     }
