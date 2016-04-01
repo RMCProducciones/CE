@@ -8,7 +8,7 @@
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
       <li>Servicio Complementario</li>
-      <li><a href="{{ path('tallerGestion') }}">Taller</a></li>
+      <li><a href="{{ path('tallerGestion', {'idGrupo': idGrupo}) }}">Taller</a></li>
       <li class="active">Nuevo</li>
     </ul>
 
@@ -37,7 +37,7 @@
   
               <button name="grupo[guardar]" id="grupo_guardar" type="submit" class="btn btn-success">Guardar</button>
               
-              <a href="{{ path('tallerGestion') }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+              <a href="{{ path('tallerGestion', {'idGrupo': idGrupo}) }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
               
             </div>
           </div>
@@ -79,34 +79,26 @@
                 </div>
           
 		</div>
+
+    <br />
+    
       <div class="row">
         <div class="col-md-4">
                   {{ form_label(form.lugar) }}
           {{ form_errors(form.lugar) }}
-                  {{ form_widget(form.lugar, { 'attr': {'class': 'form-control', 'placeholder': 'Luegar Taller'} }) }}
-                </div>
-                <div class="col-md-4">
-                  {{ form_label(form.asistentes) }}
-          {{ form_errors(form.asistentes) }}
-                  {{ form_widget(form.asistentes, { 'attr': {'class': 'form-control', 'placeholder': 'Asistentes Taller '} }) }}
-                </div>
+                  {{ form_widget(form.lugar, { 'attr': {'class': 'form-control', 'placeholder': 'Lugar Taller'} }) }}
+                </div>                
                 <div class="col-md-4">
                   {{ form_label(form.observaciones) }}
           {{ form_errors(form.observaciones) }}
-                  {{ form_widget(form.observaciones, { 'attr': {'class': 'form-control', 'placeholder': 'primer Observaciones '} }) }}
+                  {{ form_widget(form.observaciones, { 'attr': {'class': 'form-control', 'placeholder': 'Primer Observaciones '} }) }}
                 </div>
-          
-    </div>
-    <div class="row">
-        <div class="col-md-4">
+                <div class="col-md-4">
                   {{ form_label(form.compromisos) }}
           {{ form_errors(form.compromisos) }}
-                  {{ form_widget(form.compromisos, { 'attr': {'class': 'form-control', 'placeholder': ' Compromisos'} }) }}
-                </div>
-               
+                  {{ form_widget(form.compromisos, { 'attr': {'class': 'form-control', 'placeholder': 'Compromisos'} }) }}
+                </div>          
     </div>
-
-			
 
 			<br/>				
        
