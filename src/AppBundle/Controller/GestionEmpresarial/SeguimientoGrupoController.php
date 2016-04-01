@@ -23,15 +23,15 @@ use AppBundle\Entity\Nodo;
 use AppBundle\Entity\SeguimientoMOT;
 use AppBundle\Entity\SeguimientoFase;
 use AppBundle\Entity\Visita;
-use AppBundle\Entity\EvaluacionFase;
+use AppBundle\Entity\EvaluacionFases;
 
 use AppBundle\Form\GestionEmpresarial\HabilitacionFasesType;
 use AppBundle\Form\GestionEmpresarial\SeguimientoMOTType;
 use AppBundle\Form\GestionEmpresarial\SeguimientoFaseType;
 use AppBundle\Form\GestionEmpresarial\VisitaType;
 use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalType;
-use AppBundle\Form\GestionEmpresarial\EvaluacionFaseSoporteType;
-use AppBundle\Form\GestionEmpresarial\EvaluacionFaseType;
+use AppBundle\Form\GestionEmpresarial\EvaluacionFasesSoporteType;
+use AppBundle\Form\GestionEmpresarial\EvaluacionFasesType;
 
 
 /*Para autenticación por código*/
@@ -668,9 +668,9 @@ class SeguimientoGrupoController extends Controller
             array('id' => $idGrupo)
         );
 
-        $evaluacionfase= new EvaluacionFase();
+        $evaluacionfases= new EvaluacionFases();
         
-        $form = $this->createForm(new EvaluacionFaseType(), $evaluacionfase);
+        $form = $this->createForm(new EvaluacionFasesType(), $evaluacionfases);
         
         $form->add(
             'guardar', 
@@ -686,12 +686,12 @@ class SeguimientoGrupoController extends Controller
 
         if ($form->isValid()) {
             
-            $evaluacionfase = $form->getData();
+            $evaluacionfases = $form->getData();
 
 
-            $evaluacionfase->setActive(true);
-            $evaluacionfase->setFechaCreacion(new \DateTime());
-            $em->persist($evaluacionfase);
+            $evaluacionfases->setActive(true);
+            $evaluacionfases->setFechaCreacion(new \DateTime());
+            $em->persist($evaluacionfases);
             $em->flush();
 
         }
