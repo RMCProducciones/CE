@@ -407,7 +407,21 @@ class SeguimientoGrupoController extends Controller
             array('id'=>$idNodo)
         );        
 
-        $fase = $nodo->getFase();
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $evaluacionFases = $em->getRepository('AppBundle:EvaluacionFases')->findOneBy(
+            array('grupo' => $grupo)
+        );
+
+        $fase = $nodo->getFase(); //Esta iniciación se debe perder
+        if ($evaluacionFases->getAptoPn()) //Debe validar de la mas alta a la mas baja: Pn, Pi, Iea
+            $fase = 3;
+        elseif ($evaluacionFases->getAptoPi())
+            $fase = 2;
+        elseif ($evaluacionFases->getAptoIea())
+            $fase = 1;
         
         $form = $this->createForm(new SeguimientoFaseType(), $seguimientofase);
         
@@ -547,20 +561,34 @@ class SeguimientoGrupoController extends Controller
 
     private function encendidoNodoSeguimento($idGrupo, $idNodo){
 
-        if($idNodo == 6)
+        $em = $this->getDoctrine()->getManager();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $evaluacionFases = $em->getRepository('AppBundle:EvaluacionFases')->findOneBy(
+            array('grupo' => $grupo)
+        );
+
+        if($idNodo == 6) //MOT
             self::nodoCamino($idGrupo, 7, 1);
-        elseif ($idNodo == 10) {
+        elseif ($idNodo == 10) { //MOT
             self::nodoCamino($idGrupo, 11, 1);
         }
-        elseif ($idNodo == 14) {
-            self::nodoCamino($idGrupo, 15, 1);
-        }
-        elseif ($idNodo == 20){
+        //elseif ($idNodo == 26){
+        elseif ($evaluacionFases->getAptoPn()){ //Debe validar de la mas alta a la mas baja: Pn, Pi, Iea
+            self::nodoCamino($idGrupo, 27, 1);
+        } 
+        //elseif ($idNodo == 20){
+        elseif ($evaluacionFases->getAptoPi()){
             self::nodoCamino($idGrupo, 21, 1);
         }
-        else{
-            self::nodoCamino($idGrupo, 27, 1);
+        //elseif ($idNodo == 14) {
+        elseif ($evaluacionFases->getAptoIea()) {
+            self::nodoCamino($idGrupo, 15, 1);
         }
+        
 
     }
 
