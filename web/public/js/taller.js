@@ -1,12 +1,13 @@
 
 app.controller('gestionDocumentoSoporteTallerCtrl', ['$scope', '$location', function($scope, $location) {
 
+	$scope.idGrupo = 0;
 	$scope.idTaller = 0;
 	$scope.idTallerSoporteActivo = 0;
 
 	$scope.anularSoporteTaller = function() { 
 
-		window.location.replace($scope.rutaServidor  + "gestion-empresarial/servicio-complementario/taller/" + $scope.idTaller + "/documentos-soporte/" + $scope.idTallerSoporteActivo + "/borrar");
+		window.location.replace($scope.rutaServidor  + "gestion-empresarial/servicio-complementario/taller/"+ $scope.idGrupo + "/" + $scope.idTaller + "/documentos-soporte/" + $scope.idTallerSoporteActivo + "/borrar");
 		
 	};
 
@@ -21,16 +22,22 @@ app.controller('gestionDocumentoSoporteTallerCtrl', ['$scope', '$location', func
 
 app.controller('gestionTallerCtrl', ['$scope', '$http', function($scope, $http) {
 
+	$scope.idGrupo = 0;	
 	$scope.idTaller = 0;	
 
 	console.log($scope.estadoMensaje);
 
-	$scope.eliminarTaller = function(idTaller, consecutivo){
+	$scope.eliminarTaller = function(idGrupo, idTaller, consecutivo){
 
+		$scope.idGrupo = idGrupo;
 		$scope.idTaller = idTaller;
 		$scope.consecutivoTaller = consecutivo;
 
-		$http.get($scope.rutaServidor + "gestion-empresarial/servicio-complementario/taller/" + $scope.idTaller + "/eliminar")
+		console.log($scope.idGrupo);
+		console.log($scope.idTaller);
+		console.log($scope.consecutivoTaller);
+
+		$http.get($scope.rutaServidor + "gestion-empresarial/servicio-complementario/taller/" + $scope.idGrupo + "/" + $scope.idTaller + "/eliminar")
 		.success(function(data, status, headers, config) {
 
   			$("#filaTaller" + $scope.consecutivoTaller).fadeOut("slow");
