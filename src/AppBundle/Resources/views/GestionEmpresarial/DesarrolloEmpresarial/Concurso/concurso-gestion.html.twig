@@ -103,7 +103,11 @@
 
                       <a href="{{ path('distribucionGestion')}}" alt="Distribucion Premios" title="Distribucion Premios"> <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a> |
 
-                     <a href="{{ path('criterioGestion')}}" alt="Criterio Calificacion" title="Criterio Calificación"> <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span></a> |
+
+                      <a href="{{ path('aprobacionGestion', {'idConcurso': concurso.id}) }}" alt="aprobacion concurso" title="Aprobación Concurso"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a> | 
+
+
+                      <a href="{{ path('criterioGestion')}}" alt="Criterio Calificacion" title="Criterio Calificación"> <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span></a> |
 
 					            <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ concurso.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
 

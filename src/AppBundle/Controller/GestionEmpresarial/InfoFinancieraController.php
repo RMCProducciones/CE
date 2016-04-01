@@ -45,37 +45,6 @@ class InfoFinancieraController extends Controller
         'idGrupo' => $idGrupo));
     }
 
-    
-     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/gestion-info/nuevo", name="infoNuevo")
-     */
-    public function infoNuevoAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $info = new Grupo();
-        
-        $form = $this->createForm(new InfoFinancieraType(), $info);
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            // data is an array with "name", "email", and "message" keys
-            $info = $form->getData();
-
-            $info->setActive(true);
-            $info->setFechaCreacion(new \DateTime());
-
-
-            
-            $em->persist($info);
-            $em->flush();
-
-            return $this->redirectToRoute('infoGestion');
-        }
-        
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/InfoFinanciera:info-nuevo.html.twig', 
-            array('form' => $form->createView()));
-    } 
 
 /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/gestion-info/{idGrupo}/editar", name="infoEditar")
