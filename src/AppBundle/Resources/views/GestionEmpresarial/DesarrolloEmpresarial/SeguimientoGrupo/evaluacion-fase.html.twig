@@ -7,8 +7,10 @@
     <ul class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
-      <li>Servicio Complementario</li>
-      <li class="active">Evaluacion Fase</li>
+      <li>Formacion de capital social asociativo y desarrollo empresarial</li>
+      <li><a href="{{ path('grupoGestion') }}">Grupos</a></li>
+      <li><a href="{{ path('seguimientoGrupo', {'idGrupo': grupo.id}) }}">Seguimiento</a></li>
+      <li class="active">Evaluación de Fase</li>
     </ul>
 
 {% endblock %}
@@ -54,36 +56,17 @@
 			<div class="row">
 				<div class="col-md-12">
 					<fieldset>
-						<legend>Evaluacion de la Fase</legend>
+						<legend>Evaluacion de Fases</legend>
 					</fieldset>            
 				</div>
 			</div>	
-
-				<div class="row">
-				<div class="col-md-6">
-                  {{ form_label(form.calificacion) }}
-				          {{ form_errors(form.calificacion) }}
-                      
-                  {{ form_widget(form.calificacion, { 'attr': {'class': 'form-control', 'placeholder': 'Calificacion'} }) }}
-                </div>
-                <div class="col-md-6">
-                  {{ form_label(form.aprobado) }}
-				          {{ form_errors(form.aprobado) }}
-                  <center>
-                  <switch id="swCalificacion" name="swCalificacion" ng-model="swCalificacion"  class="green" on="Si" off="No"></switch>
-                  {{ form_widget(form.aprobado, { 'attr': {'class': 'form-control', 'placeholder': 'Aprobado'} }) }}
-                </div>
-          
-		</div>
-
-			
 
 			<br/>				
        
       </div>
     </div>
 
-        <div class="section">
+      <div class="section">
       <div class="container">
         <div class="row">
           <div class="col-md-12 table-responsive">
@@ -91,10 +74,8 @@
                 <thead>
                   <tr class="bg-primary">
                     <th class="text-center">Requisitos de asignación</th>
-            <th class="text-center">MOT <br />No Formal</th>
-                    <th class="text-center">MOT <br />Formal</th>
-                    <th class="text-center">IEA <br />Formal</th>
-                    <th class="text-center">PI <br />Formal</th>
+                    <th class="text-center">IEA <br />No Formal</th>
+                    <th class="text-center">PI <br />No Formal</th>
                     <th class="text-center">PN <br />Formal</th>
                 </tr>
             </thead>
@@ -106,8 +87,6 @@
 
                 <tr class="active text-muted">
                   <td>Calificación</td>
-          <td class="text-center"><input class="form-control"></input></td>
-                  <td class="text-center"><input class="form-control"></input></td>
                   <td class="text-center"><input class="form-control"></input></td>
                   <td class="text-center"><input class="form-control"></input></td>
                   <td class="text-center"><input class="form-control"></input></td>
@@ -116,9 +95,7 @@
                 <tr class="active text-muted">
                     <td>
                     Formato de evaluación
-          </td>
-          <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-                    <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+                    </td>
                     <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
                     <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
                     <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
@@ -127,9 +104,7 @@
                 <tr class="active text-muted">
                     <td>
                     Certificación aportes de contrapartida
-          </td>
-          <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-                    <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+                    </td>
                     <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
                     <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
                     <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
@@ -138,9 +113,7 @@
                 <tr class="active text-muted">
                     <td>
                     Contrato de adhesión
-          </td>
-          <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-                    <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+                    </td>
                     <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
                     <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
                     <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
@@ -149,41 +122,12 @@
                 <tr class="active text-muted">
                     <td>
                     Póliza de cumplimiento
-          </td>
-          <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-                    <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+                    </td>
                     <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
                     <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
                     <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
                 </tr>
 
-                  <tr>
-                    <th colspan="6" class="text-center bg-primary">Asignación de la fase</th>
-                </tr>
-
-                <tr class="active text-muted vertical-align">
-                    <td>Seleccione la fase(s) a asignar</td>
-            <th class="text-center">
-              MOT <br />No Formal <br />
-            
-          </th>
-                    <th class="text-center">
-                      MOT <br />Formal <br />
-            
-          </th>
-                    <th class="text-center">
-                      IEA <br />Formal <br />
-                   
-                    </th>
-                    <th class="text-center">
-                      PI <br />Formal <br />
-           
-          </th>
-                    <th class="text-center">
-                      PN <br />Formal <br />
-                    
-                    </th>
-            </tr>
            </tbody>
             </table>
           </div>

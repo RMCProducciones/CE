@@ -123,7 +123,7 @@ class SeguimientoGrupoController extends Controller
         }
 
         return $this->render(
-            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:grupo-habilitar-fases.html.twig', 
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:habilitacion-fases.html.twig', 
             array(
                     'form' => $form->createView(),
                     'grupo' => $grupo,
@@ -658,11 +658,16 @@ class SeguimientoGrupoController extends Controller
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/evaluacionfase/nuevo", name="evaluacionfaseNuevo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/evaluacion-fase", name="evaluacionFase")
      */
-    public function evaluacionfaseNuevoAction(Request $request)
+    public function evaluacionFaseAction(Request $request, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
         $evaluacionfase= new EvaluacionFase();
         
         $form = $this->createForm(new EvaluacionFaseType(), $evaluacionfase);
@@ -691,15 +696,83 @@ class SeguimientoGrupoController extends Controller
 
         }
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:evaluacionfase-nuevo.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:evaluacion-fase.html.twig', array('grupo' => $grupo, 'form' => $form->createView()));
+        
+
+
+
+       /* $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $habilitacionFases = $em->getRepository('AppBundle:HabilitacionFases')->findOneBy(
+            array('grupo' => $grupo)
+        );
+
+        if(!$habilitacionFases)
+            $habilitacionFases = new HabilitacionFases(); 
+
+        //Validar si el CLEAR aun está abierto para crear o editar el formulario de habilitación, sino solo visualización
+            
+        $nodoCREE =  $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id' => '2')
+        );
+
+        $nodosCaminoCREE = $em->getRepository('AppBundle:Camino')->findBy(
+            array('grupo' => $grupo, 'nodo' => $nodoCREE)
+        );
+ 
+        $nodoCaminoCREE = $nodosCaminoCREE[count($nodosCaminoCREE)-1];
+   
+        $clearFinalizado = false;
+        if($nodoCaminoCREE->getEstado()==2 || $nodoCaminoCREE->getEstado()==3) //Si se encuentra un nodoCREE en estados 2 o 3 se determina que el CLEAR está cerrado
+            $clearFinalizado = true;
+            
+        $form = $this->createForm(new HabilitacionFasesType(), $habilitacionFases);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $habilitacionFases = $form->getData();
+
+            $habilitacionFases->setGrupo($grupo);
+
+            $habilitacionFases->setActive(true);
+            $habilitacionFases->setFechaCreacion(new \DateTime());
+
+            $em->persist($habilitacionFases);
+            $em->flush();
+
+            return $this->redirectToRoute('seguimientoGrupo', array( 'idGrupo' => $idGrupo));
+        }
+
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:habilitacion-fases.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'grupo' => $grupo,
+                    'clearFinalizado' => $clearFinalizado,
+                    'habilitacionFases' => $habilitacionFases
+            )
+        );*/
     }
 
 
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/evaluacionfase/{idEvaluacionFase}/documentos-soporte", name="evaluacionfaseSoporte")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/evaluacionfase/{idEvaluacionFase}/documentos-soporte", name="evaluacionFaseSoporte")
      */
-    public function evaluacionfaseSoporteAction(Request $request, $idEvaluacionFase)
+    public function evaluacionFaseSoporteAction(Request $request, $idEvaluacionFase)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -773,7 +846,7 @@ class SeguimientoGrupoController extends Controller
         }   
         
         return $this->render(
-            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:evaluacionfase-soporte.html.twig', 
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:evaluacion-fase-soporte.html.twig', 
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
