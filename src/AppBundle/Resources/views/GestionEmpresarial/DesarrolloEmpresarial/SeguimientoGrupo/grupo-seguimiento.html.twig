@@ -501,7 +501,7 @@
             <b>Acciones en CREE (Comité Regional de Evaluación de Elegibilidad)</b>
             <br>
             <br>
-            
+
             {% set ultimoEstado = 0 %}
 
             {% for nodoCamino in camino %}
@@ -772,17 +772,25 @@
             <b>Inicio de Fase</b>
             <br>
             <br>
+
+            {% set ultimoEstado = 0 %}
+
             {% for nodoCamino in camino %}
-              {% if nodoCamino.nodo.id == 10 %}
-                {% if nodoCamino.estado == 1 %}
-                  <a href="{{ path('evaluacionFase', {'idGrupo': grupo.id}) }}">Evaluación de fase</a>
-                {% else %}
-                  <a href="{{ path('evaluacionFase', {'idGrupo': grupo.id}) }}">Resultado de evaluación de fase</a>   
-                {% endif %}
+              {% if nodoCamino.nodo.id == 14 %}
+                
+                  {% set ultimoEstado = nodoCamino.estado %}
+
               {% endif %}
             {% endfor %}
-            <br>
-            <b><a href="{{ path('seguimientofaseInicio', {'idGrupo': grupo.id, 'idNodo' : 14}) }}">Nuevo Inicio de Fase</a></b>
+          
+            {% if ultimoEstado == 1 %}
+              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id}) }}">Evaluación de fase</a></b>      
+            {% else %}
+              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id}) }}">Resultado de evaluación de fase</a></b> 
+              <br>
+              <b><a href="{{ path('seguimientofaseInicio', {'idGrupo': grupo.id, 'idNodo' : 14}) }}">Nuevo inicio de Fase</a></b>       
+            {% endif %}
+
             <br>           
           </div>
 

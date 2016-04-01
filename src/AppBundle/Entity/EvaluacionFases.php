@@ -27,25 +27,46 @@ class EvaluacionFases
     private $grupo;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="fase", type="integer",nullable=true)
-     */
-    private $fase;
-
-    /**
      * @var string
      *
-     * @ORM\Column(name="calificacion", type="decimal")
+     * @ORM\Column(name="calificacion_iea", type="decimal", nullable = true)
      */
-    private $calificacion;
+    private $calificacion_iea;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="aprobado", type="boolean")
+     * @ORM\Column(name="apto_iea", type="boolean", nullable = true)
      */
-    private $aprobado;
+    private $apto_iea;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="calificacion_pi", type="decimal", nullable = true)
+     */
+    private $calificacion_pi;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="apto_pi", type="boolean", nullable = true)
+     */
+    private $apto_pi;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="calificacion_pn", type="decimal", nullable = true)
+     */
+    private $calificacion_pn;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="apto_pn", type="boolean", nullable = true)
+     */
+    private $apto_pn;
 
     /**
      * @var boolean
@@ -115,75 +136,147 @@ class EvaluacionFases
     }
 
     /**
-     * Set fase
+     * Set calificacion_iea
      *
-     * @param integer $fase
+     * @param string $calificacion_iea
      *
      * @return EvaluacionFases
      */
-    public function setFase($fase)
+    public function setCalificacionIea($calificacion_iea)
     {
-        $this->fase = $fase;
+        $this->calificacion_iea = $calificacion_iea;
 
         return $this;
     }
 
     /**
-     * Get fase
-     *
-     * @return integer
-     */
-    public function getFase()
-    {
-        return $this->fase;
-    }
-
-    /**
-     * Set calificacion
-     *
-     * @param string $calificacion
-     *
-     * @return EvaluacionFases
-     */
-    public function setCalificacion($calificacion)
-    {
-        $this->calificacion = $calificacion;
-
-        return $this;
-    }
-
-    /**
-     * Get calificacion
+     * Get calificacion_iea
      *
      * @return string
      */
-    public function getCalificacion()
+    public function getCalificacionIea()
     {
-        return $this->calificacion;
+        return $this->calificacion_iea;
     }
 
     /**
-     * Set aprobado
+     * Set apto_iea
      *
-     * @param boolean $aprobado
+     * @param boolean $apto_iea
      *
      * @return EvaluacionFases
      */
-    public function setAprobado($aprobado)
+    public function setAptoIea($apto_iea)
     {
-        $this->aprobado = $aprobado;
+        $this->apto_iea = $apto_iea;
 
         return $this;
     }
 
     /**
-     * Get aprobado
+     * Get apto_iea
      *
      * @return boolean
      */
-    public function getAprobado()
+    public function getAptoEea()
     {
-        return $this->aprobado;
+        return $this->apto_iea;
+    }
+
+    /**
+     * Set calificacion_pi
+     *
+     * @param string $calificacion_pi
+     *
+     * @return EvaluacionFases
+     */
+    public function setCalificacionPi($calificacion_pi)
+    {
+        $this->calificacion_pi = $calificacion_pi;
+
+        return $this;
+    }
+
+    /**
+     * Get calificacion_pi
+     *
+     * @return string
+     */
+    public function getCalificacionPi()
+    {
+        return $this->calificacion_pi;
+    }
+
+    /**
+     * Set apto_pi
+     *
+     * @param boolean $apto_pi
+     *
+     * @return EvaluacionFases
+     */
+    public function setAptoPi($apto_pi)
+    {
+        $this->apto_pi = $apto_pi;
+
+        return $this;
+    }
+
+    /**
+     * Get apto_pi
+     *
+     * @return boolean
+     */
+    public function getAptoPi()
+    {
+        return $this->apto_pi;
+    }
+
+    /**
+     * Set calificacion_pn
+     *
+     * @param string $calificacion_pn
+     *
+     * @return EvaluacionFases
+     */
+    public function setCalificacionPn($calificacion_pn)
+    {
+        $this->calificacion_pn = $calificacion_pn;
+
+        return $this;
+    }
+
+    /**
+     * Get calificacion_pn
+     *
+     * @return string
+     */
+    public function getCalificacionPn()
+    {
+        return $this->calificacion_pn;
+    }
+
+    /**
+     * Set apto_pn
+     *
+     * @param boolean $apto_pn
+     *
+     * @return EvaluacionFases
+     */
+    public function setAptoPn($apto_pn)
+    {
+        $this->apto_pn = $apto_pn;
+
+        return $this;
+    }
+
+    /**
+     * Get apto_pn
+     *
+     * @return boolean
+     */
+    public function getAptoPn()
+    {
+        return $this->apto_pn;
     }
 
     /**
