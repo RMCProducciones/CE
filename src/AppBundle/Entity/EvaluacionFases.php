@@ -118,7 +118,7 @@ class EvaluacionFases
      *
      * @return EvaluacionFases
      */
-    public function setGrupo(\AppBundle\Entity\Usuario $grupo)
+    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
     {
         $this->grupo = $grupo;
 
@@ -178,7 +178,7 @@ class EvaluacionFases
      *
      * @return boolean
      */
-    public function getAptoEea()
+    public function getAptoIea()
     {
         return $this->apto_iea;
     }
