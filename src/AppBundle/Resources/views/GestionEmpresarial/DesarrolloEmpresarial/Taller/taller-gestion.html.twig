@@ -16,11 +16,13 @@
 
 {% endblock %}
 
-{% block section %}
+{% block section %}   
 
   <div class="container">
     <h1>Gestión Talleres</h1>
     <hr>
+    <br>    
+       <h2>Grupo: {{ grupo.nombre }}</h2>
   </div>
 
   <br />
@@ -130,7 +132,10 @@
 
                     <td class="text-center">
 
-                     
+                     <a href="{{ path('beneficiarioTaller', {'idGrupo': idGrupo, 'idTaller': taller.id}) }}" alt="Beneficiarios" title="Beneficiarios"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a> 
+
+                     |
+
                      <a href="{{ path('tallerSoporte', {'idGrupo': idGrupo, 'idTaller': taller.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> 
 
                      | 

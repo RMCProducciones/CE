@@ -9,9 +9,9 @@
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
       <li>Formacion de capital social asociativo y desarrollo empresarial</li>
-      <li><a href="{{ path('grupoGestion') }}">Grupos</a></li>
-      <li class="active">Seguimiento</li>
-      <li class="active"><a href="{{ path('tallerGestion', {'idGrupo': idGrupo}) }}">Talleres</li>
+      <li>Grupos</li>
+      <li>Seguimiento</li>
+      <li class="active"><a href="{{ path('tallerGestion', {'idGrupo': idGrupo}) }}">Talleres</a></li>
       <li class="active">Asignar Beneficiario</li>
     </ul>
 
@@ -21,13 +21,11 @@
 
  <div class="container">
     <h1>Comite Compras</h1>
-    <br>
-    {% for grupos in grupo %}
-    <h2> Grupo: {{ grupos.nombre }}</h2>
-    {% endfor %}
+    <br>    
+    <h2> Grupo: {{ grupo.nombre }}</h2>    
     <br>
     <hr>
-    <h3>Asignación Beneficiarios-Comite Compras</h3>
+    <h3>Asignación Beneficiarios-Talleres</h3>
   </div>
 
   <br />
@@ -42,7 +40,7 @@
         <div class="row">
             <div class="col-md-6">
               <div class="btn-group">
-                <a href="{{ path('grupoGestion') }}" class="btn btn-warning">Volver</a>                             
+                <a href="{{ path('tallerGestion', {'idGrupo': idGrupo}) }}" class="btn btn-warning">Volver</a>                             
               </div>
             </div>
         </div>
@@ -117,7 +115,7 @@
                   <td class="text-center">
                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ beneficiario.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                     <br>                    
-                    <a href="{{ path('grupoBeneficiarioComiteComprasAsignacion', {'idGrupo': idGrupo, 'idBeneficiario': beneficiario.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
+                    <a href="{{ path('beneficiarioTallerAsignacion', {'idGrupo': idGrupo, 'idTaller': idTaller,'idBeneficiario': beneficiario.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
                     <br>                      
                   </td>
                 </tr>
@@ -167,7 +165,7 @@
           </div>
 
           <div class="col-md-6 col-md-offset-1 well">            
-            <table class="table table-striped table-hover" ng-controller="gestionComiteComprasCtrl">
+            <table class="table table-striped table-hover" ng-controller="tallerBeneficiariosCtrl">
               <thead>           
                 <tr>
                   <th>#</th>
@@ -183,28 +181,28 @@
               <tbody>
         {% set consecutivo = 1 %}
         
-          {% for asignacionBeneficiariosCC in asignacionesBeneficiariosCC %}
+          {% for asignacionBeneficiarioTaller in asignacionesBeneficiariosTaller %}
                 <tr id="filaIntegranteCLEAR{{ consecutivo }}">
                   <td>{{ consecutivo }}</td>
                   <td>
                     
                   </td>
                   <td>
-                    {{ asignacionBeneficiariosCC.beneficiario.grupo.nombre }}
+                    {{ asignacionBeneficiarioTaller.beneficiario.grupo.nombre }}
                   </td>
                   <td>
-                    Primero Apellido: {{ asignacionBeneficiariosCC.beneficiario.primerApellido }}
+                    Primero Apellido: {{ asignacionBeneficiarioTaller.beneficiario.primerApellido }}
                     <br>
-                    Segundo Apellido: {{ asignacionBeneficiariosCC.beneficiario.segundoApellido }}
+                    Segundo Apellido: {{ asignacionBeneficiarioTaller.beneficiario.segundoApellido }}
                     <br>
-                    Primero Nombre: {{ asignacionBeneficiariosCC.beneficiario.primerNombre }}
+                    Primero Nombre: {{ asignacionBeneficiarioTaller.beneficiario.primerNombre }}
                     <br>
-                    Segundo Nombre: {{ asignacionBeneficiariosCC.beneficiario.segundoNombre }}
+                    Segundo Nombre: {{ asignacionBeneficiarioTaller.beneficiario.segundoNombre }}
                   </td>
           
                   <td>
-                    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ asignacionBeneficiariosCC.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
-                    <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarBeneficiarioComiteCompras('{{ path('grupoBeneficiarioComiteComprasEliminar', {'idGrupo': idGrupo, 'idAsignacionBeneficiariosCVB': asignacionBeneficiariosCC.id}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
+                    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ asignacionBeneficiarioTaller.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
+                    <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminartallerBeneficiarios('{{ path('beneficiarioTallerEliminar', {'idGrupo': idGrupo, 'idTaller': idTaller,'idAsignacionTallerBeneficiario': asignacionBeneficiarioTaller.id, 'consecutivo': consecutivo}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
                   </td>
                 </tr>
         
@@ -329,103 +327,103 @@
     </div>
    {% endfor %}             
 
-   {% for asignacionBeneficiariosCC in asignacionesBeneficiariosCC %}
+   {% for asignacionBeneficiarioTaller in asignacionesBeneficiariosTaller %}
     <!-- Modal -->
-    <div class="modal fade" id="myModal{{ asignacionBeneficiariosCC.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal fade" id="myModal{{ asignacionBeneficiarioTaller.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ asignacionBeneficiariosCC.beneficiario.grupo.id }} | {{ asignacionBeneficiariosCC.beneficiario.grupo.nombre }}</h4>
+            <h4 class="modal-title" id="myModalLabel">{{ asignacionBeneficiarioTaller.beneficiario.grupo.id }} | {{ asignacionBeneficiarioTaller.beneficiario.grupo.nombre }}</h4>
           </div>
           <div class="modal-body">
-            <b>Tipo de Documento:{{ beneficiario.tipoDocumento }}</b>
+            <b>Tipo de Documento:{{ asignacionBeneficiarioTaller.beneficiario.tipoDocumento }}</b>
             <br>
-            <b>Numero de Documento: {{ beneficiario.numeroDocumento }}</b>
+            <b>Numero de Documento: {{ asignacionBeneficiarioTaller.beneficiario.numeroDocumento }}</b>
             <br>
-            <b>Primero Apellido: {{ beneficiario.primerApellido }}</b>
+            <b>Primero Apellido: {{ asignacionBeneficiarioTaller.beneficiario.primerApellido }}</b>
             <br>
-            <b>Segundo Apellido: {{ beneficiario.segundoApellido }}</b>
+            <b>Segundo Apellido: {{ asignacionBeneficiarioTaller.beneficiario.segundoApellido }}</b>
             <br>
-            <b>Primero Nombre: {{ beneficiario.primerNombre }}</b>
+            <b>Primero Nombre: {{ asignacionBeneficiarioTaller.beneficiario.primerNombre }}</b>
             <br>
-            <b>Segundo Nombre: {{ beneficiario.segundoNombre }}</b>
+            <b>Segundo Nombre: {{ asignacionBeneficiarioTaller.beneficiario.segundoNombre }}</b>
             <br>
-            <b>Genero: {{ beneficiario.genero }}</b>
+            <b>Genero: {{ asignacionBeneficiarioTaller.beneficiario.genero }}</b>
             <br>
-            <b>Fecha de Nacimiento: {{ beneficiario.fechaNacimiento |  date('d - m - Y') }}</b>
+            <b>Fecha de Nacimiento: {{ asignacionBeneficiarioTaller.beneficiario.fechaNacimiento |  date('d - m - Y') }}</b>
             <br>
-            <b>Edad al momento de la inscripcion: {{ beneficiario.edadInscripcion }}</b>
+            <b>Edad al momento de la inscripcion: {{ asignacionBeneficiarioTaller.beneficiario.edadInscripcion }}</b>
             <br>
-            <b>Deplazado por la violencia: {{ beneficiario.desplazado }}</b>
+            <b>Deplazado por la violencia: {{ asignacionBeneficiarioTaller.beneficiario.desplazado }}</b>
             <br>            
-            <b>Pertenencia Etnica: {{ beneficiario.pertenenciaEtnica }}</b>
+            <b>Pertenencia Etnica: {{ asignacionBeneficiarioTaller.beneficiario.pertenenciaEtnica }}</b>
             <br>
-            <b>Grupo indigena: {{ beneficiario.grupoIndigena }}</b>
+            <b>Grupo indigena: {{ asignacionBeneficiarioTaller.beneficiario.grupoIndigena }}</b>
             <br>
-            <b>Pertenece a la red unidos: {{ beneficiario.redUnidos }}</b>
+            <b>Pertenece a la red unidos: {{ asignacionBeneficiarioTaller.beneficiario.redUnidos }}</b>
             <br>
-            <b>Sabe leer: {{ beneficiario.sabeLeer }}</b>
+            <b>Sabe leer: {{ asignacionBeneficiarioTaller.beneficiario.sabeLeer }}</b>
             <br>
-            <b>Sabe escribir: {{ beneficiario.sabeEscribir }}</b>
+            <b>Sabe escribir: {{ asignacionBeneficiarioTaller.beneficiario.sabeEscribir }}</b>
             <br>
-             <b>Puntaje del sisben: {{ beneficiario.puntajeSisben }}</b>
+             <b>Puntaje del sisben: {{ asignacionBeneficiarioTaller.beneficiario.puntajeSisben }}</b>
             <br>
-            <b>Corte sisben: {{ beneficiario.corteSisben }}</b>
+            <b>Corte sisben: {{ asignacionBeneficiarioTaller.beneficiario.corteSisben }}</b>
             <br>
-            <b>Discapacidad: {{ beneficiario.discapacidad }}</b>
+            <b>Discapacidad: {{ asignacionBeneficiarioTaller.beneficiario.discapacidad }}</b>
             <br>
-            <b>Rol grupo familiar: {{ beneficiario.rolGrupoFamiliar }}</b>
+            <b>Rol grupo familiar: {{ asignacionBeneficiarioTaller.beneficiario.rolGrupoFamiliar }}</b>
             <br>
-            <b>Mimebros nucleo familiar: {{ beneficiario.miembrosNucleoFamiliar }}</b>
+            <b>Mimebros nucleo familiar: {{ asignacionBeneficiarioTaller.beneficiario.miembrosNucleoFamiliar }}</b>
             <br>
-            <b>Hijos menores 5: {{ beneficiario.hijosMenores5 }}</b>
+            <b>Hijos menores 5: {{ asignacionBeneficiarioTaller.beneficiario.hijosMenores5 }}</b>
       <br>
-            <b>Nivel de estudios: {{ beneficiario.nivelEstudios }}</b>
+            <b>Nivel de estudios: {{ asignacionBeneficiarioTaller.beneficiario.nivelEstudios }}</b>
       <br>
-            <b>Ocupacion: {{ beneficiario.ocupacion }}</b>
+            <b>Ocupacion: {{ asignacionBeneficiarioTaller.beneficiario.ocupacion }}</b>
       <br>
-            <b>Tipo de vivienda: {{ beneficiario.tipoVivienda }}</b>
+            <b>Tipo de vivienda: {{ asignacionBeneficiarioTaller.beneficiario.tipoVivienda }}</b>
       <br>
-            <b>Rural: {{ beneficiario.rural }}</b>
+            <b>Rural: {{ asignacionBeneficiarioTaller.beneficiario.rural }}</b>
       <br>
-            <b>Direccion: {{ beneficiario.direccion }}</b>
+            <b>Direccion: {{ asignacionBeneficiarioTaller.beneficiario.direccion }}</b>
       <br>
-            <b>Barrio: {{ beneficiario.barrio }}</b>
+            <b>Barrio: {{ asignacionBeneficiarioTaller.beneficiario.barrio }}</b>
       <br>
-            <b>Corregimiento: {{ beneficiario.corregimiento }}</b>
+            <b>Corregimiento: {{ asignacionBeneficiarioTaller.beneficiario.corregimiento }}</b>
       <br>
-            <b>Vereda: {{ beneficiario.vereda }}</b>
+            <b>Vereda: {{ asignacionBeneficiarioTaller.beneficiario.vereda }}</b>
       <br>
-            <b>Cacerio: {{ beneficiario.cacerio }}</b>
+            <b>Cacerio: {{ asignacionBeneficiarioTaller.beneficiario.cacerio }}</b>
       <br>
-            <b>Telefono Fijo: {{ beneficiario.telefonoFijo }}</b>
+            <b>Telefono Fijo: {{ asignacionBeneficiarioTaller.beneficiario.telefonoFijo }}</b>
       <br>
-            <b>Telefono Celular: {{ beneficiario.telefonoCelular }}</b>
+            <b>Telefono Celular: {{ asignacionBeneficiarioTaller.beneficiario.telefonoCelular }}</b>
       <br>
-            <b>Correo electronico: {{ beneficiario.correoElectronico }}</b>
+            <b>Correo electronico: {{ asignacionBeneficiarioTaller.beneficiario.correoElectronico }}</b>
       <br>
-            <b>Estado civil: {{ beneficiario.estadoCivil }}</b>
+            <b>Estado civil: {{ asignacionBeneficiarioTaller.beneficiario.estadoCivil }}</b>
       <br>
             <b>Información del Conyuge</b>
       <br>
-            <b>Tipo de documento del conyuge: {{ beneficiario.tipoDocumentoConyugue }}</b>
+            <b>Tipo de documento del conyuge: {{ asignacionBeneficiarioTaller.beneficiario.tipoDocumentoConyugue }}</b>
       <br>
-            <b>Numero de documento del conyuge: {{ beneficiario.numeroDocumentoConyugue }}</b>
+            <b>Numero de documento del conyuge: {{ asignacionBeneficiarioTaller.beneficiario.numeroDocumentoConyugue }}</b>
       <br>
-            <b>Primer apellido del conyuge: {{ beneficiario.primerApellidoConyugue }}</b>
+            <b>Primer apellido del conyuge: {{ asignacionBeneficiarioTaller.beneficiario.primerApellidoConyugue }}</b>
       <br>
-            <b>Segundo apellido del conyuge: {{ beneficiario.segundoApellidoConyugue }}</b>
+            <b>Segundo apellido del conyuge: {{ asignacionBeneficiarioTaller.beneficiario.segundoApellidoConyugue }}</b>
       <br>
-            <b>Primer nombre del conyuge: {{ beneficiario.primerNombreConyugue }}</b>
+            <b>Primer nombre del conyuge: {{ asignacionBeneficiarioTaller.beneficiario.primerNombreConyugue }}</b>
       <br>
-            <b>Segundo nombre del conyuge: {{ beneficiario.segundoNombreConyugue }}</b>
+            <b>Segundo nombre del conyuge: {{ asignacionBeneficiarioTaller.beneficiario.segundoNombreConyugue }}</b>
       <br>
-            <b>Telefono fijo del conyuge: {{ beneficiario.telefonoFijoConyugue }}</b>
+            <b>Telefono fijo del conyuge: {{ asignacionBeneficiarioTaller.beneficiario.telefonoFijoConyugue }}</b>
       <br>
-            <b>Telefono celular del conyuge: {{ beneficiario.telefonoCelularConyugue }}</b>
+            <b>Telefono celular del conyuge: {{ asignacionBeneficiarioTaller.beneficiario.telefonoCelularConyugue }}</b>
           </div>
 
           <div class="modal-footer">

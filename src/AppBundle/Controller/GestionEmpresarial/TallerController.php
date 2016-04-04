@@ -16,10 +16,12 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 
 use AppBundle\Entity\Taller;
-
+use AppBundle\Entity\AsignacionBeneficiarioTaller;
 use AppBundle\Entity\TallerSoporte;
-
-
+use AppBundle\Entity\Beneficiario;
+use AppBundle\Entity\Grupo;
+use AppBundle\Entity\Nodo;
+use AppBundle\Entity\Camino;
 
 
 use AppBundle\Form\GestionEmpresarial\TallerSoporteType;
@@ -32,10 +34,11 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class TallerController extends Controller
 {
-/**
+
+    /**
      * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/gestion", name="tallerGestion")
      */
-    public function tallerGestionAction($idGrupo)
+    public function tallerGrupoGestionAction($idGrupo)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -46,9 +49,13 @@ class TallerController extends Controller
             array('grupo' => $grupo)
         );
 
+        /*echo $grupo->getNombre();
+        asdasfasf;*/
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Taller:taller-gestion.html.twig', 
             array( 'taller' => $taller,
-                   'idGrupo' => $idGrupo
+                   'idGrupo' => $idGrupo,
+                   'grupo' => $grupo
                 )
         );
     }
@@ -58,7 +65,7 @@ class TallerController extends Controller
 /**
      * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/nuevo", name="tallerNuevo")
      */
-    public function tallerNuevoAction(Request $request, $idGrupo)
+    public function tallerGrupoNuevoAction(Request $request, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();
         $taller = new Taller();
@@ -108,7 +115,7 @@ class TallerController extends Controller
 /**
      * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/{idTaller}/editar", name="tallerEditar")
      */
-    public function tallerEditarAction(Request $request, $idGrupo, $idTaller)
+    public function tallerGrupoEditarAction(Request $request, $idGrupo, $idTaller)
     {
         $em = $this->getDoctrine()->getManager();
         $taller = new Taller();
@@ -163,7 +170,7 @@ class TallerController extends Controller
 /**
      * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/{idTaller}/eliminar", name="tallerEliminar")
      */
-    public function tallerEliminarAction(Request $request, $idGrupo, $idTaller)
+    public function tallerGrupoEliminarAction(Request $request, $idGrupo, $idTaller)
     {
         $em = $this->getDoctrine()->getManager();
         $taller = new Taller();
@@ -186,7 +193,7 @@ class TallerController extends Controller
 /**
      * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/{idTaller}/documentos-soporte", name="tallerSoporte")
      */
-    public function tallerSoporteAction(Request $request, $idGrupo, $idTaller)
+    public function tallerGrupoSoporteAction(Request $request, $idGrupo, $idTaller)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -271,7 +278,7 @@ class TallerController extends Controller
     /**
      * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/{idTaller}/documentos-soporte/{idTallerSoporte}/borrar", name="tallerSoporteBorrar")
      */
-    public function tallerSoporteBorrarAction(Request $request, $idGrupo, $idTaller, $idTallerSoporte)
+    public function tallerGrupoSoporteBorrarAction(Request $request, $idGrupo, $idTaller, $idTallerSoporte)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -292,13 +299,16 @@ class TallerController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/taller/{idGrupo}/{idTaller}/asignacion-beneficiarios", name="beneficiarioTaller")
      */
-    public function tallerBeneficiarioAction($idGrupo, $idTaller)
+    public function tallerGrupoBeneficiarioAction($idGrupo, $idTaller)
     {
         $em = $this->getDoctrine()->getManager();
 
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id' => $idGrupo)
         );
+
+        $taller = $em->getRepository('AppBundle:Taller')->findOneBy(
+            array('id' => $idTaller));
 
         $beneficiarios = new Beneficiario();
 
@@ -307,31 +317,32 @@ class TallerController extends Controller
         );
 
         $asignacionBeneficiarioTaller = $em->getRepository('AppBundle:AsignacionBeneficiarioTaller')->findBy(
-            array('grupo' => $grupo)
+            array('taller' => $taller)
         ); 
 
-        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioTaller abt WHERE beneficiario = abt.beneficiario AND abt.grupo = :grupo) AND b.active = 1');
-        $query->setParameter(':grupo', $grupo);
+        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioTaller abt WHERE beneficiario = abt.beneficiario AND abt.taller = :taller) AND b.active = 1');
+        $query->setParameter(':taller', $taller);
         $beneficiarios = $query->getResult();
 
         $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
-            array('id' => $beneficiarios, 'grupo' => $grupo )
+            array('id' => $beneficiarios, 'grupo' => $grupo)
         );
 
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Taller:taller-beneficiario-asignacion.html.twig', 
             array(
                 'beneficiarios' => $mostrarBeneficiarios,
-                'asignacionesBeneficiariosTaller' => $asignacionesBeneficiariosTaller,
+                'asignacionesBeneficiariosTaller' => $asignacionBeneficiarioTaller,
                 'idGrupo' => $idGrupo,
-                'grupo' => $grupo
+                'grupo' => $grupo,
+                'idTaller' => $idTaller
             ));        
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/taller/{idGrupo}/{idTaller}/asignacion-beneficiarios/nueva-asignacion", name="beneficiarioTallerAsignacion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/taller/{idGrupo}/{idTaller}/asignacion-beneficiarios/{idBeneficiario}/nueva-asignacion", name="beneficiarioTallerAsignacion")
      */
-    public function tallerAsignarBeneficiarioAction($idGrupo, $idBeneficiario)
+    public function tallerGrupoAsignarBeneficiarioAction($idGrupo, $idTaller, $idBeneficiario)
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -342,41 +353,60 @@ class TallerController extends Controller
 
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id' => $idGrupo)
-        );        
+        );
+
+        $taller = $em->getRepository('AppBundle:Taller')->findOneBy(
+            array('id' => $idTaller)); 
+
+        
            
-        $asignacionBeneficiarioComiteCompras = new AsignacionBeneficiarioComiteCompras();
+        $asignacionBeneficiarioTaller = new AsignacionBeneficiarioTaller();
 
-        $asignacionBeneficiarioComiteCompras->setGrupo($grupo);        
-        $asignacionBeneficiarioComiteCompras->setBeneficiario($beneficiario);
-        $asignacionBeneficiarioComiteCompras->setActive(true);
-        $asignacionBeneficiarioComiteCompras->setFechaCreacion(new \DateTime());
+        $asignacionBeneficiarioTaller->setGrupo($grupo);        
+        $asignacionBeneficiarioTaller->setBeneficiario($beneficiario);
+        $asignacionBeneficiarioTaller->setTaller($taller);
+        $asignacionBeneficiarioTaller->setActive(true);
+        $asignacionBeneficiarioTaller->setFechaCreacion(new \DateTime());
+        //$taller->setAsistentes($consecutivo);
 
-        $em->persist($asignacionBeneficiarioComiteCompras);
+        $em->persist($asignacionBeneficiarioTaller);                
         $em->flush();
 
+        $tamaño = $em->getRepository('AppBundle:AsignacionBeneficiarioTaller')->findBy(
+            array('taller' => $taller));
 
+        $taller->setAsistentes(sizeof($tamaño));
 
-        return $this->redirectToRoute('grupoBeneficiarioComiteCompras', 
+        $em->persist($taller); 
+        $em->flush();             
+
+        return $this->redirectToRoute('beneficiarioTaller', 
             array(
                 'beneficiario' => $beneficiario,          
-                'asignacionesBeneficiarioComiteCompras' => $asignacionBeneficiarioComiteCompras,                
-                'idGrupo' => $idGrupo
+                'asignacionesBeneficiariosTaller' => $asignacionBeneficiarioTaller,                
+                'idGrupo' => $idGrupo,
+                'idTaller' => $idTaller,
+                'taller' => $taller
             ));        
         
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/taller/{idGrupo}/{idTaller}/asignacion-beneficiarios/eliminar", name="beneficiarioTallerEliminar")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/taller/{idGrupo}/{idTaller}/asignacion-beneficiarios/{idAsignacionTallerBeneficiario}/{consecutivo}/eliminar", name="beneficiarioTallerEliminar")
      */
-    public function tallerEliminarBeneficiarioAction($idGrupo, $idAsignacionBeneficiariosCVB)
+    public function tallerGrupoEliminarBeneficiarioAction($idGrupo, $idTaller, $idAsignacionTallerBeneficiario, $consecutivo)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $asignacionBeneficiarioComiteCompras = new AsignacionBeneficiarioComiteCompras();
+        $asignacionBeneficiarioTaller = new AsignacionBeneficiarioTaller();
 
-        $asignacionBeneficiarioComiteCompras = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteCompras')->find($idAsignacionBeneficiariosCVB); 
+        $asignacionBeneficiarioTaller = $em->getRepository('AppBundle:AsignacionBeneficiarioTaller')->find($idAsignacionTallerBeneficiario); 
 
-        $em->remove($asignacionBeneficiarioComiteCompras);
+        $taller = $em->getRepository('AppBundle:Taller')->findOneBy(
+            array('id' => $idTaller)
+        );
+
+        $em->remove($asignacionBeneficiarioTaller);        
         $em->flush();
 
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
@@ -389,11 +419,11 @@ class TallerController extends Controller
             array('grupo' => $grupo)
         );     
 
-        $asignacionBeneficiarioComiteCompras = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteCompras')->findBy(
+        $asignacionBeneficiarioTaller = $em->getRepository('AppBundle:AsignacionBeneficiarioTaller')->findBy(
             array('grupo' => $grupo)
         ); 
 
-        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioComiteCompras abc WHERE beneficiario = abc.beneficiario AND abc.grupo = :grupo) AND b.active = 1');
+        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioTaller abc WHERE beneficiario = abc.beneficiario AND abc.grupo = :grupo) AND b.active = 1');
         $query->setParameter(':grupo', $grupo);
         $beneficiarios = $query->getResult();
 
@@ -401,14 +431,83 @@ class TallerController extends Controller
             array('id' => $beneficiarios, 'grupo' => $grupo )
         );
 
-        return $this->redirectToRoute('grupoBeneficiarioCVB',
+        $tamaño = $em->getRepository('AppBundle:AsignacionBeneficiarioTaller')->findBy(
+            array('taller' => $taller));
+
+        $taller->setAsistentes(sizeof($tamaño));
+
+        $em->persist($taller); 
+        $em->flush();
+
+        return $this->redirectToRoute('beneficiarioTaller', 
             array(
-                'beneficiarios' => $mostrarBeneficiarios,
-                'asignacionesBeneficiarioComiteCompras' => $asignacionBeneficiarioComiteCompras,
-                'idGrupo' => $idGrupo
-            ));      
+                'beneficiario' => $beneficiarios,          
+                'asignacionesBeneficiariosTaller' => $asignacionBeneficiarioTaller,                
+                'idGrupo' => $idGrupo,
+                'idTaller' => $idTaller,
+                'taller' => $taller
+            ));           
         
     } 
+
+    /**
+     * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/cerrar", name="talleresGrupoCerrar")
+     */
+    public function tallerGrupoCerrarAction($idGrupo)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        self::nodoCamino($idGrupo, 11, 2);
+        self::nodoCamino($idGrupo, 12, 1);
+
+        $em->flush();
+
+        return $this->redirectToRoute('seguimientoGrupo', 
+            array('idGrupo' => $idGrupo)
+        );
+    }
+
+    private function nodoCamino($idGrupo, $idNodo, $estado)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id' => $idNodo)
+        );
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $nodoCaminoAccion = new Camino();
+        $nodoCaminoAccion->setGrupo($grupo);
+        $nodoCaminoAccion->setNodo($nodo);
+        $nodoCaminoAccion->setEstado($estado);
+        $nodoCaminoAccion->setActive(true);
+        $nodoCaminoAccion->setFechaCreacion(new \DateTime());
+
+        $em->persist($nodoCaminoAccion);
+    }
+
+    private function encendidoNodoSeguimento($idGrupo, $idNodo){
+
+        if($idNodo == 6)
+            self::nodoCamino($idGrupo, 7, 1);
+        elseif ($idNodo == 10) {
+            self::nodoCamino($idGrupo, 11, 1);
+        }
+        elseif ($idNodo == 14) {
+            self::nodoCamino($idGrupo, 15, 1);
+        }
+        elseif ($idNodo == 20){
+            self::nodoCamino($idGrupo, 21, 1);
+        }
+        else{
+            self::nodoCamino($idGrupo, 27, 1);
+        }
+
+    }
+
     
 
 
