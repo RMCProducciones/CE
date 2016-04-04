@@ -194,16 +194,16 @@ class Beneficiario
     /**
      * @var boolean
      *
-     * @ORM\Column(name="rural", type="boolean")
+     * @ORM\Column(name="rural", type="boolean", nullable=true)
      */
     private $rural;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="barrio", type="string", nullable=true)
+     * @ORM\Column(name="descripcion", type="string", nullable=true)
      */
-    private $barrio;
+    private $descripcion;
 
 	 /**
      * @var string
@@ -1076,27 +1076,27 @@ class Beneficiario
     }
 	
 	/**
-     * Set barrio
+     * Set descripcion
      *
-     * @param string $barrio
+     * @param string $descripcion
      *
      * @return Beneficiario
      */
-    public function setBarrio($barrio)
+    public function setDescripcion($descripcion)
     {
-        $this->barrio = $barrio;
+        $this->descripcion = $descripcion;
 
         return $this;
     }
 
     /**
-     * Get barrio
+     * Get descripcion
      *
      * @return string
      */
-    public function getBarrio()
+    public function getDescripcion()
     {
-        return $this->barrio;
+        return $this->descripcion;
     }
 	
 	  /**
