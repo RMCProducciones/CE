@@ -39,7 +39,7 @@ class BeneficiarioType extends AbstractType
 			    },))
 			->add('fecha_nacimiento', 'date', array('label' => 'Fecha de nacimiento', 'widget' => 'single_text'))
 			->add('edad_inscripcion', 'text', array('label' => 'Edad al momento de la inscripción'))
-			->add('corte_sisben')
+			->add('corte_sisben', 'text', array('label' => 'Area SISBEN'))
 			->add('puntaje_sisben')
 			->add('grupo_indigena', 'entity', array('class' => 'AppBundle:Listas','required' => false,
 										    'query_builder' => function(EntityRepository $er) {
