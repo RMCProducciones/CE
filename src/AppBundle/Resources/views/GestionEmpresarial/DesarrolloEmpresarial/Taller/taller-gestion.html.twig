@@ -8,8 +8,10 @@
     <ul class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
-      <li>Servicio Complementario</li>
-      <li class="active">Talleres</li>
+      <li>Formacion de capital social asociativo y desarrollo empresarial</li>
+      <li><a href="{{ path('grupoGestion') }}">Grupos</a></li>
+      <li class="active"><a href="{{ path('seguimientoGrupo', {'idGrupo': idGrupo}) }}">Seguimiento</a></li>
+      <li>Talleres</li>
     </ul>
 
 {% endblock %}
