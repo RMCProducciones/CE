@@ -407,21 +407,7 @@ class SeguimientoGrupoController extends Controller
             array('id'=>$idNodo)
         );        
 
-        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
-            array('id' => $idGrupo)
-        );
-
-        $evaluacionFases = $em->getRepository('AppBundle:EvaluacionFases')->findOneBy(
-            array('grupo' => $grupo)
-        );
-
-        $fase = $nodo->getFase(); //Esta iniciación se debe perder
-        if ($evaluacionFases->getAptoPn()) //Debe validar de la mas alta a la mas baja: Pn, Pi, Iea
-            $fase = 3;
-        elseif ($evaluacionFases->getAptoPi())
-            $fase = 2;
-        elseif ($evaluacionFases->getAptoIea())
-            $fase = 1;
+        $fase = $nodo->getFase();
         
         $form = $this->createForm(new SeguimientoFaseType(), $seguimientofase);
         
@@ -576,20 +562,16 @@ class SeguimientoGrupoController extends Controller
         elseif ($idNodo == 10) { //MOT
             self::nodoCamino($idGrupo, 11, 1);
         }
-        //elseif ($idNodo == 26){
-        elseif ($evaluacionFases->getAptoPn()){ //Debe validar de la mas alta a la mas baja: Pn, Pi, Iea
+        elseif ($idNodo == 26 && $evaluacionFases->getAptoPn()){
             self::nodoCamino($idGrupo, 27, 1);
         } 
-        //elseif ($idNodo == 20){
-        elseif ($evaluacionFases->getAptoPi()){
+        elseif ($idNodo == 20 && $evaluacionFases->getAptoPi()){
             self::nodoCamino($idGrupo, 21, 1);
         }
-        //elseif ($idNodo == 14) {
-        elseif ($evaluacionFases->getAptoIea()) {
+        elseif ($idNodo == 14 && $evaluacionFases->getAptoIea()) {
             self::nodoCamino($idGrupo, 15, 1);
         }
         
-
     }
 
     /**
@@ -686,9 +668,9 @@ class SeguimientoGrupoController extends Controller
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/evaluacion-fase", name="evaluacionFase")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/evaluacion-fase/{clearFinalizado}", name="evaluacionFase")
      */
-    public function evaluacionFaseAction(Request $request, $idGrupo)
+    public function evaluacionFaseAction(Request $request, $idGrupo, $clearFinalizado)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -702,20 +684,6 @@ class SeguimientoGrupoController extends Controller
 
         if(!$evaluacionFases)
             $evaluacionFases= new EvaluacionFases();
-        
-        //Validar si el CLEAR aun está abierto para crear o editar el formulario de evaluación, sino solo visualización
-
-        $camino = $em->getRepository('AppBundle:Camino')->findBy(
-                array('grupo' => $grupo)
-            );
-
-        $ultimoNodo = $camino[count($camino)-1];
-        $idUltimoNodo = $ultimoNodo->getNodo()->getId();
-        $estado = $ultimoNodo->getEstado();
-
-        $clearFinalizado = false;
-        if($estado==2 || $estado==3) //Si se encuentra que el último nodo (Debe ser CLEAR) en estados 2 o 3 se determina que el CLEAR está cerrado
-            $clearFinalizado = true;
         
         $form = $this->createForm(new EvaluacionFasesType(), $evaluacionFases);
         
