@@ -32,11 +32,9 @@ class GrupoType extends AbstractType
 			
 			->add('nombre')
 			->add('direccion','text', array('label' => 'Dirección'))
-			->add('rural', 'checkbox', array('required' => false))
-			->add('barrio', 'text', array('required' => false))
-			->add('corregimiento', 'text', array('required' => false))
-			->add('vereda', 'text', array('required' => false))
-			->add('cacerio', 'text', array('required' => false))
+			
+			->add('descripcion', 'textarea', array('required' => false))
+			
 		
 			->add('numero_identificacion_tributaria', 'text', array('label' => 'Numero identificación tributaria','required' => false))
 			->add('fecha_constitucion_legal', 'date', array('label' => 'Fecha de constitución legal del grupo', 'widget' => 'single_text','required' => false))

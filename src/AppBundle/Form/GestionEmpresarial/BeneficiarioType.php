@@ -39,7 +39,7 @@ class BeneficiarioType extends AbstractType
 			    },))
 			->add('fecha_nacimiento', 'date', array('label' => 'Fecha de nacimiento', 'widget' => 'single_text'))
 			->add('edad_inscripcion', 'text', array('label' => 'Edad al momento de la inscripción'))
-			->add('corte_sisben')
+			->add('corte_sisben', 'text', array('label' => 'Area SISBEN'))
 			->add('puntaje_sisben')
 			->add('grupo_indigena', 'entity', array('class' => 'AppBundle:Listas','required' => false,
 										    'query_builder' => function(EntityRepository $er) {
@@ -121,11 +121,9 @@ class BeneficiarioType extends AbstractType
 										            ->orderBy('l.orden', 'ASC');
 										    },))
 			->add('direccion', 'text', array('label' => 'Dirección'))
-			->add('rural', 'checkbox', array('required' => false))
-			->add('barrio', 'text', array('required' => false))
-			->add('corregimiento', 'text', array('required' => false))
-			->add('vereda', 'text', array('required' => false))
-			->add('cacerio', 'text', array('required' => false))
+			
+			->add('descripcion', 'text', array('required' => false))
+		
 			->add('telefono_fijo', 'text', array('label' => 'Teléfono fijo','required' => false))
 			->add('telefono_celular', 'text', array('label' => 'Teléfono celular','required' => false))
 			->add('correo_electronico', 'email',array('label' => 'Correo eléctronico','required' => false))
