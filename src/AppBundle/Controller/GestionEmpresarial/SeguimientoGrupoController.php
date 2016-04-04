@@ -547,21 +547,31 @@ class SeguimientoGrupoController extends Controller
 
     private function encendidoNodoSeguimento($idGrupo, $idNodo){
 
-        if($idNodo == 6)
+        $em = $this->getDoctrine()->getManager();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $evaluacionFases = $em->getRepository('AppBundle:EvaluacionFases')->findOneBy(
+            array('grupo' => $grupo)
+        );
+
+        if($idNodo == 6) //MOT
             self::nodoCamino($idGrupo, 7, 1);
-        elseif ($idNodo == 10) {
+        elseif ($idNodo == 10) { //MOT
             self::nodoCamino($idGrupo, 11, 1);
         }
-        elseif ($idNodo == 14) {
-            self::nodoCamino($idGrupo, 15, 1);
-        }
-        elseif ($idNodo == 20){
+        elseif ($idNodo == 26 && $evaluacionFases->getAptoPn()){
+            self::nodoCamino($idGrupo, 27, 1);
+        } 
+        elseif ($idNodo == 20 && $evaluacionFases->getAptoPi()){
             self::nodoCamino($idGrupo, 21, 1);
         }
-        else{
-            self::nodoCamino($idGrupo, 27, 1);
+        elseif ($idNodo == 14 && $evaluacionFases->getAptoIea()) {
+            self::nodoCamino($idGrupo, 15, 1);
         }
-
+        
     }
 
     /**
@@ -658,9 +668,9 @@ class SeguimientoGrupoController extends Controller
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/evaluacion-fase", name="evaluacionFase")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/evaluacion-fase/{clearFinalizado}", name="evaluacionFase")
      */
-    public function evaluacionFaseAction(Request $request, $idGrupo)
+    public function evaluacionFaseAction(Request $request, $idGrupo, $clearFinalizado)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -668,68 +678,15 @@ class SeguimientoGrupoController extends Controller
             array('id' => $idGrupo)
         );
 
-        $evaluacionfases= new EvaluacionFases();
-        
-        $form = $this->createForm(new EvaluacionFasesType(), $evaluacionfases);
-        
-        $form->add(
-            'guardar', 
-            'submit', 
-            array(
-                'attr' => array(
-                    'style' => 'visibility:hidden'
-                ),
-            )
-        );
-
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            
-            $evaluacionfases = $form->getData();
-
-
-            $evaluacionfases->setActive(true);
-            $evaluacionfases->setFechaCreacion(new \DateTime());
-            $em->persist($evaluacionfases);
-            $em->flush();
-
-        }
-        
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:evaluacion-fase.html.twig', array('grupo' => $grupo, 'form' => $form->createView()));
-        
-
-
-
-       /* $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
-            array('id' => $idGrupo)
-        );
-
-        $habilitacionFases = $em->getRepository('AppBundle:HabilitacionFases')->findOneBy(
+        $evaluacionFases = $em->getRepository('AppBundle:EvaluacionFases')->findOneBy(
             array('grupo' => $grupo)
         );
 
-        if(!$habilitacionFases)
-            $habilitacionFases = new HabilitacionFases(); 
-
-        //Validar si el CLEAR aun está abierto para crear o editar el formulario de habilitación, sino solo visualización
-            
-        $nodoCREE =  $em->getRepository('AppBundle:Nodo')->findOneBy(
-            array('id' => '2')
-        );
-
-        $nodosCaminoCREE = $em->getRepository('AppBundle:Camino')->findBy(
-            array('grupo' => $grupo, 'nodo' => $nodoCREE)
-        );
- 
-        $nodoCaminoCREE = $nodosCaminoCREE[count($nodosCaminoCREE)-1];
-   
-        $clearFinalizado = false;
-        if($nodoCaminoCREE->getEstado()==2 || $nodoCaminoCREE->getEstado()==3) //Si se encuentra un nodoCREE en estados 2 o 3 se determina que el CLEAR está cerrado
-            $clearFinalizado = true;
-            
-        $form = $this->createForm(new HabilitacionFasesType(), $habilitacionFases);
-
+        if(!$evaluacionFases)
+            $evaluacionFases= new EvaluacionFases();
+        
+        $form = $this->createForm(new EvaluacionFasesType(), $evaluacionFases);
+        
         $form->add(
             'Guardar', 
             'submit', 
@@ -742,43 +699,41 @@ class SeguimientoGrupoController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $habilitacionFases = $form->getData();
+        if ($form->isValid()) {            
+            $evaluacionFases = $form->getData();
 
-            $habilitacionFases->setGrupo($grupo);
+            $evaluacionFases->setGrupo($grupo);
 
-            $habilitacionFases->setActive(true);
-            $habilitacionFases->setFechaCreacion(new \DateTime());
-
-            $em->persist($habilitacionFases);
+            $evaluacionFases->setActive(true);
+            $evaluacionFases->setFechaCreacion(new \DateTime());
+            $em->persist($evaluacionFases);
             $em->flush();
 
-            return $this->redirectToRoute('seguimientoGrupo', array( 'idGrupo' => $idGrupo));
         }
-
+            
         return $this->render(
-            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:habilitacion-fases.html.twig', 
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:evaluacion-fases.html.twig', 
             array(
                     'form' => $form->createView(),
                     'grupo' => $grupo,
                     'clearFinalizado' => $clearFinalizado,
-                    'habilitacionFases' => $habilitacionFases
+                    'evaluacionFases' => $evaluacionFases
             )
-        );*/
+        );
     }
 
 
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/evaluacionfase/{idEvaluacionFase}/documentos-soporte", name="evaluacionFaseSoporte")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/evaluacionfase/{idEvaluacionFase}/documentos-soporte", name="evaluacionFasesSoporte")
      */
-    public function evaluacionFaseSoporteAction(Request $request, $idEvaluacionFase)
+    public function evaluacionFasesSoporteAction(Request $request, $idEvaluacionFases)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $evaluacionfaseSoporte = new EvaluacionFaseSoporte();
+        $evaluacionfasesSoporte = new EvaluacionFasesSoporte();
         
-        $form = $this->createForm(new EvaluacionFaseSoporteType(), $evaluacionfaseSoporte);
+        $form = $this->createForm(new EvaluacionFasesSoporteType(), $evaluacionfasesSoporte);
 
         $form->add(
             'Guardar', 
@@ -790,18 +745,18 @@ class SeguimientoGrupoController extends Controller
             )
         );
 
-        $soportesActivos = $em->getRepository('AppBundle:EvaluacionFaseSoporte')->findBy(
-            array('active' => '1', 'evaluacionfase' => $idEvaluacionFase),
+        $soportesActivos = $em->getRepository('AppBundle:EvaluacionFasesSoporte')->findBy(
+            array('active' => '1', 'evaluacionfase' => $idEvaluacionsFase),
             array('fecha_creacion' => 'ASC')
         );
 
-        $histotialSoportes = $em->getRepository('AppBundle:EvaluacionFaseSoporte')->findBy(
-            array('active' => '0', 'evaluacionfase' => $idEvaluacionFase),
+        $histotialSoportes = $em->getRepository('AppBundle:EvaluacionFasesSoporte')->findBy(
+            array('active' => '0', 'evaluacionfase' => $idEvaluacionFases),
             array('fecha_creacion' => 'ASC')
         );
         
-        $evaluacionfase = $em->getRepository('AppBundle:EvaluacionFase')->findOneBy(
-            array('id' => $idEvaluacionFase)
+        $evaluacionfases = $em->getRepository('AppBundle:EvaluacionFases')->findOneBy(
+            array('id' => $idEvaluacionFases)
         );
         
         //echo ($idEvaluacionFase);
@@ -813,40 +768,40 @@ class SeguimientoGrupoController extends Controller
 
                 $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
                     array(
-                        'descripcion' => $evaluacionfaseSoporte->getTipoSoporte()->getDescripcion(), 
+                        'descripcion' => $evaluacionfasesSoporte->getTipoSoporte()->getDescripcion(), 
                         'dominio' => 'grupo_tipo_soporte'
                     )
                 );
                 
-                $actualizarEvaluacionFaseSoportes = $em->getRepository('AppBundle:EvaluacionFaseSoporte')->findBy(
+                $actualizarEvaluacionFasesSoportes = $em->getRepository('AppBundle:EvaluacionFasesSoporte')->findBy(
                     array(
                         'active' => '1' , 
                         'tipo_soporte' => $tipoSoporte->getId(), 
-                        'evaluacionfase' => $idEvaluacionFase,
+                        'evaluacionfase' => $idEvaluacionFases,
                     )
                 );  
             
-                foreach ($actualizarEvaluacionFaseSoportes as $actualizarEvaluacionFaseSoporte){
-                    echo $actualizarEvaluacionFaseSoporte->getId()." ".$actualizarEvaluacionFaseSoporte->getTipoSoporte()."<br />";
-                    $actualizarEvaluacionFaseSoporte->setFechaModificacion(new \DateTime());
-                    $actualizarEvaluacionFaseSoporte->setActive(0);
+                foreach ($actualizarEvaluacionFasesSoportes as $actualizarEvaluacionFasesSoporte){
+                    echo $actualizarEvaluacionFasesSoporte->getId()." ".$actualizarEvaluacionFasesSoporte->getTipoSoporte()."<br />";
+                    $actualizarEvaluacionFasesSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarEvaluacionFasesSoporte->setActive(0);
                     $em->flush();
                 }
                 
-                $evaluacionfaseSoporte->setEvaluacionFase($evaluacionfase);
-                $evaluacionfaseSoporte->setActive(true);
-                $evaluacionfaseSoporte->setFechaCreacion(new \DateTime());
+                $evaluacionfasesSoporte->setEvaluacionFase($evaluacionfases);
+                $evaluacionfasesSoporte->setActive(true);
+                $evaluacionfasesSoporte->setFechaCreacion(new \DateTime());
                 //$grupoSoporte->setUsuarioCreacion(1);
 
-                $em->persist($evaluacionfaseSoporte);
+                $em->persist($evaluacionfasesSoporte);
                 $em->flush();
 
-                return $this->redirectToRoute('evaluacionfaseSoporte', array( 'idEvaluacionFase' => $idEvaluacionFase));
+                return $this->redirectToRoute('evaluacionfasesSoporte', array( 'idEvaluacionFases' => $idEvaluacionFases));
             }
         }   
         
         return $this->render(
-            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:evaluacion-fase-soporte.html.twig', 
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:evaluacion-fases-soporte.html.twig', 
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 

@@ -12,19 +12,18 @@ class EvaluacionFasesType extends AbstractType
     {
         $builder
 
+            ->add('calificacion_iea', 'text', array('label' => '','required' => false))
+            ->add('calificacion_pi', 'text', array('label' => '','required' => false))
+            ->add('calificacion_pn', 'text', array('label' => '','required' => false))
 			
-			//->add('calificacion')
-			/*->add('aprobado', 'checkbox',
-                array(
-                'attr' => array(
-                    'style' => 'visibility:hidden'
-                ),
-            ))*/
-			;
+            ->add('apto_iea', 'checkbox', array('label' => 'IEA', 'required' => false))
+            ->add('apto_pi', 'checkbox', array('label' => 'PI formal', 'required' => false))        
+            ->add('apto_pn', 'checkbox', array('label' => 'PN', 'required' => false))
+            ;
 		}
     
     public function getName()
     {
-        return 'evaluacionfases';
+        return 'evaluacionFases';
     }
 }
