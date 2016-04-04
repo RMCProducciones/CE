@@ -22,16 +22,17 @@ class AsignacionBeneficiarioTaller
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="taller", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Taller")
      */
     private $taller;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="beneficiario", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
+     */
+    private $grupo;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Beneficiario")
      */
     private $beneficiario;
 
@@ -43,9 +44,7 @@ class AsignacionBeneficiarioTaller
     private $active;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_modificacion;
 
@@ -57,9 +56,7 @@ class AsignacionBeneficiarioTaller
     private $fecha_modificacion;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario")
      */
     private $usuario_creacion;
 
@@ -82,13 +79,37 @@ class AsignacionBeneficiarioTaller
     }
 
     /**
-     * Set taller
+     * Set grupo
      *
-     * @param integer $taller
+     * @param AppBundle\Entity\Grupo $grupo
      *
      * @return AsignacionBeneficiarioTaller
      */
-    public function setTaller($taller)
+    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
+    {
+        $this->grupo = $grupo;
+
+        return $this;
+    }
+
+    /**
+     * Get grupo
+     *
+     * @return AppBundle\Entity\Grupo
+     */
+    public function getGrupo()
+    {
+        return $this->grupo;
+    }
+
+    /**
+     * Set taller
+     *
+     * @param \AppBundle\Entity\Taller $taller
+     *
+     * @return AsignacionBeneficiarioTaller
+     */
+    public function setTaller(\AppBundle\Entity\Taller $taller)
     {
         $this->taller = $taller;
 
@@ -98,7 +119,7 @@ class AsignacionBeneficiarioTaller
     /**
      * Get taller
      *
-     * @return integer
+     * @return \AppBundle\Entity\Taller
      */
     public function getTaller()
     {
@@ -108,11 +129,11 @@ class AsignacionBeneficiarioTaller
     /**
      * Set beneficiario
      *
-     * @param integer $beneficiario
+     * @param \AppBundle\Entity\Beneficiario $beneficiario
      *
      * @return AsignacionBeneficiarioTaller
      */
-    public function setBeneficiario($beneficiario)
+    public function setBeneficiario(\AppBundle\Entity\Taller $beneficiario)
     {
         $this->beneficiario = $beneficiario;
 
@@ -122,7 +143,7 @@ class AsignacionBeneficiarioTaller
     /**
      * Get beneficiario
      *
-     * @return integer
+     * @return \AppBundle\Entity\Beneficiario
      */
     public function getBeneficiario()
     {
@@ -156,11 +177,11 @@ class AsignacionBeneficiarioTaller
     /**
      * Set usuarioModificacion
      *
-     * @param integer $usuarioModificacion
+     * @param \AppBundle\Entity\Usuario $usuarioModificacion
      *
      * @return AsignacionBeneficiarioTaller
      */
-    public function setUsuarioModificacion($usuarioModificacion)
+    public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
         $this->usuario_modificacion = $usuarioModificacion;
 
@@ -170,7 +191,7 @@ class AsignacionBeneficiarioTaller
     /**
      * Get usuarioModificacion
      *
-     * @return integer
+     * @return \AppBundle\Entity\Usuario
      */
     public function getUsuarioModificacion()
     {
@@ -204,11 +225,11 @@ class AsignacionBeneficiarioTaller
     /**
      * Set usuarioCreacion
      *
-     * @param integer $usuarioCreacion
+     * @param \AppBundle\Entity\Usuario $usuarioCreacion
      *
      * @return AsignacionBeneficiarioTaller
      */
-    public function setUsuarioCreacion($usuarioCreacion)
+    public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
         $this->usuario_creacion = $usuarioCreacion;
 
@@ -218,7 +239,7 @@ class AsignacionBeneficiarioTaller
     /**
      * Get usuarioCreacion
      *
-     * @return integer
+     * @return \AppBundle\Entity\Usuario
      */
     public function getUsuarioCreacion()
     {

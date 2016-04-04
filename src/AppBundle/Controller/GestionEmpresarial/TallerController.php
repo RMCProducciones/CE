@@ -33,7 +33,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 class TallerController extends Controller
 {
 /**
-     * @Route("/gestion-empresarial/servicio-complementario/taller/{idGrupo}/gestion", name="tallerGestion")
+     * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/gestion", name="tallerGestion")
      */
     public function tallerGestionAction($idGrupo)
     {
@@ -56,7 +56,7 @@ class TallerController extends Controller
 
 
 /**
-     * @Route("/gestion-empresarial/servicio-complementario/taller/{idGrupo}/nuevo", name="tallerNuevo")
+     * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/nuevo", name="tallerNuevo")
      */
     public function tallerNuevoAction(Request $request, $idGrupo)
     {
@@ -106,7 +106,7 @@ class TallerController extends Controller
 
     
 /**
-     * @Route("/gestion-empresarial/servicio-complementario/taller/{idGrupo}/{idTaller}/editar", name="tallerEditar")
+     * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/{idTaller}/editar", name="tallerEditar")
      */
     public function tallerEditarAction(Request $request, $idGrupo, $idTaller)
     {
@@ -161,7 +161,7 @@ class TallerController extends Controller
 
 
 /**
-     * @Route("/gestion-empresarial/servicio-complementario/taller/{idGrupo}/{idTaller}/eliminar", name="tallerEliminar")
+     * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/{idTaller}/eliminar", name="tallerEliminar")
      */
     public function tallerEliminarAction(Request $request, $idGrupo, $idTaller)
     {
@@ -184,7 +184,7 @@ class TallerController extends Controller
 
 
 /**
-     * @Route("/gestion-empresarial/servicio-complementario/taller/{idGrupo}/{idTaller}/documentos-soporte", name="tallerSoporte")
+     * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/{idTaller}/documentos-soporte", name="tallerSoporte")
      */
     public function tallerSoporteAction(Request $request, $idGrupo, $idTaller)
     {
@@ -269,7 +269,7 @@ class TallerController extends Controller
     }
     
     /**
-     * @Route("/gestion-empresarial/servicio-complementario/taller/{idGrupo}/{idTaller}/documentos-soporte/{idTallerSoporte}/borrar", name="tallerSoporteBorrar")
+     * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/{idTaller}/documentos-soporte/{idTallerSoporte}/borrar", name="tallerSoporteBorrar")
      */
     public function tallerSoporteBorrarAction(Request $request, $idGrupo, $idTaller, $idTallerSoporte)
     {
@@ -288,6 +288,127 @@ class TallerController extends Controller
         return $this->redirectToRoute('tallerSoporte', array( 'idTaller' => $idTaller, 'idGrupo' => $idGrupo));
         
     }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/taller/{idGrupo}/{idTaller}/asignacion-beneficiarios", name="beneficiarioTaller")
+     */
+    public function tallerBeneficiarioAction($idGrupo, $idTaller)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $beneficiarios = new Beneficiario();
+
+        $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('grupo' => $grupo)
+        );
+
+        $asignacionBeneficiarioTaller = $em->getRepository('AppBundle:AsignacionBeneficiarioTaller')->findBy(
+            array('grupo' => $grupo)
+        ); 
+
+        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioTaller abt WHERE beneficiario = abt.beneficiario AND abt.grupo = :grupo) AND b.active = 1');
+        $query->setParameter(':grupo', $grupo);
+        $beneficiarios = $query->getResult();
+
+        $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('id' => $beneficiarios, 'grupo' => $grupo )
+        );
+
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Taller:taller-beneficiario-asignacion.html.twig', 
+            array(
+                'beneficiarios' => $mostrarBeneficiarios,
+                'asignacionesBeneficiariosTaller' => $asignacionesBeneficiariosTaller,
+                'idGrupo' => $idGrupo,
+                'grupo' => $grupo
+            ));        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/taller/{idGrupo}/{idTaller}/asignacion-beneficiarios/nueva-asignacion", name="beneficiarioTallerAsignacion")
+     */
+    public function tallerAsignarBeneficiarioAction($idGrupo, $idBeneficiario)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
+            array('id' => $idBeneficiario)
+        );      
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );        
+           
+        $asignacionBeneficiarioComiteCompras = new AsignacionBeneficiarioComiteCompras();
+
+        $asignacionBeneficiarioComiteCompras->setGrupo($grupo);        
+        $asignacionBeneficiarioComiteCompras->setBeneficiario($beneficiario);
+        $asignacionBeneficiarioComiteCompras->setActive(true);
+        $asignacionBeneficiarioComiteCompras->setFechaCreacion(new \DateTime());
+
+        $em->persist($asignacionBeneficiarioComiteCompras);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('grupoBeneficiarioComiteCompras', 
+            array(
+                'beneficiario' => $beneficiario,          
+                'asignacionesBeneficiarioComiteCompras' => $asignacionBeneficiarioComiteCompras,                
+                'idGrupo' => $idGrupo
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/taller/{idGrupo}/{idTaller}/asignacion-beneficiarios/eliminar", name="beneficiarioTallerEliminar")
+     */
+    public function tallerEliminarBeneficiarioAction($idGrupo, $idAsignacionBeneficiariosCVB)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionBeneficiarioComiteCompras = new AsignacionBeneficiarioComiteCompras();
+
+        $asignacionBeneficiarioComiteCompras = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteCompras')->find($idAsignacionBeneficiariosCVB); 
+
+        $em->remove($asignacionBeneficiarioComiteCompras);
+        $em->flush();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $beneficiarios = new Beneficiario();
+
+        $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('grupo' => $grupo)
+        );     
+
+        $asignacionBeneficiarioComiteCompras = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteCompras')->findBy(
+            array('grupo' => $grupo)
+        ); 
+
+        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioComiteCompras abc WHERE beneficiario = abc.beneficiario AND abc.grupo = :grupo) AND b.active = 1');
+        $query->setParameter(':grupo', $grupo);
+        $beneficiarios = $query->getResult();
+
+        $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('id' => $beneficiarios, 'grupo' => $grupo )
+        );
+
+        return $this->redirectToRoute('grupoBeneficiarioCVB',
+            array(
+                'beneficiarios' => $mostrarBeneficiarios,
+                'asignacionesBeneficiarioComiteCompras' => $asignacionBeneficiarioComiteCompras,
+                'idGrupo' => $idGrupo
+            ));      
+        
+    } 
     
 
 
