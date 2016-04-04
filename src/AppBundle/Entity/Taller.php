@@ -57,7 +57,7 @@ class Taller
     /**
      * @var integer
      *
-     * @ORM\Column(name="asistentes", type="integer")
+     * @ORM\Column(name="asistentes", type="integer", nullable = true)
      */
     private $asistentes;
 

@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\ORM\EntityRepository;
 
-class EvaluacionFaseSoporteType extends AbstractType
+class EvaluacionFasesSoporteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -27,6 +27,6 @@ class EvaluacionFaseSoporteType extends AbstractType
     
     public function getName()
     {
-        return 'evaluacionfaseSoporte';
+        return 'evaluacionfasesSoporte';
     }
 }

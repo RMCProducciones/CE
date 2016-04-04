@@ -717,8 +717,12 @@ class ClearController extends Controller
             }
             //CIERRE DE CLEAR DE EVALUACIÓN (ANTERIORMENTE LLAMADO CLEAR ASIGNACIÓN)
             elseif($idUltimoNodo == 6 || $idUltimoNodo == 10){
+
                     //Evaluar "Evaluación de Fase para definir el color", mientras tanto:
                     self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), $idUltimoNodo, 2);//En verde temporalmente a todos mientras se evalua la fase
+
+                    //AGREGAR LA CONDICION DE NODO EN 3 SI NO SE HABILITA PARA LA FASE!!! según evaluacionFases
+
 
                     /*if($idUltimoNodo == 6)
                         self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 6, 2);//Ejecutada(2) Clear de Asignación MOT Formal

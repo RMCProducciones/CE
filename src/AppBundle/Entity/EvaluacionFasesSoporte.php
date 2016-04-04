@@ -8,13 +8,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * EvaluacionFaseSoporte
+ * EvaluacionFasesSoporte
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\EvaluacionFaseSoporteRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\EvaluacionFasesSoporteRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class EvaluacionFaseSoporte
+class EvaluacionFasesSoporte
 {
     /**
      * @var integer
@@ -26,9 +26,9 @@ class EvaluacionFaseSoporte
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\EvaluacionFase")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\EvaluacionFases")
      */
-    private $evaluacionfase;
+    private $evaluacionfases;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\DocumentoSoporte")
@@ -95,27 +95,27 @@ class EvaluacionFaseSoporte
     }
 
     /**
-     * Set evaluacionfase
+     * Set evaluacionfases
      *
-     * @param AppBundle\Entity\EvaluacionFase $evaluacionfase
+     * @param AppBundle\Entity\EvaluacionFases $evaluacionfases
      *
-     * @return EvaluacionFaseSoporte
+     * @return EvaluacionFasesSoporte
      */
-    public function setEvaluacionFase(\AppBundle\Entity\EvaluacionFase $evaluacionfase)
+    public function setEvaluacionFases(\AppBundle\Entity\EvaluacionFases $evaluacionfases)
     {
-        $this->evaluacionfase = $evaluacionfase;
+        $this->evaluacionfases = $evaluacionfases;
     
         return $this;
     }
 
     /**
-     * Get evaluacionfase
+     * Get evaluacionfases
      *
-     * @return AppBundle\Entity\EvaluacionFase
+     * @return AppBundle\Entity\EvaluacionFases
      */
-    public function getEvaluacionFase()
+    public function getEvaluacionFases()
     {
-        return $this->evaluacionfase;
+        return $this->evaluacionfases;
     }
 
     /**
@@ -123,7 +123,7 @@ class EvaluacionFaseSoporte
      *
      * @param AppBundle\Entity\DocumentoSoporte $tipoSoporte
      *
-     * @return  EvaluacionFaseSoporte
+     * @return  EvaluacionFasesSoporte
      */
     public function setTipoSoporte(\AppBundle\Entity\DocumentoSoporte $tipoSoporte)
     {
@@ -147,7 +147,7 @@ class EvaluacionFaseSoporte
      *
      * @param string $path
      *
-     * @return EvaluacionFaseSoporte
+     * @return EvaluacionFasesSoporte
      */
     public function setPath($path)
     {
@@ -171,7 +171,7 @@ class EvaluacionFaseSoporte
      *
      * @param boolean $active
      *
-     * @return EvaluacionFaseSoporte
+     * @return EvaluacionFasesSoporte
      */
     public function setActive($active)
     {
@@ -195,7 +195,7 @@ class EvaluacionFaseSoporte
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return EvaluacionFaseSoporte
+     * @return EvaluacionFasesSoporte
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
@@ -219,7 +219,7 @@ class EvaluacionFaseSoporte
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return EvaluacionFaseSoporte
+     * @return EvaluacionFasesSoporte
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -243,7 +243,7 @@ class EvaluacionFaseSoporte
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return EvaluacionFaseSoporte
+     * @return EvaluacionFasesSoporte
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
@@ -267,7 +267,7 @@ class EvaluacionFaseSoporte
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return EvaluacionFaseSoporte
+     * @return EvaluacionFasesSoporte
      */
     public function setFechaCreacion($fechaCreacion)
     {
