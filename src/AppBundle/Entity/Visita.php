@@ -39,42 +39,42 @@ class Visita
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha", type="datetime")
+     * @ORM\Column(name="fecha", type="datetime", nullable = true)
      */
     private $fecha;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="objetivo", type="text")
+     * @ORM\Column(name="objetivo", type="text", nullable = true)
      */
     private $objetivo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="agenda", type="text")
+     * @ORM\Column(name="agenda", type="text", nullable = true)
      */
     private $agenda;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lugar", type="text")
+     * @ORM\Column(name="lugar", type="text", nullable = true)
      */
     private $lugar;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="asistentes", type="integer")
+     * @ORM\Column(name="asistentes", type="integer", nullable = true)
      */
     private $asistentes;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="comite_compras", type="boolean")
+     * @ORM\Column(name="comite_compras", type="boolean", nullable = true)
      */
     private $comite_compras;
 
@@ -88,7 +88,7 @@ class Visita
     /**
      * @var boolean
      *
-     * @ORM\Column(name="comite_vamos_bien", type="boolean")
+     * @ORM\Column(name="comite_vamos_bien", type="boolean", nullable = true)
      */
     private $comite_vamos_bien;
 
@@ -102,133 +102,133 @@ class Visita
     /**
      * @var string
      *
-     * @ORM\Column(name="logros_compras", type="text")
+     * @ORM\Column(name="logros_compras", type="text", nullable = true)
      */
     private $logros_compras;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="logros_vamos_bien", type="text")
+     * @ORM\Column(name="logros_vamos_bien", type="text", nullable = true, nullable = true)
      */
     private $logros_vamos_bien;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="contador", type="boolean")
+     * @ORM\Column(name="contador", type="boolean", nullable = true)
      */
     private $contador;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="desempeno_contador", type="integer", nullable = true)
+     * @ORM\Column(name="desempeno_contador", type="integer", nullable = true, nullable = true)
      */
     private $desempeno_contador;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="observaciones_contador", type="text")
+     * @ORM\Column(name="observaciones_contador", type="text", nullable = true)
      */
     private $observaciones_contador;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="observaciones_presupuesto_asignado", type="text")
+     * @ORM\Column(name="observaciones_presupuesto_asignado", type="text", nullable = true)
      */
     private $observaciones_presupuesto_asignado;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="cambios_presupuesto_asignado", type="boolean")
+     * @ORM\Column(name="cambios_presupuesto_asignado", type="boolean", nullable = true)
      */
     private $cambios_presupuesto_asignado;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="cambios_razones_presupuesto_asignado", type="text")
+     * @ORM\Column(name="cambios_razones_presupuesto_asignado", type="text", nullable = true)
      */
     private $cambios_razones_presupuesto_asignado;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="desempeno_organizacional", type="text")
+     * @ORM\Column(name="desempeno_organizacional", type="text", nullable = true)
      */
     private $desempeno_organizacional;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="desempeno_productivo", type="text")
+     * @ORM\Column(name="desempeno_productivo", type="text", nullable = true)
      */
     private $desempeno_productivo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="desempeno_comercial", type="text")
+     * @ORM\Column(name="desempeno_comercial", type="text", nullable = true)
      */
     private $desempeno_comercial;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="desempeno_administrativo", type="text")
+     * @ORM\Column(name="desempeno_administrativo", type="text", nullable = true)
      */
     private $desempeno_administrativo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="desempeno_financiero", type="text")
+     * @ORM\Column(name="desempeno_financiero", type="text", nullable = true)
      */
     private $desempeno_financiero;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="cambios_integrantes_grupo", type="boolean")
+     * @ORM\Column(name="cambios_integrantes_grupo", type="boolean", nullable = true)
      */
     private $cambios_integrantes_grupo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="cambios_razones_integrantes_grupo", type="text")
+     * @ORM\Column(name="cambios_razones_integrantes_grupo", type="text", nullable = true)
      */
     private $cambios_razones_integrantes_grupo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="observaciones", type="text")
+     * @ORM\Column(name="observaciones", type="text", nullable = true)
      */
     private $observaciones;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="compromisos", type="text")
+     * @ORM\Column(name="compromisos", type="text", nullable = true)
      */
     private $compromisos;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="interventoria", type="boolean")
+     * @ORM\Column(name="interventoria", type="boolean", nullable = true)
      */
     private $interventoria;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="razones_interventoria", type="text")
+     * @ORM\Column(name="razones_interventoria", type="text", nullable = true)
      */
     private $razones_interventoria;
 

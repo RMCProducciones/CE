@@ -24,6 +24,10 @@ use AppBundle\Entity\SeguimientoMOT;
 use AppBundle\Entity\SeguimientoFase;
 use AppBundle\Entity\Visita;
 use AppBundle\Entity\EvaluacionFases;
+use AppBundle\Entity\AsignacionBeneficiarioComiteCompras;
+use AppBundle\Entity\AsignacionBeneficiarioComiteVamosBien;
+use AppBundle\Entity\AsignacionBeneficiarioEstructuraOrganizacional;
+use AppBundle\Entity\AsignacionContadorGrupo;
 
 use AppBundle\Form\GestionEmpresarial\HabilitacionFasesType;
 use AppBundle\Form\GestionEmpresarial\SeguimientoMOTType;
@@ -575,32 +579,14 @@ class SeguimientoGrupoController extends Controller
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/visita/nuevo", name="visitaNuevo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/visita/{idVisita}/nuevo", name="visitaNuevo")
      */
-    public function visitaNuevoAction(Request $request, $idGrupo, $idNodo)
+    public function visitaNuevoAction(Request $request, $idGrupo, $idNodo, $idVisita)
     {
         $em = $this->getDoctrine()->getManager();
-        $visita= new Visita();
-        $seguimientoFase= new SeguimientoFase();
-        $idSeguimientoFase= new SeguimientoFase();
 
-        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
-            array('id' => $idGrupo));
-
-        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
-            array('id' => $idNodo));
-
-        $fase = $nodo->getFase();
-
-        $seguimientoFase = $em->getRepository('AppBundle:SeguimientoFase')->findOneBy(
-            array('grupo' => $idGrupo,
-                  'fase' => $fase
-                 )
-        );       
-
-        $idSeguimientoFase = $em->getRepository('AppBundle:SeguimientoFase')->findOneBy(
-            array('id' => $seguimientoFase->getId())
-        );
+        $visita= $em->getRepository('AppBundle:Visita')->findOneBy(
+            array('id' => $idVisita));        
         
         $form = $this->createForm(new VisitaType(), $visita);
         
@@ -619,22 +605,9 @@ class SeguimientoGrupoController extends Controller
         if ($form->isValid()) {
             
             $visita = $form->getData();
-
-            $visita->setGrupo($grupo);
-            $visita->setSeguimientoFase($seguimientoFase);
-            $visita->setNodo($nodo);
             $visita->setActive(true);
-            $visita->setFechaCreacion(new \DateTime());
-
-            /*$usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
-                array(
-                    'id' => 1
-                )
-            );
+            $visita->setFechaCreacion(new \DateTime());           
             
-            $pasantia->setUsuarioCreacion($usuarioCreacion);*/
-            
-        
             $em->persist($visita);
             $em->flush();
 
@@ -665,6 +638,146 @@ class SeguimientoGrupoController extends Controller
                                         'idGrupo' => $idGrupo
                                     )
                             );
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/visita/comprobar", name="comprobarVisita")
+     */
+    public function comprobarVisitaAction(Request $request, $idGrupo, $idNodo)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $visita= new Visita();
+        $seguimientoFase= new SeguimientoFase();
+        $idSeguimientoFase= new SeguimientoFase();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo));
+
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id' => $idNodo));
+
+        $fase = $nodo->getFase();
+
+        $seguimientoFase = $em->getRepository('AppBundle:SeguimientoFase')->findOneBy(
+            array('grupo' => $idGrupo,
+                  'fase' => $fase
+                 )
+        );       
+
+        $idSeguimientoFase = $em->getRepository('AppBundle:SeguimientoFase')->findOneBy(
+            array('id' => $seguimientoFase->getId())
+        );
+
+        $comiteComprasGrupo = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteCompras')->findBy(
+            array('grupo' => $idGrupo)
+        );
+        
+        $comiteVamosBienGrupo = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteVamosBien')->findBy(
+            array('grupo' => $idGrupo)
+        );
+
+        $contadorGrupo = $em->getRepository('AppBundle:AsignacionContadorGrupo')->findBy(
+            array('grupo' => $idGrupo)
+        );
+
+        $form = $this->createForm(new VisitaType(), $visita);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $visita = $form->getData();
+
+            if(sizeof($comiteComprasGrupo) != 0){
+                $visita->setComiteCompras(true);                                            
+            }
+            
+            if(sizeof($comiteVamosBienGrupo) != 0){
+                $visita->setComiteVamosBien(true);                                            
+            }
+
+            if(sizeof($contadorGrupo) != 0){
+                $visita->setContador(true);                                            
+            }
+
+            $visita->setGrupo($grupo);
+            $visita->setSeguimientoFase($seguimientoFase);
+            $visita->setNodo($nodo);
+            $visita->setActive(true);
+            $visita->setFechaCreacion(new \DateTime());
+
+            $usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
+            
+            $visita->setUsuarioCreacion($usuarioCreacion);
+            
+        
+            $em->persist($visita);
+            $em->flush();
+
+            $idVisita = $visita->getId();
+
+            return $this->redirect(
+                $this->generateUrl(
+                    'visitaNuevo', 
+                    array(
+                        'idGrupo' => $idGrupo,
+                        'idNodo' => $idNodo,
+                        'idVisita' => $idVisita
+                    )
+                )
+            );  
+
+     
+        }
+
+        $visita = $form->getData();
+
+            if(sizeof($comiteComprasGrupo) != 0){
+                $visita->setComiteCompras(true);                                            
+            }
+            
+            if(sizeof($comiteVamosBienGrupo) != 0){
+                $visita->setComiteVamosBien(true);                                            
+            }
+
+            if(sizeof($contadorGrupo) != 0){
+                $visita->setContador(true);                                            
+            }
+
+            $visita->setGrupo($grupo);
+            $visita->setSeguimientoFase($seguimientoFase);
+            $visita->setNodo($nodo);
+            $visita->setActive(true);
+            $visita->setFechaCreacion(new \DateTime());
+
+            $usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array(
+                    'id' => 1
+                )
+            );
+            
+            $visita->setUsuarioCreacion($usuarioCreacion);
+            
+        
+            $em->persist($visita);
+            $em->flush();
+
+            $idVisita = $visita->getId();
+        
+        return $this->redirect(
+                $this->generateUrl(
+                    'visitaNuevo', 
+                    array(
+                        'idGrupo' => $idGrupo,
+                        'idNodo' => $idNodo,
+                        'idVisita' => $idVisita
+                    )
+                )
+            );  
     }
 
     /**
