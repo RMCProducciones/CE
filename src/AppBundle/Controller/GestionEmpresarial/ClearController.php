@@ -23,6 +23,7 @@ use AppBundle\Entity\AsignacionIntegranteCLEAR;
 use AppBundle\Entity\AsignacionGrupoCLEAR;
 use AppBundle\Entity\Camino;
 use AppBundle\Entity\HabilitacionFases;
+use AppBundle\Entity\EvaluacionFases;
 use AppBundle\Entity\Grupo;
 
 
@@ -718,19 +719,27 @@ class ClearController extends Controller
             //CIERRE DE CLEAR DE EVALUACIÓN (ANTERIORMENTE LLAMADO CLEAR ASIGNACIÓN)
             elseif($idUltimoNodo == 6 || $idUltimoNodo == 10){
 
+                self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), $idUltimoNodo, 2);//En verde temporalmente a todos mientras se evalua la fase                    
                     //Evaluar "Evaluación de Fase para definir el color", mientras tanto:
-                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), $idUltimoNodo, 2);//En verde temporalmente a todos mientras se evalua la fase
-
                     //AGREGAR LA CONDICION DE NODO EN 3 SI NO SE HABILITA PARA LA FASE!!! según evaluacionFases
-
-
                     /*if($idUltimoNodo == 6)
                         self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 6, 2);//Ejecutada(2) Clear de Asignación MOT Formal
-
                     if($idUltimoNodo == 10)
                         self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 10, 2);//Ejecutada(2) Clear de Asignación MOT No Formal
                     */
             }
+            elseif($idUltimoNodo == 14){
+                $evaluacionFases = $em->getRepository('AppBundle:EvaluacionFases')->findOneBy(
+                    array('grupo' => $asignacionGrupoClear->getGrupo()) 
+                );
+
+                if($evaluacionFases != null){
+                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 14, 2);//Ejecutada(2) Clear de Asignacion
+                }else{
+                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 14, 3);//Rechazado(3) Clear de Asignacion   
+                }
+            }
+                
             else{//PROGRAMACIÓN GENÉRICA DE CONTRALORÍA O ASIGNACIÓN
                 self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), $idUltimoNodo, 2);
             }
