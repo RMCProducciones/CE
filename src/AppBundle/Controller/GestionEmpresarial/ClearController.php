@@ -705,6 +705,10 @@ class ClearController extends Controller
                     if($idUltimoNodo == 2)
                         self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 2);//Ejecutada(2) Clear de Habilitación
                     
+                    if($habilitacionFases->getMotFormal())
+                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 6, 1);//Programación(1) a Clear asignación Sin Negocio Formal
+                    if($habilitacionFases->getMotNoFormal())
+                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 10, 1);//Programación(1) a Clear asignación Sin Negocio No Formal
                     if($habilitacionFases->getIea())
                         self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 5, 1);//Programación(1) a Visita previa IEA
                     if($habilitacionFases->getPn())
