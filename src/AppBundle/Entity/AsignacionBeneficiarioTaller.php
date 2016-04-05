@@ -51,7 +51,7 @@ class AsignacionBeneficiarioTaller
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable = true)
      */
     private $fecha_modificacion;
 
@@ -133,7 +133,7 @@ class AsignacionBeneficiarioTaller
      *
      * @return AsignacionBeneficiarioTaller
      */
-    public function setBeneficiario(\AppBundle\Entity\Taller $beneficiario)
+    public function setBeneficiario(\AppBundle\Entity\Beneficiario $beneficiario)
     {
         $this->beneficiario = $beneficiario;
 

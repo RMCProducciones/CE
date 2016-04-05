@@ -9,7 +9,7 @@
       <li>Gestión Empresarial</li>
       <li>Servicio Complementario</li>
       <li><a href="{{ path('tallerGestion', {'idGrupo': idGrupo}) }}">Taller</a></li>
-      <li class="active">Nuevo</li>
+      <li class="active">Cerrar Taller</li>
     </ul>
 
 {% endblock %}
@@ -19,7 +19,7 @@
 <div class="container">
     <h1> Gestión Talleres </h1>
     <hr>
-    <h3> Nuevo Registro</h3>
+    <h3> Cerrar Registro</h3>
     <br />
     <br />
   </div>
@@ -56,49 +56,26 @@
 			<div class="row">
 				<div class="col-md-12">
 					<fieldset>
-						<legend>Datos básicos del taller </legend>
+						<legend>Datos básicos de la ruta </legend>
 					</fieldset>            
 				</div>
 			</div>	
 
 				<div class="row">
-				<div class="col-md-4">
-                  {{ form_label(form.fecha) }}
-				  {{ form_errors(form.fecha) }}
-                  {{ form_widget(form.fecha, { 'attr': {'class': 'form-control', 'placeholder': 'Fecha Taller'} }) }}
+				<div class="col-md-6">
+                  {{ form_label(form.nombreRuta) }}
+				  {{ form_errors(form.nombreRuta) }}
+                  {{ form_widget(form.nombreRuta, { 'attr': {'class': 'form-control', 'placeholder': 'Nombre ruta'} }) }}
                 </div>
-                <div class="col-md-4">
-                  {{ form_label(form.objetivo) }}
-				  {{ form_errors(form.objetivo) }}
-                  {{ form_widget(form.objetivo, { 'attr': {'class': 'form-control', 'placeholder': 'Objetivo '} }) }}
-                </div>
-                <div class="col-md-4">
-                  {{ form_label(form.agenda) }}
-          {{ form_errors(form.agenda) }}
-                  {{ form_widget(form.agenda, { 'attr': {'class': 'form-control', 'placeholder': 'Agenda '} }) }}
+                <div class="col-md-6">
+                  {{ form_label(form.observaciones) }}
+				  {{ form_errors(form.observaciones) }}
+                  {{ form_widget(form.observaciones, { 'attr': {'class': 'form-control', 'placeholder': 'Observaciones '} }) }}
                 </div>
           
 		</div>
 
-    <br />
-    
-      <div class="row">
-        <div class="col-md-4">
-                  {{ form_label(form.lugar) }}
-          {{ form_errors(form.lugar) }}
-                  {{ form_widget(form.lugar, { 'attr': {'class': 'form-control', 'placeholder': 'Lugar Taller'} }) }}
-                </div>                
-                <div class="col-md-4">
-                  {{ form_label(form.observaciones) }}
-          {{ form_errors(form.observaciones) }}
-                  {{ form_widget(form.observaciones, { 'attr': {'class': 'form-control', 'placeholder': 'Primer Observaciones '} }) }}
-                </div>
-                <div class="col-md-4">
-                  {{ form_label(form.compromisos) }}
-          {{ form_errors(form.compromisos) }}
-                  {{ form_widget(form.compromisos, { 'attr': {'class': 'form-control', 'placeholder': 'Compromisos'} }) }}
-                </div>          
-    </div>
+			
 
 			<br/>				
        

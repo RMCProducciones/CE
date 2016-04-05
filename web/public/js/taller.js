@@ -58,5 +58,19 @@ app.controller('gestionTallerCtrl', ['$scope', '$http', function($scope, $http) 
 
 }]);
 
+app.controller('tallerBeneficiariosCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.eliminartallerBeneficiarios = function(ruta){		
+		window.location.replace(ruta);
 
+	};	
+}]);
+
+app.controller('cerrarTalleresGrupoCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.cerrarTalleresGrupo = function(ruta){		
+		window.location.replace(ruta);
+
+	};	
+}]);
 
