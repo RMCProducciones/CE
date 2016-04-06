@@ -8,7 +8,7 @@
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
       <li>Formacion de capital social asociativo y desarrollo empresarial</li>
-      <li><a href="{{ path('gruposGestion') }}">Grupos</a></li>
+      <li><a href="{{ path('grupoGestion') }}">Grupos</a></li>
       <li class="active">Nuevo</li>
     </ul>
 
@@ -67,7 +67,7 @@
 			{{ form_widget(form.rol, { 'attr': {'class': 'form-control', 'placeholder': 'Rol'} }) }}
           	{{ form_widget(form.permiso, { 'attr': {'style':'visibility:hidden'} }) }}	
 				</div>
-				<div class="col-md-8" ng-controller="AsignarPermisoCtrl" ng-init="initRol(0)>
+				<div class="col-md-8" ng-controller="AsignarPermisoCtrl" ng-init="initRol(0)">
 			{{ form_label(form.permiso) }}
           	{{ form_errors(form.permiso) }}
 

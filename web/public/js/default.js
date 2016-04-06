@@ -4,6 +4,7 @@ app.constant('styleBuscarHerramientas', { dropdown: 'dropdown', dropup: 'dropup'
 app.controller('rutaServidorCtrl', ['$scope', '$http', function($scope, $http) {
 
 	$scope.rutaServidor = $('#path').val();
+	console.log ($scope.rutaServidor);
 	$scope.elementPermiso = "inicioMenu";
 	$scope.jsonPermiso = [];
 
