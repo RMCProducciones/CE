@@ -588,6 +588,9 @@ class SeguimientoGrupoController extends Controller
         $visita= $em->getRepository('AppBundle:Visita')->findOneBy(
             array('id' => $idVisita));        
         
+        $nodo= $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id' => $idNodo));   
+
         $form = $this->createForm(new VisitaType(), $visita);
         
         $form->add(
