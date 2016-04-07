@@ -28,24 +28,33 @@
           <div class="col-md-4">
             <div class="input-group">
                   
-
+              {% set dato = 0 %}
               <select class="form-control" id="txtBuscar" placeholder="Buscar..." ng-model="txtBuscar">
                 {% for lista in listas %}
-                  <option>{{lista.dominio}}</option>
+                  <option value="{{lista.id}}">{{lista.dominio}}</option>                  
                 {% endfor %}
-              </select>
-            
+              </select>            
               <span class="input-group-btn">
-                <button class="btn btn-default" style="color:white; background-color:#ccc;" type="button" href="#"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                <a class="btn btn-default" href="javascript:buscar();" style="color:white; background-color:#ccc;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
               </span>    
             </div>
           </div>
+
+          <script>
+          function buscar(){
+            var valor = document.getElementById("txtBuscar").value;
+            var url = document.getElementById("path").value;
+            console.log(valor);
+            console.log(url);
+            window.location = url + "lista-valor/"+ valor + "/filtro";
+          }            
+          </script>
 
           <div class="col-md-2">
             <div class="btn-group [[styleBuscarHerramientas]]">              
                 
                 <button class="btn btn-info" ng-click="buttonBuscarHerramientas(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
-              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusqueda();">Limpiar</button>                            
+              <a class="btn btn-primary" href="{{ path('listasValorGestion') }}" ng-click="limpiarCamposFiltroBusqueda();">Limpiar</a>                            
             </div>
           </div>
 

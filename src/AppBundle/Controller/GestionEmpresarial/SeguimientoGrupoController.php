@@ -822,6 +822,9 @@ class SeguimientoGrupoController extends Controller
             $em->persist($evaluacionFases);
             $em->flush();
 
+            return $this->redirectToRoute('seguimientoGrupo', 
+                array('idGrupo' => $idGrupo));
+
         }
             
         return $this->render(

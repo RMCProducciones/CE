@@ -28,7 +28,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 class ListasValorController extends Controller
 {
 /**
-     * @Route("/gestion-listas-valor/gestion", name="listasValorGestion")
+     * @Route("/lista-valor/gestion", name="listasValorGestion")
      */
     public function listasValorGestionAction(Request $request)
     {
@@ -55,7 +55,7 @@ class ListasValorController extends Controller
     }
 
     /**
-     * @Route("/gestion-listas-valor/nuevo", name="listasValorNuevo")
+     * @Route("/lista-valor/nuevo", name="listasValorNuevo")
      */
     public function listasValorNuevoAction(Request $request)
     {
@@ -92,7 +92,7 @@ class ListasValorController extends Controller
     }
 
     /**
-     * @Route("/gestion-listas-valor/{idListas}/editar", name="listasValorEditar")
+     * @Route("/lista-valor/{idListas}/editar", name="listasValorEditar")
      */
     public function listasValorEditarAction(Request $request, $idListas)
     {
@@ -132,7 +132,7 @@ class ListasValorController extends Controller
     }
 
     /**
-     * @Route("/gestion-listas-valor/{idListas}/eliminar", name="listasValorEliminar")
+     * @Route("/lista-valor/{idListas}/eliminar", name="listasValorEliminar")
      */
     public function listasValorEliminarAction(Request $request, $idListas)
     {
@@ -149,18 +149,35 @@ class ListasValorController extends Controller
     }
 
     /**
-     * @Route("/gestion-listas-valor/filtro", name="listasValorFiltro")
+     * @Route("/lista-valor/{dato}/filtro", name="listasValorFiltro")
      */
     public function listasValorFiltroAction(Request $request, $dato)
     {
-        $em = $this->getDoctrine()->getManager();        
+        $em = $this->getDoctrine()->getManager();
 
-        $listas = $em->getRepository('AppBundle:Listas')->find($idListas);              
+        echo $dato;        
 
-        $em->remove($listas);
-        $em->flush();
+        $idListas = $em->getRepository('AppBundle:Listas')->findOneBy(
+            array('id' => $dato));
 
-        return $this->redirect($this->generateUrl('listasValorGestion'));
+        $idListas->getDominio();
+
+        $listas = $em->getRepository('AppBundle:Listas')->findBy(
+            array('dominio' => $idListas->getDominio()));
+
+        $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $listas, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+         
+        return $this->render('AppBundle:GestionListasValor:listas-valor-gestion.html.twig', 
+            array( 'listas' => $listas,
+                   'pagination' => $pagination
+            )
+        );       
 
     }
 
