@@ -29,8 +29,6 @@ abstract class AbstractIntlDateFormatterTest extends \PHPUnit_Framework_TestCase
     /**
      * When a time zone is not specified, it uses the system default however it returns null in the getter method.
      *
-     * @covers Symfony\Component\Intl\DateFormatter\IntlDateFormatter::getTimeZoneId
-     *
      * @see StubIntlDateFormatterTest::testDefaultTimeZoneIntl()
      */
     public function testConstructorDefaultTimeZone()
@@ -387,7 +385,7 @@ abstract class AbstractIntlDateFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function testFormatWithDateTimeZoneGmt()
     {
-        if (PHP_VERSION_ID < 50500) {
+        if (PHP_VERSION_ID < 50500 && !(extension_loaded('intl') && method_exists('IntlDateFormatter', 'setTimeZone'))) {
             $this->markTestSkipped('Only in PHP 5.5+ IntlDateFormatter allows to use DateTimeZone objects.');
         }
 
@@ -409,12 +407,11 @@ abstract class AbstractIntlDateFormatterTest extends \PHPUnit_Framework_TestCase
 
     public function testFormatWithIntlTimeZone()
     {
-        if (PHP_VERSION_ID < 50500 && !(extension_loaded('intl') && method_exists('IntlDateFormatter', 'setTimeZone'))) {
-            $this->markTestSkipped('Only in PHP 5.5+ IntlDateFormatter allows to use DateTimeZone objects.');
+        if (!extension_loaded('intl')) {
+            $this->markTestSkipped('Extension intl is required.');
         }
-
-        if (!class_exists('IntlTimeZone')) {
-            $this->markTestSkipped('This test requires the IntlTimeZone class from the Intl extension.');
+        if (PHP_VERSION_ID < 50500 && !method_exists('IntlDateFormatter', 'setTimeZone')) {
+            $this->markTestSkipped('Only in PHP 5.5+ IntlDateFormatter allows to use DateTimeZone objects.');
         }
 
         $formatter = $this->getDateFormatter('en', IntlDateFormatter::MEDIUM, IntlDateFormatter::SHORT, \IntlTimeZone::createTimeZone('GMT+03:00'), IntlDateFormatter::GREGORIAN, 'zzzz');
@@ -871,7 +868,6 @@ abstract class AbstractIntlDateFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Symfony\Component\Intl\DateFormatter\IntlDateFormatter::getTimeZoneId
      * @dataProvider setTimeZoneIdProvider
      */
     public function testSetTimeZoneId($timeZoneId, $expectedTimeZoneId)

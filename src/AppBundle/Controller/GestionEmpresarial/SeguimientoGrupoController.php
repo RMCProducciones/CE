@@ -614,7 +614,7 @@ class SeguimientoGrupoController extends Controller
             $em->persist($visita);
             $em->flush();
 
-            if($visita->getInterventoria() != 1)
+            if($visita->getInterventoria() == 1)
                 self::nodoCamino($idGrupo, $nodo->getId(), 6);
             else{
                 self::nodoCamino($idGrupo, $nodo->getId(), 2);
@@ -824,6 +824,9 @@ class SeguimientoGrupoController extends Controller
             $evaluacionFases->setFechaCreacion(new \DateTime());
             $em->persist($evaluacionFases);
             $em->flush();
+
+            return $this->redirectToRoute('seguimientoGrupo', 
+                array('idGrupo' => $idGrupo));
 
         }
             

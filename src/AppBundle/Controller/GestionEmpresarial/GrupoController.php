@@ -59,7 +59,7 @@ class GrupoController extends Controller
         );
     }
 
-     /**
+    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/nuevo", name="grupoNuevo")
      */
     public function grupoNuevoAction(Request $request)

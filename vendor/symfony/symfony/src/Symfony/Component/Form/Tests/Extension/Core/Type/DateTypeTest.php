@@ -187,6 +187,7 @@ class DateTypeTest extends TestCase
             'model_timezone' => 'UTC',
             'view_timezone' => 'UTC',
             'widget' => 'choice',
+            'years' => array(2010),
         ));
 
         $text = array(
@@ -486,7 +487,7 @@ class DateTypeTest extends TestCase
         $view = $form->createView();
 
         $this->assertEquals(array(
-            new ChoiceView(1, '1', 'Jän'),
+            new ChoiceView(1, '1', 'Jän.'),
             new ChoiceView(4, '4', 'Apr.'),
         ), $view['month']->vars['choices']);
     }
@@ -705,7 +706,6 @@ class DateTypeTest extends TestCase
         $this->assertSame('single_text', $view->vars['widget']);
     }
 
-    // Bug fix
     public function testInitializeWithDateTime()
     {
         // Throws an exception if "data_class" option is not explicitly set
@@ -923,8 +923,7 @@ class DateTypeTest extends TestCase
     public function testYearsFor32BitsMachines()
     {
         if (4 !== PHP_INT_SIZE) {
-            $this->markTestSkipped(
-                'PHP must be compiled in 32 bit mode to run this test');
+            $this->markTestSkipped('PHP 32 bit is required.');
         }
 
         $form = $this->factory->create('date', null, array(
