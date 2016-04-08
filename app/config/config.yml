@@ -88,7 +88,7 @@ fos_user:
 
 # KNPPaginator Bundle
 knp_paginator:
-    page_range: 5  # número de páginas a mostrar
+    page_range: 10  # número de páginas a mostrar
     default_options:
         page_name: page # nombre del parámetro de paginación
         sort_field_name: sort # nombre del parámetro para ordenar los registros
