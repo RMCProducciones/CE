@@ -186,8 +186,8 @@ class ExperienciaController extends Controller
 
                 $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
                     array(
-                        'descripcion' => $talentoSoporte->getTipoSoporte()->getDescripcion(), 
-                        'dominio' => 'talento_tipo_soporte'
+                        'descripcion' => $experienciaexitosaSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'experiencia_tipo_soporte'
                     )
                 );
                 

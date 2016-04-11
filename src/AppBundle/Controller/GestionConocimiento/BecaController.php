@@ -191,7 +191,7 @@ class BecaController extends Controller
                 $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
                     array(
                         'descripcion' => $becaSoporte->getTipoSoporte()->getDescripcion(), 
-                        'dominio' => 'talento_tipo_soporte'
+                        'dominio' => 'beca_tipo_soporte'
                     )
                 );
                 

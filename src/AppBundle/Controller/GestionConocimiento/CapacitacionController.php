@@ -193,7 +193,7 @@ class CapacitacionController extends Controller
                 $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
                     array(
                         'descripcion' => $capacitacionSoporte->getTipoSoporte()->getDescripcion(), 
-                        'dominio' => 'talento_tipo_soporte'
+                        'dominio' => 'capacitacion_tipo_soporte'
                     )
                 );
                 
@@ -212,7 +212,7 @@ class CapacitacionController extends Controller
                     $em->flush();
                 }
                 
-                $capacitacionSoporte->setEvento($capacitacion);
+                $capacitacionSoporte->setCapacitacion($capacitacion);
                 $capacitacionSoporte->setActive(true);
                 $capacitacionSoporte->setFechaCreacion(new \DateTime());
                 //$grupoSoporte->setUsuarioCreacion(1);
@@ -242,12 +242,12 @@ class CapacitacionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $capacitacionSoporte = new CapacitacionSoporte();
-        
+        $capacitacionSoporte = new CapacitacionSoporte();        
+
         $capacitacionSoporte = $em->getRepository('AppBundle:CapacitacionSoporte')->findOneBy(
             array('id' => $idCapacitacionSoporte)
         );
-        
+                
         $capacitacionSoporte->setFechaModificacion(new \DateTime());
         $capacitacionSoporte->setActive(0);
         $em->flush();
