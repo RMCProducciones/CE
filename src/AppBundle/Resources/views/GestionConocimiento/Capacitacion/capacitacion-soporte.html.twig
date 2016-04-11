@@ -113,7 +113,7 @@
 	                  <td>
 	                    <a href="{{ asset('../uploads/documents/'~ soporteActivo.path) }}" alt="Descargar" title="Descargar"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a> | 	 
 
-                      <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="anularSoporteCapacitacion();" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true" ng-click="idCapacitacion = {{soporteActivo.capacitacion.id}}; idCapacitacionActivo = {{soporteActivo.id}}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>              
+                      <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="anularSoporteCapacitacion();" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true" ng-click="idCapacitacion = {{soporteActivo.capacitacion.id}}; idCapacitacionSoporteActivo = {{soporteActivo.id}}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>              
 	                  </td>
 	                </tr>
 	                {% set consecutivo = consecutivo + 1 %}

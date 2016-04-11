@@ -190,7 +190,7 @@ class EventoController extends Controller
                 $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
                     array(
                         'descripcion' => $eventoSoporte->getTipoSoporte()->getDescripcion(), 
-                        'dominio' => 'talento_tipo_soporte'
+                        'dominio' => 'evento_tipo_soporte'
                     )
                 );
                 

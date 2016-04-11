@@ -123,7 +123,7 @@ class CapacitacionSoporte
      *
      * @param AppBundle\Entity\DocumentoSoporte $tipoSoporte
      *
-     * @return GrupoSoporte
+     * @return CapacitacionSoporte
      */
     public function setTipoSoporte(\AppBundle\Entity\DocumentoSoporte $tipoSoporte)
     {
@@ -147,7 +147,7 @@ class CapacitacionSoporte
      *
      * @param string $path
      *
-     * @return GrupoSoporte
+     * @return CapacitacionSoporte
      */
     public function setPath($path)
     {
@@ -171,7 +171,7 @@ class CapacitacionSoporte
      *
      * @param boolean $active
      *
-     * @return GrupoSoporte
+     * @return CapacitacionSoporte
      */
     public function setActive($active)
     {
@@ -195,7 +195,7 @@ class CapacitacionSoporte
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return GrupoSoporte
+     * @return CapacitacionSoporte
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
@@ -219,7 +219,7 @@ class CapacitacionSoporte
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return GrupoSoporte
+     * @return CapacitacionSoporte
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -243,7 +243,7 @@ class CapacitacionSoporte
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return GrupoSoporte
+     * @return CapacitacionSoporte
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
@@ -267,7 +267,7 @@ class CapacitacionSoporte
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return GrupoSoporte
+     * @return CapacitacionSoporte
      */
     public function setFechaCreacion($fechaCreacion)
     {
