@@ -45,7 +45,7 @@ class DocumentoSoporte
     /**
      * @var boolean
      *
-     * @ORM\Column(name="obligatorio", type="boolean")
+     * @ORM\Column(name="obligatorio")
      */
     private $obligatorio;
 
