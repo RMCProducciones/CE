@@ -186,7 +186,7 @@ class PolizaController extends Controller
                 $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
                     array(
                         'descripcion' => $polizaSoporte->getTipoSoporte()->getDescripcion(), 
-                        'dominio' => 'ruta_tipo_soporte'
+                        'dominio' => 'poliza_tipo_soporte'
                     )
                 );
                 

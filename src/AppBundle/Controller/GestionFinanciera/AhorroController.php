@@ -183,7 +183,7 @@ class AhorroController extends Controller
                 $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
                     array(
                         'descripcion' => $ahorroSoporte->getTipoSoporte()->getDescripcion(), 
-                        'dominio' => 'ruta_tipo_soporte'
+                        'dominio' => 'ahorro_tipo_soporte'
                     )
                 );
                 

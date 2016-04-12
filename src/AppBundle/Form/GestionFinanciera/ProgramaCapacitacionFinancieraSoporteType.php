@@ -17,7 +17,7 @@ class ProgramaCapacitacionFinancieraSoporteType extends AbstractType
 					return $er->createQueryBuilder('l')
 						->where('l.dominio = :dominio')
 						->andWhere('l.active = 1')
-						->setParameter('dominio', 'ruta_tipo_soporte')
+						->setParameter('dominio', 'programa_tipo_soporte')
 						->orderBy('l.orden', 'ASC');
 				},
 			))
