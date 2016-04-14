@@ -611,12 +611,12 @@ class GrupoController extends Controller
             array('id' => $beneficiarios, 'grupo' => $grupo )
         );
 
-        return $this->redirectToRoute('grupoBeneficiarioCVB',
+        return $this->redirectToRoute('grupoBeneficiarioComiteCompras', 
             array(
-                'beneficiarios' => $mostrarBeneficiarios,
-                'asignacionesBeneficiarioComiteCompras' => $asignacionBeneficiarioComiteCompras,
+                'beneficiario' => $beneficiarios,          
+                'asignacionesBeneficiarioComiteCompras' => $asignacionBeneficiarioComiteCompras,                
                 'idGrupo' => $idGrupo
-            ));      
+            ));       
         
     } 
 

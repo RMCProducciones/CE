@@ -123,7 +123,7 @@
 
           {{ form_label(form.funcionamiento_comite_compras) }}
           {{ form_errors(form.funcionamiento_comite_compras) }}
-          {% if visita.comiteVamosBien == 1 %}
+          {% if visita.comiteCompras == 1 %}
             {{ form_widget(form.funcionamiento_comite_compras, { 'attr': {'class': 'form-control', 'placeholder': 'Nomnre territorio aprendizaje'} }) }}
           {% else %}
             {{ form_widget(form.funcionamiento_comite_compras, { 'attr': {'class': 'form-control', 'placeholder': 'Nomnre territorio aprendizaje', 'disabled':'disabled'} }) }}
@@ -134,7 +134,7 @@
 
           {{ form_label(form.logros_compras) }}
           {{ form_errors(form.logros_compras) }}
-          {% if visita.comiteVamosBien == 1 %}
+          {% if visita.comiteCompras == 1 %}
             {{ form_widget(form.logros_compras, { 'attr': {'class': 'form-control', 'placeholder': 'Logros compras'} }) }}
           {% else %}
             {{ form_widget(form.logros_compras, { 'attr': {'class': 'form-control', 'placeholder': 'Logros compras', 'disabled':'disabled'} }) }}
@@ -339,14 +339,14 @@
 
 
 <div class="row" ng-controller="CampoInterventoriaCtrl">
-             
+{% set dato = 0 %}             
  <div class="col-md-4">
           {{ form_label(form.interventoria) }}
-          {{ form_errors(form.interventoria) }}
+          {{ form_errors(form.interventoria) }}          
           <center>
-          <switch id="swInterventoria" name="swInterventoria" ng-model="swInterventoria"  class="green" on="Si" off="No"></switch>
+          <switch id="swInterventoria" name="swInterventoria" ng-model="swInterventoria"  class="green" on="Si" off="No" onclick="javascript:validar();"></switch>
                   {{ form_widget(form.interventoria, { 'attr': {'style':'visibility:hidden'} }) }}
-          </center>          
+          </center>                    
   </div>
    <div class="col-md-4">
           {{ form_label(form.razones_interventoria) }}
