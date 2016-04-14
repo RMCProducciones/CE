@@ -83,14 +83,7 @@ class TalentoType extends AbstractType
 			->add('telefono_fijo')
 			->add('telefono_celular')
 			->add('correo_electronico', 'email')
-			->add('estado_civil', 'entity', array('class' => 'AppBundle:Listas',
-										    'query_builder' => function(EntityRepository $er) {
-										        return $er->createQueryBuilder('l')
-										        	->where('l.dominio = :dominio')
-										        	->andWhere('l.active = 1')
-										        	->setParameter('dominio', 'estado_civil')
-										            ->orderBy('l.orden', 'ASC');
-										    },))
+			
 											
 			->add('organizacion')
 			->add('fecha_inicio_talento', 'date', array('label' => 'Fecha de inicio talento', 'widget' => 'single_text'))								

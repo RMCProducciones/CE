@@ -208,11 +208,7 @@
 		<br/>
 		
 		<div class="row">
-				<div class="col-md-4">
-                  {{ form_label(form.estado_civil) }}
-				  {{ form_errors(form.estado_civil) }}
-                  {{ form_widget(form.estado_civil, { 'attr': {'class': 'form-control'} }) }}
-                </div>
+				
                 <div class="col-md-4">
                   {{ form_label(form.organizacion) }}
 				  {{ form_errors(form.organizacion) }}
@@ -223,16 +219,17 @@
 				  {{ form_errors(form.fecha_inicio_talento) }}
                   {{ form_widget(form.fecha_inicio_talento, { 'attr': {'class': 'form-control'} }) }}
                 </div>
+                <div class="col-md-4">
+                  {{ form_label(form.nivel_estudios) }}
+				  {{ form_errors(form.nivel_estudios) }}
+                  {{ form_widget(form.nivel_estudios, { 'attr': {'class': 'form-control'} }) }}
+                </div>
 		</div>
 		
 		<br/>
 		
 		<div class="row" ng-controller = "CamposTalentoCtrl">
-				<div class="col-md-4">
-                  {{ form_label(form.nivel_estudios) }}
-				  {{ form_errors(form.nivel_estudios) }}
-                  {{ form_widget(form.nivel_estudios, { 'attr': {'class': 'form-control'} }) }}
-                </div> 
+				 
                 <div class="col-md-4">
                   <label>Talento Ministerio Agricultura y Desarrollo Rural</label><br/>
 				  {{ form_errors(form.talento_madr) }}
@@ -245,16 +242,17 @@
                   <switch id="swlugares" name="swlugares" ng-model="swlugares" class="green" on="Si" off="No"></switch>
 				  {{ form_widget(form.talento_otros_lugares, { 'attr': {'style':'visibility:visible'} }) }}
                 </div> 
+                <div class="col-md-4">
+                  {{ form_label(form.actividad_participado) }}
+				  {{ form_errors(form.actividad_participado) }}
+                  {{ form_widget(form.actividad_participado, { 'attr': {'class': 'form-control'} }) }}
+                </div>
 		</div>
 
 		<br/>
 		
 		<div class="row">
-				<div class="col-md-4">
-                  {{ form_label(form.actividad_participado) }}
-				  {{ form_errors(form.actividad_participado) }}
-                  {{ form_widget(form.actividad_participado, { 'attr': {'class': 'form-control'} }) }}
-                </div>
+				
                 <div class="col-md-4">
                   {{ form_label(form.area_desempeno_principal) }}
 				  {{ form_errors(form.area_desempeno_principal) }}
@@ -265,17 +263,16 @@
 				  {{ form_errors(form.area_desempeno_secundario) }}
                   {{ form_widget(form.area_desempeno_secundario, { 'attr': {'class': 'form-control'} }) }}
                 </div> 
-		</div>  
-			   
-        <br/>       
-              
-		<div class="row">
-            <div class="col-md-4">
+                 <div class="col-md-4">
              {{ form_label(form.area_desempeno_terciario) }}
 			 {{ form_errors(form.area_desempeno_terciario) }}
              {{ form_widget(form.area_desempeno_terciario, { 'attr': {'class': 'form-control'} }) }}
             </div>
-        </div>		
+		</div>  
+			   
+        <br/>       
+              
+			
 		<br/>
 		<br/>
 		<!--/form-->

@@ -22,18 +22,16 @@ class CalificacionCriterioGrupoConcurso
     private $id;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="criterioCalificacion", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CriterioCalificacion")
      */
     private $criterioCalificacion;
 
+
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="asignacionGrupoConcurso", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Grupo")
      */
-    private $asignacionGrupoConcurso;
+    private $grupo;
+
 
     /**
      * @var integer
@@ -41,6 +39,11 @@ class CalificacionCriterioGrupoConcurso
      * @ORM\Column(name="puntaje", type="integer")
      */
     private $puntaje;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Concurso")
+     */
+    private $concurso;
 
     /**
      * @var boolean
@@ -52,28 +55,28 @@ class CalificacionCriterioGrupoConcurso
     /**
      * @var integer
      *
-     * @ORM\Column(name="usuario_modificacion", type="integer")
+     * @ORM\Column(name="usuario_modificacion", type="integer", nullable = true)
      */
     private $usuario_modificacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable = true)
      */
     private $fecha_modificacion;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="usuario_creacion", type="integer")
+     * @ORM\Column(name="usuario_creacion", type="integer", nullable = true)
      */
     private $usuario_creacion;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_creacion", type="datetime")
+     * @ORM\Column(name="fecha_creacion", type="datetime", nullable = true)
      */
     private $fecha_creacion;
 
@@ -91,11 +94,11 @@ class CalificacionCriterioGrupoConcurso
     /**
      * Set criterioCalificacion
      *
-     * @param integer $criterioCalificacion
+     * @param AppBundle\Entity\CriterioCalificacion $criterioCalificacion
      *
      * @return CalificacionCriterioGrupoConcurso
      */
-    public function setCriterioCalificacion($criterioCalificacion)
+    public function setCriterioCalificacion(\AppBundle\Entity\CriterioCalificacion $criterioCalificacion)
     {
         $this->criterioCalificacion = $criterioCalificacion;
 
@@ -105,7 +108,7 @@ class CalificacionCriterioGrupoConcurso
     /**
      * Get criterioCalificacion
      *
-     * @return integer
+     * @return AppBundle\Entity\CriterioCalificacion
      */
     public function getCriterioCalificacion()
     {
@@ -113,27 +116,27 @@ class CalificacionCriterioGrupoConcurso
     }
 
     /**
-     * Set asignacionGrupoConcurso
+     * Set grupo
      *
-     * @param integer $asignacionGrupoConcurso
+     * @param AppBundle\Entity\Grupo $grupo
      *
      * @return CalificacionCriterioGrupoConcurso
      */
-    public function setAsignacionGrupoConcurso($asignacionGrupoConcurso)
+    public function setGrupo(\AppBundle\Entity\Grupo $grupo)
     {
-        $this->asignacionGrupoConcurso = $asignacionGrupoConcurso;
+        $this->grupo = $grupo;
 
         return $this;
     }
 
     /**
-     * Get asignacionGrupoConcurso
+     * Get grupo
      *
-     * @return integer
+     * @return AppBundle\Entity\Grupo
      */
-    public function getAsignacionGrupoConcurso()
+    public function getGrupo()
     {
-        return $this->asignacionGrupoConcurso;
+        return $this->grupo;
     }
 
     /**
@@ -158,6 +161,30 @@ class CalificacionCriterioGrupoConcurso
     public function getPuntaje()
     {
         return $this->puntaje;
+    }
+
+    /**
+     * Set concurso
+     *
+     * @param AppBundle\Entity\Concurso $concurso
+     *
+     * @return CalificacionCriterioGrupoConcurso
+     */
+    public function setConcurso(\AppBundle\Entity\Concurso $concurso)
+    {
+        $this->concurso = $concurso;
+
+        return $this;
+    }
+
+    /**
+     * Get concurso
+     *
+     * @return AppBundle\Entity\Concurso
+     */
+    public function getConcurso()
+    {
+        return $this->concurso;
     }
 
     /**

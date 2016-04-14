@@ -30,27 +30,34 @@ class CriterioCalificacionController extends Controller
 {
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/gestion-criterio", name="criterioGestion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/gestion-criterio", name="criterioGestion")
      */
-   public function criterioGestionAction()
+   public function criterioGestionAction($idConcurso)
     {
         $em = $this->getDoctrine()->getManager();
         $criterio = $em->getRepository('AppBundle:CriterioCalificacion')->findBY(
-            array('active' => 1)
+            array('concurso' => $idConcurso)
           
         ); 
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/CriterioCalificacion:criterio-gestion.html.twig', array( 'criterio' => $criterio));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/CriterioCalificacion:criterio-gestion.html.twig',
+         array( 'criterio' => $criterio,
+            'idConcurso'=>$idConcurso));
     }
 
     
      /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/gestion-criterio/nuevo", name="criterioNuevo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/gestion-criterio/nuevo", name="criterioNuevo")
      */
-    public function criterioNuevoAction(Request $request)
+    public function criterioNuevoAction(Request $request ,$idConcurso)
     {
         $em = $this->getDoctrine()->getManager();
         $criterio = new CriterioCalificacion();
+
+        $concurso = $em->getRepository('AppBundle:Concurso')->findOneBy(
+        array('id' => $idConcurso)
+         ); 
+          
         
         $form = $this->createForm(new CriterioCalificacionType(), $criterio);
 
@@ -62,22 +69,29 @@ class CriterioCalificacionController extends Controller
 
             $criterio->setActive(true);
             $criterio->setFechaCreacion(new \DateTime());
+            $criterio->setConcurso($concurso);
 
 
             
             $em->persist($criterio);
             $em->flush();
 
-            return $this->redirectToRoute('criterioGestion');
+            return $this->redirectToRoute('criterioGestion',
+             array(
+                'idConcurso' =>$idConcurso
+                ));
         }
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/CriterioCalificacion:criterio-nuevo.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/CriterioCalificacion:criterio-nuevo.html.twig', 
+            array('form' => $form->createView(),
+                'idConcurso' =>$idConcurso
+                ));
     } 
 
 /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/gestion-criterio/{idCriterioCalificacion}/editar", name="criterioEditar")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/gestion-criterio/{idCriterioCalificacion}/editar", name="criterioEditar")
      */
-    public function criterioEditarAction(Request $request, $idCriterioCalificacion)
+    public function criterioEditarAction(Request $request, $idConcurso, $idCriterioCalificacion )
     {
         $em = $this->getDoctrine()->getManager();
         $criterio = new CriterioCalificacion();
@@ -110,7 +124,10 @@ class CriterioCalificacionController extends Controller
 
             $em->flush();
 
-            return $this->redirectToRoute('criterioGestion');
+            return $this->redirectToRoute('criterioGestion' ,
+                array(
+                'idConcurso' =>$idConcurso
+                ));
         }
 
         return $this->render(
@@ -119,6 +136,7 @@ class CriterioCalificacionController extends Controller
                     'form' => $form->createView(),
                     'idCriterioCalificacion' => $idCriterioCalificacion,
                     'criterio' => $criterio,
+                    'idConcurso' =>$idConcurso
             )
         );
 
