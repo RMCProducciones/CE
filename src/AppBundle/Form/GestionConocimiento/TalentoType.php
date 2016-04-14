@@ -76,11 +76,9 @@ class TalentoType extends AbstractType
 				'class' => 'AppBundle:Municipio',
 			))
 			->add('direccion')
-			->add('rural', 'checkbox', array('required' => false))
-			->add('barrio', 'text', array('required' => false))
-			->add('corregimiento', 'text', array('required' => false))
-			->add('vereda', 'text', array('required' => false))
-			->add('cacerio', 'text', array('required' => false))
+	
+			->add('descripcion', 'text', array('required' => false))
+			
 			
 			->add('telefono_fijo')
 			->add('telefono_celular')

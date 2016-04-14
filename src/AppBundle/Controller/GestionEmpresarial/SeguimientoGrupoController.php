@@ -638,7 +638,8 @@ class SeguimientoGrupoController extends Controller
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:visita-nuevo.html.twig',
                                 array(
                                         'form' => $form->createView(),
-                                        'idGrupo' => $idGrupo
+                                        'idGrupo' => $idGrupo,
+                                        'visita' => $visita
                                     )
                             );
     }
