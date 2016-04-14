@@ -38,15 +38,25 @@ class CapacitacionController extends Controller
 	/**
      * @Route("/gestion-conocimiento/capacitacion/gestion", name="capacitacionGestion")
      */
-    public function capacitacionGestionAction()
+    public function capacitacionGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $capacitaciones= $em->getRepository('AppBundle:Capacitacion')->findBY(
-            array('active' => 1)
-            
+            array('active' => 1)            
         ); 
+         $paginator  = $this->get('knp_paginator');
 
-        return $this->render('AppBundle:GestionConocimiento/Capacitacion:capacitacion-gestion.html.twig', array( 'capacitaciones' => $capacitaciones));
+        $pagination = $paginator->paginate(
+            $capacitaciones, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
+        return $this->render('AppBundle:GestionConocimiento/Capacitacion:capacitacion-gestion.html.twig', 
+            array( 'capacitaciones' => $capacitaciones,
+                    'pagination' => $pagination
+                )
+            );
     }  
 	
 	 /**

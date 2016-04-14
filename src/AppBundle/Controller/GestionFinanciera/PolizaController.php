@@ -33,15 +33,25 @@ class PolizaController extends Controller
      /**
      * @Route("/gestion-financiera/poliza/gestion", name="polizaGestion")
      */
-    public function polizaGestionAction()
+    public function polizaGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $polizas= $em->getRepository('AppBundle:Poliza')->findBY(
-            array('active' => 1)
-            
+            array('active' => 1)            
         ); 
+         $paginator  = $this->get('knp_paginator');
 
-        return $this->render('AppBundle:GestionFinanciera/Poliza:poliza-gestion.html.twig', array( 'polizas' => $polizas));
+        $pagination = $paginator->paginate(
+            $polizas, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
+        return $this->render('AppBundle:GestionFinanciera/Poliza:poliza-gestion.html.twig', 
+            array( 'polizas' => $polizas,
+                    'pagination' => $pagination
+                )
+            );
     }  
     
      /**

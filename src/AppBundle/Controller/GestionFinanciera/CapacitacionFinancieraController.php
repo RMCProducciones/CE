@@ -34,15 +34,25 @@ class CapacitacionFinancieraController extends Controller
     /**
      * @Route("/gestion-financiera/programa-capacitacion-financiera/capacitacion/gestion", name="capacitacionFinancieraGestion")
      */
-    public function capacitacionFinancieraGestionAction()
+    public function capacitacionFinancieraGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $capacitacionFinancieras= $em->getRepository('AppBundle:CapacitacionFinanciera')->findBY(
-            array('active' => 1)
-            
+            array('active' => 1)            
         ); 
+         $paginator  = $this->get('knp_paginator');
 
-        return $this->render('AppBundle:GestionFinanciera/CapacitacionFinanciera:capacitacion-financiera-capacitacion-gestion.html.twig', array( 'capacitacionFinancieras' => $capacitacionFinancieras));
+        $pagination = $paginator->paginate(
+            $capacitacionFinancieras, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
+        return $this->render('AppBundle:GestionFinanciera/CapacitacionFinanciera:capacitacion-financiera-capacitacion-gestion.html.twig', 
+            array( 'capacitacionFinancieras' => $capacitacionFinancieras,
+                    'pagination' => $pagination
+                )
+            );
     }  
     
      /**

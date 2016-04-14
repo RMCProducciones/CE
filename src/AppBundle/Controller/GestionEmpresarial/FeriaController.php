@@ -35,7 +35,7 @@ class FeriaController extends Controller
 /**
      * @Route("/gestion-empresarial/servicio-complementario/feria/gestion", name="feriaGestion")
      */
-    public function feriaGestionAction()
+    public function feriaGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $ferias = $em->getRepository('AppBundle:Feria')->findBy(
@@ -43,7 +43,19 @@ class FeriaController extends Controller
             array('fecha_creacion' => 'ASC')
         );
 
-        return $this->render('AppBundle:GestionEmpresarial/ServicioComplementario/Feria:feria-gestion.html.twig', array( 'ferias' => $ferias));
+         $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $ferias, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/ServicioComplementario/Feria:feria-gestion.html.twig', 
+            array( 'ferias' => $ferias,
+                'pagination' => $pagination
+                )
+            );
     }
 
 

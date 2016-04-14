@@ -53,12 +53,9 @@
                 	<tr>
 	                  	    
       
-                    <th></th>     
-	                  <th class="text-left">Entidad Financiera</th>
-                    <th></th>
-	                  <th class="text-left">Tipo de Cuenta</th>
-                    <th></th>
-                    <th class="text-left">Numero de Cuenta</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Entidad Financiera', 'a.entidadfinancieracuenta') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Tipo de Cuenta', 'a.tipocuenta') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Numero de Cuenta', 'a.numerocuenta') }}</th>
 	                                 
 	            
 	                </tr>
@@ -71,13 +68,12 @@
 	                
 	      
 	                  
-                       
-                    <th></th>              
-	                  <td class="text-left">{{ info.entidadfinancieracuenta}}</td>
-                    <th></th>
-	                  <td class="text-left">{{ info.tipocuenta}}</td>
-                    <th></th>
-                    <td>{{ info.numerocuenta}}</td>
+                      <tr {% if loop.index is odd %}class="color"{% endif %}>
+                  
+
+                    <td class="text-center">{{article.entidadfinancieracuenta }}</td>
+                    <td class="text-center">{{article.tipocuenta}}</td>      
+                    <td class="text-center">{{article.numerocuenta}}</td>
 
 	                </tr>
 	                {% set consecutivo = consecutivo + 1 %}
@@ -91,6 +87,13 @@
               
                </tbody>
             </table>
+            <div class="navigation text-center">
+              <nav>
+                <ul class="pagination">
+                  {{ knp_pagination_render(pagination) }}
+                </ul>
+              </nav>
+            </div>    
           </div>
         </div>
       </div>

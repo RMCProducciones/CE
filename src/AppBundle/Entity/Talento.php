@@ -81,7 +81,7 @@ class Talento
     /**
      * @var integer
      *
-     * @ORM\Column(name="edad_inscripcion", type="integer")
+     * @ORM\Column(name="edad_inscripcion", type="integer", nullable=true)
      */
     private $edad_inscripcion;
 
@@ -129,9 +129,9 @@ class Talento
     /**
      * @var string
      *
-     * @ORM\Column(name="barrio", type="string", nullable=true)
+     * @ORM\Column(name="descripcion", type="string", nullable=true)
      */
-    private $barrio;
+    private $descripcion;
 
     /**
      * @var string
@@ -157,14 +157,14 @@ class Talento
     /**
      * @var string
      *
-     * @ORM\Column(name="telefono_fijo", type="string")
+     * @ORM\Column(name="telefono_fijo", type="string", nullable=true)
      */
     private $telefono_fijo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="telefono_celular", type="string")
+     * @ORM\Column(name="telefono_celular", type="string", nullable=true)
      */
     private $telefono_celular;
 
@@ -701,27 +701,27 @@ class Talento
     }
 
     /**
-     * Set barrio
+     * Set descripcion
      *
-     * @param string $barrio
+     * @param string $descripcion
      *
      * @return Talento
      */
-    public function setBarrio($barrio)
+    public function setDescripcion($descripcion)
     {
-        $this->barrio = $barrio;
+        $this->descripcion = $descripcion;
 
         return $this;
     }
 
     /**
-     * Get barrio
+     * Get descripcion
      *
      * @return string
      */
-    public function getBarrio()
+    public function getDescripcion()
     {
-        return $this->barrio;
+        return $this->descripcion;
     }
 
     /**

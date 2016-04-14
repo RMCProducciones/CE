@@ -40,7 +40,7 @@ class GrupoController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/gestion", name="grupoGestion")
      */
-    public function grupoGestionAction()
+    public function grupoGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $grupos = $em->getRepository('AppBundle:Grupo')->findBy(
@@ -53,9 +53,18 @@ class GrupoController extends Controller
             array('fecha_creacion' => 'ASC')
         );
 
+         $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $grupos, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:grupo-gestion.html.twig', 
             array( 'grupos' => $grupos,
-                   'caminos' => $caminos)
+                   'caminos' => $caminos,
+                   'pagination' => $pagination)
         );
     }
 

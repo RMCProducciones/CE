@@ -47,49 +47,45 @@
             <table class="table table-striped table-hover" ng-controller="gestionExperienciaExitosaCtrl">
               <thead>
                 	<tr>
-	                  <th>#</th>
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
 	                                  
-	                  <th>Fecha de Registro Experiencia </th>
-	                  <th>Grupo </th>
-	                  <th>Calificacion </th>
-	                  <th>Acciones</th>
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Fecha de Registro Experiencia', 'a.fecharegistro') }}</th>
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Grupo', 'a.grupo') }}</th>
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Calificacion', 'a.calificacion') }}</th>
+	                  <th class="text-left">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.acciones') }}</th>
 	                </tr>
 	           </thead>
 	           <tbody>
                 
               {% set consecutivo = 1 %}
 	    	
-	    		{% for experienciaexitosa in experienciaexitosas %}
+	    		{% for article in pagination %}
 	    		
 	                
-	                <tr id="filaExperienciaExitosa{{ consecutivo }}">
-	                  <td>{{ consecutivo }}</td>
-	                  
-	                <td>
-	                   {{ experienciaexitosa.fecharegistro |  date('d - m - Y') }}
-	                  </td>
-	                  <td>
-	                    
-	                  </td>
-					  
-					  <td>
-	                  
+	                <tr {% if loop.index is odd %}class="color"{% endif %}>
+                  <tr id="filaBeca{{ consecutivo }}">
+                    <td class="text-center">{{article.id }}</td>           
+
+                    <td class="text-center"> {{ article.fecharegistro |  date('d - m - Y') }}</td>
+                    <td></td>
+	                  <td></td>
+                    
 	                  </td>
 	         
 	                  
 	                  <td>  
                       
-                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ experienciaexitosa.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
+                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ article.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
 	            
-                     <a href="{{ path('experienciaSoporte', {'idExperienciaExitosa': experienciaexitosa.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> 
+                     <a href="{{ path('experienciaSoporte', {'idExperienciaExitosa': article.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> 
 
                      | 
 
-                     <a title="Editar" alt="Editar" href="{{ path('experienciaEditar', {'idExperienciaExitosa': experienciaexitosa.id}) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> 
+                     <a title="Editar" alt="Editar" href="{{ path('experienciaEditar', {'idExperienciaExitosa': article.id}) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> 
 
                      |  
                     
-                     <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarExperienciaExitosa({{experienciaexitosa.id}}, {{consecutivo}});" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true" ng-click="idExperienciaExitosa = {{experienciaexitosa.id}};"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                     <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarExperienciaExitosa({{article.id}}, {{consecutivo}});" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true" ng-click="idExperienciaExitosa = {{article.id}};"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                          
 
                     </td>
@@ -105,6 +101,13 @@
 	             
                </tbody>
             </table>
+            <div class="navigation text-center">
+              <nav>
+                <ul class="pagination">
+                  {{ knp_pagination_render(pagination) }}
+                </ul>
+              </nav>
+            </div>   
           </div>
         </div>
       </div>
