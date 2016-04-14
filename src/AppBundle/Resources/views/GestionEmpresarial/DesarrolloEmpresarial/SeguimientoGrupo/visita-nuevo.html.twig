@@ -123,13 +123,22 @@
 
           {{ form_label(form.funcionamiento_comite_compras) }}
           {{ form_errors(form.funcionamiento_comite_compras) }}
-          {{ form_widget(form.funcionamiento_comite_compras, { 'attr': {'class': 'form-control', 'placeholder': 'Nomnre territorio aprendizaje'} }) }}
+          {% if visita.comiteVamosBien == 1 %}
+            {{ form_widget(form.funcionamiento_comite_compras, { 'attr': {'class': 'form-control', 'placeholder': 'Nomnre territorio aprendizaje'} }) }}
+          {% else %}
+            {{ form_widget(form.funcionamiento_comite_compras, { 'attr': {'class': 'form-control', 'placeholder': 'Nomnre territorio aprendizaje', 'disabled':'disabled'} }) }}
+          {% endif %} 
+          
   </div>
   <div class="col-md-4">
 
           {{ form_label(form.logros_compras) }}
           {{ form_errors(form.logros_compras) }}
-          {{ form_widget(form.logros_compras, { 'attr': {'class': 'form-control', 'placeholder': 'Logros compras'} }) }}
+          {% if visita.comiteVamosBien == 1 %}
+            {{ form_widget(form.logros_compras, { 'attr': {'class': 'form-control', 'placeholder': 'Logros compras'} }) }}
+          {% else %}
+            {{ form_widget(form.logros_compras, { 'attr': {'class': 'form-control', 'placeholder': 'Logros compras', 'disabled':'disabled'} }) }}
+          {% endif %}          
   </div>
 </div>
 
@@ -158,12 +167,21 @@
   <div class="col-md-4">
           {{ form_label(form.funcionamiento_comite_vamos_bien) }}
           {{ form_errors(form.funcionamiento_comite_vamos_bien) }}
-          {{ form_widget(form.funcionamiento_comite_vamos_bien, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre ', 'estadoComiteVamosBien':''} }) }}
+          {% if visita.comiteVamosBien == 1 %}
+            {{ form_widget(form.funcionamiento_comite_vamos_bien, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
+          {% else %}
+            {{ form_widget(form.funcionamiento_comite_vamos_bien, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre ', 'disabled':'disabled'} }) }}
+          {% endif %}          
   </div>  
   <div class="col-md-4">
           {{ form_label(form.logros_vamos_bien) }}
           {{ form_errors(form.logros_vamos_bien) }}
-          {{ form_widget(form.logros_vamos_bien, { 'attr': {'class': 'form-control', 'placeholder': 'Logros comite vamos bien ', 'disabled': estadoComiteVamosBien} }) }}
+          {% if visita.comiteVamosBien == 1 %}
+            {{ form_widget(form.logros_vamos_bien, { 'attr': {'class': 'form-control', 'placeholder': 'Logros comite vamos bien '} }) }}
+          {% else %}
+            {{ form_widget(form.logros_vamos_bien, { 'attr': {'class': 'form-control', 'placeholder': 'Logros comite vamos bien ', 'disabled': 'disabled'} }) }}
+          {% endif %}    
+          
   </div> 
 </div>  
 
@@ -204,7 +222,11 @@
   <div class="col-md-4">
           {{ form_label(form.observaciones_contador) }}
           {{ form_errors(form.observaciones_contador) }}
-          {{ form_widget(form.observaciones_contador, { 'attr': {'class': 'form-control', 'placeholder': 'Observaciones contador', disabled: 'enabled'} }) }}
+          {% if visita.contador == 1 %}
+            {{ form_widget(form.observaciones_contador, { 'attr': {'class': 'form-control', 'placeholder': 'Observaciones contador'} }) }}
+          {% else %}
+            {{ form_widget(form.observaciones_contador, { 'attr': {'class': 'form-control', 'placeholder': 'Observaciones contador', disabled: 'enabled'} }) }}
+          {% endif %}          
   </div>
 
 </div>
