@@ -32,17 +32,26 @@ class AprobacionConcursoController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/gestion-aprobacion", name="aprobacionGestion")
      */
-   public function aprobacionGestionAction($idConcurso)
+   public function aprobacionGestionAction(Request $request, $idConcurso)
     {
         $em = $this->getDoctrine()->getManager();
         
         $aprobacion=$em->getRepository('AppBundle:Concurso')->findBy(
             array('id'=> $idConcurso)
         ); 
+         $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $aprobacion, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/AprobacionConcurso:aprobacion-gestion.html.twig',
          array( 'aprobacion' => $aprobacion,
-        'idConcurso' => $idConcurso));
+        'idConcurso' => $idConcurso,
+        'pagination' => $pagination)
+         );
     }
 
 

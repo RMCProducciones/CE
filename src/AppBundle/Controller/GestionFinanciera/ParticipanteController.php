@@ -32,15 +32,25 @@ class ParticipanteController extends Controller
     /**
      * @Route("/gestion-financiera/participante/gestion", name="participanteGestion")
      */
-    public function participanteGestionAction()
+    public function participanteGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $participantes= $em->getRepository('AppBundle:Participante')->findBY(
-            array('active' => 1)
-            
+            array('active' => 1)            
         ); 
+         $paginator  = $this->get('knp_paginator');
 
-        return $this->render('AppBundle:GestionFinanciera/Participante:participante-gestion.html.twig', array( 'participantes' => $participantes));
+        $pagination = $paginator->paginate(
+            $participantes, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
+        return $this->render('AppBundle:GestionFinanciera/Participante:participante-gestion.html.twig', 
+            array( 'participantes' => $participantes,
+                    'pagination' => $pagination
+                )
+            );
     }  
     
      /**

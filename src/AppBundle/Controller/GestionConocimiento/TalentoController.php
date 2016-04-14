@@ -37,15 +37,25 @@ class TalentoController extends Controller
    /**
      * @Route("/gestion-conocimiento/talento/gestion", name="talentoGestion")
      */
-    public function talentoGestionAction()
+    public function talentoGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $talentos= $em->getRepository('AppBundle:Talento')->findBY(
-            array('active' => 1)
-            
+            array('active' => 1)            
         ); 
+         $paginator  = $this->get('knp_paginator');
 
-        return $this->render('AppBundle:GestionConocimiento/Talento:talento-gestion.html.twig', array( 'talentos' => $talentos));
+        $pagination = $paginator->paginate(
+            $talentos, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
+        return $this->render('AppBundle:GestionConocimiento/Talento:talento-gestion.html.twig', 
+            array( 'talentos' => $talentos,
+                    'pagination' => $pagination
+                )
+            );
     }       
 	
 	 /**

@@ -40,7 +40,7 @@ class RutaController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/gestion", name="rutaGestion")
      */
-    public function rutaGestionAction()
+    public function rutaGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -48,8 +48,19 @@ class RutaController extends Controller
             array('active' => '1'),
             array('fecha_creacion' => 'ASC')
         );
+         $paginator  = $this->get('knp_paginator');
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Ruta:ruta-gestion.html.twig', array( 'rutas' => $rutas));
+        $pagination = $paginator->paginate(
+            $rutas, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Ruta:ruta-gestion.html.twig', 
+            array( 'rutas' => $rutas,
+                'pagination' => $pagination
+                )
+            );
     }
 
 

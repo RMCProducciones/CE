@@ -32,15 +32,25 @@ class DistribucionPremioController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/gestion-distribucion", name="distribucionGestion")
      */
-   public function distribucionGestionAction()
+   public function distribucionGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $distribucion = $em->getRepository('AppBundle:DistribucionPremio')->findBY(
-            array('active' => 1)
-          
+            array('active' => 1)          
         ); 
+         $paginator  = $this->get('knp_paginator');
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/DistribucionPremio:distribucion-gestion.html.twig', array( 'distribucion' => $distribucion));
+        $pagination = $paginator->paginate(
+            $distribucion, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/DistribucionPremio:distribucion-gestion.html.twig', 
+            array( 'distribucion' => $distribucion,
+                'pagination' => $pagination
+                )
+            );
     }
 
     
