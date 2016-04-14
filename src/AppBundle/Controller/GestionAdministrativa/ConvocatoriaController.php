@@ -35,12 +35,24 @@ class ConvocatoriaController extends Controller
 	/**
      * @Route("/gestion-administrativa/poa/convocatoria/gestion", name="convocatoriaGestion")
      */
-    public function convocatoriaGestionAction()
+    public function convocatoriaGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $convocatoria = $em->getRepository('AppBundle:Convocatoria')->findAll(); 
+        
+         $paginator  = $this->get('knp_paginator');
 
-        return $this->render('AppBundle:GestionAdministrativa/Convocatoria:convocatoria-gestion.html.twig', array( 'convocatoria' => $convocatoria));
+        $pagination = $paginator->paginate(
+            $convocatoria, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
+        return $this->render('AppBundle:GestionAdministrativa/Convocatoria:convocatoria-gestion.html.twig', 
+            array( 'convocatoria' => $convocatoria, 
+                   'pagination' => $pagination
+                )
+            );
     }
 
     /**
