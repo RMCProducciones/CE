@@ -97,7 +97,10 @@
   </div>
            
 </div>
-<br>
+
+</br>
+</br>
+
 <div class="row">
         <div class="col-md-12">
           <fieldset>
@@ -107,10 +110,14 @@
       </div>
 
 <div class="row">
-  <div class="col-md-4">
-          {{ form_label(form.comite_compras) }}
-          {{ form_errors(form.comite_compras) }}
-          {{ form_widget(form.comite_compras, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
+  <div class="col-md-4">                                  
+          </br>
+          {% if visita.comiteCompras == 1 %}        
+              <center><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></center>
+            {% else %}
+              <center><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></center>
+          {% endif %} 
+          {{ form_widget(form.comite_compras, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre ', 'style':'visibility: hidden'} }) }}       
   </div>
   <div class="col-md-4">
 
@@ -124,7 +131,9 @@
           {{ form_errors(form.logros_compras) }}
           {{ form_widget(form.logros_compras, { 'attr': {'class': 'form-control', 'placeholder': 'Logros compras'} }) }}
   </div>
-  </div>
+</div>
+
+</br>
   
   <div class="row">
         <div class="col-md-12">
@@ -133,25 +142,33 @@
           </fieldset>            
         </div>
       </div>
-<div class="row">            
+<div class="row">
+  {% set estadoComiteVamosBien = "" %}            
   <div class="col-md-4">
-          {{ form_label(form.comite_vamos_bien) }}
-          {{ form_errors(form.comite_vamos_bien) }}
-          {{ form_widget(form.comite_vamos_bien, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
-  </div>
+          </br>
+          {% if visita.comiteVamosBien == 1 %}        
+              <center><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></center>
+              {% set estadoComiteVamosBien = "enabled" %}
+            {% else %}
+              <center><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></center>
+              {% set estadoComiteVamosBien = "'disabled'" %}
+          {% endif %}                 
+          {{ form_widget(form.comite_vamos_bien, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre ', 'style':'visibility: hidden'} }) }}  
+  </div>  
   <div class="col-md-4">
           {{ form_label(form.funcionamiento_comite_vamos_bien) }}
           {{ form_errors(form.funcionamiento_comite_vamos_bien) }}
-          {{ form_widget(form.funcionamiento_comite_vamos_bien, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
+          {{ form_widget(form.funcionamiento_comite_vamos_bien, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre ', 'estadoComiteVamosBien':''} }) }}
   </div>  
   <div class="col-md-4">
           {{ form_label(form.logros_vamos_bien) }}
           {{ form_errors(form.logros_vamos_bien) }}
-          {{ form_widget(form.logros_vamos_bien, { 'attr': {'class': 'form-control', 'placeholder': 'Logros comite vamos bien '} }) }}
+          {{ form_widget(form.logros_vamos_bien, { 'attr': {'class': 'form-control', 'placeholder': 'Logros comite vamos bien ', 'disabled': estadoComiteVamosBien} }) }}
   </div> 
-</div>      
+</div>  
 
-<br>
+</br>    
+
 <div class="row">
         <div class="col-md-12">
           <fieldset>
@@ -160,27 +177,40 @@
         </div>
       </div>
 
-<div class="row"> 
+<div class="row">
+  {% set estadoContador = "" %} 
   <div class="col-md-4">
-          {{ form_label(form.contador) }}
-          {{ form_errors(form.contador) }}
-          {{ form_widget(form.contador, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
+          </br>
+          {% if visita.contador == 1 %}
+            <center><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></center>
+            {% set estadoContador = "enabled" %}
+          {% else %}
+            <center><img class="text-center" width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></center>
+            {% set estadoContador = "disabled" %}
+          {% endif %}
+          {{ form_widget(form.contador, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre ', 'style':'visibility: hidden'} }) }}                  
   </div> 
   <div class="col-md-4">
 
           {{ form_label(form.desempeno_contador) }}
           {{ form_errors(form.desempeno_contador) }}
-          {{ form_widget(form.desempeno_contador, { 'attr': {'class': 'form-control', 'placeholder': 'Nomnre territorio aprendizaje'} }) }}
+          {% if visita.contador == 1 %}
+            {{ form_widget(form.desempeno_contador, { 'attr': {'class': 'form-control', 'placeholder': 'Nombre territorio aprendizaje'} }) }}
+          {% else %}
+            {{ form_widget(form.desempeno_contador, { 'attr': {'class': 'form-control', 'placeholder': 'Nombre territorio aprendizaje', 'disabled': 'disabled'} }) }}
+          {% endif %}
+          
   </div> 
   <div class="col-md-4">
           {{ form_label(form.observaciones_contador) }}
           {{ form_errors(form.observaciones_contador) }}
-          {{ form_widget(form.observaciones_contador, { 'attr': {'class': 'form-control', 'placeholder': 'Observaciones contador'} }) }}
+          {{ form_widget(form.observaciones_contador, { 'attr': {'class': 'form-control', 'placeholder': 'Observaciones contador', disabled: 'enabled'} }) }}
   </div>
 
 </div>
 
-<br>
+</br>
+
 <div class="row">
         <div class="col-md-12">
           <fieldset>
@@ -189,12 +219,15 @@
         </div>
       </div>
 
-<div class="row">
+<div class="row" ng-controller="CampoCambioPresupuestoCtrl">
     <div class="col-md-4">
 
           {{ form_label(form.cambios_presupuesto_asignado) }}
           {{ form_errors(form.cambios_presupuesto_asignado) }}
-          {{ form_widget(form.cambios_presupuesto_asignado, { 'attr': {'class': 'form-control', 'placeholder': 'Nomnre territorio aprendizaje'} }) }}
+          <center>
+          <switch id="swCambiosPresupuestoAsignado" name="swCambiosPresupuestoAsignado" ng-model="swCambiosPresupuestoAsignado"  class="green" on="Si" off="No"></switch>
+                  {{ form_widget(form.cambios_presupuesto_asignado, { 'attr': {'style':'visibility:hidden'} }) }}
+          </center>          
   </div>
 <div class="col-md-4">
           {{ form_label(form.observaciones_presupuesto_asignado) }}
@@ -232,8 +265,9 @@
           {{ form_errors(form.desempeno_comercial) }}
           {{ form_widget(form.desempeno_comercial, { 'attr': {'class': 'form-control', 'placeholder': 'Desempeño comercial'} }) }}
   </div>
-  <br>
-  <br>
+</div>
+ <br>
+<div class="row">
   <div class="col-md-4">
           {{ form_label(form.desempeno_administrativo) }}
           {{ form_errors(form.desempeno_administrativo) }}
@@ -256,12 +290,15 @@
       </div>
 
 
-<div class="row">
+<div class="row" ng-controller="CampoCambioIntegranteCtrl">
              
   <div class="col-md-4">
           {{ form_label(form.cambios_integrantes_grupo) }}
           {{ form_errors(form.cambios_integrantes_grupo) }}
-          {{ form_widget(form.cambios_integrantes_grupo, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
+          <center>
+          <switch id="swCambiosIntegrantesGrupo" name="swCambiosIntegrantesGrupo" ng-model="swCambiosIntegrantesGrupo"  class="green" on="Si" off="No"></switch>
+                  {{ form_widget(form.cambios_integrantes_grupo, { 'attr': {'style':'visibility:hidden'} }) }}
+          </center>          
   </div>
   <div class="col-md-4">
           {{ form_label(form.cambios_razones_integrantes_grupo) }}
@@ -279,12 +316,15 @@
       </div>
 
 
-<div class="row">
+<div class="row" ng-controller="CampoInterventoriaCtrl">
              
  <div class="col-md-4">
           {{ form_label(form.interventoria) }}
           {{ form_errors(form.interventoria) }}
-          {{ form_widget(form.interventoria, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
+          <center>
+          <switch id="swInterventoria" name="swInterventoria" ng-model="swInterventoria"  class="green" on="Si" off="No"></switch>
+                  {{ form_widget(form.interventoria, { 'attr': {'style':'visibility:hidden'} }) }}
+          </center>          
   </div>
    <div class="col-md-4">
           {{ form_label(form.razones_interventoria) }}
@@ -313,8 +353,6 @@
           {{ form_errors(form.compromisos) }}
           {{ form_widget(form.compromisos, { 'attr': {'class': 'form-control', 'placeholder': 'Compromisos '} }) }}
   </div>
-     
-         
 </div>
 <br>
     </div>
