@@ -32,7 +32,7 @@ class InfoFinancieraController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/gestion-info", name="infoGestion")
      */
-   public function infoGestionAction($idGrupo)
+   public function infoGestionAction(Request $request, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();
         
@@ -40,9 +40,20 @@ class InfoFinancieraController extends Controller
             array('id'=> $idGrupo)
         ); 
 
+         $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $info, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/InfoFinanciera:info-gestion.html.twig',
          array( 'info' => $info,
-        'idGrupo' => $idGrupo));
+        'idGrupo' => $idGrupo,
+        'pagination' => $pagination
+        )
+         );
     }
 
 

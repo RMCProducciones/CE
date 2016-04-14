@@ -32,15 +32,25 @@ class CriterioCalificacionController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/gestion-criterio", name="criterioGestion")
      */
-   public function criterioGestionAction()
+   public function criterioGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $criterio = $em->getRepository('AppBundle:CriterioCalificacion')->findBY(
-            array('active' => 1)
-          
+            array('active' => 1)          
         ); 
+         $paginator  = $this->get('knp_paginator');
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/CriterioCalificacion:criterio-gestion.html.twig', array( 'criterio' => $criterio));
+        $pagination = $paginator->paginate(
+            $criterio, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/CriterioCalificacion:criterio-gestion.html.twig', 
+            array( 'criterio' => $criterio, 
+                'pagination' => $pagination
+                )
+            );
     }
 
     

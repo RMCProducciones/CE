@@ -44,15 +44,26 @@ class PasantiaController extends Controller
      /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/gestion", name="pasantiaGestion")
      */
-    public function pasantiaGestionAction()
+    public function pasantiaGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $pasantias = $em->getRepository('AppBundle:Pasantia')->findBy(
             array('active' => '1'),
             array('fecha_creacion' => 'ASC')
         );
+         $paginator  = $this->get('knp_paginator');
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Pasantia:pasantia-gestion.html.twig', array( 'pasantias' => $pasantias));
+        $pagination = $paginator->paginate(
+            $pasantias, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Pasantia:pasantia-gestion.html.twig', 
+            array( 'pasantias' => $pasantias,
+                'pagination' => $pagination
+                )
+            );
     }
 
 
