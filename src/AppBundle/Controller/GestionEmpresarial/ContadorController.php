@@ -35,7 +35,7 @@ class ContadorController extends Controller
 /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/contador/gestion", name="contadorGestion")
      */
-    public function contadorGestionAction()
+    public function contadorGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -43,10 +43,18 @@ class ContadorController extends Controller
             array('active' => '1'),
             array('fecha_creacion' => 'ASC')
         );
+         $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $contador, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Contador:contador-gestion.html.twig', 
             array( 
                 'contador' => $contador,
+                'pagination' => $pagination
             )
         );
     }

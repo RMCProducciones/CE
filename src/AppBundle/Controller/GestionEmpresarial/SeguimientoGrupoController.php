@@ -588,6 +588,9 @@ class SeguimientoGrupoController extends Controller
         $visita= $em->getRepository('AppBundle:Visita')->findOneBy(
             array('id' => $idVisita));        
         
+        $nodo= $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id' => $idNodo));   
+
         $form = $this->createForm(new VisitaType(), $visita);
         
         $form->add(
@@ -611,7 +614,7 @@ class SeguimientoGrupoController extends Controller
             $em->persist($visita);
             $em->flush();
 
-            if($visita->getInterventoria() != 1)
+            if($visita->getInterventoria() == 1)
                 self::nodoCamino($idGrupo, $nodo->getId(), 6);
             else{
                 self::nodoCamino($idGrupo, $nodo->getId(), 2);
@@ -635,7 +638,8 @@ class SeguimientoGrupoController extends Controller
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:visita-nuevo.html.twig',
                                 array(
                                         'form' => $form->createView(),
-                                        'idGrupo' => $idGrupo
+                                        'idGrupo' => $idGrupo,
+                                        'visita' => $visita
                                     )
                             );
     }
@@ -821,6 +825,9 @@ class SeguimientoGrupoController extends Controller
             $evaluacionFases->setFechaCreacion(new \DateTime());
             $em->persist($evaluacionFases);
             $em->flush();
+
+            return $this->redirectToRoute('seguimientoGrupo', 
+                array('idGrupo' => $idGrupo));
 
         }
             

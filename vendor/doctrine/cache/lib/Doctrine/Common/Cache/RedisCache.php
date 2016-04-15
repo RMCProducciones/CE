@@ -83,6 +83,31 @@ class RedisCache extends CacheProvider
         }
 
         return $foundItems;
+<<<<<<< HEAD
+=======
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function doSaveMultiple(array $keysAndValues, $lifetime = 0)
+    {
+        if ($lifetime) {
+            $success = true;
+
+            // Keys have lifetime, use SETEX for each of them
+            foreach ($keysAndValues as $key => $value) {
+                if (!$this->redis->setex($key, $lifetime, $value)) {
+                    $success = false;
+                }
+            }
+
+            return $success;
+        }
+
+        // No lifetime, use MSET
+        return (bool) $this->redis->mset($keysAndValues);
+>>>>>>> e1b26dc9bba75d1dfe95d4ae1924bd3610f336eb
     }
 
     /**

@@ -43,15 +43,26 @@ class ComiteController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/gestion", name="comiteGestion")
      */
-    public function ComiteGestionAction()
+    public function ComiteGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $comites = $em->getRepository('AppBundle:Comite')->findBY(
             array('active' => 1),
             array('fecha_inicio' => 'ASC')
         ); 
+         $paginator  = $this->get('knp_paginator');
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Comite:comite-gestion.html.twig', array( 'comites' => $comites));
+        $pagination = $paginator->paginate(
+            $comites, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Comite:comite-gestion.html.twig', 
+            array( 'comites' => $comites,
+                'pagination' => $pagination
+                )
+            );
     }
     
     /**

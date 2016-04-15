@@ -44,16 +44,23 @@ class ClearController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/clear/gestion", name="clearGestion")
     */
-    public function clearGestionAction()
+    public function clearGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $cleares = $em->getRepository('AppBundle:CLEAR')->findBY(
             array('active' => 1),
             array('fecha_inicio' => 'ASC')
         ); 
+         $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $cleares, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Clear:clear-gestion.html.twig', 
-            array( 'cleares' => $cleares)
+            array( 'cleares' => $cleares, 'pagination' => $pagination)
         );
     }
 

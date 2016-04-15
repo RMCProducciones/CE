@@ -77,7 +77,7 @@ class BeneficiarioController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/beneficiario/", name="beneficiarioGestion")
      */
-    public function beneficiarioGestionAction($idGrupo)
+    public function beneficiarioGestionAction(Request $request, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();
         
@@ -88,9 +88,16 @@ class BeneficiarioController extends Controller
         $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
             array('id'=> $idGrupo)
         );
+         $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $beneficiarios, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Beneficiario:beneficiario-gestion.html.twig', 
-        array( 'idGrupo' => $idGrupo, 'beneficiarios' => $beneficiarios, 'grupo'=>$grupo));
+        array( 'idGrupo' => $idGrupo, 'beneficiarios' => $beneficiarios, 'grupo'=>$grupo, 'pagination'=> $pagination));
 
     }
 

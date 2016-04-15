@@ -57,5 +57,64 @@ SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a 
 
 }]);
 
+app.controller('CampoJovenRuralCtrl', ['$scope', '$http', function($scope, $http) {		
 
+
+	if($('#Talento_joven_rural').prop('checked')==false){
+		
+		$scope.swJovenRural = false;	
+		$('#swJovenRural').removeClass('checked');
+	}
+	else
+	{
+		$scope.swJovenRural = true;	
+		$('#swJovenRural').addClass('checked');		
+	}
+
+	$scope.$watch('swJovenRural', function() {
+
+		$('#Talento_joven_rural').prop('checked', $scope.swJovenRural);
+		
+	});
+}]);
+
+app.controller('CamposTalentoCtrl', ['$scope', '$http', function($scope, $http) {	
+	
+console.log("hola");
+
+	if($('#Talento_talento_madr').prop('checked')==false){
+		
+		$scope.swTalento = false;	
+		$('#swTalento').removeClass('checked');
+	}
+	else
+	{
+		$scope.swTalento = true;	
+		$('#swtalento').addClass('checked');		
+	}
+
+	$scope.$watch('swTalento', function() {
+
+		$('#Talento_talento_madr').prop('checked', $scope.swTalento);
+		
+	});
+
+	if($('#Talento_talento_otros_lugares').prop('checked')==false){
+		
+		$scope.swlugares = false;	
+		$('#swlugares').removeClass('checked');
+	}
+	else
+	{
+		$scope.swlugares = true;	
+		$('#swlugares').addClass('checked');		
+	}
+
+	$scope.$watch('swlugares', function() {
+
+		$('#Talento_talento_otros_lugares').prop('checked', $scope.swlugares);
+		
+	});
+
+}]);
 

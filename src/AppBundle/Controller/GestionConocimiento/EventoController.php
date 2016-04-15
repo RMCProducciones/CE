@@ -36,15 +36,25 @@ class EventoController extends Controller
 	/**
      * @Route("/gestion-conocimiento/evento/gestion", name="eventoGestion")
      */
-    public function eventoGestionAction()
+    public function eventoGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $eventos= $em->getRepository('AppBundle:Evento')->findBY(
-            array('active' => 1)
-            
+            array('active' => 1)            
         ); 
+         $paginator  = $this->get('knp_paginator');
 
-        return $this->render('AppBundle:GestionConocimiento/Evento:evento-gestion.html.twig', array( 'eventos' => $eventos));
+        $pagination = $paginator->paginate(
+            $eventos, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
+        return $this->render('AppBundle:GestionConocimiento/Evento:evento-gestion.html.twig', 
+            array( 'eventos' => $eventos,
+                    'pagination' => $pagination
+                )
+            );
     }  
 	
 	 /**
@@ -190,7 +200,7 @@ class EventoController extends Controller
                 $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
                     array(
                         'descripcion' => $eventoSoporte->getTipoSoporte()->getDescripcion(), 
-                        'dominio' => 'talento_tipo_soporte'
+                        'dominio' => 'evento_tipo_soporte'
                     )
                 );
                 

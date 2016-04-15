@@ -36,15 +36,27 @@ class BecaController extends Controller
     	 /**
      * @Route("/gestion-conocimiento/beca/gestion", name="becaGestion")
      */
-    public function becaGestionAction()
+    public function becaGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+
         $becas= $em->getRepository('AppBundle:Beca')->findBY(
-            array('active' => 1)
-            
+            array('active' => 1)            
         ); 
 
-        return $this->render('AppBundle:GestionConocimiento/Beca:beca-gestion.html.twig', array( 'becas' => $becas));
+         $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $becas, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
+        return $this->render('AppBundle:GestionConocimiento/Beca:beca-gestion.html.twig', 
+            array( 'becas' => $becas,
+                   'pagination' => $pagination
+                )
+            );
     }  
 	
 	 /**
@@ -191,7 +203,7 @@ class BecaController extends Controller
                 $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
                     array(
                         'descripcion' => $becaSoporte->getTipoSoporte()->getDescripcion(), 
-                        'dominio' => 'talento_tipo_soporte'
+                        'dominio' => 'beca_tipo_soporte'
                     )
                 );
                 

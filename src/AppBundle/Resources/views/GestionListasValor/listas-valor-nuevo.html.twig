@@ -1,0 +1,85 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+{% block title %}Listas de Valor{% endblock %}
+
+{% block breadcrumb_ul %}
+
+    <ul class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Empresarial</li>
+      <li>Servicio Complementario</li>
+      <li><a href="#">Gestión Listas de Valores</a></li>
+      <li class="active">Nuevo</li>
+    </ul>
+
+{% endblock %}
+
+
+{% block section %}
+<div class="container">
+    <h1> Gestión Listas de Valores</h1>
+    <hr>
+    <h3> Nuevo Registro</h3>
+    <br />
+    <br />
+  </div>
+     
+
+  {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+    {{ form_errors(form) }}
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="btn-group">
+  
+              <button name="grupo[guardar]" id="grupo_guardar" type="submit" class="btn btn-success">Guardar</button>
+              
+              <a href="{{ path('listasValorGestion') }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <br>
+        
+
+
+    <div class="section">
+      <div class="container">
+        
+		
+			<div class="row">
+				<div class="col-md-12">
+					<fieldset>
+						<legend>Nuevo Registro</legend>
+					</fieldset>            
+				</div>
+			</div>	
+
+				<div class="row">
+				<div class="col-md-4">
+                  {{ form_label(form.dominio) }}
+				          {{ form_errors(form.dominio) }}
+                  {{ form_widget(form.dominio, { 'attr': {'class': 'form-control', 'placeholder': 'Dominio'} }) }}
+                </div>
+                <div class="col-md-4">
+                  {{ form_label(form.descripcion) }}
+				          {{ form_errors(form.descripcion) }}
+                  {{ form_widget(form.descripcion, { 'attr': {'class': 'form-control', 'placeholder': 'Descripcion '} }) }}
+                </div>          
+		</div>
+    <br />  
+		<br/>				
+       
+      </div>
+    </div>
+
+  {{ form_end(form) }}
+               
+{% endblock %}
+

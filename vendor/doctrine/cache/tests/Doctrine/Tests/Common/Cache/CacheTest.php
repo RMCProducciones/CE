@@ -38,6 +38,7 @@ abstract class CacheTest extends \Doctrine\Tests\DoctrineTestCase
 
         $this->assertTrue($cache->save('key', 'old-value'));
         $this->assertTrue($cache->contains('key'));
+<<<<<<< HEAD
 
         $this->assertTrue($cache->save('key', $value));
         $this->assertTrue($cache->contains('key'));
@@ -75,6 +76,45 @@ abstract class CacheTest extends \Doctrine\Tests\DoctrineTestCase
             $saved[$key] = $value[0];
         }
 
+=======
+
+        $this->assertTrue($cache->save('key', $value));
+        $this->assertTrue($cache->contains('key'));
+        if (is_object($value)) {
+            $this->assertEquals($value, $cache->fetch('key'), 'Objects retrieved from the cache must be equal but not necessarily the same reference');
+        } else {
+            $this->assertSame($value, $cache->fetch('key'), 'Scalar and array data retrieved from the cache must be the same as the original, e.g. same type');
+        }
+    }
+
+    public function testCacheKeyIsCaseSensitive()
+    {
+        $cache = $this->_getCacheDriver();
+
+        $this->assertTrue($cache->save('key', 'value'));
+        $this->assertTrue($cache->contains('key'));
+        $this->assertSame('value', $cache->fetch('key'));
+
+        $this->assertFalse($cache->contains('KEY'));
+        $this->assertFalse($cache->fetch('KEY'));
+
+        $cache->delete('KEY');
+        $this->assertTrue($cache->contains('key', 'Deleting cache item with different case must not affect other cache item'));
+    }
+
+    public function testFetchMultiple()
+    {
+        $cache  = $this->_getCacheDriver();
+        $values = $this->provideDataToCache();
+        $saved  = array();
+
+        foreach ($values as $key => $value) {
+            $cache->save($key, $value[0]);
+
+            $saved[$key] = $value[0];
+        }
+
+>>>>>>> e1b26dc9bba75d1dfe95d4ae1924bd3610f336eb
         $keys = array_keys($saved);
 
         $this->assertEquals(
@@ -109,6 +149,25 @@ abstract class CacheTest extends \Doctrine\Tests\DoctrineTestCase
         $this->assertSame(array(), $cache->fetchMultiple(array()));
     }
 
+<<<<<<< HEAD
+=======
+    public function testSaveMultiple()
+    {
+        $cache = $this->_getCacheDriver();
+        $cache->deleteAll();
+
+        $data = array_map(function ($value) {
+            return $value[0];
+        }, $this->provideDataToCache());
+
+        $this->assertTrue($cache->saveMultiple($data));
+
+        $keys = array_keys($data);
+
+        $this->assertEquals($data, $cache->fetchMultiple($keys));
+    }
+
+>>>>>>> e1b26dc9bba75d1dfe95d4ae1924bd3610f336eb
     public function provideDataToCache()
     {
         $obj = new \stdClass();

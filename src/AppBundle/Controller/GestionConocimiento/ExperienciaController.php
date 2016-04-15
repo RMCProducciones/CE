@@ -35,15 +35,25 @@ class ExperienciaController extends Controller
 	 /**
      * @Route("/gestion-conocimiento/experiencia-exitosa/gestion", name="experienciaGestion")
      */
-    public function experienciaGestionAction()
+    public function experienciaGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $experienciaexitosas = $em->getRepository('AppBundle:ExperienciaExitosa')->findBY(
-            array('active' => 1)
-            
+            array('active' => 1)            
         ); 
+         $paginator  = $this->get('knp_paginator');
 
-        return $this->render('AppBundle:GestionConocimiento/Experiencia:experiencia-gestion.html.twig', array( 'experienciaexitosas' => $experienciaexitosas));
+        $pagination = $paginator->paginate(
+            $experienciaexitosas, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
+        return $this->render('AppBundle:GestionConocimiento/Experiencia:experiencia-gestion.html.twig', 
+            array( 'experienciaexitosas' => $experienciaexitosas,
+                    'pagination' => $pagination
+                )
+            );
     }                                                                                                                                                                                                                
 	
  /**
@@ -186,8 +196,8 @@ class ExperienciaController extends Controller
 
                 $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
                     array(
-                        'descripcion' => $talentoSoporte->getTipoSoporte()->getDescripcion(), 
-                        'dominio' => 'talento_tipo_soporte'
+                        'descripcion' => $experienciaexitosaSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'experiencia_tipo_soporte'
                     )
                 );
                 

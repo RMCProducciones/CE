@@ -38,15 +38,25 @@ class CapacitacionController extends Controller
 	/**
      * @Route("/gestion-conocimiento/capacitacion/gestion", name="capacitacionGestion")
      */
-    public function capacitacionGestionAction()
+    public function capacitacionGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $capacitaciones= $em->getRepository('AppBundle:Capacitacion')->findBY(
-            array('active' => 1)
-            
+            array('active' => 1)            
         ); 
+         $paginator  = $this->get('knp_paginator');
 
-        return $this->render('AppBundle:GestionConocimiento/Capacitacion:capacitacion-gestion.html.twig', array( 'capacitaciones' => $capacitaciones));
+        $pagination = $paginator->paginate(
+            $capacitaciones, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
+        return $this->render('AppBundle:GestionConocimiento/Capacitacion:capacitacion-gestion.html.twig', 
+            array( 'capacitaciones' => $capacitaciones,
+                    'pagination' => $pagination
+                )
+            );
     }  
 	
 	 /**
@@ -193,7 +203,7 @@ class CapacitacionController extends Controller
                 $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
                     array(
                         'descripcion' => $capacitacionSoporte->getTipoSoporte()->getDescripcion(), 
-                        'dominio' => 'talento_tipo_soporte'
+                        'dominio' => 'capacitacion_tipo_soporte'
                     )
                 );
                 
@@ -212,7 +222,7 @@ class CapacitacionController extends Controller
                     $em->flush();
                 }
                 
-                $capacitacionSoporte->setEvento($capacitacion);
+                $capacitacionSoporte->setCapacitacion($capacitacion);
                 $capacitacionSoporte->setActive(true);
                 $capacitacionSoporte->setFechaCreacion(new \DateTime());
                 //$grupoSoporte->setUsuarioCreacion(1);
@@ -242,12 +252,12 @@ class CapacitacionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $capacitacionSoporte = new CapacitacionSoporte();
-        
+        $capacitacionSoporte = new CapacitacionSoporte();        
+
         $capacitacionSoporte = $em->getRepository('AppBundle:CapacitacionSoporte')->findOneBy(
             array('id' => $idCapacitacionSoporte)
         );
-        
+                
         $capacitacionSoporte->setFechaModificacion(new \DateTime());
         $capacitacionSoporte->setActive(0);
         $em->flush();

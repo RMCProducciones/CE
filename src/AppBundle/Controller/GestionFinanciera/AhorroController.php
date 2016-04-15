@@ -33,15 +33,25 @@ class AhorroController extends Controller
    /**
      * @Route("/gestion-financiera/ahorro/gestion", name="ahorroGestion")
      */
-    public function ahorroGestionAction()
+    public function ahorroGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $ahorros= $em->getRepository('AppBundle:Ahorro')->findBY(
-            array('active' => 1)
-            
+            array('active' => 1)            
         ); 
+         $paginator  = $this->get('knp_paginator');
 
-        return $this->render('AppBundle:GestionFinanciera/Ahorro:ahorro-gestion.html.twig', array( 'ahorros' => $ahorros));
+        $pagination = $paginator->paginate(
+            $ahorros, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
+        return $this->render('AppBundle:GestionFinanciera/Ahorro:ahorro-gestion.html.twig', 
+            array( 'ahorros' => $ahorros,
+                    'pagination' => $pagination
+                )
+            );
     }  
     
      /**
@@ -183,7 +193,7 @@ class AhorroController extends Controller
                 $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
                     array(
                         'descripcion' => $ahorroSoporte->getTipoSoporte()->getDescripcion(), 
-                        'dominio' => 'ruta_tipo_soporte'
+                        'dominio' => 'ahorro_tipo_soporte'
                     )
                 );
                 

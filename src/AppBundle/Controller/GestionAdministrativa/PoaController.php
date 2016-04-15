@@ -30,12 +30,25 @@ class PoaController extends Controller
 	/**
      * @Route("/gestion-administrativa/poa/POAGestion", name="POAGestion")
      */
-    public function POAGestionAction()
+    public function POAGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $poas = $em->getRepository('AppBundle:POA')->findAll(); 
 
-        return $this->render('AppBundle:GestionAdministrativa/Poa:POA-gestion.html.twig', array( 'poas' => $poas));
+        $paginator  = $this->get('knp_paginator');
+
+
+        $pagination = $paginator->paginate(
+            $poas, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
+        return $this->render('AppBundle:GestionAdministrativa/Poa:POA-gestion.html.twig', 
+            array( 'poas' => $poas,
+                   'pagination' => $pagination
+                   )
+            );
     }
 
 	/**

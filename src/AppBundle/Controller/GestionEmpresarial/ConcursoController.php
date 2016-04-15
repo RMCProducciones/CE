@@ -37,15 +37,26 @@ class ConcursoController extends Controller
 /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/gestion", name="concursoGestion")
      */
-    public function concursoGestionAction()
+    public function concursoGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $concursos = $em->getRepository('AppBundle:Concurso')->findBY(
             array('active' => 1),
             array('fecha_inicio' => 'ASC')
         ); 
+         $paginator  = $this->get('knp_paginator');
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Concurso:concurso-gestion.html.twig', array( 'concursos' => $concursos));
+        $pagination = $paginator->paginate(
+            $concursos, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Concurso:concurso-gestion.html.twig', 
+            array( 'concursos' => $concursos,
+                'pagination' => $pagination
+                )
+            );
     }
     
        /**
