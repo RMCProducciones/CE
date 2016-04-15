@@ -36,6 +36,8 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form_themes:
+        - LexikFormFilterBundle:Form:form_div_layout.html.twig
 
 # Assetic Configuration
 assetic:
@@ -85,3 +87,11 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: AppBundle\Entity\Usuario
+
+#lexik Configuration
+lexik_form_filter:
+#    listeners:
+#        doctrine_orm: true
+#        doctrine_dbal: false
+#        doctrine_mongodb: false
+    where_method: ~  # null | and | or

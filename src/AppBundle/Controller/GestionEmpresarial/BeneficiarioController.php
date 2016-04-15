@@ -33,10 +33,47 @@ use AppBundle\Form\GestionEmpresarial\GrupoSoporteType;
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
+use AppBundle\Form\GestionEmpresarial\BeneficiarioFilterType;
+
 class BeneficiarioController extends Controller
 {
 
-    
+    /**
+     * @Route("/test", name="testFilter")
+     */
+    public function testFilterAction(Request $request)
+    {
+        $form = $this->get('form.factory')->create(new BeneficiarioFilterType());
+
+        //die("r ".$request->query->has($form->getName()));
+        if ($request->query->has('submit-filter')) {
+         //   die("tonces");
+        }
+        if ($request->query->has($form->getName())) {
+            
+            // manually bind values from the request
+            $form->submit($request->query->get($form->getName()));
+
+            // initialize a query builder
+            $filterBuilder = $this->get('doctrine.orm.entity_manager')
+                ->getRepository('AppBundle:Beneficiario')
+                ->createQueryBuilder('b');
+
+            // build the query from the given form object
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+
+            // now look at the DQL =)
+            var_dump($filterBuilder->getDql());
+            die("entra al if");
+
+        }
+
+        return $this->render('AppBundle:Default:testFilter.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/beneficiario/", name="beneficiarioGestion")
      */
