@@ -18,11 +18,8 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
             new FOS\UserBundle\FOSUserBundle(),
-<<<<<<< HEAD
             new Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle(),
-=======
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
->>>>>>> e1b26dc9bba75d1dfe95d4ae1924bd3610f336eb
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

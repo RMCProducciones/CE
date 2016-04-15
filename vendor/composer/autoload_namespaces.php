@@ -18,9 +18,6 @@ return array(
     'Doctrine\\Common\\Inflector\\' => array($vendorDir . '/doctrine/inflector/lib'),
     'Doctrine\\Common\\Collections\\' => array($vendorDir . '/doctrine/collections/lib'),
     'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib'),
-<<<<<<< HEAD
     'Doctrine\\Common\\' => array($vendorDir . '/doctrine/common/lib'),
-=======
->>>>>>> e1b26dc9bba75d1dfe95d4ae1924bd3610f336eb
     'Assetic' => array($vendorDir . '/kriswallsmith/assetic/src'),
 );

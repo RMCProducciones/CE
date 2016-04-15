@@ -88,7 +88,6 @@ fos_user:
     firewall_name: main
     user_class: AppBundle\Entity\Usuario
 
-<<<<<<< HEAD
 #lexik Configuration
 lexik_form_filter:
 #    listeners:
@@ -96,7 +95,7 @@ lexik_form_filter:
 #        doctrine_dbal: false
 #        doctrine_mongodb: false
     where_method: ~  # null | and | or
-=======
+
 # KNPPaginator Bundle
 knp_paginator:
     page_range: 10  # número de páginas a mostrar
@@ -108,4 +107,3 @@ knp_paginator:
     template:
         pagination: KnpPaginatorBundle:Pagination:sliding.html.twig # plantilla utilizada en la paginación
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # plantilla utilizada en la paginación para ordenar los resultados
->>>>>>> e1b26dc9bba75d1dfe95d4ae1924bd3610f336eb
