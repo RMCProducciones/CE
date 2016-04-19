@@ -520,11 +520,7 @@ class GrupoController extends Controller
         $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
             array('grupo' => $grupo)
         );
-
-        $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
-            array('id'=> $idGrupo)
-        );
-
+        
         $asignacionesBeneficiariosCC = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteCompras')->findBy(
             array('grupo' => $grupo)
         ); 

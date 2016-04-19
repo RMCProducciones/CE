@@ -787,6 +787,7 @@
           <div class="modal-body">
             <b>Visita 1</b>
             <br>
+            <b><a href="{{ path('beneficiarioVisitasAsignacionNuevo', {'idGrupo': grupo.id, 'idNodo' : 15}) }}">Asignar Beneficiarios</a></b>
             <br>
             <b><a href="{{ path('visitaNuevo', {'idGrupo': grupo.id, 'idNodo' : 15}) }}">Nueva Visita 1</a></b>
             <br>           
@@ -809,9 +810,10 @@
             </button>
             <h4 class="modal-title" id="myModalLabel">{{ grupo.codigo }} | {{ grupo.nombre }}</h4>
           </div>
-          <div class="modal-body">
+          <div class="modal-body">                                    
             <b>Visita 2</b>
             <br>
+            <b><a href="{{ path('beneficiarioVisitasNuevo', {'idGrupo': grupo.id, 'idNodo' : 16}) }}">Asignar Beneficiarios</a></b>
             <br>
             <b><a href="{{ path('visitaNuevo', {'idGrupo': grupo.id, 'idNodo' : 16}) }}">Nueva Visita 2</a></b>
             <br>           
@@ -837,6 +839,7 @@
           <div class="modal-body">
             <b>Visita 3</b>
             <br>
+            <b><a href="{{ path('beneficiarioVisitasAsignacionNuevo', {'idGrupo': grupo.id, 'idNodo' : 17}) }}">Asignar Beneficiarios</a></b>
             <br>
             <b><a href="{{ path('visitaNuevo', {'idGrupo': grupo.id, 'idNodo' : 17}) }}">Nueva Visita 3</a></b>
             <br>           
