@@ -16,6 +16,7 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 
 use AppBundle\Entity\Grupo;
+use AppBundle\Entity\Beneficiario;
 use AppBundle\Entity\Camino;
 use AppBundle\Entity\HabilitacionFases;
 use AppBundle\Entity\DiagnosticoOrganizacional;
@@ -28,6 +29,7 @@ use AppBundle\Entity\AsignacionBeneficiarioComiteCompras;
 use AppBundle\Entity\AsignacionBeneficiarioComiteVamosBien;
 use AppBundle\Entity\AsignacionBeneficiarioEstructuraOrganizacional;
 use AppBundle\Entity\AsignacionContadorGrupo;
+use AppBundle\Entity\AsignacionBeneficiarioVisitas;
 
 use AppBundle\Form\GestionEmpresarial\HabilitacionFasesType;
 use AppBundle\Form\GestionEmpresarial\SeguimientoMOTType;
@@ -810,8 +812,8 @@ class SeguimientoGrupoController extends Controller
                   'nodo' => $nodo)
         ); 
 
-        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioVisitas abv WHERE beneficiario = abv.beneficiario AND abv.grupo = :grupo AND abv.nodo = :nodo) AND b.active = 1');
-        $query->setParameter(':grupo', $grupo, ':nodo' , $nodo);
+        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioVisitas abv WHERE beneficiario = abv.beneficiario AND abv.nodo = :nodo) AND b.active = 1');
+        $query->setParameter(':nodo', $nodo);
         $beneficiarios = $query->getResult();
 
         $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
@@ -825,14 +827,14 @@ class SeguimientoGrupoController extends Controller
                 'asignacionesBeneficiariosVisitas' => $asignacionesBeneficiariosVisitas,
                 'idGrupo' => $idGrupo,
                 'grupo' => $grupo,
-                'nodo' => $nodo
+                'idNodo' => $idNodo
             ));        
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/comite-compras/{idBeneficiario}/nueva-asignacion", name="beneficiarioVisitasAsignacion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/visita/beneficiarios-asignacion/{idBeneficiario}/nueva-asignacion", name="beneficiarioVisitasAsignar")
      */
-    public function beneficiariosAsignarVisitaAction($idGrupo, $idBeneficiario)
+    public function beneficiariosAsignarVisitaAction($idGrupo, $idNodo, $idBeneficiario)
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -843,45 +845,55 @@ class SeguimientoGrupoController extends Controller
 
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id' => $idGrupo)
-        );        
+        ); 
+
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id' => $idNodo)
+        );       
            
-        $asignacionBeneficiarioComiteCompras = new AsignacionBeneficiarioComiteCompras();
+        $asignacionBeneficiarioVisitas = new AsignacionBeneficiarioVisitas();
 
-        $asignacionBeneficiarioComiteCompras->setGrupo($grupo);        
-        $asignacionBeneficiarioComiteCompras->setBeneficiario($beneficiario);
-        $asignacionBeneficiarioComiteCompras->setActive(true);
-        $asignacionBeneficiarioComiteCompras->setFechaCreacion(new \DateTime());
+        $asignacionBeneficiarioVisitas->setGrupo($grupo);        
+        $asignacionBeneficiarioVisitas->setBeneficiario($beneficiario);
+        $asignacionBeneficiarioVisitas->setNodo($nodo);
+        $asignacionBeneficiarioVisitas->setActive(true);
+        $asignacionBeneficiarioVisitas->setFechaCreacion(new \DateTime());
 
-        $em->persist($asignacionBeneficiarioComiteCompras);
+        $em->persist($asignacionBeneficiarioVisitas);
         $em->flush();
 
 
 
-        return $this->redirectToRoute('grupoBeneficiarioComiteCompras', 
+        return $this->redirectToRoute('beneficiarioVisitasNuevo', 
             array(
                 'beneficiario' => $beneficiario,          
-                'asignacionesBeneficiarioComiteCompras' => $asignacionBeneficiarioComiteCompras,                
-                'idGrupo' => $idGrupo
+                'AsignacionBeneficiarioVisitas' => $asignacionBeneficiarioVisitas,                
+                'idGrupo' => $idGrupo,
+                'idNodo' => $idNodo
             ));        
         
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/comite-compras/{idAsignacionBeneficiariosCVB}/eliminar", name="beneficiarioVisitasAsignacionEliminar")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/visita/beneficiarios-asignacion/{idAsignacionBeneficiariosVisita}/eliminar", name="beneficiarioVisitasEliminar")
      */
-    public function beneficiariosEliminarVisitaAction($idGrupo, $idAsignacionBeneficiariosCVB)
+    public function beneficiariosEliminarVisitaAction($idGrupo, $idNodo, $idAsignacionBeneficiariosVisita)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $asignacionBeneficiarioComiteCompras = new AsignacionBeneficiarioComiteCompras();
+        $asignacionBeneficiarioVisitas = new AsignacionBeneficiarioVisitas();
 
-        $asignacionBeneficiarioComiteCompras = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteCompras')->find($idAsignacionBeneficiariosCVB); 
+        $asignacionBeneficiarioVisitas = $em->getRepository('AppBundle:AsignacionBeneficiarioVisitas')->find($idAsignacionBeneficiariosVisita); 
 
-        $em->remove($asignacionBeneficiarioComiteCompras);
+        $em->remove($asignacionBeneficiarioVisitas);
         $em->flush();
 
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id' => $idGrupo)
+        );
+
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id' => $idNodo)
         );
 
         $beneficiarios = new Beneficiario();
@@ -890,24 +902,18 @@ class SeguimientoGrupoController extends Controller
             array('grupo' => $grupo)
         );     
 
-        $asignacionBeneficiarioComiteCompras = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteCompras')->findBy(
-            array('grupo' => $grupo)
+        $asignacionesBeneficiariosVisitas = $em->getRepository('AppBundle:AsignacionBeneficiarioVisitas')->findBy(
+            array('grupo' => $grupo,
+                  'nodo' => $nodo)
         ); 
 
-        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioComiteCompras abc WHERE beneficiario = abc.beneficiario AND abc.grupo = :grupo) AND b.active = 1');
-        $query->setParameter(':grupo', $grupo);
-        $beneficiarios = $query->getResult();
-
-        $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
-            array('id' => $beneficiarios, 'grupo' => $grupo )
-        );
-
-        return $this->redirectToRoute('grupoBeneficiarioComiteCompras', 
+        return $this->redirectToRoute('beneficiarioVisitasNuevo', 
             array(
                 'beneficiario' => $beneficiarios,          
-                'asignacionesBeneficiarioComiteCompras' => $asignacionBeneficiarioComiteCompras,                
-                'idGrupo' => $idGrupo
-            ));       
+                'AsignacionBeneficiarioVisitas' => $asignacionBeneficiarioVisitas,                
+                'idGrupo' => $idGrupo,
+                'idNodo' => $idNodo
+            ));        
         
     } 
 

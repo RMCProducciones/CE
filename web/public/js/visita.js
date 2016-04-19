@@ -76,3 +76,11 @@ app.controller('CampoInterventoriaCtrl', ['$scope', '$http', function($scope, $h
 		
 	});
 }]);
+
+app.controller('gestionBeneficiariosVisitaCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.eliminarBeneficiarioVisita = function(ruta){		
+		window.location.replace(ruta);
+
+	};	
+}]);
