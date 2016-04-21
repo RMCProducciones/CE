@@ -281,6 +281,34 @@ class ClearController extends Controller
         return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR));
         
     }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/acta-incio", name="clearActaInicio")
+     */
+    public function clearActaInicioPDFAction(Request $request, $idCLEAR){
+
+        $em = $this->getDoctrine()->getManager();
+        //Consulto a mi base de datos
+
+        $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
+            array('id' => $idCLEAR)            
+        );
+
+        $variable = "5";
+        $link = 'C:\Users\DES_RMC_1\Desktop\\'.$variable.'.pdf';        
+        if(file_exists($link)){
+            unlink('C:\Users\DES_RMC_1\Desktop\\'.$variable.'.pdf');            
+        }        
+
+        $this->get('knp_snappy.pdf')->generateFromHtml(
+        $this->renderView(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/PruebaPDF:joda-de-prueba.html.twig', 
+            array('clear' => $clear)
+            ),
+            'C:\Users\DES_RMC_1\Desktop\\'.$variable.'.pdf'
+        );
+        return $this->redirectToRoute('clearGestion');     
+    }
     
 
      /**

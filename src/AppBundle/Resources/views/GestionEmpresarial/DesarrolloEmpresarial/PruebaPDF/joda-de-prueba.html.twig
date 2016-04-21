@@ -1,0 +1,21 @@
+{% block section %}	
+<meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">             
+		<div style="color:#f00;font-size:30px;">
+			<b>{{clear.lugarRealizacionCLEAR}}</b>
+			<br>
+			<b>Fecha de inicio:{{ clear.fechaInicio |  date('d - m - Y') }}</b>
+            <br>
+            <b>Fecha de finalización: {{ clear.fechaFinalizacion |  date('d - m - Y') }}</b>
+            <br>
+            <b>Lugar de realización del CLEAR: {{ clear.lugarRealizacionCLEAR }}</b>
+            <br>
+            <b>Zona: {{ clear.municipio.zona.nombre }}</b>
+            <br>
+            <b>Departamento: {{ clear.municipio.departamento.nombre }}</b>
+			<br>
+            <b>Municipio: {{ clear.municipio }}</b>
+		</div>
+
+		<div >	
+{% endblock %}
+

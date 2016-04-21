@@ -126,11 +126,12 @@ class GrupoController extends Controller
             
             $em->flush();
 
-            return $this->redirectToRoute('grupoGestion');
+            return $this->redirectToRoute('grupoGestion', 
+                array('idGrupo' => $idGrupo));
         }
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:grupo-nuevo.html.twig', array('form' => $form->createView()));
-    }
+    }    
 
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/editar", name="grupoEditar")

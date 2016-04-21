@@ -83,8 +83,6 @@ class RedisCache extends CacheProvider
         }
 
         return $foundItems;
-<<<<<<< HEAD
-=======
     }
 
     /**
@@ -107,7 +105,6 @@ class RedisCache extends CacheProvider
 
         // No lifetime, use MSET
         return (bool) $this->redis->mset($keysAndValues);
->>>>>>> e1b26dc9bba75d1dfe95d4ae1924bd3610f336eb
     }
 
     /**

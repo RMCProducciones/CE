@@ -8,11 +8,6 @@ cache:
         - $HOME/.composer/cache
 
 php:
-<<<<<<< HEAD
-    - 5.3
-    - 5.4
-=======
->>>>>>> e1b26dc9bba75d1dfe95d4ae1924bd3610f336eb
     - 5.5
     - 5.6
     - 7.0
@@ -25,13 +20,8 @@ services:
     - redis-server
 
 before_install:
-<<<<<<< HEAD
-    - if [[ $TRAVIS_PHP_VERSION != 'hhvm' && $TRAVIS_PHP_VERSION != '7.0' ]]; then pecl install riak-beta; fi;
-    - if [[ $TRAVIS_PHP_VERSION =~ 5.[34] ]] ; then echo 'extension="apc.so"' >> ./tests/travis/php.ini; fi;
-=======
     - if [[ $TRAVIS_PHP_VERSION != 'hhvm' ]] ; then pecl channel-update pecl.php.net; fi;
     - if [[ $TRAVIS_PHP_VERSION != 'hhvm' && $TRAVIS_PHP_VERSION != '7.0' ]]; then pecl install riak-beta; fi;
->>>>>>> e1b26dc9bba75d1dfe95d4ae1924bd3610f336eb
     - if [[ $TRAVIS_PHP_VERSION =~ 5.[56] ]] ; then echo yes | pecl install apcu-4.0.10; fi;
     - if [[ $TRAVIS_PHP_VERSION = 7.* ]] ; then pecl config-set preferred_state beta; echo yes | pecl install apcu; fi;
     - if [[ $TRAVIS_PHP_VERSION != 'hhvm' ]]; then phpenv config-add ./tests/travis/php.ini; fi;
