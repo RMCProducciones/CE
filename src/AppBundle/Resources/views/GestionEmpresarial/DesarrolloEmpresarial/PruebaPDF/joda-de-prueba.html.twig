@@ -16,6 +16,10 @@
             <b>Municipio: {{ clear.municipio }}</b>
 		</div>
 
-		<div >	
+		<div>
+			{% for grupoClear in gruposClear %}
+				{{grupoClear.grupo.nombre}}
+			{% endfor %}
+		</div>	
 {% endblock %}
 

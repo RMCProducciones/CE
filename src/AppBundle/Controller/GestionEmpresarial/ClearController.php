@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -294,20 +295,27 @@ class ClearController extends Controller
             array('id' => $idCLEAR)            
         );
 
-        $variable = "5";
-        $link = 'C:\Users\DES_RMC_1\Desktop\\'.$variable.'.pdf';        
+        $gruposClear = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
+            array('clear' => $clear->getId())
+        );
+
+        $nombre = "Acta de Inicio Clear ";        
+        $link = '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf';        
         if(file_exists($link)){
-            unlink('C:\Users\DES_RMC_1\Desktop\\'.$variable.'.pdf');            
+            unlink('..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf');            
         }        
 
         $this->get('knp_snappy.pdf')->generateFromHtml(
         $this->renderView(
             'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/PruebaPDF:joda-de-prueba.html.twig', 
-            array('clear' => $clear)
+            array('clear' => $clear,
+                  'gruposClear' => $gruposClear)
             ),
-            'C:\Users\DES_RMC_1\Desktop\\'.$variable.'.pdf'
-        );
-        return $this->redirectToRoute('clearGestion');     
+            '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf'
+        );        
+
+        //return $this->redirectToRoute('clearGestion');    
+        return new BinaryFileResponse($link); 
     }
     
 
