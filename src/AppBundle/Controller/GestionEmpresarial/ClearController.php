@@ -284,6 +284,25 @@ class ClearController extends Controller
     }
 
     /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/documentos-soporte/{idClearSoporte}/descargar", name="clearSoporteRecuperarArchivo")
+     */
+    public function clearSoporteDescargarAction(Request $request, $idCLEAR, $idClearSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $path = $em->getRepository('AppBundle:ClearSoporte')->findOneBy(
+            array('id' => $idClearSoporte));
+
+        $link = '..\uploads\documents\\'.$path->getPath();
+
+        header("Content-Disposition: attachment; filename = $link");
+        header ("Content-Type: application/force-download");
+        header ("Content-Length: ".filesize($link));
+        readfile($link);           
+        //return new BinaryFileResponse($link); -> para mostrar en ventana aparte
+    }
+
+    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/acta-incio", name="clearActaInicio")
      */
     public function clearActaInicioPDFAction(Request $request, $idCLEAR){
@@ -312,10 +331,14 @@ class ClearController extends Controller
                   'gruposClear' => $gruposClear)
             ),
             '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf'
-        );        
+        ); 
 
-        //return $this->redirectToRoute('clearGestion');    
-        return new BinaryFileResponse($link); 
+        header("Content-Disposition: attachment; filename = $link");
+        header ("Content-Type: application/force-download");
+        header ("Content-Length: ".filesize($link));
+        readfile($link);                    
+
+        //return new BinaryFileResponse($link); 
     }
     
 
