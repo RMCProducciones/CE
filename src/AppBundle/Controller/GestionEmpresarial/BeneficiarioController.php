@@ -75,7 +75,7 @@ class BeneficiarioController extends Controller
         $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
             array('id'=> $idGrupo)
         );
-         $paginator  = $this->get('knp_paginator');
+        $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
             $query, /* fuente de los datos*/
