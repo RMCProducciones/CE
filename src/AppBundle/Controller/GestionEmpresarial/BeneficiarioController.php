@@ -29,17 +29,19 @@ use AppBundle\Form\GestionEmpresarial\BeneficiarioType;
 use AppBundle\Form\GestionEmpresarial\BeneficiarioSoporteType;
 use AppBundle\Form\GestionEmpresarial\GrupoSoporteType;
 
+use AppBundle\Form\GestionEmpresarial\BeneficiarioFilterType;
+
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-use AppBundle\Form\GestionEmpresarial\BeneficiarioFilterType;
+
 
 class BeneficiarioController extends Controller
 {
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/beneficiario/", name="beneficiarioGestion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/beneficiario", name="beneficiarioGestion")
      */
     public function beneficiarioGestionAction(Request $request, $idGrupo)
     {
@@ -52,11 +54,8 @@ class BeneficiarioController extends Controller
 
         $filterBuilder = $this->get('doctrine.orm.entity_manager')
             ->getRepository('AppBundle:Beneficiario')
-            ->createQueryBuilder('b')
-            ->where('b.grupo = :idGrupo')
-            ->andWhere('b.active = 1')
-            ->setParameter('idGrupo', $idGrupo);
-
+            ->createQueryBuilder('q');
+                  
         $form = $this->get('form.factory')->create(new BeneficiarioFilterType());
 
         if ($request->query->has($form->getName())) {
@@ -64,13 +63,22 @@ class BeneficiarioController extends Controller
             $form->submit($request->query->get($form->getName()));
             $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
         }
+
+        $filterBuilder->andwhere('q.grupo = :idGrupo')
+        ->setParameter('idGrupo', $idGrupo)
+        ->andWhere('q.active = 1');
+
         $query = $filterBuilder->getQuery();
+
+        //var_dump($filterBuilder->getDql());
+        //die("");
 
 
         $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
             array('id'=> $idGrupo)
         );
-         $paginator  = $this->get('knp_paginator');
+
+        $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
             $query, /* fuente de los datos*/

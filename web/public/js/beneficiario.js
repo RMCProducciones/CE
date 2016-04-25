@@ -228,3 +228,33 @@ app.controller('CamposBeneficiarioCtrl', ['$scope', '$http', function($scope, $h
 		
 	});
 }]);
+
+app.controller('FiltrosBeneficiarioCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasBeneficiario = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaBeneficiario = function(){
+       
+		$("#beneficiarioFilter_numero_documento").val("");
+		$("#beneficiarioFilter_primer_apellido").val("");
+		$("#beneficiarioFilter_primer_nombre").val("");
+		$("#beneficiarioFilter_genero").val("");		
+       
+    }
+      
+		
+}]);

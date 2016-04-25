@@ -26,51 +26,105 @@
     <h2> Grupo: {{ grupos.nombre }}</h2>
     {% endfor %}
     <hr>
-  </div>
+  </div> 
    
  
-  	<br>
+ <br />
+  <br />
 
-                <form method="get" action="{{ path('beneficiarioGestion', {'idGrupo': idGrupo}) }}">
-                  {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+    <div class="section" ng-controller="FiltrosBeneficiarioCtrl">
+      <div class="container">
+        <div class="row" >
+          
+          <div class="col-md-6">
+            <div class="btn-group">
+              <a href="{{ path('grupoGestion') }}" class="btn btn-warning">Volver</a>
+              <a href="{{ path('beneficiarioNuevo', {'idGrupo': idGrupo}) }}" class="btn btn-success">Nuevo</a>              
+            </div>
+          </div>
 
-                    {{ form_errors(form) }}
+          <div class="col-md-4">
+          </div>
+
+          <div class="col-md-2">
+            <div class="btn-group [[styleBuscarHerramientas]]">              
+                
+                <button class="btn btn-info" ng-click="buttonBuscarHerramientasBeneficiario(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
+              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaBeneficiario();">Limpiar</button>                            
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <br />
+
+      <div class="container well" ng-show="CountBuscarHerramientas === 1">
+
+        <form method="get" action="{{ path('beneficiarioGestion', {'idGrupo': idGrupo}) }}">               
+                  
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+        {{ form_errors(form) }}
+
+        <div class="row">          
+
+            
+
+                  <div class="col-md-3">
                   
                     {{ form_label(form.numero_documento) }}
                     {{ form_errors(form.numero_documento) }}
                     {{ form_widget(form.numero_documento, { 'attr': {'class': 'form-control', 'placeholder': 'Número de documento'} }) }}
 
+                  </div>
+
+                  <div class="col-md-3">
+
                     {{ form_label(form.primer_apellido) }}
                     {{ form_errors(form.primer_apellido) }}
                     {{ form_widget(form.primer_apellido, { 'attr': {'class': 'form-control', 'placeholder': 'Primer apellido'} }) }}
+
+                  </div>
+
+                  <div class="col-md-3">
 
                     {{ form_label(form.primer_nombre) }}
                     {{ form_errors(form.primer_nombre) }}
                     {{ form_widget(form.primer_nombre, { 'attr': {'class': 'form-control', 'placeholder': 'Primer nombre'} }) }}
 
+                  </div>
+
+                  <div class="col-md-3">
+
                     {{ form_label(form.genero) }}
                     {{ form_errors(form.genero) }}
                     {{ form_widget(form.genero, { 'attr': {'class': 'form-control', 'placeholder': 'Género'} }) }}
-                    
-                    <input type="submit" name="submit-filter" value="filter" />
 
-                  {{ form_end(form) }}
-                  
-                </form>
+                  </div>
 
-
-    <div class="section">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="btn-group">
-              <a href="{{ path('grupoGestion') }}" class="btn btn-warning">Volver</a>
-              <a href="{{ path('beneficiarioNuevo', {'idGrupo': idGrupo}) }}" class="btn btn-success">Nuevo</a>
-            </div>
-          </div>
         </div>
+
+        <br />        
+
+        <div class="row">    
+
+                  <div class="col-md-12 text-right">
+
+                  <button class="btn btn-default" style="color:white; background-color:#ccc;"  type="submit" name="submit-filter" value="filter"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+
+                  </div>                  
+        </div>
+
+        {{ form_end(form) }}
+
+        </form>
+
       </div>
+
     </div>
+    <br />               
+
     
     <br>
     <div class="container">
@@ -141,7 +195,7 @@
       </div>
     </div>  
 
-	{% for beneficiario in beneficiarios %}
+	{% for beneficiario in pagination %}
     <!-- Modal -->
     <div class="modal fade" id="myModal{{ beneficiario.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
