@@ -24,180 +24,162 @@
 
 		<style type="text/css">
 
-H1 { font-size:26px; font-family: "Tahoma", "Geneva", sans-serif; color:black; line-height: 50%;}
+H1 { font-size:26px; font-family: "Tahoma", "Geneva", sans-serif; color:black; line-height: 100%;}
 H2 { font-size:18px; font-family:arial; color:red;line-height: 100%  }
 BODY { margin: 10px 60px 10px 60px }
-.CSSTableGenerator {
-  margin:0px;padding:0px;
-  width:70%;
-  box-shadow: 10px 10px 5px #888888;
-  border:1px solid #000000;
-  
-  -moz-border-radius-bottomleft:25px;
-  -webkit-border-bottom-left-radius:25px;
-  border-bottom-left-radius:25px;
-  
-  -moz-border-radius-bottomright:25px;
-  -webkit-border-bottom-right-radius:25px;
-  border-bottom-right-radius:25px;
-  
-  -moz-border-radius-topright:25px;
-  -webkit-border-top-right-radius:25px;
-  border-top-right-radius:25px;
-  
-  -moz-border-radius-topleft:25px;
-  -webkit-border-top-left-radius:25px;
-  border-top-left-radius:25px;
-}.CSSTableGenerator table{
-    border-collapse: collapse;
-        border-spacing: 0;
-  width:100%;
-  height:100%;
-  margin:0px;padding:0px;
-}.CSSTableGenerator tr:last-child td:last-child {
-  -moz-border-radius-bottomright:25px;
-  -webkit-border-bottom-right-radius:25px;
-  border-bottom-right-radius:25px;
-}
-.CSSTableGenerator table tr:first-child td:first-child {
-  -moz-border-radius-topleft:25px;
-  -webkit-border-top-left-radius:25px;
-  border-top-left-radius:25px;
-}
-.CSSTableGenerator table tr:first-child td:last-child {
-  -moz-border-radius-topright:25px;
-  -webkit-border-top-right-radius:25px;
-  border-top-right-radius:25px;
-}.CSSTableGenerator tr:last-child td:first-child{
-  -moz-border-radius-bottomleft:25px;
-  -webkit-border-bottom-left-radius:25px;
-  border-bottom-left-radius:25px;
-}.CSSTableGenerator tr:hover td{
-  
-}
-.CSSTableGenerator tr:nth-child(odd){ background-color:#e5e5e5; }
-.CSSTableGenerator tr:nth-child(even)    { background-color:#ffffff; }.CSSTableGenerator td{
-  vertical-align:middle;
-  
-  
-  border:1px solid #000000;
-  border-width:0px 1px 1px 0px;
-  text-align:left;
-  padding:20px;
-  font-size:10px;
-  font-family:Courier;
-  font-weight:normal;
-  color:#000000;
-}.CSSTableGenerator tr:last-child td{
-  border-width:0px 1px 0px 0px;
-}.CSSTableGenerator tr td:last-child{
-  border-width:0px 0px 1px 0px;
-}.CSSTableGenerator tr:last-child td:last-child{
-  border-width:0px 0px 0px 0px;
-}
-.CSSTableGenerator tr:first-child td{
-    background:-o-linear-gradient(bottom, #ffffff 5%, #ffffff 100%);  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #ffffff) );
-  background:-moz-linear-gradient( center top, #ffffff 5%, #ffffff 100% );
-  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#ffffff");  background: -o-linear-gradient(top,#ffffff,ffffff);
-
-  background-color:#ffffff;
-  border:0px solid #000000;
-  text-align:center;
-  border-width:0px 0px 1px 1px;
-  font-size:13px;
-  font-family:Arial;
-  font-weight:bold;
-  color:#000000;
-}
-.CSSTableGenerator tr:first-child:hover td{
-  background:-o-linear-gradient(bottom, #ffffff 5%, #ffffff 100%);  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #ffffff) );
-  background:-moz-linear-gradient( center top, #ffffff 5%, #ffffff 100% );
-  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff", endColorstr="#ffffff");  background: -o-linear-gradient(top,#ffffff,ffffff);
-
-  background-color:#ffffff;
-}
-.CSSTableGenerator tr:first-child td:first-child{
-  border-width:0px 0px 1px 0px;
-}
-.CSSTableGenerator tr:first-child td:last-child{
-  border-width:0px 0px 1px 1px;
-}
 
 
 </style>
 </br>
 <h1><center><b>PROYECTO CONSTRUYENDO CAPACIDADES EMPRESARIALES
-<p> RURALES, CONFIANZA Y OPORTUNIDAD</p>
+ RURALES, CONFIANZA Y OPORTUNIDAD
 </center></b></h1>
 </br>
-<p>En el municipio de _________________Unidad Territorial - UT de ______________a los __________ (   ) días del mes de ______del año ______, siendo las __:___a.m.(__)/p.m.(__) horas, de conformidad con lo señalado en la Resolución 251 del 29 de Mayo de 2014; con el propósito de realizar la instalación del Comité Local de Evaluación y Asignación de Recursos – CLEAR del Proyecto Construyendo Capacidades Empresariales Rurales, Confianza y Oportunidad, se lleva a cabo la jornada de inducción de cada uno de los integrantes del CLEAR en el proceso de la convocatoria y en sus funciones como ente de evaluador y de asignador de recursos.</p>
+<p>En el municipio de <b>{{ clear.municipio }}</b> Unidad Territorial - UT de {{clear.municipio.zona.nombre}} con fecha {{ clear.fechaInicio |  date('d - m - Y') }}, siendo las __:___a.m.(__)/p.m.(__) horas, de conformidad con lo señalado en la Resolución 251 del 29 de Mayo de 2014; con el propósito de realizar la instalación del Comité Local de Evaluación y Asignación de Recursos – CLEAR del Proyecto Construyendo Capacidades Empresariales Rurales, Confianza y Oportunidad, se lleva a cabo la jornada de inducción de cada uno de los integrantes del CLEAR en el proceso de la convocatoria y en sus funciones como ente de evaluador y de asignador de recursos.</p>
 
 <p>Así mismo, con el propósito de integrar el CLEAR se lleva a cabo su instalación con la participación de las siguientes personas:</p>
 
 </br>
-<div class="CSSTableGenerator" >
-                <table >
-                    <tr>
-                        <td>
-                            Miembros del CREAR
-                        </td>
-                        <td >
-                            Nombre
-                        </td>
-                        <td>
-                            Documento Identidad
-                        </td>
-<td>
-                            Firma
-                        </td>
-                    </tr>
-                    <tr>
-                        <td >
-                            Row 1
-                        </td>
-                        <td>
-                            Row 1
-                        </td>
-                        <td>
-                            Row 1
-                        </td>
-                    </tr>
-                    <tr>
-                        <td >
-                            Row 2
-                        </td>
-                        <td>
-                            Row 2
-                        </td>
-                        <td>
-                            Row 2
-                        </td>
-                    </tr>
-                    <tr>
-                        <td >
-                            Row 2
-                        </td>
-                        <td>
-                            Row 2
-                        </td>
-                        <td>
-                            Row 2
-                        </td>
-                    </tr>
-                    <tr>
-                        <td >
-                            Row 3
-                        </td>
-                        <td>
-                            Row 3
-                        </td>
-                        <td>
-                            Row 3
-                        </td>
-                    </tr>
-<tr>
-</tr>
-                </table>
+<div>
+  {% for grupo in gruposClear %}
+                 <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos del Grupos</th>                    
+                </tr>
+              </thead>
+
+              <tbody>    
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Departamento:
+                  </td>         
+                  <td class="text-center">
+                    {{ grupo.grupo.municipio.departamento.nombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Municipio:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.grupo.municipio }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Zona:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.grupo.municipio.zona.nombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Codigo de grupo:
+                  </td>
+                  <td class="text-center">
+                    {% if grupo.grupo.codigo != null %}
+                      {{ grupo.grupo.codigo }}
+                    {% else %}
+                      No habilitado
+                    {% endif %}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Nombre grupo:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.grupo.nombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Tipo de grupo:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.grupo.tipo }}
+                  </td>
+              </tr>
+
+              {% if grupo.grupo.fechaConstitucionLegal != null %}
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    NIT:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.grupo.numeroIdentificacionTributaria }}
+                  </td>
+              </tr>
+              {% endif %}
+
+              {% if grupo.grupo.fechaConstitucionLegal != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Fecha de Constitución legal:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.grupo.fechaConstitucionLegal |  date('d - m - Y') }}
+                  </td>
+              </tr>
+              {% endif %} 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Movil:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.grupo.telefonoCelular }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Fijo:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.grupo.telefonoFijo }}
+                  </td>
+              </tr> 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Cuenta Bancaria:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.grupo.entidadFinancieraCuenta }}
+                  </td>
+              </tr> 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Tipo de cuenta:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.grupo.tipoCuenta }}
+                  </td>
+              </tr>               
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Numero de cuenta:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.grupo.numeroCuenta }}
+                  </td>
+              </tr>  
+              </tbody>  
+          </table>
+          {% endfor %}
             </div>
 </br>
 </br>
