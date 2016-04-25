@@ -39,65 +39,47 @@ class BeneficiarioController extends Controller
 {
 
     /**
-     * @Route("/test", name="testFilter")
-     */
-    public function testFilterAction(Request $request)
-    {
-        $form = $this->get('form.factory')->create(new BeneficiarioFilterType());
-
-        //die("r ".$request->query->has($form->getName()));
-        if ($request->query->has('submit-filter')) {
-         //   die("tonces");
-        }
-        if ($request->query->has($form->getName())) {
-            
-            // manually bind values from the request
-            $form->submit($request->query->get($form->getName()));
-
-            // initialize a query builder
-            $filterBuilder = $this->get('doctrine.orm.entity_manager')
-                ->getRepository('AppBundle:Beneficiario')
-                ->createQueryBuilder('b');
-
-            // build the query from the given form object
-            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
-
-            // now look at the DQL =)
-            var_dump($filterBuilder->getDql());
-            die("entra al if");
-
-        }
-
-        return $this->render('AppBundle:Default:testFilter.html.twig', array(
-            'form' => $form->createView(),
-        ));
-    }
-
-
-    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/beneficiario/", name="beneficiarioGestion")
      */
     public function beneficiarioGestionAction(Request $request, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();
         
-        $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+        /*$beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
             array('active' => '1', 'grupo' => $idGrupo),
             array('primer_apellido' => 'ASC')
-        );
+        );*/
+
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Beneficiario')
+            ->createQueryBuilder('b')
+            ->where('b.grupo = :idGrupo')
+            ->andWhere('b.active = 1')
+            ->setParameter('idGrupo', $idGrupo);
+
+        $form = $this->get('form.factory')->create(new BeneficiarioFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+        $query = $filterBuilder->getQuery();
+
+
         $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
             array('id'=> $idGrupo)
         );
          $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
-            $beneficiarios, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             10/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Beneficiario:beneficiario-gestion.html.twig', 
-        array( 'idGrupo' => $idGrupo, 'beneficiarios' => $beneficiarios, 'grupo'=>$grupo, 'pagination'=> $pagination));
+        array( 'form' => $form->createView(), 'idGrupo' => $idGrupo, 'beneficiarios' => $query, 'grupo'=>$grupo, 'pagination'=> $pagination));
 
     }
 

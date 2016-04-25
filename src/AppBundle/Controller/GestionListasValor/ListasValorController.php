@@ -21,6 +21,7 @@ use AppBundle\Entity\DocumentoSoporte;
 use AppBundle\Form\GestionListasValor\ListasValorType;
 use AppBundle\Form\GestionListasValor\ListasDocumentoSoporteType;
 
+use AppBundle\Form\GestionListasValor\ListasValorFilterType;
 
 
 /*Para autenticación por código*/
@@ -37,22 +38,46 @@ class ListasValorController extends Controller
     {
         $em = $this->getDoctrine()->getManager();        
 
-        $listas = $em->getRepository('AppBundle:Listas')->findBy(
+        /*$listas = $em->getRepository('AppBundle:Listas')->findBy(
             array('active' => '1')            
-        );
+        );*/
+
+        // initialize a query builder
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Listas')
+            ->createQueryBuilder('l');
+
+        $form = $this->get('form.factory')->create(new ListasValorFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            // manually bind values from the request
+            $form->submit($request->query->get($form->getName()));
+
+            // build the query from the given form object
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+
+            // now look at the DQL =)
+            //var_dump($filterBuilder->getDql());
+            //die("");
+        }
+
+        $query = $filterBuilder->getQuery();
 
         $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
-            $listas, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             10/*límite de resultados por página*/
         );
  
         
         return $this->render('AppBundle:GestionListasValor:listas-valor-gestion.html.twig', 
-            array( 'listas' => $listas,
-                   'pagination' => $pagination
+            array( 
+                    'form' => $form->createView(),
+                    'listas' => $query,
+                    'pagination' => $pagination
             )
         );
     }

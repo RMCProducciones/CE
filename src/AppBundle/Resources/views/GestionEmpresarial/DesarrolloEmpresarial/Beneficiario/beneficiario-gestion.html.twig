@@ -31,6 +31,34 @@
  
   	<br>
 
+                <form method="get" action="{{ path('beneficiarioGestion', {'idGrupo': idGrupo}) }}">
+                  {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+                    {{ form_errors(form) }}
+                  
+                    {{ form_label(form.numero_documento) }}
+                    {{ form_errors(form.numero_documento) }}
+                    {{ form_widget(form.numero_documento, { 'attr': {'class': 'form-control', 'placeholder': 'Número de documento'} }) }}
+
+                    {{ form_label(form.primer_apellido) }}
+                    {{ form_errors(form.primer_apellido) }}
+                    {{ form_widget(form.primer_apellido, { 'attr': {'class': 'form-control', 'placeholder': 'Primer apellido'} }) }}
+
+                    {{ form_label(form.primer_nombre) }}
+                    {{ form_errors(form.primer_nombre) }}
+                    {{ form_widget(form.primer_nombre, { 'attr': {'class': 'form-control', 'placeholder': 'Primer nombre'} }) }}
+
+                    {{ form_label(form.genero) }}
+                    {{ form_errors(form.genero) }}
+                    {{ form_widget(form.genero, { 'attr': {'class': 'form-control', 'placeholder': 'Género'} }) }}
+                    
+                    <input type="submit" name="submit-filter" value="filter" />
+
+                  {{ form_end(form) }}
+                  
+                </form>
+
+
     <div class="section">
       <div class="container">
         <div class="row">

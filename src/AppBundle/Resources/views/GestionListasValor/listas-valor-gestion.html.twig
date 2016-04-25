@@ -27,13 +27,24 @@
 
           <div class="col-md-4">
             <div class="input-group">
+              <form method="get" action="{{ path('listasValorGestion') }}">
+                  {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+                    {{ form_errors(form) }}
                   
-              {% set dato = 0 %}
-              <select class="form-control" id="txtBuscar" placeholder="Buscar..." ng-model="txtBuscar">
-                {% for lista in listas %}
-                  <option value="{{lista.id}}">{{lista.dominio}}</option>                  
-                {% endfor %}
-              </select>            
+                    {{ form_label(form.dominio) }}
+                    {{ form_errors(form.dominio) }}
+                    {{ form_widget(form.dominio, { 'attr': {'class': 'form-control', 'placeholder': 'Dominio'} }) }}
+
+                    {{ form_label(form.descripcion) }}
+                    {{ form_errors(form.descripcion) }}
+                    {{ form_widget(form.descripcion, { 'attr': {'class': 'form-control', 'placeholder': 'Descripcion '} }) }}
+                    <input type="submit" name="submit-filter" value="filter" />
+
+                  {{ form_end(form) }}
+                  
+              </form>
+                           
               <span class="input-group-btn">
                 <a class="btn btn-default" href="javascript:buscar();" style="color:white; background-color:#ccc;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
               </span>    
