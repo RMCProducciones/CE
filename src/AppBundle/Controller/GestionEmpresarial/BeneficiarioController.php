@@ -52,11 +52,8 @@ class BeneficiarioController extends Controller
 
         $filterBuilder = $this->get('doctrine.orm.entity_manager')
             ->getRepository('AppBundle:Beneficiario')
-            ->createQueryBuilder('b')
-            ->where('b.grupo = :idGrupo')
-            ->andWhere('b.active = 1')
-            ->setParameter('idGrupo', $idGrupo);
-
+            ->createQueryBuilder('q');
+                  
         $form = $this->get('form.factory')->create(new BeneficiarioFilterType());
 
         if ($request->query->has($form->getName())) {
@@ -64,6 +61,11 @@ class BeneficiarioController extends Controller
             $form->submit($request->query->get($form->getName()));
             $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
         }
+
+        $filterBuilder->andwhere('q.grupo = :idGrupo')
+        ->setParameter('idGrupo', $idGrupo)
+        ->andWhere('q.active = 1');
+
         $query = $filterBuilder->getQuery();
 
         $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
