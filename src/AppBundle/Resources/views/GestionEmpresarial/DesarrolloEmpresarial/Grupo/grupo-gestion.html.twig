@@ -24,7 +24,7 @@
   <br />
   <br />
 
-    <div class="section" ng-controller="FiltrosCtrl">
+    <div class="section" ng-controller="FiltrosGrupoCtrl">
       <div class="container">
         <div class="row" >
           
@@ -36,21 +36,13 @@
           </div>
 
           <div class="col-md-4">
-            <div class="input-group">           
-
-              <input class="form-control" id="txtBuscar" placeholder="Buscar..." ng-model="txtBuscar" type="text">
-              <span class="input-group-btn">
-                <button class="btn btn-default" style="color:white; background-color:#ccc;" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>              
-              </span>         
-
-            </div>
           </div>
 
           <div class="col-md-2">
             <div class="btn-group [[styleBuscarHerramientas]]">              
                 
-                <button class="btn btn-info" ng-click="buttonBuscarHerramientas(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
-              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusqueda();">Limpiar</button>                            
+                <button class="btn btn-info" ng-click="buttonBuscarHerramientasGrupo(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
+              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaGrupo();">Limpiar</button>                            
             </div>
           </div>
 

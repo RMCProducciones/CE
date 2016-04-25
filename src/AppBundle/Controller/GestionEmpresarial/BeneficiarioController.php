@@ -66,7 +66,6 @@ class BeneficiarioController extends Controller
         }
         $query = $filterBuilder->getQuery();
 
-
         $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
             array('id'=> $idGrupo)
         );
