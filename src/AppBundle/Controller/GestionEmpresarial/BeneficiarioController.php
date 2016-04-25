@@ -54,8 +54,8 @@ class BeneficiarioController extends Controller
             ->getRepository('AppBundle:Beneficiario')
             ->createQueryBuilder('b')
             ->where('b.grupo = :idGrupo')
-            ->andWhere('b.active = 1')
-            ->setParameter('idGrupo', $idGrupo);
+            ->setParameter('idGrupo', $idGrupo);      
+        
 
         $form = $this->get('form.factory')->create(new BeneficiarioFilterType());
 
@@ -65,6 +65,9 @@ class BeneficiarioController extends Controller
             $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
         }
         $query = $filterBuilder->getQuery();
+
+        var_dump($filterBuilder->getDql());
+        die("");
 
 
         $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
