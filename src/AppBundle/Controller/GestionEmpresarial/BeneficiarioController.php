@@ -29,11 +29,13 @@ use AppBundle\Form\GestionEmpresarial\BeneficiarioType;
 use AppBundle\Form\GestionEmpresarial\BeneficiarioSoporteType;
 use AppBundle\Form\GestionEmpresarial\GrupoSoporteType;
 
+use AppBundle\Form\GestionEmpresarial\BeneficiarioFilterType;
+
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-use AppBundle\Form\GestionEmpresarial\BeneficiarioFilterType;
+
 
 class BeneficiarioController extends Controller
 {

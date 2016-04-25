@@ -29,6 +29,8 @@ use AppBundle\Form\GestionEmpresarial\GrupoType;
 use AppBundle\Form\GestionEmpresarial\GrupoSoporteType;
 use AppBundle\Form\GestionEmpresarial\ListaRolBeneficiarioType;
 
+use AppBundle\Form\GestionEmpresarial\GrupoFilterType;
+
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -43,26 +45,66 @@ class GrupoController extends Controller
     public function grupoGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $grupos = $em->getRepository('AppBundle:Grupo')->findBy(
+        /*$grupos = $em->getRepository('AppBundle:Grupo')->findBy(
             array('active' => '1'),
             array('fecha_creacion' => 'ASC')
-        );
+        );*/
 
         $caminos = $em->getRepository('AppBundle:Camino')->findBy(
             array('active' => '1'),
             array('fecha_creacion' => 'ASC')
         );
+        
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Grupo')
+            ->createQueryBuilder('g')
+            ->innerJoin("g.municipio", "m")
+            ->innerJoin("m.departamento", "d")
+            ->innerJoin("m.zona", "z");
+
+        $form = $this->get('form.factory')->create(new GrupoFilterType());
+
+    
+        if ($request->query->has($form->getName())) {
+
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);           
+        }
+
+        $filterBuilder->andWhere('g.active = 1');
+        
+        if (isset($_GET['selMunicipio']) && $_GET['selMunicipio'] != "?") {
+             $filterBuilder->andWhere('m.id = :idMunicipio')
+            ->setParameter('idMunicipio', $_GET['selMunicipio']);
+        }
+        else{
+            if (isset($_GET['selDepartamento']) && $_GET['selDepartamento'] != "?") {
+                $filterBuilder->andWhere('d.id = :idDepartamento')
+                ->setParameter('idDepartamento', $_GET['selDepartamento']);
+            }
+            if (isset($_GET['selZona']) && $_GET['selZona'] != "?") {
+                $filterBuilder->andWhere('z.id = :idZona')
+                ->setParameter('idZona', $_GET['selZona']);
+            }      
+        }
+
+        //var_dump($filterBuilder->getDql());
+        //die("");
+
+        $query = $filterBuilder->getQuery();
+
 
          $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
-            $grupos, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             10/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:grupo-gestion.html.twig', 
-            array( 'grupos' => $grupos,
+            array( 'form' => $form->createView(),
+                   'grupos' => $query,
                    'caminos' => $caminos,
                    'pagination' => $pagination)
         );
