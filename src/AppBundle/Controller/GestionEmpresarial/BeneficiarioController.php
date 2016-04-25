@@ -39,7 +39,7 @@ class BeneficiarioController extends Controller
 {
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/beneficiario/", name="beneficiarioGestion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/beneficiario", name="beneficiarioGestion")
      */
     public function beneficiarioGestionAction(Request $request, $idGrupo)
     {
@@ -75,6 +75,10 @@ class BeneficiarioController extends Controller
         $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
             array('id'=> $idGrupo)
         );
+<<<<<<< HEAD
+=======
+
+>>>>>>> ed7a0d9e76d5045fd555c8f20f131df911c071c5
         $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(

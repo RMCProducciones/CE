@@ -24,34 +24,4 @@ app.controller('rutaServidorCtrl', ['$scope', '$http', function($scope, $http) {
 	
 }]);
 
-app.controller('FiltrosCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
 
-	$scope.CountBuscarHerramientas = -1;
-	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
-	
-	$scope.buttonBuscarHerramientas = function(CountBuscarHerramientas){
-		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
-		if($scope.CountBuscarHerramientas== -1)
-		{
-			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
-		}
-		else
-		{
-			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
-		}
-		
-    }	
-	
-    $scope.limpiarCamposFiltroBusqueda = function(){
-       
-
-		$("#txtBuscar").val("");
-		$("#selDepartamento").val("");
-		$("#selZona").val("");
-		$("#selMunicipio").val("");
-		$("#lstEstado").val("");
-       
-    }
-      
-		
-}]);
