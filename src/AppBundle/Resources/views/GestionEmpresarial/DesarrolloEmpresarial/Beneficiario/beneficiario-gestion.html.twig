@@ -26,12 +26,7 @@
     <h2> Grupo: {{ grupos.nombre }}</h2>
     {% endfor %}
     <hr>
-  </div>
-
-  <form method="get" action="{{ path('beneficiarioGestion', {'idGrupo': idGrupo}) }}">
-                  
-                  
-                </form>
+  </div> 
    
  
  <br />
@@ -66,6 +61,8 @@
 
       <div class="container well" ng-show="CountBuscarHerramientas === 1">
 
+        <form method="get" action="{{ path('beneficiarioGestion', {'idGrupo': idGrupo}) }}">               
+                  
         {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
 
         {{ form_errors(form) }}
@@ -120,6 +117,8 @@
         </div>
 
         {{ form_end(form) }}
+
+        </form>
 
       </div>
 
@@ -196,7 +195,7 @@
       </div>
     </div>  
 
-	{% for beneficiario in beneficiarios %}
+	{% for beneficiario in pagination %}
     <!-- Modal -->
     <div class="modal fade" id="myModal{{ beneficiario.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
