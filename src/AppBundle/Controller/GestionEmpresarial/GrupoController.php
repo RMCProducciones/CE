@@ -425,7 +425,7 @@ class GrupoController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/comite-vamos-bien", name="grupoBeneficiarioCVB")
      */
-    public function comiteVamosBienGrupoBeneficiarioAction($idGrupo)
+    public function comiteVamosBienGrupoBeneficiarioAction(Request $request, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -455,13 +455,21 @@ class GrupoController extends Controller
             array('id' => $beneficiarios, 'grupo' => $grupo )
         );
 
+        $paginator1  = $this->get('knp_paginator');
+
+        $pagination1 = $paginator1->paginate(
+            $mostrarBeneficiarios, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            5/*límite de resultados por página*/
+        );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:beneficiario-grupo-cvb-gestion-asignacion.html.twig', 
             array(
                 'beneficiarios' => $mostrarBeneficiarios,
                 'asignacionesBeneficiariosCVB' => $asignacionesBeneficiariosCVB,
                 'idGrupo' => $idGrupo,
-                'grupo' => $grupo
+                'grupo' => $grupo,
+                'pagination1' => $pagination1
             ));        
     }
 
@@ -550,7 +558,7 @@ class GrupoController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/comite-compras", name="grupoBeneficiarioComiteCompras")
      */
-    public function comiteComprasGrupoBeneficiarioAction($idGrupo)
+    public function comiteComprasGrupoBeneficiarioAction(Request $request, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -576,13 +584,21 @@ class GrupoController extends Controller
             array('id' => $beneficiarios, 'grupo' => $grupo )
         );
 
+        $paginator1  = $this->get('knp_paginator');
+
+        $pagination1 = $paginator1->paginate(
+            $mostrarBeneficiarios, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            5/*límite de resultados por página*/
+        );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:beneficiario-grupo-cc-gestion-asignacion.html.twig', 
             array(
                 'beneficiarios' => $mostrarBeneficiarios,
                 'asignacionesBeneficiariosCC' => $asignacionesBeneficiariosCC,
                 'idGrupo' => $idGrupo,
-                'grupo' => $grupo
+                'grupo' => $grupo,
+                'pagination1' => $pagination1                
             ));        
     }
 
