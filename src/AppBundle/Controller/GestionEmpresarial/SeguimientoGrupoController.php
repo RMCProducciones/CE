@@ -16,6 +16,7 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 
 use AppBundle\Entity\Grupo;
+use AppBundle\Entity\Beneficiario;
 use AppBundle\Entity\Camino;
 use AppBundle\Entity\HabilitacionFases;
 use AppBundle\Entity\DiagnosticoOrganizacional;
@@ -28,6 +29,7 @@ use AppBundle\Entity\AsignacionBeneficiarioComiteCompras;
 use AppBundle\Entity\AsignacionBeneficiarioComiteVamosBien;
 use AppBundle\Entity\AsignacionBeneficiarioEstructuraOrganizacional;
 use AppBundle\Entity\AsignacionContadorGrupo;
+use AppBundle\Entity\AsignacionBeneficiarioVisitas;
 
 use AppBundle\Form\GestionEmpresarial\HabilitacionFasesType;
 use AppBundle\Form\GestionEmpresarial\SeguimientoMOTType;
@@ -783,6 +785,137 @@ class SeguimientoGrupoController extends Controller
                 )
             );  
     }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/visita/beneficiarios-asignacion", name="beneficiarioVisitasNuevo")
+     */
+    public function beneficiariosVisitaAction($idGrupo, $idNodo)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id' => $idNodo)
+        );
+
+        $beneficiarios = new Beneficiario();
+
+        $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('grupo' => $grupo)
+        );
+
+        $asignacionesBeneficiariosVisitas = $em->getRepository('AppBundle:AsignacionBeneficiarioVisitas')->findBy(
+            array('grupo' => $grupo,
+                  'nodo' => $nodo)
+        ); 
+
+        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioVisitas abv WHERE beneficiario = abv.beneficiario AND abv.nodo = :nodo) AND b.active = 1');
+        $query->setParameter(':nodo', $nodo);
+        $beneficiarios = $query->getResult();
+
+        $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('id' => $beneficiarios, 'grupo' => $grupo )
+        );
+
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:beneficiario-visita-asignacion.html.twig', 
+            array(
+                'beneficiarios' => $mostrarBeneficiarios,
+                'asignacionesBeneficiariosVisitas' => $asignacionesBeneficiariosVisitas,
+                'idGrupo' => $idGrupo,
+                'grupo' => $grupo,
+                'idNodo' => $idNodo
+            ));        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/visita/beneficiarios-asignacion/{idBeneficiario}/nueva-asignacion", name="beneficiarioVisitasAsignar")
+     */
+    public function beneficiariosAsignarVisitaAction($idGrupo, $idNodo, $idBeneficiario)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
+            array('id' => $idBeneficiario)
+        );      
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        ); 
+
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id' => $idNodo)
+        );       
+           
+        $asignacionBeneficiarioVisitas = new AsignacionBeneficiarioVisitas();
+
+        $asignacionBeneficiarioVisitas->setGrupo($grupo);        
+        $asignacionBeneficiarioVisitas->setBeneficiario($beneficiario);
+        $asignacionBeneficiarioVisitas->setNodo($nodo);
+        $asignacionBeneficiarioVisitas->setActive(true);
+        $asignacionBeneficiarioVisitas->setFechaCreacion(new \DateTime());
+
+        $em->persist($asignacionBeneficiarioVisitas);
+        $em->flush();
+
+
+
+        return $this->redirectToRoute('beneficiarioVisitasNuevo', 
+            array(
+                'beneficiario' => $beneficiario,          
+                'AsignacionBeneficiarioVisitas' => $asignacionBeneficiarioVisitas,                
+                'idGrupo' => $idGrupo,
+                'idNodo' => $idNodo
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/visita/beneficiarios-asignacion/{idAsignacionBeneficiariosVisita}/eliminar", name="beneficiarioVisitasEliminar")
+     */
+    public function beneficiariosEliminarVisitaAction($idGrupo, $idNodo, $idAsignacionBeneficiariosVisita)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionBeneficiarioVisitas = new AsignacionBeneficiarioVisitas();
+
+        $asignacionBeneficiarioVisitas = $em->getRepository('AppBundle:AsignacionBeneficiarioVisitas')->find($idAsignacionBeneficiariosVisita); 
+
+        $em->remove($asignacionBeneficiarioVisitas);
+        $em->flush();
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id' => $idNodo)
+        );
+
+        $beneficiarios = new Beneficiario();
+
+        $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
+            array('grupo' => $grupo)
+        );     
+
+        $asignacionesBeneficiariosVisitas = $em->getRepository('AppBundle:AsignacionBeneficiarioVisitas')->findBy(
+            array('grupo' => $grupo,
+                  'nodo' => $nodo)
+        ); 
+
+        return $this->redirectToRoute('beneficiarioVisitasNuevo', 
+            array(
+                'beneficiario' => $beneficiarios,          
+                'AsignacionBeneficiarioVisitas' => $asignacionBeneficiarioVisitas,                
+                'idGrupo' => $idGrupo,
+                'idNodo' => $idNodo
+            ));        
+        
+    } 
 
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/evaluacion-fase/{clearFinalizado}", name="evaluacionFase")

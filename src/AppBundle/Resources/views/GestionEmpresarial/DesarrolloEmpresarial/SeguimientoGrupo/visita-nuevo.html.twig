@@ -252,14 +252,18 @@
           </center>          
   </div>
 <div class="col-md-4">
+  <div ng-show="swCambiosPresupuestoAsignado === true">
           {{ form_label(form.observaciones_presupuesto_asignado) }}
           {{ form_errors(form.observaciones_presupuesto_asignado) }}
           {{ form_widget(form.observaciones_presupuesto_asignado, { 'attr': {'class': 'form-control', 'placeholder': 'Observaciones presupuesto asignado '} }) }}
+  </div>
   </div>  
     <div class="col-md-4">
+      <div ng-show="swCambiosPresupuestoAsignado === true">
           {{ form_label(form.cambios_razones_presupuesto_asignado) }}
           {{ form_errors(form.cambios_razones_presupuesto_asignado) }}
           {{ form_widget(form.cambios_razones_presupuesto_asignado, { 'attr': {'class': 'form-control', 'placeholder': 'Cambios presupuesto asignado'} }) }}
+      </div>
   </div>       
 </div>
 <br>
@@ -323,9 +327,11 @@
           </center>          
   </div>
   <div class="col-md-4">
+    <div ng-show="swCambiosIntegrantesGrupo === true">
           {{ form_label(form.cambios_razones_integrantes_grupo) }}
           {{ form_errors(form.cambios_razones_integrantes_grupo) }}
           {{ form_widget(form.cambios_razones_integrantes_grupo, { 'attr': {'class': 'form-control', 'placeholder': 'Razones cambio integrantes '} }) }}
+    </div>
   </div>         
 </div>
 <br>
@@ -349,9 +355,11 @@
           </center>                    
   </div>
    <div class="col-md-4">
+    <div ng-show="swInterventoria === true">
           {{ form_label(form.razones_interventoria) }}
           {{ form_errors(form.razones_interventoria) }}
           {{ form_widget(form.razones_interventoria, { 'attr': {'class': 'form-control', 'placeholder': 'Razones interventoria'} }) }}
+    </div>
   </div>      
 </div>
 <div class="row">

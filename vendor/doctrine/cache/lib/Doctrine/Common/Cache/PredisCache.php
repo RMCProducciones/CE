@@ -49,8 +49,6 @@ class PredisCache extends CacheProvider
         return array_map('unserialize', array_filter(array_combine($keys, $fetchedItems)));
     }
 
-<<<<<<< HEAD
-=======
     /**
      * {@inheritdoc}
      */
@@ -79,7 +77,6 @@ class PredisCache extends CacheProvider
         return (string) $response == 'OK';
     }
 
->>>>>>> e1b26dc9bba75d1dfe95d4ae1924bd3610f336eb
     /**
      * {@inheritdoc}
      */

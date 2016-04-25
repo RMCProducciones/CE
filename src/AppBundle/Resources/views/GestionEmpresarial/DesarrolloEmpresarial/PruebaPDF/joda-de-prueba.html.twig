@@ -1,0 +1,208 @@
+{% block section %}	
+<meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">             
+		<div style="color:#f00;font-size:30px;">
+			<b>{{clear.lugarRealizacionCLEAR}}</b>
+			<br>
+			<b>Fecha de inicio:{{ clear.fechaInicio |  date('d - m - Y') }}</b>
+            <br>
+            <b>Fecha de finalización: {{ clear.fechaFinalizacion |  date('d - m - Y') }}</b>
+            <br>
+            <b>Lugar de realización del CLEAR: {{ clear.lugarRealizacionCLEAR }}</b>
+            <br>
+            <b>Zona: {{ clear.municipio.zona.nombre }}</b>
+            <br>
+            <b>Departamento: {{ clear.municipio.departamento.nombre }}</b>
+			<br>
+            <b>Municipio: {{ clear.municipio }}</b>
+		</div>
+
+		<div>
+			{% for grupoClear in gruposClear %}
+				{{grupoClear.grupo.nombre}}
+			{% endfor %}
+		</div>
+
+		<style type="text/css">
+
+H1 { font-size:26px; font-family: "Tahoma", "Geneva", sans-serif; color:black; line-height: 100%;}
+H2 { font-size:18px; font-family:arial; color:red;line-height: 100%  }
+BODY { margin: 10px 60px 10px 60px }
+
+
+</style>
+</br>
+<h1><center><b>PROYECTO CONSTRUYENDO CAPACIDADES EMPRESARIALES
+ RURALES, CONFIANZA Y OPORTUNIDAD
+</center></b></h1>
+</br>
+<p>En el municipio de <b>{{ clear.municipio }}</b> Unidad Territorial - UT de {{clear.municipio.zona.nombre}} con fecha {{ clear.fechaInicio |  date('d - m - Y') }}, siendo las __:___a.m.(__)/p.m.(__) horas, de conformidad con lo señalado en la Resolución 251 del 29 de Mayo de 2014; con el propósito de realizar la instalación del Comité Local de Evaluación y Asignación de Recursos – CLEAR del Proyecto Construyendo Capacidades Empresariales Rurales, Confianza y Oportunidad, se lleva a cabo la jornada de inducción de cada uno de los integrantes del CLEAR en el proceso de la convocatoria y en sus funciones como ente de evaluador y de asignador de recursos.</p>
+
+<p>Así mismo, con el propósito de integrar el CLEAR se lleva a cabo su instalación con la participación de las siguientes personas:</p>
+
+</br>
+<div>
+  {% for grupo in gruposClear %}
+                 <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos del Grupos</th>                    
+                </tr>
+              </thead>
+
+              <tbody>    
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Departamento:
+                  </td>         
+                  <td class="text-center">
+                    {{ grupo.grupo.municipio.departamento.nombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Municipio:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.grupo.municipio }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Zona:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.grupo.municipio.zona.nombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Codigo de grupo:
+                  </td>
+                  <td class="text-center">
+                    {% if grupo.grupo.codigo != null %}
+                      {{ grupo.grupo.codigo }}
+                    {% else %}
+                      No habilitado
+                    {% endif %}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Nombre grupo:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.grupo.nombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Tipo de grupo:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.grupo.tipo }}
+                  </td>
+              </tr>
+
+              {% if grupo.grupo.fechaConstitucionLegal != null %}
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    NIT:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.grupo.numeroIdentificacionTributaria }}
+                  </td>
+              </tr>
+              {% endif %}
+
+              {% if grupo.grupo.fechaConstitucionLegal != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Fecha de Constitución legal:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.grupo.fechaConstitucionLegal |  date('d - m - Y') }}
+                  </td>
+              </tr>
+              {% endif %} 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Movil:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.grupo.telefonoCelular }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Fijo:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.grupo.telefonoFijo }}
+                  </td>
+              </tr> 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Cuenta Bancaria:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.grupo.entidadFinancieraCuenta }}
+                  </td>
+              </tr> 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Tipo de cuenta:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.grupo.tipoCuenta }}
+                  </td>
+              </tr>               
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Numero de cuenta:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.grupo.numeroCuenta }}
+                  </td>
+              </tr>  
+              </tbody>  
+          </table>
+          {% endfor %}
+            </div>
+</br>
+</br>
+Posterior a la instalación del CLEAR, el promotor rural hace entrega a los integrantes del CLEAR de _____________ (____) propuestas recibidas según acta de cierre del día ___ del mes de _____ del año ____ en el marco de la Convocatoria para la conformación del Banco de proyectos para grupos formales y no formales:
+</br>
+</br>
+Tabla
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+
+Para constancia se firma a los _________________ (    ) días del mes de _______del año ______<p>
+
+______________________________________________<p>
+SECRETARIO TÉCNICO DEL CLEAR<p>
+
+Nombre:<p> ________________________________________
+<p>C.C.<p>       ________________________________________ <p>     
+Cargo:Promotor Rural Municipio _____________________	
+{% endblock %}
+

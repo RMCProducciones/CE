@@ -107,3 +107,14 @@ knp_paginator:
     template:
         pagination: KnpPaginatorBundle:Pagination:sliding.html.twig # plantilla utilizada en la paginación
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # plantilla utilizada en la paginación para ordenar los resultados
+
+#Bundle PDF
+knp_snappy:
+    pdf:
+        enabled: true
+        binary: C:\\xampp\\htdocs\\CE\\pdf\\wkhtmltopdf\\bin\\wkhtmltopdf.exe
+        options: []
+    image:
+        enabled: true
+        binary: C:\\xampp\\htdocs\\CE\\pdf\\wkhtmltopdf\\bin\\wkhtmltoimage.exe
+        options: []

@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -280,6 +281,64 @@ class ClearController extends Controller
 
         return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR));
         
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/documentos-soporte/{idClearSoporte}/descargar", name="clearSoporteRecuperarArchivo")
+     */
+    public function clearSoporteDescargarAction(Request $request, $idCLEAR, $idClearSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $path = $em->getRepository('AppBundle:ClearSoporte')->findOneBy(
+            array('id' => $idClearSoporte));
+
+        $link = '..\uploads\documents\\'.$path->getPath();
+
+        header("Content-Disposition: attachment; filename = $link");
+        header ("Content-Type: application/force-download");
+        header ("Content-Length: ".filesize($link));
+        readfile($link);           
+        //return new BinaryFileResponse($link); -> para mostrar en ventana aparte
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/acta-incio", name="clearActaInicio")
+     */
+    public function clearActaInicioPDFAction(Request $request, $idCLEAR){
+
+        $em = $this->getDoctrine()->getManager();
+        //Consulto a mi base de datos
+
+        $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
+            array('id' => $idCLEAR)            
+        );
+
+        $gruposClear = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
+            array('clear' => $clear->getId())
+        );
+
+        $nombre = "Acta de Inicio Clear ";        
+        $link = '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf';        
+        if(file_exists($link)){
+            unlink('..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf');            
+        }        
+
+        $this->get('knp_snappy.pdf')->generateFromHtml(
+        $this->renderView(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/PruebaPDF:joda-de-prueba.html.twig', 
+            array('clear' => $clear,
+                  'gruposClear' => $gruposClear)
+            ),
+            '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf'
+        ); 
+
+        header("Content-Disposition: attachment; filename = $link");
+        header ("Content-Type: application/force-download");
+        header ("Content-Length: ".filesize($link));
+        readfile($link);                    
+
+        //return new BinaryFileResponse($link); 
     }
     
 

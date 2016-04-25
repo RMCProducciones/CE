@@ -126,11 +126,12 @@ class GrupoController extends Controller
             
             $em->flush();
 
-            return $this->redirectToRoute('grupoGestion');
+            return $this->redirectToRoute('grupoGestion', 
+                array('idGrupo' => $idGrupo));
         }
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:grupo-nuevo.html.twig', array('form' => $form->createView()));
-    }
+    }    
 
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/editar", name="grupoEditar")
@@ -520,11 +521,7 @@ class GrupoController extends Controller
         $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
             array('grupo' => $grupo)
         );
-
-        $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
-            array('id'=> $idGrupo)
-        );
-
+        
         $asignacionesBeneficiariosCC = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteCompras')->findBy(
             array('grupo' => $grupo)
         ); 

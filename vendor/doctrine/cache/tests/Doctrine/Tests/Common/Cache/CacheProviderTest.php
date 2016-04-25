@@ -69,8 +69,6 @@ class CacheProviderTest extends \Doctrine\Tests\DoctrineTestCase
         $this->assertFalse($cache->deleteAll(), 'deleteAll() returns false when saving the namespace version fails');
         $cache->contains('key');
     }
-<<<<<<< HEAD
-=======
 
     public function testSaveMultipleNoFail()
     {
@@ -102,5 +100,4 @@ class CacheProviderTest extends \Doctrine\Tests\DoctrineTestCase
             'kok'   => 'vok',
         ));
     }
->>>>>>> e1b26dc9bba75d1dfe95d4ae1924bd3610f336eb
 }

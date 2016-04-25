@@ -48,15 +48,9 @@ class CalificacionCriteriosConcursoController extends Controller
             array('grupo' => $asignacionCalificacion->getGrupo()->getId())        
         );
 
-        if($calificacionCriterio == null){
-            $criterios = $em->getRepository('AppBundle:CriterioCalificacion')->findBy(
+        $criterios = $em->getRepository('AppBundle:CriterioCalificacion')->findBy(
                 array('concurso' => $asignacionCalificacion->getConcurso())          
-           );               
-        }else{
-            $criterios = $em->getRepository('AppBundle:CriterioCalificacion')->findBy(
-                array('concurso' => $asignacionCalificacion->getConcurso())          
-           );                          
-        }
+        );     
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/CalificacionCriterio:calificacion-gestion.html.twig', 
             array( 'criterios' => $criterios,                    
