@@ -56,6 +56,9 @@ class BeneficiarioController extends Controller
             ->where('b.grupo = :idGrupo')
             ->setParameter('idGrupo', $idGrupo);      
         
+        var_dump($filterBuilder->getDql());
+        die("");
+
 
         $form = $this->get('form.factory')->create(new BeneficiarioFilterType());
 
@@ -66,8 +69,7 @@ class BeneficiarioController extends Controller
         }
         $query = $filterBuilder->getQuery();
 
-        var_dump($filterBuilder->getDql());
-        die("");
+        
 
 
         $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
