@@ -29,11 +29,13 @@ use AppBundle\Form\GestionEmpresarial\BeneficiarioType;
 use AppBundle\Form\GestionEmpresarial\BeneficiarioSoporteType;
 use AppBundle\Form\GestionEmpresarial\GrupoSoporteType;
 
+use AppBundle\Form\GestionEmpresarial\BeneficiarioFilterType;
+
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-use AppBundle\Form\GestionEmpresarial\BeneficiarioFilterType;
+
 
 class BeneficiarioController extends Controller
 {
@@ -75,10 +77,7 @@ class BeneficiarioController extends Controller
         $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
             array('id'=> $idGrupo)
         );
-<<<<<<< HEAD
-=======
 
->>>>>>> ed7a0d9e76d5045fd555c8f20f131df911c071c5
         $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
