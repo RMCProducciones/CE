@@ -17,6 +17,8 @@ use AppBundle\Entity\POA;
 use AppBundle\Entity\POASoporte;
 use AppBundle\Form\GestionAdministrativa\POAType;
 use AppBundle\Form\GestionAdministrativa\POASoporteType;
+use AppBundle\Form\GestionAdministrativa\POAFilterType;
+
 
 
 /*Para autenticación por código*/
@@ -33,20 +35,42 @@ class PoaController extends Controller
     public function POAGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $poas = $em->getRepository('AppBundle:POA')->findAll(); 
+
+
+        /*$poas = $em->getRepository('AppBundle:POA')->findAll(); */
+
+         $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:POA')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new POAFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder->andWhere('q.active = 1');
+
+        $query = $filterBuilder->getQuery();
+
+        //var_dump($filterBuilder->getDql());
+        //die("");    
 
         $paginator  = $this->get('knp_paginator');
 
 
         $pagination = $paginator->paginate(
-            $poas, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             10/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionAdministrativa/Poa:POA-gestion.html.twig', 
-            array( 'poas' => $poas,
-                   'pagination' => $pagination
+            array('form' => $form->createView(),  
+                  'poas' => $query,
+                  'pagination' => $pagination
                    )
             );
     }

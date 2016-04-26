@@ -57,5 +57,34 @@ SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a 
 
 }]);
 
+app.controller('FiltrosConvocatoriaCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasConvocatoria = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaConvocatoria = function(){
+       
+		$("#convocatoriaFilter_poa").val("");
+		$("#convocatoriaFilter_numero").val("");
+		
+       
+    }
+      
+		
+}]);
+
 
 

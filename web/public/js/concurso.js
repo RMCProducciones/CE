@@ -66,3 +66,41 @@ app.controller('gestionGrupoConcursoCtrl', ['$scope', '$http', function($scope, 
 
 	};	
 }]);
+
+app.controller('FiltrosConcursoCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasConcurso = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaConcurso = function(){
+       
+		$("#concursoFilter_tipo").val("");
+		$("#concursoFilter_modalidad").val("");
+		$("#concursoFilter_tematica").val("");
+			
+
+
+		
+
+       
+    }
+      
+		
+}]);
+
+
+
+

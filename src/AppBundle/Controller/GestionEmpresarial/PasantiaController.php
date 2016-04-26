@@ -27,7 +27,7 @@ use AppBundle\Entity\AsignacionGrupoBeneficiarioPasantia;
 
 
 
-
+use AppBundle\Form\GestionEmpresarial\PasantiaFilterType;
 use AppBundle\Form\GestionEmpresarial\PasantiaType;
 use AppBundle\Form\GestionEmpresarial\PasantiaSoporteType;
 
@@ -36,6 +36,9 @@ use AppBundle\Form\GestionEmpresarial\PasantiaSoporteType;
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+
+
+
 
 
 class PasantiaController extends Controller
@@ -47,20 +50,43 @@ class PasantiaController extends Controller
     public function pasantiaGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $pasantias = $em->getRepository('AppBundle:Pasantia')->findBy(
+        
+        /*$pasantias = $em->getRepository('AppBundle:Pasantia')->findBy(
             array('active' => '1'),
             array('fecha_creacion' => 'ASC')
-        );
+        );*/
+
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Pasantia')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new PasantiaFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder->andWhere('q.active = 1');
+
+        $query = $filterBuilder->getQuery();
+
+        //var_dump($filterBuilder->getDql());
+        //die("");    
+
+
          $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
-            $pasantias, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             10/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Pasantia:pasantia-gestion.html.twig', 
-            array( 'pasantias' => $pasantias,
+            array( 'form' => $form->createView(), 
+                'pasantias' => $query,
                 'pagination' => $pagination
                 )
             );

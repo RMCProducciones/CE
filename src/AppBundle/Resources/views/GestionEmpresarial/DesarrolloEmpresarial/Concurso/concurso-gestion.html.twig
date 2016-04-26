@@ -27,21 +27,92 @@
 
     
 
-    <div class="section">
+    <div class="section" ng-controller="FiltrosConcursoCtrl">
       <div class="container">
         <div class="row">
           <div class="col-md-6">
             <div class="btn-group">
               <a href="{{ path('homepage') }}" class="btn btn-warning">Volver</a>
               <a href="{{ path('concursoNuevo') }}" class="btn btn-success">Nuevo</a>
-            </div>
-
-          
+            </div>          
           </div>
-        </div>
+
+          <div class="col-md-4">
+          </div>
+
+          <div class="col-md-2">
+            <div class="btn-group [[styleBuscarHerramientas]]">              
+                
+                <button class="btn btn-info" ng-click="buttonBuscarHerramientasConcurso(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
+              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaConcurso();">Limpiar</button>                            
+            </div>
+          </div>
+
+
       </div>
     </div>
+    <div class="container well" ng-show="CountBuscarHerramientas === 1">
+
+        <form method="get" action="{{ path('concursoGestion') }}">               
+                  
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+        {{ form_errors(form) }}
+
+        <div class="row">          
+
+            
+
+                  <div class="col-md-3">
+                  
+                    {{ form_label(form.tipo) }}
+                    {{ form_errors(form.tipo) }}
+                    {{ form_widget(form.tipo, { 'attr': {'class': 'form-control', 'placeholder': 'Tipo'} }) }}
+
+                  </div>
+
+                  <div class="col-md-3">
+
+                    {{ form_label(form.modalidad) }}
+                    {{ form_errors(form.modalidad) }}
+                    {{ form_widget(form.modalidad, { 'attr': {'class': 'form-control', 'placeholder': 'Modalidad'} }) }}
+
+                  </div>
+
+                  <div class="col-md-3">
+
+                    {{ form_label(form.tematica) }}
+                    {{ form_errors(form.tematica) }}
+                    {{ form_widget(form.tematica, { 'attr': {'class': 'form-control', 'placeholder': 'Tematica'} }) }}
+
+                  </div>
+
+               
+
+
+        </div>
+
+        <br />        
+
+        <div class="row">    
+
+                  <div class="col-md-12 text-right">
+
+                  <button class="btn btn-default" style="color:white; background-color:#ccc;"  type="submit" name="submit-filter" value="filter"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+
+                  </div>                  
+        </div>
+
+        {{ form_end(form) }}
+
+        </form>
+
+      </div>
+
+    </div>  
     
+
+
     <br />    
     <br />    
 

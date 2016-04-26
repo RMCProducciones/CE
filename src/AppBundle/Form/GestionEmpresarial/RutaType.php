@@ -13,7 +13,7 @@ class RutaType extends AbstractType
         $builder
 
 			
-			->add('nombreRuta','text', array('label' => 'Nombre Ruta'))
+			->add('nombre_ruta','text', array('label' => 'Nombre Ruta'))
 			->add('observaciones')
 			;
 		}
