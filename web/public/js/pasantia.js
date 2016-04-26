@@ -84,6 +84,44 @@ app.controller('gestionTerritorioPasantiaCtrl', ['$scope', '$http', function($sc
 	};	
 }]);
 
+app.controller('FiltrosPasantiaCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasPasantia = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaPasantia = function(){
+       
+		$("#pasantiaFilter_nombre_pasantia").val("");
+		$("#pasantiaFilter_observaciones").val("");
+	
+
+
+		
+
+       
+    }
+      
+		
+}]);
+
+
+
+
+
+
 
 
 

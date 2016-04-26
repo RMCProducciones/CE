@@ -30,6 +30,9 @@ use AppBundle\Form\GestionEmpresarial\ContadorType;
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
+use AppBundle\Form\GestionEmpresarial\ContadorFilterType;
+
+
 class ContadorController extends Controller
 {
 /**
@@ -39,21 +42,42 @@ class ContadorController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $contador = $em->getRepository('AppBundle:Contador')->findBy(
+        /*$contador = $em->getRepository('AppBundle:Contador')->findBy(
             array('active' => '1'),
             array('fecha_creacion' => 'ASC')
-        );
+        );*/
+
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Contador')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new ContadorFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder->andWhere('q.active = 1');
+
+        $query = $filterBuilder->getQuery();
+
+        //var_dump($filterBuilder->getDql());
+        //die("");    
+
          $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
-            $contador, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             10/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Contador:contador-gestion.html.twig', 
-            array( 
-                'contador' => $contador,
+            array(
+                'form' => $form->createView(), 
+                'contador' => $query,
                 'pagination' => $pagination
             )
         );

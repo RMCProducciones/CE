@@ -27,18 +27,90 @@
 
     <hr>
 
-    <div class="section">
+    <div class="section" ng-controller="FiltrosAhorroCtrl">
       <div class="container">
-        <div class="row">
+        <div class="row" >
+          
           <div class="col-md-6">
             <div class="btn-group">
-              <a href="{{ path('ahorroGestion') }}" class="btn btn-warning">Volver</a>
-              <a href="{{ path('ahorroNuevo') }}" class="btn btn-success">Nuevo</a>
+              <a href="{{ path('homepage') }}" class="btn btn-warning">Volver</a>
+              <a href="{{ path('ahorroNuevo') }}" class="btn btn-success">Nuevo</a>              
             </div>
           </div>
+
+          <div class="col-md-4">
+          </div>
+
+          <div class="col-md-2">
+            <div class="btn-group [[styleBuscarHerramientas]]">              
+                
+                <button class="btn btn-info" ng-click="buttonBuscarHerramientasAhorro(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
+              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaAhorro();">Limpiar</button>                            
+            </div>
+          </div>
+
         </div>
+
       </div>
+
+      <div class="container well" ng-show="CountBuscarHerramientas === 1">
+
+        <form method="get" action="{{ path('ahorroGestion') }}">               
+                  
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+        {{ form_errors(form) }}
+
+        <div class="row">                      
+
+                  <div class="col-md-3">
+                  
+                    {{ form_label(form.fecha_registro) }}
+                    {{ form_errors(form.fecha_registro) }}
+                    {{ form_widget(form.fecha_registro, { 'attr': {'class': 'form-control', 'placeholder': 'Fecha Registro'} }) }}
+
+                  </div>
+
+                  <div class="col-md-3">
+
+                    {{ form_label(form.fecha_inicio) }}
+                    {{ form_errors(form.fecha_inicio) }}
+                    {{ form_widget(form.fecha_inicio, { 'attr': {'class': 'form-control', 'placeholder': 'Fecha Inicio '} }) }}
+
+                  </div>
+
+                  <div class="col-md-3">
+
+                    {{ form_label(form.estado) }}
+                    {{ form_errors(form.estado) }}
+                    {{ form_widget(form.estado, { 'attr': {'class': 'form-control', 'placeholder': 'Estado'} }) }}
+
+                  </div>
+                
+        </div>
+
+        <br />        
+
+        <div class="row">    
+
+                  <div class="col-md-12 text-right">
+
+                  <button class="btn btn-default" style="color:white; background-color:#ccc;"  type="submit" name="submit-filter" value="filter"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+
+                  </div>                  
+        </div>
+
+        {{ form_end(form) }}
+
+        </form>
+
+
+
+
+
     </div>
+
+  </div>
     
     <br>
 
@@ -112,7 +184,7 @@
       </div>
     </div>  
 
-	{% for ahorro in ahorros %}
+	{% for ahorro in pagination %}
     <!-- Modal -->
     <div class="modal fade" id="myModal{{ ahorro.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">

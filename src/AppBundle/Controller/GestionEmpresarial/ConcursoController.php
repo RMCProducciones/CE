@@ -32,6 +32,9 @@ use AppBundle\Form\GestionEmpresarial\ConcursoType;
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
+use AppBundle\Form\GestionEmpresarial\ConcursoFilterType;
+
+
 class ConcursoController extends Controller
 {
 /**
@@ -40,20 +43,44 @@ class ConcursoController extends Controller
     public function concursoGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $concursos = $em->getRepository('AppBundle:Concurso')->findBY(
+
+        /*$concursos = $em->getRepository('AppBundle:Concurso')->findBY(
             array('active' => 1),
             array('fecha_inicio' => 'ASC')
-        ); 
+        ); */
+
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Concurso')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new ConcursoFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder->andWhere('q.active = 1');
+
+        $query = $filterBuilder->getQuery();
+
+        //var_dump($filterBuilder->getDql());
+        //die("");    
+
+
          $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
-            $concursos, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             10/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Concurso:concurso-gestion.html.twig', 
-            array( 'concursos' => $concursos,
+            array( 
+                'form' => $form->createView(), 
+                'concursos' => $query,
                 'pagination' => $pagination
                 )
             );

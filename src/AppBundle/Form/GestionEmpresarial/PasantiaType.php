@@ -13,7 +13,7 @@ class PasantiaType extends AbstractType
         $builder
 
 			
-			->add('nombrePasantia','text', array('label' => 'Nombre Pasantia'))
+			->add('nombre_pasantia','text', array('label' => 'Nombre Pasantia'))
 			->add('observaciones')
 			;
 		}

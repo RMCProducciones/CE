@@ -51,3 +51,35 @@ app.controller('gestionAhorroCtrl', ['$scope', '$http', function($scope, $http) 
 
 }]);
 
+app.controller('FiltrosAhorroCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasAhorro = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaAhorro = function(){
+       
+		$("#ahorroFilter_fecha_registro").val("");
+		$("#ahorroFilter_fecha_inicio").val("");
+		$("#ahorroFilter_estado").val("");
+
+		
+       
+    }
+      
+		
+}]);
+
+
