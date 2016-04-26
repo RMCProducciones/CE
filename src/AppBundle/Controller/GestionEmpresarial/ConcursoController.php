@@ -268,7 +268,7 @@ class ConcursoController extends Controller
 /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/asignacion-grupo", name="concursoGrupo")
      */
-    public function concursoGrupoAction($idConcurso)
+    public function concursoGrupoAction(Request $request, $idConcurso)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -284,12 +284,21 @@ class ConcursoController extends Controller
         $query->setParameter('concurso', $concurso);
 
         $grupos = $query->getResult(); 
+
+        $paginator1  = $this->get('knp_paginator');
+
+        $pagination1 = $paginator1->paginate(
+            $grupos, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            5/*límite de resultados por página*/
+        );
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Concurso:grupo-concurso-gestion-asignacion.html.twig', 
             array(
                 'grupos' => $grupos,
                 'asignacionesGrupoConcurso' => $asignacionesGrupoConcurso,
-                'idConcurso' => $idConcurso
+                'idConcurso' => $idConcurso,
+                'pagination1' => $pagination1
             ));        
         
     }

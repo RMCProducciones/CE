@@ -276,7 +276,7 @@ class ContadorController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-contador", name="grupoContador")
      */
-    public function contadorGrupoAction($idGrupo)
+    public function contadorGrupoAction(Request $request, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -297,19 +297,26 @@ class ContadorController extends Controller
         if($asignacionesContadorGrupo == null){
             $query = $em->createQuery('SELECT c FROM AppBundle:Contador c WHERE c.id NOT IN (SELECT contador.id FROM AppBundle:Contador contador JOIN AppBundle:AsignacionContadorGrupo acg WHERE contador = acg.contador AND acg.grupo = :grupo) AND c.active = 1');
             $query->setParameter(':grupo', $grupo);
-            $contadores = $query->getResult();            
+            $contadores = $query->getResult(); 
         }else{
-            $contadores = null;
+            $contadores = array();
         }
 
-        
+        $paginator1  = $this->get('knp_paginator');
+
+        $pagination1 = $paginator1->paginate(
+        $contadores, /* fuente de los datos*/
+        $request->query->get('page', 1)/*número de página*/,
+        5/*límite de resultados por página*/
+        );       
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Contador:asignar-contador-grupo.html.twig', 
             array(
                 'contadores' => $contadores,
                 'asignacionesContadorGrupo' => $asignacionesContadorGrupo,
                 'idGrupo' => $idGrupo,
-                'grupo'=>$grupo
+                'grupo'=>$grupo,
+                'pagination1' => $pagination1
             ));     
     }
 
