@@ -1,38 +1,42 @@
 {% block section %}	
 <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">             
-		<div style="color:#f00;font-size:30px;">
-			<b>{{clear.lugarRealizacionCLEAR}}</b>
-			<br>
-			<b>Fecha de inicio:{{ clear.fechaInicio |  date('d - m - Y') }}</b>
-            <br>
-            <b>Fecha de finalización: {{ clear.fechaFinalizacion |  date('d - m - Y') }}</b>
-            <br>
-            <b>Lugar de realización del CLEAR: {{ clear.lugarRealizacionCLEAR }}</b>
-            <br>
-            <b>Zona: {{ clear.municipio.zona.nombre }}</b>
-            <br>
-            <b>Departamento: {{ clear.municipio.departamento.nombre }}</b>
-			<br>
-            <b>Municipio: {{ clear.municipio }}</b>
-		</div>
+		
+<style type="text/css">
 
-		<div>
-			{% for grupoClear in gruposClear %}
-				{{grupoClear.grupo.nombre}}
-			{% endfor %}
-		</div>
-
-		<style type="text/css">
-
-H1 { font-size:26px; font-family: "Tahoma", "Geneva", sans-serif; color:black; line-height: 100%;}
+H1 { font-size:32px;  font: small-caps serif;  color:black; line-height: 100%;}
 H2 { font-size:18px; font-family:arial; color:red;line-height: 100%  }
+P { font-size:20px; font: small-caps serif; line-height: 100%;text-align: justify;}
 BODY { margin: 10px 60px 10px 60px }
-
+.demo {
+    border:1px solid #C0C0C0;
+    border-collapse:collapse;
+    padding:4px;
+  }
+  .demo th {
+    border:1px solid #C0C0C0;
+    padding:5px;
+    background:#F0F0F0;
+  }
+  .demo td {
+    border:1px solid #C0C0C0;
+    padding:5px;
+  }
 
 </style>
 </br>
-<h1><center><b>PROYECTO CONSTRUYENDO CAPACIDADES EMPRESARIALES
- RURALES, CONFIANZA Y OPORTUNIDAD
+
+<header>
+     
+     <img src= "{{ app.request.scheme ~'://' ~ app.request.httpHost}}{{ asset('public/images/banner.png') }}">
+</header>
+</br>
+</br>
+</br>
+
+<h1><center>
+<b>PROYECTO CONSTRUYENDO CAPACIDADES
+</br> EMPRESARIALES RURALES, CONFIANZA 
+</br>Y OPORTUNIDAD
 </center></b></h1>
 </br>
 <p>En el municipio de <b>{{ clear.municipio }}</b> Unidad Territorial - UT de {{clear.municipio.zona.nombre}} con fecha {{ clear.fechaInicio |  date('d - m - Y') }}, siendo las __:___a.m.(__)/p.m.(__) horas, de conformidad con lo señalado en la Resolución 251 del 29 de Mayo de 2014; con el propósito de realizar la instalación del Comité Local de Evaluación y Asignación de Recursos – CLEAR del Proyecto Construyendo Capacidades Empresariales Rurales, Confianza y Oportunidad, se lleva a cabo la jornada de inducción de cada uno de los integrantes del CLEAR en el proceso de la convocatoria y en sus funciones como ente de evaluador y de asignador de recursos.</p>
@@ -40,10 +44,15 @@ BODY { margin: 10px 60px 10px 60px }
 <p>Así mismo, con el propósito de integrar el CLEAR se lleva a cabo su instalación con la participación de las siguientes personas:</p>
 
 </br>
-<div>
+<div class="demo">
   {% for grupo in gruposClear %}
+<<<<<<< HEAD
+
+                 <table class="table table-bordered" style="margin: 0 auto;">            
+=======
   <br/>
                  <table class="table table-bordered">            
+>>>>>>> 5707624b4ceb86c861a853b41ed89d2d0817358b
               <thead>
                 <tr class="bg-primary">
                     <th class="text-center col-md-5">Información</th>
@@ -178,13 +187,20 @@ BODY { margin: 10px 60px 10px 60px }
                     {{ grupo.grupo.numeroCuenta }}
                   </td>
               </tr>  
+              </br>
+
               </tbody>  
           </table>
+<<<<<<< HEAD
+       
+          {% endfor %}
+=======
   {% endfor %}
+>>>>>>> 5707624b4ceb86c861a853b41ed89d2d0817358b
             </div>
 </br>
 </br>
-Posterior a la instalación del CLEAR, el promotor rural hace entrega a los integrantes del CLEAR de _____________ (____) propuestas recibidas según acta de cierre del día ___ del mes de _____ del año ____ en el marco de la Convocatoria para la conformación del Banco de proyectos para grupos formales y no formales:
+<p>Posterior a la instalación del CLEAR, el promotor rural hace entrega a los integrantes del CLEAR de _____________ (____) propuestas recibidas según acta de cierre del día ___ del mes de _____ del año ____ en el marco de la Convocatoria para la conformación del Banco de proyectos para grupos formales y no formales:</p>
 </br>
 </br>
 Tabla
@@ -197,7 +213,7 @@ Tabla
 </br>
 </br>
 
-Para constancia se firma a los _________________ (    ) días del mes de _______del año ______<p>
+<p>Para constancia se firma a los _________________ (    ) días del mes de _______del año ______<p>
 
 ______________________________________________<p>
 SECRETARIO TÉCNICO DEL CLEAR<p>

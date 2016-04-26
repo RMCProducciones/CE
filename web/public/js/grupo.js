@@ -218,11 +218,15 @@ app.controller('FiltrosGrupoCtrl', ['$scope', '$http', 'styleBuscarHerramientas'
 	
     $scope.limpiarCamposFiltroBusquedaGrupo = function(){
        
-		$("#txtBuscar").val("");		
 		$("#selDepartamento").val("");
 		$("#selZona").val("");
 		$("#selMunicipio").val("");
-		$("#lstEstado").val("");
+		$("#grupoFilter_tipo").val("");
+		$("#grupoFilter_codigo").val("");
+		$("#grupoFilter_nombre").val("");
+		$("#grupoFilter_numero_identificacion_tributaria").val("");
+		$("#grupoFilter_figura_legal_constitucion").val("");
+
        
     }
       

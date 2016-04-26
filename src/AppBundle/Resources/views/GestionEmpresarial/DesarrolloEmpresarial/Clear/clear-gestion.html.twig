@@ -26,7 +26,7 @@
   <br />
   <br />
 
-    <div class="section" ng-controller="FiltrosCtrl">
+    <div class="section" ng-controller="FiltrosGrupoCtrl">
       <div class="container">
         <div class="row" >
           
@@ -118,8 +118,8 @@
 	    	
 	    		{% for article in pagination %}
 
-                  <tr {% if loop.index is odd %}class="color"{% endif %}>
-                  <tr id="filaCLEAR{{ consecutivo }}">
+                  <tr {% if loop.index is odd %}class="color"{% endif %}>     
+                  <tr id="filaCLEAR{{ consecutivo }}" >             
 
                     <td class="text-center">{{article.id }}</td>               
                     <td class="text-center">{{ article.fechaInicio |  date('d - m - Y') }}</td>
