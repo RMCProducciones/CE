@@ -316,7 +316,7 @@ class PasantiaController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-territorio", name="pasantiaTerritorio")
      */
-    public function pasantiaTerritorioAction($idPasantia)
+    public function pasantiaTerritorioAction(Request $request, $idPasantia)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -359,17 +359,26 @@ class PasantiaController extends Controller
 
             $query->setParameter('territorio_aprendizaje', $pasantia);
             $query->setParameter('idPasantia', $idPasantia);
-
             $territorios = $query->getResult();
+
         }else{
-            $territorios = null; 
+            $territorios = array(); 
         }
+
+        $paginator1  = $this->get('knp_paginator');
+
+        $pagination1 = $paginator1->paginate(
+            $territorios, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            5/*límite de resultados por página*/
+        );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Pasantia:territorio-pasantia-gestion-asignacion.html.twig', 
             array(
                 'territorios' => $territorios,
                 'asignacionesTerritorioPasantia' => $territorioAsignado,
-                'idPasantia' => $idPasantia
+                'idPasantia' => $idPasantia,
+                'pagination1' => $pagination1
             ));        
         
         
