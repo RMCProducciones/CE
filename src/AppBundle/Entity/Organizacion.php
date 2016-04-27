@@ -78,30 +78,11 @@ class Organizacion
     /**
      * @var string
      *
-     * @ORM\Column(name="barrio", type="string", nullable=true)
+     * @ORM\Column(name="descripcion", type="string", nullable=true)
      */
-    private $barrio;
+    private $descripcion;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="corregimiento", type="string", nullable=true)
-     */
-    private $corregimiento;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="vereda", type="string", nullable=true)
-     */
-    private $vereda;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="cacerio", type="string", nullable=true)
-     */
-    private $cacerio;
+  
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Municipio")
@@ -425,101 +406,34 @@ class Organizacion
     }
 
     /**
-     * Set barrio
+     * Set descripcion
      *
-     * @param string $barrio
+     * @param string $descripcion
      *
      * @return Organizacion
      */
-    public function setBarrio($barrio)
+    public function setDescripcion($descripcion)
     {
-        $this->barrio = $barrio;
+        $this->descripcion = $descripcion;
     
         return $this;
     }
 
     /**
-     * Get barrio
+     * Get descripcion
      *
      * @return string
      */
-    public function getBarrio()
+    public function getDescripcion()
     {
-        return $this->barrio;
+        return $this->descripcion;
     }
 
-    /**
-     * Set corregimiento
-     *
-     * @param string $corregimiento
-     *
-     * @return Organizacion
-     */
-    public function setCorregimiento($corregimiento)
-    {
-        $this->corregimiento = $corregimiento;
-    
-        return $this;
-    }
+  
 
-    /**
-     * Get corregimiento
-     *
-     * @return string
-     */
-    public function getCorregimiento()
-    {
-        return $this->corregimiento;
-    }
 
-    /**
-     * Set vereda
-     *
-     * @param string $vereda
-     *
-     * @return Organizacion
-     */
-    public function setVereda($vereda)
-    {
-        $this->vereda = $vereda;
-    
-        return $this;
-    }
 
-    /**
-     * Get vereda
-     *
-     * @return string
-     */
-    public function getVereda()
-    {
-        return $this->vereda;
-    }
-
-    /**
-     * Set cacerio
-     *
-     * @param string $cacerio
-     *
-     * @return Organizacion
-     */
-    public function setCacerio($cacerio)
-    {
-        $this->cacerio = $cacerio;
-    
-        return $this;
-    }
-
-    /**
-     * Get cacerio
-     *
-     * @return string
-     */
-    public function getCacerio()
-    {
-        return $this->cacerio;
-    }
-
+  
     /**
      * Set municipio
      *

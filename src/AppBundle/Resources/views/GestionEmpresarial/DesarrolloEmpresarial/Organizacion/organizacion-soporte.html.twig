@@ -1,0 +1,189 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+{% block title %}Organizaciones{% endblock %}
+
+{% block breadcrumb_ul %}
+
+    <ul class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Empresarial</li>
+      <li>Servicio Complementario</li>
+      <li><a href="{{ path('organizacionGestion') }}">Organizaciones</a></li>
+      <li class="active">Documentos Soporte</li>
+    </ul>
+
+{% endblock %}
+
+
+{% block section %}
+  	<br>
+    <hr>
+    
+  {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+    {{ form_errors(form) }}
+
+    <div class="section">
+      <div class="container">
+
+		<div class="row">
+		
+          <div class="col-md-6">
+            <div class="btn-group">
+  
+              <button name="grupoSoporte[Guardar]" id="grupoSoporte_Guardar" type="submit" class="btn btn-success">Guardar</button>
+              
+              <a href="{{ path('organizacionGestion') }}" class="btn btn-danger" title="" alt="Cancelar" >Cancelar</a>
+              
+            </div>
+          </div>
+        </div>
+      		
+
+	  </div>
+    </div>
+    
+    <div class="section">
+      <div class="container">
+		<h2 class="page-header">Gestión de documentos soportes de las Organizaciones</h2>
+        <div class="row">
+          <div class="col-md-12">
+              
+              <div class="form-group">
+                <div class="col-sm-2">
+                  {{ form_label(form.tipoSoporte) }}
+                </div>
+				
+                <div class="col-sm-10">
+                  {{ form_errors(form.tipoSoporte) }}
+                  {{ form_widget(form.tipoSoporte) }}
+                </div>
+              </div>
+			  
+              <div class="form-group">
+                <div class="col-sm-2">
+                  {{ form_label(form.file) }}
+                </div>
+				
+                <div class="col-sm-10">
+                  {{ form_errors(form.file) }}
+                  {{ form_widget(form.file) }}
+                </div>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+	
+
+
+  {{ form_end(form) }}
+  
+
+   <div class="section">
+   
+      <div class="container">
+		<h2 class="page-header">Documentos soportes activos</h2>
+        <div class="row">
+          <div class="col-md-12">
+            <table class="table" ng-controller="gestionDocumentoSoporteOrganizacionCtrl">
+              <thead>
+                	<tr>
+	                  <th>#</th>
+	                  <th>Tipo soporte</th>
+	                  <th>Obligatorio</th>
+	                  <th>Estado</th>
+	                  <th>Fecha Creación</th>
+	                  <th>Acciones</th>
+	                </tr>
+	           </thead>
+	           <tbody>
+               
+                {% set consecutivo = 1 %}
+	    	
+	    		{% for soporteActivo in soportesActivos %}
+	                
+	                <tr>
+	                  <td>{{ consecutivo }}</td>
+	                  <td>{{ soporteActivo.tiposoporte }}</td>
+	                  <td>{% if soporteActivo.tiposoporte.abreviatura %}Si{% else %}No{% endif %}</td>
+	                  <td>{% if soporteActivo.active %}Activo{% else %}Inactivo{% endif %}</td>
+	                  <td>{{ soporteActivo.fechacreacion | date ('d/m/Y h:i:s', 'America/Bogota')}}</td>
+	                  <td>
+	                    <a href="{{ asset('../uploads/documents/'~ soporteActivo.path) }}" alt="Descargar" title="Descargar"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a> | 	 
+
+                      <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="anularSoporteOrganizacion();" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true" ng-click="idOrganizacion = {{soporteActivo.organizacion.id}}; idOrganizacionSoporteActivo = {{soporteActivo.id}}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>              
+	                  </td>
+	                </tr>
+	                {% set consecutivo = consecutivo + 1 %}
+	                {% else %}
+	                
+	                <tr>
+	                  	<td colspan="6" class="info">No se encontraron registros.</td>
+	                </tr>
+	                
+	                {% endfor %}
+              
+               </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>  
+	
+    <div class="section">
+   
+      <div class="container">
+		<h2 class="page-header">Historial de documentos soportes</h2>
+        <div class="row">
+          <div class="col-md-12">
+            <table class="table">
+              <thead>
+                	<tr>
+	                  <th>#</th>
+	                  <th>Tipo soporte</th>
+	                  <th>Obligatorio</th>
+	                  <th>Estado</th>
+	                  <th>Fecha Creación</th>
+	                  <th>Fecha Modificación</th>
+	                  <th>Acciones</th>
+	                </tr>
+	           </thead>
+	           <tbody>
+               
+                {% set consecutivo = 1 %}
+	    	
+	    		{% for soporte in histotialSoportes %}
+	                
+	                <tr>
+	                  <td>{{ consecutivo }}</td>
+	                  <td>{{ soporte.tiposoporte }}</td>
+	                  <td>{% if soporte.tiposoporte.abreviatura %}Si{% else %}No{% endif %}</td>
+	                  <td>{% if soporte.active %}Activo{% else %}Inactivo{% endif %}</td>
+	                  <td>{{ soporte.fechacreacion | date ('d/m/Y h:i:s', 'America/Bogota')}}</td>
+	                  <td>{{ soporte.fechamodificacion | date ('d/m/Y h:i:s', 'America/Bogota')}}</td>
+	                  <td>
+	                    <a href="{{ asset('../uploads/documents/'~ soporte.path) }}" alt="Descargar" title="Descargar"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a> 	                  
+	                  </td>
+	                </tr>
+	                {% set consecutivo = consecutivo + 1 %}
+	                {% else %}
+	                
+	                <tr>
+	                  	<td colspan="6" class="info">No se encontraron registros.</td>
+	                </tr>
+	                
+	                {% endfor %}
+              
+               </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>  
+
+	
+               
+{% endblock %}
+
