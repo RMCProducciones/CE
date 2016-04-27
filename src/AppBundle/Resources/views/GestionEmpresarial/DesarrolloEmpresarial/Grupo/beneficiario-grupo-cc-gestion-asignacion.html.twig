@@ -78,16 +78,14 @@
 
 
             <table class="table table-striped table-hover">
-              <thead>
-                <tr>
+              <thead>                
                   <tr>
                     <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Id', 'a.id') }}</th>
                     <th></th>
                     <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Grupo', 'a.grupo') }}</th>
                     <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Datos del Beneficiario', 'a.datosDelBeneficiario') }}</th>
                     <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Acciones', 'a.acciones') }}</th>
-                </tr>
-                </tr>
+                </tr>                
               </thead>
               <tbody>
                 
@@ -100,10 +98,10 @@
                   <td>  
                     
                   </td>
-                  <td>
+                  <td class="text-center">
                     {{ beneficiario.grupo.nombre }}
                   </td>
-                  <td>
+                  <td class="text-center">
                     Primero Apellido: {{ beneficiario.primerApellido }}
                     <br>
                     Segundo Apellido: {{ beneficiario.segundoApellido }}

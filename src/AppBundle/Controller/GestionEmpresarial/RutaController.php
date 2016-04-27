@@ -24,8 +24,11 @@ use AppBundle\Entity\Beneficiario;
 use AppBundle\Entity\AsignacionGrupoBeneficiarioRuta;
 
 
+
 use AppBundle\Form\GestionEmpresarial\RutaType;
 use AppBundle\Form\GestionEmpresarial\RutaSoporteType;
+use AppBundle\Form\GestionEmpresarial\RutaFilterType;
+
 
 
 
@@ -44,20 +47,42 @@ class RutaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $rutas = $em->getRepository('AppBundle:Ruta')->findBy(
+       /* $rutas = $em->getRepository('AppBundle:Ruta')->findBy(
             array('active' => '1'),
             array('fecha_creacion' => 'ASC')
-        );
+        );*/
+
+         $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Ruta')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new RutaFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder->andWhere('q.active = 1');
+
+        $query = $filterBuilder->getQuery();
+
+        //var_dump($filterBuilder->getDql());
+        //die("");    
+
+
          $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
-            $rutas, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             10/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Ruta:ruta-gestion.html.twig', 
-            array( 'rutas' => $rutas,
+            array( 'form' => $form->createView(),
+                'rutas' => $query,
                 'pagination' => $pagination
                 )
             );

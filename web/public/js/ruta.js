@@ -96,3 +96,36 @@ app.controller('asignarOrganizacionRutaCtrl', ['$scope', '$http', function($scop
 }]);
 
 
+
+app.controller('FiltrosRutaCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasRuta = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaRuta = function(){
+       
+		$("#rutaFilter_nombre_ruta").val("");
+		$("#rutaFilter_observaciones").val("");
+	
+
+
+		
+
+       
+    }
+      
+		
+}]);

@@ -789,7 +789,7 @@ class SeguimientoGrupoController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/visita/beneficiarios-asignacion", name="beneficiarioVisitasNuevo")
      */
-    public function beneficiariosVisitaAction($idGrupo, $idNodo)
+    public function beneficiariosVisitaAction(Request $request, $idGrupo, $idNodo)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -820,6 +820,14 @@ class SeguimientoGrupoController extends Controller
             array('id' => $beneficiarios, 'grupo' => $grupo )
         );
 
+        $paginator1  = $this->get('knp_paginator');
+
+        $pagination1 = $paginator1->paginate(
+            $mostrarBeneficiarios, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            5/*límite de resultados por página*/
+        );
+
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:beneficiario-visita-asignacion.html.twig', 
             array(
@@ -827,7 +835,8 @@ class SeguimientoGrupoController extends Controller
                 'asignacionesBeneficiariosVisitas' => $asignacionesBeneficiariosVisitas,
                 'idGrupo' => $idGrupo,
                 'grupo' => $grupo,
-                'idNodo' => $idNodo
+                'idNodo' => $idNodo,
+                'pagination1' => $pagination1
             ));        
     }
 

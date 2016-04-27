@@ -51,3 +51,35 @@ app.controller('gestionPolizaCtrl', ['$scope', '$http', function($scope, $http) 
 
 }]);
 
+
+app.controller('FiltrosPolizaCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasPoliza = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaPoliza = function(){
+       
+		$("#ahorroFilter_estado").val("");
+		$("#ahorroFilter_consecutivo").val("");
+		$("#ahorroFilter_cofinanciacion").val("");
+
+		
+       
+    }
+      
+		
+}]);
+

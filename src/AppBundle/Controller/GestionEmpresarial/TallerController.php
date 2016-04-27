@@ -299,7 +299,7 @@ class TallerController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/taller/{idGrupo}/{idTaller}/asignacion-beneficiarios", name="beneficiarioTaller")
      */
-    public function tallerGrupoBeneficiarioAction($idGrupo, $idTaller)
+    public function tallerGrupoBeneficiarioAction(Request $request, $idGrupo, $idTaller)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -328,6 +328,14 @@ class TallerController extends Controller
             array('id' => $beneficiarios, 'grupo' => $grupo)
         );
 
+        $paginator1  = $this->get('knp_paginator');
+
+        $pagination1 = $paginator1->paginate(
+            $mostrarBeneficiarios, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            5/*límite de resultados por página*/
+        );
+
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Taller:taller-beneficiario-asignacion.html.twig', 
             array(
@@ -335,7 +343,8 @@ class TallerController extends Controller
                 'asignacionesBeneficiariosTaller' => $asignacionBeneficiarioTaller,
                 'idGrupo' => $idGrupo,
                 'grupo' => $grupo,
-                'idTaller' => $idTaller
+                'idTaller' => $idTaller,
+                'pagination1' => $pagination1
             ));        
     }
 

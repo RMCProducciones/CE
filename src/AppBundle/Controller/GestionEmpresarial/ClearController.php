@@ -382,6 +382,8 @@ class ClearController extends Controller
                 $em->persist($asignacionIntegranteCLEAR);
                 $em->flush();
 
+                return $this->redirectToRoute('clearIntegrante', array( 'idCLEAR' => $idCLEAR));
+
             }
 
         }        
@@ -394,14 +396,22 @@ class ClearController extends Controller
 
         $query = $em->createQuery('SELECT i FROM AppBundle:Integrante i WHERE i.id NOT IN (SELECT integrante.id FROM AppBundle:Integrante integrante JOIN AppBundle:AsignacionIntegranteCLEAR agc WHERE integrante = agc.integrante AND agc.clear = :clear) AND i.active = 1');
         $query->setParameter('clear', $clear);
-
         $integrantes = $query->getResult();
+
+        $paginator1  = $this->get('knp_paginator');
+
+        $pagination1 = $paginator1->paginate(
+            $integrantes, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            5/*límite de resultados por página*/
+        );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Clear:integrantes-clear-gestion-asignacion.html.twig', 
             array(
                 'integrantes' => $integrantes,
                 'asignacionesIntegranteCLEAR' => $asignacionesIntegranteCLEAR,
-                'idCLEAR' => $idCLEAR
+                'idCLEAR' => $idCLEAR,
+                'pagination1' => $pagination1
             ));        
         
     }
@@ -493,7 +503,7 @@ class ClearController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/asignacion-grupo", name="clearGrupo")
      */
-    public function clearGrupoAction($idCLEAR)
+    public function clearGrupoAction(Request $request, $idCLEAR)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -510,11 +520,20 @@ class ClearController extends Controller
 
         $grupos = $query->getResult();
 
+        $paginator1  = $this->get('knp_paginator');
+
+        $pagination1 = $paginator1->paginate(
+            $grupos, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            5/*límite de resultados por página*/
+        );
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Clear:grupo-clear-gestion-asignacion.html.twig', 
             array(
                 'grupos' => $grupos,
                 'asignacionesGrupoCLEAR' => $asignacionesGrupoCLEAR,
-                'idCLEAR' => $idCLEAR
+                'idCLEAR' => $idCLEAR,
+                'pagination1' => $pagination1
             ));        
         
     }

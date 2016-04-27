@@ -21,6 +21,8 @@ use AppBundle\Entity\DocumentoSoporte;
 
 use AppBundle\Form\GestionFinanciera\PolizaType;
 use AppBundle\Form\GestionFinanciera\PolizaSoporteType;
+use AppBundle\Form\GestionFinanciera\PolizaFilterType;
+
 
 
 
@@ -36,19 +38,39 @@ class PolizaController extends Controller
     public function polizaGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $polizas= $em->getRepository('AppBundle:Poliza')->findBY(
+        /*$polizas= $em->getRepository('AppBundle:Poliza')->findBY(
             array('active' => 1)            
-        ); 
+        );*/
+
+         $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Poliza')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new PolizaFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder->andWhere('q.active = 1');
+
+        $query = $filterBuilder->getQuery();
+
+        //var_dump($filterBuilder->getDql());
+        //die(""); 
          $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
-            $polizas, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             10/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionFinanciera/Poliza:poliza-gestion.html.twig', 
-            array( 'polizas' => $polizas,
+            array( 'form' => $form->createView(),
+                    'polizas' => $query,
                     'pagination' => $pagination
                 )
             );

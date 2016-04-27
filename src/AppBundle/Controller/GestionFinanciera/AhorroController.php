@@ -21,6 +21,8 @@ use AppBundle\Entity\DocumentoSoporte;
 
 use AppBundle\Form\GestionFinanciera\AhorroType;
 use AppBundle\Form\GestionFinanciera\AhorroSoporteType;
+use AppBundle\Form\GestionFinanciera\AhorroFilterType;
+
 
 
 
@@ -36,19 +38,41 @@ class AhorroController extends Controller
     public function ahorroGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $ahorros= $em->getRepository('AppBundle:Ahorro')->findBY(
+        /*$ahorros= $em->getRepository('AppBundle:Ahorro')->findBY(
             array('active' => 1)            
-        ); 
+        ); */
+
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Ahorro')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new AhorroFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder->andWhere('q.active = 1');
+
+        $query = $filterBuilder->getQuery();
+
+        //var_dump($filterBuilder->getDql());
+        //die("");
+
+
          $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
-            $ahorros, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             10/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionFinanciera/Ahorro:ahorro-gestion.html.twig', 
-            array( 'ahorros' => $ahorros,
+            array( 'form' => $form->createView(),
+                    'ahorros' => $query,
                     'pagination' => $pagination
                 )
             );

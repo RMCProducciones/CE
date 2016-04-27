@@ -80,30 +80,28 @@
             <table class="table table-striped table-hover">
               <thead>
                 <tr>
-                  <th class="text-center">#</th>
-                  <th>
-                    
-                  </th>
-                  <th>Grupo</th>
-                  <th>Datos del Beneficiario</th>
-                  <th>Acciones</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Id', 'a.id') }}</th>
+                    <th></th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Grupo', 'a.grupo') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Datos del Beneficiario', 'a.datosDelBeneficiario') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Acciones', 'a.acciones') }}</th>
                 </tr>
               </thead>
               <tbody>
                 
               {% set consecutivo = 1 %}              
         
-            {% for beneficiario in beneficiarios %}
+            {% for beneficiario in pagination1 %}
         
-             <tr>
-                  <td class="text-center">{{ consecutivo }}</td>
+             <tr {% if loop.index is odd %}class="color"{% endif %}>
+                  <td class="text-center">{{ beneficiario.id }}</td>
                   <td>  
                     
                   </td>
-                  <td>
+                  <td class="text-center">
                     {{ beneficiario.grupo.nombre }}
                   </td>
-                  <td>
+                  <td class="text-center">
                     Primero Apellido: {{ beneficiario.primerApellido }}
                     <br>
                     Segundo Apellido: {{ beneficiario.segundoApellido }}
@@ -133,34 +131,12 @@
               </tbody>
             </table>
 
-
-
-            
-
-            <div class="col-md-12 text-center">
-              <ul class="pagination">
-                <li>
-                  <a href="#">Anterior</a>
-                </li>
-                <li>
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-                <li>
-                  <a href="#">4</a>
-                </li>
-                <li>
-                  <a href="#">5</a>
-                </li>
-                <li>
-                  <a href="#">Siguiente</a>
-                </li>
-              </ul>
+            <div class="navigation text-center">
+              <nav>
+                <ul class="pagination">
+                  {{ knp_pagination_render(pagination1) }}
+                </ul>
+              </nav>
             </div>
           </div>
 

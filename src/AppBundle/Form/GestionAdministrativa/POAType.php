@@ -17,6 +17,6 @@ class POAType extends AbstractType
     
     public function getName()
     {
-        return 'POA';
+        return 'poa';
     }
 }

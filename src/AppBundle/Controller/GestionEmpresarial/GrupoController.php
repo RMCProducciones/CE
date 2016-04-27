@@ -724,6 +724,8 @@ class GrupoController extends Controller
                 $em->persist($asignacionBeneficiarioEstructuraOrganizacional);
                 $em->flush();
 
+                return $this->redirectToRoute('grupoBeneficiarioOrganizacional', array( 'idGrupo' => $idGrupo));
+
             }
 
         }
@@ -750,13 +752,22 @@ class GrupoController extends Controller
             array('id' => $beneficiarios, 'grupo' => $grupo )
         );
 
+        $paginator1  = $this->get('knp_paginator');
+
+        $pagination1 = $paginator1->paginate(
+            $mostrarBeneficiarios, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            5/*límite de resultados por página*/
+        );
+
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:beneficiario-grupo-eo-gestion-asignacion.html.twig', 
             array(
                 'beneficiarios' => $mostrarBeneficiarios,
                 'asignacionesBeneficiariosEO' => $asignacionesBeneficiariosEO,
                 'idGrupo' => $idGrupo,
-                'grupo' => $grupo
+                'grupo' => $grupo,
+                'pagination1' => $pagination1
             ));        
     }
 
@@ -783,7 +794,7 @@ class GrupoController extends Controller
                 )
             )
         );
-//El boton tiene un error al enviar el ID del beneficiario
+        //El boton tiene un error al enviar el ID del beneficiario
         $form->add(
             'Asignar_'.$idBeneficiario, 
             'submit', 
@@ -794,8 +805,7 @@ class GrupoController extends Controller
             )
         );
 
-
-        $form->handleRequest($request);
+        $form->handleRequest($request);                                 
 
         return $this->render(
             'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:asignarRolBeneficiarioEstructuraOrganizacional.html.twig',

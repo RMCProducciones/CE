@@ -22,17 +22,79 @@
 
   <hr>
 
-  <div class="section">
+  <div class="section" ng-controller="FiltrosConvocatoriaCtrl">
       <div class="container">
-        <div class="row">
+        <div class="row" >
+          
           <div class="col-md-6">
             <div class="btn-group">
-              <a href="{{ path('POAGestion') }}" class="btn btn-warning">Volver</a>
-              <a href="{{ path('convocatoriaNuevo') }}" class="btn btn-success">Nuevo</a>
+              <a href="{{ path('homepage') }}" class="btn btn-warning">Volver</a>
+              <a href="{{ path('convocatoriaNuevo') }}" class="btn btn-success">Nuevo</a>              
             </div>
           </div>
+
+          <div class="col-md-4">
+          </div>
+
+          <div class="col-md-2">
+            <div class="btn-group [[styleBuscarHerramientas]]">              
+                
+                <button class="btn btn-info" ng-click="buttonBuscarHerramientasConvocatoria(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
+              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaConvocatoria();">Limpiar</button>                            
+            </div>
+          </div>
+
         </div>
+
       </div>
+
+       <div class="container well" ng-show="CountBuscarHerramientas === 1">
+
+        <form method="get" action="{{ path('convocatoriaGestion') }}">               
+                  
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+        {{ form_errors(form) }}
+
+        <div class="row">                      
+
+                  <div class="col-md-3">
+                  
+                    {{ form_label(form.poa) }}
+                    {{ form_errors(form.poa) }}
+                    {{ form_widget(form.poa, { 'attr': {'class': 'form-control', 'placeholder': 'Año'} }) }}
+
+                  </div>
+
+                  <div class="col-md-3">
+
+                    {{ form_label(form.numero) }}
+                    {{ form_errors(form.numero) }}
+                    {{ form_widget(form.numero, { 'attr': {'class': 'form-control', 'placeholder': 'Presupuesto '} }) }}
+
+                  </div>
+                
+        </div>
+
+        <br />        
+
+        <div class="row">    
+
+                  <div class="col-md-12 text-right">
+
+                  <button class="btn btn-default" style="color:white; background-color:#ccc;"  type="submit" name="submit-filter" value="filter"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+
+                  </div>                  
+        </div>
+
+        {{ form_end(form) }}
+
+        </form>
+
+      </div>
+
+
+
     </div>
 	    <br>
 

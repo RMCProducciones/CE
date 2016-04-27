@@ -30,6 +30,9 @@ use AppBundle\Form\GestionEmpresarial\ContadorType;
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
+use AppBundle\Form\GestionEmpresarial\ContadorFilterType;
+
+
 class ContadorController extends Controller
 {
 /**
@@ -39,21 +42,42 @@ class ContadorController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $contador = $em->getRepository('AppBundle:Contador')->findBy(
+        /*$contador = $em->getRepository('AppBundle:Contador')->findBy(
             array('active' => '1'),
             array('fecha_creacion' => 'ASC')
-        );
+        );*/
+
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Contador')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new ContadorFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder->andWhere('q.active = 1');
+
+        $query = $filterBuilder->getQuery();
+
+        //var_dump($filterBuilder->getDql());
+        //die("");    
+
          $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
-            $contador, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             10/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Contador:contador-gestion.html.twig', 
-            array( 
-                'contador' => $contador,
+            array(
+                'form' => $form->createView(), 
+                'contador' => $query,
                 'pagination' => $pagination
             )
         );
@@ -276,7 +300,7 @@ class ContadorController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-contador", name="grupoContador")
      */
-    public function contadorGrupoAction($idGrupo)
+    public function contadorGrupoAction(Request $request, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -297,19 +321,26 @@ class ContadorController extends Controller
         if($asignacionesContadorGrupo == null){
             $query = $em->createQuery('SELECT c FROM AppBundle:Contador c WHERE c.id NOT IN (SELECT contador.id FROM AppBundle:Contador contador JOIN AppBundle:AsignacionContadorGrupo acg WHERE contador = acg.contador AND acg.grupo = :grupo) AND c.active = 1');
             $query->setParameter(':grupo', $grupo);
-            $contadores = $query->getResult();            
+            $contadores = $query->getResult(); 
         }else{
-            $contadores = null;
+            $contadores = array();
         }
 
-        
+        $paginator1  = $this->get('knp_paginator');
+
+        $pagination1 = $paginator1->paginate(
+        $contadores, /* fuente de los datos*/
+        $request->query->get('page', 1)/*número de página*/,
+        5/*límite de resultados por página*/
+        );       
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Contador:asignar-contador-grupo.html.twig', 
             array(
                 'contadores' => $contadores,
                 'asignacionesContadorGrupo' => $asignacionesContadorGrupo,
                 'idGrupo' => $idGrupo,
-                'grupo'=>$grupo
+                'grupo'=>$grupo,
+                'pagination1' => $pagination1
             ));     
     }
 
