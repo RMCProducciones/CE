@@ -39,20 +39,29 @@ BODY { margin: 10px 60px 10px 60px }
 </br>Y OPORTUNIDAD
 </center></b></h1>
 </br>
-<p>En el municipio de <b>{{ clear.municipio }}</b> Unidad Territorial - UT de {{clear.municipio.zona.nombre}} con fecha {{ clear.fechaInicio |  date('d - m - Y') }}, siendo las __:___a.m.(__)/p.m.(__) horas, de conformidad con lo señalado en la Resolución 251 del 29 de Mayo de 2014; con el propósito de realizar la instalación del Comité Local de Evaluación y Asignación de Recursos – CLEAR del Proyecto Construyendo Capacidades Empresariales Rurales, Confianza y Oportunidad, se lleva a cabo la jornada de inducción de cada uno de los integrantes del CLEAR en el proceso de la convocatoria y en sus funciones como ente de evaluador y de asignador de recursos.</p>
 
-<p>Así mismo, con el propósito de integrar el CLEAR se lleva a cabo su instalación con la participación de las siguientes personas:</p>
+<h1><center>
+<b>Conformación Banco de proyectos para la coofinanciación de propuestas de negocios para grupos formales y no formales.
+</center>
+</b></h1>
+
+<p>En el marco de la convocatoria para la conformación 
+  del banco de proyectos para grupos formales y no formales para su posible cofinanciación
+  por parte del proyecto Construyendo Capacidades Empresariales Rurales, cofianza y oportunidad , 
+  quienes firman este documento certifican que 
+  En el municipio de <b>{{ clear.municipio }}</b> Unidad Territorial - UT de {{clear.municipio.zona.nombre}} con fecha {{ clear.fechaInicio |  date('d - m - Y') }}, siendo las __:___a.m.(__)/p.m.(__) horas,se recibieron un total de 
+  ______Propuestas, las cuales se relacionan a continuación:</p>
 
 </br>
 <div class="demo">
   {% for grupo in gruposClear %}
-<<<<<<< HEAD
+
 
                  <table class="table table-bordered" style="margin: 0 auto;">            
-=======
+
   <br/>
                  <table class="table table-bordered">            
->>>>>>> 5707624b4ceb86c861a853b41ed89d2d0817358b
+
               <thead>
                 <tr class="bg-primary">
                     <th class="text-center col-md-5">Información</th>
@@ -191,35 +200,30 @@ BODY { margin: 10px 60px 10px 60px }
 
               </tbody>  
           </table>
-<<<<<<< HEAD
-       
-          {% endfor %}
-=======
   {% endfor %}
->>>>>>> 5707624b4ceb86c861a853b41ed89d2d0817358b
+
             </div>
-</br>
-</br>
-<p>Posterior a la instalación del CLEAR, el promotor rural hace entrega a los integrantes del CLEAR de _____________ (____) propuestas recibidas según acta de cierre del día ___ del mes de _____ del año ____ en el marco de la Convocatoria para la conformación del Banco de proyectos para grupos formales y no formales:</p>
-</br>
-</br>
-Tabla
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
+
 </br>
 </br>
 
 <p>Para constancia se firma a los _________________ (    ) días del mes de _______del año ______<p>
+</br>
+</br>
 
-______________________________________________<p>
-SECRETARIO TÉCNICO DEL CLEAR<p>
 
-Nombre:<p> ________________________________________
-<p>C.C.<p>       ________________________________________ <p>     
-Cargo:Promotor Rural Municipio _____________________	
+
+<p>Representante de la Alcandía Municipal:____________________________
+<p>Nombre:_______________________________________________________
+<p> C.C. :_________________________________________________________    
+
+</br>
+</br>
+
+<p>Promotor Municipal:_____________________________________________
+<p>Nombre:_________________________________________________________
+<p> C.C. :_________________________________________________________
+
+
 {% endblock %}
 

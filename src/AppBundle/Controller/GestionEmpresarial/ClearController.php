@@ -326,7 +326,7 @@ class ClearController extends Controller
 
         $this->get('knp_snappy.pdf')->generateFromHtml(
         $this->renderView(
-            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/PruebaPDF:joda-de-prueba.html.twig', 
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/PruebaPDF:acta-fin.html.twig', 
             array('clear' => $clear,
                   'gruposClear' => $gruposClear)
             ),
