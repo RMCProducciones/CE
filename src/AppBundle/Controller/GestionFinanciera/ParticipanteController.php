@@ -18,6 +18,8 @@ use AppBundle\Entity\Participante;
 
 
 use AppBundle\Form\GestionFinanciera\ParticipanteType;
+use AppBundle\Form\GestionFinanciera\ParticipanteFilterType;
+
 
 
 
@@ -35,19 +37,41 @@ class ParticipanteController extends Controller
     public function participanteGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $participantes= $em->getRepository('AppBundle:Participante')->findBY(
+        /*$participantes= $em->getRepository('AppBundle:Participante')->findBY(
             array('active' => 1)            
-        ); 
+        );*/
+
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Participante')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new ParticipanteFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder->andWhere('q.active = 1');
+
+        $query = $filterBuilder->getQuery();
+
+        //var_dump($filterBuilder->getDql());
+        //die("");
+
+
          $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
-            $participantes, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             10/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionFinanciera/Participante:participante-gestion.html.twig', 
-            array( 'participantes' => $participantes,
+            array(  'form' => $form->createView(),
+                    'participantes' => $query,
                     'pagination' => $pagination
                 )
             );
