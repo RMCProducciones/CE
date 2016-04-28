@@ -100,22 +100,24 @@
           <div class="col-md-12 table-responsive">
             <table class="table table-striped table-hover" ng-controller="gestionOrganizacionCtrl">
               <thead>
-                	<tr>
-	                  <th class="text-center">#</th>
-	                  <th class="text-left">Nombre Organizacion</th>
-	                  <th class="text-left">Linea Productiva</th>
-                    <th class="text-left">Producto</th>
-	                  <th class="text-center">Acciones</th>
-	                </tr>
+                <tr>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
+                    <th></th>
+                    <th>{{ knp_pagination_sortable(pagination, 'Nombre Organización', 'a.nombreOrganizacion') }}</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'Linea Productiva', 'a.lineaProductiva') }}</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'Producto', 'a.producto') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.acciones') }}</th>
+                </tr>                	
 	           </thead>
 	           <tbody>
           
             {% set consecutivo = 1 %}
         
-          {% for organizacion in organizaciones %}
+          {% for organizacion in pagination %}
                   
                   <tr id="filaOrganizacion{{ consecutivo }}">
-                    <td class="text-center">{{ consecutivo }}</td>
+                    <td class="text-center">{{ organizacion.id }}</td>
+                    <td></td>
                      <td class="text-left">
                       {{organizacion.nombreOrganizacion}}
                      </td>
@@ -149,6 +151,13 @@
 
                </tbody>
             </table>
+            <div class="navigation text-center">
+              <nav>
+                <ul class="pagination">
+                  {{ knp_pagination_render(pagination) }}
+                </ul>
+              </nav>
+            </div>
           </div>
         </div>
       </div>

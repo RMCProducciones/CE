@@ -34,7 +34,7 @@ class OrganizacionController extends Controller
      /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/organizacion/gestion", name="organizacionGestion")
      */
-    public function organizacionGestionAction()
+    public function organizacionGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $organizaciones = $em->getRepository('AppBundle:Organizacion')->findBy(
@@ -42,7 +42,17 @@ class OrganizacionController extends Controller
             array('fecha_creacion' => 'ASC')
         );
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Organizacion:organizacion-gestion.html.twig', array( 'organizaciones' => $organizaciones));
+        $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $organizaciones, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Organizacion:organizacion-gestion.html.twig', 
+            array( 'organizaciones' => $organizaciones,
+                   'pagination' => $pagination ));
     }
 /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/organizacion/nuevo", name="organizacionNuevo")

@@ -538,7 +538,7 @@ class RutaController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-grupo", name="rutaGrupo")
      */
-    public function rutaGrupoAction($idRuta)
+    public function rutaGrupoAction(Request $request, $idRuta)
     {
          $em = $this->getDoctrine()->getManager();
 
@@ -563,14 +563,23 @@ class RutaController extends Controller
             $query->setParameter('grupo', $ruta);
             $grupos = $query->getResult();      
         }else{
-            $grupos = null; 
+            $grupos = array(); 
         }
+
+        $paginator1  = $this->get('knp_paginator');
+
+        $pagination1 = $paginator1->paginate(
+            $grupos, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            5/*límite de resultados por página*/
+        );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Ruta:grupo-ruta-gestion-asignacion.html.twig', 
             array(
                 'grupos' => $grupos,
                 'asignacionesGrupoRuta' => $grupoAsignado,
-                'idRuta' => $idRuta
+                'idRuta' => $idRuta,
+                'pagination1' => $pagination1
             ));        
         
         
@@ -648,7 +657,7 @@ class RutaController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-grupo/{idGrupo}/asignacion-beneficiario", name="rutaGrupoBeneficiario")
      */
-    public function rutaGrupoBeneficiarioAction($idRuta, $idGrupo)
+    public function rutaGrupoBeneficiarioAction(Request $request, $idRuta, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -681,13 +690,22 @@ class RutaController extends Controller
         $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
             array('id' => $beneficiarios, 'grupo' => $grupo )
         );
+
+        $paginator1  = $this->get('knp_paginator');
+
+        $pagination1 = $paginator1->paginate(
+            $mostrarBeneficiarios, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            5/*límite de resultados por página*/
+        );
        
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Ruta:beneficiario-grupo-ruta-gestion-asignacion.html.twig', 
             array(
                 'beneficiarios' => $mostrarBeneficiarios,                
                 'beneficiariosRuta' => $beneficiariosRuta,
                 'idRuta' => $idRuta, 
-                'idGrupo' => $idGrupo,                               
+                'idGrupo' => $idGrupo,
+                'pagination1' => $pagination1                               
             ));        
         
     }
@@ -741,7 +759,7 @@ class RutaController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $asignacionesGrupoBeneficiarioRuta = new AsignacionGrupoBeneficiarioPasantia();
+        $asignacionesGrupoBeneficiarioRuta = new AsignacionGrupoBeneficiarioRuta();
 
         $asignacionesGrupoBeneficiarioRuta = $em->getRepository('AppBundle:AsignacionGrupoBeneficiarioRuta')->find($idBeneficiarioRuta); 
 
