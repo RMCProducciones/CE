@@ -92,7 +92,7 @@
         
           {% for territorio in pagination1 %}
         
-        <tr>
+        <tr {% if loop.index is odd %}class="color"{% endif %}>
                   <td class="text-center">{{ territorio.id }}</td>
                   <td>
 
