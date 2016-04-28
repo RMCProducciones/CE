@@ -28,6 +28,16 @@ class ConcursoType extends AbstractType
 				'label' => 'Fecha de Bases', 
 				'widget' => 'single_text'
 			))
+
+			->add('fecha_inicio_propuesta', 'date', array(
+				'label' => 'Fecha de inicio Propuesta', 
+				'widget' => 'single_text'
+			))
+
+			->add('fecha_finalizacion_propuesta', 'date', array(
+				'label' => 'Fecha de Finalizacion Propuesta', 
+				'widget' => 'single_text'
+			))
 			
 			->add('modalidad', 'entity', array(
 			    
@@ -42,13 +52,11 @@ class ConcursoType extends AbstractType
 			))
 			
 			->add('tematica','textarea')
-			->add('ambito', 'text', array('label' => 'Ámbito'))
-			->add('problematica', 'text', array('label' => 'Problematicás'))
+			->add('ambito', 'textarea', array('label' => 'Ámbito'))
+			->add('problematica', 'textarea', array('label' => 'Problematicás'))
 			->add('actividades')
 			->add('resultados')
-			->add('valor')
-			->add('distribucion', 'text', array('label' => 'Distribución'))
-			->add('criterios');
+			;
 			
     
     }

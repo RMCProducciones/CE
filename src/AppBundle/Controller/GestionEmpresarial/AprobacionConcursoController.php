@@ -84,6 +84,8 @@ class AprobacionConcursoController extends Controller
         if ($form->isValid()) {
 
             $aprobacion = $form->getData();
+             //$aprobacion->setCoordinador($this->getUser());//$this->container->get('security.context')->getToken()->getUser();
+
 
             $em->persist($aprobacion);
             $em->flush();
