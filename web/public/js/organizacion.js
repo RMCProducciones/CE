@@ -134,6 +134,27 @@ app.controller('CamposRutalPasantiaOrganizacionCtrl', ['$scope', '$http', functi
 	
 }]);
 
+app.controller('CampoRuralOrganizacionCtrl', ['$scope', '$http', function($scope, $http) {	
+	
+
+	if($('#organizacion_rural').prop('checked')==false){
+		
+		$scope.swRural = false;	
+		$('#swRural').removeClass('checked');
+	}
+	else
+	{
+		$scope.swRural = true;	
+		$('#swRural').addClass('checked');		
+	}
+
+	$scope.$watch('swRural', function() {
+
+		$('#organizacion_rural').prop('checked', $scope.swRural);
+		
+	});
+
+}]);
 
 app.controller('gestionTerritorioAprendizajeOrganizacionCtrl', ['$scope', '$http', function($scope, $http) {
 	

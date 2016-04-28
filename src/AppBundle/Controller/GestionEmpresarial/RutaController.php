@@ -307,7 +307,7 @@ class RutaController extends Controller
         /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-territorio", name="rutaTerritorio")
      */
-    public function rutaTerritorioAction($idRuta)
+    public function rutaTerritorioAction(Request $request, $idRuta)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -332,14 +332,23 @@ class RutaController extends Controller
             $query->setParameter('territorio_aprendizaje', $ruta);
             $territorios = $query->getResult();
         }else{
-            $territorios = null; 
+            $territorios = array(); 
         }
+
+        $paginator1  = $this->get('knp_paginator');
+
+        $pagination1 = $paginator1->paginate(
+            $territorios, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            5/*límite de resultados por página*/
+        );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Ruta:territorio-ruta-gestion-asignacion.html.twig', 
             array(
                 'territorios' => $territorios,
                 'asignacionesTerritorioRuta' => $territorioAsignado,
-                'idRuta' => $idRuta
+                'idRuta' => $idRuta,
+                'pagination1' => $pagination1
             ));        
         
         
@@ -413,7 +422,7 @@ class RutaController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/asignacion-organizacion", name="rutaOrganizacion")
      */
-    public function rutaOrganizacionAction($idRuta)
+    public function rutaOrganizacionAction(Request $request, $idRuta)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -434,12 +443,21 @@ class RutaController extends Controller
 
         $mostrarOrganizacion = $em->getRepository('AppBundle:AsignacionOrganizacionTerritorioAprendizaje')->findBy(
             array('organizacion' => $organizaciones, 'territorio_aprendizaje' => $territorioAprendizaje));
+
+        $paginator1  = $this->get('knp_paginator');
+
+        $pagination1 = $paginator1->paginate(
+            $mostrarOrganizacion, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            5/*límite de resultados por página*/
+        );
        
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Ruta:organizacion-ruta-gestion-asignacion.html.twig', 
             array(
                 'organizaciones' => $mostrarOrganizacion, 
                 'asignacionesOrganizacionRuta' => $organizacionRuta,
-                'idRuta' => $idRuta                              
+                'idRuta' => $idRuta,
+                'pagination1' => $pagination1                              
             ));        
         
     }    
