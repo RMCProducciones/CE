@@ -28,7 +28,6 @@ use AppBundle\Entity\Nodo;
 use AppBundle\Form\GestionEmpresarial\GrupoType;
 use AppBundle\Form\GestionEmpresarial\GrupoSoporteType;
 use AppBundle\Form\GestionEmpresarial\ListaRolBeneficiarioType;
-
 use AppBundle\Form\GestionEmpresarial\GrupoFilterType;
 
 
@@ -57,8 +56,8 @@ class GrupoController extends Controller
         
         $filterBuilder = $this->get('doctrine.orm.entity_manager')
             ->getRepository('AppBundle:Grupo')
-            ->createQueryBuilder('g')
-            ->innerJoin("g.municipio", "m")
+            ->createQueryBuilder('q')
+            ->innerJoin("q.municipio", "m")
             ->innerJoin("m.departamento", "d")
             ->innerJoin("m.zona", "z");
 
@@ -71,7 +70,7 @@ class GrupoController extends Controller
             $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);           
         }
 
-        $filterBuilder->andWhere('g.active = 1');
+        $filterBuilder->andWhere('q.active = 1');
         
         if (isset($_GET['selMunicipio']) && $_GET['selMunicipio'] != "?") {
              $filterBuilder->andWhere('m.id = :idMunicipio')

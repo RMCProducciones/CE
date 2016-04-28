@@ -118,3 +118,42 @@ console.log("hola");
 
 }]);
 
+app.controller('FiltrosTalentoCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasTalento = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaTalento = function(){
+       
+		
+		$("#selMunicipio").val("");
+		$("#talentoFilter_numero_documento").val("");
+		$("#talentoFilter_primer_apellido").val("");
+		$("#talentoFilter_primer_nombre").val("");
+		$("#talentoFilter_genero").val("");
+		$("#talentoFilter_tipo").val("");
+		$("#talentoFilter_area_desempeno_principal").val("");
+		$("#talentoFilter_area_desempeno_secundario").val("");
+
+
+       
+    }
+      
+		
+}]);
+
+
+
