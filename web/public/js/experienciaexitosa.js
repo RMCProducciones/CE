@@ -54,4 +54,34 @@ SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a 
 }]);
 
 
+app.controller('FiltrosExperienciaCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasExperiencia = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaExperiencia = function(){
+       
+		$("#experienciaFilter_fecha_registro").val("");
+		
+		
+       
+    }
+      
+		
+}]);
+
+
 

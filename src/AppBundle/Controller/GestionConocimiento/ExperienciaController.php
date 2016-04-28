@@ -21,6 +21,8 @@ use AppBundle\Entity\ExperienciaExitosaSoporte;
 
 use AppBundle\Form\GestionConocimiento\ExperienciaExitosaType;
 use AppBundle\Form\GestionConocimiento\ExperienciaExitosaSoporteType;
+use AppBundle\Form\GestionConocimiento\ExperienciaExitosaFilterType;
+
 
 
 
@@ -38,19 +40,41 @@ class ExperienciaController extends Controller
     public function experienciaGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $experienciaexitosas = $em->getRepository('AppBundle:ExperienciaExitosa')->findBY(
+       /*$experienciaexitosas = $em->getRepository('AppBundle:ExperienciaExitosa')->findBY(
             array('active' => 1)            
-        ); 
+        );*/
+
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:ExperienciaExitosa')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new ExperienciaExitosaFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder->andWhere('q.active = 1');
+
+        $query = $filterBuilder->getQuery();
+
+        //var_dump($filterBuilder->getDql());
+        //die("");
+
+
          $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
-            $experienciaexitosas, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             10/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionConocimiento/Experiencia:experiencia-gestion.html.twig', 
-            array( 'experienciaexitosas' => $experienciaexitosas,
+            array(  'form' => $form->createView(),
+                    'experienciaexitosas' => $query,
                     'pagination' => $pagination
                 )
             );

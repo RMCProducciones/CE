@@ -2,6 +2,7 @@ app.controller('FiltrosParticipanteCtrl', ['$scope', '$http', 'styleBuscarHerram
 
 	$scope.CountBuscarHerramientas = -1;
 	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	console.log("lkñsdjfñlkajsdfñkljsdañlkfjasdñ");
 	
 	$scope.buttonBuscarHerramientasParticipante = function(CountBuscarHerramientas){
 		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
