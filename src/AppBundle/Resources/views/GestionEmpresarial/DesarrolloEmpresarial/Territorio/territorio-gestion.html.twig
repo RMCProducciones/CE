@@ -100,21 +100,21 @@
           <div class="col-md-12 table-responsive">
             <table class="table table-striped table-hover" ng-controller="gestionTerritorioAprendizajeCtrl">
               <thead>
-                	<tr>
-	                  <th class="text-center">#</th>
-	                  <th class="text-left">Nombre Territorio Aprendizaje</th>
-	                  <th class="text-left">Observaciones</th>
-	                  <th class="text-center">Acciones</th>
-	                </tr>
+                <tr>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Nombre Territorio Aprendizaje', 'a.nombreTerritorioAprendizaje') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Observaciones', 'a.observaciones') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.acciones') }}</th>
+                </tr>                	
 	           </thead>
 	           <tbody>
           
             {% set consecutivo = 1 %}
         
-          {% for territorio in territorios %}
+          {% for territorio in pagination %}
                   
                   <tr id="filaTerritorioAprendizaje{{ consecutivo }}">
-                    <td class="text-center">{{ consecutivo }}</td>
+                    <td class="text-center">{{ territorio.id }}</td>
                      <td class="text-left">
                       {{territorio.nombreTerritorio}}
                      </td>
@@ -147,6 +147,13 @@
 
                </tbody>
             </table>
+            <div class="navigation text-center">
+              <nav>
+                <ul class="pagination">
+                  {{ knp_pagination_render(pagination) }}
+                </ul>
+              </nav>
+            </div>
           </div>
         </div>
       </div>

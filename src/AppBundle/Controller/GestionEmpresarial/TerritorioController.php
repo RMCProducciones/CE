@@ -42,7 +42,7 @@ class TerritorioController extends Controller
 	    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/territorio/gestion", name="territorioaprendizajeGestion")
      */
-    public function territorioaprendizajeGestionAction()
+    public function territorioaprendizajeGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $territorios = $em->getRepository('AppBundle:TerritorioAprendizaje')->findBy(
@@ -50,7 +50,17 @@ class TerritorioController extends Controller
             
         );
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Territorio:territorio-gestion.html.twig', array( 'territorios' => $territorios));
+        $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $territorios, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Territorio:territorio-gestion.html.twig', 
+        	array( 'territorios' => $territorios,
+        		   'pagination' => $pagination));
     }
 
 
@@ -183,7 +193,7 @@ class TerritorioController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/territorio/{idTerritorioAprendizaje}/asignacion-organizacion", name="territorioAprendizajeOrganizacion")
      */
-    public function territorioAprendizajeOrganizacionAction($idTerritorioAprendizaje)
+    public function territorioAprendizajeOrganizacionAction(Request $request, $idTerritorioAprendizaje)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -199,12 +209,20 @@ class TerritorioController extends Controller
         $query->setParameter('territorio_aprendizaje', $territorioAprendizaje);
         $organizaciones = $query->getResult();      
 
+        $paginator1  = $this->get('knp_paginator');
 
-        return $this->render('AppBundle:GestionParametro/Territorio:organizacion-territorio-gestion-asignacion.html.twig', 
+        $pagination1 = $paginator1->paginate(
+            $organizaciones, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            5/*límite de resultados por página*/
+        );
+
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Territorio:organizacion-territorio-gestion-asignacion.html.twig', 
             array(
                 'organizaciones' => $organizaciones,
                 'asignacionesTerritoriosOrganizacion' => $asignacionesTerritoriosOrganizacion,
-                'idTerritorioAprendizaje' => $idTerritorioAprendizaje
+                'idTerritorioAprendizaje' => $idTerritorioAprendizaje,
+                'pagination1' => $pagination1
             ));        
     }
 
