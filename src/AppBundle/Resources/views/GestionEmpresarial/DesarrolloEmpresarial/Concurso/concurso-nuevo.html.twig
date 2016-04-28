@@ -56,8 +56,8 @@
 
     <div class="section">
       <div class="container">
-        <div class="row">
-						<div class="col-md-12">
+      <div class="row">
+				<div class="col-md-12">
 						<fieldset>
 							<legend>Datos del concurso</legend>
 						</fieldset>            
@@ -71,18 +71,18 @@
         				  {{ form_errors(form.fecha_bases) }}
         				  {{ form_widget(form.fecha_bases, { 'attr': {'class': 'form-control'} }) }}
           </div>			
+          <div class="col-md-4">
+                  {{ form_label(form.fecha_inicio_propuesta) }}
+          {{ form_errors(form.fecha_inicio_propuesta) }}
+          {{ form_widget(form.fecha_inicio_propuesta, { 'attr': {'class': 'form-control', 'placeholder': 'Fecha de Inicio Propuesta '} }) }}
+                </div>
+        <div class="col-md-4">
+                  {{ form_label(form.fecha_finalizacion_propuesta) }}
+          {{ form_errors(form.fecha_finalizacion_propuesta) }}
+          {{ form_widget(form.fecha_finalizacion_propuesta, { 'attr': {'class': 'form-control', 'placeholder': 'Fecha Finalizacion Propuesta  '} }) }}
+                </div>
                            		   
-          <div class="col-md-4">
-            {{ form_label(form.tipo) }}
-  				  {{ form_errors(form.tipo) }}
-  				  {{ form_widget(form.tipo, { 'attr': {'class': 'form-control', 'placeholder': 'Razones interventoria'} }) }}
-          </div>								
-  
-          <div class="col-md-4">
-            {{ form_label(form.modalidad) }}
-	          {{ form_errors(form.modalidad) }}
-            {{ form_widget(form.modalidad, { 'attr': {'class': 'form-control'} }) }}
-          </div>			        	
+          		        	
       </div>
 			
 			<br/>
@@ -117,27 +117,26 @@
 				  {{ form_errors(form.resultados) }}
 				  {{ form_widget(form.resultados, { 'attr': {'class': 'form-control', 'placeholder': 'Resultados '} }) }}
                 </div>
-				<div class="col-md-4">
-                  {{ form_label(form.valor) }}
-				  {{ form_errors(form.valor) }}
-				  {{ form_widget(form.valor, { 'attr': {'class': 'form-control', 'placeholder': 'Valor '} }) }}
-                </div>                
+				                
                 
             </div>   
 			<br/>
-			<div class ="row">
-			<div class="col-md-4">
-                  {{ form_label(form.distribucion) }}
-				  {{ form_errors(form.distribucion) }}
-				  {{ form_widget(form.distribucion, { 'attr': {'class': 'form-control', 'placeholder': 'Distribucion '} }) }}
-                </div>
-				<div class="col-md-4">
-                  {{ form_label(form.criterios) }}
-				  {{ form_errors(form.criterios) }}
-				  {{ form_widget(form.criterios, { 'attr': {'class': 'form-control', 'placeholder': 'Criterios '} }) }}
-                </div>
+			
+        <div class ="row">
+      
+                <div class="col-md-4">
+            {{ form_label(form.tipo) }}
+            {{ form_errors(form.tipo) }}
+            {{ form_widget(form.tipo, { 'attr': {'class': 'form-control', 'placeholder': 'Razones interventoria'} }) }}
+          </div>                
+  
+          <div class="col-md-4">
+            {{ form_label(form.modalidad) }}
+            {{ form_errors(form.modalidad) }}
+            {{ form_widget(form.modalidad, { 'attr': {'class': 'form-control'} }) }}
+          </div>  
                 
-			</div>
+      </div>
 			<!--/form-->
 			<br/>
 		  	<br/>	

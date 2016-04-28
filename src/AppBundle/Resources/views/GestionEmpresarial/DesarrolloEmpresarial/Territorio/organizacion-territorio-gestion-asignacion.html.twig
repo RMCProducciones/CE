@@ -1,7 +1,7 @@
 {% extends 'AppBundle::frontend.html.twig' %}
 
 
-{% block title %}Rutas{% endblock %}
+{% block title %}Territorios{% endblock %}
 
 {% block breadcrumb_ul %}
 
@@ -9,7 +9,7 @@
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
       <li class="active">Concrusos de Mejoramiento</li>
-	   <li><a href="{{ path('rutaGestion') }}">Rutas</a></li>
+	   <li><a href="{{ path('territorioaprendizajeGestion') }}">Pasantias</a></li>
       <li class="active">Organizaciones</li>
     </ul>
 
@@ -18,7 +18,7 @@
 {% block section %}
 
  <div class="container">
-    <h1>Gestión Rutas</h1>
+    <h1>Gestión Territorios</h1>
     <hr>
     <h3>Asignación Organización</h3>
   </div>
@@ -35,7 +35,7 @@
         <div class="row">
             <div class="col-md-6">
               <div class="btn-group">
-                <a href="{{ path('rutaGestion') }}" class="btn btn-warning">Volver</a>                             
+                <a href="{{ path('territorioaprendizajeGestion') }}" class="btn btn-warning">Volver</a>                             
               </div>
             </div>
         </div>
@@ -84,23 +84,23 @@
         
           {% for organizacion in pagination1 %}
         
-        <tr>
+        <tr {% if loop.index is odd %}class="color"{% endif %}>
                   <td class="text-center">{{ organizacion.id }}</td>
                   <td>
 
                   </td>
-                  <td>                                        
-                    {{ organizacion.organizacion.nombreorganizacion }}
+                  <td>                    
+                    {{ organizacion.nombreorganizacion }}
                     <br />
-                    Linea Productiva: {{organizacion.organizacion.lineaproductiva}}
+                    Linea Productiva: {{organizacion.lineaproductiva}}
                     <br>
-                    Tipo de Producto: {{organizacion.organizacion.tipoproducto}}
+                    Tipo de Producto: {{organizacion.tipoproducto}}
                     <br>
                     <br>
                   <td>
                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ organizacion.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                     <br>                    
-                    <a href="{{ path('rutaAsignarOrganizacion', {'idRuta': idRuta, 'idOrganizacion': organizacion.organizacion.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
+                    <a href="{{ path('territorioAprendizajeAsignarOrganizacion', {'idTerritorioAprendizaje': idTerritorioAprendizaje, 'idOrganizacion': organizacion.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
                     <br>                    
                   </td>
                 </tr>
@@ -126,7 +126,7 @@
           </div>
 
           <div class="col-md-6 col-md-offset-1 well">            
-            <table class="table table-striped table-hover" ng-controller="gestionOrganizacionRutaCtrl">
+            <table class="table table-striped table-hover" ng-controller="gestionOrganizacionTerritorioCtrl">
               <thead>           
                 <tr>
                   <th>#</th>
@@ -142,18 +142,18 @@
               <tbody>
         {% set consecutivo = 1 %}
         
-          {% for asignacionOrganizacionRuta in asignacionesOrganizacionRuta %}
+          {% for asignacionTerritorioOrganizacion in asignacionesTerritoriosOrganizacion %}
                 <tr id="filaIntegranteCLEAR{{ consecutivo }}">
                   <td>{{ consecutivo }}</td>
                   <td>
                     
                   </td>                  
                   <td>
-                    {{ asignacionOrganizacionRuta.organizacion.nombreorganizacion }}
+                    {{ asignacionTerritorioOrganizacion.organizacion.nombreorganizacion }}
                     <br />
-                    Linea Productiva: {{asignacionOrganizacionRuta.organizacion.lineaproductiva}}
+                    Linea Productiva: {{asignacionTerritorioOrganizacion.organizacion.lineaproductiva}}
                     <br>
-                    Tipo de Producto: {{asignacionOrganizacionRuta.organizacion.tipoproducto}}
+                    Tipo de Producto: {{asignacionTerritorioOrganizacion.organizacion.tipoproducto}}
                     <br>
                   </td>
                   <td>
@@ -161,8 +161,8 @@
                   </td>
           
                   <td>
-                    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ asignacionOrganizacionRuta.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
-                    <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarOrganizacionRuta('{{ path('rutaEliminarOrganizacion', {'idRuta': idRuta, 'idAsignacionOrganizacionRuta': asignacionOrganizacionRuta.id}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>                                   
+                    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ asignacionTerritorioOrganizacion.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
+                    <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarOrganizacionTerritorio('{{ path('territorioAprendizajeEliminarOrganizacion', {'idTerritorioAprendizaje': idTerritorioAprendizaje, 'idTerritorioOrganizacion': asignacionTerritorioOrganizacion.id}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>                                   
                   </td>
                 </tr>
         
@@ -189,47 +189,42 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ organizacion.organizacion.id }} | {{ organizacion.organizacion.nombreorganizacion }}</h4>
+            <h4 class="modal-title" id="myModalLabel">{{ organizacion.id }} | {{ organizacion.nombreorganizacion }}</h4>
           </div>
           <div class="modal-body">
-            <b>Nombre de la Organización:{{ organizacion.organizacion.nombreorganizacion }}</b>
+            <b>Nombre de la Organización:{{ organizacion.nombreorganizacion }}</b>
             <br>
-            <b>Linea Productiva: {{organizacion.organizacion.lineaproductiva}}</b>
+            <b>Linea Productiva: {{organizacion.lineaproductiva}}</b>
             <br>
-            <b>Tipo de Producto: Oriente {{organizacion.organizacion.tipoproducto}}</b>
+            <b>Tipo de Producto: Oriente {{organizacion.tipoproducto}}</b>
+            <br>            
+            <b>Dirección: {{organizacion.direccion}}</b>
+            <br>            
+            <b>Descripcion: {{organizacion.descripcion}}</b>
             <br>
-            
-            <b>Dirección: {{organizacion.organizacion.direccion}}</b>
+            <b>Municipio: {{organizacion.municipio}}</b>  
             <br>
-        
+            <b>Numero Documento Contacto: {{organizacion.numerodocumentocontacto}}</b>
             <br>
-            <b>Barrio: {{organizacion.organizacion.descripcion}}</b>
+            <b>Primer Apellido Contacto: {{organizacion.primerapellidocontacto}}</b>
             <br>
-         
+            <b>Segundo Apellido Contacto: {{organizacion.segundoapellidocontacto}}</b>
             <br>
-            <b>Municipio: {{organizacion.organizacion.municipio}}</b>  
+            <b>Primer Nombre Contacto: {{organizacion.primernombrecontacto}}</b>
             <br>
-            <b>Numero Documento Contacto: {{organizacion.organizacion.numerodocumentocontacto}}</b>
+            <b>Segundo Nombre Contacto: {{organizacion.segundonombrecontacto}}</b>
             <br>
-            <b>Primer Apellido Contacto: {{organizacion.organizacion.primerapellidocontacto}}</b>
+            <b>Telefono Fijo Contacto: {{organizacion.telefonofijocontacto}}</b>  
             <br>
-            <b>Segundo Apellido Contacto: {{organizacion.organizacion.segundoapellidocontacto}}</b>
+            <b>Telefono celular Contacto: {{organizacion.telefonocelularcontacto}}</b>
             <br>
-            <b>Primer Nombre Contacto: {{organizacion.organizacion.primernombrecontacto}}</b>
+            <b>Correo electronico Contacto: {{organizacion.correoelectronicocontacto}}</b>
             <br>
-            <b>Segundo Nombre Contacto: {{organizacion.organizacion.segundonombrecontacto}}</b>
+            <b>Ruta: {{organizacion.ruta}}</b>
             <br>
-            <b>Telefono Fijo Contacto: {{organizacion.organizacion.telefonofijocontacto}}</b>  
+            <b>Pasantia: {{organizacion.pasantia}}</b>
             <br>
-            <b>Telefono celular Contacto: {{organizacion.organizacion.telefonocelularcontacto}}</b>
-            <br>
-            <b>Correo electronico Contacto: {{organizacion.organizacion.correoelectronicocontacto}}</b>
-            <br>
-            <b>Ruta: {{organizacion.organizacion.ruta}}</b>
-            <br>
-            <b>Pasantia: {{organizacion.organizacion.pasantia}}</b>
-            <br>
-            <b>Observaciones: {{organizacion.organizacion.observaciones}}</b> 
+            <b>Observaciones: {{organizacion.observaciones}}</b> 
 
 
           </div>
@@ -244,55 +239,51 @@
     {% endfor %}
 
 
-{% for asignacionOrganizacionRuta in asignacionesOrganizacionRuta %}
+{% for asignacionTerritorioOrganizacion in asignacionesTerritoriosOrganizacion %}
     <!-- Modal -->
-    <div class="modal fade" id="myModal{{ asignacionOrganizacionRuta.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal fade" id="myModal{{ asignacionTerritorioOrganizacion.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ asignacionOrganizacionRuta.organizacion.id }} | {{ asignacionOrganizacionRuta.organizacion.nombreorganizacion }}</h4>
+            <h4 class="modal-title" id="myModalLabel">{{ asignacionTerritorioOrganizacion.organizacion.id }} | {{ asignacionTerritorioOrganizacion.organizacion.nombreorganizacion }}</h4>
           </div>
           <div class="modal-body">
-            <b>Nombre de la Organización:{{ asignacionOrganizacionRuta.organizacion.nombreorganizacion }}</b>
+            <b>Nombre de la Organización:{{ asignacionTerritorioOrganizacion.organizacion.nombreorganizacion }}</b>
             <br>
-            <b>Linea Productiva: {{asignacionOrganizacionRuta.organizacion.lineaproductiva}}</b>
+            <b>Linea Productiva: {{asignacionTerritorioOrganizacion.organizacion.lineaproductiva}}</b>
             <br>
-            <b>Tipo de Producto: Oriente {{asignacionOrganizacionRuta.organizacion.tipoproducto}}</b>
+            <b>Tipo de Producto: Oriente {{asignacionTerritorioOrganizacion.organizacion.tipoproducto}}</b>
+            <br>            
+            <b>Dirección: {{asignacionTerritorioOrganizacion.organizacion.direccion}}</b>
             <br>
-            
-            <b>Dirección: {{asignacionOrganizacionRuta.organizacion.direccion}}</b>
+            <b>Descripcion: {{asignacionTerritorioOrganizacion.organizacion.descripcion}}</b>            
             <br>
-           
-            <b>Barrio: {{asignacionOrganizacionRuta.organizacion.descripcion}}</b>
+            <b>Municipio: {{asignacionTerritorioOrganizacion.organizacion.municipio}}</b>  
             <br>
-            
+            <b>Numero Documento Contacto: {{asignacionTerritorioOrganizacion.organizacion.numerodocumentocontacto}}</b>
             <br>
-            <b>Municipio: {{asignacionOrganizacionRuta.organizacion.municipio}}</b>  
+            <b>Primer Apellido Contacto: {{asignacionTerritorioOrganizacion.organizacion.primerapellidocontacto}}</b>
             <br>
-            <b>Numero Documento Contacto: {{asignacionOrganizacionRuta.organizacion.numerodocumentocontacto}}</b>
+            <b>Segundo Apellido Contacto: {{asignacionTerritorioOrganizacion.organizacion.segundoapellidocontacto}}</b>
             <br>
-            <b>Primer Apellido Contacto: {{asignacionOrganizacionRuta.organizacion.primerapellidocontacto}}</b>
+            <b>Primer Nombre Contacto: {{asignacionTerritorioOrganizacion.organizacion.primernombrecontacto}}</b>
             <br>
-            <b>Segundo Apellido Contacto: {{asignacionOrganizacionRuta.organizacion.segundoapellidocontacto}}</b>
+            <b>Segundo Nombre Contacto: {{asignacionTerritorioOrganizacion.organizacion.segundonombrecontacto}}</b>
             <br>
-            <b>Primer Nombre Contacto: {{asignacionOrganizacionRuta.organizacion.primernombrecontacto}}</b>
+            <b>Telefono Fijo Contacto: {{asignacionTerritorioOrganizacion.organizacion.telefonofijocontacto}}</b>  
             <br>
-            <b>Segundo Nombre Contacto: {{asignacionOrganizacionRuta.organizacion.segundonombrecontacto}}</b>
+            <b>Telefono celular Contacto: {{asignacionTerritorioOrganizacion.organizacion.telefonocelularcontacto}}</b>
             <br>
-            <b>Telefono Fijo Contacto: {{asignacionOrganizacionRuta.organizacion.telefonofijocontacto}}</b>  
+            <b>Correo electronico Contacto: {{asignacionTerritorioOrganizacion.organizacion.correoelectronicocontacto}}</b>
             <br>
-            <b>Telefono celular Contacto: {{asignacionOrganizacionRuta.organizacion.telefonocelularcontacto}}</b>
+            <b>Ruta: {{asignacionTerritorioOrganizacion.organizacion.ruta}}</b>
             <br>
-            <b>Correo electronico Contacto: {{asignacionOrganizacionRuta.organizacion.correoelectronicocontacto}}</b>
+            <b>Pasantia: {{asignacionTerritorioOrganizacion.organizacion.pasantia}}</b>
             <br>
-            <b>Ruta: {{asignacionOrganizacionRuta.organizacion.ruta}}</b>
-            <br>
-            <b>Pasantia: {{asignacionOrganizacionRuta.organizacion.pasantia}}</b>
-            <br>
-            <b>Observaciones: {{asignacionOrganizacionRuta.organizacion.observaciones}}</b> 
+            <b>Observaciones: {{asignacionTerritorioOrganizacion.organizacion.observaciones}}</b> 
 
 
           </div>

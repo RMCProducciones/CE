@@ -76,21 +76,21 @@ class Concurso
     /**
      * @var string
      *
-     * @ORM\Column(name="valor", type="string")
+     * @ORM\Column(name="valor", type="string",nullable=true)
      */
     private $valor;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="distribucion", type="string")
+     * @ORM\Column(name="distribucion", type="string",nullable=true)
      */
     private $distribucion;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="criterios", type="string")
+     * @ORM\Column(name="criterios", type="string",nullable=true)
      */
     private $criterios;
 
@@ -114,6 +114,35 @@ class Concurso
      * @ORM\Column(name="fecha_finalizacion", type="datetime", nullable=true)
      */
     private $fecha_finalizacion;
+     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_inicio_propuesta", type="datetime", nullable=true)
+     */
+    private $fecha_inicio_propuesta;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_finalizacion_propuesta", type="datetime", nullable=true)
+     */
+    private $fecha_finalizacion_propuesta;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="aprobador", type="integer",nullable=true)
+     */
+    private $aprobador;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observaciones", type="string",nullable=true)
+     */
+    private $observaciones;
+
+
 
     /**
      * @var boolean
@@ -492,6 +521,104 @@ class Concurso
     {
         return $this->fecha_finalizacion;
     }
+
+
+    /**
+     * Set fechaInicioPropuesta
+     *
+     * @param \DateTime $fechaInicioPropuesta
+     *
+     * @return Concurso
+     */
+    public function setFechaInicioPropuesta($fechaInicioPropuesta)
+    {
+        $this->fecha_inicio_propuesta = $fechaInicioPropuesta;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaInicioPropuesta
+     *
+     * @return \DateTime
+     */
+    public function getFechaInicioPropuesta()
+    {
+        return $this->fecha_inicio_propuesta;
+    }
+
+    /**
+     * Set fechaFinalizacionPropuesta
+     *
+     * @param \DateTime $fechaFinalizacionPropuesta
+     *
+     * @return Concurso
+     */
+    public function setFechaFinalizacionPropuesta($fechaFinalizacionPropuesta)
+    {
+        $this->fecha_finalizacion_propuesta = $fechaFinalizacionPropuesta;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaFinalizacionPropuesta
+     *
+     * @return \DateTime
+     */
+    public function getFechaFinalizacionPropuesta()
+    {
+        return $this->fecha_finalizacion_propuesta;
+    }
+
+    /**
+     * Set aprobador
+     *
+     * @param integer $aprobador
+     *
+     * @return Concurso
+     */
+    public function setAprobador($aprobador)
+    {
+        $this->aprobador = $aprobador;
+
+        return $this;
+    }
+
+    /**
+     * Get aprobador
+     *
+     * @return integer
+     */
+    public function getAprobador()
+    {
+        return $this->aprobador;
+    }
+
+    /**
+     * Set observaciones
+     *
+     * @param string $observaciones
+     *
+     * @return Concurso
+     */
+    public function setObservaciones($observaciones)
+    {
+        $this->observaciones = $observaciones;
+
+        return $this;
+    }
+
+    /**
+     * Get observaciones
+     *
+     * @return string
+     */
+    public function getObservaciones()
+    {
+        return $this->observaciones;
+    }
+
 
     /**
      * Set active

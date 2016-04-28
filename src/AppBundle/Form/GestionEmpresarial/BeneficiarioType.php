@@ -37,6 +37,7 @@ class BeneficiarioType extends AbstractType
 			        	->setParameter('dominio', 'genero')
 			            ->orderBy('l.orden', 'ASC');
 			    },))
+			->add('rural', 'checkbox', array('required' => false))
 			->add('fecha_nacimiento', 'date', array('label' => 'Fecha de nacimiento', 'widget' => 'single_text'))
 			->add('edad_inscripcion', 'text', array('label' => 'Edad al momento de la inscripción'))
 			->add('corte_sisben', 'text', array('label' => 'Area SISBEN'))

@@ -27,6 +27,7 @@ class GrupoType extends AbstractType
 						->orderBy('l.orden', 'ASC');
 				}
 			))
+			->add('rural', 'checkbox', array('required' => false))
 											
 			
 			
