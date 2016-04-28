@@ -246,7 +246,14 @@
 		</br>
 		
 		<div>
-				<div class="row">
+				<div class="row" ng-controller="CamposDireccionBeneficiarioCtrl">
+
+          <div class="col-md-4">
+                    {{ form_label(form.rural) }}<br/>
+                    {{ form_errors(form.rural) }}
+                    <switch id="swRural" name="swRural" ng-model="swRural" class="green" on="Si" off="No"></switch>
+                    {{ form_widget(form.rural, { 'attr': {'style':'visibility:hidden'} }) }}
+                </div>
 						
 						<div class="col-md-4">
 						  {{ form_label(form.direccion) }}
