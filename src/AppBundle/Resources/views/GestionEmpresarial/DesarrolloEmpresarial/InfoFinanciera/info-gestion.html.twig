@@ -64,7 +64,7 @@
                
                 {% set consecutivo = 1 %}
 	    	
-	    		{% for info in info %}
+	    		{% for article in pagination %}
 	                
 	      
 	                  
@@ -80,7 +80,7 @@
 	                {% else %}
 	                
 	                <tr>
-	                  	<td colspan="9" class="info">No se encontraron registros.</td>
+	                  	<td colspan="9" class="article">No se encontraron registros.</td>
 	                </tr>
 	                
 	                {% endfor %}

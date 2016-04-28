@@ -452,7 +452,7 @@ class PasantiaController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-organizacion", name="pasantiaOrganizacion")
      */
-    public function pasantiaOrganizacionAction($idPasantia)
+    public function pasantiaOrganizacionAction(Request $request, $idPasantia)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -473,12 +473,21 @@ class PasantiaController extends Controller
 
         $mostrarOrganizacion = $em->getRepository('AppBundle:AsignacionOrganizacionTerritorioAprendizaje')->findBy(
             array('organizacion' => $organizaciones, 'territorio_aprendizaje' => $territorioAprendizaje));
+
+        $paginator1  = $this->get('knp_paginator');
+
+        $pagination1 = $paginator1->paginate(
+            $mostrarOrganizacion, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            5/*límite de resultados por página*/
+        );
        
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Pasantia:organizacion-pasantia-gestion-asignacion.html.twig', 
             array(
                 'organizaciones' => $mostrarOrganizacion, 
                 'asignacionesOrganizacionPasantia' => $organizacionPasantia,
-                'idPasantia' => $idPasantia                              
+                'idPasantia' => $idPasantia,            
+                'pagination1' => $pagination1                  
             ));        
         
     }
@@ -560,7 +569,7 @@ class PasantiaController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-grupo", name="pasantiaGrupo")
      */
-    public function pasantiaGrupoAction($idPasantia)
+    public function pasantiaGrupoAction(Request $request, $idPasantia)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -597,9 +606,10 @@ class PasantiaController extends Controller
                         WHERE 
                             grupo = pasantia.grupo 
                             AND pasantia.grupo = :grupo_pasantia
-                            AND pasantia.id = :idPasantia
+                            AND pasantia.id = :idPasantia                            
                     ) 
                     AND g.active = 1
+                    AND g.codigo IS NOT NULL
             ');
 
             $query->setParameter('grupo_pasantia', $pasantia); //Se compara el grupo que tiene la pasantia
@@ -609,15 +619,24 @@ class PasantiaController extends Controller
 
         }else{
 
-            $grupos = null; 
+            $grupos = array(); 
 
         }
+
+        $paginator1  = $this->get('knp_paginator');
+
+        $pagination1 = $paginator1->paginate(
+            $grupos, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            5/*límite de resultados por página*/
+        );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Pasantia:grupo-pasantia-gestion-asignacion.html.twig', 
             array(
                 'grupos' => $grupos,
                 'asignacionesGrupoPasantia' => $grupoAsignado,
-                'idPasantia' => $idPasantia
+                'idPasantia' => $idPasantia,
+                'pagination1' => $pagination1
             ));        
         
     }
@@ -694,7 +713,7 @@ class PasantiaController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/asignacion-grupo/{idGrupo}/asignacion-beneficiario", name="pasantiaGrupoBeneficiario")
      */
-    public function pasantiaGrupoBeneficiarioAction($idPasantia, $idGrupo)
+    public function pasantiaGrupoBeneficiarioAction(Request $request, $idPasantia, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();    
 
@@ -727,13 +746,22 @@ class PasantiaController extends Controller
         $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
             array('id' => $beneficiarios, 'grupo' => $grupo )
         );
+
+        $paginator1  = $this->get('knp_paginator');
+
+        $pagination1 = $paginator1->paginate(
+            $mostrarBeneficiarios, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            5/*límite de resultados por página*/
+        );
        
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Pasantia:beneficiario-grupo-pasantia-gestion-asignacion.html.twig', 
             array(
                 'beneficiarios' => $mostrarBeneficiarios,                
                 'beneficiariosPasantia' => $beneficiariosPasantia,
                 'idPasantia' => $idPasantia, 
-                'idGrupo' => $idGrupo,               
+                'idGrupo' => $idGrupo,
+                'pagination1' => $pagination1               
             ));        
         
     }

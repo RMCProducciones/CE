@@ -139,7 +139,7 @@
 
                    <a href="{{ path('pasantiaTerritorio', {'idPasantia': article.id}) }}" alt="Asignacion Territorio" title="Asignacion Territorio"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a> | 
 
-                   {% if article.territorioAprendizaje != NULL and pasantia.grupo != NULL %}                   
+                   {% if article.territorioAprendizaje != NULL and article.grupo != NULL %}                   
 
                    <a href="{{ path('pasantiaOrganizacion', {'idPasantia': article.id}) }}" alt="Asignacion Organizaciones" title="Asignacion Organizaciones"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span></a> |  
 
