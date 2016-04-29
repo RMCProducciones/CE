@@ -24,33 +24,25 @@
   <br />
   <br />
 
-    <div class="section" ng-controller="FiltrosCtrl">
+    <div class="section" ng-controller="FiltrosOrganizacionCtrl">
       <div class="container">
         <div class="row" >
           
           <div class="col-md-6">
             <div class="btn-group">
               <a href="{{ path('homepage') }}" class="btn btn-warning">Volver</a>
-              <a href="{{ path('organizacionNuevo') }}" class="btn btn-success">Nuevo</a>
+              <a href="{{ path('organizacionNuevo') }}" class="btn btn-success">Nuevo</a>              
             </div>
           </div>
 
           <div class="col-md-4">
-            <div class="input-group">           
-
-              <input class="form-control" id="txtBuscar" placeholder="Buscar..." ng-model="txtBuscar" type="text">
-              <span class="input-group-btn">
-                <button class="btn btn-default" style="color:white; background-color:#ccc;" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>              
-              </span>         
-
-            </div>
           </div>
 
           <div class="col-md-2">
             <div class="btn-group [[styleBuscarHerramientas]]">              
                 
-                <button class="btn btn-info" ng-click="buttonBuscarHerramientas(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
-              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusqueda();">Limpiar</button>                            
+                <button class="btn btn-info" ng-click="buttonBuscarHerramientasOrganizacion(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
+              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaOrganizacion();">Limpiar</button>                            
             </div>
           </div>
 
@@ -60,31 +52,71 @@
       <br />
 
       <div class="container well" ng-controller="ListasLocalizacionCtrl" ng-show="CountBuscarHerramientas === 1">
+        
+        <form method="get" action="{{ path('organizacionGestion') }}">               
+                  
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+        {{ form_errors(form) }}
+
         <div class="row" >
+
           <div class="col-md-3">
             <label>Departamento</label>
-              <select ng-model="selDepartamento" class="form-control" id="selDepartamento" ng-change="cargarZonas()" ng-options="departamento.nombre for departamento in JSONDepartamento track by departamento.id">     
+              <select ng-model="selDepartamento" class="form-control" id="selDepartamento" name="selDepartamento" ng-change="cargarZonas()" ng-options="departamento.nombre for departamento in JSONDepartamento track by departamento.id">     
              </select>
           </div>
-          <div class="col-md-3">
-            <label>Zona</label>
-             <select ng-model="selZona" class="form-control" id="selZona" ng-change="cargarMunicipios()" ng-options="zona.nombre for zona in JSONZona track by zona.id"></select>
-          </div>
+
           <div class="col-md-3">
             <label>Municipio</label>
-             <select ng-model="selMunicipio" class="form-control" id="selMunicipio" ng-options="municipio.nombre for municipio in JSONMunicipio track by municipio.id"></select>           
+             <select ng-model="selMunicipio" class="form-control" id="selMunicipio" name="selMunicipio" ng-options="municipio.nombre for municipio in JSONMunicipio track by municipio.id"></select>           
+          </div>          
+          
+          <div class="col-md-3">
+            <label>Zona</label>
+             <select ng-model="selZona" class="form-control" id="selZona" name="selZona" ng-change="cargarMunicipios()" ng-options="zona.nombre for zona in JSONZona track by zona.id"></select>
+          </div>
+          
+
+        </div>
+
+        <br />
+
+        <div class="row"> 
+          <div class="col-md-3">
+            {{ form_label(form.nombre_organizacion) }}
+            {{ form_errors(form.nombre_organizacion) }}
+            {{ form_widget(form.nombre_organizacion, { 'attr': {'class': 'form-control', 'placeholder': 'Nombre Organización'} }) }}
           </div>
           <div class="col-md-3">
-            <label>Estado</label>
-            <input list="estado" id="lstEstado" placeholder="Estado..." class="form-control" />
-            <datalist id="estado">
-              <option value="Activo"></option>
-              <option value="Inactivo"></option>
-            </datalist>
+            {{ form_label(form.linea_productiva) }}
+            {{ form_errors(form.linea_productiva) }}
+            {{ form_widget(form.linea_productiva, { 'attr': {'class': 'form-control', 'placeholder': 'Linea Productiva'} }) }}
           </div>
-        </div>
-      </div>
+          <div class="col-md-3">
+            {{ form_label(form.tipo_producto) }}
+            {{ form_errors(form.tipo_producto) }}
+            {{ form_widget(form.tipo_producto, { 'attr': {'class': 'form-control', 'placeholder': 'Producto'} }) }}
+          </div>
+          
+                    
+        </div> 
 
+        <br />
+
+        <div class="row">    
+
+          <div class="col-md-12 text-right">
+
+          <button class="btn btn-default" style="color:white; background-color:#ccc;"  type="submit" name="submit-filter" value="filter"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+
+          </div>                  
+        </div>
+
+        {{ form_end(form) }}
+
+        </form>
+      </div>
     </div>
 
     <br />

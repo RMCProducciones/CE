@@ -13,7 +13,7 @@ class TerritorioAprendizajeType extends AbstractType
         $builder
 
 			
-			->add('nombreTerritorio','text', array('label' => 'Nombre del Territorio'))
+			->add('nombre_territorio','text', array('label' => 'Nombre del Territorio'))
 			->add('observaciones')
 			;
 		}
