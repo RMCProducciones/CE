@@ -36,8 +36,8 @@ class FeriaType extends AbstractType
 			->add('nombre')
 			->add('entidades','text', array('label' => 'Entidades'))
 			->add('presentacion','text', array('label' => 'Presentación Feria'))
-			->add('objetivo','text', array('label' => 'objetivo Feria'))
-			->add('objetivos_especificos','text', array('label' => 'objetivos especificos Feria'))			
+			->add('objetivo','text', array('label' => 'Objetivo Feria'))
+			->add('objetivos_especificos','text', array('label' => 'Objetivos Especificos Feria'))			
 				
 		;
     }

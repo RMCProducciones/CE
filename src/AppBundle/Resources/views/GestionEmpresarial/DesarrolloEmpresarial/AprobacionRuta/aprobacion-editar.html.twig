@@ -19,8 +19,7 @@
 
      
   	<br>
-
-    <hr>
+    
 
     
   {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
@@ -44,7 +43,7 @@
     </div>
     
     <br>
-        
+    <br>
 
 
     <div class="section">
@@ -84,11 +83,12 @@
         </div>
       </div> 
 
-   <div class="row">
+   <div class="row" ng-controller = "CampoAprobacionRutaCtrl">
                 <div class="col-md-4">
-                  {{ form_label(form.aprobacion) }}
+                  {{ form_label(form.aprobacion) }}<br />
                   {{ form_errors(form.aprobacion) }}
-                  {{ form_widget(form.aprobacion, { 'attr': {'class': 'form-control', 'placeholder': 'Entidad financiera donde tiene la cuenta'} }) }}
+                  <switch id="swAprobacion" name="swAprobacion" ng-model="swAprobacion" class="green" on="Si" off="No"></switch>
+                    {{ form_widget(form.aprobacion, { 'attr': {'style':'visibility:hidden'} }) }}
                 </div>
                 <div class="col-md-4">
                   {{ form_label(form.fecha_inicio) }}
@@ -100,7 +100,10 @@
                   {{ form_errors(form.fecha_finalizacion) }}
                   {{ form_widget(form.fecha_finalizacion, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-      </div> 
+      </div>
+
+      <br />
+
       <div class="row">
                 <div class="col-md-4">
                   {{ form_label(form.observacion) }}

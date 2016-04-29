@@ -129,3 +129,24 @@ app.controller('FiltrosRutaCtrl', ['$scope', '$http', 'styleBuscarHerramientas',
       
 		
 }]);
+
+app.controller('CampoAprobacionRutaCtrl', ['$scope', '$http', function($scope, $http) {
+	
+		
+	if($('#AprobacionRuta_aprobacion').prop('checked')==false){		
+		$scope.swAprobacion = false;	
+		$('#swAprobacion').removeClass('checked');
+	}
+	else
+	{
+		$scope.swAprobacion = true;	
+		$('#swAprobacion').addClass('checked');		
+	}
+
+	
+	$scope.$watch('swAprobacion', function() {
+
+		$('#AprobacionRuta_aprobacion').prop('checked', $scope.swAprobacion);
+		
+	});
+}]);

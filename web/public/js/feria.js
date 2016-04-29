@@ -89,6 +89,24 @@ app.controller('FiltrosFeriaCtrl', ['$scope', '$http', 'styleBuscarHerramientas'
 		
 }]);
 
+app.controller('CampoAprobacionFeriaCtrl', ['$scope', '$http', function($scope, $http) {
+	
+		
+	if($('#AprobacionFeria_aprobacion').prop('checked')==false){		
+		$scope.swAprobacion = false;	
+		$('#swAprobacion').removeClass('checked');
+	}
+	else
+	{
+		$scope.swAprobacion = true;	
+		$('#swAprobacion').addClass('checked');		
+	}
 
+	
+	$scope.$watch('swAprobacion', function() {
 
+		$('#AprobacionFeria_aprobacion').prop('checked', $scope.swAprobacion);
+		
+	});
+}]);
 

@@ -138,6 +138,12 @@
 
                     <td class="text-center" ng-controller = "gestionRutaCtrl">
 
+                      {% if article.aprobacion == 0 and article.aprobador != null %}
+
+                      <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ article.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+
+                      {% else %}
+
                      <a href="{{ path('rutaTerritorio', {'idRuta': article.id}) }}" alt="Asignacion Territorio" title="Asignacion Territorio"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></a> 
 
                     {% if article.territorioAprendizaje != NULL and article.grupo != NULL %}  
@@ -173,6 +179,8 @@
                        handle-focus="true" ng-click="idRuta = {{article.id}};">
                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                      </a>
+
+                     {% endif %}
                      
                      </td>
                   </tr>
@@ -203,6 +211,36 @@
         </div>
       </div>
     </div>  
+
+
+    {% for article in pagination %}
+    <!-- Modal -->
+    <div class="modal fade" id="myModal{{ article.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel">{{ article.id }} | {{ article.nombreRuta }}</h4>
+          </div>
+          <div class="modal-body">            
+            <b>Fecha de Inicio de la Ruta Propuesta: {{ article.fechaInicioPropuesta |  date('d - m - Y') }}</b>
+            <br>
+            <b>Fecha de Finalizacion de la Ruta Propuesta: {{ article.fechaFinalizacionPropuesta |  date('d - m - Y') }}</b>
+            <br>
+            <b>Nombre Pasantia: {{article.nombreRuta}}</b>
+            <br>
+            <b>Observaciones: {{article.observaciones}}</b>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}    
 
 
     

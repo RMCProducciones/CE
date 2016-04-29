@@ -101,6 +101,27 @@ app.controller('FiltrosConcursoCtrl', ['$scope', '$http', 'styleBuscarHerramient
 		
 }]);
 
+app.controller('CampoAprobacionConcursoCtrl', ['$scope', '$http', function($scope, $http) {
+	
+		
+	if($('#AprobacionConcurso_aprobacion').prop('checked')==false){		
+		$scope.swAprobacion = false;	
+		$('#swAprobacion').removeClass('checked');
+	}
+	else
+	{
+		$scope.swAprobacion = true;	
+		$('#swAprobacion').addClass('checked');		
+	}
+
+	
+	$scope.$watch('swAprobacion', function() {
+
+		$('#AprobacionConcurso_aprobacion').prop('checked', $scope.swAprobacion);
+		
+	});
+}]);
+
 
 
 
