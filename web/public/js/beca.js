@@ -55,5 +55,40 @@ SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a 
 
 }]);
 
+app.controller('FiltrosBecaCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasBeca = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaBeca = function(){
+       
+		
+		$("#selMunicipio").val("");
+		$("#becaFilter_modalidad").val("");
+		$("#becaFilter_nombre").val("");
+		$("#becaFilter_tipo").val("");
+
+
+       
+    }
+      
+		
+}]);
+
+
+
 
 

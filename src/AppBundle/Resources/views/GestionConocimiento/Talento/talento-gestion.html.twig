@@ -24,19 +24,103 @@
 
   <br />  
 
-  <div class="section">
+  <div class="section" ng-controller="FiltrosTalentoCtrl">
       <div class="container">
-        <div class="row">
+        <div class="row" >
+          
           <div class="col-md-6">
             <div class="btn-group">
               <a href="{{ path('homepage') }}" class="btn btn-warning">Volver</a>
-              <a href="{{ path('talentoNuevo') }}" class="btn btn-success">Nuevo</a>
+              <a href="{{ path('talentoNuevo') }}" class="btn btn-success">Nuevo</a>              
             </div>
-
-          
           </div>
+
+          <div class="col-md-4">
+          </div>
+
+          <div class="col-md-2">
+            <div class="btn-group [[styleBuscarHerramientas]]">              
+                
+                <button class="btn btn-info" ng-click="buttonBuscarHerramientasTalento(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
+              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaTalento();">Limpiar</button>                            
+            </div>
+          </div>
+
         </div>
       </div>
+      <br />
+      <div class="container well" ng-controller="ListasLocalizacionCtrl" ng-show="CountBuscarHerramientas === 1">
+        
+        <form method="get" action="{{ path('talentoGestion') }}">               
+                  
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+        {{ form_errors(form) }}
+
+        <div class="row" >
+          
+          <div class="col-md-3">
+            <label>Municipio</label>
+             <select ng-model="selMunicipio" class="form-control" id="selMunicipio" name="selMunicipio" ng-options="municipio.nombre for municipio in JSONMunicipio track by municipio.id"></select>           
+          </div>       
+          <div class="col-md-3">
+            {{ form_label(form.numero_documento) }}
+            {{ form_errors(form.numero_documento) }}
+            {{ form_widget(form.numero_documento, { 'attr': {'class': 'form-control', 'placeholder': 'Numero Documento'} }) }}
+          </div>
+          <div class="col-md-3">
+            {{ form_label(form.primer_apellido) }}
+            {{ form_errors(form.primer_apellido) }}
+            {{ form_widget(form.primer_apellido, { 'attr': {'class': 'form-control', 'placeholder': 'Primer Apellido'} }) }}
+          </div>
+          <div class="col-md-3">
+            {{ form_label(form.primer_nombre) }}
+            {{ form_errors(form.primer_nombre) }}
+            {{ form_widget(form.primer_nombre, { 'attr': {'class': 'form-control', 'placeholder': 'Primer Nombre'} }) }}
+          </div>
+        </div> 
+        <br>
+        <div class="row" >
+
+          <div class="col-md-3">
+            {{ form_label(form.genero) }}
+            {{ form_errors(form.genero) }}
+            {{ form_widget(form.genero, { 'attr': {'class': 'form-control', 'placeholder': 'Genero'} }) }}
+          </div>
+          <div class="col-md-3">
+            {{ form_label(form.tipo) }}
+            {{ form_errors(form.tipo) }}
+            {{ form_widget(form.tipo, { 'attr': {'class': 'form-control', 'placeholder': 'Tipo'} }) }}
+          </div>
+          <div class="col-md-3">
+            {{ form_label(form.area_desempeno_principal) }}
+            {{ form_errors(form.area_desempeno_principal) }}
+            {{ form_widget(form.area_desempeno_principal, { 'attr': {'class': 'form-control', 'placeholder': 'Area Desempeño Principal'} }) }}
+          </div>
+          <div class="col-md-3">
+            {{ form_label(form.area_desempeno_secundario) }}
+            {{ form_errors(form.area_desempeno_secundario) }}
+            {{ form_widget(form.area_desempeno_secundario, { 'attr': {'class': 'form-control', 'placeholder': 'Area Desempeño Secundario'} }) }}
+          </div>
+                             
+        </div> 
+
+        <div class="row">    
+
+          <div class="col-md-12 text-right">
+
+          <button class="btn btn-default" style="color:white; background-color:#ccc;"  type="submit" name="submit-filter" value="filter"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+
+          </div>                  
+        </div>
+
+        {{ form_end(form) }}
+
+        </form>
+      </div>
+
+
+
     </div>  
     
 
@@ -73,7 +157,7 @@
 
                     <td class="text-center">{{article.id }}</td>               
                     <td class="text-center">{{ article.primernombre }} {{ article.segundonombre }} {{ article.primerapellido}} {{ article.segundoapellido }}</td>
-                    <td class="text-center">{{article.areaDesempenoSecundario}}</td>      
+                    <td class="text-center">{{article.areaDesempenoPrincipal}}</td>      
                     <td class="text-center">{{article.areaDesempenoSecundario}}</td>
 
 	                  
@@ -113,7 +197,7 @@
       </div>
     </div>  
 
-	{% for talento in talentos %}
+	{% for talento in pagination %}
     <!-- Modal -->
     <div class="modal fade" id="myModal{{ talento.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">

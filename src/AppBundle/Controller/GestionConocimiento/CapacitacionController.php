@@ -24,6 +24,8 @@ use AppBundle\Entity\DocumentoSoporte;
 
 use AppBundle\Form\GestionConocimiento\CapacitacionType;
 use AppBundle\Form\GestionConocimiento\CapacitacionSoporteType;
+use AppBundle\Form\GestionConocimiento\CapacitacionFilterType;
+
 
 
 
@@ -41,19 +43,58 @@ class CapacitacionController extends Controller
     public function capacitacionGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $capacitaciones= $em->getRepository('AppBundle:Capacitacion')->findBY(
+        /*$capacitaciones= $em->getRepository('AppBundle:Capacitacion')->findBY(
             array('active' => 1)            
-        ); 
+        ); */
+
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Capacitacion')
+            ->createQueryBuilder('q')
+            ->innerJoin("q.municipio", "m")
+            ->innerJoin("m.departamento", "d")
+            ->innerJoin("m.zona", "z");
+
+        $form = $this->get('form.factory')->create(new CapacitacionFilterType());
+
+    
+        if ($request->query->has($form->getName())) {
+
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);           
+        }
+
+        $filterBuilder->andWhere('q.active = 1');
+        
+        if (isset($_GET['selMunicipio']) && $_GET['selMunicipio'] != "?") {
+             $filterBuilder->andWhere('m.id = :idMunicipio')
+            ->setParameter('idMunicipio', $_GET['selMunicipio']);
+        }
+        else{
+            if (isset($_GET['selDepartamento']) && $_GET['selDepartamento'] != "?") {
+                $filterBuilder->andWhere('d.id = :idDepartamento')
+                ->setParameter('idDepartamento', $_GET['selDepartamento']);
+            }
+            if (isset($_GET['selZona']) && $_GET['selZona'] != "?") {
+                $filterBuilder->andWhere('z.id = :idZona')
+                ->setParameter('idZona', $_GET['selZona']);
+            }      
+        }
+
+        //var_dump($filterBuilder->getDql());
+        //die("");
+
+        $query = $filterBuilder->getQuery();
          $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
-            $capacitaciones, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             10/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionConocimiento/Capacitacion:capacitacion-gestion.html.twig', 
-            array( 'capacitaciones' => $capacitaciones,
+            array(  'form' => $form->createView(),
+                    'capacitaciones' => $query,
                     'pagination' => $pagination
                 )
             );

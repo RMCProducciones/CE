@@ -24,6 +24,8 @@ use AppBundle\Entity\FeriaSoporte;
 
 use AppBundle\Form\GestionEmpresarial\FeriaSoporteType;
 use AppBundle\Form\GestionEmpresarial\FeriaType;
+use AppBundle\Form\GestionEmpresarial\FeriaFilterType;
+
 
 
 /*Para autenticación por código*/
@@ -38,22 +40,61 @@ class FeriaController extends Controller
     public function feriaGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $ferias = $em->getRepository('AppBundle:Feria')->findBy(
+        /*$ferias = $em->getRepository('AppBundle:Feria')->findBy(
             array('active' => '1'),
             array('fecha_creacion' => 'ASC')
-        );
+        );*/
+
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Feria')
+            ->createQueryBuilder('q')
+            ->innerJoin("q.municipio", "m")
+            ->innerJoin("m.departamento", "d")
+            ->innerJoin("m.zona", "z");
+
+        $form = $this->get('form.factory')->create(new FeriaFilterType());
+
+    
+        if ($request->query->has($form->getName())) {
+
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);           
+        }
+
+        $filterBuilder->andWhere('q.active = 1');
+        
+        if (isset($_GET['selMunicipio']) && $_GET['selMunicipio'] != "?") {
+             $filterBuilder->andWhere('m.id = :idMunicipio')
+            ->setParameter('idMunicipio', $_GET['selMunicipio']);
+        }
+        else{
+            if (isset($_GET['selDepartamento']) && $_GET['selDepartamento'] != "?") {
+                $filterBuilder->andWhere('d.id = :idDepartamento')
+                ->setParameter('idDepartamento', $_GET['selDepartamento']);
+            }
+            if (isset($_GET['selZona']) && $_GET['selZona'] != "?") {
+                $filterBuilder->andWhere('z.id = :idZona')
+                ->setParameter('idZona', $_GET['selZona']);
+            }      
+        }
+
+        //var_dump($filterBuilder->getDql());
+        //die("");
+
+        $query = $filterBuilder->getQuery();
 
          $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
-            $ferias, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             10/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionEmpresarial/ServicioComplementario/Feria:feria-gestion.html.twig', 
-            array( 'ferias' => $ferias,
-                'pagination' => $pagination
+            array( 'form' => $form->createView(),
+                    'ferias' => $query,
+                    'pagination' => $pagination
                 )
             );
     }

@@ -51,3 +51,40 @@ app.controller('gestionProgramaCapacitacionFinancieraCtrl', ['$scope', '$http', 
 
 }]);
 
+app.controller('FiltrosProgramaCapacitacionFinancieraCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasProgramaCapacitacionFinanciera = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaProgramaCapacitacionFinanciera = function(){
+       
+		
+		$("#selMunicipio").val("");
+		$("#programaCapacitacionFinancieraGestion_lugar").val("");
+		$("#programaCapacitacionFinancieraGestion_talento_financiero").val("");
+		$("#programaCapacitacionFinancieraGestion_estado").val("");
+
+
+       
+    }
+      
+		
+}]);
+
+
+
+
+

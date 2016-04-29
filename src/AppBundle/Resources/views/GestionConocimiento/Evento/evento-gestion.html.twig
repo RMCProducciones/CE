@@ -24,17 +24,83 @@
 
     <hr>
 
-    <div class="section">
+    <div class="section" ng-controller="FiltrosEventoCtrl">
       <div class="container">
-        <div class="row">
+        <div class="row" >
+          
           <div class="col-md-6">
             <div class="btn-group">
               <a href="{{ path('homepage') }}" class="btn btn-warning">Volver</a>
-              <a href="{{ path('eventoNuevo') }}" class="btn btn-success">Nuevo</a>
+              <a href="{{ path('eventoNuevo') }}" class="btn btn-success">Nuevo</a>              
             </div>
           </div>
+
+          <div class="col-md-4">
+          </div>
+
+          <div class="col-md-2">
+            <div class="btn-group [[styleBuscarHerramientas]]">              
+                
+                <button class="btn btn-info" ng-click="buttonBuscarHerramientasEvento(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
+              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaEvento();">Limpiar</button>                            
+            </div>
+          </div>
+
         </div>
       </div>
+      <br />
+
+       <div class="container well" ng-controller="ListasLocalizacionCtrl" ng-show="CountBuscarHerramientas === 1">
+        
+        <form method="get" action="{{ path('eventoGestion') }}">               
+                  
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+        {{ form_errors(form) }}
+
+        <div class="row" >
+          
+          <div class="col-md-3">
+            <label>Municipio</label>
+             <select ng-model="selMunicipio" class="form-control" id="selMunicipio" name="selMunicipio" ng-options="municipio.nombre for municipio in JSONMunicipio track by municipio.id"></select>           
+          </div>       
+          <div class="col-md-3">
+            {{ form_label(form.organizador) }}
+            {{ form_errors(form.organizador) }}
+            {{ form_widget(form.organizador, { 'attr': {'class': 'form-control', 'placeholder': 'Nombre Organizador'} }) }}
+          </div>
+          <div class="col-md-3">
+            {{ form_label(form.nombre) }}
+            {{ form_errors(form.nombre) }}
+            {{ form_widget(form.nombre, { 'attr': {'class': 'form-control', 'placeholder': 'Nombre Evento'} }) }}
+          </div>
+          <div class="col-md-3">
+            {{ form_label(form.tipo) }}
+            {{ form_errors(form.tipo) }}
+            {{ form_widget(form.tipo, { 'attr': {'class': 'form-control', 'placeholder': 'Tipo'} }) }}
+          </div>
+          
+                    
+        </div> 
+
+        <div class="row">    
+
+          <div class="col-md-12 text-right">
+
+          <button class="btn btn-default" style="color:white; background-color:#ccc;"  type="submit" name="submit-filter" value="filter"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+
+          </div>                  
+        </div>
+
+        {{ form_end(form) }}
+
+        </form>
+      </div>
+
+    </div>
+
+
+
     </div>
     
     <br>
