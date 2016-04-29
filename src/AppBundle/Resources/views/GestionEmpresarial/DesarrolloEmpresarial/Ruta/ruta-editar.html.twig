@@ -61,19 +61,37 @@
 				</div>
 			</div>	
 
+      <div class="row">
+        <div class="col-md-6">
+                  {{ form_label(form.fecha_inicio_propuesta) }}
+          {{ form_errors(form.fecha_inicio_propuesta) }}
+                  {{ form_widget(form.fecha_inicio_propuesta, { 'attr': {'class': 'form-control', 'placeholder': 'Fecha de Inicio Propuesta'} }) }}
+                </div>
+                <div class="col-md-6">
+                  {{ form_label(form.fecha_finalizacion_propuesta) }}
+          {{ form_errors(form.fecha_finalizacion_propuesta) }}
+                  {{ form_widget(form.fecha_finalizacion_propuesta, { 'attr': {'class': 'form-control', 'placeholder': 'Fecha Finalizacion Propuesta '} }) }}
+                </div>
+          
+    </div>
+     <br>
+      <br>
+
 				<div class="row">
 				<div class="col-md-6">
                   {{ form_label(form.nombre_ruta) }}
 				  {{ form_errors(form.nombre_ruta) }}
-                  {{ form_widget(form.nombre_ruta, { 'attr': {'class': 'form-control', 'placeholder': 'segundo apellido'} }) }}
+                  {{ form_widget(form.nombre_ruta, { 'attr': {'class': 'form-control', 'placeholder': 'Nombre ruta'} }) }}
                 </div>
                 <div class="col-md-6">
                   {{ form_label(form.observaciones) }}
 				  {{ form_errors(form.observaciones) }}
-                  {{ form_widget(form.observaciones, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
+                  {{ form_widget(form.observaciones, { 'attr': {'class': 'form-control', 'placeholder': 'Observaciones '} }) }}
                 </div>
           
 		</div>
+
+
 
 			
 
