@@ -39,4 +39,35 @@ app.controller('gestionOrganizacionTerritorioCtrl', ['$scope', '$http', function
 }]);
 
 
+app.controller('FiltrosTerritorioAprendizajeCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
 
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasTerritorioAprendizaje = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaTerritorioAprendizaje = function(){
+       
+		$("#territorioFilter_nombre_territorio").val("");
+		$("#territorioFilter_observaciones").val("");
+	
+
+
+		
+
+       
+    }
+      
+		
+}]);

@@ -22,6 +22,8 @@ use AppBundle\Entity\OrganizacionSoporte;
 
 use AppBundle\Form\GestionEmpresarial\OrganizacionType;
 use AppBundle\Form\GestionEmpresarial\OrganizacionSoporteType;
+use AppBundle\Form\GestionEmpresarial\OrganizacionFilterType;
+
 
 
 /*Para autenticación por código*/
@@ -37,22 +39,62 @@ class OrganizacionController extends Controller
     public function organizacionGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $organizaciones = $em->getRepository('AppBundle:Organizacion')->findBy(
+        /*$organizaciones = $em->getRepository('AppBundle:Organizacion')->findBy(
             array('active' => '1'),
             array('fecha_creacion' => 'ASC')
-        );
+        );*/
+
+         $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Organizacion')
+            ->createQueryBuilder('q')
+            ->innerJoin("q.municipio", "m")
+            ->innerJoin("m.departamento", "d")
+            ->innerJoin("m.zona", "z");
+
+        $form = $this->get('form.factory')->create(new OrganizacionFilterType());
+
+    
+        if ($request->query->has($form->getName())) {
+
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);           
+        }
+
+        $filterBuilder->andWhere('q.active = 1');
+        
+        if (isset($_GET['selMunicipio']) && $_GET['selMunicipio'] != "?") {
+             $filterBuilder->andWhere('m.id = :idMunicipio')
+            ->setParameter('idMunicipio', $_GET['selMunicipio']);
+        }
+        else{
+            if (isset($_GET['selDepartamento']) && $_GET['selDepartamento'] != "?") {
+                $filterBuilder->andWhere('d.id = :idDepartamento')
+                ->setParameter('idDepartamento', $_GET['selDepartamento']);
+            }
+            if (isset($_GET['selZona']) && $_GET['selZona'] != "?") {
+                $filterBuilder->andWhere('z.id = :idZona')
+                ->setParameter('idZona', $_GET['selZona']);
+            }      
+        }
+
+        //var_dump($filterBuilder->getDql());
+        //die("");
+
+        $query = $filterBuilder->getQuery();
+    
 
         $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
-            $organizaciones, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             10/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Organizacion:organizacion-gestion.html.twig', 
-            array( 'organizaciones' => $organizaciones,
-                   'pagination' => $pagination ));
+            array(  'form' => $form->createView(),
+                    'organizaciones' => $query,
+                    'pagination' => $pagination ));
     }
 /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/organizacion/nuevo", name="organizacionNuevo")

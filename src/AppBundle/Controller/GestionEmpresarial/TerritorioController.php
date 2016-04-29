@@ -28,6 +28,8 @@ use AppBundle\Entity\AsignacionGrupoBeneficiarioRuta;
 use AppBundle\Form\GestionEmpresarial\TerritorioAprendizajeType;
 use AppBundle\Form\GestionEmpresarial\RutaSoporteType;
 use AppBundle\Form\GestionEmpresarial\RutaFilterType;
+use AppBundle\Form\GestionEmpresarial\TerritorioAprendizajeFilterType;
+
 
 
 
@@ -45,22 +47,42 @@ class TerritorioController extends Controller
     public function territorioaprendizajeGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $territorios = $em->getRepository('AppBundle:TerritorioAprendizaje')->findBy(
+        /*$territorios = $em->getRepository('AppBundle:TerritorioAprendizaje')->findBy(
             array('active' => '1')
             
-        );
+        );*/
+
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:TerritorioAprendizaje')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new TerritorioAprendizajeFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder->andWhere('q.active = 1');
+
+        $query = $filterBuilder->getQuery();
+
+        //var_dump($filterBuilder->getDql());
+        //die("");    
 
         $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
-            $territorios, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             10/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Territorio:territorio-gestion.html.twig', 
-        	array( 'territorios' => $territorios,
-        		   'pagination' => $pagination));
+        	array(  'form' => $form->createView(),
+                    'territorios' => $query,
+        		    'pagination' => $pagination));
     }
 
 

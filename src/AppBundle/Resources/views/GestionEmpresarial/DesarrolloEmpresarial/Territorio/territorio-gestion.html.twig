@@ -24,7 +24,7 @@
   <br />
   <br />
 
-    <div class="section" ng-controller="FiltrosCtrl">
+     <div class="section" ng-controller="FiltrosTerritorioAprendizajeCtrl">
       <div class="container">
         <div class="row" >
           
@@ -35,54 +35,70 @@
             </div>
           </div>
 
-          <div class="col-md-4">
-            <div class="input-group">           
-
-              <input class="form-control" id="txtBuscar" placeholder="Buscar..." ng-model="txtBuscar" type="text">
-              <span class="input-group-btn">
-                <button class="btn btn-default" style="color:white; background-color:#ccc;" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>              
-              </span>         
-
-            </div>
+          <div class="col-md-4">           
           </div>
 
           <div class="col-md-2">
             <div class="btn-group [[styleBuscarHerramientas]]">              
                 
-                <button class="btn btn-info" ng-click="buttonBuscarHerramientas(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
-              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusqueda();">Limpiar</button>                            
+                <button class="btn btn-info" ng-click="buttonBuscarHerramientasTerritorioAprendizaje(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
+              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaTerritorioAprendizaje();">Limpiar</button>                            
             </div>
           </div>
+
 
         </div>
       </div>
 
       <br />
 
-      <div class="container well" ng-controller="ListasLocalizacionCtrl" ng-show="CountBuscarHerramientas === 1">
-        <div class="row" >
-          <div class="col-md-3">
-            <label>Departamento</label>
-              <select ng-model="selDepartamento" class="form-control" id="selDepartamento" ng-change="cargarZonas()" ng-options="departamento.nombre for departamento in JSONDepartamento track by departamento.id">     
-             </select>
-          </div>
-          <div class="col-md-3">
-            <label>Zona</label>
-             <select ng-model="selZona" class="form-control" id="selZona" ng-change="cargarMunicipios()" ng-options="zona.nombre for zona in JSONZona track by zona.id"></select>
-          </div>
-          <div class="col-md-3">
-            <label>Municipio</label>
-             <select ng-model="selMunicipio" class="form-control" id="selMunicipio" ng-options="municipio.nombre for municipio in JSONMunicipio track by municipio.id"></select>           
-          </div>
-          <div class="col-md-3">
-            <label>Estado</label>
-            <input list="estado" id="lstEstado" placeholder="Estado..." class="form-control" />
-            <datalist id="estado">
-              <option value="Activo"></option>
-              <option value="Inactivo"></option>
-            </datalist>
-          </div>
+      <div class="container well" ng-show="CountBuscarHerramientas === 1">
+
+        <form method="get" action="{{ path('territorioaprendizajeGestion') }}">               
+                  
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+        {{ form_errors(form) }}
+
+        <div class="row">          
+
+            
+
+                  <div class="col-md-3">
+                  
+                  {{ form_label(form.nombre_territorio) }}
+                  {{ form_errors(form.nombre_territorio) }}
+                  {{ form_widget(form.nombre_territorio, { 'attr': {'class': 'form-control', 'placeholder': 'Nombre  Territorio '} }) }}
+
+                  </div>
+
+                  <div class="col-md-3">
+
+                    {{ form_label(form.observaciones) }}
+                    {{ form_errors(form.observaciones) }}
+                    {{ form_widget(form.observaciones, { 'attr': {'class': 'form-control', 'placeholder': 'Observaciones'} }) }}
+
+                  </div>
+                 
+
+
         </div>
+
+        <br />        
+
+        <div class="row">    
+
+                  <div class="col-md-12 text-right">
+
+                  <button class="btn btn-default" style="color:white; background-color:#ccc;"  type="submit" name="submit-filter" value="filter"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+
+                  </div>                  
+        </div>
+
+        {{ form_end(form) }}
+
+        </form>
+
       </div>
 
     </div>
@@ -115,10 +131,10 @@
                   
                   <tr id="filaTerritorioAprendizaje{{ consecutivo }}">
                     <td class="text-center">{{ territorio.id }}</td>
-                     <td class="text-left">
+                     <td class="text-center">
                       {{territorio.nombreTerritorio}}
                      </td>
-                     <td class="text-left">
+                     <td class="text-center">
                       {{territorio.observaciones}}
                     </td>
                          
