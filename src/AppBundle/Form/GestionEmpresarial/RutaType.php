@@ -15,6 +15,9 @@ class RutaType extends AbstractType
 			
 			->add('nombre_ruta','text', array('label' => 'Nombre Ruta'))
 			->add('observaciones')
+            ->add('fecha_inicio_propuesta', 'date', array('label' => 'Fecha de Inicio de la feria Propuesta', 'widget' => 'single_text'))
+            ->add('fecha_finalizacion_propuesta', 'date', 
+            array('label' => 'Fecha de finalizacion de la feria Propuesta', 'widget' => 'single_text'))
 			;
 		}
     

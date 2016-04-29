@@ -15,6 +15,9 @@ class PasantiaType extends AbstractType
 			
 			->add('nombre_pasantia','text', array('label' => 'Nombre Pasantia'))
 			->add('observaciones')
+            ->add('fecha_inicio_propuesta', 'date', array('label' => 'Fecha de Inicio de la pasantia Propuesta', 'widget' => 'single_text'))
+            ->add('fecha_finalizacion_propuesta', 'date', 
+            array('label' => 'Fecha de finalizacion de la pasantia Propuesta', 'widget' => 'single_text'))
 			;
 		}
     
