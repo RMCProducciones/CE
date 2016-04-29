@@ -57,5 +57,42 @@ SQLSTATE[23000]: Integrity constraint violation: 1451 Cannot delete or update a 
 
 }]);
 
+app.controller('FiltrosCapacitacionCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasCapacitacion = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaCapacitacion = function(){
+       
+		
+		$("#selMunicipio").val("");
+		$("#capacitacionFilter_tipo").val("");
+		$("#capacitacionFilter_nombre").val("");
+		$("#capacitacionFilter_capacitador").val("");
+		$("#capacitacionFilter_modalidad").val("");
+
+
+
+       
+    }
+      
+		
+}]);
+
+
+
 
 
