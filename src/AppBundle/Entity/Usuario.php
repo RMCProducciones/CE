@@ -137,7 +137,7 @@ class Usuario extends BaseUser
           array_push($this->roles, 'ROLE_PROMOTOR');
         }
         else if($rol == 2) {
-          array_push($this->roles, 'ROLE_COORDINADOR        ');
+          array_push($this->roles, 'ROLE_COORDINADOR');
         }
     }
 
