@@ -134,10 +134,10 @@ class Usuario extends BaseUser
     public function addRole( $rol )
     {
         if($rol == 1) {
-          array_push($this->roles, 'ROLE_ADMIN');
+          array_push($this->roles, 'ROLE_PROMOTOR');
         }
         else if($rol == 2) {
-          array_push($this->roles, 'ROLE_USER');
+          array_push($this->roles, 'ROLE_COORDINADOR        ');
         }
     }
 

@@ -35,6 +35,8 @@ use AppBundle\Form\GestionEmpresarial\GrupoFilterType;
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
+use AppBundle\Utilities\Acceso;
+
 class GrupoController extends Controller
 {
 
@@ -43,12 +45,17 @@ class GrupoController extends Controller
      */
     public function grupoGestionAction(Request $request)
     {
+        
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR"]);
+
+       
         $em = $this->getDoctrine()->getManager();
+       
         /*$grupos = $em->getRepository('AppBundle:Grupo')->findBy(
             array('active' => '1'),
             array('fecha_creacion' => 'ASC')
         );*/
-
+       
         $caminos = $em->getRepository('AppBundle:Camino')->findBy(
             array('active' => '1'),
             array('fecha_creacion' => 'ASC')
@@ -907,4 +914,3 @@ class GrupoController extends Controller
 
 
 }
-
