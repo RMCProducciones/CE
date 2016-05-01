@@ -53,6 +53,54 @@ class Pasantia
     /**
      * @var boolean
      *
+     * @ORM\Column(name="aprobacion", type="boolean", nullable=true)
+     */
+    private $aprobacion;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_inicio", type="datetime", nullable=true)
+     */
+    private $fecha_inicio;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_finalizacion", type="datetime", nullable=true)
+     */
+    private $fecha_finalizacion;
+     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_inicio_propuesta", type="datetime", nullable=true)
+     */
+    private $fecha_inicio_propuesta;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_finalizacion_propuesta", type="datetime", nullable=true)
+     */
+    private $fecha_finalizacion_propuesta;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="aprobador", type="integer",nullable=true)
+     */
+    private $aprobador;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observacion", type="string",nullable=true)
+     */
+    private $observacion;
+
+    /**
+     * @var boolean
+     *
      * @ORM\Column(name="active", type="boolean")
      */
     private $active;
@@ -220,6 +268,175 @@ class Pasantia
     public function getObservaciones()
     {
         return $this->observaciones;
+    }
+
+     /**
+     * Set aprobacion
+     *
+     * @param boolean $aprobacion
+     *
+     * @return Concurso
+     */
+    public function setAprobacion($aprobacion)
+    {
+        $this->aprobacion = $aprobacion;
+
+        return $this;
+    }
+
+    /**
+     * Get aprobacion
+     *
+     * @return boolean
+     */
+    public function getAprobacion()
+    {
+        return $this->aprobacion;
+    }
+
+    /**
+     * Set fechaInicio
+     *
+     * @param \DateTime $fechaInicio
+     *
+     * @return Concurso
+     */
+    public function setFechaInicio($fechaInicio)
+    {
+        $this->fecha_inicio = $fechaInicio;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaInicio
+     *
+     * @return \DateTime
+     */
+    public function getFechaInicio()
+    {
+        return $this->fecha_inicio;
+    }
+
+    /**
+     * Set fechaFinalizacion
+     *
+     * @param \DateTime $fechaFinalizacion
+     *
+     * @return Concurso
+     */
+    public function setFechaFinalizacion($fechaFinalizacion)
+    {
+        $this->fecha_finalizacion = $fechaFinalizacion;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaFinalizacion
+     *
+     * @return \DateTime
+     */
+    public function getFechaFinalizacion()
+    {
+        return $this->fecha_finalizacion;
+    }
+
+
+    /**
+     * Set fechaInicioPropuesta
+     *
+     * @param \DateTime $fechaInicioPropuesta
+     *
+     * @return Concurso
+     */
+    public function setFechaInicioPropuesta($fechaInicioPropuesta)
+    {
+        $this->fecha_inicio_propuesta = $fechaInicioPropuesta;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaInicioPropuesta
+     *
+     * @return \DateTime
+     */
+    public function getFechaInicioPropuesta()
+    {
+        return $this->fecha_inicio_propuesta;
+    }
+
+    /**
+     * Set fechaFinalizacionPropuesta
+     *
+     * @param \DateTime $fechaFinalizacionPropuesta
+     *
+     * @return Concurso
+     */
+    public function setFechaFinalizacionPropuesta($fechaFinalizacionPropuesta)
+    {
+        $this->fecha_finalizacion_propuesta = $fechaFinalizacionPropuesta;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaFinalizacionPropuesta
+     *
+     * @return \DateTime
+     */
+    public function getFechaFinalizacionPropuesta()
+    {
+        return $this->fecha_finalizacion_propuesta;
+    }
+
+    /**
+     * Set aprobador
+     *
+     * @param integer $aprobador
+     *
+     * @return Concurso
+     */
+    public function setAprobador($aprobador)
+    {
+        $this->aprobador = $aprobador;
+
+        return $this;
+    }
+
+    /**
+     * Get aprobador
+     *
+     * @return integer
+     */
+    public function getAprobador()
+    {
+        return $this->aprobador;
+    }
+
+    /**
+     * Set observacion
+     *
+     * @param string $observacion
+     *
+     * @return Pasantia
+     */
+    public function setObservacion($observacion)
+    {
+        $this->observacion = $observacion;
+
+        return $this;
+    }
+
+    /**
+     * Get observacion
+     *
+     * @return string
+     */
+    public function getObservacion()
+    {
+        return $this->observacion;
     }
 
     /**

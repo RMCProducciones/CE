@@ -61,6 +61,20 @@
 				</div>
 			</div>	
 
+        <div class="row">
+        <div class="col-md-6">
+                  {{ form_label(form.fecha_inicio_propuesta) }}
+          {{ form_errors(form.fecha_inicio_propuesta) }}
+                  {{ form_widget(form.fecha_inicio_propuesta, { 'attr': {'class': 'form-control', 'placeholder': 'Fecha de Iniciación pasantia Propuesta'} }) }}
+                </div>
+                <div class="col-md-6">
+                  {{ form_label(form.fecha_finalizacion_propuesta) }}
+          {{ form_errors(form.fecha_finalizacion_propuesta) }}
+                  {{ form_widget(form.fecha_finalizacion_propuesta, { 'attr': {'class': 'form-control', 'placeholder': 'Fecha de finalizacion pasantia Propuesta '} }) }}
+                </div>
+          
+    </div>
+
 				<div class="row">
 				<div class="col-md-6">
                   {{ form_label(form.nombre_pasantia) }}

@@ -1,15 +1,15 @@
 {% extends 'AppBundle::frontend.html.twig' %}
 
 
-{% block title %}Gestion Informacion Financiera {% endblock %}
+{% block title %}Aprobación Feria {% endblock %}
 
 {% block breadcrumb_ul %}
 
     <ul class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
-      <li><a href="{{ path('concursoGestion') }}">Concurso</a></li>
-      <li class="active">Aprobación Concurso</li>
+      <li><a href="{{ path('feriaGestion') }}">Feria</a></li>
+      <li class="active">Aprobación Feria</li>
     </ul>
 {% endblock %}
 
@@ -19,7 +19,7 @@
 
 {% block section %}
   <div class="container">
-    <h1>Aprobación de Concurso</h1>
+    <h1>Aprobación de Feria</h1>
     <hr>
   </div>
 
@@ -29,8 +29,8 @@
         <div class="row">
           <div class="col-md-6">
             <div class="btn-group">
-              <a href="{{ path('concursoGestion', {'idConcurso': idConcurso}) }}" class="btn btn-warning">Volver</a>
-              <a href="{{ path('aprobacionEditar', {'idConcurso': idConcurso}) }}" class="btn btn-success">Editar</a>
+              <a href="{{ path('feriaGestion', {'idFeria': idFeria}) }}" class="btn btn-warning">Volver</a>
+              <a href="{{ path('aprobacionferiaEditar', {'idFeria': idFeria}) }}" class="btn btn-success">Editar</a>
             </div>
 
           
@@ -86,7 +86,6 @@
                       {% endif %}
 
                     {% endif %}
-                                   
                     <td class="text-center">{{ article.fechainicio |  date('d - m - Y')}}</td>
                     <td class="text-center">{{ article.fechafinalizacion |  date('d - m - Y')}}</td>      
                     

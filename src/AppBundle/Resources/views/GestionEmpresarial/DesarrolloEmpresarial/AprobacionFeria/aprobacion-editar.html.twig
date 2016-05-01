@@ -1,6 +1,6 @@
 {% extends 'AppBundle::frontend.html.twig' %}
 
-{% block title %}Aprobación Concurso{% endblock %}
+{% block title %}Aprobación Feria{% endblock %}
 
 {% block breadcrumb_ul %}
 
@@ -8,8 +8,8 @@
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
       <li>Formacion de capital social asociativo y desarrollo empresarial</li>
-      <li><a href="{{ path('concursoGestion') }}">Concurso</a></li>
-      <li class="active">Aprobación Concurso</li>
+      <li><a href="{{ path('feriaGestion') }}">Feria</a></li>
+      <li class="active">Aprobación Feria</li>
     </ul>
 
 {% endblock %}
@@ -19,8 +19,7 @@
 
      
   	<br>
-
-
+    
 
     
   {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
@@ -35,7 +34,7 @@
   
               <button name="grupo[Guardar]" id="grupo_Guardar" type="submit" class="btn btn-success">Guardar</button>
               
-              <a href="{{ path('aprobacionGestion', {'idConcurso': idConcurso}) }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+              <a href="{{ path('aprobacionferiaGestion', {'idFeria': idFeria}) }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
               
             </div>
           </div>
@@ -85,7 +84,7 @@
         </div>
       </div> 
 
-   <div class="row" ng-controller="CampoAprobacionConcursoCtrl">
+   <div class="row" ng-controller = "CampoAprobacionFeriaCtrl">
                 <div class="col-md-4">
                   {{ form_label(form.aprobacion) }}<br />
                   {{ form_errors(form.aprobacion) }}
@@ -106,9 +105,9 @@
       <br />
       <div class="row">
                 <div class="col-md-4">
-                  {{ form_label(form.observaciones) }}
-                  {{ form_errors(form.observaciones) }}
-                  {{ form_widget(form.observaciones, { 'attr': {'class': 'form-control', 'placeholder': 'Observaciones'} }) }}
+                  {{ form_label(form.observacion) }}
+                  {{ form_errors(form.observacion) }}
+                  {{ form_widget(form.observacion, { 'attr': {'class': 'form-control', 'placeholder': 'Observaciones'} }) }}
                 </div>
                 <div class="col-md-4">
                   {{ form_label(form.aprobador) }}

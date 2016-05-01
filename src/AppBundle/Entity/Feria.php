@@ -199,6 +199,57 @@ class Feria
      */
     private $comentarios;
 
+
+
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_inicio", type="datetime", nullable=true)
+     */
+    private $fecha_inicio;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_finalizacion", type="datetime", nullable=true)
+     */
+    private $fecha_finalizacion;
+     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_inicio_propuesta", type="datetime", nullable=true)
+     */
+    private $fecha_inicio_propuesta;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_finalizacion_propuesta", type="datetime", nullable=true)
+     */
+    private $fecha_finalizacion_propuesta;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="aprobador", type="integer",nullable=true)
+     */
+    private $aprobador;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observacion", type="string",nullable=true)
+     */
+    private $observacion;
+
+
+
+
+
+
+
+
     /**
      * @var boolean
      *
@@ -868,6 +919,154 @@ class Feria
     {
         return $this->comentarios;
     }
+
+    
+
+    /**
+     * Set fechaInicio
+     *
+     * @param \DateTime $fechaInicio
+     *
+     * @return Feria
+     */
+    public function setFechaInicio($fechaInicio)
+    {
+        $this->fecha_inicio = $fechaInicio;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaInicio
+     *
+     * @return \DateTime
+     */
+    public function getFechaInicio()
+    {
+        return $this->fecha_inicio;
+    }
+
+    /**
+     * Set fechaFinalizacion
+     *
+     * @param \DateTime $fechaFinalizacion
+     *
+     * @return Feria
+     */
+    public function setFechaFinalizacion($fechaFinalizacion)
+    {
+        $this->fecha_finalizacion = $fechaFinalizacion;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaFinalizacion
+     *
+     * @return \DateTime
+     */
+    public function getFechaFinalizacion()
+    {
+        return $this->fecha_finalizacion;
+    }
+
+
+    /**
+     * Set fechaInicioPropuesta
+     *
+     * @param \DateTime $fechaInicioPropuesta
+     *
+     * @return Feria
+     */
+    public function setFechaInicioPropuesta($fechaInicioPropuesta)
+    {
+        $this->fecha_inicio_propuesta = $fechaInicioPropuesta;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaInicioPropuesta
+     *
+     * @return \DateTime
+     */
+    public function getFechaInicioPropuesta()
+    {
+        return $this->fecha_inicio_propuesta;
+    }
+
+    /**
+     * Set fechaFinalizacionPropuesta
+     *
+     * @param \DateTime $fechaFinalizacionPropuesta
+     *
+     * @return Feria
+     */
+    public function setFechaFinalizacionPropuesta($fechaFinalizacionPropuesta)
+    {
+        $this->fecha_finalizacion_propuesta = $fechaFinalizacionPropuesta;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaFinalizacionPropuesta
+     *
+     * @return \DateTime
+     */
+    public function getFechaFinalizacionPropuesta()
+    {
+        return $this->fecha_finalizacion_propuesta;
+    }
+
+    /**
+     * Set aprobador
+     *
+     * @param integer $aprobador
+     *
+     * @return Feria
+     */
+    public function setAprobador($aprobador)
+    {
+        $this->aprobador = $aprobador;
+
+        return $this;
+    }
+
+    /**
+     * Get aprobador
+     *
+     * @return integer
+     */
+    public function getAprobador()
+    {
+        return $this->aprobador;
+    }
+
+    /**
+     * Set observacion
+     *
+     * @param string $observacion
+     *
+     * @return Feria
+     */
+    public function setObservacion($observacion)
+    {
+        $this->observacion = $observacion;
+
+        return $this;
+    }
+
+    /**
+     * Get observacion
+     *
+     * @return string
+     */
+    public function getObservacion()
+    {
+        return $this->observacion;
+    }
+
 
     /**
      * Set active

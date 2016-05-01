@@ -29,6 +29,7 @@ use AppBundle\Entity\Grupo;
 
 
 use AppBundle\Form\GestionEmpresarial\CLEARType;
+use AppBundle\Form\GestionEmpresarial\CLEARFilterType;
 use AppBundle\Form\GestionEmpresarial\ClearSoporteType;
 use AppBundle\Form\GestionEmpresarial\ListaRolBeneficiarioType;
 use AppBundle\Form\GestionEmpresarial\ListaRolType;
@@ -48,20 +49,59 @@ class ClearController extends Controller
     public function clearGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $cleares = $em->getRepository('AppBundle:CLEAR')->findBY(
+        /*$cleares = $em->getRepository('AppBundle:CLEAR')->findBY(
             array('active' => 1),
             array('fecha_inicio' => 'ASC')
-        ); 
+        ); */
+        
+         $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:CLEAR')
+            ->createQueryBuilder('q')
+            ->innerJoin("q.municipio", "m")
+            ->innerJoin("m.departamento", "d")
+            ->innerJoin("m.zona", "z");
+
+        $form = $this->get('form.factory')->create(new ClearFilterType());
+
+    
+        if ($request->query->has($form->getName())) {
+
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);           
+        }
+
+        $filterBuilder->andWhere('q.active = 1');
+        
+        if (isset($_GET['selMunicipio']) && $_GET['selMunicipio'] != "?") {
+             $filterBuilder->andWhere('m.id = :idMunicipio')
+            ->setParameter('idMunicipio', $_GET['selMunicipio']);
+        }
+        else{
+            if (isset($_GET['selDepartamento']) && $_GET['selDepartamento'] != "?") {
+                $filterBuilder->andWhere('d.id = :idDepartamento')
+                ->setParameter('idDepartamento', $_GET['selDepartamento']);
+            }
+            if (isset($_GET['selZona']) && $_GET['selZona'] != "?") {
+                $filterBuilder->andWhere('z.id = :idZona')
+                ->setParameter('idZona', $_GET['selZona']);
+            }      
+        }
+
+        //var_dump($filterBuilder->getDql());
+        //die("");
+
+        $query = $filterBuilder->getQuery();
+    
          $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
-            $cleares, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             10/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Clear:clear-gestion.html.twig', 
-            array( 'cleares' => $cleares, 'pagination' => $pagination)
+            array( 'form' => $form->createView(),'cleares' => $query, 'pagination' => $pagination)
         );
     }
 

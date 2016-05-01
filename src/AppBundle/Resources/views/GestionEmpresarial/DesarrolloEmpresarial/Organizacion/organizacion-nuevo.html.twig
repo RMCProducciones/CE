@@ -29,20 +29,31 @@
 
     {{ form_errors(form) }}
 
-    <div class="section">
+    <div class="section" ng-controller="FiltrosOrganizacionCtrl">
       <div class="container">
-        <div class="row">
+        <div class="row" >
+          
           <div class="col-md-6">
             <div class="btn-group">
-  
-              <button name="grupo[guardar]" id="grupo_guardar" type="submit" class="btn btn-success">Guardar</button>
-              
-              <a href="{{ path('organizacionGestion') }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
-              
+              <a href="{{ path('homepage') }}" class="btn btn-warning">Volver</a>
+              <a href="{{ path('organizacionNuevo') }}" class="btn btn-success">Nuevo</a>              
             </div>
           </div>
+
+          <div class="col-md-4">
+          </div>
+
+          <div class="col-md-2">
+            <div class="btn-group [[styleBuscarHerramientas]]">              
+                
+                <button class="btn btn-info" ng-click="buttonBuscarHerramientasOrganizacion(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
+              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaOrganizacion();">Limpiar</button>                            
+            </div>
+          </div>
+
         </div>
       </div>
+
     </div>
     
     <br>

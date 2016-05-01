@@ -117,11 +117,24 @@ app.controller('FiltrosPasantiaCtrl', ['$scope', '$http', 'styleBuscarHerramient
 		
 }]);
 
+app.controller('CampoAprobacionPasantiaCtrl', ['$scope', '$http', function($scope, $http) {
+	
+		
+	if($('#AprobacionPasantia_aprobacion').prop('checked')==false){		
+		$scope.swAprobacion = false;	
+		$('#swAprobacion').removeClass('checked');
+	}
+	else
+	{
+		$scope.swAprobacion = true;	
+		$('#swAprobacion').addClass('checked');		
+	}
 
+	
+	$scope.$watch('swAprobacion', function() {
 
-
-
-
-
-
+		$('#AprobacionPasantia_aprobacion').prop('checked', $scope.swAprobacion);
+		
+	});
+}]);
 

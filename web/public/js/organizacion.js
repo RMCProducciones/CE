@@ -165,3 +165,35 @@ app.controller('gestionTerritorioAprendizajeOrganizacionCtrl', ['$scope', '$http
 	};	
 }]);
 
+app.controller('FiltrosOrganizacionCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasOrganizacion = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaOrganizacion = function(){
+       
+		$("#selDepartamento").val("");
+		$("#selZona").val("");
+		$("#selMunicipio").val("");
+		$("#organizacionFilter_nombre_organizacion").val("");
+		$("#organizacionFilter_linea_productiva").val("");
+		$("#organizacionFilter_tipo_producto").val("");
+
+       
+    }
+      
+		
+}]);

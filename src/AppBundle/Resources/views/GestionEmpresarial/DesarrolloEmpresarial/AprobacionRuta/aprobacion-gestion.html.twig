@@ -1,15 +1,15 @@
 {% extends 'AppBundle::frontend.html.twig' %}
 
 
-{% block title %}Gestion Informacion Financiera {% endblock %}
+{% block title %}Aprobación Ruta {% endblock %}
 
 {% block breadcrumb_ul %}
 
     <ul class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
-      <li><a href="{{ path('concursoGestion') }}">Concurso</a></li>
-      <li class="active">Aprobación Concurso</li>
+      <li><a href="{{ path('rutaGestion') }}">Ruta</a></li>
+      <li class="active">Aprobación Ruta</li>
     </ul>
 {% endblock %}
 
@@ -29,8 +29,8 @@
         <div class="row">
           <div class="col-md-6">
             <div class="btn-group">
-              <a href="{{ path('concursoGestion', {'idConcurso': idConcurso}) }}" class="btn btn-warning">Volver</a>
-              <a href="{{ path('aprobacionEditar', {'idConcurso': idConcurso}) }}" class="btn btn-success">Editar</a>
+              <a href="{{ path('rutaGestion', {'idRuta': idRuta}) }}" class="btn btn-warning">Volver</a>
+              <a href="{{ path('aprobacionrutaEditar', {'idRuta': idRuta}) }}" class="btn btn-success">Editar</a>
             </div>
 
           

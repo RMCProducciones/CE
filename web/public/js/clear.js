@@ -69,3 +69,36 @@ app.controller('gestionGrupoClearCtrl', ['$scope', '$http', function($scope, $ht
 	};	
 
 }]);
+
+app.controller('FiltrosClearCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasClear = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaClear = function(){
+       
+		$("#selDepartamento").val("");
+		$("#selZona").val("");
+		$("#selMunicipio").val("");
+		$("#clearFilter_fecha_inicio").val("");
+		$("#clearFilter_fecha_finalizacion").val("");
+		
+
+       
+    }
+      
+		
+}]);
