@@ -242,6 +242,7 @@ class ContadorController extends Controller
                         'active' => '1' , 
                         'tipo_soporte' => $tipoSoporte->getId(), 
                         'contador' => $idContador
+
                     )
                 );  
             
@@ -270,7 +271,8 @@ class ContadorController extends Controller
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
-                'histotialSoportes' => $histotialSoportes                
+                'histotialSoportes' => $histotialSoportes,
+                'idContador' => $idContador                
             )
         );
         
@@ -295,6 +297,25 @@ class ContadorController extends Controller
 
         return $this->redirectToRoute('contadorSoporte', array( 'idContador' => $idContador));
         
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/contador/{idContador}/documentos-soporte/{idContadorSoporte}/descargar", name="contadorSoporteRecuperarArchivo")
+     */
+    public function contadorSoporteDescargarAction(Request $request, $idContador, $idContadorSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $path = $em->getRepository('AppBundle:ContadorSoporte')->findOneBy(
+            array('id' => $idContadorSoporte));
+
+        $link = '..\uploads\documents\\'.$path->getPath();
+
+        header("Content-Disposition: attachment; filename = $link");
+        header ("Content-Type: application/force-download");
+        header ("Content-Length: ".filesize($link));
+        readfile($link);           
+        //return new BinaryFileResponse($link); -> para mostrar en ventana aparte
     }
 
     /**

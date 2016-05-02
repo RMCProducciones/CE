@@ -110,7 +110,7 @@
 	                  <td>{% if soporteActivo.active %}Activo{% else %}Inactivo{% endif %}</td>
 	                  <td>{{ soporteActivo.fechacreacion | date ('d/m/Y h:i:s', 'America/Bogota')}}</td>
 	                  <td>
-	                    <a href="{{ asset('../uploads/documents/'~ soporteActivo.path) }}" alt="Descargar" title="Descargar"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a> | 	 
+	                    <a href="{{ path('contadorSoporteRecuperarArchivo', {'idContador': idContador, 'idContadorSoporte': soporte.id}) }}" target="_blank" alt="Descargar" title="Descargar"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a>      | 	 
 
                       <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="anularSoporteContador();" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true" ng-click="idContador = {{soporteActivo.contador.id}}; idContadorSoporteActivo = {{soporteActivo.id}}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>              
 	                  </td>
@@ -163,7 +163,7 @@
 	                  <td>{{ soporte.fechacreacion | date ('d/m/Y h:i:s', 'America/Bogota')}}</td>
 	                  <td>{{ soporte.fechamodificacion | date ('d/m/Y h:i:s', 'America/Bogota')}}</td>
 	                  <td>
-	                    <a href="{{ asset('../uploads/documents/'~ soporte.path) }}" alt="Descargar" title="Descargar"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a> 	                  
+	                    <a href="{{ path('contadorSoporteRecuperarArchivo', {'idContador': idContador, 'idContadorSoporte': soporte.id}) }}" target="_blank" alt="Descargar" title="Descargar"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a>  	                  
 	                  </td>
 	                </tr>
 	                {% set consecutivo = consecutivo + 1 %}

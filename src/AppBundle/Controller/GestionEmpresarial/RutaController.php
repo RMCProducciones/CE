@@ -275,10 +275,30 @@ class RutaController extends Controller
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
-                'histotialSoportes' => $histotialSoportes
+                'histotialSoportes' => $histotialSoportes,
+                'idRuta' => $idRuta
             )
         );
         
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/ruta/{idRuta}/documentos-soporte/{idRutaSoporte}/descargar", name="rutaSoporteRecuperarArchivo")
+     */
+    public function rutaSoporteDescargarAction(Request $request, $idRuta, $idRutaSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $path = $em->getRepository('AppBundle:RutaSoporte')->findOneBy(
+            array('id' => $idRutaSoporte));
+
+        $link = '..\uploads\documents\\'.$path->getPath();
+
+        header("Content-Disposition: attachment; filename = $link");
+        header ("Content-Type: application/force-download");
+        header ("Content-Length: ".filesize($link));
+        readfile($link);           
+        //return new BinaryFileResponse($link); -> para mostrar en ventana aparte
     }
     
     /**

@@ -200,6 +200,7 @@ class TalentoController extends Controller
 
 
 
+
     /**
      * @Route("/gestion-conocimiento/talento/{idTalento}/eliminar", name="talentoEliminar")
      */
@@ -295,10 +296,30 @@ class TalentoController extends Controller
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
-                'histotialSoportes' => $histotialSoportes
+                'histotialSoportes' => $histotialSoportes,
+                'idTalento' => $idTalento
             )
         );
         
+    }
+
+    /**
+     * @Route("/gestion-conocimiento/talento/{idTalento}/documentos-soporte/{idTalentoSoporte}/descargar", name="talentoSoporteRecuperarArchivo")
+     */
+    public function talentoSoporteDescargarAction(Request $request, $idTalento, $idTalentoSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $path = $em->getRepository('AppBundle:TalentoSoporte')->findOneBy(
+            array('id' => $idTalentoSoporte));
+
+        $link = '..\uploads\documents\\'.$path->getPath();
+
+        header("Content-Disposition: attachment; filename = $link");
+        header ("Content-Type: application/force-download");
+        header ("Content-Length: ".filesize($link));
+        readfile($link);           
+        //return new BinaryFileResponse($link); -> para mostrar en ventana aparte
     }
     
     /**

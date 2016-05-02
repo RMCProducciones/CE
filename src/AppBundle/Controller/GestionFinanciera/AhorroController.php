@@ -253,10 +253,31 @@ class AhorroController extends Controller
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
-                'histotialSoportes' => $histotialSoportes
+                'histotialSoportes' => $histotialSoportes,
+                'idAhorro' => $idAhorro
             )
         );
         
+    }
+
+
+    /**
+     * @Route("/gestion-financiera/ahorro/{idAhorro}/documentos-soporte/{idAhorroSoporte}/descargar", name="ahorroSoporteRecuperarArchivo")
+     */
+    public function ahorroSoporteDescargarAction(Request $request, $idAhorro, $idAhorroSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $path = $em->getRepository('AppBundle:AhorroSoporte')->findOneBy(
+            array('id' => $idAhorroSoporte));
+
+        $link = '..\uploads\documents\\'.$path->getPath();
+
+        header("Content-Disposition: attachment; filename = $link");
+        header ("Content-Type: application/force-download");
+        header ("Content-Length: ".filesize($link));
+        readfile($link);           
+        //return new BinaryFileResponse($link); -> para mostrar en ventana aparte
     }
     
     /**

@@ -46,7 +46,7 @@ class GrupoController extends Controller
     public function grupoGestionAction(Request $request)
     {
         
-        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR"]);
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
 
        
         $em = $this->getDoctrine()->getManager();
@@ -401,7 +401,8 @@ class GrupoController extends Controller
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
                 'histotialSoportes' => $histotialSoportes,
-                'grupo' => $grupo
+                'grupo' => $grupo,
+                'idGrupo' => $idGrupo
             )
         );
         
@@ -426,6 +427,25 @@ class GrupoController extends Controller
 
         return $this->redirectToRoute('grupoSoporte', array( 'idGrupo' => $idGrupo));
         
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/documentos-soporte/{idGrupoSoporte}/descargar", name="grupoSoporteRecuperarArchivo")
+     */
+    public function grupoSoporteDescargarAction(Request $request, $idGrupo, $idGrupoSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $path = $em->getRepository('AppBundle:GrupoSoporte')->findOneBy(
+            array('id' => $idGrupoSoporte));
+
+        $link = '..\uploads\documents\\'.$path->getPath();
+
+        header("Content-Disposition: attachment; filename = $link");
+        header ("Content-Type: application/force-download");
+        header ("Content-Length: ".filesize($link));
+        readfile($link);           
+        //return new BinaryFileResponse($link); -> para mostrar en ventana aparte
     }
 
     /**

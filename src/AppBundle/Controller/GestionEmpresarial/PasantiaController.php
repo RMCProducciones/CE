@@ -286,10 +286,30 @@ class PasantiaController extends Controller
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
-                'histotialSoportes' => $histotialSoportes
+                'histotialSoportes' => $histotialSoportes,
+                'idPasantia' => $idPasantia
             )
         );
         
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/pasantia/{idPasantia}/documentos-soporte/{idPasantiaSoporte}/descargar", name="pasantiaSoporteRecuperarArchivo")
+     */
+    public function pasantiaSoporteDescargarAction(Request $request, $idPasantia, $idPasantiaSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $path = $em->getRepository('AppBundle:PasantiaSoporte')->findOneBy(
+            array('id' => $idPasantiaSoporte));
+
+        $link = '..\uploads\documents\\'.$path->getPath();
+
+        header("Content-Disposition: attachment; filename = $link");
+        header ("Content-Type: application/force-download");
+        header ("Content-Length: ".filesize($link));
+        readfile($link);           
+        //return new BinaryFileResponse($link); -> para mostrar en ventana aparte
     }
     
     /**

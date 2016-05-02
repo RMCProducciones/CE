@@ -257,10 +257,30 @@ class ExperienciaController extends Controller
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
-                'histotialSoportes' => $histotialSoportes
+                'histotialSoportes' => $histotialSoportes,
+                'idExperienciaExitosa' => $idExperienciaExitosa
             )
         );
         
+    }
+
+    /**
+     * @Route("/gestion-conocimiento/experiencia-exitosa/{idExperienciaExitosa}/documentos-soporte/{idExperienciaExitosaSoporte}/descargar", name="experienciaExitosaSoporteRecuperarArchivo")
+     */
+    public function experienciaSoporteDescargarAction(Request $request, $idExperienciaExitosa, $idExperienciaExitosaSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $path = $em->getRepository('AppBundle:ExperienciaExitosaSoporte')->findOneBy(
+            array('id' => $idExperienciaExitosaSoporte));
+
+        $link = '..\uploads\documents\\'.$path->getPath();
+
+        header("Content-Disposition: attachment; filename = $link");
+        header ("Content-Type: application/force-download");
+        header ("Content-Length: ".filesize($link));
+        readfile($link);           
+        //return new BinaryFileResponse($link); -> para mostrar en ventana aparte
     }
     
     /**
