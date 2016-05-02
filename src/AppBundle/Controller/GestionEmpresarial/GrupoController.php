@@ -29,6 +29,7 @@ use AppBundle\Form\GestionEmpresarial\GrupoType;
 use AppBundle\Form\GestionEmpresarial\GrupoSoporteType;
 use AppBundle\Form\GestionEmpresarial\ListaRolBeneficiarioType;
 use AppBundle\Form\GestionEmpresarial\GrupoFilterType;
+use AppBundle\Form\GestionEmpresarial\ComiteVamosBienFilterType;
 
 
 /*Para autenticación por código*/
@@ -46,7 +47,7 @@ class GrupoController extends Controller
     public function grupoGestionAction(Request $request)
     {
         
-        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR"]);
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
 
        
         $em = $this->getDoctrine()->getManager();
@@ -441,7 +442,7 @@ class GrupoController extends Controller
 
         $beneficiarios = new Beneficiario();
 
-        $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
+        $grupo=$em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id'=> $idGrupo)
         );
 
@@ -453,29 +454,52 @@ class GrupoController extends Controller
             array('grupo' => $grupo)
         ); 
 
+        
+
         $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioComiteVamosBien abc WHERE beneficiario = abc.beneficiario AND abc.grupo = :grupo) AND b.active = 1');
         $query->setParameter(':grupo', $grupo);
         $beneficiarios = $query->getResult();
 
         $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
             array('id' => $beneficiarios, 'grupo' => $grupo )
-        );
+        );   
+
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Beneficiario')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new ComiteVamosBienFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder->andwhere('q.grupo = :idGrupo')
+        ->setParameter('idGrupo', $idGrupo)
+        ->andWhere('q.active = 1')
+        ->andWhere('q.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioComiteVamosBien abc WHERE beneficiario = abc.beneficiario AND abc.grupo = :grupo)')
+        ->setParameter(':grupo', $grupo);
+
+        $query = $filterBuilder->getQuery();
 
         $paginator1  = $this->get('knp_paginator');
 
         $pagination1 = $paginator1->paginate(
-            $mostrarBeneficiarios, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:beneficiario-grupo-cvb-gestion-asignacion.html.twig', 
             array(
-                'beneficiarios' => $mostrarBeneficiarios,
+                'form' => $form->createView(),
+                'beneficiarios' => $query,
                 'asignacionesBeneficiariosCVB' => $asignacionesBeneficiariosCVB,
                 'idGrupo' => $idGrupo,
                 'grupo' => $grupo,
-                'pagination1' => $pagination1
+                'pagination1' => $pagination1                
             ));        
     }
 

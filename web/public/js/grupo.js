@@ -204,3 +204,32 @@ app.controller('FiltrosGrupoCtrl', ['$scope', '$http', 'styleBuscarHerramientas'
       
 		
 }]);
+
+app.controller('FiltrosCVBCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasCVB = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaCVB = function(){
+       
+		$("#comiteVamosBienFilter_numero_documento").val("");
+		$("#comiteVamosBienFilter_primer_apellido").val("");
+		$("#comiteVamosBienFilter_primer_nombre").val("");			
+       
+    }
+      
+		
+}]);

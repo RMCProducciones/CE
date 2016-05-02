@@ -698,7 +698,7 @@ class SeguimientoGrupoController extends Controller
                 $visita->setComiteCompras(true);                                            
             }
             
-            if(sizeof($comiteVamosBienGrupo) != 0){
+            if(sizeof($comiteVamosBienGrupo) >= 3){
                 $visita->setComiteVamosBien(true);                                            
             }
 
@@ -746,7 +746,7 @@ class SeguimientoGrupoController extends Controller
                 $visita->setComiteCompras(true);                                            
             }
             
-            if(sizeof($comiteVamosBienGrupo) != 0){
+            if(sizeof($comiteVamosBienGrupo) >= 3){
                 $visita->setComiteVamosBien(true);                                            
             }
 
