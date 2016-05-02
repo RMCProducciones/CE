@@ -354,6 +354,10 @@ class ClearController extends Controller
             array('id' => $idCLEAR)            
         );
 
+        $integrantesClear = $em->getRepository('AppBundle:AsignacionIntegranteCLEAR')->findBy(
+            array('clear' => $clear->getId())
+        );
+
         $gruposClear = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
             array('clear' => $clear->getId())
         );
@@ -368,17 +372,18 @@ class ClearController extends Controller
         $this->renderView(
             'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/ActasDeClear:acta-inicio.html.twig', 
             array('clear' => $clear,
-                  'gruposClear' => $gruposClear)
+                  'gruposClear' => $gruposClear,
+                  'integrantesClear' => $integrantesClear)
             ),
             '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf'
         ); 
 
-        header("Content-Disposition: attachment; filename = $link");
+        /*header("Content-Disposition: attachment; filename = $link");
         header ("Content-Type: application/force-download");
         header ("Content-Length: ".filesize($link));
-        readfile($link);                    
+        readfile($link);                    */
 
-        //return new BinaryFileResponse($link); 
+        return new BinaryFileResponse($link); 
     }
 
     /**

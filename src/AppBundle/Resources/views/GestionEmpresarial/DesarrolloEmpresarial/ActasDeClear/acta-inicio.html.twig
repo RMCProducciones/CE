@@ -8,7 +8,7 @@ H2 { font-size:18px; font-family:arial; color:red;line-height: 100%  }
 P { font-size:20px; font: small-caps serif; line-height: 100%;text-align: justify;}
 BODY { margin: 10px 60px 10px 60px }
 .demo {
-    border:1px solid #C0C0C0;
+    border:0px solid #C0C0C0;
     border-collapse:collapse;
     padding:4px;
   }
@@ -43,164 +43,93 @@ BODY { margin: 10px 60px 10px 60px }
 
 <p>Así mismo, con el propósito de integrar el CLEAR se lleva a cabo su instalación con la participación de las siguientes personas:</p>
 
-</br>
+
 <div class="demo">
-  {% for grupo in gruposClear %}
 
-
-                 <table class="table table-bordered" style="margin: 0 auto;">            
-
-  <br/>
-                 <table class="table table-bordered">            
+                 <table class="table responsive" style="margin: 0 auto;">            
 
               <thead>
                 <tr class="bg-primary">
-                    <th class="text-center col-md-5">Información</th>
-                    <th class="text-center col-md-7">Datos del Grupos</th>                    
+                    <th class="text-center col-md-5">MIEMBROS DEL CLEAR</th>
+                    <th class="text-center col-md-7">NOMBRE</th>                    
+                    <th class="text-center col-md-7">DOCUMENTO DE<br />IDENTIDAD</th>                    
+                    <th class="text-center col-md-7">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FIRMA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>                    
                 </tr>
               </thead>
 
-              <tbody>    
+              <tbody>  
+
+              {% for integranteClear in integrantesClear %}  
 
               <tr class="active text-muted">            
                     
                   <td class="text-center">
-                    Departamento:
+                    {{integranteClear.rol.descripcion}}
                   </td>         
                   <td class="text-center">
-                    {{ grupo.grupo.municipio.departamento.nombre }}
+                    {{ integranteClear.integrante.primerNombre}} {{ integranteClear.integrante.primerApellido}}
+                  </td>
+                  <td class="text-center">
+                    {{ integranteClear.integrante.numeroDocumento}}
+                  </td>
+                  <td class="text-center">
+                    
                   </td>
               </tr>
 
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Municipio:
-                  </td>
-                  <td class="text-center">
-                    {{ grupo.grupo.municipio }}
-                  </td>
-              </tr>
+                {% endfor %}
 
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Zona:
-                  </td>
-                  <td class="text-center">
-                    {{ grupo.grupo.municipio.zona.nombre }}
-                  </td>
-              </tr>
-
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Codigo de grupo:
-                  </td>
-                  <td class="text-center">
-                    {% if grupo.grupo.codigo != null %}
-                      {{ grupo.grupo.codigo }}
-                    {% else %}
-                      No habilitado
-                    {% endif %}
-                  </td>
-              </tr>
-
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Nombre grupo:
-                  </td>
-                  <td class="text-center">
-                    {{ grupo.grupo.nombre }}
-                  </td>
-              </tr>
-
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Tipo de grupo:
-                  </td>
-                  <td class="text-center">
-                    {{ grupo.grupo.tipo }}
-                  </td>
-              </tr>
-
-              {% if grupo.grupo.fechaConstitucionLegal != null %}
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    NIT:
-                  </td>
-                  <td class="text-center">
-                    {{ grupo.grupo.numeroIdentificacionTributaria }}
-                  </td>
-              </tr>
-              {% endif %}
-
-              {% if grupo.grupo.fechaConstitucionLegal != null %} 
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Fecha de Constitución legal:
-                  </td>
-                  <td class="text-center">
-                    {{ grupo.grupo.fechaConstitucionLegal |  date('d - m - Y') }}
-                  </td>
-              </tr>
-              {% endif %} 
-
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Telefono Movil:
-                  </td>
-                  <td class="text-center">
-                    {{ grupo.grupo.telefonoCelular }}
-                  </td>
-              </tr>
-
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Telefono Fijo:
-                  </td>
-                  <td class="text-center">
-                    {{ grupo.grupo.telefonoFijo }}
-                  </td>
-              </tr> 
-
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Cuenta Bancaria:
-                  </td>
-                  <td class="text-center">
-                    {{ grupo.grupo.entidadFinancieraCuenta }}
-                  </td>
-              </tr> 
-
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Tipo de cuenta:
-                  </td>
-                  <td class="text-center">
-                    {{ grupo.grupo.tipoCuenta }}
-                  </td>
-              </tr>               
-
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Numero de cuenta:
-                  </td>
-                  <td class="text-center">
-                    {{ grupo.grupo.numeroCuenta }}
-                  </td>
-              </tr>  
-              </br>
-
-              </tbody>  
+              </tbody>                              
           </table>
 
-  {% endfor %}
+
 
             </div>
 </br>
 </br>
-<p>Posterior a la instalación del CLEAR, el promotor rural hace entrega a los integrantes del CLEAR de _____________ (____) propuestas recibidas según acta de cierre del día ___ del mes de _____ del año ____ en el marco de la Convocatoria para la conformación del Banco de proyectos para grupos formales y no formales:</p>
+{% set cantidadGrupos = 0 %}
+{% for grupoClear in gruposClear %}
+  {% set cantidadGrupos = cantidadGrupos + 1 %}
+{% endfor %}
+
+<p>Posterior a la instalación del CLEAR, el promotor rural hace entrega a los integrantes del CLEAR de {{cantidadGrupos}} propuestas recibidas según acta de cierre del día {{ clear.fechaFinalizacion |  date('d') }} del mes de {{ clear.fechaFinalizacion |  date('m') }} del año {{ clear.fechaFinalizacion |  date('Y') }} en el marco de la Convocatoria para la conformación del Banco de proyectos para grupos formales y no formales:</p>
 </br>
-</br>
-Tabla
+<div class="demo">
+
+                 <table class="table responsive" style="margin: 0 auto;">  
+
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Consecutivo</th>
+                    <th class="text-center col-md-7">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nombre Grupo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+              </thead>
+
+              <tbody> 
+
+              {% set consecutivo = 1 %} 
+
+              {% for grupoClear in gruposClear %}  
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    {{consecutivo}}
+                  </td>         
+                  <td class="text-center">
+                    {{ grupoClear.grupo}}
+                  </td>                  
+              </tr>
+
+                {% set consecutivo = consecutivo + 1 %}
+
+                {% endfor %}
+
+              </tbody>                              
+          </table>
+
+
+
+            </div>
 </br>
 </br>
 
