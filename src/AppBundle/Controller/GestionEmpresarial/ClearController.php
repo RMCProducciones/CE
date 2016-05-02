@@ -366,7 +366,46 @@ class ClearController extends Controller
 
         $this->get('knp_snappy.pdf')->generateFromHtml(
         $this->renderView(
-            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/PruebaPDF:acta-fin.html.twig', 
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/ActasDeClear:acta-inicio.html.twig', 
+            array('clear' => $clear,
+                  'gruposClear' => $gruposClear)
+            ),
+            '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf'
+        ); 
+
+        header("Content-Disposition: attachment; filename = $link");
+        header ("Content-Type: application/force-download");
+        header ("Content-Length: ".filesize($link));
+        readfile($link);                    
+
+        //return new BinaryFileResponse($link); 
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/clear/{idCLEAR}/acta-cierre", name="clearActaCierre")
+     */
+    public function clearActaCierrePDFAction(Request $request, $idCLEAR){
+
+        $em = $this->getDoctrine()->getManager();
+        //Consulto a mi base de datos
+
+        $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
+            array('id' => $idCLEAR)            
+        );
+
+        $gruposClear = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
+            array('clear' => $clear->getId())
+        );
+
+        $nombre = "Acta de Cierre Clear ";        
+        $link = '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf';        
+        if(file_exists($link)){
+            unlink('..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf');            
+        }        
+
+        $this->get('knp_snappy.pdf')->generateFromHtml(
+        $this->renderView(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/ActasDeClear:acta-fin.html.twig', 
             array('clear' => $clear,
                   'gruposClear' => $gruposClear)
             ),
@@ -915,3 +954,4 @@ class ClearController extends Controller
             $traerGrupo->setCodigo($zona."-".$idMunicipio->getAbreviatura()."-".$tipo."-".date_format($traerGrupo->getFechaInscripcion(), 'Y/m')."-".$consecutivo.$traerGrupo->getId());  
     }
 }
+
