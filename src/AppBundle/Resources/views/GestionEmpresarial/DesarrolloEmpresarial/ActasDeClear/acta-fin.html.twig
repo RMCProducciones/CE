@@ -8,7 +8,7 @@ H2 { font-size:18px; font-family:arial; color:red;line-height: 100%  }
 P { font-size:20px; font: small-caps serif; line-height: 100%;text-align: justify;}
 BODY { margin: 10px 60px 10px 60px }
 .demo {
-    border:1px solid #C0C0C0;
+    border:0px solid #C0C0C0;
     border-collapse:collapse;
     padding:4px;
   }
@@ -53,15 +53,17 @@ BODY { margin: 10px 60px 10px 60px }
   ______Propuestas, las cuales se relacionan a continuación:</p>
 
 </br>
-<div class="demo">
-  {% for grupo in gruposClear %}
+
+{% if faseHabilitacionTrue != 0 %}
+
+<p>Grupos en Fase de Habilitación</p>
+
+<div class="demo text-center">
+  {% for gruposfaseHabilitacion in faseHabilitacion %}
 
 
-                 <table class="table table-bordered" style="margin: 0 auto;">            
-
-  <br/>
-                 <table class="table table-bordered">            
-
+                 <table class="table responsive" style="margin: 0 auto;">            
+  
               <thead>
                 <tr class="bg-primary">
                     <th class="text-center col-md-5">Información</th>
@@ -77,7 +79,7 @@ BODY { margin: 10px 60px 10px 60px }
                     Departamento:
                   </td>         
                   <td class="text-center">
-                    {{ grupo.grupo.municipio.departamento.nombre }}
+                    {{ gruposfaseHabilitacion.grupo.municipio.departamento.nombre }}
                   </td>
               </tr>
 
@@ -86,7 +88,7 @@ BODY { margin: 10px 60px 10px 60px }
                     Municipio:
                   </td>
                   <td class="text-center">
-                    {{ grupo.grupo.municipio }}
+                    {{ gruposfaseHabilitacion.grupo.municipio }}
                   </td>
               </tr>
 
@@ -95,7 +97,7 @@ BODY { margin: 10px 60px 10px 60px }
                     Zona:
                   </td>
                   <td class="text-center">
-                    {{ grupo.grupo.municipio.zona.nombre }}
+                    {{ gruposfaseHabilitacion.grupo.municipio.zona.nombre }}
                   </td>
               </tr>
 
@@ -104,8 +106,8 @@ BODY { margin: 10px 60px 10px 60px }
                     Codigo de grupo:
                   </td>
                   <td class="text-center">
-                    {% if grupo.grupo.codigo != null %}
-                      {{ grupo.grupo.codigo }}
+                    {% if gruposfaseHabilitacion.grupo.codigo != null %}
+                      {{ gruposfaseHabilitacion.grupo.codigo }}
                     {% else %}
                       No habilitado
                     {% endif %}
@@ -117,7 +119,7 @@ BODY { margin: 10px 60px 10px 60px }
                     Nombre grupo:
                   </td>
                   <td class="text-center">
-                    {{ grupo.grupo.nombre }}
+                    {{ gruposfaseHabilitacion.grupo.nombre }}
                   </td>
               </tr>
 
@@ -126,28 +128,28 @@ BODY { margin: 10px 60px 10px 60px }
                     Tipo de grupo:
                   </td>
                   <td class="text-center">
-                    {{ grupo.grupo.tipo }}
+                    {{ gruposfaseHabilitacion.grupo.tipo }}
                   </td>
               </tr>
 
-              {% if grupo.grupo.fechaConstitucionLegal != null %}
+              {% if gruposfaseHabilitacion.grupo.fechaConstitucionLegal != null %}
               <tr class="active text-muted">             
                   <td class="text-center">
                     NIT:
                   </td>
                   <td class="text-center">
-                    {{ grupo.grupo.numeroIdentificacionTributaria }}
+                    {{ gruposfaseHabilitacion.grupo.numeroIdentificacionTributaria }}
                   </td>
               </tr>
               {% endif %}
 
-              {% if grupo.grupo.fechaConstitucionLegal != null %} 
+              {% if gruposfaseHabilitacion.grupo.fechaConstitucionLegal != null %} 
               <tr class="active text-muted">             
                   <td class="text-center">
                     Fecha de Constitución legal:
                   </td>
                   <td class="text-center">
-                    {{ grupo.grupo.fechaConstitucionLegal |  date('d - m - Y') }}
+                    {{ gruposfaseHabilitacion.grupo.fechaConstitucionLegal |  date('d - m - Y') }}
                   </td>
               </tr>
               {% endif %} 
@@ -157,7 +159,7 @@ BODY { margin: 10px 60px 10px 60px }
                     Telefono Movil:
                   </td>
                   <td class="text-center">
-                    {{ grupo.grupo.telefonoCelular }}
+                    {{ gruposfaseHabilitacion.grupo.telefonoCelular }}
                   </td>
               </tr>
 
@@ -166,7 +168,7 @@ BODY { margin: 10px 60px 10px 60px }
                     Telefono Fijo:
                   </td>
                   <td class="text-center">
-                    {{ grupo.grupo.telefonoFijo }}
+                    {{ gruposfaseHabilitacion.grupo.telefonoFijo }}
                   </td>
               </tr> 
 
@@ -175,7 +177,7 @@ BODY { margin: 10px 60px 10px 60px }
                     Cuenta Bancaria:
                   </td>
                   <td class="text-center">
-                    {{ grupo.grupo.entidadFinancieraCuenta }}
+                    {{ gruposfaseHabilitacion.grupo.entidadFinancieraCuenta }}
                   </td>
               </tr> 
 
@@ -184,7 +186,7 @@ BODY { margin: 10px 60px 10px 60px }
                     Tipo de cuenta:
                   </td>
                   <td class="text-center">
-                    {{ grupo.grupo.tipoCuenta }}
+                    {{ gruposfaseHabilitacion.grupo.tipoCuenta }}
                   </td>
               </tr>               
 
@@ -193,16 +195,333 @@ BODY { margin: 10px 60px 10px 60px }
                     Numero de cuenta:
                   </td>
                   <td class="text-center">
-                    {{ grupo.grupo.numeroCuenta }}
+                    {{ gruposfaseHabilitacion.grupo.numeroCuenta }}
                   </td>
               </tr>  
               </br>
 
               </tbody>  
           </table>
+
+          <br />
   {% endfor %}
 
             </div>
+
+{% endif %}
+
+{% if faseAsignacionTrue != 0 %}
+
+<p>Grupos en Fase de Asignación</p>
+
+<div class="demo text-center">
+  {% for gruposfaseAsignacion in faseAsignacion %}
+
+
+                 <table class="table responsive" style="margin: 0 auto;">            
+  
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos del Grupos</th>                    
+                </tr>
+              </thead>
+
+              <tbody>    
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Departamento:
+                  </td>         
+                  <td class="text-center">
+                    {{ gruposfaseAsignacion.grupo.municipio.departamento.nombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Municipio:
+                  </td>
+                  <td class="text-center">
+                    {{ gruposfaseAsignacion.grupo.municipio }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Zona:
+                  </td>
+                  <td class="text-center">
+                    {{ gruposfaseAsignacion.grupo.municipio.zona.nombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Codigo de grupo:
+                  </td>
+                  <td class="text-center">
+                    {% if gruposfaseAsignacion.grupo.codigo != null %}
+                      {{ gruposfaseAsignacion.grupo.codigo }}
+                    {% else %}
+                      No habilitado
+                    {% endif %}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Nombre grupo:
+                  </td>
+                  <td class="text-center">
+                    {{ gruposfaseAsignacion.grupo.nombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Tipo de grupo:
+                  </td>
+                  <td class="text-center">
+                    {{ gruposfaseAsignacion.grupo.tipo }}
+                  </td>
+              </tr>
+
+              {% if gruposfaseAsignacion.grupo.fechaConstitucionLegal != null %}
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    NIT:
+                  </td>
+                  <td class="text-center">
+                    {{ gruposfaseAsignacion.grupo.numeroIdentificacionTributaria }}
+                  </td>
+              </tr>
+              {% endif %}
+
+              {% if gruposfaseAsignacion.grupo.fechaConstitucionLegal != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Fecha de Constitución legal:
+                  </td>
+                  <td class="text-center">
+                    {{ gruposfaseAsignacion.grupo.fechaConstitucionLegal |  date('d - m - Y') }}
+                  </td>
+              </tr>
+              {% endif %} 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Movil:
+                  </td>
+                  <td class="text-center">
+                    {{ gruposfaseAsignacion.grupo.telefonoCelular }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Fijo:
+                  </td>
+                  <td class="text-center">
+                    {{ gruposfaseAsignacion.grupo.telefonoFijo }}
+                  </td>
+              </tr> 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Cuenta Bancaria:
+                  </td>
+                  <td class="text-center">
+                    {{ gruposfaseAsignacion.grupo.entidadFinancieraCuenta }}
+                  </td>
+              </tr> 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Tipo de cuenta:
+                  </td>
+                  <td class="text-center">
+                    {{ gruposfaseAsignacion.grupo.tipoCuenta }}
+                  </td>
+              </tr>               
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Numero de cuenta:
+                  </td>
+                  <td class="text-center">
+                    {{ gruposfaseAsignacion.grupo.numeroCuenta }}
+                  </td>
+              </tr>  
+              </br>
+
+              </tbody>  
+          </table>
+
+          <br />
+  {% endfor %}
+
+            </div>
+
+{% endif %}
+
+{% if faseContraloriaSocialTrue != 0 %}
+
+<p>Grupos en Fase de Contraloria Social</p>
+
+<div class="demo text-center">
+  {% for gruposfaseContraloriaSocial in faseContraloriaSocial %}
+
+
+                 <table class="table responsive" style="margin: 0 auto;">            
+  
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos del Grupos</th>                    
+                </tr>
+              </thead>
+
+              <tbody>    
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Departamento:
+                  </td>         
+                  <td class="text-center">
+                    {{ gruposfaseContraloriaSocial.grupo.municipio.departamento.nombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Municipio:
+                  </td>
+                  <td class="text-center">
+                    {{ gruposfaseContraloriaSocial.grupo.municipio }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Zona:
+                  </td>
+                  <td class="text-center">
+                    {{ gruposfaseContraloriaSocial.grupo.municipio.zona.nombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Codigo de grupo:
+                  </td>
+                  <td class="text-center">
+                    {% if gruposfaseContraloriaSocial.grupo.codigo != null %}
+                      {{ gruposfaseContraloriaSocial.grupo.codigo }}
+                    {% else %}
+                      No habilitado
+                    {% endif %}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Nombre grupo:
+                  </td>
+                  <td class="text-center">
+                    {{ gruposfaseContraloriaSocial.grupo.nombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Tipo de grupo:
+                  </td>
+                  <td class="text-center">
+                    {{ gruposfaseContraloriaSocial.grupo.tipo }}
+                  </td>
+              </tr>
+
+              {% if gruposfaseContraloriaSocial.grupo.fechaConstitucionLegal != null %}
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    NIT:
+                  </td>
+                  <td class="text-center">
+                    {{ gruposfaseContraloriaSocial.grupo.numeroIdentificacionTributaria }}
+                  </td>
+              </tr>
+              {% endif %}
+
+              {% if gruposfaseContraloriaSocial.grupo.fechaConstitucionLegal != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Fecha de Constitución legal:
+                  </td>
+                  <td class="text-center">
+                    {{ gruposfaseContraloriaSocial.grupo.fechaConstitucionLegal |  date('d - m - Y') }}
+                  </td>
+              </tr>
+              {% endif %} 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Movil:
+                  </td>
+                  <td class="text-center">
+                    {{ gruposfaseContraloriaSocial.grupo.telefonoCelular }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Fijo:
+                  </td>
+                  <td class="text-center">
+                    {{ gruposfaseContraloriaSocial.grupo.telefonoFijo }}
+                  </td>
+              </tr> 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Cuenta Bancaria:
+                  </td>
+                  <td class="text-center">
+                    {{ gruposfaseContraloriaSocial.grupo.entidadFinancieraCuenta }}
+                  </td>
+              </tr> 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Tipo de cuenta:
+                  </td>
+                  <td class="text-center">
+                    {{ gruposfaseContraloriaSocial.grupo.tipoCuenta }}
+                  </td>
+              </tr>               
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Numero de cuenta:
+                  </td>
+                  <td class="text-center">
+                    {{ gruposfaseContraloriaSocial.grupo.numeroCuenta }}
+                  </td>
+              </tr>  
+              </br>
+
+              </tbody>  
+          </table>
+
+          <br />
+  {% endfor %}
+
+            </div>
+
+{% endif %}
+
 
 </br>
 </br>

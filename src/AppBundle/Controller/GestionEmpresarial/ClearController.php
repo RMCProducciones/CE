@@ -51,10 +51,11 @@ class ClearController extends Controller
     public function clearGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        /*$cleares = $em->getRepository('AppBundle:CLEAR')->findBY(
+
+        $soportesClear = $em->getRepository('AppBundle:ClearSoporte')->findBY(
             array('active' => 1),
-            array('fecha_inicio' => 'ASC')
-        ); */
+            array('fecha_creacion' => 'ASC')
+        );
         
          $filterBuilder = $this->get('doctrine.orm.entity_manager')
             ->getRepository('AppBundle:CLEAR')
@@ -103,7 +104,7 @@ class ClearController extends Controller
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Clear:clear-gestion.html.twig', 
-            array( 'form' => $form->createView(),'cleares' => $query, 'pagination' => $pagination)
+            array( 'form' => $form->createView(),'cleares' => $query, 'pagination' => $pagination, 'soportesClear' => $soportesClear)
         );
     }
 
@@ -285,11 +286,11 @@ class ClearController extends Controller
 
                 $em->persist($clearSoporte);
                 $em->flush();
-
+                
                 return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR) );
             }
         }   
-        
+            
 
         //return new Response("Hola mundo");
         return $this->render(
@@ -380,12 +381,12 @@ class ClearController extends Controller
             '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf'
         ); 
 
-        /*header("Content-Disposition: attachment; filename = $link");
+        header("Content-Disposition: attachment; filename = $link");
         header ("Content-Type: application/force-download");
         header ("Content-Length: ".filesize($link));
-        readfile($link);                    */
+        readfile($link);
 
-        return new BinaryFileResponse($link); 
+        //return new BinaryFileResponse($link); 
     }
 
     /**
@@ -404,6 +405,27 @@ class ClearController extends Controller
             array('clear' => $clear->getId())
         );
 
+        $faseHabilitacion = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
+            array('clear' => $clear->getId(),
+                  'habilitacion' => 1)
+        );
+
+        $faseHabilitacionTrue = sizeof($faseHabilitacion);
+
+        $faseAsignacion = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
+            array('clear' => $clear->getId(),
+                  'asignacion' => 1)
+        );
+
+        $faseAsignacionTrue = sizeof($faseAsignacion);
+
+        $faseContraloriaSocial = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
+            array('clear' => $clear->getId(),
+                  'contraloria_social' => 1)
+        );
+
+        $faseContraloriaSocialTrue = sizeof($faseContraloriaSocial);
+
         $nombre = "Acta de Cierre Clear ";        
         $link = '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf';        
         if(file_exists($link)){
@@ -414,7 +436,13 @@ class ClearController extends Controller
         $this->renderView(
             'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/ActasDeClear:acta-fin.html.twig', 
             array('clear' => $clear,
-                  'gruposClear' => $gruposClear)
+                  'gruposClear' => $gruposClear,
+                  'faseHabilitacion' => $faseHabilitacion,
+                  'faseAsignacion' => $faseAsignacion,
+                  'faseContraloriaSocial' => $faseContraloriaSocial,
+                  'faseHabilitacionTrue' => $faseHabilitacionTrue,
+                  'faseAsignacionTrue' => $faseAsignacionTrue,
+                  'faseContraloriaSocialTrue' => $faseContraloriaSocialTrue)
             ),
             '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf'
         ); 
@@ -921,9 +949,9 @@ class ClearController extends Controller
                     */
             }
             elseif($idUltimoNodo == 14){
-                $evaluacionFases = $em->getRepository('AppBundle:EvaluacionFases')->findOneBy(
-                    array('grupo' => $asignacionGrupoClear->getGrupo()) 
-                );
+                $evaluacionFases = $em->getRepository('AppBundle:EvaluacionFases')->findBy(
+                    array('grupo' => $asignacionGrupoClear->getGrupo()                                                    
+                ));
 
                 if($evaluacionFases != null){
                     self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 14, 2);//Ejecutada(2) Clear de Asignacion
@@ -931,7 +959,32 @@ class ClearController extends Controller
                     self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 14, 3);//Rechazado(3) Clear de Asignacion   
                 }
             }
-                
+            elseif($idUltimoNodo == 20){
+                $evaluacionFases = $em->getRepository('AppBundle:EvaluacionFases')->findOneBy(
+                    array('grupo' => $asignacionGrupoClear->getGrupo()                          
+                ));
+
+                if($evaluacionFases->getCalificacionPi() != null){
+                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 20, 2);//Ejecutada(2) Clear de Asignacion
+                }else{
+                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 20, 3);//Rechazado(3) Clear de Asignacion   
+                }
+            }  
+            elseif($idUltimoNodo == 26){
+                $evaluacionFases = $em->getRepository('AppBundle:EvaluacionFases')->findOneBy(
+                    array('grupo' => $asignacionGrupoClear->getGrupo()                          
+                ));
+
+                if($evaluacionFases != null){
+                    if($evaluacionFases->getCalificacionPn() != null){
+                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 26, 2);//Ejecutada(2) Clear de Asignacion
+                    }else{
+                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 26, 3);//Rechazado(3) Clear de Asignacion   
+                    }
+                }else{
+                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 26, 3);//Rechazado(3) Clear de Asignacion
+                }
+            }     
             else{//PROGRAMACIÓN GENÉRICA DE CONTRALORÍA O ASIGNACIÓN
                 self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), $idUltimoNodo, 2);
             }

@@ -937,9 +937,9 @@
             {% endfor %}
           
             {% if ultimoEstado == 1 %}
-              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': false}) }}">Evaluación de fase</a></b>      
+              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '0'}) }}">Evaluación de fase</a></b>      
             {% else %}
-              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': true}) }}">Resultado de evaluación de fase</a></b> 
+              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '1'}) }}">Resultado de evaluación de fase</a></b> 
               <br>
               <b><a href="{{ path('seguimientofaseInicio', {'idGrupo': grupo.id, 'idNodo': 20}) }}">Nuevo inicio de Fase</a></b>       
             {% endif %}
@@ -1089,9 +1089,9 @@
             {% endfor %}
           
             {% if ultimoEstado == 1 %}
-              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': false}) }}">Evaluación de fase</a></b>      
+              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '0'}) }}">Evaluación de fase</a></b>      
             {% else %}
-              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': true}) }}">Resultado de evaluación de fase</a></b> 
+              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '1'}) }}">Resultado de evaluación de fase</a></b> 
               <br>
               <b><a href="{{ path('seguimientofaseInicio', {'idGrupo': grupo.id, 'idNodo': 26}) }}">Nuevo inicio de Fase</a></b>       
             {% endif %}
