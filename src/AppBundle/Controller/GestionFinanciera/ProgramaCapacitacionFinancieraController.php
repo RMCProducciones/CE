@@ -271,10 +271,30 @@ class ProgramaCapacitacionFinancieraController extends Controller
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
-                'histotialSoportes' => $histotialSoportes
+                'histotialSoportes' => $histotialSoportes,
+                'idPCF' => $idPCF
             )
         );
         
+    }
+
+    /**
+     * @Route("/gestion-financiera/programa-capacitacion-financiera/{idPCF}/documentos-soporte/{idPCFSoporte}/descargar", name="programaCapacitacionFinancieraSoporteRecuperarArchivo")
+     */
+    public function ProgramaCapacitacionFinancieraSoporteDescargarAction(Request $request, $idPCF, $idPCFSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $path = $em->getRepository('AppBundle:ProgramaCapacitacionFinancieraSoporte')->findOneBy(
+            array('id' => $idPCFSoporte));
+
+        $link = '..\uploads\documents\\'.$path->getPath();
+
+        header("Content-Disposition: attachment; filename = $link");
+        header ("Content-Type: application/force-download");
+        header ("Content-Length: ".filesize($link));
+        readfile($link);           
+        //return new BinaryFileResponse($link); -> para mostrar en ventana aparte
     }
     
     /**

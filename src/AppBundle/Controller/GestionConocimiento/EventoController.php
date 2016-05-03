@@ -282,6 +282,25 @@ class EventoController extends Controller
         );
         
     }
+
+    /**
+     * @Route("/gestion-conocimiento/evento/{idEvento}/documentos-soporte/{idEventoSoporte}/descargar", name="eventoSoporteRecuperarArchivo")
+     */
+    public function eventoSoporteDescargarAction(Request $request, $idEvento, $idEventoSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $path = $em->getRepository('AppBundle:EventoSoporte')->findOneBy(
+            array('id' => $idEventoSoporte));
+
+        $link = '..\uploads\documents\\'.$path->getPath();
+
+        header("Content-Disposition: attachment; filename = $link");
+        header ("Content-Type: application/force-download");
+        header ("Content-Length: ".filesize($link));
+        readfile($link);           
+        //return new BinaryFileResponse($link); -> para mostrar en ventana aparte
+    }
     
     /**
      * @Route("/gestion-conocimiento/evento/{idEvento}/documentos-soporte/{idEventoSoporte}/borrar", name="eventoSoporteBorrar")

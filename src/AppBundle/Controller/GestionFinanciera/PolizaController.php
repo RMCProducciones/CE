@@ -254,12 +254,34 @@ class PolizaController extends Controller
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
-                'histotialSoportes' => $histotialSoportes
+                'histotialSoportes' => $histotialSoportes,
+                'idPoliza' => $idPoliza
             )
         );
         
     }
     
+
+     /**
+     * @Route("/gestion-financiera/poliza/{idPoliza}/documentos-soporte/{idPolizaSoporte}/descargar", name="polizaSoporteRecuperarArchivo")
+     */
+    public function polizaSoporteDescargarAction(Request $request, $idPoliza, $idPolizaSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $path = $em->getRepository('AppBundle:PolizaSoporte')->findOneBy(
+            array('id' => $idPolizaSoporte));
+
+        $link = '..\uploads\documents\\'.$path->getPath();
+
+        header("Content-Disposition: attachment; filename = $link");
+        header ("Content-Type: application/force-download");
+        header ("Content-Length: ".filesize($link));
+        readfile($link);           
+        //return new BinaryFileResponse($link); -> para mostrar en ventana aparte
+    }
+
+
     /**
      * @Route("/gestion-financiera/poliza/{idPoliza}/documentos-soporte/{idPolizaSoporte}/borrar", name="polizaSoporteBorrar")
      */
