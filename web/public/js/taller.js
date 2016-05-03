@@ -74,3 +74,33 @@ app.controller('cerrarTalleresGrupoCtrl', ['$scope', '$http', function($scope, $
 	};	
 }]);
 
+app.controller('FiltrosTallerCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasTaller = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaTaller = function(){
+
+       
+		$("#tallerFilter_lugar").val("");
+		$("#tallerFilter_asistentes").val("");
+
+				
+       
+    }
+      
+		
+}]);

@@ -84,3 +84,33 @@ app.controller('gestionBeneficiariosVisitaCtrl', ['$scope', '$http', function($s
 
 	};	
 }]);
+
+app.controller('FiltrosVisitaCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasVisita = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaVisita = function(){
+
+       
+		$("#visitaFilter_numero_documento").val("");
+		$("#visitaFilter_primer_apellido").val("");
+		$("#visitaFilter_primer_nombre").val("");			
+       
+    }
+      
+		
+}]);

@@ -33,6 +33,8 @@ use AppBundle\Form\GestionEmpresarial\CLEARFilterType;
 use AppBundle\Form\GestionEmpresarial\ClearSoporteType;
 use AppBundle\Form\GestionEmpresarial\ListaRolBeneficiarioType;
 use AppBundle\Form\GestionEmpresarial\ListaRolType;
+use AppBundle\Form\GestionEmpresarial\ClearIntegranteFilterType;
+
 
 
 
@@ -482,17 +484,38 @@ class ClearController extends Controller
         $query->setParameter('clear', $clear);
         $integrantes = $query->getResult();
 
+
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Integrante')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new ClearIntegranteFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder
+        ->andWhere('q.active = 1')
+        ->andWhere('q.id NOT IN (SELECT integrante.id FROM AppBundle:Integrante integrante JOIN AppBundle:AsignacionIntegranteCLEAR agc WHERE integrante = agc.integrante AND agc.clear = :clear)')
+        ->setParameter('clear', $clear);
+
+        $query = $filterBuilder->getQuery();
+
         $paginator1  = $this->get('knp_paginator');
 
         $pagination1 = $paginator1->paginate(
-            $integrantes, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Clear:integrantes-clear-gestion-asignacion.html.twig', 
             array(
-                'integrantes' => $integrantes,
+                'form' => $form->createView(),
+                'integrantes' => $query,
                 'asignacionesIntegranteCLEAR' => $asignacionesIntegranteCLEAR,
                 'idCLEAR' => $idCLEAR,
                 'pagination1' => $pagination1

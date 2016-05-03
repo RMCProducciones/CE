@@ -24,13 +24,15 @@ use AppBundle\Entity\AsignacionContadorGrupo;
 
 use AppBundle\Form\GestionEmpresarial\ContadorSoporteType;
 use AppBundle\Form\GestionEmpresarial\ContadorType;
+use AppBundle\Form\GestionEmpresarial\ContadorFilterType;
+use AppBundle\Form\GestionEmpresarial\ContadorAsignacionFilterType;
+
 
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-use AppBundle\Form\GestionEmpresarial\ContadorFilterType;
 
 
 class ContadorController extends Controller
@@ -343,25 +345,50 @@ class ContadorController extends Controller
             $query = $em->createQuery('SELECT c FROM AppBundle:Contador c WHERE c.id NOT IN (SELECT contador.id FROM AppBundle:Contador contador JOIN AppBundle:AsignacionContadorGrupo acg WHERE contador = acg.contador AND acg.grupo = :grupo) AND c.active = 1');
             $query->setParameter(':grupo', $grupo);
             $contadores = $query->getResult(); 
-        }else{
-            $contadores = array();
+
+            $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Contador')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new ContadorAsignacionFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
         }
+
+        $filterBuilder->andWhere('q.active = 1')
+        ->andWhere('q.id NOT IN (SELECT contador.id FROM AppBundle:Contador contador JOIN AppBundle:AsignacionContadorGrupo acg WHERE contador = acg.contador AND acg.grupo = :grupo)')
+        ->setParameter(':grupo', $grupo);
+
+        $query = $filterBuilder->getQuery();
+
+        }else{
+
+            $form = $this->get('form.factory')->create(new ContadorAsignacionFilterType());
+            $query = array();
+        }
+
+        $mostrarFiltros = sizeof($asignacionesContadorGrupo);
 
         $paginator1  = $this->get('knp_paginator');
 
         $pagination1 = $paginator1->paginate(
-        $contadores, /* fuente de los datos*/
+        $query, /* fuente de los datos*/
         $request->query->get('page', 1)/*número de página*/,
         5/*límite de resultados por página*/
         );       
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Contador:asignar-contador-grupo.html.twig', 
             array(
-                'contadores' => $contadores,
+                'form' => $form->createView(),
+                'contadores' => $query,
                 'asignacionesContadorGrupo' => $asignacionesContadorGrupo,
                 'idGrupo' => $idGrupo,
                 'grupo'=>$grupo,
-                'pagination1' => $pagination1
+                'pagination1' => $pagination1,
+                'mostrarFiltros' => $mostrarFiltros
             ));     
     }
 

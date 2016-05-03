@@ -89,6 +89,40 @@ app.controller('FiltrosContadorCtrl', ['$scope', '$http', 'styleBuscarHerramient
 		
 }]);
 
+app.controller('FiltrosContadorAsignacionCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasContadorAsignacion = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaContadorAsignacion = function(){
+       
+		$("#contadorAsignacionFilter_numero_documento").val("");
+		$("#contadorAsignacionFilter_primer_apellido").val("");
+		$("#contadorAsignacionFilter_primer_nombre").val("");
+		
+
+
+		
+
+       
+    }
+      
+		
+}]);
+
 
 
 

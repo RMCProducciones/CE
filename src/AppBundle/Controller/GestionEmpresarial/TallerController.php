@@ -26,6 +26,7 @@ use AppBundle\Entity\Camino;
 
 use AppBundle\Form\GestionEmpresarial\TallerSoporteType;
 use AppBundle\Form\GestionEmpresarial\TallerType;
+use AppBundle\Form\GestionEmpresarial\TallerFilterType;
 
 
 /*Para autenticación por código*/
@@ -38,7 +39,7 @@ class TallerController extends Controller
     /**
      * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/gestion", name="tallerGestion")
      */
-    public function tallerGrupoGestionAction($idGrupo)
+    public function tallerGrupoGestionAction(Request $request, $idGrupo)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -52,10 +53,38 @@ class TallerController extends Controller
         /*echo $grupo->getNombre();
         asdasfasf;*/
 
+         $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Taller')
+            ->createQueryBuilder('q');
+                  
+        $form = $this->get('form.factory')->create(new TallerFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder->andwhere('q.grupo = :idGrupo')
+        ->setParameter('idGrupo', $idGrupo)
+        ->andWhere('q.active = 1');
+
+        $query = $filterBuilder->getQuery();
+
+        $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $query, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Taller:taller-gestion.html.twig', 
-            array( 'taller' => $taller,
+            array( 'form' => $form->createView(),
+                    'taller' => $query,
                    'idGrupo' => $idGrupo,
-                   'grupo' => $grupo
+                   'grupo' => $grupo,
+                   'pagination'=> $pagination
                 )
         );
     }

@@ -30,6 +30,10 @@ use AppBundle\Form\GestionEmpresarial\GrupoSoporteType;
 use AppBundle\Form\GestionEmpresarial\ListaRolBeneficiarioType;
 use AppBundle\Form\GestionEmpresarial\GrupoFilterType;
 use AppBundle\Form\GestionEmpresarial\ComiteVamosBienFilterType;
+use AppBundle\Form\GestionEmpresarial\EstructuraOrganizacionalFilterType;
+use AppBundle\Form\GestionEmpresarial\ComiteComprasFilterType;
+
+
 
 
 /*Para autenticación por código*/
@@ -634,17 +638,38 @@ class GrupoController extends Controller
             array('id' => $beneficiarios, 'grupo' => $grupo )
         );
 
+         $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Beneficiario')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new ComiteComprasFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder->andwhere('q.grupo = :idGrupo')
+        ->setParameter('idGrupo', $idGrupo)
+        ->andWhere('q.active = 1')
+        ->andWhere('q.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioComiteCompras abc WHERE beneficiario = abc.beneficiario AND abc.grupo = :grupo)')
+        ->setParameter(':grupo', $grupo);
+
+        $query = $filterBuilder->getQuery();
+
         $paginator1  = $this->get('knp_paginator');
 
         $pagination1 = $paginator1->paginate(
-            $mostrarBeneficiarios, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:beneficiario-grupo-cc-gestion-asignacion.html.twig', 
             array(
-                'beneficiarios' => $mostrarBeneficiarios,
+                'form' => $form->createView(),
+                'beneficiarios' => $query,
                 'asignacionesBeneficiariosCC' => $asignacionesBeneficiariosCC,
                 'idGrupo' => $idGrupo,
                 'grupo' => $grupo,
@@ -802,10 +827,30 @@ class GrupoController extends Controller
             array('id' => $beneficiarios, 'grupo' => $grupo )
         );
 
+         $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Beneficiario')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new EstructuraOrganizacionalFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder->andwhere('q.grupo = :idGrupo')
+        ->setParameter('idGrupo', $idGrupo)
+        ->andWhere('q.active = 1')
+        ->andWhere('q.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioEstructuraOrganizacional abc WHERE beneficiario = abc.beneficiario AND abc.grupo = :grupo)')
+        ->setParameter(':grupo', $grupo);
+
+        $query = $filterBuilder->getQuery();
+
         $paginator1  = $this->get('knp_paginator');
 
         $pagination1 = $paginator1->paginate(
-            $mostrarBeneficiarios, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
         );
@@ -813,7 +858,8 @@ class GrupoController extends Controller
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:beneficiario-grupo-eo-gestion-asignacion.html.twig', 
             array(
-                'beneficiarios' => $mostrarBeneficiarios,
+                'form' => $form->createView(),
+                'beneficiarios' => $query,
                 'asignacionesBeneficiariosEO' => $asignacionesBeneficiariosEO,
                 'idGrupo' => $idGrupo,
                 'grupo' => $grupo,

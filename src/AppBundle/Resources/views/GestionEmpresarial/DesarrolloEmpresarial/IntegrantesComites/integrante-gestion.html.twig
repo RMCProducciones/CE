@@ -23,23 +23,98 @@
  
   	<br>
 
-    <div class="section">
+    <div class="section" ng-controller="FiltrosIntegranteCtrl">
       <div class="container">
-        <div class="row">
+        <div class="row" >
+          
           <div class="col-md-6">
             <div class="btn-group">
               <a href="{{ path('homepage') }}" class="btn btn-warning">Volver</a>
-              <a href="{{ path('integranteNuevo') }}" class="btn btn-success">Nuevo</a>
+               <a href="{{ path('integranteNuevo') }}" class="btn btn-success">Nuevo</a>              
             </div>
           </div>
+
+          <div class="col-md-4">
+          </div>
+
+          <div class="col-md-2">
+            <div class="btn-group [[styleBuscarHerramientas]]">              
+                
+                <button class="btn btn-info" ng-click="buttonBuscarHerramientasIntegrante(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
+              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaIntegrante();">Limpiar</button>                            
+            </div>
+          </div>
+
         </div>
       </div>
-    </div>
     
+    
+    <br>
+    <div class="container well" ng-show="CountBuscarHerramientas === 1">
+
+        <form method="get" action="{{ path('integranteGestion') }}">               
+                  
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+        {{ form_errors(form) }}
+
+        <div class="row">          
+
+            
+
+                  <div class="col-md-3">
+                  
+                    {{ form_label(form.numero_documento) }}
+                    {{ form_errors(form.numero_documento) }}
+                    {{ form_widget(form.numero_documento, { 'attr': {'class': 'form-control', 'placeholder': 'Número de documento'} }) }}
+
+                  </div>
+
+                  <div class="col-md-3">
+
+                    {{ form_label(form.primer_apellido) }}
+                    {{ form_errors(form.primer_apellido) }}
+                    {{ form_widget(form.primer_apellido, { 'attr': {'class': 'form-control', 'placeholder': 'Primer apellido'} }) }}
+
+                  </div>
+
+                  <div class="col-md-3">
+
+                    {{ form_label(form.primer_nombre) }}
+                    {{ form_errors(form.primer_nombre) }}
+                    {{ form_widget(form.primer_nombre, { 'attr': {'class': 'form-control', 'placeholder': 'Primer nombre'} }) }}
+
+                  </div>
+
+                  
+        </div>
+
+        <br />        
+
+        <div class="row">    
+
+                  <div class="col-md-12 text-right">
+
+                  <button class="btn btn-default" style="color:white; background-color:#ccc;"  type="submit" name="submit-filter" value="filter"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+
+                  </div>                  
+        </div>
+
+        {{ form_end(form) }}
+
+        </form>
+
+      </div>
+    </div>
+
     <br>
     <div class="container">
     <div class="alert alert-[[estadoMensaje]] alert-dismissible" id="MensajeCtrl" ng-show="mostrarMensaje === true" role="alert">[[textoMensaje]]<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
     </div>
+    <br>
+
+
+
     <div class="section">
       <div class="container">        
         <div class="row">
@@ -47,26 +122,26 @@
             <table class="table table-striped table-hover" ng-controller="gestionIntegranteComiteCtrl">
               <thead>
                 	<tr>
-	                  <th>#</th>
-					           <th>Documento</th>
-	                   <th>Nombre</th>
-	                   <th>Cargo</th>
-	                   <th>Acciones</th>
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
+					          <th class="text-center">{{ knp_pagination_sortable(pagination, 'Numero Documento', 'a.numeroDocumento') }}</th>
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Nombre', 'a.nombre') }}</th>
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Cargo', 'a.cargo') }}</th>
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.acciones') }}</th>
 	                </tr>
 	           </thead>
 	           <tbody>
                
                 {% set consecutivo = 1 %}
 	    	
-	    		{% for integrante in integrantes %}
+	    		{% for integrante in pagination %}
 	                
 	                <tr id="filaIntegrante{{ consecutivo }}">
 
-	                  <td>{{ consecutivo }}</td>
-					  <td>{{ integrante.numeroDocumento}}</td>
-	                  <td>{{ integrante.primernombre}} {{ integrante.segundonombre}} {{ integrante.primerapellido}} {{ integrante.segundoapellido}}</td>
-	                  <td>{{ integrante.cargo }}</td>
-	                  <td>
+	                  <td class="text-center">{{ consecutivo }}</td>
+					          <td class="text-center">{{ integrante.numeroDocumento}}</td>
+	                  <td class="text-center">{{ integrante.primernombre}} {{ integrante.segundonombre}} {{ integrante.primerapellido}} {{ integrante.segundoapellido}}</td>
+	                  <td class="text-center">{{ integrante.cargo }}</td>
+	                  <td class="text-center">
 
 
 	                    <a href="{{ path('integranteSoporte', {'idIntegrante': integrante.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> | 
@@ -92,6 +167,13 @@
               
                </tbody>
             </table>
+            <div class="navigation text-center">
+              <nav>
+                <ul class="pagination">
+                  {{ knp_pagination_render(pagination) }}
+                </ul>
+              </nav>
+            </div> 
           </div>
         </div>
       </div>

@@ -22,6 +22,8 @@ use AppBundle\Entity\IntegranteSoporte;
 
 use AppBundle\Form\GestionEmpresarial\IntegranteType;
 use AppBundle\Form\GestionEmpresarial\IntegranteSoporteType;
+use AppBundle\Form\GestionEmpresarial\IntegranteFilterType;
+
 
 
 /*Para autenticación por código*/
@@ -34,18 +36,44 @@ class IntegranteConcursoController extends Controller
 	/**
      * @Route("/gestion-empresarial/desarrollo-empresarial/integrante/gestion", name="integranteGestion")
      */
-    public function integrantesGestionAction()
+    public function integrantesGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         
 		$integrantes = $em->getRepository('AppBundle:Integrante')->findBy(
             array('active' => '1'),
             array('primer_apellido' => 'ASC')
+        );
+
+         $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Integrante')
+            ->createQueryBuilder('q');
+                  
+        $form = $this->get('form.factory')->create(new IntegranteFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder->andWhere('q.active = 1');
+
+        $query = $filterBuilder->getQuery();
+
+        $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $query, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
         );			
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/IntegrantesComites:integrante-gestion.html.twig', 
             array(
-                'integrantes' => $integrantes,                  
+                'form' => $form->createView(),
+                'integrantes' => $query,     
+                'pagination'=> $pagination             
             ));        
     }
 
