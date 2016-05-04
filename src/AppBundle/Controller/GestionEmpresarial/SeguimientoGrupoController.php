@@ -62,10 +62,24 @@ class SeguimientoGrupoController extends Controller
         $camino = $em->getRepository('AppBundle:Camino')->findBy(
             array('grupo' => $grupo)
         );
+
+        $taller = $em->getRepository('AppBundle:Taller')->findBy(          
+            array('grupo' => $grupo)
+        );
+
+        $cerrarTalleres = 0;
+
+        if(sizeof($taller) > 0){
+            $cerrarTalleres = 1;
+        }
+        
         
        // die();
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:grupo-seguimiento.html.twig', array( 'grupo' => $grupo, 'camino' => $camino));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:grupo-seguimiento.html.twig', 
+            array( 'grupo' => $grupo, 
+                   'camino' => $camino,
+                   'cerrarTalleres' => $cerrarTalleres));
     }
 
     /**
