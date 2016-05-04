@@ -28,6 +28,26 @@ class ParametrizacionController extends Controller
 
 
     /**
+     * @Route("/agregar/rol/", name="agregarRol")
+     */
+    public function agregarRolAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('username' => 'coordinador')
+        );
+
+        $user->addRole(2);
+        
+        $em->persist($user);
+        $em->flush();
+
+        return new Response($user->getPrimerNombre());
+
+    }   
+
+    /**
      * @Route("/backend/rol/gestion", name="rolGestion")
      */
     public function rolGestionAction()

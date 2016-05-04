@@ -34,6 +34,7 @@ use AppBundle\Form\GestionEmpresarial\ClearSoporteType;
 use AppBundle\Form\GestionEmpresarial\ListaRolBeneficiarioType;
 use AppBundle\Form\GestionEmpresarial\ListaRolType;
 use AppBundle\Form\GestionEmpresarial\ClearIntegranteFilterType;
+use AppBundle\Form\GestionEmpresarial\ClearGrupoFilterType;
 
 
 
@@ -655,17 +656,37 @@ class ClearController extends Controller
 
         $grupos = $query->getResult();
 
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Grupo')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new ClearGrupoFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder
+        ->andWhere('q.active = 1')
+        ->andWhere('q.id NOT IN (SELECT grupo.id FROM AppBundle:Grupo grupo JOIN AppBundle:AsignacionGrupoCLEAR agc WHERE grupo = agc.grupo AND agc.clear = :clear)')
+        ->setParameter('clear', $clear);
+
+        $query = $filterBuilder->getQuery();
+
         $paginator1  = $this->get('knp_paginator');
 
         $pagination1 = $paginator1->paginate(
-            $grupos, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Clear:grupo-clear-gestion-asignacion.html.twig', 
             array(
-                'grupos' => $grupos,
+                'form' => $form->createView(),
+                'grupos' => $query,
                 'asignacionesGrupoCLEAR' => $asignacionesGrupoCLEAR,
                 'idCLEAR' => $idCLEAR,
                 'pagination1' => $pagination1
