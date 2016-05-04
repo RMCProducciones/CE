@@ -614,14 +614,38 @@
             </button>
             <h4 class="modal-title" id="myModalLabel">{{ grupo.codigo }} | {{ grupo.nombre }}</h4>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" ng-controller="cerrarTalleresGrupoCtrl">
             <b>Talleres</b>
             <br>
             <b>Grupo Formal</b>
-            <br>
-            <br>
-            <b><a href="{{ path('tallerGestion', {'idGrupo': grupo.id})}}">Nuevo Taller</a></b>
-            <br>           
+            {% set ultimoEstado = 0 %}
+
+            {% for nodoCamino in camino %}
+              {% if nodoCamino.nodo.id == 8 %}
+                {% if nodoCamino.estado == 1 or nodoCamino.estado == 2 %}
+                
+                  {% set ultimoEstado = 1 %}
+
+                {% endif %}
+
+              {% endif %}
+
+            {% endfor %}
+
+            {% if ultimoEstado == 1 or ultimoEstado == 2 %}
+              <br>
+              <br>
+              <b><a href="{{ path('tallerGestion', {'idGrupo': grupo.id, 'acceso': 0})}}">Visualizar Taller</a></b>
+
+            {% else %}
+              <br>
+              <br>
+              <b><a href="{{ path('tallerGestion', {'idGrupo': grupo.id, 'acceso': 1})}}">Nuevo Taller</a></b>
+
+              <br>           
+              <b><a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="Recuerde que al cerrar el ciclo talleres no podrá registrar nuevos, dando paso al nodo de legalización de fase." confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="cerrarTalleresGrupo('{{ path('talleresGrupoCerrar', {'idGrupo': grupo.id, 'idNodo': 7}) }}');" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true">Cerrar Talleres</a></b>
+
+            {% endif %}                    
           </div>
 
           <div class="modal-footer">
@@ -717,10 +741,40 @@
             <br>
             <b>Grupo Formal</b>
             <br>
-            <br>
-            <b><a href="{{ path('tallerGestion', {'idGrupo': grupo.id})}}">Nuevo Taller</a></b>
-            <br>           
-            <b><a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="Recuerde que al cerrar el ciclo talleres no podrá registrar nuevos, dando paso al nodo de legalización de fase." confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="cerrarTalleresGrupo('{{ path('talleresGrupoCerrar', {'idGrupo': grupo.id}) }}');" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true">Cerrar Talleres</a></b>
+            {% set ultimoEstado = 0 %}
+
+            {% for nodoCamino in camino %}
+              {% if nodoCamino.nodo.id == 12 %}
+                {% if nodoCamino.estado == 1 or nodoCamino.estado == 2 %}
+                
+                  {% set ultimoEstado = 1 %}
+
+                {% endif %}
+
+              {% endif %}
+
+            {% endfor %}
+
+            {% if ultimoEstado == 1 or ultimoEstado == 2 %}
+              <br>
+              <b><a href="{{ path('tallerGestion', {'idGrupo': grupo.id, 'acceso': 0})}}">Visualizar Taller</a></b>
+
+            {% else %}
+
+              <br>
+              <b><a href="{{ path('tallerGestion', {'idGrupo': grupo.id, 'acceso': 1})}}">Nuevo Taller</a></b>
+
+              {% if cerrarTalleres == 1 %}
+
+                <br>           
+                <br>           
+                <b><a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="Recuerde que al cerrar el ciclo talleres no podrá registrar nuevos, dando paso al nodo de legalización de fase." confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="cerrarTalleresGrupo('{{ path('talleresGrupoCerrar', {'idGrupo': grupo.id, 'idNodo': 11}) }}');" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true">Cerrar Talleres</a></b>
+
+              {% endif %}
+
+            {% endif %}
+            
+            
           </div>
 
           <div class="modal-footer">
@@ -787,9 +841,11 @@
             {% if ultimoEstado == 1 %}
               <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '0'}) }}">Evaluación de fase</a></b>      
             {% else %}
-              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '1'}) }}">Resultado de evaluación de fase</a></b> 
-              <br>
-              <b><a href="{{ path('seguimientofaseInicio', {'idGrupo': grupo.id, 'idNodo': 14}) }}">Nuevo inicio de Fase</a></b>       
+              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '1'}) }}">Resultado de evaluación de fase</a></b>
+              {% if ultimoEstado != 3 %} 
+                <br>
+                <b><a href="{{ path('seguimientofaseInicio', {'idGrupo': grupo.id, 'idNodo': 14}) }}">Nuevo inicio de Fase</a></b>       
+              {% endif %}
             {% endif %}
 
             <br>           
@@ -940,8 +996,10 @@
               <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '0'}) }}">Evaluación de fase</a></b>      
             {% else %}
               <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '1'}) }}">Resultado de evaluación de fase</a></b> 
-              <br>
-              <b><a href="{{ path('seguimientofaseInicio', {'idGrupo': grupo.id, 'idNodo': 20}) }}">Nuevo inicio de Fase</a></b>       
+              {% if ultimoEstado != 3 %} 
+                <br>
+                <b><a href="{{ path('seguimientofaseInicio', {'idGrupo': grupo.id, 'idNodo': 20}) }}">Nuevo inicio de Fase</a></b>
+              {% endif %}
             {% endif %}
 
             <br>           
@@ -1091,9 +1149,11 @@
             {% if ultimoEstado == 1 %}
               <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '0'}) }}">Evaluación de fase</a></b>      
             {% else %}
-              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '1'}) }}">Resultado de evaluación de fase</a></b> 
-              <br>
-              <b><a href="{{ path('seguimientofaseInicio', {'idGrupo': grupo.id, 'idNodo': 26}) }}">Nuevo inicio de Fase</a></b>       
+              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '1'}) }}">Resultado de evaluación de fase</a></b>
+              {% if ultimoEstado != 3 %} 
+                <br>
+                <b><a href="{{ path('seguimientofaseInicio', {'idGrupo': grupo.id, 'idNodo': 26}) }}">Nuevo inicio de Fase</a></b>
+              {% endif %}       
             {% endif %}
 
             <br>           
