@@ -139,7 +139,8 @@
                 <tr>
                     <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Id', 'a.id') }}</th>
                     <th></th>
-                    <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Opcionados', 'a.opcionados') }}</th>                  
+                    <th></th>
+                    <th class="text-left">{{ knp_pagination_sortable(pagination1, 'Opcionados', 'a.opcionados') }}</th>                  
                     <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Acciones', 'a.acciones') }}</th>
                 </tr>                
               </thead>
@@ -155,6 +156,9 @@
                     
                   </td>
                   <td>
+                    
+                  </td>
+                  <td>
             <br>{{integrante.primernombre}} {{integrante.segundonombre}} {{integrante.primerapellido}} {{integrante.segundoapellido}}
             <br>{{integrante.entidad}}
             <br>{{integrante.cargo}}
@@ -162,7 +166,7 @@
           <br>{{integrante.numerodocumento}}
 
                     
-                  <td>
+                  <td class="text-center">
                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ integrante.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                     <br>                    
                     <a href="#" title="Asignar" alt="Asignar" data-toggle="modal" data-target="#asignarRol{{ integrante.id }}"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
