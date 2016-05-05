@@ -53,7 +53,7 @@ class ClearController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $soportesClear = $em->getRepository('AppBundle:ClearSoporte')->findBY(
+        $soportesClear = $em->getRepository('AppBundle:ClearSoporte')->findBy(
             array('active' => 1),
             array('fecha_creacion' => 'ASC')
         );
@@ -468,6 +468,11 @@ class ClearController extends Controller
             array('id' => $idCLEAR)
         );
 
+        $soportesClear = $em->getRepository('AppBundle:ClearSoporte')->findBy(
+            array('clear' => $idCLEAR,
+                  'active' => 1)
+        );
+
         if ($request->getMethod() == 'POST') {
 
 
@@ -497,7 +502,7 @@ class ClearController extends Controller
                 $em->persist($asignacionIntegranteCLEAR);
                 $em->flush();
 
-                return $this->redirectToRoute('clearIntegrante', array( 'idCLEAR' => $idCLEAR));
+                return $this->redirectToRoute('clearIntegrante', array( 'idCLEAR' => $idCLEAR, 'soportesClear' => $soportesClear));
 
             }
 
@@ -547,7 +552,8 @@ class ClearController extends Controller
                 'integrantes' => $query,
                 'asignacionesIntegranteCLEAR' => $asignacionesIntegranteCLEAR,
                 'idCLEAR' => $idCLEAR,
-                'pagination1' => $pagination1
+                'pagination1' => $pagination1,
+                'soportesClear' => $soportesClear
             ));        
         
     }
@@ -649,7 +655,12 @@ class ClearController extends Controller
 
         $asignacionesGrupoCLEAR = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
             array('clear' => $clear)
-        );  
+        );
+
+        $soportesClear = $em->getRepository('AppBundle:ClearSoporte')->findBy(
+            array('clear' => $idCLEAR,
+                  'active' => 1)
+        );
 
         $query = $em->createQuery('SELECT g FROM AppBundle:Grupo g WHERE g.id NOT IN (SELECT grupo.id FROM AppBundle:Grupo grupo JOIN AppBundle:AsignacionGrupoCLEAR agc WHERE grupo = agc.grupo AND agc.clear = :clear) AND g.active = 1');
         $query->setParameter('clear', $clear);
@@ -689,7 +700,8 @@ class ClearController extends Controller
                 'grupos' => $query,
                 'asignacionesGrupoCLEAR' => $asignacionesGrupoCLEAR,
                 'idCLEAR' => $idCLEAR,
-                'pagination1' => $pagination1
+                'pagination1' => $pagination1,
+                'soportesClear' => $soportesClear
             ));        
         
     }
