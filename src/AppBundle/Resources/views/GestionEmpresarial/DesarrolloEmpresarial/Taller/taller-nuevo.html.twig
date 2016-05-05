@@ -8,7 +8,7 @@
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
       <li>Servicio Complementario</li>
-      <li><a href="{{ path('tallerGestion', {'idGrupo': idGrupo}) }}">Taller</a></li>
+      <li><a href="{{ path('tallerGestion', {'idGrupo': idGrupo, 'acceso': acceso}) }}">Taller</a></li>
       <li class="active">Nuevo</li>
     </ul>
 
@@ -37,7 +37,7 @@
   
               <button name="grupo[guardar]" id="grupo_guardar" type="submit" class="btn btn-success">Guardar</button>
               
-              <a href="{{ path('tallerGestion', {'idGrupo': idGrupo}) }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+              <a href="{{ path('tallerGestion', {'idGrupo': idGrupo, 'acceso': acceso}) }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
               
             </div>
           </div>

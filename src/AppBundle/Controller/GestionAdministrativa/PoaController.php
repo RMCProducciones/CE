@@ -255,10 +255,30 @@ class PoaController extends Controller
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
-                'histotialSoportes' => $histotialSoportes
+                'histotialSoportes' => $histotialSoportes,
+                'idPOA' => $idPOA
             )
         );
         
+    }
+
+    /**
+     * @Route("/gestion-administrativa/poa/{idPOA}/documentos-soporte/{idPOASoporte}/descargar", name="POASoporteRecuperarArchivo")
+     */
+    public function POASoporteDescargarAction(Request $request, $idPOA, $idPOASoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $path = $em->getRepository('AppBundle:POASoporte')->findOneBy(
+            array('id' => $idPOASoporte));
+
+        $link = '..\uploads\documents\\'.$path->getPath();
+
+        header("Content-Disposition: attachment; filename = $link");
+        header ("Content-Type: application/force-download");
+        header ("Content-Length: ".filesize($link));
+        readfile($link);           
+        //return new BinaryFileResponse($link); -> para mostrar en ventana aparte
     }
     
     /**

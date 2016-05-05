@@ -102,3 +102,66 @@ app.controller('FiltrosClearCtrl', ['$scope', '$http', 'styleBuscarHerramientas'
       
 		
 }]);
+
+app.controller('FiltrosClearIntegranteCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasClearIntegrante = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaClearIntegrante = function(){
+       
+		
+		$("#clearIntegranteFilter_primer_nombre").val("");
+		$("#clearIntegranteFilter_primer_apellido").val("");
+		$("#clearIntegranteFilter_numero_documento").val("");
+
+       
+    }
+      
+		
+}]);
+
+app.controller('FiltrosClearGrupoCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasClearGrupo = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaClearGrupo = function(){
+       
+		
+		$("#clearGrupoFilter_primer_nombre").val("");
+		$("#clearGrupoFilter_primer_apellido").val("");
+		$("#clearGrupoFilter_numero_documento").val("");
+
+       
+    }
+      
+		
+}]);
+

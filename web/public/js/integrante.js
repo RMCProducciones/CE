@@ -45,3 +45,33 @@ app.controller('gestionDocumentoSoporteIntegranteComiteCtrl', ['$scope', '$locat
 
 
 }]);
+
+app.controller('FiltrosIntegranteCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasIntegrante = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaIntegrante = function(){
+
+       
+		$("#integranteFilter_numero_documento").val("");
+		$("#integranteFilter_primer_apellido").val("");
+		$("#integranteFilter_primer_nombre").val("");			
+       
+    }
+      
+		
+}]);

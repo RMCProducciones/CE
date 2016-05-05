@@ -18,81 +18,97 @@
 
 {% block section %}
 
-	<div class="section" ng-controller="FiltrosCtrl">
+	<div class="section" ng-controller="FiltrosUsuarioCtrl">
       <div class="container">
-        <div class="row">
-
-
-
-          <div class="col-md-7">
-            <div class="input-group">
-              <input class="form-control" placeholder="Buscar..." ng-model="txtBuscar" type="text">
-              <span class="input-group-btn">
-			  <button class="btn btn-default" type="button">Buscar</button>
-              </span>
-            </div>
-			
-                r:[[txtBuscar]]
-			  
-          </div>
-          <div class="col-md-3 text-center">
-		  
-            <div class="[[styleBuscarHerramientas]]">
-              <button class="btn btn-primary" ng-click="buttonBuscarHerramientas(count)">Filtros <span class="caret"></span></button>
-            </div>
-          </div>
-          <div class="col-md-2 text-center">
-            <a class="btn btn-default">Limpiar</a>
-          </div>
-        </div>
-      </div>
-      <br>
-      <div class="container well" ng-controller="ListasLocalizacionCtrl" ng-show="count === 1">
         <div class="row" >
-          <div class="col-md-3">
-            <label>Departamento</label>
-            <br>
-			<select ng-model="selDepartamento" class="form-control" ng-change="cargarZonas()" ng-options="departamento.id as departamento.nombre for departamento in JSONDepartamento"></select>
-          </div>
-          <div class="col-md-3">
-            <label>Zona</label>
-            <br>
-			<select ng-model="selZona" class="form-control" ng-change="cargarMunicipios()" ng-options="zona.id as zona.nombre for zona in JSONZona"></select>
-          </div>
-          <div class="col-md-3">
-            <label>Municipio</label>
-            <br>
-			<select ng-model="selMunicipio" class="form-control" ng-options="municipio.id as municipio.nombre for municipio in JSONMunicipio"></select>           
-          </div>
-          <div class="col-md-3">
-            <label>Estado</label>
-            <br>
-            <input list="estado" placeholder="Estado..." class="form-control">
-            <datalist id="estado">
-              <option value="Activo"></option>
-              <option value="Inactivo"></option>
-            </datalist>
-          </div>
-        </div>
-      </div>
-    </div>
-    <br>
-     
-  	<br>
-
-    <hr>
-
-    <div class="section">
-      <div class="container">
-        <div class="row">
+          
           <div class="col-md-6">
             <div class="btn-group">
               <a href="{{ path('homepage') }}" class="btn btn-warning">Volver</a>
-              <a href="{{ path('homepage') }}register" class="btn btn-success">Nuevo</a>              
+               <a href="{{ path('homepage') }}register" class="btn btn-success">Nuevo</a>              
             </div>
           </div>
+
+          <div class="col-md-4">
+          </div>
+
+          <div class="col-md-2">
+            <div class="btn-group [[styleBuscarHerramientas]]">              
+                
+                <button class="btn btn-info" ng-click="buttonBuscarHerramientasUsuario(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
+              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaUsuario();">Limpiar</button>                            
+            </div>
+          </div>
+
         </div>
       </div>
+
+
+      <br>
+      <div class="container well" ng-show="CountBuscarHerramientas === 1">
+
+        <form method="get" action="{{ path('usuarioGestion') }}">               
+                  
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+        {{ form_errors(form) }}
+
+        <div class="row">          
+
+            
+
+                  <div class="col-md-3">
+                  
+                    {{ form_label(form.numero_documento) }}
+                    {{ form_errors(form.numero_documento) }}
+                    {{ form_widget(form.numero_documento, { 'attr': {'class': 'form-control', 'placeholder': 'Número de documento'} }) }}
+
+                  </div>
+
+                  <div class="col-md-3">
+
+                    {{ form_label(form.primer_apellido) }}
+                    {{ form_errors(form.primer_apellido) }}
+                    {{ form_widget(form.primer_apellido, { 'attr': {'class': 'form-control', 'placeholder': 'Primer apellido'} }) }}
+
+                  </div>
+
+                  <div class="col-md-3">
+
+                    {{ form_label(form.primer_nombre) }}
+                    {{ form_errors(form.primer_nombre) }}
+                    {{ form_widget(form.primer_nombre, { 'attr': {'class': 'form-control', 'placeholder': 'Primer nombre'} }) }}
+
+                  </div>
+
+                  
+        </div>
+
+        <br />        
+
+        <div class="row">    
+
+                  <div class="col-md-12 text-right">
+
+                  <button class="btn btn-default" style="color:white; background-color:#ccc;"  type="submit" name="submit-filter" value="filter"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+
+                  </div>                  
+        </div>
+
+        {{ form_end(form) }}
+
+        </form>
+
+      </div>
+
+
+    </div>
+    
+     
+  	<br>
+
+    <div class="container">
+    <div class="alert alert-[[estadoMensaje]] alert-dismissible" id="MensajeCtrl" ng-show="mostrarMensaje === true" role="alert">[[textoMensaje]]<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
     </div>
     
     <br>
@@ -105,23 +121,28 @@
               <thead>
                 	<tr>
 
-	                  <th>#</th>
-	                  <th>Nombre Usuario </th>
-	                  <th>Username</th>
-	                  <th>Email</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
+                    <th></th><th></th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Nombre', 'a.nombre') }}</th>
+                    
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Username', 'a.Username') }}</th>
+
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Email', 'a.email') }}</th>
 	                 
 	                </tr>
 	           </thead>
 	           <tbody>
                 {% set consecutivo = 1 %}
         
-          {% for usuario in usuarios %}
+          {% for usuario in pagination %}
                   
                   <tr id="filaUsuario{{ consecutivo }}">
-                    <td class="text-center">{{ consecutivo }}</td>             
+                    <td class="text-center">{{ consecutivo }}</td>  
+                    <td></td><td></td>     
                     <td class="text-left">{{ usuario.primerNombre}} {{ usuario.SegundoNombre}} {{ usuario.PrimerApellido}} {{ usuario.SegundoApellido}}</td>
+                        
                     <td class="text-left">{{ usuario.Username}}</td>   
-                    <td class="text-left">{{ usuario.email}}</td>      
+                    <td class="text-center">{{ usuario.email}}</td>      
                     
                   </tr>
                   {% set consecutivo = consecutivo + 1 %}
@@ -138,6 +159,13 @@
 	             
                </tbody>
             </table>
+            <div class="navigation text-center">
+              <nav>
+                <ul class="pagination">
+                  {{ knp_pagination_render(pagination) }}
+                </ul>
+              </nav>
+            </div>  
           </div>
         </div>
       </div>

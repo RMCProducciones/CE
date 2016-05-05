@@ -33,6 +33,9 @@ use AppBundle\Form\GestionEmpresarial\CLEARFilterType;
 use AppBundle\Form\GestionEmpresarial\ClearSoporteType;
 use AppBundle\Form\GestionEmpresarial\ListaRolBeneficiarioType;
 use AppBundle\Form\GestionEmpresarial\ListaRolType;
+use AppBundle\Form\GestionEmpresarial\ClearIntegranteFilterType;
+use AppBundle\Form\GestionEmpresarial\ClearGrupoFilterType;
+
 
 
 
@@ -49,10 +52,11 @@ class ClearController extends Controller
     public function clearGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        /*$cleares = $em->getRepository('AppBundle:CLEAR')->findBY(
+
+        $soportesClear = $em->getRepository('AppBundle:ClearSoporte')->findBY(
             array('active' => 1),
-            array('fecha_inicio' => 'ASC')
-        ); */
+            array('fecha_creacion' => 'ASC')
+        );
         
          $filterBuilder = $this->get('doctrine.orm.entity_manager')
             ->getRepository('AppBundle:CLEAR')
@@ -101,7 +105,7 @@ class ClearController extends Controller
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Clear:clear-gestion.html.twig', 
-            array( 'form' => $form->createView(),'cleares' => $query, 'pagination' => $pagination)
+            array( 'form' => $form->createView(),'cleares' => $query, 'pagination' => $pagination, 'soportesClear' => $soportesClear)
         );
     }
 
@@ -283,11 +287,11 @@ class ClearController extends Controller
 
                 $em->persist($clearSoporte);
                 $em->flush();
-
+                
                 return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR) );
             }
         }   
-        
+            
 
         //return new Response("Hola mundo");
         return $this->render(
@@ -354,6 +358,10 @@ class ClearController extends Controller
             array('id' => $idCLEAR)            
         );
 
+        $integrantesClear = $em->getRepository('AppBundle:AsignacionIntegranteCLEAR')->findBy(
+            array('clear' => $clear->getId())
+        );
+
         $gruposClear = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
             array('clear' => $clear->getId())
         );
@@ -368,7 +376,8 @@ class ClearController extends Controller
         $this->renderView(
             'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/ActasDeClear:acta-inicio.html.twig', 
             array('clear' => $clear,
-                  'gruposClear' => $gruposClear)
+                  'gruposClear' => $gruposClear,
+                  'integrantesClear' => $integrantesClear)
             ),
             '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf'
         ); 
@@ -376,7 +385,7 @@ class ClearController extends Controller
         header("Content-Disposition: attachment; filename = $link");
         header ("Content-Type: application/force-download");
         header ("Content-Length: ".filesize($link));
-        readfile($link);                    
+        readfile($link);
 
         //return new BinaryFileResponse($link); 
     }
@@ -397,6 +406,27 @@ class ClearController extends Controller
             array('clear' => $clear->getId())
         );
 
+        $faseHabilitacion = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
+            array('clear' => $clear->getId(),
+                  'habilitacion' => 1)
+        );
+
+        $faseHabilitacionTrue = sizeof($faseHabilitacion);
+
+        $faseAsignacion = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
+            array('clear' => $clear->getId(),
+                  'asignacion' => 1)
+        );
+
+        $faseAsignacionTrue = sizeof($faseAsignacion);
+
+        $faseContraloriaSocial = $em->getRepository('AppBundle:AsignacionGrupoCLEAR')->findBy(
+            array('clear' => $clear->getId(),
+                  'contraloria_social' => 1)
+        );
+
+        $faseContraloriaSocialTrue = sizeof($faseContraloriaSocial);
+
         $nombre = "Acta de Cierre Clear ";        
         $link = '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf';        
         if(file_exists($link)){
@@ -407,7 +437,13 @@ class ClearController extends Controller
         $this->renderView(
             'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/ActasDeClear:acta-fin.html.twig', 
             array('clear' => $clear,
-                  'gruposClear' => $gruposClear)
+                  'gruposClear' => $gruposClear,
+                  'faseHabilitacion' => $faseHabilitacion,
+                  'faseAsignacion' => $faseAsignacion,
+                  'faseContraloriaSocial' => $faseContraloriaSocial,
+                  'faseHabilitacionTrue' => $faseHabilitacionTrue,
+                  'faseAsignacionTrue' => $faseAsignacionTrue,
+                  'faseContraloriaSocialTrue' => $faseContraloriaSocialTrue)
             ),
             '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf'
         ); 
@@ -477,17 +513,38 @@ class ClearController extends Controller
         $query->setParameter('clear', $clear);
         $integrantes = $query->getResult();
 
+
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Integrante')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new ClearIntegranteFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder
+        ->andWhere('q.active = 1')
+        ->andWhere('q.id NOT IN (SELECT integrante.id FROM AppBundle:Integrante integrante JOIN AppBundle:AsignacionIntegranteCLEAR agc WHERE integrante = agc.integrante AND agc.clear = :clear)')
+        ->setParameter('clear', $clear);
+
+        $query = $filterBuilder->getQuery();
+
         $paginator1  = $this->get('knp_paginator');
 
         $pagination1 = $paginator1->paginate(
-            $integrantes, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Clear:integrantes-clear-gestion-asignacion.html.twig', 
             array(
-                'integrantes' => $integrantes,
+                'form' => $form->createView(),
+                'integrantes' => $query,
                 'asignacionesIntegranteCLEAR' => $asignacionesIntegranteCLEAR,
                 'idCLEAR' => $idCLEAR,
                 'pagination1' => $pagination1
@@ -599,17 +656,37 @@ class ClearController extends Controller
 
         $grupos = $query->getResult();
 
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Grupo')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new ClearGrupoFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder
+        ->andWhere('q.active = 1')
+        ->andWhere('q.id NOT IN (SELECT grupo.id FROM AppBundle:Grupo grupo JOIN AppBundle:AsignacionGrupoCLEAR agc WHERE grupo = agc.grupo AND agc.clear = :clear)')
+        ->setParameter('clear', $clear);
+
+        $query = $filterBuilder->getQuery();
+
         $paginator1  = $this->get('knp_paginator');
 
         $pagination1 = $paginator1->paginate(
-            $grupos, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Clear:grupo-clear-gestion-asignacion.html.twig', 
             array(
-                'grupos' => $grupos,
+                'form' => $form->createView(),
+                'grupos' => $query,
                 'asignacionesGrupoCLEAR' => $asignacionesGrupoCLEAR,
                 'idCLEAR' => $idCLEAR,
                 'pagination1' => $pagination1
@@ -893,9 +970,9 @@ class ClearController extends Controller
                     */
             }
             elseif($idUltimoNodo == 14){
-                $evaluacionFases = $em->getRepository('AppBundle:EvaluacionFases')->findOneBy(
-                    array('grupo' => $asignacionGrupoClear->getGrupo()) 
-                );
+                $evaluacionFases = $em->getRepository('AppBundle:EvaluacionFases')->findBy(
+                    array('grupo' => $asignacionGrupoClear->getGrupo()                                                    
+                ));
 
                 if($evaluacionFases != null){
                     self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 14, 2);//Ejecutada(2) Clear de Asignacion
@@ -903,7 +980,32 @@ class ClearController extends Controller
                     self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 14, 3);//Rechazado(3) Clear de Asignacion   
                 }
             }
-                
+            elseif($idUltimoNodo == 20){
+                $evaluacionFases = $em->getRepository('AppBundle:EvaluacionFases')->findOneBy(
+                    array('grupo' => $asignacionGrupoClear->getGrupo()                          
+                ));
+
+                if($evaluacionFases->getCalificacionPi() != null){
+                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 20, 2);//Ejecutada(2) Clear de Asignacion
+                }else{
+                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 20, 3);//Rechazado(3) Clear de Asignacion   
+                }
+            }  
+            elseif($idUltimoNodo == 26){
+                $evaluacionFases = $em->getRepository('AppBundle:EvaluacionFases')->findOneBy(
+                    array('grupo' => $asignacionGrupoClear->getGrupo()                          
+                ));
+
+                if($evaluacionFases != null){
+                    if($evaluacionFases->getCalificacionPn() != null){
+                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 26, 2);//Ejecutada(2) Clear de Asignacion
+                    }else{
+                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 26, 3);//Rechazado(3) Clear de Asignacion   
+                    }
+                }else{
+                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 26, 3);//Rechazado(3) Clear de Asignacion
+                }
+            }     
             else{//PROGRAMACIÓN GENÉRICA DE CONTRALORÍA O ASIGNACIÓN
                 self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), $idUltimoNodo, 2);
             }

@@ -280,11 +280,32 @@ class BecaController extends Controller
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
-                'histotialSoportes' => $histotialSoportes
+                'histotialSoportes' => $histotialSoportes,
+                'idBeca' => $idBeca
             )
         );
         
     }
+
+    /**
+     * @Route("/gestion-conocimiento/beca/{idBeca}/documentos-soporte/{idBecaSoporte}/descargar", name="becaSoporteRecuperarArchivo")
+     */
+    public function ExperienciaSoporteDescargarAction(Request $request, $idBeca, $idBecaSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $path = $em->getRepository('AppBundle:BecaSoporte')->findOneBy(
+            array('id' => $idBecaSoporte));
+
+        $link = '..\uploads\documents\\'.$path->getPath();
+
+        header("Content-Disposition: attachment; filename = $link");
+        header ("Content-Type: application/force-download");
+        header ("Content-Length: ".filesize($link));
+        readfile($link);           
+        //return new BinaryFileResponse($link); -> para mostrar en ventana aparte
+    }
+
     /**
      * @Route("/gestion-conocimiento/beca/{idBeca}/documentos-soporte/{idBecaSoporte}/borrar", name="becaSoporteBorrar")
      */

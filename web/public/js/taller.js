@@ -3,11 +3,12 @@ app.controller('gestionDocumentoSoporteTallerCtrl', ['$scope', '$location', func
 
 	$scope.idGrupo = 0;
 	$scope.idTaller = 0;
+	$scope.idAcceso = 0;
 	$scope.idTallerSoporteActivo = 0;
 
 	$scope.anularSoporteTaller = function() { 
 
-		window.location.replace($scope.rutaServidor  + "gestion-empresarial/servicio-complementario/taller/"+ $scope.idGrupo + "/" + $scope.idTaller + "/documentos-soporte/" + $scope.idTallerSoporteActivo + "/borrar");
+		window.location.replace($scope.rutaServidor  + "gestion-empresarial/gestion-empresarial/taller/"+ $scope.idGrupo + "/" + $scope.idTaller + "/" +$scope.idAcceso + "/documentos-soporte/" + $scope.idTallerSoporteActivo + "/borrar");
 		
 	};
 
@@ -24,20 +25,23 @@ app.controller('gestionTallerCtrl', ['$scope', '$http', function($scope, $http) 
 
 	$scope.idGrupo = 0;	
 	$scope.idTaller = 0;	
+	$scope.idAcceso = 0;
 
 	console.log($scope.estadoMensaje);
 
-	$scope.eliminarTaller = function(idGrupo, idTaller, consecutivo){
+	$scope.eliminarTaller = function(idGrupo, idTaller, acceso, consecutivo){
 
 		$scope.idGrupo = idGrupo;
 		$scope.idTaller = idTaller;
+		$scope.idAcceso = acceso;
 		$scope.consecutivoTaller = consecutivo;
 
 		console.log($scope.idGrupo);
 		console.log($scope.idTaller);
+		console.log($scope.acceso);
 		console.log($scope.consecutivoTaller);
 
-		$http.get($scope.rutaServidor + "gestion-empresarial/servicio-complementario/taller/" + $scope.idGrupo + "/" + $scope.idTaller + "/eliminar")
+		$http.get($scope.rutaServidor + "gestion-empresarial/gestion-empresarial/taller/" + $scope.idGrupo + "/" + $scope.idTaller + "/" +$scope.idAcceso +"/eliminar")
 		.success(function(data, status, headers, config) {
 
   			$("#filaTaller" + $scope.consecutivoTaller).fadeOut("slow");
@@ -67,6 +71,8 @@ app.controller('tallerBeneficiariosCtrl', ['$scope', '$http', function($scope, $
 }]);
 
 app.controller('cerrarTalleresGrupoCtrl', ['$scope', '$http', function($scope, $http) {
+
+	console.log("dsjhasjkdlhs");
 	
 	$scope.cerrarTalleresGrupo = function(ruta){		
 		window.location.replace(ruta);
@@ -74,3 +80,33 @@ app.controller('cerrarTalleresGrupoCtrl', ['$scope', '$http', function($scope, $
 	};	
 }]);
 
+app.controller('FiltrosTallerCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasTaller = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaTaller = function(){
+
+       
+		$("#tallerFilter_lugar").val("");
+		$("#tallerFilter_asistentes").val("");
+
+				
+       
+    }
+      
+		
+}]);

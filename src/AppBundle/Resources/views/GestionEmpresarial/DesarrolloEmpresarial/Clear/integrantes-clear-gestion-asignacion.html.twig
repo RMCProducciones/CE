@@ -49,25 +49,85 @@
         <div class="row">
           <div class="col-md-5 well">            
             <br>
-            <div class="row well">
-              <div class="col-md-6">
-                <label>Cargo</label>
-                <br>
-                <input list="cargo" placeholder="Cargo..." class="form-control">
-                <datalist id="cargo">
-                  <option value="Funcionario"></option>
-                  <option value="Promotor"></option>
-                </datalist>
-              </div>
-              <div class="col-md-6">
-                <label>Entidad</label>
-                <br>
-                <input list="entidad" placeholder="Entidad..." class="form-control">
-                <datalist id="entidad">
-                  <option value=""></option>
-                </datalist>
-              </div>
+            <div class="row well" ng-controller="FiltrosClearIntegranteCtrl">
+
+              <div class="row">
+              <div class="col-md-12 text-right">
+            <div class="btn-group [[styleBuscarHerramientas]]">              
+                
+                <button class="btn btn-info" ng-click="buttonBuscarHerramientasClearIntegrante(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
+              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaClearIntegrante();">Limpiar</button>                            
             </div>
+          </div>
+        </div>
+
+        <br />
+
+        <div ng-show="CountBuscarHerramientas === 1">
+
+        <form method="get" action="{{ path('clearIntegrante', {'idCLEAR': idCLEAR}) }}">               
+                  
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+        {{ form_errors(form) }}
+
+        <div class="row">       
+
+                  <div class="col-md-6">
+
+                    {{ form_label(form.primer_nombre) }}
+                    {{ form_errors(form.primer_nombre) }}
+                    {{ form_widget(form.primer_nombre, { 'attr': {'class': 'form-control', 'placeholder': 'Primer nombre'} }) }}
+
+                    
+                  </div>
+
+                  <div class="col-md-6">
+
+                    {{ form_label(form.primer_apellido) }}
+                    {{ form_errors(form.primer_apellido) }}
+                    {{ form_widget(form.primer_apellido, { 'attr': {'class': 'form-control', 'placeholder': 'Primer apellido'} }) }}
+
+                  </div>
+
+        </div>
+
+        <br />
+
+        <div class="row">
+                  <div class="col-md-3">
+                  </div> 
+                  <div class="col-md-6">
+
+                    {{ form_label(form.numero_documento) }}
+                    {{ form_errors(form.numero_documento) }}
+                    {{ form_widget(form.numero_documento, { 'attr': {'class': 'form-control', 'placeholder': 'Número de documento'} }) }}
+   
+                  </div>
+
+        </div>
+
+        
+
+        <br />        
+
+        <div class="row">    
+
+                  <div class="col-md-12 text-right">
+
+                  <button class="btn btn-default" style="color:white; background-color:#ccc;"  type="submit" name="submit-filter" value="filter"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+
+                  </div>                  
+        </div>
+
+        {{ form_end(form) }}
+
+        </form>
+
+      </div>
+
+
+        </div>
             <hr> 
 
             
@@ -79,7 +139,8 @@
                 <tr>
                     <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Id', 'a.id') }}</th>
                     <th></th>
-                    <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Opcionados', 'a.opcionados') }}</th>                  
+                    <th></th>
+                    <th class="text-left">{{ knp_pagination_sortable(pagination1, 'Opcionados', 'a.opcionados') }}</th>                  
                     <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Acciones', 'a.acciones') }}</th>
                 </tr>                
               </thead>
@@ -95,6 +156,9 @@
                     
                   </td>
                   <td>
+                    
+                  </td>
+                  <td>
             <br>{{integrante.primernombre}} {{integrante.segundonombre}} {{integrante.primerapellido}} {{integrante.segundoapellido}}
             <br>{{integrante.entidad}}
             <br>{{integrante.cargo}}
@@ -102,7 +166,7 @@
           <br>{{integrante.numerodocumento}}
 
                     
-                  <td>
+                  <td class="text-center">
                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ integrante.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                     <br>                    
                     <a href="#" title="Asignar" alt="Asignar" data-toggle="modal" data-target="#asignarRol{{ integrante.id }}"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
@@ -177,7 +241,7 @@
       </div>
     </div>
 
-  {% for integrante in integrantes %}
+  {% for integrante in pagination1 %}
     <!-- Modal -->
   <div class="modal fade" id="myModal{{ integrante.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
@@ -286,7 +350,7 @@
 {% endfor %} 
 
 
-{% for integrante in integrantes %}
+{% for integrante in pagination1 %}
 
   {% render url('formularioRolIntegranteClear', {'idCLEAR': idCLEAR, 'idIntegrante': integrante.id }) %}
 

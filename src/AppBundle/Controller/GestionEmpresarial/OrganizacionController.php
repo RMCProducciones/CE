@@ -306,10 +306,30 @@ class OrganizacionController extends Controller
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
-                'histotialSoportes' => $histotialSoportes
+                'histotialSoportes' => $histotialSoportes,
+                'idOrganizacion' => $idOrganizacion
             )
         );
         
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/organizacion/{idOrganizacion}/documentos-soporte/{idOrganizacionSoporte}/descargar", name="organizacionSoporteRecuperarArchivo")
+     */
+    public function organizacionSoporteDescargarAction(Request $request, $idOrganizacion, $idOrganizacionSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $path = $em->getRepository('AppBundle:OrganizacionSoporte')->findOneBy(
+            array('id' => $idOrganizacionSoporte));
+
+        $link = '..\uploads\documents\\'.$path->getPath();
+
+        header("Content-Disposition: attachment; filename = $link");
+        header ("Content-Type: application/force-download");
+        header ("Content-Length: ".filesize($link));
+        readfile($link);           
+        //return new BinaryFileResponse($link); -> para mostrar en ventana aparte
     }
     
     /**

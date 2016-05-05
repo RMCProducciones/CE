@@ -204,3 +204,92 @@ app.controller('FiltrosGrupoCtrl', ['$scope', '$http', 'styleBuscarHerramientas'
       
 		
 }]);
+
+app.controller('FiltrosCVBCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasCVB = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaCVB = function(){
+       
+		$("#comiteVamosBienFilter_numero_documento").val("");
+		$("#comiteVamosBienFilter_primer_apellido").val("");
+		$("#comiteVamosBienFilter_primer_nombre").val("");			
+       
+    }
+      
+		
+}]);
+
+app.controller('FiltrosOrganizacionalCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasOrganizacional = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaOrganizacional = function(){
+
+       
+		$("#estructuraOrganizacionalFilter_numero_documento").val("");
+		$("#estructuraOrganizacionalFilter_primer_apellido").val("");
+		$("#estructuraOrganizacionalFilter_primer_nombre").val("");			
+       
+    }
+      
+		
+}]);
+
+app.controller('FiltrosCCCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasCC = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaCC = function(){
+
+       
+		$("#comiteComprasFilter_numero_documento").val("");
+		$("#comiteComprasFilter_primer_apellido").val("");
+		$("#comiteComprasFilter_primer_nombre").val("");			
+       
+    }
+      
+		
+}]);

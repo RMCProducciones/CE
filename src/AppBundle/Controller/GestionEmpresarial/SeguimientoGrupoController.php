@@ -38,6 +38,8 @@ use AppBundle\Form\GestionEmpresarial\VisitaType;
 use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalType;
 use AppBundle\Form\GestionEmpresarial\EvaluacionFasesSoporteType;
 use AppBundle\Form\GestionEmpresarial\EvaluacionFasesType;
+use AppBundle\Form\GestionEmpresarial\VisitaFilterType;
+
 
 
 /*Para autenticación por código*/
@@ -60,10 +62,24 @@ class SeguimientoGrupoController extends Controller
         $camino = $em->getRepository('AppBundle:Camino')->findBy(
             array('grupo' => $grupo)
         );
+
+        $taller = $em->getRepository('AppBundle:Taller')->findBy(          
+            array('grupo' => $grupo)
+        );
+
+        $cerrarTalleres = 0;
+
+        if(sizeof($taller) > 0){
+            $cerrarTalleres = 1;
+        }
+        
         
        // die();
 
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:grupo-seguimiento.html.twig', array( 'grupo' => $grupo, 'camino' => $camino));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:grupo-seguimiento.html.twig', 
+            array( 'grupo' => $grupo, 
+                   'camino' => $camino,
+                   'cerrarTalleres' => $cerrarTalleres));
     }
 
     /**
@@ -698,7 +714,7 @@ class SeguimientoGrupoController extends Controller
                 $visita->setComiteCompras(true);                                            
             }
             
-            if(sizeof($comiteVamosBienGrupo) != 0){
+            if(sizeof($comiteVamosBienGrupo) >= 3){
                 $visita->setComiteVamosBien(true);                                            
             }
 
@@ -746,7 +762,7 @@ class SeguimientoGrupoController extends Controller
                 $visita->setComiteCompras(true);                                            
             }
             
-            if(sizeof($comiteVamosBienGrupo) != 0){
+            if(sizeof($comiteVamosBienGrupo) >= 3){
                 $visita->setComiteVamosBien(true);                                            
             }
 
@@ -820,10 +836,30 @@ class SeguimientoGrupoController extends Controller
             array('id' => $beneficiarios, 'grupo' => $grupo )
         );
 
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Beneficiario')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new VisitaFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder->andwhere('q.grupo = :idGrupo')
+        ->setParameter('idGrupo', $idGrupo)
+        ->andWhere('q.active = 1')
+        ->andWhere('q.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioVisitas abv WHERE beneficiario = abv.beneficiario AND abv.nodo = :nodo)')
+        ->setParameter(':nodo', $nodo);
+
+        $query = $filterBuilder->getQuery();
+
         $paginator1  = $this->get('knp_paginator');
 
         $pagination1 = $paginator1->paginate(
-            $mostrarBeneficiarios, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
         );
@@ -831,7 +867,8 @@ class SeguimientoGrupoController extends Controller
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:beneficiario-visita-asignacion.html.twig', 
             array(
-                'beneficiarios' => $mostrarBeneficiarios,
+                'form' => $form->createView(),
+                'beneficiarios' => $query,
                 'asignacionesBeneficiariosVisitas' => $asignacionesBeneficiariosVisitas,
                 'idGrupo' => $idGrupo,
                 'grupo' => $grupo,

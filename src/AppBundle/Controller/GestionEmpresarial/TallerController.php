@@ -26,6 +26,7 @@ use AppBundle\Entity\Camino;
 
 use AppBundle\Form\GestionEmpresarial\TallerSoporteType;
 use AppBundle\Form\GestionEmpresarial\TallerType;
+use AppBundle\Form\GestionEmpresarial\TallerFilterType;
 
 
 /*Para autenticación por código*/
@@ -36,9 +37,9 @@ class TallerController extends Controller
 {
 
     /**
-     * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/gestion", name="tallerGestion")
+     * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/{acceso}/gestion", name="tallerGestion")
      */
-    public function tallerGrupoGestionAction($idGrupo)
+    public function tallerGrupoGestionAction(Request $request, $idGrupo, $acceso)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -52,10 +53,39 @@ class TallerController extends Controller
         /*echo $grupo->getNombre();
         asdasfasf;*/
 
+         $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Taller')
+            ->createQueryBuilder('q');
+                  
+        $form = $this->get('form.factory')->create(new TallerFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder->andwhere('q.grupo = :idGrupo')
+        ->setParameter('idGrupo', $idGrupo)
+        ->andWhere('q.active = 1');
+
+        $query = $filterBuilder->getQuery();
+
+        $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $query, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Taller:taller-gestion.html.twig', 
-            array( 'taller' => $taller,
+            array( 'form' => $form->createView(),
+                    'taller' => $query,
                    'idGrupo' => $idGrupo,
-                   'grupo' => $grupo
+                   'grupo' => $grupo,
+                   'pagination'=> $pagination,
+                   'acceso' => $acceso
                 )
         );
     }
@@ -63,9 +93,9 @@ class TallerController extends Controller
 
 
 /**
-     * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/nuevo", name="tallerNuevo")
+     * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/{acceso}/nuevo", name="tallerNuevo")
      */
-    public function tallerGrupoNuevoAction(Request $request, $idGrupo)
+    public function tallerGrupoNuevoAction(Request $request, $idGrupo, $acceso)
     {
         $em = $this->getDoctrine()->getManager();
         $taller = new Taller();
@@ -101,24 +131,28 @@ class TallerController extends Controller
             $em->flush();
 
             return $this->redirectToRoute('tallerGestion', 
-                array( 'idGrupo' => $idGrupo
+                array( 'idGrupo' => $idGrupo,
+                       'acceso' => $acceso
                 )
             );
         }
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Taller:taller-nuevo.html.twig', 
             array('form' => $form->createView(),
-                  'idGrupo' => $idGrupo));
+                  'idGrupo' => $idGrupo,
+                  'acceso' => $acceso));
     }
 
     
 /**
-     * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/{idTaller}/editar", name="tallerEditar")
+     * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/{idTaller}/{acceso}/editar", name="tallerEditar")
      */
-    public function tallerGrupoEditarAction(Request $request, $idGrupo, $idTaller)
+    public function tallerGrupoEditarAction(Request $request, $idGrupo, $idTaller, $acceso)
     {
         $em = $this->getDoctrine()->getManager();
         $taller = new Taller();
+
+        $acceso;
 
         $taller = $em->getRepository('AppBundle:Taller')->findOneBy(
             array('id' => $idTaller)
@@ -149,7 +183,8 @@ class TallerController extends Controller
             $em->flush();
 
             return $this->redirectToRoute('tallerGestion', 
-                array( 'idGrupo' => $idGrupo
+                array( 'idGrupo' => $idGrupo,
+                       'acceso' => $acceso
                 )
             );
         }
@@ -160,7 +195,8 @@ class TallerController extends Controller
                     'form' => $form->createView(),
                     'idTaller' => $idTaller,
                     'taller' => $taller,
-                    'idGrupo' => $idGrupo
+                    'idGrupo' => $idGrupo,
+                    'acceso' => $acceso
             )
         );
 
@@ -168,9 +204,9 @@ class TallerController extends Controller
 
 
 /**
-     * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/{idTaller}/eliminar", name="tallerEliminar")
+     * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/{idTaller}/{acceso}/eliminar", name="tallerEliminar")
      */
-    public function tallerGrupoEliminarAction(Request $request, $idGrupo, $idTaller)
+    public function tallerGrupoEliminarAction(Request $request, $idGrupo, $idTaller, $acceso)
     {
         $em = $this->getDoctrine()->getManager();
         $taller = new Taller();
@@ -182,7 +218,7 @@ class TallerController extends Controller
         $em->flush();
 
         return $this->redirect($this->generateUrl('tallerGestion',
-            array('idGrupo' => $idGrupo)
+            array('idGrupo' => $idGrupo, 'acceso' => $acceso)
             )
         );
 
@@ -191,9 +227,9 @@ class TallerController extends Controller
 
 
 /**
-     * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/{idTaller}/documentos-soporte", name="tallerSoporte")
+     * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/{idTaller}/{acceso}/documentos-soporte", name="tallerSoporte")
      */
-    public function tallerGrupoSoporteAction(Request $request, $idGrupo, $idTaller)
+    public function tallerGrupoSoporteAction(Request $request, $idGrupo, $idTaller, $acceso)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -259,7 +295,7 @@ class TallerController extends Controller
                 $em->persist($tallerSoporte);
                 $em->flush();
 
-                return $this->redirectToRoute('tallerSoporte', array( 'idTaller' => $idTaller, 'idGrupo' => $idGrupo));
+                return $this->redirectToRoute('tallerSoporte', array( 'idTaller' => $idTaller, 'idGrupo' => $idGrupo, 'acceso' => $acceso));
             }
         }   
         
@@ -269,16 +305,17 @@ class TallerController extends Controller
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
                 'histotialSoportes' => $histotialSoportes,
-                'idGrupo' => $idGrupo
+                'idGrupo' => $idGrupo,
+                'acceso' => $acceso
             )
         );
         
     }
     
     /**
-     * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/{idTaller}/documentos-soporte/{idTallerSoporte}/borrar", name="tallerSoporteBorrar")
+     * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/{idTaller}/{acceso}/documentos-soporte/{idTallerSoporte}/borrar", name="tallerSoporteBorrar")
      */
-    public function tallerGrupoSoporteBorrarAction(Request $request, $idGrupo, $idTaller, $idTallerSoporte)
+    public function tallerGrupoSoporteBorrarAction(Request $request, $idGrupo, $idTaller, $acceso, $idTallerSoporte)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -292,14 +329,14 @@ class TallerController extends Controller
         $tallerSoporte->setActive(0);
         $em->flush();
 
-        return $this->redirectToRoute('tallerSoporte', array( 'idTaller' => $idTaller, 'idGrupo' => $idGrupo));
+        return $this->redirectToRoute('tallerSoporte', array( 'idTaller' => $idTaller, 'idGrupo' => $idGrupo, 'acceso' => $acceso));
         
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/taller/{idGrupo}/{idTaller}/asignacion-beneficiarios", name="beneficiarioTaller")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/taller/{idGrupo}/{idTaller}/{acceso}/asignacion-beneficiarios", name="beneficiarioTaller")
      */
-    public function tallerGrupoBeneficiarioAction(Request $request, $idGrupo, $idTaller)
+    public function tallerGrupoBeneficiarioAction(Request $request, $idGrupo, $idTaller, $acceso)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -344,14 +381,15 @@ class TallerController extends Controller
                 'idGrupo' => $idGrupo,
                 'grupo' => $grupo,
                 'idTaller' => $idTaller,
-                'pagination1' => $pagination1
+                'pagination1' => $pagination1,
+                'acceso' => $acceso
             ));        
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/taller/{idGrupo}/{idTaller}/asignacion-beneficiarios/{idBeneficiario}/nueva-asignacion", name="beneficiarioTallerAsignacion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/taller/{idGrupo}/{idTaller}/{acceso}/asignacion-beneficiarios/{idBeneficiario}/nueva-asignacion", name="beneficiarioTallerAsignacion")
      */
-    public function tallerGrupoAsignarBeneficiarioAction($idGrupo, $idTaller, $idBeneficiario)
+    public function tallerGrupoAsignarBeneficiarioAction($idGrupo, $idTaller, $acceso, $idBeneficiario)
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -395,15 +433,16 @@ class TallerController extends Controller
                 'asignacionesBeneficiariosTaller' => $asignacionBeneficiarioTaller,                
                 'idGrupo' => $idGrupo,
                 'idTaller' => $idTaller,
-                'taller' => $taller
+                'taller' => $taller,
+                'acceso' => $acceso
             ));        
         
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/taller/{idGrupo}/{idTaller}/asignacion-beneficiarios/{idAsignacionTallerBeneficiario}/{consecutivo}/eliminar", name="beneficiarioTallerEliminar")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/taller/{idGrupo}/{idTaller}/{acceso}/asignacion-beneficiarios/{idAsignacionTallerBeneficiario}/{consecutivo}/eliminar", name="beneficiarioTallerEliminar")
      */
-    public function tallerGrupoEliminarBeneficiarioAction($idGrupo, $idTaller, $idAsignacionTallerBeneficiario, $consecutivo)
+    public function tallerGrupoEliminarBeneficiarioAction($idGrupo, $idTaller, $acceso, $idAsignacionTallerBeneficiario, $consecutivo)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -454,21 +493,28 @@ class TallerController extends Controller
                 'asignacionesBeneficiariosTaller' => $asignacionBeneficiarioTaller,                
                 'idGrupo' => $idGrupo,
                 'idTaller' => $idTaller,
-                'taller' => $taller
+                'taller' => $taller,
+                'acceso' => $acceso
             ));           
         
     } 
 
     /**
-     * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/cerrar", name="talleresGrupoCerrar")
+     * @Route("/gestion-empresarial/gestion-empresarial/taller/{idGrupo}/{idNodo}/cerrar", name="talleresGrupoCerrar")
      */
-    public function tallerGrupoCerrarAction($idGrupo)
+    public function tallerGrupoCerrarAction($idGrupo, $idNodo)
     {
         $em = $this->getDoctrine()->getManager();
-        
-        self::nodoCamino($idGrupo, 11, 2);
-        self::nodoCamino($idGrupo, 12, 1);
 
+        if($idNodo == 7){
+            self::nodoCamino($idGrupo, 7, 2);
+            self::nodoCamino($idGrupo, 8, 1);            
+        }else{
+            self::nodoCamino($idGrupo, 11, 2);
+            self::nodoCamino($idGrupo, 12, 1);
+        }
+        
+        
         $em->flush();
 
         return $this->redirectToRoute('seguimientoGrupo', 

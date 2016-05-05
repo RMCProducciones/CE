@@ -18,12 +18,34 @@ use AppBundle\Entity\Rol;
 use AppBundle\Entity\Usuario;
 
 use AppBundle\Form\Backend\Parametrizacion\RolType;
+use AppBundle\Form\Backend\Parametrizacion\UsuarioFilterType;
+
 
 
 
 class ParametrizacionController extends Controller
 {
 
+
+    /**
+     * @Route("/agregar/rol/", name="agregarRol")
+     */
+    public function agregarRolAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('username' => 'coordinador')
+        );
+
+        $user->addRole(2);
+        
+        $em->persist($user);
+        $em->flush();
+
+        return new Response($user->getPrimerNombre());
+
+    }   
 
     /**
      * @Route("/backend/rol/gestion", name="rolGestion")
@@ -210,7 +232,7 @@ class ParametrizacionController extends Controller
     /**
      * @Route("/parametrizacion/usuario", name="usuarioGestion")
      */
-    public function usuarioGestionAction()
+    public function usuarioGestionAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -219,12 +241,37 @@ class ParametrizacionController extends Controller
             array('active' => 1)         
         );
 
+         $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Usuario')
+            ->createQueryBuilder('q');
+                  
+        $form = $this->get('form.factory')->create(new UsuarioFilterType());
 
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder->andWhere('q.active = 1');
+
+        $query = $filterBuilder->getQuery();
+
+        $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $query, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
         
         return $this->render(
             'AppBundle:GestionParametro:usuario-gestion.html.twig', 
             array( 
-                'usuarios' => $usuarios
+                'form' => $form->createView(),
+                'usuarios' => $usuarios,
+                'pagination'=> $pagination
+
             )
         );
 

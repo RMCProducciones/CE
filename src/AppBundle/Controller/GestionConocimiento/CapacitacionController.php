@@ -280,10 +280,30 @@ class CapacitacionController extends Controller
             array(
                 'form' => $form->createView(), 
                 'soportesActivos' => $soportesActivos, 
-                'histotialSoportes' => $histotialSoportes
+                'histotialSoportes' => $histotialSoportes,
+                'idCapacitacion' => $idCapacitacion
             )
         );
         
+    }
+
+    /**
+     * @Route("/gestion-conocimiento/capacitacion/{idCapacitacion}/documentos-soporte/{idCapacitacionSoporte}/descargar", name="capacitacionSoporteRecuperarArchivo")
+     */
+    public function capacitacionSoporteDescargarAction(Request $request, $idCapacitacion, $idCapacitacionSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $path = $em->getRepository('AppBundle:CapacitacionSoporte')->findOneBy(
+            array('id' => $idCapacitacionSoporte));
+
+        $link = '..\uploads\documents\\'.$path->getPath();
+
+        header("Content-Disposition: attachment; filename = $link");
+        header ("Content-Type: application/force-download");
+        header ("Content-Length: ".filesize($link));
+        readfile($link);           
+        //return new BinaryFileResponse($link); -> para mostrar en ventana aparte
     }
     
     /**
