@@ -46,7 +46,7 @@ class GrupoController extends Controller
     public function grupoGestionAction(Request $request)
     {
         
-        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR"]);
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
 
        
         $em = $this->getDoctrine()->getManager();
