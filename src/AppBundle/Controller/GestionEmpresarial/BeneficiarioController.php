@@ -232,7 +232,7 @@ class BeneficiarioController extends Controller
                 'histotialSoportes' => $histotialSoportes,
                 'idGrupo' => $idGrupo,
                 'idBeneficiario' => $idBeneficiario,
-                'grupo'=>$grupo
+                'grupo'=>$grupo,
             )
         );
         
@@ -260,6 +260,25 @@ class BeneficiarioController extends Controller
             'idBeneficiario' => $idBeneficiario,
             'idGrupo' => $idGrupo));
         
+    }
+
+     /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/beneficiario/{idBeneficiario}/documentos-soporte/{idBeneficiarioSoporte}/descargar", name="beneficiarioSoporteRecuperarArchivo")
+     */
+    public function beneficiarioSoporteDescargarAction(Request $request, $idBeneficiario, $idBeneficiarioSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $path = $em->getRepository('AppBundle:BeneficiarioSoporte')->findOneBy(
+            array('id' => $idBeneficiarioSoporte));
+
+        $link = '..\uploads\documents\\'.$path->getPath();
+
+        header("Content-Disposition: attachment; filename = $link");
+        header ("Content-Type: application/force-download");
+        header ("Content-Length: ".filesize($link));
+        readfile($link);           
+        //return new BinaryFileResponse($link); -> para mostrar en ventana aparte
     }
 
 

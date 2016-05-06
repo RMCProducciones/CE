@@ -122,7 +122,7 @@
 	                  <td>{{ soporteActivo.fechacreacion | date ('d/m/Y h:i:s', 'America/Bogota')}}</td>
 	                  <td>
 	                                      	   
-						<a href="{{ asset('../uploads/documents/'~ soporteActivo.path) }}" alt="Descargar" title="Descargar"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a> | 	   
+						<a href="{{ path('beneficiarioSoporteRecuperarArchivo', {'idBeneficiario': idBeneficiario, 'idBeneficiarioSoporte': soporteActivo.id}) }}" target="_blank" alt="Descargar" title="Descargar"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a>  | 	   
 
             <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" 
             alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" 
@@ -182,7 +182,7 @@
 	                  <td>{{ soporte.fechacreacion | date ('d/m/Y h:i:s', 'America/Bogota')}}</td>
 	                  <td>{{ soporte.fechamodificacion | date ('d/m/Y h:i:s', 'America/Bogota')}}</td>
 	                  <td>
-	                    <a href="{{ asset('../uploads/documents/'~ soporte.path) }}" alt="Descargar" title="Descargar"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a> 	                  
+	                    <a href="{{ path('beneficiarioSoporteRecuperarArchivo', {'idBeneficiario': idBeneficiario, 'idBeneficiarioSoporte': soporte.id}) }}" target="_blank" alt="Descargar" title="Descargar"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a> 	                  
 	                  </td>
 	                </tr>
 	                {% set consecutivo = consecutivo + 1 %}
