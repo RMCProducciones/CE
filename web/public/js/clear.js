@@ -155,9 +155,11 @@ app.controller('FiltrosClearGrupoCtrl', ['$scope', '$http', 'styleBuscarHerramie
     $scope.limpiarCamposFiltroBusquedaClearGrupo = function(){
        
 		
-		$("#clearGrupoFilter_primer_nombre").val("");
-		$("#clearGrupoFilter_primer_apellido").val("");
-		$("#clearGrupoFilter_numero_documento").val("");
+		$("#clearGrupoFilter_nombre").val("");
+		$("#selDepartamento").val("");
+		$("#selMunicipio").val("");
+		$("#selZona").val("");
+
 
        
     }

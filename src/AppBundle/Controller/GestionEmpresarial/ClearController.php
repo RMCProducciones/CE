@@ -669,7 +669,10 @@ class ClearController extends Controller
 
         $filterBuilder = $this->get('doctrine.orm.entity_manager')
             ->getRepository('AppBundle:Grupo')
-            ->createQueryBuilder('q');
+            ->createQueryBuilder('q')
+            ->innerJoin("q.municipio", "m")
+            ->innerJoin("m.departamento", "d")
+            ->innerJoin("m.zona", "z");
 
         $form = $this->get('form.factory')->create(new ClearGrupoFilterType());
 
@@ -683,6 +686,21 @@ class ClearController extends Controller
         ->andWhere('q.active = 1')
         ->andWhere('q.id NOT IN (SELECT grupo.id FROM AppBundle:Grupo grupo JOIN AppBundle:AsignacionGrupoCLEAR agc WHERE grupo = agc.grupo AND agc.clear = :clear)')
         ->setParameter('clear', $clear);
+
+        if (isset($_GET['selMunicipio']) && $_GET['selMunicipio'] != "?") {
+             $filterBuilder->andWhere('m.id = :idMunicipio')
+            ->setParameter('idMunicipio', $_GET['selMunicipio']);
+        }
+        else{
+            if (isset($_GET['selDepartamento']) && $_GET['selDepartamento'] != "?") {
+                $filterBuilder->andWhere('d.id = :idDepartamento')
+                ->setParameter('idDepartamento', $_GET['selDepartamento']);
+            }
+            if (isset($_GET['selZona']) && $_GET['selZona'] != "?") {
+                $filterBuilder->andWhere('z.id = :idZona')
+                ->setParameter('idZona', $_GET['selZona']);
+            }      
+        }
 
         $query = $filterBuilder->getQuery();
 
