@@ -16,7 +16,10 @@
         <div class="collapse navbar-collapse" id="navbar-ex-collapse">
           
           {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-          
+
+
+        {% if is_granted('ROLE_USER') %}
+
           <ul class="nav navbar-nav">
 
             {% if is_granted('ROLE_PROMOTOR') or is_granted('ROLE_COORDINADOR') %}
@@ -271,5 +274,8 @@
 
       </div>
     </div>
+
+                        {% endif %}
+
 
 </nav>
