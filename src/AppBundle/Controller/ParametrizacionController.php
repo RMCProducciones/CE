@@ -35,10 +35,10 @@ class ParametrizacionController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $user = $em->getRepository('AppBundle:Usuario')->findOneBy(
-            array('username' => 'coordinador')
+            array('username' => 'admin')
         );
 
-        $user->addRole(2);
+        $user->addRole(3);
         
         $em->persist($user);
         $em->flush();
