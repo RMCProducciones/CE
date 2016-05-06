@@ -65,7 +65,7 @@
 
         <div ng-show="CountBuscarHerramientas === 1">
 
-        <form method="get" action="{{ path('clearIntegrante', {'idCLEAR': idCLEAR}) }}">               
+        <form method="get" action="{{ path('clearIntegrante', {'idCLEAR': idCLEAR, 'territorio_aprendizaje' : pasantia}) }}">               
                   
         {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
 
