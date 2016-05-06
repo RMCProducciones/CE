@@ -444,11 +444,11 @@ class GrupoController extends Controller
 
         $link = '..\uploads\documents\\'.$path->getPath();
 
-        header("Content-Disposition: attachment; filename = $link");
+        /*header("Content-Disposition: attachment; filename = $link");
         header ("Content-Type: application/force-download");
         header ("Content-Length: ".filesize($link));
-        readfile($link);           
-        //return new BinaryFileResponse($link); -> para mostrar en ventana aparte
+        readfile($link);*/
+        return new BinaryFileResponse($link); //-> para mostrar en ventana aparte
     }
 
     /**
