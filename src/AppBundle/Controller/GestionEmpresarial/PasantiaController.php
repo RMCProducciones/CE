@@ -205,7 +205,7 @@ class PasantiaController extends Controller
         $em->remove($pasantia);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('pasantiaGestion'));
+        return $this->redirectToRoute('pasantiaGestion');
 
     }
 

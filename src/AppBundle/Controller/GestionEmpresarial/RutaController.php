@@ -191,7 +191,7 @@ class RutaController extends Controller
         $em->remove($ruta);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('rutaGestion'));
+        return $this->redirectToRoute('rutaGestion');
 
     }
 
