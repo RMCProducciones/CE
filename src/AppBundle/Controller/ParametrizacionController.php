@@ -34,13 +34,31 @@ class ParametrizacionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $user = $em->getRepository('AppBundle:Usuario')->findOneBy(
+        $userAdmin = $em->getRepository('AppBundle:Usuario')->findOneBy(
             array('username' => 'admin')
         );
 
-        $user->addRole(3);
+        $userAdmin->addRole(3);
         
-        $em->persist($user);
+        $em->persist($userAdmin);
+        $em->flush();
+
+        $userCoordinador = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('username' => 'coordinador')
+        );
+
+        $userCoordinador->addRole(2);
+        
+        $em->persist($userCoordinador);
+        $em->flush();
+
+        $userPromotor = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('username' => 'promotor')
+        );
+
+        $userPromotor->addRole(1);
+        
+        $em->persist($userPromotor);
         $em->flush();
 
         return new Response($user->getPrimerNombre());
