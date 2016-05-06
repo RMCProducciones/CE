@@ -116,7 +116,7 @@ app.controller('gestionGrupoCtrl', ['$scope', '$http', function($scope, $http) {
 		
 		}).error(function(data, status, headers, config) {
 
-			console.log($(data).filter("title").html());
+			//console.log($(data).filter("title").html());
 
 			$scope.mostrarMensaje("warning", true, $(data).filter("title").html());
 
