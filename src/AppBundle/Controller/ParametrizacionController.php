@@ -32,6 +32,8 @@ class ParametrizacionController extends Controller
      */
     public function agregarRolAction()
     {
+        
+        /*
         $em = $this->getDoctrine()->getManager();
 
         $userAdmin = $em->getRepository('AppBundle:Usuario')->findOneBy(
@@ -60,6 +62,7 @@ class ParametrizacionController extends Controller
         
         $em->persist($userPromotor);
         $em->flush();
+        */
 
         return new Response("Hola..");
 
