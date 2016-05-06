@@ -61,7 +61,7 @@ class ParametrizacionController extends Controller
         $em->persist($userPromotor);
         $em->flush();
 
-        return new Response($user->getPrimerNombre());
+        return new Response("Hola");
 
     }   
 
