@@ -354,9 +354,7 @@ class GrupoController extends Controller
             array('id' => $idGrupo)
         );
 
-        $grupo=$em->getRepository('AppBundle:Grupo')->findBy(
-            array('id'=> $idGrupo)
-        );
+        
         
         if ($this->getRequest()->isMethod('POST')) {
             $form->bind($this->getRequest());
