@@ -129,18 +129,23 @@
                 <tr>
                     <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Id', 'a.id') }}</th>
                     <th></th>
-                    <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Opcionados', 'a.opcionados') }}</th>                  
+                    <th></th>
+                    <th class="text-left">{{ knp_pagination_sortable(pagination1, 'Opcionados', 'a.opcionados') }}</th>                  
                     <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Acciones', 'a.acciones') }}</th>
                 </tr>                
               </thead>
               <tbody>
                 
          {% set consecutivo = 1 %}
+         {% set comprobarSoporte = 0 %}
         
           {% for grupo in pagination1 %}
         
         <tr>
                   <td class="text-center">{{ grupo.id }}</td>
+                  <td>
+
+                  </td>
                   <td>
 
                   </td>
@@ -158,11 +163,20 @@
           <br>
 
                     
-                  <td>
+                  <td class="text-center">
                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ grupo.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-                    <br>                    
+                    <br>          
+                    {% for asignacionGrupoCLEAR in asignacionesGrupoCLEAR %}
+                      {% for soporteClear in soportesClear %}
+                       {% if asignacionGrupoCLEAR.clear.id == soporteClear.clear.id and soporteClear.active == 1 and soporteClear.tipoSoporte == "Acta Inducción e instalación" %}
+                          {% set comprobarSoporte = 1 %}                                                                        
+                       {% endif %} 
+                      {% endfor %}
+                     {% endfor %}
+                     {% if comprobarSoporte != 1 %}                              
                     <a href="{{ path('clearAsignarGrupo', {'idCLEAR': idCLEAR, 'idGrupo': grupo.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
                     <br>                    
+                    {% endif %}
                   </td>
                 </tr>
         
@@ -235,9 +249,13 @@
                     {% endif%}
                   </td>
           
-                  <td>                    
+                  <td> 
+                  {% if comprobarSoporte != 1 %}                   
                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ asignacionGrupoCLEAR.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
-                    <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarGrupoClear('{{ path('clearEliminarGrupo', {'idCLEAR': idCLEAR, 'idAsignacionGrupoCLEAR': asignacionGrupoCLEAR.id}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>                                    
+                    <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarGrupoClear('{{ path('clearEliminarGrupo', {'idCLEAR': idCLEAR, 'idAsignacionGrupoCLEAR': asignacionGrupoCLEAR.id}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a> 
+                    {% else %}
+                        <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ asignacionGrupoCLEAR.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                    {% endif %}                                   
                   </td>
                 </tr>
         

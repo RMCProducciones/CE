@@ -27,9 +27,12 @@ use AppBundle\Entity\AsignacionGrupoBeneficiarioPasantia;
 
 
 
+
 use AppBundle\Form\GestionEmpresarial\PasantiaFilterType;
 use AppBundle\Form\GestionEmpresarial\PasantiaType;
 use AppBundle\Form\GestionEmpresarial\PasantiaSoporteType;
+use AppBundle\Form\GestionEmpresarial\PasantiaTerritorioFilterType;
+
 
 
 
@@ -385,17 +388,47 @@ class PasantiaController extends Controller
             $territorios = array(); 
         }
 
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:TerritorioAprendizaje')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new PasantiaTerritorioFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder
+        ->andWhere('q.active = 1')
+        ->andWhere('q.id NOT IN (                        
+                        SELECT 
+                            territorioAprendizaje.id 
+                        FROM 
+                            AppBundle:TerritorioAprendizaje territorioAprendizaje 
+                            JOIN AppBundle:Pasantia pasantia 
+                        WHERE 
+                            territorioAprendizaje = pasantia.territorio_aprendizaje 
+                            AND pasantia.territorio_aprendizaje = :territorio_aprendizaje
+                            AND pasantia.id = :idPasantia) ')
+        ->setParameter('territorio_aprendizaje', $pasantia)
+        ->setParameter('idPasantia', $idPasantia);
+
+        $query = $filterBuilder->getQuery();
+
         $paginator1  = $this->get('knp_paginator');
 
         $pagination1 = $paginator1->paginate(
-            $territorios, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Pasantia:territorio-pasantia-gestion-asignacion.html.twig', 
             array(
-                'territorios' => $territorios,
+                'form' => $form->createView(),
+                'territorios' => $query,
                 'asignacionesTerritorioPasantia' => $territorioAsignado,
                 'idPasantia' => $idPasantia,
                 'pagination1' => $pagination1

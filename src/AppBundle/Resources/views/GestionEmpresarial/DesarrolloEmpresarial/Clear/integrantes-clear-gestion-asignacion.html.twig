@@ -65,7 +65,7 @@
 
         <div ng-show="CountBuscarHerramientas === 1">
 
-        <form method="get" action="{{ path('clearIntegrante', {'idCLEAR': idCLEAR}) }}">               
+        <form method="get" action="{{ path('clearIntegrante', {'idCLEAR': idCLEAR, 'territorio_aprendizaje' : pasantia}) }}">               
                   
         {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
 
@@ -139,13 +139,15 @@
                 <tr>
                     <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Id', 'a.id') }}</th>
                     <th></th>
-                    <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Opcionados', 'a.opcionados') }}</th>                  
+                    <th></th>
+                    <th class="text-left">{{ knp_pagination_sortable(pagination1, 'Opcionados', 'a.opcionados') }}</th>                  
                     <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Acciones', 'a.acciones') }}</th>
                 </tr>                
               </thead>
               <tbody>
                 
               {% set consecutivo = 1 %}
+              {% set comprobarSoporte = 0 %} 
         
             {% for integrante in pagination1 %}
         
@@ -155,18 +157,29 @@
                     
                   </td>
                   <td>
-            <br>{{integrante.primernombre}} {{integrante.segundonombre}} {{integrante.primerapellido}} {{integrante.segundoapellido}}
+                    
+                  </td>
+                  <td>
+                {{integrante.primernombre}} {{integrante.segundonombre}} {{integrante.primerapellido}} {{integrante.segundoapellido}}
             <br>{{integrante.entidad}}
             <br>{{integrante.cargo}}
           <br>{{integrante.tipodocumento}}
           <br>{{integrante.numerodocumento}}
-
-                    
-                  <td>
+                  <td class="text-center">
                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ integrante.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-                    <br>                    
-                    <a href="#" title="Asignar" alt="Asignar" data-toggle="modal" data-target="#asignarRol{{ integrante.id }}"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
-                    <br>                    
+                    <br>                
+                     
+                     {% for asignacionIntegranteCLEAR in asignacionesIntegranteCLEAR %}
+                      {% for soporteClear in soportesClear %}
+                       {% if asignacionIntegranteCLEAR.clear.id == soporteClear.clear.id and soporteClear.active == 1 and soporteClear.tipoSoporte == "Acta Inducción e instalación" %}
+                          {% set comprobarSoporte = 1 %}                                                                        
+                       {% endif %} 
+                      {% endfor %}
+                     {% endfor %}
+                     {% if comprobarSoporte != 1 %}
+                      <a href="#" title="Asignar" alt="Asignar" data-toggle="modal" data-target="#asignarRol{{ integrante.id }}"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
+                          <br>
+                     {% endif %}
                   </td>
                 </tr>
         
@@ -217,8 +230,14 @@
                   <td>{{asignacionIntegranteCLEAR.rol}}</td>
           
                   <td>
-                    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ asignacionIntegranteCLEAR.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> |                     
-                   <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarIntegranteClear('{{ path('clearEliminarIntegrante', {'idCLEAR': idCLEAR, 'idAsignacionIntegranteCLEAR': asignacionIntegranteCLEAR.id}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
+                    {% if comprobarSoporte != 1 %}
+                      <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ asignacionIntegranteCLEAR.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> |                     
+                      <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarIntegranteClear('{{ path('clearEliminarIntegrante', {'idCLEAR': idCLEAR, 'idAsignacionIntegranteCLEAR': asignacionIntegranteCLEAR.id}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
+                     {% else %}
+                     <div class="text-center">
+                    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ asignacionIntegranteCLEAR.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>                   
+                  </div>
+                   {% endif %}
 
                   </td>
                 </tr>

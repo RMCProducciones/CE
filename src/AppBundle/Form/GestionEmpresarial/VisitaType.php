@@ -14,7 +14,7 @@ class VisitaType extends AbstractType
 		     
 		    ->add('fecha', 'date', array('label' => 'Fecha de la Visita', 'widget' => 'single_text')) 								
 			->add('objetivo', 'textarea', array('label' => 'Objetivo de la Visita'))	
-			->add('agenda', 'text', array('label' => 'Agenda de la Visita'))
+			->add('agenda', 'textarea', array('label' => 'Agenda de la Visita'))
 			->add('lugar', 'text', array('label' => 'Lugar de la Visita'))		
 		    ->add('asistentes', 'text', array('label' => 'Numero asistentes de la Visita'))	
 			->add('comite_compras', 'checkbox', array('label' => 'Comite de Compras', 'required' => false))

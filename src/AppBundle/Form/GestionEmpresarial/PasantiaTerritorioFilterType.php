@@ -10,24 +10,23 @@ use Lexik\Bundle\FormFilterBundle\Filter\Form\Type as Filters;
 
 use Doctrine\ORM\EntityRepository;
 
-class ClearIntegranteFilterType extends AbstractType
+class PasantiaTerritorioFilterType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     { 
-        $builder->add('primer_nombre', 'filter_text', array('label' => 'Primer Nombre'));
-        $builder->add('primer_apellido', 'filter_text', array('label' => 'Primer Apellido'));
-        $builder->add('numero_documento', 'filter_text', array('label' => 'Número de Documento'));
+        $builder->add('nombre_territorio', 'filter_text', array('label' => 'Nombre Territorio'));
+        
 
     }
 
     public function getBlockPrefix()
     {
-        return 'clearIntegranteFilter';
+        return 'pasantiaTerritorioFilter';
     }
 
      public function getName()
     {
-        return 'clearIntegranteFilter';
+        return 'pasantiaTerritorioFilter';
     }
     
 }
