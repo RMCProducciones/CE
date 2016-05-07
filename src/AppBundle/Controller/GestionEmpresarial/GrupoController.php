@@ -8,12 +8,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
-
 
 use AppBundle\Entity\Grupo;
 use AppBundle\Entity\Beneficiario;
@@ -444,11 +445,11 @@ class GrupoController extends Controller
 
         $link = '..\uploads\documents\\'.$path->getPath();
 
-        header("Content-Disposition: attachment; filename = $link");
-        header ("Content-Type: application/force-download");
+        header("Content-Disposition: attachment; filename=".$path->getPath()."");
+        header ("Content-Type: application/octet-stream");
         header ("Content-Length: ".filesize($link));
         readfile($link);           
-        //return new BinaryFileResponse($link); -> para mostrar en ventana aparte
+
     }
 
     /**

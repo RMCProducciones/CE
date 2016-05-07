@@ -861,7 +861,7 @@ class ClearController extends Controller
 
         }else{
                 //No se puede asignar a CLEAR
-                 $this->addFlash('danger', 'Este grupo no se puede asignar a un CLEAR, favor consulte la cantidad de beneficiarios.');
+                 $this->addFlash('danger', 'Este grupo no se puede asignar a un CLEAR, favor consulte la cantidad de beneficiarios. '. $ultimoNodo);
                  return $this->redirectToRoute('clearGrupo', 
                     array(
                         'grupos' => $grupo, 

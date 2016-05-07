@@ -15,7 +15,7 @@
 
         <div class="collapse navbar-collapse" id="navbar-ex-collapse">
           
-          {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 
 
         {% if is_granted('ROLE_USER') %}
@@ -260,22 +260,23 @@
             </li>
           </ul>
           
-          {% else %}
-          
-          <ul class="nav navbar-nav navbar-right">
-            <li class="dropdown">
-              <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-            </li>
-          </ul>
-          
           {% endif %}
         
+    {% else %}
+    
+    <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown"> 
+        <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+      </li>
+    </ul>
+    
+    {% endif %}
+
         </div>
 
       </div>
     </div>
 
-                        {% endif %}
 
 
 </nav>
