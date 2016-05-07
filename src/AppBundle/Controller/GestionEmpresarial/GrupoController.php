@@ -149,13 +149,13 @@ class GrupoController extends Controller
             $grupo = $form->getData();
 
             if($grupo->getRural() == true){             
-                $grupo->setBarrio(null);
+                //$grupo->setBarrio(null);
             }
             else
             {
-                $grupo->setCorregimiento(null);
-                $grupo->setVereda(null);
-                $grupo->setCacerio(null);
+                //$grupo->setCorregimiento(null);
+                //$grupo->setVereda(null);
+                //$grupo->setCacerio(null);
             }
             
             
