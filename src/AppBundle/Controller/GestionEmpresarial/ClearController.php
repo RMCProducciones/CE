@@ -796,7 +796,7 @@ class ClearController extends Controller
         
         //PROGRAMACIÓN(1) PARTICIPACIÓN PARA HABILITACIÓN ******** ******** ******** ********
 
-        echo sizeof($cantidadBeneficiarios);
+        //echo sizeof($cantidadBeneficiarios);
 
         if(sizeof($cantidadBeneficiarios) >= 15){
             if ($idUltimoNodo == 1){
