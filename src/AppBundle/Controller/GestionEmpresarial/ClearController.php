@@ -366,26 +366,49 @@ class ClearController extends Controller
             array('clear' => $clear->getId())
         );
 
-        $nombre = "Acta de Inicio Clear ";        
-        $link = '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf';        
-        if(file_exists($link)){
-            unlink('..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf');            
-        }        
+        $nombre = "Acta de Inicio Clear ";    
 
-        $this->get('knp_snappy.pdf')->generateFromHtml(
-        $this->renderView(
-            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/ActasDeClear:acta-inicio.html.twig', 
-            array('clear' => $clear,
-                  'gruposClear' => $gruposClear,
-                  'integrantesClear' => $integrantesClear)
-            ),
-            '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf'
-        ); 
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                $link = '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf' ;        
+                if(file_exists($link)){
+                    unlink('..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf');            
+                }        
+
+                $this->get('knp_snappy.pdf')->generateFromHtml(
+                $this->renderView(
+                    'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/ActasDeClear:acta-inicio.html.twig', 
+                    array('clear' => $clear,
+                          'gruposClear' => $gruposClear,
+                          'integrantesClear' => $integrantesClear)
+                    ),
+                    '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf'
+                ); 
+        } 
+        else {
+                $link = '../pdf/ActasDeClear\\'.$nombre.$idCLEAR.'.pdf' ;        
+                if(file_exists($link)){
+                    unlink('../pdf/ActasDeClear\\'.$nombre.$idCLEAR.'.pdf');            
+                }        
+
+                $this->get('knp_snappy.pdf')->generateFromHtml(
+                $this->renderView(
+                    'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/ActasDeClear:acta-inicio.html.twig', 
+                    array('clear' => $clear,
+                          'gruposClear' => $gruposClear,
+                          'integrantesClear' => $integrantesClear)
+                    ),
+                    '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf'
+                ); 
+        }
+       //return new Response("Hola..");
+
+       
 
         header("Content-Disposition: attachment; filename = $link");
         header ("Content-Type: application/force-download");
         header ("Content-Length: ".filesize($link));
         readfile($link);
+
 
         //return new BinaryFileResponse($link); 
     }
