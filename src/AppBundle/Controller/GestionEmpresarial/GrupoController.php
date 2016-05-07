@@ -445,8 +445,8 @@ class GrupoController extends Controller
 
         $link = '..\uploads\documents\\'.$path->getPath();
 
-        header("Content-Disposition: attachment; filename = $link");
-        header ("Content-Type: application/force-download");
+        header("Content-Disposition: attachment; filename=".$path->getPath()."");
+        header ("Content-Type: application/octet-stream");
         header ("Content-Length: ".filesize($link));
         readfile($link);           
 
