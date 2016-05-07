@@ -385,9 +385,9 @@ class ClearController extends Controller
                 ); 
         } 
         else {
-                $link = '../pdf/ActasDeClear\\'.$nombre.$idCLEAR.'.pdf' ;        
+                $link = '../pdf/ActasDeClear/'.$nombre.$idCLEAR.'.pdf' ;        
                 if(file_exists($link)){
-                    unlink('../pdf/ActasDeClear\\'.$nombre.$idCLEAR.'.pdf');            
+                    unlink('../pdf/ActasDeClear/'.$nombre.$idCLEAR.'.pdf');            
                 }        
 
                 $this->get('knp_snappy.pdf')->generateFromHtml(
@@ -397,7 +397,7 @@ class ClearController extends Controller
                           'gruposClear' => $gruposClear,
                           'integrantesClear' => $integrantesClear)
                     ),
-                    '../pdf/ActasDeClear\\'.$nombre.$idCLEAR.'.pdf'
+                    '../pdf/ActasDeClear/'.$nombre.$idCLEAR.'.pdf'
                 ); 
         }
        //return new Response("Hola..");
