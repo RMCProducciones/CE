@@ -397,7 +397,7 @@ class ClearController extends Controller
                           'gruposClear' => $gruposClear,
                           'integrantesClear' => $integrantesClear)
                     ),
-                    '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf'
+                    '../pdf/ActasDeClear\\'.$nombre.$idCLEAR.'.pdf'
                 ); 
         }
        //return new Response("Hola..");
