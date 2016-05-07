@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -442,13 +443,35 @@ class GrupoController extends Controller
         $path = $em->getRepository('AppBundle:GrupoSoporte')->findOneBy(
             array('id' => $idGrupoSoporte));
 
-        $link = '..\uploads\documents\\'.$path->getPath();
+        $file = '..\uploads\documents\\'.$path->getPath();
+
+        //echo $link;
 
         /*header("Content-Disposition: attachment; filename = $link");
         header ("Content-Type: application/force-download");
         header ("Content-Length: ".filesize($link));
         readfile($link);*/
-        return new BinaryFileResponse($link); //-> para mostrar en ventana aparte
+        //return new BinaryFileResponse($link); //-> para mostrar en ventana aparte
+
+        header("Content-disposition: attachment; filename=$file");
+        header("Content-type: application/octet-stream");
+        readfile($file);
+
+        //$response = new BinaryFileResponse($link);
+        //$response->setContentDisposition(
+        //    ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+        //    'prueba.txt'
+        //);
+
+        //return new Response (new BinaryFileResponse($link));
+
+        /*$response->headers->setContentDisposition('Content-Disposition', 
+            $response->headers->makeDisposition(
+                ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+                $link
+            )
+        );*/
+
     }
 
     /**
