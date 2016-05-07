@@ -443,7 +443,7 @@ class GrupoController extends Controller
         $path = $em->getRepository('AppBundle:GrupoSoporte')->findOneBy(
             array('id' => $idGrupoSoporte));
 
-        $file = '..\uploads\documents\\'.$path->getPath();
+        $file = '\uploads\documents\\'.$path->getPath();
 
         //echo $link;
 
