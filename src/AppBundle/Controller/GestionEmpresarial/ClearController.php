@@ -385,9 +385,9 @@ class ClearController extends Controller
                 ); 
         } 
         else {
-                $link = '../pdf/ActasDeClear\\'.$nombre.$idCLEAR.'.pdf' ;        
+                $link = '../pdf/ActasDeClear/'.$nombre.$idCLEAR.'.pdf' ;        
                 if(file_exists($link)){
-                    unlink('../pdf/ActasDeClear\\'.$nombre.$idCLEAR.'.pdf');            
+                    unlink('../pdf/ActasDeClear/'.$nombre.$idCLEAR.'.pdf');            
                 }        
 
                 $this->get('knp_snappy.pdf')->generateFromHtml(
@@ -397,7 +397,7 @@ class ClearController extends Controller
                           'gruposClear' => $gruposClear,
                           'integrantesClear' => $integrantesClear)
                     ),
-                    '../pdf/ActasDeClear\\'.$nombre.$idCLEAR.'.pdf'
+                    '../pdf/ActasDeClear/'.$nombre.$idCLEAR.'.pdf'
                 ); 
         }
        //return new Response("Hola..");
@@ -418,15 +418,9 @@ class ClearController extends Controller
      */
     public function clearActaCierrePDFAction(Request $request, $idCLEAR){
 
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            echo 'Este un servidor usando Windows!';
-        } 
-        else {
-            echo 'Este es un servidor que no usa Windows!';
-        }
-        return new Response("Hola..");
+       
 
-       /* $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         //Consulto a mi base de datos
 
         $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
@@ -485,7 +479,7 @@ class ClearController extends Controller
         readfile($link);                    
 
         //return new BinaryFileResponse($link); 
-        */
+        
     }
     
 
