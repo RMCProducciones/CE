@@ -789,6 +789,15 @@ class ClearController extends Controller
             array('grupo' => $asignacionesGrupoCLEAR->getGrupo()) 
         );  
 
+        //echo ("camino ".count($camino));
+        //echo ("<br />");
+        //echo ("ultimoNodo ".$idUltimoNodo);
+        //echo ("<br />");
+
+        //die("Fin");
+
+        //die("camino ".count($camino));
+
         //if según HabilitacionFases alguno en true
         //$habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal() || $habilitacionFases->getIea() || $habilitacionFases->getPi() || $habilitacionFases->getPn()
             
@@ -798,11 +807,15 @@ class ClearController extends Controller
 
         //echo sizeof($cantidadBeneficiarios);
 
-        if(sizeof($cantidadBeneficiarios) >= 15){
+
+
+        if(sizeof($cantidadBeneficiarios) >= 15 ||  $idUltimoNodo == 1){
+
             if ($idUltimoNodo == 1){
-            $asignacionesGrupoCLEAR->setHabilitacion(true); 
-            self::nodoCamino($idGrupo, 2, 1);//Programación(1) a Clear de Habilitación
+                $asignacionesGrupoCLEAR->setHabilitacion(true); 
+                self::nodoCamino($idGrupo, 2, 1);//Programación(1) a Clear de Habilitación
             }
+
             //PROGRAMACIÓN(1) PARTICIPACIÓN PARA ASIGNACIÓN ******** ******** ********  ********      
             elseif($estado == 2 && $idUltimoNodo == 2 && ($habilitacionFases->getMotFormal() || $habilitacionFases->getMotNoFormal())){ // Si el ultimo nodo es 2(Habilitación) y tiene estado 2(Ejecutado) y en HabilitaciónFases permita MOT Formal o MOT no Formal
                 $asignacionesGrupoCLEAR->setAsignacion(true);
@@ -862,15 +875,16 @@ class ClearController extends Controller
             $em->flush();
 
         }else{
-                //No se puede asignar a CLEAR
-                 $this->addFlash('danger', 'Este grupo no se puede asignar a un CLEAR, favor consulte la cantidad de beneficiarios. '. $ultimoNodo);
-                 return $this->redirectToRoute('clearGrupo', 
-                    array(
-                        'grupos' => $grupo, 
-                        'asignacionesGrupoCLEAR' => $asignacionesGrupoCLEAR,
-                        'idCLEAR' => $idCLEAR
-                    ));   
-            }      
+
+            //No se puede asignar a CLEAR
+             $this->addFlash('danger', 'Este grupo no se puede asignar a un CLEAR, favor consulte la cantidad de beneficiarios. ');
+             return $this->redirectToRoute('clearGrupo', 
+                array(
+                    'grupos' => $grupo, 
+                    'asignacionesGrupoCLEAR' => $asignacionesGrupoCLEAR,
+                    'idCLEAR' => $idCLEAR
+                ));   
+        }
         
         /*
         $this->addFlash('info',  
