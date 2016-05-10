@@ -112,9 +112,9 @@ knp_paginator:
 knp_snappy:
     pdf:
         enabled: true
-        binary: sh: /var/www/vhosts/siscap.co/httpdocs/pdf/wkhtmltopdf/bin
+        binary: /var/www/vhosts/siscap.co/httpdocs/pdf/wkhtmltopdf/bin
         options: []
     image:
         enabled: true
-        binary: sh: /var/www/vhosts/siscap.co/httpdocs/pdf/wkhtmltopdf/bin
+        binary: /var/www/vhosts/siscap.co/httpdocs/pdf/wkhtmltoimage/bin
         options: []
