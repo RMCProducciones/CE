@@ -226,19 +226,13 @@ class GrupoController extends Controller
             if($grupo->getRural() == true){
                 //$grupo->setBarrio(null);
             }
-            else
-            {
-                //$grupo->setCorregimiento(null);
-                //$grupo->setVereda(null);
-                //$grupo->setCacerio(null);
-            }
-
+            
             if($grupo->getTipo()->getDescripcion() == 'No Formal con negocio'|| $grupo->getTipo()->getDescripcion() == 'No Formal Sin Negocio'){
                 $grupo->setNullFiguraLegalConstitucion();
                 $grupo->setNumeroIdentificacionTributaria(null);
                 $grupo->setFechaConstitucionLegal(null);
             }  
-
+            
             $grupo->setFechaModificacion(new \DateTime());
 
             $em->flush();
@@ -281,7 +275,7 @@ class GrupoController extends Controller
                 $tipo = "4";                
             }
 
-            $traerGrupo->setCodigo($zona."-".$idMunicipio->getAbreviatura()."-".$tipo."-".date_format($traerGrupo->getFechaInscripcion(), 'Y/m')."-".$consecutivo.$idGrupo);
+            $traerGrupo->setCodigo($zona."-".$idMunicipio->getAbreviatura()."-".$tipo."-".date_format($traerGrupo->getFechaInscripcion(), 'Y/m')."-".$consecutivo.$idGrupo);            
             $em->flush();
 
             return $this->redirectToRoute('grupoGestion');

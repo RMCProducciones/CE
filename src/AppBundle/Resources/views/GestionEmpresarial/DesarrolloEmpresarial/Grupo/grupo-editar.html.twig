@@ -9,7 +9,7 @@
       <li>Gestión Empresarial</li>
       <li>Formacion de capital social asociativo y desarrollo empresarial</li>
       <li><a href="{{ path('grupoGestion') }}">Grupos</a></li>
-      <li class="active">Nuevo</li>
+      <li class="active">Editar</li>
     </ul>
 
 {% endblock %}
@@ -19,7 +19,7 @@
 <div class="container">
     <h1> Gestión Grupos </h1>
     <hr>
-    <h3> Nuevo Registro</h3>
+    <h3> Editar Registro</h3>
     <br />
     <br />
   </div>
@@ -133,7 +133,7 @@
                   </div>
 
                   <div style="visibility:hidden">
-	                  {{ form_widget(form.numero_identificacion_tributaria, { 'attr': {'class': 'form-control', 'placeholder': 'Número de identificación tributaria', 'value': '[[numeroIdentificacion]]-[[digitoVerificacion]]','ng-show':'mostrarFormal'} }) }}
+	                  {{ form_widget(form.numero_identificacion_tributaria, { 'attr': {'class': 'form-control', 'placeholder': 'Número de identificación tributaria', 'ng-show':'mostrarFormal'} }) }}
                   </div>  
                 </div>
 
