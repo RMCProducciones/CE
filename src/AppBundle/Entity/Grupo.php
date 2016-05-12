@@ -77,28 +77,7 @@ class Grupo
      * @ORM\Column(name="descripcion", type="string", nullable=true)
      */
     private $descripcion;
-
-	 /**
-     * @var string
-     *
-     * @ORM\Column(name="corregimiento", type="string", nullable=true)
-     */
-    private $corregimiento;
-	
-	/**
-     * @var string
-     *
-     * @ORM\Column(name="vereda", type="string", nullable=true)
-     */
-    private $vereda;
-	
-	/**
-     * @var string
-     *
-     * @ORM\Column(name="cacerio", type="string", nullable=true)
-     */
-    private $cacerio;
-	
+		
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
@@ -427,78 +406,7 @@ class Grupo
      *
      * @return Grupo
      */
-    public function setCorregimiento($corregimiento)
-    {
-        $this->corregimiento = $corregimiento;
-
-        return $this;
-    }
-
-    /**
-     * Get corregimiento
-     *
-     * @return string
-     */
-    public function getCorregimiento()
-    {
-        return $this->corregimiento;
-    }
-	
-	/**
-     * Set vereda
-     *
-     * @param string $vereda
-     *
-     * @return Grupo
-     */
-    public function setVereda($vereda)
-    {
-        $this->vereda = $vereda;
-
-        return $this;
-    }
-
-    /**
-     * Get vereda
-     *
-     * @return string
-     */
-    public function getVereda()
-    {
-        return $this->vereda;
-    }
-	
-	/**
-     * Set cacerio
-     *
-     * @param string $cacerio
-     *
-     * @return Grupo
-     */
-    public function setCacerio($cacerio)
-    {
-        $this->cacerio = $cacerio;
-
-        return $this;
-    }
-
-    /**
-     * Get cacerio
-     *
-     * @return string
-     */
-    public function getCacerio()
-    {
-        return $this->cacerio;
-    }
-	
-    /**
-     * Set figuraLegalConstitucion
-     *
-     * @param AppBundle\Entity\Listas $figuraLegalConstitucion
-     *
-     * @return Grupo
-     */
+    
     public function setFiguraLegalConstitucion(\AppBundle\Entity\Listas $figuraLegalConstitucion)
     {
         $this->figura_legal_constitucion = $figuraLegalConstitucion;
