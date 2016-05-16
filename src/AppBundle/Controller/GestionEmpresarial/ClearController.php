@@ -342,7 +342,7 @@ class ClearController extends Controller
         /*header("Content-Disposition: attachment; filename = $link");
         header ("Content-Type: application/force-download");
         header ("Content-Length: ".filesize($link));
-        readfile($link);   */
+        readfile($link); */
         return new BinaryFileResponse($link); //-> para mostrar en ventana aparte
     }
 
