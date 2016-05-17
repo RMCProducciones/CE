@@ -337,7 +337,8 @@ class ClearController extends Controller
         $path = $em->getRepository('AppBundle:ClearSoporte')->findOneBy(
             array('id' => $idClearSoporte));
 
-        $link = '/var/www/vhosts/siscap.co/httpdocs/uploads/documents/'.$path->getPath();
+        $link = '/var/www/vhosts/siscap.co/httpdocs/uploads/documents/'.$path->getPath(); //Codigo para el Servidor web (siscap.co)
+        //$link = '..\uploads\documents\\'.$path->getPath(); //Codigo para realizar pruebas local (windows)
 
         
         header("Content-Disposition: attachment; filename = $link");
@@ -371,9 +372,11 @@ class ClearController extends Controller
         $nombre = "Acta de Inicio Clear ";    
 
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-                $link = '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf' ;        
+                //$link = '/var/www/vhosts/siscap.co/httpdocs/pdf/ActasDeClear/'.$nombre.$idCLEAR.'.pdf' ; //Codigo para el Servidor web (siscap.co)
+                $link = '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf' ;  //Codigo para realizar pruebas local (windows)      
                 if(file_exists($link)){
-                    unlink('..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf');            
+                    //unlink('/var/www/vhosts/siscap.co/httpdocs/pdf/ActasDeClear/'.$nombre.$idCLEAR.'.pdf');  //Codigo para el Servidor web (siscap.co)          
+                    unlink('..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf');  //Codigo para realizar pruebas local (windows)         
                 }        
 
                 $this->get('knp_snappy.pdf')->generateFromHtml(
@@ -383,13 +386,14 @@ class ClearController extends Controller
                           'gruposClear' => $gruposClear,
                           'integrantesClear' => $integrantesClear)
                     ),
-                    '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf'
+                    //'/var/www/vhosts/siscap.co/httpdocs/pdf/ActasDeClear/'.$nombre.$idCLEAR.'.pdf' //Codigo para el Servidor web (siscap.co)
+                    '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf' //Codigo para realizar pruebas local (windows)
                 ); 
         } 
         else {
-                $link = '../pdf/ActasDeClear/'.$nombre.$idCLEAR.'.pdf' ;        
+                $link = '/var/www/vhosts/siscap.co/httpdocs/pdf/ActasDeClear/'.$nombre.$idCLEAR.'.pdf' ; //Codigo para el Servidor web (siscap.co)
                 if(file_exists($link)){
-                    unlink('../pdf/ActasDeClear/'.$nombre.$idCLEAR.'.pdf');            
+                    unlink('..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf');  //Codigo para realizar pruebas local (windows)         
                 }        
 
                 $this->get('knp_snappy.pdf')->generateFromHtml(
@@ -399,7 +403,7 @@ class ClearController extends Controller
                           'gruposClear' => $gruposClear,
                           'integrantesClear' => $integrantesClear)
                     ),
-                    '../pdf/ActasDeClear/'.$nombre.$idCLEAR.'.pdf'
+                    '/var/www/vhosts/siscap.co/httpdocs/pdf/ActasDeClear/'.$nombre.$idCLEAR.'.pdf' //Codigo para el Servidor web (siscap.co)
                 ); 
         }
        //return new Response("Hola..");
