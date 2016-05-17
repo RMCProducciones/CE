@@ -337,7 +337,7 @@ class ClearController extends Controller
         $path = $em->getRepository('AppBundle:ClearSoporte')->findOneBy(
             array('id' => $idClearSoporte));
 
-        $link = '..\uploads\documents\\'.$path->getPath();
+        $link = '../uploads/documents/'.$path->getPath();
 
         /*
         header("Content-Disposition: attachment; filename = $link");
