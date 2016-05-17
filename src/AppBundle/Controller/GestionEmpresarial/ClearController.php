@@ -374,6 +374,7 @@ class ClearController extends Controller
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
                 //$link = '/var/www/vhosts/siscap.co/httpdocs/pdf/ActasDeClear/'.$nombre.$idCLEAR.'.pdf' ; //Codigo para el Servidor web (siscap.co)
                 $link = '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf' ;  //Codigo para realizar pruebas local (windows)      
+                
                 if(file_exists($link)){
                     //unlink('/var/www/vhosts/siscap.co/httpdocs/pdf/ActasDeClear/'.$nombre.$idCLEAR.'.pdf');  //Codigo para el Servidor web (siscap.co)          
                     unlink('..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf');  //Codigo para realizar pruebas local (windows)         
@@ -390,7 +391,8 @@ class ClearController extends Controller
                     '..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf' //Codigo para realizar pruebas local (windows)
                 ); 
         } 
-        else {
+        else 
+        {
                 $link = '/var/www/vhosts/siscap.co/httpdocs/pdf/ActasDeClear/'.$nombre.$idCLEAR.'.pdf' ; //Codigo para el Servidor web (siscap.co)
                 if(file_exists($link)){
                     unlink('..\pdf\ActasDeClear\\'.$nombre.$idCLEAR.'.pdf');  //Codigo para realizar pruebas local (windows)         
