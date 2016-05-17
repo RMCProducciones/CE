@@ -235,9 +235,12 @@ class GrupoController extends Controller
             
             $grupo->setFechaModificacion(new \DateTime());
 
+            $em->persist($grupo);
             $em->flush();
 
-            $traerGrupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+
+            if($grupo->getCodigo() != null){
+                            $traerGrupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
                 array('id' => $idGrupo));            
 
             $idMunicipio = $em->getRepository('AppBundle:Municipio')->findOneBy(
@@ -275,8 +278,10 @@ class GrupoController extends Controller
                 $tipo = "4";                
             }
 
-            $traerGrupo->setCodigo($zona."-".$idMunicipio->getAbreviatura()."-".$tipo."-".date_format($traerGrupo->getFechaInscripcion(), 'Y/m')."-".$consecutivo.$idGrupo);            
-            $em->flush();
+                $traerGrupo->setCodigo($zona."-".$idMunicipio->getAbreviatura()."-".$tipo."-".date_format($traerGrupo->getFechaInscripcion(), 'Y/m')."-".$consecutivo.$idGrupo);            
+                $em->persist($traerGrupo);
+                $em->flush();
+            }
 
             return $this->redirectToRoute('grupoGestion');
         }
