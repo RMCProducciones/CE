@@ -395,7 +395,7 @@ class ClearController extends Controller
         {
                 $link = '/var/www/vhosts/siscap.co/httpdocs/pdf/ActasDeClear/'.$nombre.$idCLEAR.'.pdf' ; //Codigo para el Servidor web (siscap.co)
                 if(file_exists($link)){
-                    //unlink('/var/www/vhosts/siscap.co/httpdocs/pdf/ActasDeClear/'.$nombre.$idCLEAR.'.pdf');  //Codigo para el Servidor web (siscap.co)          
+                    unlink('/var/www/vhosts/siscap.co/httpdocs/pdf/ActasDeClear/'.$nombre.$idCLEAR.'.pdf');  //Codigo para el Servidor web (siscap.co)          
                 }        
 
                 $this->get('knp_snappy.pdf')->generateFromHtml(
