@@ -212,7 +212,7 @@ class GrupoController extends Controller
             'submit', 
             array(
                 'attr' => array(
-                    'style' => 'visibility:visible'
+                    'style' => 'visibility:hidden'
                 ),
             )
         );
