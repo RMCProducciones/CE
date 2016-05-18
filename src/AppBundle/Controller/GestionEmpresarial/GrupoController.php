@@ -212,7 +212,7 @@ class GrupoController extends Controller
             'submit', 
             array(
                 'attr' => array(
-                    'style' => 'visibility:hidden'
+                    'style' => 'visibility:visible'
                 ),
             )
         );
@@ -223,10 +223,6 @@ class GrupoController extends Controller
 
             $grupo = $form->getData();
 
-            if($grupo->getRural() == true){
-                //$grupo->setBarrio(null);
-            }
-            
             if($grupo->getTipo()->getDescripcion() == 'No Formal con negocio'|| $grupo->getTipo()->getDescripcion() == 'No Formal Sin Negocio'){
                 $grupo->setNullFiguraLegalConstitucion();
                 $grupo->setNumeroIdentificacionTributaria(null);

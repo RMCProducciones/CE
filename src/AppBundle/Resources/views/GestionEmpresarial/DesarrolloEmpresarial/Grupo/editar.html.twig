@@ -1,0 +1,49 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+{% block title %}Grupos{% endblock %}
+
+{% block breadcrumb_ul %}
+
+    <ul class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Empresarial</li>
+      <li>Formacion de capital social asociativo y desarrollo empresarial</li>
+      <li><a href="{{ path('grupoGestion') }}">Grupos</a></li>
+      <li class="active">Editar</li>
+    </ul>
+
+{% endblock %}
+
+
+{% block section %}
+<div class="container">
+    <h1> Gestión Grupos </h1>
+    <hr>
+    <h3> Editar Registro</h3>
+    <br />
+    <br />
+  </div>
+     
+
+{{ form_start(form) }}
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="btn-group">
+  
+              <button name="grupo[Guardar]" id="grupo_Guardar" type="submit" class="btn btn-success">Guardar</button>
+              
+              <a href="{{ path('grupoGestion') }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{{ form_widget(form) }}
+{{ form_end(form) }}
+               
+{% endblock %}
+
