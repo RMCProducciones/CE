@@ -443,6 +443,32 @@
               </tr>  
               {% endif %}  
 
+              {% if grupo.correoElectronico != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Correo Electronico
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.correoElectronico }}
+                  </td>
+              </tr>  
+              {% endif %}  
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Rural
+                  </td>
+                  {% if grupo.rural == null %}
+                  <td class="text-center">
+                    No
+                  </td>
+                  {% else %}
+                  <td class="text-center">
+                    Si
+                  </td>
+              </tr>
+              {% endif %} 
+
               </tbody>  
           </table>  
            <div class="modal-footer">
