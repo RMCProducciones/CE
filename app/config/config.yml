@@ -113,8 +113,10 @@ knp_snappy:
     pdf:
         enabled: true
         binary: /var/www/vhosts/siscap.co/httpdocs/pdf/wkhtmltox/bin/wkhtmltopdf
+        #binary: ..\pdf\wkhtmltopdf\bin\wkhtmltopdf.exe
         options: []
     image:
         enabled: true
         binary: /var/www/vhosts/siscap.co/httpdocs/pdf/wkhtmltox/bin/wkhtmltoimage
+        #binary: ..\pdf\wkhtmltopdf\bin\wkhtmltoimage.exe
         options: []
