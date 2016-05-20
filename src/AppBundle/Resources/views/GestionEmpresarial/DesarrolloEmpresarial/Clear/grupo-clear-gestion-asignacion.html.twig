@@ -277,97 +277,403 @@
     <!-- Modal -->
     <div class="modal fade" id="myModal{{ grupo.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content col-md-12 table-responsive">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ grupo.codigo }} | {{ grupo.nombre }}</h4>
+            <tr class="col-md-12 table-responsive">
+              <td><h4 class="modal-title text-center" id="myModalLabel">{{ grupo.nombre }}</h4><td>
+                {% if grupo.codigo != null %}
+                  <td><h4 class="text-center" id="myModalLabel">{{ grupo.codigo }}</td>
+                {% else %}
+                  <td><h4 class="text-center" id="myModalLabel">No habilitado</td>                      
+                {% endif %} 
+              
+            </tr>
           </div>
-          <div class="modal-body">
-            <b>Departamento:{{ grupo.municipio.departamento.nombre }}</b>
-            <br>
-            <b>Municipio: {{ grupo.municipio }}</b>
-            <br>
-            <b>Zona: Oriente {{ grupo.municipio.zona.nombre }}</b>
-            <br>
-            <b>Tipo de grupo: {{ grupo.tipo }}</b>
-            <br>
-            <b>Codigo de grupo: {{ grupo.codigo }}</b>
-            <br>
-            <b>Nombre grupo: {{ grupo.nombre }}</b>
-            <br>
-            <b>Direccion:  {{ grupo.direccion }}</b>
-            <br>
-            <b>Tipo de organización: {{ grupo.codigo }}</b>
-            <br>
-            <b>NIT: {{ grupo.numeroIdentificacionTributaria }}</b>
-            <br>
-            <b>Telefono Movil: {{ grupo.telefonoCelular }}</b>
-            <br>
-            <b>Telefono Fijo: {{ grupo.telefonoFijo }}</b>
-            <br>
-            <b>Cuenta Bancaria: {{ grupo.entidadFinancieraCuenta }}</b>
-            <br>
-            <b>Tipo de cuenta:  {{ grupo.tipoCuenta }}</b>
-            <br>
-            <b>Numero de cuenta: {{ grupo.numeroCuenta }}</b>            
-          </div>
+        </br>
+          <div class="col-md-12 table-responsive">
+          <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos del Grupos</th>                    
+                </tr>
+              </thead>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
+              <tbody>    
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Departamento:
+                  </td>         
+                  <td class="text-center">
+                    {{ grupo.municipio.departamento.nombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Municipio:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.municipio }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Zona:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.municipio.zona.nombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Codigo de grupo:
+                  </td>
+                  <td class="text-center">
+                    {% if grupo.codigo != null %}
+                      {{ grupo.codigo }}
+                    {% else %}
+                      No habilitado
+                    {% endif %}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Nombre grupo:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.nombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Tipo de grupo:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.tipo }}
+                  </td>
+              </tr>
+
+              {% if grupo.fechaConstitucionLegal != null %}
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    NIT:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.numeroIdentificacionTributaria }}
+                  </td>
+              </tr>
+              {% endif %}
+
+              {% if grupo.fechaConstitucionLegal != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Fecha de Constitución legal:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.fechaConstitucionLegal |  date('d - m - Y') }}
+                  </td>
+              </tr>
+              {% endif %} 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Movil:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.telefonoCelular }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Fijo:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.telefonoFijo }}
+                  </td>
+              </tr> 
+
+              {% if grupo.entidadFinancieraCuenta != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Cuenta Bancaria:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.entidadFinancieraCuenta }}
+                  </td>
+              </tr> 
+              {% endif %}
+
+              {% if grupo.tipoCuenta != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Tipo de cuenta:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.tipoCuenta }}
+                  </td>
+              </tr>              
+              {% endif %}  
+
+
+              {% if grupo.numeroCuenta != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Numero de cuenta:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.numeroCuenta }}
+                  </td>
+              </tr>  
+              {% endif %}  
+
+              {% if grupo.correoElectronico != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Correo Electronico
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.correoElectronico }}
+                  </td>
+              </tr>  
+              {% endif %}  
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Rural
+                  </td>
+                  {% if grupo.rural == null %}
+                  <td class="text-center">
+                    No
+                  </td>
+                  {% else %}
+                  <td class="text-center">
+                    Si
+                  </td>
+              </tr>
+              {% endif %} 
+
+              </tbody>  
+          </table>  
+           <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>  
+          </div>      
       </div>
     </div>
+  </div>
      {% endfor %}
 
  {% for asignacionGrupoCLEAR in asignacionesGrupoCLEAR %}
     <!-- Modal -->
     <div class="modal fade" id="myModal{{ asignacionGrupoCLEAR.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content col-md-12 table-responsive">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ asignacionGrupoCLEAR.grupo.codigo }} | {{ asignacionGrupoCLEAR.grupo.nombre }}</h4>
+            <tr class="col-md-12 table-responsive">
+              <td><h4 class="modal-title text-center" id="myModalLabel">{{ asignacionGrupoCLEAR.grupo.nombre }}</h4><td>
+                {% if asignacionGrupoCLEAR.grupo.codigo != null %}
+                  <td><h4 class="text-center" id="myModalLabel">{{ asignacionGrupoCLEAR.grupo.codigo }}</td>
+                {% else %}
+                  <td><h4 class="text-center" id="myModalLabel">No habilitado</td>                      
+                {% endif %} 
+              
+            </tr>
           </div>
-          <div class="modal-body">
-            <b>Departamento:{{ asignacionGrupoCLEAR.grupo.municipio.departamento.nombre }}</b>
-            <br>
-            <b>Municipio: {{ asignacionGrupoCLEAR.grupo.municipio }}</b>
-            <br>
-            <b>Zona: Oriente {{ asignacionGrupoCLEAR.grupo.municipio.zona.nombre }}</b>
-            <br>
-            <b>Tipo de grupo: {{ asignacionGrupoCLEAR.grupo.tipo }}</b>
-            <br>
-            <b>Codigo de grupo: {{ asignacionGrupoCLEAR.grupo.codigo }}</b>
-            <br>
-            <b>Nombre grupo: {{ asignacionGrupoCLEAR.grupo.nombre }}</b>
-            <br>
-            <b>Direccion:  {{ asignacionGrupoCLEAR.grupo.direccion }}</b>
-            <b>Tipo de organización: {{ asignacionGrupoCLEAR.grupo.codigo }}</b>
-            <br>
-            <b>NIT: {{ asignacionGrupoCLEAR.grupo.numeroIdentificacionTributaria }}</b>
-            <br>
-            <b>Telefono Movil: {{ asignacionGrupoCLEAR.grupo.telefonoCelular }}</b>
-            <br>
-            <b>Telefono Fijo: {{ asignacionGrupoCLEAR.grupo.telefonoFijo }}</b>
-            <br>
-            <b>Cuenta Bancaria: {{ asignacionGrupoCLEAR.grupo.entidadFinancieraCuenta }}</b>
-            <br>
-            <b>Tipo de cuenta:  {{ asignacionGrupoCLEAR.grupo.tipoCuenta }}</b>
-            <br>
-            <b>Numero de cuenta: {{ asignacionGrupoCLEAR.grupo.numeroCuenta }}</b>            
-          </div>
+        </br>
+          <div class="col-md-12 table-responsive">
+          <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos del Grupos</th>                    
+                </tr>
+              </thead>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
+              <tbody>    
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Departamento:
+                  </td>         
+                  <td class="text-center">
+                    {{ asignacionGrupoCLEAR.grupo.municipio.departamento.nombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Municipio:
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionGrupoCLEAR.grupo.municipio }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Zona:
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionGrupoCLEAR.grupo.municipio.zona.nombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Codigo de grupo:
+                  </td>
+                  <td class="text-center">
+                    {% if asignacionGrupoCLEAR.grupo.codigo != null %}
+                      {{ asignacionGrupoCLEAR.grupo.codigo }}
+                    {% else %}
+                      No habilitado
+                    {% endif %}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Nombre grupo:
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionGrupoCLEAR.grupo.nombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Tipo de grupo:
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionGrupoCLEAR.grupo.tipo }}
+                  </td>
+              </tr>
+
+              {% if asignacionGrupoCLEAR.grupo.fechaConstitucionLegal != null %}
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    NIT:
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionGrupoCLEAR.grupo.numeroIdentificacionTributaria }}
+                  </td>
+              </tr>
+              {% endif %}
+
+              {% if asignacionGrupoCLEAR.grupo.fechaConstitucionLegal != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Fecha de Constitución legal:
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionGrupoCLEAR.grupo.fechaConstitucionLegal |  date('d - m - Y') }}
+                  </td>
+              </tr>
+              {% endif %} 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Movil:
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionGrupoCLEAR.grupo.telefonoCelular }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Fijo:
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionGrupoCLEAR.grupo.telefonoFijo }}
+                  </td>
+              </tr> 
+
+              {% if asignacionGrupoCLEAR.grupo.entidadFinancieraCuenta != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Cuenta Bancaria:
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionGrupoCLEAR.grupo.entidadFinancieraCuenta }}
+                  </td>
+              </tr> 
+              {% endif %}
+
+              {% if asignacionGrupoCLEAR.grupo.tipoCuenta != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Tipo de cuenta:
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionGrupoCLEAR.grupo.tipoCuenta }}
+                  </td>
+              </tr>              
+              {% endif %}  
+
+
+              {% if asignacionGrupoCLEAR.grupo.numeroCuenta != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Numero de cuenta:
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionGrupoCLEAR.grupo.numeroCuenta }}
+                  </td>
+              </tr>  
+              {% endif %}  
+
+              {% if asignacionGrupoCLEAR.grupo.correoElectronico != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Correo Electronico
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionGrupoCLEAR.grupo.correoElectronico }}
+                  </td>
+              </tr>  
+              {% endif %}  
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Rural
+                  </td>
+                  {% if asignacionGrupoCLEAR.grupo.rural == null %}
+                  <td class="text-center">
+                    No
+                  </td>
+                  {% else %}
+                  <td class="text-center">
+                    Si
+                  </td>
+              </tr>
+              {% endif %} 
+
+              </tbody>  
+          </table>  
+           <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>  
+          </div>      
       </div>
     </div>
+  </div>
+   
      {% endfor %}
                
 {% endblock %}

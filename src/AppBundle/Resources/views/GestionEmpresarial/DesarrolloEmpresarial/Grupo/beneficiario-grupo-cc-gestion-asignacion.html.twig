@@ -257,201 +257,882 @@
 
   {% for beneficiario in pagination1 %}
     <!-- Modal -->
-    <div class="modal fade" id="myModal{{ beneficiario.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal fade" id="myModal{{  beneficiario.id  }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content col-md-12 table-responsive">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ beneficiario.grupo.id }} | {{ beneficiario.grupo.nombre }}</h4>
+            <tr class="col-md-12 table-responsive">
+              <td><h4 class="modal-title text-center" id="myModalLabel">{{ beneficiario.grupo.nombre }}</h4><td>
+                            
+            </tr>
           </div>
-          <div class="modal-body">
-            <b>Tipo de Documento:{{ beneficiario.tipoDocumento }}</b>
-            <br>
-            <b>Numero de Documento: {{ beneficiario.numeroDocumento }}</b>
-            <br>
-            <b>Primero Apellido: {{ beneficiario.primerApellido }}</b>
-            <br>
-            <b>Segundo Apellido: {{ beneficiario.segundoApellido }}</b>
-            <br>
-            <b>Primero Nombre: {{ beneficiario.primerNombre }}</b>
-            <br>
-            <b>Segundo Nombre: {{ beneficiario.segundoNombre }}</b>
-            <br>
-            <b>Genero: {{ beneficiario.genero }}</b>
-            <br>
-            <b>Fecha de Nacimiento: {{ beneficiario.fechaNacimiento |  date('d - m - Y') }}</b>
-            <br>
-            <b>Edad al momento de la inscripcion: {{ beneficiario.edadInscripcion }}</b>
-            <br>
-            <b>Deplazado por la violencia: {{ beneficiario.desplazado }}</b>
-            <br>            
-            <b>Pertenencia Etnica: {{ beneficiario.pertenenciaEtnica }}</b>
-            <br>
-            <b>Grupo indigena: {{ beneficiario.grupoIndigena }}</b>
-            <br>
-            <b>Pertenece a la red unidos: {{ beneficiario.redUnidos }}</b>
-            <br>
-            <b>Sabe leer: {{ beneficiario.sabeLeer }}</b>
-            <br>
-            <b>Sabe escribir: {{ beneficiario.sabeEscribir }}</b>
-            <br>
-             <b>Puntaje del sisben: {{ beneficiario.puntajeSisben }}</b>
-            <br>
-            <b>Corte sisben: {{ beneficiario.corteSisben }}</b>
-            <br>
-            <b>Discapacidad: {{ beneficiario.discapacidad }}</b>
-            <br>
-            <b>Rol grupo familiar: {{ beneficiario.rolGrupoFamiliar }}</b>
-            <br>
-            <b>Mimebros nucleo familiar: {{ beneficiario.miembrosNucleoFamiliar }}</b>
-            <br>
-            <b>Hijos menores 5: {{ beneficiario.hijosMenores5 }}</b>
-      <br>
-            <b>Nivel de estudios: {{ beneficiario.nivelEstudios }}</b>
-      <br>
-            <b>Ocupacion: {{ beneficiario.ocupacion }}</b>
-      <br>
-            <b>Tipo de vivienda: {{ beneficiario.tipoVivienda }}</b>
-      <br>
-       
-            <b>Direccion: {{ beneficiario.direccion }}</b>
-      <br>
-         
-          
-            <b>Telefono Fijo: {{ beneficiario.telefonoFijo }}</b>
-      <br>
-            <b>Telefono Celular: {{ beneficiario.telefonoCelular }}</b>
-      <br>
-            <b>Correo electronico: {{ beneficiario.correoElectronico }}</b>
-      <br>
-            <b>Estado civil: {{ beneficiario.estadoCivil }}</b>
-      <br>
-            <b>Información del Conyuge</b>
-      <br>
-            <b>Tipo de documento del conyuge: {{ beneficiario.tipoDocumentoConyugue }}</b>
-      <br>
-            <b>Numero de documento del conyuge: {{ beneficiario.numeroDocumentoConyugue }}</b>
-      <br>
-            <b>Primer apellido del conyuge: {{ beneficiario.primerApellidoConyugue }}</b>
-      <br>
-            <b>Segundo apellido del conyuge: {{ beneficiario.segundoApellidoConyugue }}</b>
-      <br>
-            <b>Primer nombre del conyuge: {{ beneficiario.primerNombreConyugue }}</b>
-      <br>
-            <b>Segundo nombre del conyuge: {{ beneficiario.segundoNombreConyugue }}</b>
-      <br>
-            <b>Telefono fijo del conyuge: {{ beneficiario.telefonoFijoConyugue }}</b>
-      <br>
-            <b>Telefono celular del conyuge: {{ beneficiario.telefonoCelularConyugue }}</b>
-          </div>
+        </br>
+          <div class="col-md-12 table-responsive">
+          <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos del Beneficiario</th>                    
+                </tr>
+              </thead>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
+              <tbody>    
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Tipo de Documento
+                  </td>         
+                  <td class="text-center">
+                    {{ beneficiario.tipoDocumento }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Numero de Documento
+                  </td>
+                  <td class="text-center">
+                    {{ beneficiario.numeroDocumento }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Primer Apellido
+                  </td>
+                  <td class="text-center">
+                     {{ beneficiario.primerApellido }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Segundo Apellido
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.segundoApellido }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Primer Nombre
+                  </td>
+                  <td class="text-center">
+                    {{ beneficiario.primerNombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Segundo Nombre
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.segundoNombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Genero
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.genero }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Fecha de Nacimiento
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.fechaNacimiento |  date('d - m - Y') }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Edad al Momento de la Inscripcion
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.edadInscripcion }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Desplazado por la Violencia
+                  </td>
+                  {% if beneficiario.desplazado == null %}
+                  <td class="text-center">
+                    No
+                  </td>
+                  {% else %}
+                  <td class="text-center">
+                    Si
+                  </td>
+              </tr>
+              {% endif %} 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Pertenencia Etnica
+                  </td>
+                  <td class="text-center">
+                  {{ beneficiario.pertenenciaEtnica }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Grupo Indigena
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.grupoIndigena }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Pertenece a la Red Unidos
+                  </td>
+                  {% if beneficiario.redUnidos == null %}
+                  <td class="text-center">
+                    No
+                  </td>
+                  {% else %}
+                  <td class="text-center">
+                    Si
+                  </td>
+              </tr>
+              {% endif %} 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Sabe Leer
+                  </td>
+                  {% if beneficiario.sabeLeer == null %}
+                  <td class="text-center">
+                    No
+                  </td>
+                  {% else %}
+                  <td class="text-center">
+                    Si
+                  </td>
+              </tr>
+              {% endif %} 
+
+               
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Sabe Escribir
+                  </td>
+             {% if beneficiario.sabeEscribir == null %}
+                  <td class="text-center">
+                    No
+                  </td>
+                  {% else %}
+                  <td class="text-center">
+                    Si
+                  </td>
+              </tr>
+              {% endif %} 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Puntaje Sisben
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.puntajeSisben }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Corte Sisben
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.corteSisben }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Discapacidad
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.discapacidad }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Rol Grupo Familiar
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.rolGrupoFamiliar }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Miembros Grupo Familiar
+                  </td>
+                  <td class="text-center">
+                  {{ beneficiario.miembrosNucleoFamiliar }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Nivel de Estudios
+                  </td>
+                  <td class="text-center">
+                  {{ beneficiario.nivelEstudios }}
+                  </td>
+              </tr>
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Ocupacion
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.ocupacion }}
+                  </td>
+              </tr>
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Tipo de Vivienda
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.tipoVivienda }}
+                  </td>
+              </tr>
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Rural
+                  </td>
+                  {% if beneficiario.rural == null %}
+                  <td class="text-center">
+                    No
+                  </td>
+                  {% else %}
+                  <td class="text-center">
+                    Si
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Dirección
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.direccion }}
+                  </td>
+              </tr>
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                   Telefono Fijo
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.telefonoFijo }}
+                  </td>
+              </tr>
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Celular
+                  </td>
+                  <td class="text-center">
+                  {{ beneficiario.telefonoCelular }}
+                  </td>
+              </tr>
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Correo Electronico
+                  </td>
+                  <td class="text-center">                 
+                  {{ beneficiario.correoElectronico }}
+                  </td>
+              </tr>
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Estado civil
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.estadoCivil }}
+                  </td>
+              </tr>
+
+              <br>
+
+              {% if beneficiario.tipoDocumentoConyugue != null %} 
+
+
+              <div class="col-md-12 table-responsive">
+              <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos del Conyugue</th>                    
+                </tr>
+              </thead>
+
+              <tbody>
+             
+              {% if beneficiario.estadoCivil != "Soltero" or beneficiario.estadoCivil != "Viudo"  %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Tipo Documento Conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ beneficiario.tipoDocumentoConyugue }}
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              {% if beneficiario.numeroDocumentoConyugue != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Numero Documento Conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ beneficiario.numeroDocumentoConyugue }}
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              {% if beneficiario.primerApellidoConyugue != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Primer Apellido Conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ beneficiario.primerApellidoConyugue }}
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              {% if beneficiario.segundoApellidoConyugue != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Segundo Apellido Conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ beneficiario.segundoApellidoConyugue }}
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              {% if beneficiario.primerNombreConyugue != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Primer Nombre Conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ beneficiario.primerNombreConyugue }}
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              {% if beneficiario.segundoNombreConyugue != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Segundo Nombre conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ beneficiario.segundoNombreConyugue }}
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              {% if beneficiario.telefonoFijoConyugue != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Fijo Conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ beneficiario.telefonoFijoConyugue }}
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              {% if beneficiario.telefonoCelularConyugue != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Celular Conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ beneficiario.telefonoCelularConyugue }}
+                  </td>
+              </tr>
+              {% endif %}      
+
+              </tbody>  
+          </table>     
+
+          {% endif %}     
+
+              
+              </tbody>  
+          </table>  
+           <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>  
+          </div>      
       </div>
     </div>
+  </div>
    {% endfor %}             
 
    {% for asignacionBeneficiariosCC in asignacionesBeneficiariosCC %}
     <!-- Modal -->
-    <div class="modal fade" id="myModal{{ asignacionBeneficiariosCC.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal fade" id="myModal{{  asignacionBeneficiariosCC.id  }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content col-md-12 table-responsive">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ asignacionBeneficiariosCC.beneficiario.grupo.id }} | {{ asignacionBeneficiariosCC.beneficiario.grupo.nombre }}</h4>
+            <tr class="col-md-12 table-responsive">
+              <td><h4 class="modal-title text-center" id="myModalLabel">{{ asignacionBeneficiariosCC.beneficiario.grupo.nombre }}</h4><td>
+                            
+            </tr>
           </div>
-          <div class="modal-body">
-            <b>Tipo de Documento:{{ asignacionBeneficiariosCC.beneficiario.tipoDocumento }}</b>
-            <br>
-            <b>Numero de Documento: {{ asignacionBeneficiariosCC.beneficiario.numeroDocumento }}</b>
-            <br>
-            <b>Primero Apellido: {{ asignacionBeneficiariosCC.beneficiario.primerApellido }}</b>
-            <br>
-            <b>Segundo Apellido: {{ asignacionBeneficiariosCC.beneficiario.segundoApellido }}</b>
-            <br>
-            <b>Primero Nombre: {{ asignacionBeneficiariosCC.beneficiario.primerNombre }}</b>
-            <br>
-            <b>Segundo Nombre: {{ asignacionBeneficiariosCC.beneficiario.segundoNombre }}</b>
-            <br>
-            <b>Genero: {{ asignacionBeneficiariosCC.beneficiario.genero }}</b>
-            <br>
-            <b>Fecha de Nacimiento: {{ asignacionBeneficiariosCC.beneficiario.fechaNacimiento |  date('d - m - Y') }}</b>
-            <br>
-            <b>Edad al momento de la inscripcion: {{ asignacionBeneficiariosCC.beneficiario.edadInscripcion }}</b>
-            <br>
-            <b>Deplazado por la violencia: {{ asignacionBeneficiariosCC.beneficiario.desplazado }}</b>
-            <br>            
-            <b>Pertenencia Etnica: {{ asignacionBeneficiariosCC.beneficiario.pertenenciaEtnica }}</b>
-            <br>
-            <b>Grupo indigena: {{ asignacionBeneficiariosCC.beneficiario.grupoIndigena }}</b>
-            <br>
-            <b>Pertenece a la red unidos: {{ asignacionBeneficiariosCC.beneficiario.redUnidos }}</b>
-            <br>
-            <b>Sabe leer: {{ asignacionBeneficiariosCC.beneficiario.sabeLeer }}</b>
-            <br>
-            <b>Sabe escribir: {{ asignacionBeneficiariosCC.beneficiario.sabeEscribir }}</b>
-            <br>
-             <b>Puntaje del sisben: {{ asignacionBeneficiariosCC.beneficiario.puntajeSisben }}</b>
-            <br>
-            <b>Corte sisben: {{ asignacionBeneficiariosCC.beneficiario.corteSisben }}</b>
-            <br>
-            <b>Discapacidad: {{ asignacionBeneficiariosCC.beneficiario.discapacidad }}</b>
-            <br>
-            <b>Rol grupo familiar: {{ asignacionBeneficiariosCC.beneficiario.rolGrupoFamiliar }}</b>
-            <br>
-            <b>Mimebros nucleo familiar: {{ asignacionBeneficiariosCC.beneficiario.miembrosNucleoFamiliar }}</b>
-            <br>
-            <b>Hijos menores 5: {{ asignacionBeneficiariosCC.beneficiario.hijosMenores5 }}</b>
-            <br>
-            <b>Nivel de estudios: {{ asignacionBeneficiariosCC.beneficiario.nivelEstudios }}</b>
-            <br>
-            <b>Ocupacion: {{ asignacionBeneficiariosCC.beneficiario.ocupacion }}</b>
-            <br>
-            <b>Tipo de vivienda: {{ asignacionBeneficiariosCC.beneficiario.tipoVivienda }}</b>
-      <br>
-          
-            <b>Direccion: {{ asignacionBeneficiariosCC.beneficiario.direccion }}</b>
-      
-      <br>
-            <b>Telefono Fijo: {{ asignacionBeneficiariosCC.beneficiario.telefonoFijo }}</b>
-      <br>
-            <b>Telefono Celular: {{ asignacionBeneficiariosCC.beneficiario.telefonoCelular }}</b>
-      <br>
-            <b>Correo electronico: {{ asignacionBeneficiariosCC.beneficiario.correoElectronico }}</b>
-      <br>
-            <b>Estado civil: {{ asignacionBeneficiariosCC.beneficiario.estadoCivil }}</b>
-      <br>
-            <b>Información del Conyuge</b>
-      <br>
-            <b>Tipo de documento del conyuge: {{ asignacionBeneficiariosCC.beneficiario.tipoDocumentoConyugue }}</b>
-      <br>
-            <b>Numero de documento del conyuge: {{ asignacionBeneficiariosCC.beneficiario.numeroDocumentoConyugue }}</b>
-      <br>
-            <b>Primer apellido del conyuge: {{ asignacionBeneficiariosCC.beneficiario.primerApellidoConyugue }}</b>
-      <br>
-            <b>Segundo apellido del conyuge: {{ asignacionBeneficiariosCC.beneficiario.segundoApellidoConyugue }}</b>
-      <br>
-            <b>Primer nombre del conyuge: {{ asignacionBeneficiariosCC.beneficiario.primerNombreConyugue }}</b>
-      <br>
-            <b>Segundo nombre del conyuge: {{ asignacionBeneficiariosCC.beneficiario.segundoNombreConyugue }}</b>
-      <br>
-            <b>Telefono fijo del conyuge: {{ asignacionBeneficiariosCC.beneficiario.telefonoFijoConyugue }}</b>
-      <br>
-            <b>Telefono celular del conyuge: {{ asignacionBeneficiariosCC.beneficiario.telefonoCelularConyugue }}</b>
-          </div>
+        </br>
+          <div class="col-md-12 table-responsive">
+          <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos del Beneficiario</th>                    
+                </tr>
+              </thead>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
+              <tbody>    
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Tipo de Documento
+                  </td>         
+                  <td class="text-center">
+                    {{ asignacionBeneficiariosCC.beneficiario.tipoDocumento }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Numero de Documento
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionBeneficiariosCC.beneficiario.numeroDocumento }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Primer Apellido
+                  </td>
+                  <td class="text-center">
+                     {{ asignacionBeneficiariosCC.beneficiario.primerApellido }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Segundo Apellido
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionBeneficiariosCC.beneficiario.segundoApellido }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Primer Nombre
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionBeneficiariosCC.beneficiario.primerNombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Segundo Nombre
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionBeneficiariosCC.beneficiario.segundoNombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Genero
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionBeneficiariosCC.beneficiario.genero }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Fecha de Nacimiento
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionBeneficiariosCC.beneficiario.fechaNacimiento |  date('d - m - Y') }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Edad al Momento de la Inscripcion
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionBeneficiariosCC.beneficiario.edadInscripcion }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Desplazado por la Violencia
+                  </td>
+                  {% if asignacionBeneficiariosCC.beneficiario.desplazado == null %}
+                  <td class="text-center">
+                    No
+                  </td>
+                  {% else %}
+                  <td class="text-center">
+                    Si
+                  </td>
+              </tr>
+              {% endif %} 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Pertenencia Etnica
+                  </td>
+                  <td class="text-center">
+                  {{ asignacionBeneficiariosCC.beneficiario.pertenenciaEtnica }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Grupo Indigena
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionBeneficiariosCC.beneficiario.grupoIndigena }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Pertenece a la Red Unidos
+                  </td>
+                  {% if asignacionBeneficiariosCC.beneficiario.redUnidos == null %}
+                  <td class="text-center">
+                    No
+                  </td>
+                  {% else %}
+                  <td class="text-center">
+                    Si
+                  </td>
+              </tr>
+              {% endif %} 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Sabe Leer
+                  </td>
+                  {% if asignacionBeneficiariosCC.beneficiario.sabeLeer == null %}
+                  <td class="text-center">
+                    No
+                  </td>
+                  {% else %}
+                  <td class="text-center">
+                    Si
+                  </td>
+              </tr>
+              {% endif %} 
+
+               
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Sabe Escribir
+                  </td>
+             {% if asignacionBeneficiariosCC.beneficiario.sabeEscribir == null %}
+                  <td class="text-center">
+                    No
+                  </td>
+                  {% else %}
+                  <td class="text-center">
+                    Si
+                  </td>
+              </tr>
+              {% endif %} 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Puntaje Sisben
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionBeneficiariosCC.beneficiario.puntajeSisben }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Corte Sisben
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionBeneficiariosCC.beneficiario.corteSisben }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Discapacidad
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionBeneficiariosCC.beneficiario.discapacidad }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Rol Grupo Familiar
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionBeneficiariosCC.beneficiario.rolGrupoFamiliar }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Miembros Grupo Familiar
+                  </td>
+                  <td class="text-center">
+                  {{ asignacionBeneficiariosCC.beneficiario.miembrosNucleoFamiliar }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Nivel de Estudios
+                  </td>
+                  <td class="text-center">
+                  {{ asignacionBeneficiariosCC.beneficiario.nivelEstudios }}
+                  </td>
+              </tr>
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Ocupacion
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionBeneficiariosCC.beneficiario.ocupacion }}
+                  </td>
+              </tr>
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Tipo de Vivienda
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionBeneficiariosCC.beneficiario.tipoVivienda }}
+                  </td>
+              </tr>
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Rural
+                  </td>
+                  {% if asignacionBeneficiariosCC.beneficiario.rural == null %}
+                  <td class="text-center">
+                    No
+                  </td>
+                  {% else %}
+                  <td class="text-center">
+                    Si
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Dirección
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionBeneficiariosCC.beneficiario.direccion }}
+                  </td>
+              </tr>
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                   Telefono Fijo
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionBeneficiariosCC.beneficiario.telefonoFijo }}
+                  </td>
+              </tr>
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Celular
+                  </td>
+                  <td class="text-center">
+                  {{ asignacionBeneficiariosCC.beneficiario.telefonoCelular }}
+                  </td>
+              </tr>
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Correo Electronico
+                  </td>
+                  <td class="text-center">                 
+                  {{ asignacionBeneficiariosCC.beneficiario.correoElectronico }}
+                  </td>
+              </tr>
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Estado civil
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionBeneficiariosCC.beneficiario.estadoCivil }}
+                  </td>
+              </tr>
+
+              <br>
+
+              {% if asignacionBeneficiariosCC.beneficiario.tipoDocumentoConyugue != null %} 
+
+
+              <div class="col-md-12 table-responsive">
+              <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos del Conyugue</th>                    
+                </tr>
+              </thead>
+
+              <tbody>
+             
+              {% if asignacionBeneficiariosCC.beneficiario.estadoCivil != "Soltero" or asignacionBeneficiariosCC.beneficiario.estadoCivil != "Viudo"  %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Tipo Documento Conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionBeneficiariosCC.beneficiario.tipoDocumentoConyugue }}
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              {% if asignacionBeneficiariosCC.beneficiario.numeroDocumentoConyugue != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Numero Documento Conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionBeneficiariosCC.beneficiario.numeroDocumentoConyugue }}
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              {% if asignacionBeneficiariosCC.beneficiario.primerApellidoConyugue != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Primer Apellido Conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionBeneficiariosCC.beneficiario.primerApellidoConyugue }}
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              {% if asignacionBeneficiariosCC.beneficiario.segundoApellidoConyugue != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Segundo Apellido Conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionBeneficiariosCC.beneficiario.segundoApellidoConyugue }}
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              {% if asignacionBeneficiariosCC.beneficiario.primerNombreConyugue != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Primer Nombre Conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionBeneficiariosCC.beneficiario.primerNombreConyugue }}
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              {% if asignacionBeneficiariosCC.beneficiario.segundoNombreConyugue != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Segundo Nombre conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionBeneficiariosCC.beneficiario.segundoNombreConyugue }}
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              {% if asignacionBeneficiariosCC.beneficiario.telefonoFijoConyugue != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Fijo Conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionBeneficiariosCC.beneficiario.telefonoFijoConyugue }}
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              {% if asignacionBeneficiariosCC.beneficiario.telefonoCelularConyugue != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Celular Conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionBeneficiariosCC.beneficiario.telefonoCelularConyugue }}
+                  </td>
+              </tr>
+              {% endif %}      
+
+              </tbody>  
+          </table>     
+
+          {% endif %}     
+
+              
+              </tbody>  
+          </table>  
+           <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>  
+          </div>      
       </div>
     </div>
+  </div>
    {% endfor %}             
 
                

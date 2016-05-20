@@ -210,49 +210,149 @@
 
 	{% for contador in pagination %}
     <!-- Modal -->
-    <div class="modal fade" id="myModal{{ contador.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal fade" id="myModal{{  contador.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content col-md-12 table-responsive">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ contador.numeroDocumento }} | {{ contador.primerNombre }} {{ contador.segundoNombre }} {{ contador.primerApellido }} {{ contador.segundoApellido }}</h4>
+            <tr class="col-md-12 table-responsive">
+              <td><h4 class="modal-title text-center" id="myModalLabel">{{ contador.numeroDocumento }} | {{ contador.primerNombre }} {{ contador.segundoNombre }} {{ contador.primerApellido }} {{ contador.segundoApellido }}</h4><td>
+                            
+            </tr>
           </div>
-          <div class="modal-body">
-            <b>Tipo de documento:{{ contador.tipoDocumento }}</b>
-            <br>
-            <b>Numero de documento: {{ contador.numeroDocumento }}</b>            
-            <br>
-            <b>Numero de documento: {{ contador.numeroTarjeta }}</b> 
-            <br>
-            <b>Primer apellido: {{ contador.primerApellido }}</b>
-            <br>
-            <b>Segundo apellido: {{ contador.segundoApellido }}</b>
-            <br>
-            <b>Primer Nombre: {{ contador.primerNombre }}</b>
-            <br>
-            <b>Segundo Nombre: {{ contador.segundoNombre }}</b>
-            <br>
-            <b>Genero: {{ contador.genero }}</b>
-            <br>
-            <b>Fecha de nacimiento: {{ contador.fechaNacimiento |  date('d - m - Y') }}</b>
-            <br>
-            <b>Telefono fijo: {{ contador.telefonoFijo }}</b>
-			      <br>
-            <b>Telefono celular: {{ contador.telefonoCelular }}</b>
-			      <br>
-            <b>Correo electronico: {{ contador.correoElectronico }}</b>
-		      	<br>
-           
-          </div>
+        </br>
+          <div class="col-md-12 table-responsive">
+          <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos del Contador</th>                    
+                </tr>
+              </thead>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
+              <tbody>    
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Tipo de Documento
+                  </td>         
+                  <td class="text-center">
+                    {{ contador.tipoDocumento }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Número Documento
+                  </td>
+                  <td class="text-center">
+                    {{ contador.numeroDocumento }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Número Tarjeta Profesional
+                  </td>
+                  <td class="text-center">
+                     {{ contador.numeroTarjeta }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                   Primer Apellido
+                  </td>
+                  <td class="text-center">
+                    {{ contador.primerApellido }}
+                  
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Segundo Apellido
+                  </td>
+                  <td class="text-center">
+                   {{ contador.segundoApellido }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Primer Nombre
+                  </td>
+                  <td class="text-center">
+                   {{ contador.primerNombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Segundo Nombre
+                  </td>
+                  <td class="text-center">
+                   {{ contador.segundoNombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Genero
+                  </td>
+                  <td class="text-center">
+                   {{ contador.genero }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Fecha Nacimiento
+                  </td>
+                  <td class="text-center">
+                   {{ contador.fechaNacimiento |  date('d - m - Y')  }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Fijo
+                  </td>
+                  <td class="text-center">
+                   {{ contador.telefonoFijo }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Celular
+                  </td>
+                  <td class="text-center">
+                   {{ contador.telefonoCelular }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Correo Electronico
+                  </td>
+                  <td class="text-center">
+                   {{ contador.correoElectronico }}
+                  </td>
+              </tr>
+              </tbody>  
+          </table>  
+           <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>  
+          </div>      
       </div>
     </div>
+  </div>
+
     {% endfor %}           
 {% endblock %}
 
