@@ -1,4 +1,146 @@
 {% block section %}	
-Hola esto es una prueba de la generacion del PDF
+<meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">             
+		
+<style type="text/css">
+
+H1 { font-size:32px;  color:black; line-height: 100%;}
+H2 { font-size:18px; color:red;line-height: 100%  }
+P { font-size:20px; line-height: 100%;text-align: justify;}
+BODY { margin: 10px 60px 10px 60px }
+.demo {
+    border:0px solid #C0C0C0;
+    border-collapse:collapse;
+    padding:4px;
+  }
+  .demo th {
+    border:1px solid #C0C0C0;
+    padding:5px;
+    background:#F0F0F0;
+  }
+  .demo td {
+    border:1px solid #C0C0C0;
+    padding:5px;
+  }
+
+</style>
+</br>
+
+<header>
+     
+     <img src= "{{ app.request.scheme ~'://' ~ app.request.httpHost}}{{ asset('public/images/banner.png') }}">
+</header>
+</br>
+</br>
+</br>
+<label>prueba de esta joda</label>
+<h1><center>
+<b>PROYECTO CONSTRUYENDO CAPACIDADES
+</br> EMPRESARIALES RURALES, CONFIANZA 
+</br>Y OPORTUNIDAD
+</center></b></h1>
+</br>
+<p>En el municipio de <b>{{ clear.municipio }}</b> Unidad Territorial - UT de {{clear.municipio.zona.nombre}} con fecha {{ clear.fechaInicio |  date('d - m - Y') }}, siendo las __:___a.m.(__)/p.m.(__) horas, de conformidad con lo señalado en la Resolución 251 del 29 de Mayo de 2014; con el propósito de realizar la instalación del Comité Local de Evaluación y Asignación de Recursos – CLEAR del Proyecto Construyendo Capacidades Empresariales Rurales, Confianza y Oportunidad, se lleva a cabo la jornada de inducción de cada uno de los integrantes del CLEAR en el proceso de la convocatoria y en sus funciones como ente de evaluador y de asignador de recursos.</p>
+
+<p>Así mismo, con el propósito de integrar el CLEAR se lleva a cabo su instalación con la participación de las siguientes personas:</p>
+
+
+<div class="demo">
+
+                 <table class="table responsive" style="margin: 0 auto;">            
+
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">MIEMBROS DEL CLEAR</th>
+                    <th class="text-center col-md-7">NOMBRE</th>                    
+                    <th class="text-center col-md-7">DOCUMENTO DE<br />IDENTIDAD</th>                    
+                    <th class="text-center col-md-7">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FIRMA&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>                    
+                </tr>
+              </thead>
+
+              <tbody>  
+
+              {% for integranteClear in integrantesClear %}  
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    {{integranteClear.rol.descripcion}}
+                  </td>         
+                  <td class="text-center">
+                    {{ integranteClear.integrante.primerNombre}} {{ integranteClear.integrante.primerApellido}}
+                  </td>
+                  <td class="text-center">
+                    <center>{{ integranteClear.integrante.numeroDocumento}}</center>
+                  </td>
+                  <td class="text-center">
+                    
+                  </td>
+              </tr>
+
+                {% endfor %}
+
+              </tbody>                              
+          </table>
+
+
+
+            </div>
+</br>
+</br>
+{% set cantidadGrupos = 0 %}
+{% for grupoClear in gruposClear %}
+  {% set cantidadGrupos = cantidadGrupos + 1 %}
+{% endfor %}
+
+<p>Posterior a la instalación del CLEAR, el promotor rural hace entrega a los integrantes del CLEAR de {{cantidadGrupos}} propuestas recibidas según acta de cierre del día {{ clear.fechaFinalizacion |  date('d') }} del mes de {{ clear.fechaFinalizacion |  date('m') }} del año {{ clear.fechaFinalizacion |  date('Y') }} en el marco de la Convocatoria para la conformación del Banco de proyectos para grupos formales y no formales:</p>
+</br>
+<div class="demo">
+
+                 <table class="table responsive" style="margin: 0 auto;">  
+
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Consecutivo</th>
+                    <th class="text-center col-md-7">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nombre Grupo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+              </thead>
+
+              <tbody> 
+
+              {% set consecutivo = 1 %} 
+
+              {% for grupoClear in gruposClear %}  
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    <center>{{consecutivo}}</center>
+                  </td>         
+                  <td class="text-center">
+                    <center>{{ grupoClear.grupo}}</center>
+                  </td>                  
+              </tr>
+
+                {% set consecutivo = consecutivo + 1 %}
+
+                {% endfor %}
+
+              </tbody>                              
+          </table>
+
+
+
+            </div>
+</br>
+</br>
+
+
+<p>Para constancia se firma a los _________________ (    ) días del mes de _______del año ______<p>
+
+______________________________________________<p>
+SECRETARIO TÉCNICO DEL CLEAR<p>
+
+Nombre:<p> ________________________________________
+<p>C.C.<p>       ________________________________________ <p>     
+Cargo:Promotor Rural Municipio _____________________	
 {% endblock %}
 
