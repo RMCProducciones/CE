@@ -236,7 +236,7 @@ class GrupoController extends Controller
 
 
             if($grupo->getCodigo() != null){
-                            $traerGrupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+                $traerGrupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
                 array('id' => $idGrupo));            
 
             $idMunicipio = $em->getRepository('AppBundle:Municipio')->findOneBy(
