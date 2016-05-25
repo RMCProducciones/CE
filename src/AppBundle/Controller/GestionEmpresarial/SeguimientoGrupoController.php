@@ -89,6 +89,8 @@ class SeguimientoGrupoController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        $validacion = array(12);
+
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id' => $idGrupo)
         );
@@ -144,13 +146,124 @@ class SeguimientoGrupoController extends Controller
             return $this->redirectToRoute('seguimientoGrupo', array( 'idGrupo' => $idGrupo));
         }
 
+
+        $validacion[0] = true;
+        $validacion[1] = true;
+        $validacion[2] = true;
+        
+
+        //Validar acta de interes del grupo
+        $validacion[3] = true;
+        
+        $query = $em->createQuery("
+            SELECT 
+                grupo.nombre,
+                documento_soporte.descripcion,
+                grupo_soporte.path
+            FROM AppBundle:Grupo grupo
+            INNER JOIN AppBundle:GrupoSoporte grupo_soporte WITH grupo.id = grupo_soporte.grupo
+            INNER JOIN AppBundle:DocumentoSoporte documento_soporte WITH grupo_soporte.tipo_soporte = documento_soporte.id
+            WHERE 
+                grupo_soporte.active = 1
+                AND documento_soporte.dominio = 'grupo_tipo_soporte'
+                AND documento_soporte.abreviatura = 'AI'
+                AND grupo.id = :idGrupo
+        ");
+
+        $query->setParameter('idGrupo', $idGrupo);
+
+        $elementos = $query->getResult();
+
+        //echo sizeof($elementos); 
+
+        if (sizeof($elementos) == 0) {
+            $validacion[3] = false;
+        }
+//        echo "<pre>";
+//        print_r($elementos);
+//        echo "</pre>";
+
+
+        $validacion[4] = true;
+
+        $query = $em->createQuery("
+            SELECT 
+                grupo.nombre,
+                documento_soporte.descripcion,
+                grupo_soporte.path
+            FROM AppBundle:Grupo grupo
+            INNER JOIN AppBundle:GrupoSoporte grupo_soporte WITH grupo.id = grupo_soporte.grupo
+            INNER JOIN AppBundle:DocumentoSoporte documento_soporte WITH grupo_soporte.tipo_soporte = documento_soporte.id
+            WHERE 
+                grupo_soporte.active = 1
+                AND documento_soporte.dominio = 'grupo_tipo_soporte'
+                AND documento_soporte.abreviatura = 'FRB'
+                AND grupo.id = :idGrupo
+        ");
+
+        $query->setParameter('idGrupo', $idGrupo);
+
+        $elementos = $query->getResult();
+
+        //echo sizeof($elementos); 
+
+        if (sizeof($elementos) == 0) {
+            $validacion[4] = false;
+        }
+
+        $validacion[5] = true;
+
+        $query = $em->createQuery("
+            SELECT 
+                grupo.nombre,
+                documento_soporte.descripcion,
+                grupo_soporte.path
+            FROM AppBundle:Grupo grupo
+            INNER JOIN AppBundle:GrupoSoporte grupo_soporte WITH grupo.id = grupo_soporte.grupo
+            INNER JOIN AppBundle:DocumentoSoporte documento_soporte WITH grupo_soporte.tipo_soporte = documento_soporte.id
+            WHERE 
+                grupo_soporte.active = 1
+                AND documento_soporte.dominio = 'grupo_tipo_soporte'
+                
+                AND grupo.numero_identificacion_tributaria IS NOT NULL
+                AND grupo.id = :idGrupo
+        ");
+
+        $query->setParameter('idGrupo', $idGrupo);
+
+        $elementos = $query->getResult();
+
+        echo "<pre>";
+        print_r($elementos);
+        echo "</pre>";
+
+        //echo sizeof($elementos); 
+
+        if (sizeof($elementos) == 0) {
+            $validacion[5] = false;
+        }
+
+        $validacion[6] = true;
+        $validacion[7] = true;
+        $validacion[8] = true;
+        $validacion[9] = true;
+        $validacion[10] = true;
+        $validacion[11] = true;
+        //$validacion[12] = true;
+        //$validacion[13] = true;
+
+
+
+
         return $this->render(
             'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:habilitacion-fases.html.twig', 
             array(
                     'form' => $form->createView(),
                     'grupo' => $grupo,
+                    'validacion' => $validacion,
                     'clearFinalizado' => $clearFinalizado,
-                    'habilitacionFases' => $habilitacionFases
+                    'habilitacionFases' => $habilitacionFases,
+                    'query' => $query
             )
         );
     }

@@ -98,17 +98,20 @@
                   {{ form_errors(form.nombre) }}
                   {{ form_widget(form.nombre, { 'attr': {'class': 'form-control', 'placeholder': 'Nombre del grupo'} }) }}
                 </div>
-           
+
                 <div class="col-md-4">
                   {{ form_label(form.tipo) }}
                   {{ form_errors(form.tipo) }}
-                  {{ form_widget(form.tipo, { 'attr': {'class': 'form-control tipo','ng-model': 'Tipo', 'ng-change': 'infoFormal()'} }) }}
+                  {{ form_widget(form.tipo, { 'attr': {'class': 'form-control tipo', 'ng-init':'initInfoFormal()', 'ng-change': 'infoFormal()', 'ng-model': 'Tipo'} }) }}
                 </div>
+
                 <br/>
-                 <div ng-show="mostrarFormal">
+                 <div ng-show="mostrarFormal">                 
          	<div class = "row">
 				<div class="col-md-12" >
-					<fieldset>
+					<br />
+					<br />
+					<fieldset class="col-md-12" >
 						<legend>Datos de constitución de la empresa</legend>
 					</fieldset>            
 				</div>	
@@ -116,7 +119,7 @@
 
 			<br/>
 			
-	<div class="row" ng-controller="datosEmpresaGrupoCtrl" >
+			<div class="row-md-12" ng-controller="datosEmpresaGrupoCtrl" ng-init="iniciarNIT({{numeroIdentificacionGrupo}}, {{digitoVerificacionGrupo}})">
 
                 <div class="col-md-4">
                   {{ form_label(form.figura_legal_constitucion) }}
@@ -133,7 +136,8 @@
                   </div>
 
                   <div style="visibility:hidden">
-	                  {{ form_widget(form.numero_identificacion_tributaria, { 'attr': {'class': 'form-control', 'placeholder': 'Número de identificación tributaria', 'ng-show':'mostrarFormal'} }) }}
+	                  {{ form_widget(form.numero_identificacion_tributaria, { 'attr': {'class': 'form-control', 'placeholder': 'Número de 
+	                  identificación tributaria', 'value': '[[numeroIdentificacion]]-[[digitoVerificacion]]','ng-show':'mostrarFormal'} }) }}
                   </div>  
                 </div>
 
@@ -235,6 +239,7 @@
     </div>
 
   {{ form_end(form) }}
+
                
 {% endblock %}
 

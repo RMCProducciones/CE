@@ -201,7 +201,11 @@ class GrupoController extends Controller
 
         $nit = explode("-", $grupo->getNumeroIdentificacionTributaria());
 
+        print_r($nit);
+        echo count($nit);
+
         if($grupo->getTipo()->getDescripcion() == 'No Formal con negocio'|| $grupo->getTipo()->getDescripcion() == 'No Formal Sin Negocio'){
+            $nit[0] = 0;
             $nit[1] = 0;
         }
 
@@ -288,8 +292,8 @@ class GrupoController extends Controller
                     'form' => $form->createView(),
                     'idGrupo' => $idGrupo,
                     'grupo' => $grupo,
-                    'numeroIdentificacion' => $nit[0],
-                    'digitoVerificacion' => $nit[1],
+                    'numeroIdentificacionGrupo' => $nit[0],
+                    'digitoVerificacionGrupo' => $nit[1],
 
             )
         );

@@ -164,8 +164,15 @@ app.controller('FormalCtrl', ['$scope', function($scope) {
 
 	$scope.mostrarFormal = false;	
 
+
+	$scope.initInfoFormal = function(){
+		$scope.Tipo = $( "#grupo_tipo option:selected" ).val();
+		$scope.mostrarFormal = $(".tipo option[value='"+$('.tipo').val()+"']").text().toLowerCase() == "formal con negocio" || $(".tipo option[value='"+$('.tipo').val()+"']").text().toLowerCase() == "formal sin negocio";			
+
+	}	
+
 	$scope.infoFormal = function() { 
-		$scope.mostrarFormal = $(".tipo option[value='"+$('.tipo').val()+"']").text().toLowerCase() == "formal con negocio" ||$(".tipo option[value='"+$('.tipo').val()+"']").text().toLowerCase() == "formal sin negocio";			
+		$scope.mostrarFormal = $(".tipo option[value='"+$('.tipo').val()+"']").text().toLowerCase() == "formal con negocio" || $(".tipo option[value='"+$('.tipo').val()+"']").text().toLowerCase() == "formal sin negocio";			
 	};	
 
 }]);
