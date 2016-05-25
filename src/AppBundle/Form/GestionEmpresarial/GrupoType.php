@@ -56,6 +56,14 @@ class GrupoType extends AbstractType
 			 		}
 			 	)
 			 )
+			  ->add('convocatoria', 'entity', array(
+			 	'class' => 'AppBundle:Convocatoria',
+			 	'query_builder' => function(EntityRepository $er) {
+			 		return $er->createQueryBuilder('c')
+			 			->where('c.active = 1')
+			 			->orderBy('c.fecha_inicio', 'ASC');
+			 	}
+			 ))
 			;
     }
     

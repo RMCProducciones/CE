@@ -51,7 +51,26 @@
 
     <div class="section">
       <div class="container">
-        
+
+
+      	<div class="row">
+				<div class="col-md-12">
+					<fieldset>
+						<legend>Datos de la Convocatoria</legend>
+					</fieldset>            
+				</div>
+			</div>	
+
+<div class="row">
+      	 <div class="col-md-4">
+                    {{ form_label(form.convocatoria) }}<br/>
+                    {{ form_errors(form.convocatoria) }}
+                    {{ form_widget(form.convocatoria, { 'attr': {'class': 'form-control', 'placeholder': 'Convocatoria'} }) }}
+            		</div>
+ </div>
+
+ <br>
+     
 		
 			<div class="row">
 				<div class="col-md-12">
