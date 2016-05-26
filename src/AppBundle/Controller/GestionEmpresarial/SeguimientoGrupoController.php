@@ -224,8 +224,10 @@ class SeguimientoGrupoController extends Controller
             WHERE 
                 grupo_soporte.active = 1
                 AND documento_soporte.dominio = 'grupo_tipo_soporte'
-                
-                AND grupo.numero_identificacion_tributaria IS NOT NULL
+                AND documento_soporte.abreviatura = 'CB'                
+                AND grupo.entidad_financiera_cuenta IS NOT NULL
+                AND grupo.tipo_cuenta IS NOT NULL
+                AND grupo.numero_cuenta IS NOT NULL                
                 AND grupo.id = :idGrupo
         ");
 
@@ -233,9 +235,9 @@ class SeguimientoGrupoController extends Controller
 
         $elementos = $query->getResult();
 
-        echo "<pre>";
-        print_r($elementos);
-        echo "</pre>";
+        //echo "<pre>";
+        //print_r($elementos);
+        //echo "</pre>";
 
         //echo sizeof($elementos); 
 
@@ -244,11 +246,193 @@ class SeguimientoGrupoController extends Controller
         }
 
         $validacion[6] = true;
+
+        $query = $em->createQuery("
+            SELECT 
+                grupo.nombre,
+                documento_soporte.descripcion,
+                grupo_soporte.path
+            FROM AppBundle:Grupo grupo
+            INNER JOIN AppBundle:GrupoSoporte grupo_soporte WITH grupo.id = grupo_soporte.grupo
+            INNER JOIN AppBundle:DocumentoSoporte documento_soporte WITH grupo_soporte.tipo_soporte = documento_soporte.id
+            WHERE 
+                grupo_soporte.active = 1
+                AND documento_soporte.dominio = 'grupo_tipo_soporte'
+                AND documento_soporte.abreviatura = 'CC'                
+                AND grupo.id = :idGrupo
+        ");
+
+        $query->setParameter('idGrupo', $idGrupo);
+
+        $elementos = $query->getResult();
+
+        //echo "<pre>";
+        //print_r($elementos);
+        //echo "</pre>";
+
+        //echo sizeof($elementos); 
+
+        if (sizeof($elementos) == 0) {
+            $validacion[6] = false;
+        }
+
         $validacion[7] = true;
+
+        $query = $em->createQuery("
+            SELECT 
+                grupo.nombre,
+                documento_soporte.descripcion,
+                grupo_soporte.path
+            FROM AppBundle:Grupo grupo
+            INNER JOIN AppBundle:GrupoSoporte grupo_soporte WITH grupo.id = grupo_soporte.grupo
+            INNER JOIN AppBundle:DocumentoSoporte documento_soporte WITH grupo_soporte.tipo_soporte = documento_soporte.id
+            WHERE 
+                grupo_soporte.active = 1
+                AND documento_soporte.dominio = 'grupo_tipo_soporte'
+                AND grupo.numero_identificacion_tributaria IS NOT NULL
+                AND grupo.numero_identificacion_tributaria != '0-0'
+                AND documento_soporte.abreviatura = 'RUTG'                
+                AND grupo.id = :idGrupo
+        ");
+
+        $query->setParameter('idGrupo', $idGrupo);
+
+        $elementos = $query->getResult();
+
+        //echo "<pre>";
+        //print_r($elementos);
+        //echo "</pre>";
+
+        //echo sizeof($elementos); 
+
+        if (sizeof($elementos) == 0) {
+            $validacion[7] = false;
+        }
+
         $validacion[8] = true;
+
+        $query = $em->createQuery("
+            SELECT 
+                grupo.nombre,
+                documento_soporte.descripcion,
+                grupo_soporte.path
+            FROM AppBundle:Grupo grupo
+            INNER JOIN AppBundle:GrupoSoporte grupo_soporte WITH grupo.id = grupo_soporte.grupo
+            INNER JOIN AppBundle:DocumentoSoporte documento_soporte WITH grupo_soporte.tipo_soporte = documento_soporte.id
+            WHERE 
+                grupo_soporte.active = 1
+                AND documento_soporte.dominio = 'grupo_tipo_soporte'                
+                AND documento_soporte.abreviatura = 'DRAA'                
+                AND grupo.id = :idGrupo
+        ");
+
+        $query->setParameter('idGrupo', $idGrupo);
+
+        $elementos = $query->getResult();
+
+        //echo "<pre>";
+        //print_r($elementos);
+        //echo "</pre>";
+
+        //echo sizeof($elementos); 
+
+        if (sizeof($elementos) == 0) {
+            $validacion[8] = false;
+        }
+
         $validacion[9] = true;
+
+        $query = $em->createQuery("
+            SELECT 
+                grupo.nombre,
+                documento_soporte.descripcion,
+                grupo_soporte.path
+            FROM AppBundle:Grupo grupo
+            INNER JOIN AppBundle:GrupoSoporte grupo_soporte WITH grupo.id = grupo_soporte.grupo
+            INNER JOIN AppBundle:DocumentoSoporte documento_soporte WITH grupo_soporte.tipo_soporte = documento_soporte.id
+            WHERE 
+                grupo_soporte.active = 1
+                AND documento_soporte.dominio = 'grupo_tipo_soporte'                
+                AND documento_soporte.abreviatura = 'BGER'                
+                AND grupo.id = :idGrupo
+        ");
+
+        $query->setParameter('idGrupo', $idGrupo);
+
+        $elementos = $query->getResult();
+
+        //echo "<pre>";
+        //print_r($elementos);
+        //echo "</pre>";
+
+        //echo sizeof($elementos); 
+
+        if (sizeof($elementos) == 0) {
+            $validacion[9] = false;
+        }
+
         $validacion[10] = true;
+
+        $query = $em->createQuery("
+            SELECT 
+                grupo.nombre,
+                documento_soporte.descripcion,
+                grupo_soporte.path
+            FROM AppBundle:Grupo grupo
+            INNER JOIN AppBundle:GrupoSoporte grupo_soporte WITH grupo.id = grupo_soporte.grupo
+            INNER JOIN AppBundle:DocumentoSoporte documento_soporte WITH grupo_soporte.tipo_soporte = documento_soporte.id
+            WHERE 
+                grupo_soporte.active = 1
+                AND documento_soporte.dominio = 'grupo_tipo_soporte'                
+                AND documento_soporte.abreviatura = 'ADGP'                
+                AND grupo.id = :idGrupo
+        ");
+
+        $query->setParameter('idGrupo', $idGrupo);
+
+        $elementos = $query->getResult();
+
+        //echo "<pre>";
+        //print_r($elementos);
+        //echo "</pre>";
+
+        //echo sizeof($elementos); 
+
+        if (sizeof($elementos) == 0) {
+            $validacion[10] = false;
+        }
+
         $validacion[11] = true;
+
+        $query = $em->createQuery("
+            SELECT 
+                grupo.nombre,
+                documento_soporte.descripcion,
+                grupo_soporte.path
+            FROM AppBundle:Grupo grupo
+            INNER JOIN AppBundle:GrupoSoporte grupo_soporte WITH grupo.id = grupo_soporte.grupo
+            INNER JOIN AppBundle:DocumentoSoporte documento_soporte WITH grupo_soporte.tipo_soporte = documento_soporte.id
+            WHERE 
+                grupo_soporte.active = 1
+                AND documento_soporte.dominio = 'grupo_tipo_soporte'                
+                AND documento_soporte.abreviatura = 'AFGC'                
+                AND grupo.id = :idGrupo
+        ");
+
+        $query->setParameter('idGrupo', $idGrupo);
+
+        $elementos = $query->getResult();
+
+        //echo "<pre>";
+        //print_r($elementos);
+        //echo "</pre>";
+
+        //echo sizeof($elementos); 
+
+        if (sizeof($elementos) == 0) {
+            $validacion[11] = false;
+        }
+
         //$validacion[12] = true;
         //$validacion[13] = true;
 

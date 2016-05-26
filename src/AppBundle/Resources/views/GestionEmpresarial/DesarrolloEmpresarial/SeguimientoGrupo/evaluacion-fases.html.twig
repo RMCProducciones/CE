@@ -91,7 +91,7 @@
 
                 <tr class="active text-muted" {% if clearFinalizado %}style="display:none;"{% endif %}>
                   <td>Calificación</td>
-                  <td class="text-center">
+                  <td class="text-center">                    
                     {{ form_errors(form.calificacion_iea) }}
                     {{ form_widget(form.calificacion_iea) }}
                   </td>
@@ -178,7 +178,7 @@
                   </th>
                 </tr>
                 <tr class="active text-muted vertical-align" {% if not clearFinalizado %}style="display:none;"{% endif %}>
-                  <td><b>Fase habilitada: </b><br><br>
+                  <td><b>Fase apta: </b><br><br>
                     La fase para la cual el grupo es apto se marcará con un icono en color verde como "<img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}">"
                   </td>
                   <th class="text-center">
