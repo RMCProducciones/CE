@@ -30,6 +30,7 @@ use AppBundle\Entity\AsignacionBeneficiarioComiteVamosBien;
 use AppBundle\Entity\AsignacionBeneficiarioEstructuraOrganizacional;
 use AppBundle\Entity\AsignacionContadorGrupo;
 use AppBundle\Entity\AsignacionBeneficiarioVisitas;
+use AppBundle\Entity\SeguimientoGrupoSoporte;
 
 use AppBundle\Form\GestionEmpresarial\HabilitacionFasesType;
 use AppBundle\Form\GestionEmpresarial\SeguimientoMOTType;
@@ -39,6 +40,7 @@ use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalType;
 use AppBundle\Form\GestionEmpresarial\EvaluacionFasesSoporteType;
 use AppBundle\Form\GestionEmpresarial\EvaluacionFasesType;
 use AppBundle\Form\GestionEmpresarial\VisitaFilterType;
+use AppBundle\Form\GestionEmpresarial\SeguimientoGrupoSoporteType;
 
 
 
@@ -1426,6 +1428,146 @@ class SeguimientoGrupoController extends Controller
 
         return $this->redirectToRoute('evaluacionfaseSoporte', array( 'idEvaluacionFase' => $idEvaluacionFase));
         
+    }
+
+    /**    
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/documentos-soporte", name="seguimientoGrupoSoporte")
+     */
+    public function seguimientoGrupoSoporteAction(Request $request, $idGrupo, $idNodo)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $grupoSoporte = new SeguimientoGrupoSoporte();
+
+        $form = $this->createForm(new SeguimientoGrupoSoporteType(), $grupoSoporte);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $soportesActivos = $em->getRepository('AppBundle:SeguimientoGrupoSoporte')->findBy(
+            array('active' => '1', 'grupo' => $idGrupo, 'nodo' => $idNodo),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $histotialSoportes = $em->getRepository('AppBundle:SeguimientoGrupoSoporte')->findBy(
+            array('active' => '0', 'grupo' => $idGrupo, 'nodo' => $idNodo),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id' => $idNodo)
+        );
+
+        
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+
+
+                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+
+                    array(
+                        'descripcion' => $grupoSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'seguimiento_grupo_tipo_soporte'
+                    )
+                );
+
+            
+                $actualizarGrupoSoportes = $em->getRepository('AppBundle:SeguimientoGrupoSoporte')->findBy(
+                    array(
+                        'active' => '1' , 
+                        'tipo_soporte' => $tipoSoporte->getId(), 
+                        'grupo' => $idGrupo,
+                        'nodo' => $idNodo
+                    )
+                );  
+            
+                foreach ($actualizarGrupoSoportes as $actualizarGrupoSoporte){
+                    echo $actualizarGrupoSoporte->getId()." ".$actualizarGrupoSoporte->getTipoSoporte()."<br />";
+                    $actualizarGrupoSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarGrupoSoporte->setActive(0);
+                    $em->flush();
+                }
+
+                $grupoSoporte->setGrupo($grupo);
+                $grupoSoporte->setNodo($nodo);
+                $grupoSoporte->setActive(true);
+                $grupoSoporte->setFechaCreacion(new \DateTime());
+
+
+                $em->persist($grupoSoporte);
+
+                $em->flush();
+
+                return $this->redirectToRoute('seguimientoGrupoSoporte', array( 'idGrupo' => $idGrupo, 'idNodo' => $idNodo));
+            }
+        }   
+        
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:grupo-seguimiento-soporte.html.twig', 
+            array(
+                'form' => $form->createView(), 
+                'soportesActivos' => $soportesActivos, 
+                'histotialSoportes' => $histotialSoportes,
+                'grupo' => $grupo,
+                'idGrupo' => $idGrupo,
+                'idNodo' => $idNodo
+            )
+        );
+        
+    }
+    
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/documentos-soporte/{idGrupoSoporte}/borrar", name="seguimientoGrupoSoporteBorrar")
+     */
+    public function seguimientoGrupoSoporteBorrarAction(Request $request, $idGrupo, $idNodo, $idGrupoSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $grupoSoporte = new SeguimientoGrupoSoporte();
+        
+        $grupoSoporte = $em->getRepository('AppBundle:SeguimientoGrupoSoporte')->findOneBy(
+            array('id' => $idGrupoSoporte)
+        );
+        
+        $grupoSoporte->setFechaModificacion(new \DateTime());
+        $grupoSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('seguimientoGrupoSoporte', array( 'idGrupo' => $idGrupo, 'idNodo' => $idNodo));
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/documentos-soporte/{idGrupoSoporte}/descargar", name="seguimientoGrupoSoporteRecuperarArchivo")
+     */
+    public function seguimientoGrupoSoporteDescargarAction(Request $request, $idGrupo, $idNodo, $idGrupoSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $path = $em->getRepository('AppBundle:SeguimientoGrupoSoporte')->findOneBy(
+            array('id' => $idGrupoSoporte, 'nodo' => $idNodo));
+
+        $link = '..\uploads\documents\\'.$path->getPath();
+
+        header("Content-Disposition: attachment; filename=".$path->getPath()."");
+        header ("Content-Type: application/octet-stream");
+        header ("Content-Length: ".filesize($link));
+        readfile($link);           
+
     }
 
 }

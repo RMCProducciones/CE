@@ -300,3 +300,19 @@ app.controller('FiltrosCCCtrl', ['$scope', '$http', 'styleBuscarHerramientas', f
       
 		
 }]);
+
+app.controller('gestionDocumentoSoporteSeguimientoGrupoCtrl', ['$scope', '$location', function($scope, $location) {
+
+	$scope.idGrupo = 0;
+	$scope.idNodo = 0;
+	$scope.idGrupoSoporteActivo = 0;
+
+	$scope.anularSoporteSeguimientoGrupo = function() { 
+	
+		window.location.replace($scope.rutaServidor  + "gestion-empresarial/desarrollo-empresarial/grupo/" + $scope.idGrupo + "/seguimiento/" + $scope.idNodo + "/documentos-soporte/" + $scope.idGrupoSoporteActivo + "/borrar");
+		
+	};	
+
+
+
+}]);
