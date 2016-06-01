@@ -1263,9 +1263,9 @@ class SeguimientoGrupoController extends Controller
     } 
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/evaluacion-fase/{clearFinalizado}", name="evaluacionFase")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/evaluacion-fase/{clearFinalizado}", name="evaluacionFase")
      */
-    public function evaluacionFaseAction(Request $request, $idGrupo, $clearFinalizado)
+    public function evaluacionFaseAction(Request $request, $idGrupo, $idNodo, $clearFinalizado)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -1308,6 +1308,409 @@ class SeguimientoGrupoController extends Controller
                 array('idGrupo' => $idGrupo));
 
         }
+
+        $validacion = array(12);
+
+        $validacion[0] = true;
+
+        $query = $em->createQuery("
+            SELECT 
+                grupo.nombre,
+                documento_soporte.descripcion,
+                seguimiento_grupo_soporte.path
+            FROM AppBundle:Grupo grupo
+            INNER JOIN AppBundle:SeguimientoGrupoSoporte seguimiento_grupo_soporte WITH grupo.id = seguimiento_grupo_soporte.grupo
+            INNER JOIN AppBundle:DocumentoSoporte documento_soporte WITH seguimiento_grupo_soporte.tipo_soporte = documento_soporte.id
+            INNER JOIN AppBundle:Nodo nodo WITH seguimiento_grupo_soporte.nodo = nodo.id
+            WHERE 
+                seguimiento_grupo_soporte.active = 1
+                AND documento_soporte.dominio = 'seguimiento_grupo_tipo_soporte'
+                AND documento_soporte.abreviatura = 'FE'                                
+                AND grupo.id = :idGrupo
+                AND seguimiento_grupo_soporte.nodo = 14
+        ");
+
+        $query->setParameter('idGrupo', $idGrupo);                   
+
+        $elementos = $query->getResult();
+
+        //echo "<pre>";
+        //print_r($elementos);
+        //echo "</pre>";
+
+        //echo sizeof($elementos); 
+
+        if (sizeof($elementos) == 0) {
+            $validacion[0] = false;
+        }
+
+        $validacion[1] = true;
+
+        $query = $em->createQuery("
+            SELECT 
+                grupo.nombre,
+                documento_soporte.descripcion,
+                seguimiento_grupo_soporte.path
+            FROM AppBundle:Grupo grupo
+            INNER JOIN AppBundle:SeguimientoGrupoSoporte seguimiento_grupo_soporte WITH grupo.id = seguimiento_grupo_soporte.grupo
+            INNER JOIN AppBundle:DocumentoSoporte documento_soporte WITH seguimiento_grupo_soporte.tipo_soporte = documento_soporte.id
+            INNER JOIN AppBundle:Nodo nodo WITH seguimiento_grupo_soporte.nodo = nodo.id
+            WHERE 
+                seguimiento_grupo_soporte.active = 1
+                AND documento_soporte.dominio = 'seguimiento_grupo_tipo_soporte'
+                AND documento_soporte.abreviatura = 'FE'                                
+                AND grupo.id = :idGrupo
+                AND seguimiento_grupo_soporte.nodo = 20
+        ");
+
+        $query->setParameter('idGrupo', $idGrupo);                   
+
+        $elementos = $query->getResult();
+
+        //echo "<pre>";
+        //print_r($elementos);
+        //echo "</pre>";
+
+        //echo sizeof($elementos); 
+
+        if (sizeof($elementos) == 0) {
+            $validacion[1] = false;
+        }
+
+        $validacion[2] = true;
+
+        $query = $em->createQuery("
+            SELECT 
+                grupo.nombre,
+                documento_soporte.descripcion,
+                seguimiento_grupo_soporte.path
+            FROM AppBundle:Grupo grupo
+            INNER JOIN AppBundle:SeguimientoGrupoSoporte seguimiento_grupo_soporte WITH grupo.id = seguimiento_grupo_soporte.grupo
+            INNER JOIN AppBundle:DocumentoSoporte documento_soporte WITH seguimiento_grupo_soporte.tipo_soporte = documento_soporte.id
+            INNER JOIN AppBundle:Nodo nodo WITH seguimiento_grupo_soporte.nodo = nodo.id
+            WHERE 
+                seguimiento_grupo_soporte.active = 1
+                AND documento_soporte.dominio = 'seguimiento_grupo_tipo_soporte'
+                AND documento_soporte.abreviatura = 'FE'                                
+                AND grupo.id = :idGrupo
+                AND seguimiento_grupo_soporte.nodo = 26
+        ");
+
+        $query->setParameter('idGrupo', $idGrupo);                   
+
+        $elementos = $query->getResult();
+
+        //echo "<pre>";
+        //print_r($elementos);
+        //echo "</pre>";
+
+        //echo sizeof($elementos); 
+
+        if (sizeof($elementos) == 0) {
+            $validacion[2] = false;
+        }
+
+        $validacion[3] = true;
+
+        $query = $em->createQuery("
+            SELECT 
+                grupo.nombre,
+                documento_soporte.descripcion,
+                seguimiento_grupo_soporte.path
+            FROM AppBundle:Grupo grupo
+            INNER JOIN AppBundle:SeguimientoGrupoSoporte seguimiento_grupo_soporte WITH grupo.id = seguimiento_grupo_soporte.grupo
+            INNER JOIN AppBundle:DocumentoSoporte documento_soporte WITH seguimiento_grupo_soporte.tipo_soporte = documento_soporte.id
+            INNER JOIN AppBundle:Nodo nodo WITH seguimiento_grupo_soporte.nodo = nodo.id
+            WHERE 
+                seguimiento_grupo_soporte.active = 1
+                AND documento_soporte.dominio = 'seguimiento_grupo_tipo_soporte'
+                AND documento_soporte.abreviatura = 'CAC'                                
+                AND grupo.id = :idGrupo
+                AND seguimiento_grupo_soporte.nodo = 14
+        ");
+
+        $query->setParameter('idGrupo', $idGrupo);                   
+
+        $elementos = $query->getResult();
+
+        //echo "<pre>";
+        //print_r($elementos);
+        //echo "</pre>";
+
+        //echo sizeof($elementos); 
+
+        if (sizeof($elementos) == 0) {
+            $validacion[3] = false;
+        }
+
+        $validacion[4] = true;
+
+        $query = $em->createQuery("
+            SELECT 
+                grupo.nombre,
+                documento_soporte.descripcion,
+                seguimiento_grupo_soporte.path
+            FROM AppBundle:Grupo grupo
+            INNER JOIN AppBundle:SeguimientoGrupoSoporte seguimiento_grupo_soporte WITH grupo.id = seguimiento_grupo_soporte.grupo
+            INNER JOIN AppBundle:DocumentoSoporte documento_soporte WITH seguimiento_grupo_soporte.tipo_soporte = documento_soporte.id
+            INNER JOIN AppBundle:Nodo nodo WITH seguimiento_grupo_soporte.nodo = nodo.id
+            WHERE 
+                seguimiento_grupo_soporte.active = 1
+                AND documento_soporte.dominio = 'seguimiento_grupo_tipo_soporte'
+                AND documento_soporte.abreviatura = 'CAC'                                
+                AND grupo.id = :idGrupo
+                AND seguimiento_grupo_soporte.nodo = 20
+        ");
+
+        $query->setParameter('idGrupo', $idGrupo);                   
+
+        $elementos = $query->getResult();
+
+        //echo "<pre>";
+        //print_r($elementos);
+        //echo "</pre>";
+
+        //echo sizeof($elementos); 
+
+        if (sizeof($elementos) == 0) {
+            $validacion[4] = false;
+        }
+
+        $validacion[5] = true;
+
+        $query = $em->createQuery("
+            SELECT 
+                grupo.nombre,
+                documento_soporte.descripcion,
+                seguimiento_grupo_soporte.path
+            FROM AppBundle:Grupo grupo
+            INNER JOIN AppBundle:SeguimientoGrupoSoporte seguimiento_grupo_soporte WITH grupo.id = seguimiento_grupo_soporte.grupo
+            INNER JOIN AppBundle:DocumentoSoporte documento_soporte WITH seguimiento_grupo_soporte.tipo_soporte = documento_soporte.id
+            INNER JOIN AppBundle:Nodo nodo WITH seguimiento_grupo_soporte.nodo = nodo.id
+            WHERE 
+                seguimiento_grupo_soporte.active = 1
+                AND documento_soporte.dominio = 'seguimiento_grupo_tipo_soporte'
+                AND documento_soporte.abreviatura = 'CAC'                                
+                AND grupo.id = :idGrupo
+                AND seguimiento_grupo_soporte.nodo = 26
+        ");
+
+        $query->setParameter('idGrupo', $idGrupo);                   
+
+        $elementos = $query->getResult();
+
+        //echo "<pre>";
+        //print_r($elementos);
+        //echo "</pre>";
+
+        //echo sizeof($elementos); 
+
+        if (sizeof($elementos) == 0) {
+            $validacion[5] = false;
+        }
+
+
+        $validacion[6] = true;
+
+        $query = $em->createQuery("
+            SELECT 
+                grupo.nombre,
+                documento_soporte.descripcion,
+                seguimiento_grupo_soporte.path
+            FROM AppBundle:Grupo grupo
+            INNER JOIN AppBundle:SeguimientoGrupoSoporte seguimiento_grupo_soporte WITH grupo.id = seguimiento_grupo_soporte.grupo
+            INNER JOIN AppBundle:DocumentoSoporte documento_soporte WITH seguimiento_grupo_soporte.tipo_soporte = documento_soporte.id
+            INNER JOIN AppBundle:Nodo nodo WITH seguimiento_grupo_soporte.nodo = nodo.id
+            WHERE 
+                seguimiento_grupo_soporte.active = 1
+                AND documento_soporte.dominio = 'seguimiento_grupo_tipo_soporte'
+                AND documento_soporte.abreviatura = 'CA'                                
+                AND grupo.id = :idGrupo
+                AND seguimiento_grupo_soporte.nodo = 14
+        ");
+
+        $query->setParameter('idGrupo', $idGrupo);                   
+
+        $elementos = $query->getResult();
+
+        //echo "<pre>";
+        //print_r($elementos);
+        //echo "</pre>";
+
+        //echo sizeof($elementos); 
+
+        if (sizeof($elementos) == 0) {
+            $validacion[6] = false;
+        }
+
+        $validacion[7] = true;
+
+        $query = $em->createQuery("
+            SELECT 
+                grupo.nombre,
+                documento_soporte.descripcion,
+                seguimiento_grupo_soporte.path
+            FROM AppBundle:Grupo grupo
+            INNER JOIN AppBundle:SeguimientoGrupoSoporte seguimiento_grupo_soporte WITH grupo.id = seguimiento_grupo_soporte.grupo
+            INNER JOIN AppBundle:DocumentoSoporte documento_soporte WITH seguimiento_grupo_soporte.tipo_soporte = documento_soporte.id
+            INNER JOIN AppBundle:Nodo nodo WITH seguimiento_grupo_soporte.nodo = nodo.id
+            WHERE 
+                seguimiento_grupo_soporte.active = 1
+                AND documento_soporte.dominio = 'seguimiento_grupo_tipo_soporte'
+                AND documento_soporte.abreviatura = 'CA'                                
+                AND grupo.id = :idGrupo
+                AND seguimiento_grupo_soporte.nodo = 20
+        ");
+
+        $query->setParameter('idGrupo', $idGrupo);                   
+
+        $elementos = $query->getResult();
+
+        //echo "<pre>";
+        //print_r($elementos);
+        //echo "</pre>";
+
+        //echo sizeof($elementos); 
+
+        if (sizeof($elementos) == 0) {
+            $validacion[7] = false;
+        }
+
+        $validacion[8] = true;
+
+        $query = $em->createQuery("
+            SELECT 
+                grupo.nombre,
+                documento_soporte.descripcion,
+                seguimiento_grupo_soporte.path
+            FROM AppBundle:Grupo grupo
+            INNER JOIN AppBundle:SeguimientoGrupoSoporte seguimiento_grupo_soporte WITH grupo.id = seguimiento_grupo_soporte.grupo
+            INNER JOIN AppBundle:DocumentoSoporte documento_soporte WITH seguimiento_grupo_soporte.tipo_soporte = documento_soporte.id
+            INNER JOIN AppBundle:Nodo nodo WITH seguimiento_grupo_soporte.nodo = nodo.id
+            WHERE 
+                seguimiento_grupo_soporte.active = 1
+                AND documento_soporte.dominio = 'seguimiento_grupo_tipo_soporte'
+                AND documento_soporte.abreviatura = 'CA'                                
+                AND grupo.id = :idGrupo
+                AND seguimiento_grupo_soporte.nodo = 26
+        ");
+
+        $query->setParameter('idGrupo', $idGrupo);                   
+
+        $elementos = $query->getResult();
+
+        //echo "<pre>";
+        //print_r($elementos);
+        //echo "</pre>";
+
+        //echo sizeof($elementos); 
+
+        if (sizeof($elementos) == 0) {
+            $validacion[8] = false;
+        }
+
+
+        $validacion[9] = true;
+
+        $query = $em->createQuery("
+            SELECT 
+                grupo.nombre,
+                documento_soporte.descripcion,
+                seguimiento_grupo_soporte.path
+            FROM AppBundle:Grupo grupo
+            INNER JOIN AppBundle:SeguimientoGrupoSoporte seguimiento_grupo_soporte WITH grupo.id = seguimiento_grupo_soporte.grupo
+            INNER JOIN AppBundle:DocumentoSoporte documento_soporte WITH seguimiento_grupo_soporte.tipo_soporte = documento_soporte.id
+            INNER JOIN AppBundle:Nodo nodo WITH seguimiento_grupo_soporte.nodo = nodo.id
+            WHERE 
+                seguimiento_grupo_soporte.active = 1
+                AND documento_soporte.dominio = 'seguimiento_grupo_tipo_soporte'
+                AND documento_soporte.abreviatura = 'PC'                                
+                AND grupo.id = :idGrupo
+                AND seguimiento_grupo_soporte.nodo = 14
+        ");
+
+        $query->setParameter('idGrupo', $idGrupo);                   
+
+        $elementos = $query->getResult();
+
+        //echo "<pre>";
+        //print_r($elementos);
+        //echo "</pre>";
+
+        //echo sizeof($elementos); 
+
+        if (sizeof($elementos) == 0) {
+            $validacion[9] = false;
+        }
+
+        $validacion[10] = true;
+
+        $query = $em->createQuery("
+            SELECT 
+                grupo.nombre,
+                documento_soporte.descripcion,
+                seguimiento_grupo_soporte.path
+            FROM AppBundle:Grupo grupo
+            INNER JOIN AppBundle:SeguimientoGrupoSoporte seguimiento_grupo_soporte WITH grupo.id = seguimiento_grupo_soporte.grupo
+            INNER JOIN AppBundle:DocumentoSoporte documento_soporte WITH seguimiento_grupo_soporte.tipo_soporte = documento_soporte.id
+            INNER JOIN AppBundle:Nodo nodo WITH seguimiento_grupo_soporte.nodo = nodo.id
+            WHERE 
+                seguimiento_grupo_soporte.active = 1
+                AND documento_soporte.dominio = 'seguimiento_grupo_tipo_soporte'
+                AND documento_soporte.abreviatura = 'PC'                                
+                AND grupo.id = :idGrupo
+                AND seguimiento_grupo_soporte.nodo = 20
+        ");
+
+        $query->setParameter('idGrupo', $idGrupo);                   
+
+        $elementos = $query->getResult();
+
+        //echo "<pre>";
+        //print_r($elementos);
+        //echo "</pre>";
+
+        //echo sizeof($elementos); 
+
+        if (sizeof($elementos) == 0) {
+            $validacion[10] = false;
+        }
+
+        $validacion[11] = true;
+
+        $query = $em->createQuery("
+            SELECT 
+                grupo.nombre,
+                documento_soporte.descripcion,
+                seguimiento_grupo_soporte.path
+            FROM AppBundle:Grupo grupo
+            INNER JOIN AppBundle:SeguimientoGrupoSoporte seguimiento_grupo_soporte WITH grupo.id = seguimiento_grupo_soporte.grupo
+            INNER JOIN AppBundle:DocumentoSoporte documento_soporte WITH seguimiento_grupo_soporte.tipo_soporte = documento_soporte.id
+            INNER JOIN AppBundle:Nodo nodo WITH seguimiento_grupo_soporte.nodo = nodo.id
+            WHERE 
+                seguimiento_grupo_soporte.active = 1
+                AND documento_soporte.dominio = 'seguimiento_grupo_tipo_soporte'
+                AND documento_soporte.abreviatura = 'PC'                                
+                AND grupo.id = :idGrupo
+                AND seguimiento_grupo_soporte.nodo = 26
+        ");
+
+        $query->setParameter('idGrupo', $idGrupo);                   
+
+        $elementos = $query->getResult();
+
+        //echo "<pre>";
+        //print_r($elementos);
+        //echo "</pre>";
+
+        //echo sizeof($elementos); 
+
+        if (sizeof($elementos) == 0) {
+            $validacion[11] = false;
+        }
+
+
+
             
         return $this->render(
             'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:evaluacion-fases.html.twig', 
@@ -1315,7 +1718,9 @@ class SeguimientoGrupoController extends Controller
                     'form' => $form->createView(),
                     'grupo' => $grupo,
                     'clearFinalizado' => $clearFinalizado,
-                    'evaluacionFases' => $evaluacionFases
+                    'evaluacionFases' => $evaluacionFases,
+                    'idNodo' => $idNodo,
+                    'validacion' => $validacion
             )
         );
     }

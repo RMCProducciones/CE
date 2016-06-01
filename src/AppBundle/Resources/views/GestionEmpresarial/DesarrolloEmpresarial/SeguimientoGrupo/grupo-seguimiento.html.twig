@@ -839,9 +839,9 @@
             {% endfor %}
           
             {% if ultimoEstado == 1 %}
-              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '0'}) }}">Evaluación de fase</a></b>      
+              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'idNodo': 14, 'clearFinalizado': '0'}) }}">Evaluación de fase</a></b>      
             {% else %}
-              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '1'}) }}">Resultado de evaluación de fase</a></b>
+              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'idNodo': 14, 'clearFinalizado': '1'}) }}">Resultado de evaluación de fase</a></b>
               {% if ultimoEstado != 3 %} 
                 <br>
                 <br>
@@ -1002,9 +1002,9 @@
             {% endfor %}
           
             {% if ultimoEstado == 1 %}
-              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '0'}) }}">Evaluación de fase</a></b>      
+              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'idNodo' : 20, 'clearFinalizado': '0'}) }}">Evaluación de fase</a></b>      
             {% else %}
-              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '1'}) }}">Resultado de evaluación de fase</a></b> 
+              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'idNodo' : 20, 'clearFinalizado': '1'}) }}">Resultado de evaluación de fase</a></b> 
               {% if ultimoEstado != 3 %} 
                 <br>
                 <br>
@@ -1167,9 +1167,9 @@
             {% endfor %}
           
             {% if ultimoEstado == 1 %}
-              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '0'}) }}">Evaluación de fase</a></b>      
+              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'idNodo' : 20, 'clearFinalizado': '0'}) }}">Evaluación de fase</a></b>      
             {% else %}
-              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '1'}) }}">Resultado de evaluación de fase</a></b>
+              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'idNodo' : 20, 'clearFinalizado': '1'}) }}">Resultado de evaluación de fase</a></b>
               {% if ultimoEstado != 3 %} 
                 <br>
                 <br>

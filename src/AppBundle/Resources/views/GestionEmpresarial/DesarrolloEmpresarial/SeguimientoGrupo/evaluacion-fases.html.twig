@@ -91,17 +91,29 @@
 
                 <tr class="active text-muted" {% if clearFinalizado %}style="display:none;"{% endif %}>
                   <td>Calificación</td>
-                  <td class="text-center">                    
+                  <td class="text-center">
+                  {% if idNodo == 14 %}                    
                     {{ form_errors(form.calificacion_iea) }}
                     {{ form_widget(form.calificacion_iea) }}
+                  {% else %}
+                    {{ evaluacionFases.calificacionIea }}
+                  {% endif %}
                   </td>
                   <td class="text-center">
+                  {% if idNodo == 20 %}                    
                     {{ form_errors(form.calificacion_pi) }}
                     {{ form_widget(form.calificacion_pi) }}
+                  {% else %}
+                    {{ evaluacionFases.calificacionPi }}
+                  {% endif %}
                   </input></td>
                   <td class="text-center">
+                  {% if idNodo == 26 %}
                     {{ form_errors(form.calificacion_pn) }}
                     {{ form_widget(form.calificacion_pn) }}
+                  {% else %}                    
+                    {{ evaluacionFases.calificacionPn }}
+                  {% endif %}
                   </input></td>
                 </tr>
 
@@ -122,36 +134,84 @@
                     <td>
                     Formato de evaluación
                     </td>
-                    <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-                    <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-                    <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+                    {% if validacion[0] == true %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+                    {% else %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+                    {% endif %}
+                    {% if validacion[1] == true %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+                    {% else %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+                    {% endif %}
+                    {% if validacion[2] == true %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+                    {% else %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+                    {% endif %}
                 </tr>
 
                 <tr class="active text-muted">
                     <td>
                     Certificación aportes de contrapartida
                     </td>
-                    <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-                    <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-                    <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+                    {% if validacion[3] == true %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+                    {% else %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+                    {% endif %}
+                    {% if validacion[4] == true %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+                    {% else %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+                    {% endif %}
+                    {% if validacion[5] == true %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+                    {% else %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+                    {% endif %}
                 </tr>
 
                 <tr class="active text-muted">
                     <td>
                     Contrato de adhesión
                     </td>
-                    <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-                    <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-                    <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+                    {% if validacion[6] == true %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+                    {% else %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+                    {% endif %}
+                    {% if validacion[7] == true %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+                    {% else %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+                    {% endif %}
+                    {% if validacion[8] == true %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+                    {% else %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+                    {% endif %}
                 </tr>
 
                 <tr class="active text-muted">
                     <td>
                     Póliza de cumplimiento
                     </td>
-                    <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-                    <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-                    <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+                    {% if validacion[9] == true %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+                    {% else %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+                    {% endif %}
+                    {% if validacion[10] == true %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+                    {% else %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+                    {% endif %}
+                    {% if validacion[11] == true %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+                    {% else %}
+                      <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+                    {% endif %}
                 </tr>
 
                 <tr>
@@ -214,6 +274,9 @@
         </div>
       </div>
     </div>
+    {{ form_widget(form.calificacion_iea, { 'attr': {'style': 'opacity:0'} }) }} 
+    {{ form_widget(form.calificacion_pi, { 'attr': {'style': 'opacity:0'} }) }}   
+    {{ form_widget(form.calificacion_pn, { 'attr': {'style': 'opacity:0'} }) }}    
 
   {{ form_end(form) }}
                
