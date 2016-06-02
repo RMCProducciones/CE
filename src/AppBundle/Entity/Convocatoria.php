@@ -82,7 +82,7 @@ class Convocatoria
     
     public function __toString()
     {
-        return "Convocatoria No. ".$this->getNumero();
+        return "Convocatoria No. ".$this->getNumero()." del ".date_format($this->getFechaInicio(), 'Y/m/d');
     }
 
     /**

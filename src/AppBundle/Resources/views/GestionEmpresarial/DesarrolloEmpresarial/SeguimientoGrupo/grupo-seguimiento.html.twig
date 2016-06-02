@@ -839,16 +839,25 @@
             {% endfor %}
           
             {% if ultimoEstado == 1 %}
-              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '0'}) }}">Evaluación de fase</a></b>      
+              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'idNodo': 14, 'clearFinalizado': '0'}) }}">Evaluación de fase</a></b>      
             {% else %}
-              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '1'}) }}">Resultado de evaluación de fase</a></b>
+              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'idNodo': 14, 'clearFinalizado': '1'}) }}">Resultado de evaluación de fase</a></b>
               {% if ultimoEstado != 3 %} 
+                <br>
                 <br>
                 <b><a href="{{ path('seguimientofaseInicio', {'idGrupo': grupo.id, 'idNodo': 14}) }}">Nuevo inicio de Fase</a></b>       
               {% endif %}
             {% endif %}
 
-            <br>           
+            <br>    
+            <br> 
+            <b>Acciones</b>
+            <br>
+            <br>
+            <a href="{{path('seguimientoGrupoSoporte', {'idGrupo': grupo.id, 'idNodo' : 14}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"> Subir soportes</a>
+            <br>
+            <br>    
+
           </div>
 
           <div class="modal-footer">
@@ -993,14 +1002,25 @@
             {% endfor %}
           
             {% if ultimoEstado == 1 %}
-              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '0'}) }}">Evaluación de fase</a></b>      
+              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'idNodo' : 20, 'clearFinalizado': '0'}) }}">Evaluación de fase</a></b>      
             {% else %}
-              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '1'}) }}">Resultado de evaluación de fase</a></b> 
+              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'idNodo' : 20, 'clearFinalizado': '1'}) }}">Resultado de evaluación de fase</a></b> 
               {% if ultimoEstado != 3 %} 
+                <br>
                 <br>
                 <b><a href="{{ path('seguimientofaseInicio', {'idGrupo': grupo.id, 'idNodo': 20}) }}">Nuevo inicio de Fase</a></b>
               {% endif %}
             {% endif %}
+
+
+            <br>    
+            <br> 
+            <b>Acciones</b>
+            <br>
+            <br>
+            <a href="{{path('seguimientoGrupoSoporte', {'idGrupo': grupo.id, 'idNodo' : 20}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"> Subir soportes</a>
+            <br>
+            <br>    
 
             <br>           
           </div>
@@ -1147,14 +1167,26 @@
             {% endfor %}
           
             {% if ultimoEstado == 1 %}
-              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '0'}) }}">Evaluación de fase</a></b>      
+              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'idNodo' : 20, 'clearFinalizado': '0'}) }}">Evaluación de fase</a></b>      
             {% else %}
-              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'clearFinalizado': '1'}) }}">Resultado de evaluación de fase</a></b>
+              <b><a href="{{ path('evaluacionFase', {'idGrupo': grupo.id, 'idNodo' : 20, 'clearFinalizado': '1'}) }}">Resultado de evaluación de fase</a></b>
               {% if ultimoEstado != 3 %} 
+                <br>
                 <br>
                 <b><a href="{{ path('seguimientofaseInicio', {'idGrupo': grupo.id, 'idNodo': 26}) }}">Nuevo inicio de Fase</a></b>
               {% endif %}       
             {% endif %}
+
+
+
+            <br>    
+            <br> 
+            <b>Acciones</b>
+            <br>
+            <br>
+            <a href="{{path('seguimientoGrupoSoporte', {'idGrupo': grupo.id, 'idNodo' : 26}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"> Subir soportes</a>
+            <br>
+            <br>    
 
             <br>           
           </div>
