@@ -81,6 +81,14 @@
 
                   </div>
 
+                  <div class="col-md-3">
+
+                    {{ form_label(form.username) }}
+                    {{ form_errors(form.username) }}
+                    {{ form_widget(form.username, { 'attr': {'class': 'form-control', 'placeholder': 'Nombre de Usuario'} }) }}
+
+                  </div>
+
                   
         </div>
 
@@ -128,6 +136,8 @@
                     <th class="text-center">{{ knp_pagination_sortable(pagination, 'Username', 'a.Username') }}</th>
 
                     <th class="text-center">{{ knp_pagination_sortable(pagination, 'Email', 'a.email') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.acciones') }}</th>
+
 	                 
 	                </tr>
 	           </thead>
@@ -142,7 +152,11 @@
                     <td class="text-left">{{ usuario.primerNombre}} {{ usuario.SegundoNombre}} {{ usuario.PrimerApellido}} {{ usuario.SegundoApellido}}</td>
                         
                     <td class="text-left">{{ usuario.Username}}</td>   
-                    <td class="text-center">{{ usuario.email}}</td>      
+                    <td class="text-center">{{ usuario.email}}</td>   
+                    <td class="text-center">
+                      
+                      <a href="{{ path('beneficiarioGestion', {'idGrupo': usuario.id}) }}" alt="Beneficiarios" title="Beneficiarios"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a></td>
+                    
                     
                   </tr>
                   {% set consecutivo = consecutivo + 1 %}

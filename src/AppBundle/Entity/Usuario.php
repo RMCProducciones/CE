@@ -146,6 +146,19 @@ class Usuario extends BaseUser
     }
 
     /**
+     * Elimina un rol al usuario.
+     * @throws Exception
+     * @param Rol $rol 
+     */
+    public function deleteRole( $rol )
+    {
+        //unset($this->roles);
+        array_filter($this->roles);
+        //array_push($this->roles, 'a:0:{}');
+
+    }
+
+    /**
      * Get id
      *
      * @return integer

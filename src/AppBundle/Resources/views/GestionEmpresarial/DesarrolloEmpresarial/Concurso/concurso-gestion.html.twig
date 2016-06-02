@@ -219,43 +219,139 @@
 
 	{% for concurso in pagination %}
     <!-- Modal -->
-    <div class="modal fade" id="myModal{{ concurso.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+
+    <div class="modal fade" id="myModal{{  concurso.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content col-md-12 table-responsive">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ concurso.id }} | {{ concurso.tipo }}</h4>
+            <tr class="col-md-12 table-responsive">
+              <td><h4 class="modal-title text-center" id="myModalLabel">{{ concurso.tipo }}</h4><td>
+                            
+            </tr>
           </div>
-          <div class="modal-body">
-            <b>Tipo de Concurso:{{ concurso.tipo }}</b>
-            <br>
-            <b>Modalidad del Concurso: {{concurso.modalidad}}</b>
-            <br>
-            <b>Temática del Concurso: Oriente {{concurso.tematica}}</b>
-            <br>
-            <b>Ambito del Concurso: {{concurso.ambito}}</b>
-            <br>
-            <b>Problematica del Concurso: {{concurso.problematica}}</b>
-            <br>
-            <b>Actividades del Concurso: {{concurso.actividades}}</b>
-            <br>
-            <b>Resultados del Concurso: {{concurso.resultados}}</b>
-            <br>
-            <b>Valor del Concurso: {{concurso.valor}}</b>
-            <br>
-            <b>Distribución del Concurso: {{concurso.distribucion}}</b>
-            <br>
-            <b>Criterios del Concurso: {{concurso.criterios}}</b>            
-          </div>
+        </br>
+          <div class="col-md-12 table-responsive">
+          <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos del Contador</th>                    
+                </tr>
+              </thead>   
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
+              <tbody>    
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Tipo de Concurso:
+                  </td>         
+                  <td class="text-center">
+                    {{ concurso.tipo }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Modalidad del Concurso:
+                  </td>
+                  <td class="text-center">
+                    {{ concurso.modalidad }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Tematica del Concurso:
+                  </td>
+                  <td class="text-center">
+                    {{ concurso.tematica }}
+                  </td>
+              </tr>
+
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Ambito del concurso:
+                  </td>
+                  <td class="text-center">
+                   {{concurso.ambito}}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Problematica del Concurso:
+                  </td>
+                  <td class="text-center">
+                    {{concurso.problematica}}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Actividades del Concurso:
+                  </td>
+                  <td class="text-center">
+                   {{concurso.actividades}}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Resultado del Concurso
+                  </td>
+                  <td class="text-center">
+                    {{concurso.resultados}}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                   Valor del Concurso
+                  </td>
+                  <td class="text-center">
+                    {{concurso.valor}}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                   Distribución del Concurso:
+                  </td>
+                  <td class="text-center">
+                    {{concurso.distribucion}}
+                  </td>
+              </tr> 
+
+             
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Criterios del Concurso
+                  </td>
+                  <td class="text-center">
+                    {{concurso.criterios}}
+                  </td>
+              </tr> 
+            </div>
+          </tbody>  
+          </table>  
+           <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>  
+          </div>      
       </div>
     </div>
+  </div>
+  
+
+
+
+
+
     {% endfor %}           
 {% endblock %}
 

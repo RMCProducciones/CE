@@ -22,6 +22,7 @@ app.controller('FiltrosUsuarioCtrl', ['$scope', '$http', 'styleBuscarHerramienta
 		$("#usuarioFilter_numero_documento").val("");
 		$("#usuarioFilter_primer_apellido").val("");
 		$("#usuarioFilter_primer_nombre").val("");			
+		$("#usuarioFilter_username").val("");			
        
     }
       
