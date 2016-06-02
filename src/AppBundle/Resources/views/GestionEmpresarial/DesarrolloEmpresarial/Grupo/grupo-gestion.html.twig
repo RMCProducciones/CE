@@ -409,6 +409,26 @@
                   </td>
               </tr> 
 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                   Dirección:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.direccion }}
+                  </td>
+              </tr>
+
+              {% if grupo.descripcion != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Descripción:
+                  </td>
+                  <td class="text-center">
+                    {{ grupo.descripcion }}
+                  </td>
+              </tr> 
+              {% endif %}  
+
               {% if grupo.entidadFinancieraCuenta != null %} 
               <tr class="active text-muted">             
                   <td class="text-center">

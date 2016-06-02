@@ -46,5 +46,38 @@ app.controller('gestionActividadCtrl', ['$scope', '$http', function($scope, $htt
 
 }]);
 
+app.controller('FiltrosActividadCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasActividad = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaActividad = function(){
+
+       
+		$("#actividadFilter_actividad").val("");
+		$("#actividadFilter_mejoras").val("");
+		$("#actividadFilter_duracion").val("");
+
+				
+       
+    }
+      
+		
+}]);
+
+
 
 
