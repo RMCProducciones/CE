@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col-md-6">
               <div class="btn-group">
-                <a href="{{ path('comiteGestion') }}" class="btn btn-warning">Volver</a>                              
+                <a href="{{ path('concursoGestion') }}" class="btn btn-warning">Volver</a>                              
               </div>
             </div>
         </div>
@@ -171,110 +171,377 @@
 
 {% for integrante in integrantes %}
     <!-- Modal -->
-  <div class="modal fade" id="myModal{{ integrante.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+
+     <div class="modal fade" id="myModal{{  integrante.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content col-md-12 table-responsive">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ integrante.id }} | {{ integrante.primerNombre }} {{ integrante.segundoNombre }} {{ integrante.primerApellido }} {{ integrante.segundoApellido }}</h4>
+            <tr class="col-md-12 table-responsive">
+              <td><h4 class="modal-title text-center" id="myModalLabel">{{ integrante.id }} | {{ integrante.primerNombre }} {{ integrante.segundoNombre }} {{ integrante.primerApellido }} {{ integrante.segundoApellido }}</h4><td>
+                            
+            </tr>
           </div>
-          <div class="modal-body">
-            <b>Tipo de documento:{{ integrante.tipoDocumento }}</b>
-            <br>
-            <b>Numero de documento: {{ integrante.numeroDocumento }}</b>
-            <br>
-            <b>Primer apellido: {{ integrante.primerApellido }}</b>
-            <br>
-            <b>Segundo apellido: {{ integrante.segundoApellido }}</b>
-            <br>
-            <b>Primer nombre: {{ integrante.primerNombre }}</b>
-            <br>
-            <b>Segundo nombre: {{ integrante.segundoNombre }}</b>
-            <br>
-            <b>Genero: {{ integrante.genero }}</b>
-            <br>
-            <b>Fecha de nacimiento: {{ integrante.fechaNacimiento |  date('d - m - Y') }}</b>
-            <br>
-            <b>Entidad: {{ integrante.entidad }}</b>
-            <br>
-            <b>Cargo: {{ integrante.cargo }}</b>            
-            <br>
-            <b>Dirección:  {{ integrante.direccion }}</b>
-            <br>
-            <b>Telefono fijo: {{ integrante.telefonoFijo }}</b>
-            <br>
-            <b>Telefono celular: {{ integrante.telefonoCelular }}</b>
-            <br>
-            <b>Correo electrónico: {{ integrante.correoElectronico }}</b>
-            <br>
-            <b>Nivel de estudios: {{ integrante.nivelEstudios }}</b>
-            <br>
-            <b>Pertenencia étnica: {{ integrante.pertenenciaEtnica }}</b>        
-          </div>
+        </br>
+          <div class="col-md-12 table-responsive">
+          <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos del Integrante</th>                    
+                </tr>
+              </thead>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
+              <tbody>    
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Tipo de Documento
+                  </td>         
+                  <td class="text-center">
+                    {{ integrante.tipoDocumento }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Número Documento
+                  </td>
+                  <td class="text-center">
+                    {{ integrante.numeroDocumento }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                   Primer Apellido
+                  </td>
+                  <td class="text-center">
+                    {{ integrante.primerApellido }}
+                  
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Segundo Apellido
+                  </td>
+                  <td class="text-center">
+                   {{ integrante.segundoApellido }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Primer Nombre
+                  </td>
+                  <td class="text-center">
+                   {{ integrante.primerNombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Segundo Nombre
+                  </td>
+                  <td class="text-center">
+                   {{ integrante.segundoNombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Genero
+                  </td>
+                  <td class="text-center">
+                   {{ integrante.genero }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Fecha Nacimiento
+                  </td>
+                  <td class="text-center">
+                   {{ integrante.fechaNacimiento |  date('d - m - Y')  }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Entidad
+                  </td>
+                  <td class="text-center">
+                   {{ integrante.entidad }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Cargo
+                  </td>
+                  <td class="text-center">
+                   {{ integrante.cargo }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Dirección
+                  </td>
+                  <td class="text-center">
+                   {{ integrante.direccion }}
+                  </td>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Fijo
+                  </td>
+                  <td class="text-center">
+                   {{ integrante.telefonoFijo }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Celular
+                  </td>
+                  <td class="text-center">
+                   {{ integrante.telefonoCelular }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Correo Electronico
+                  </td>
+                  <td class="text-center">
+                   {{ integrante.correoElectronico }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Nivel de Estudios
+                  </td>
+                  <td class="text-center">
+                   {{ integrante.nivelEstudios }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Pertenencia Etnica
+                  </td>
+                  <td class="text-center">
+                   {{ integrante.pertenenciaEtnica }}
+                  </td>
+              </tr>
+              </tbody>  
+          </table>  
+           <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>  
+          </div>      
       </div>
     </div>
+  </div>
+ 
 {% endfor %}   
 
 {% for asignacionIntegranteComite in asignacionesIntegranteComite %}
     <!-- Modal -->
-  <div class="modal fade" id="myModal{{ asignacionIntegranteComite.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+
+     <div class="modal fade" id="myModal{{  asignacionIntegranteComite.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content col-md-12 table-responsive">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ asignacionIntegranteComite.integrante.id }} | {{asignacionIntegranteComite.rol}} | {{ asignacionIntegranteComite.integrante.primerNombre }} {{ asignacionIntegranteComite.integrante.segundoNombre }} {{ asignacionIntegranteComite.integrante.primerApellido }} {{ asignacionIntegranteComite.integrante.segundoApellido }}</h4>
+            <tr class="col-md-12 table-responsive">
+              <td><h4 class="modal-title text-center" id="myModalLabel">{{ asignacionIntegranteComite.integrante.id }} | {{ asignacionIntegranteComite.integrante.primerNombre }} {{ asignacionIntegranteComite.integrante.segundoNombre }} {{ asignacionIntegranteComite.integrante.primerApellido }} {{ asignacionIntegranteComite.integrante.segundoApellido }}</h4><td>
+                            
+            </tr>
           </div>
-          <div class="modal-body">
-            <b>Tipo de documento:{{ asignacionIntegranteComite.integrante.tipoDocumento }}</b>
-            <br>
-            <b>Numero de documento: {{ asignacionIntegranteComite.integrante.numeroDocumento }}</b>
-            <br>
-            <b>Primer apellido: {{ asignacionIntegranteComite.integrante.primerApellido }}</b>
-            <br>
-            <b>Segundo apellido: {{ asignacionIntegranteComite.integrante.segundoApellido }}</b>
-            <br>
-            <b>Primer nombre: {{ asignacionIntegranteComite.integrante.primerNombre }}</b>
-            <br>
-            <b>Segundo nombre: {{ asignacionIntegranteComite.integrante.segundoNombre }}</b>
-            <br>
-            <b>Genero: {{ asignacionIntegranteComite.integrante.genero }}</b>
-            <br>
-            <b>Fecha de nacimiento: {{ asignacionIntegranteComite.integrante.fechaNacimiento |  date('d - m - Y') }}</b>
-            <br>
-            <b>Entidad: {{ asignacionIntegranteComite.integrante.entidad }}</b>
-            <br>
-            <b>Cargo: {{ asignacionIntegranteComite.integrante.cargo }}</b>            
-            <br>
-            <b>Rol: {{ asignacionIntegranteComite.rol }}</b>            
-            <br>
-            <b>Dirección:  {{ asignacionIntegranteComite.integrante.direccion }}</b>
-            <br>
-            <b>Telefono fijo: {{ asignacionIntegranteComite.integrante.telefonoFijo }}</b>
-            <br>
-            <b>Telefono celular: {{ asignacionIntegranteComite.integrante.telefonoCelular }}</b>
-            <br>
-            <b>Correo electrónico: {{ asignacionIntegranteComite.integrante.correoElectronico }}</b>
-            <br>
-            <b>Nivel de estudios: {{ asignacionIntegranteComite.integrante.nivelEstudios }}</b>
-            <br>
-            <b>Pertenencia étnica: {{ asignacionIntegranteComite.integrante.pertenenciaEtnica }}</b>        
-          </div>
+        </br>
+          <div class="col-md-12 table-responsive">
+          <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos del Integrante</th>                    
+                </tr>
+              </thead>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
+              <tbody>    
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Tipo de Documento
+                  </td>         
+                  <td class="text-center">
+                    {{ asignacionIntegranteComite.integrante.tipoDocumento }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Número Documento
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionIntegranteComite.integrante.numeroDocumento }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                   Primer Apellido
+                  </td>
+                  <td class="text-center">
+                    {{ asignacionIntegranteComite.integrante.primerApellido }}
+                  
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Segundo Apellido
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionIntegranteComite.integrante.segundoApellido }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Primer Nombre
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionIntegranteComite.integrante.primerNombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Segundo Nombre
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionIntegranteComite.integrante.segundoNombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Genero
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionIntegranteComite.integrante.genero }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Fecha Nacimiento
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionIntegranteComite.integrante.fechaNacimiento |  date('d - m - Y')  }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Entidad
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionIntegranteComite.integrante.entidad }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Cargo
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionIntegranteComite.integrante.cargo }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Dirección
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionIntegranteComite.integrante.direccion }}
+                  </td>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Fijo
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionIntegranteComite.integrante.telefonoFijo }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Celular
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionIntegranteComite.integrante.telefonoCelular }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Correo Electronico
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionIntegranteComite.integrante.correoElectronico }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Nivel de Estudios
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionIntegranteComite.integrante.nivelEstudios }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Pertenencia Etnica
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionIntegranteComite.integrante.pertenenciaEtnica }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Rol
+                  </td>
+                  <td class="text-center">
+                   {{ asignacionIntegranteComite.rol }}
+                  </td>
+              </tr>
+              </tbody>  
+          </table>  
+           <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>  
+          </div>      
       </div>
     </div>
+  </div>
+ 
 {% endfor %} 
 
 {% for integrante in integrantes %}

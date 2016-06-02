@@ -164,8 +164,15 @@ app.controller('FormalCtrl', ['$scope', function($scope) {
 
 	$scope.mostrarFormal = false;	
 
+
+	$scope.initInfoFormal = function(){
+		$scope.Tipo = $( "#grupo_tipo option:selected" ).val();
+		$scope.mostrarFormal = $(".tipo option[value='"+$('.tipo').val()+"']").text().toLowerCase() == "formal con negocio" || $(".tipo option[value='"+$('.tipo').val()+"']").text().toLowerCase() == "formal sin negocio";			
+
+	}	
+
 	$scope.infoFormal = function() { 
-		$scope.mostrarFormal = $(".tipo option[value='"+$('.tipo').val()+"']").text().toLowerCase() == "formal con negocio" ||$(".tipo option[value='"+$('.tipo').val()+"']").text().toLowerCase() == "formal sin negocio";			
+		$scope.mostrarFormal = $(".tipo option[value='"+$('.tipo').val()+"']").text().toLowerCase() == "formal con negocio" || $(".tipo option[value='"+$('.tipo').val()+"']").text().toLowerCase() == "formal sin negocio";			
 	};	
 
 }]);
@@ -292,4 +299,20 @@ app.controller('FiltrosCCCtrl', ['$scope', '$http', 'styleBuscarHerramientas', f
     }
       
 		
+}]);
+
+app.controller('gestionDocumentoSoporteSeguimientoGrupoCtrl', ['$scope', '$location', function($scope, $location) {
+
+	$scope.idGrupo = 0;
+	$scope.idNodo = 0;
+	$scope.idGrupoSoporteActivo = 0;
+
+	$scope.anularSoporteSeguimientoGrupo = function() { 
+	
+		window.location.replace($scope.rutaServidor  + "gestion-empresarial/desarrollo-empresarial/grupo/" + $scope.idGrupo + "/seguimiento/" + $scope.idNodo + "/documentos-soporte/" + $scope.idGrupoSoporteActivo + "/borrar");
+		
+	};	
+
+
+
 }]);

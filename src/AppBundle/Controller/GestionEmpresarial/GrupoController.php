@@ -201,7 +201,11 @@ class GrupoController extends Controller
 
         $nit = explode("-", $grupo->getNumeroIdentificacionTributaria());
 
+        //print_r($nit);
+        //echo count($nit);
+
         if($grupo->getTipo()->getDescripcion() == 'No Formal con negocio'|| $grupo->getTipo()->getDescripcion() == 'No Formal Sin Negocio'){
+            $nit[0] = 0;
             $nit[1] = 0;
         }
 
@@ -288,8 +292,8 @@ class GrupoController extends Controller
                     'form' => $form->createView(),
                     'idGrupo' => $idGrupo,
                     'grupo' => $grupo,
-                    'numeroIdentificacion' => $nit[0],
-                    'digitoVerificacion' => $nit[1],
+                    'numeroIdentificacionGrupo' => $nit[0],
+                    'digitoVerificacionGrupo' => $nit[1],
 
             )
         );
@@ -789,11 +793,22 @@ class GrupoController extends Controller
                 $asignacionBeneficiarioEstructuraOrganizacional->setFechaCreacion(new \DateTime());
                 $asignacionBeneficiarioEstructuraOrganizacional->setActive(0);
 
+                $rolExistente =  $em->getRepository('AppBundle:AsignacionBeneficiarioEstructuraOrganizacional')->findBy(
+                    array('grupo' => $idGrupo,
+                          'rol' => $rolBeneficiario)
+                );                
 
-                $em->persist($asignacionBeneficiarioEstructuraOrganizacional);
-                $em->flush();
+                if(sizeof($rolExistente) == 1){
+                     $this->addFlash('danger', 'El rol ya se encuentra asignado');
+                     return $this->redirectToRoute('grupoBeneficiarioOrganizacional', array( 'idGrupo' => $idGrupo));
+                }else{
+                    $em->persist($asignacionBeneficiarioEstructuraOrganizacional);
+                    $em->flush();
+                    $this->addFlash('success', 'Rol asignado');
+                    return $this->redirectToRoute('grupoBeneficiarioOrganizacional', array( 'idGrupo' => $idGrupo));
+                }
 
-                return $this->redirectToRoute('grupoBeneficiarioOrganizacional', array( 'idGrupo' => $idGrupo));
+                
 
             }
 

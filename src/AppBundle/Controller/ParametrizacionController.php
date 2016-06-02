@@ -18,13 +18,17 @@ use AppBundle\Entity\Rol;
 use AppBundle\Entity\Usuario;
 
 use AppBundle\Form\Backend\Parametrizacion\RolType;
+use AppBundle\Form\Backend\Parametrizacion\RolFilterType;
 use AppBundle\Form\Backend\Parametrizacion\UsuarioFilterType;
+use AppBundle\Form\Backend\Parametrizacion\UsuarioAsignacionFilterType;
 
 
 
 
 class ParametrizacionController extends Controller
 {
+
+    
 
 
     /**
@@ -68,25 +72,6 @@ class ParametrizacionController extends Controller
 
     }   
 
-    /**
-     * @Route("/backend/rol/gestion", name="rolGestion")
-     */
-    public function rolGestionAction()
-    {
-
-        $em = $this->getDoctrine()->getManager();
-
-        $roles = $em->getRepository('AppBundle:Rol')->findBy(
-            array('active' => '1'),
-            array('rol' => 'ASC')
-        );
-
-        return $this->render(
-            'AppBundle:Backend/Parametrizacion:rol-gestion.html.twig',
-            array( 'roles' => $roles) 
-        );
-
-    }
 
     /**
      * @Route("/backend/rol/nuevo", name="rolNuevo")
@@ -144,6 +129,8 @@ class ParametrizacionController extends Controller
             )
         );
     }
+
+
 
     /**
      * @Route("/backend/rol/editar/{idRol}", name="rolEditar")
@@ -248,10 +235,13 @@ class ParametrizacionController extends Controller
     }
 
 
+    
+
+
 
 
     /**
-     * @Route("/parametrizacion/usuario", name="usuarioGestion")
+     * @Route("/parametrizacion/usuario/gestion", name="usuarioGestion")
      */
     public function usuarioGestionAction(Request $request)
     {

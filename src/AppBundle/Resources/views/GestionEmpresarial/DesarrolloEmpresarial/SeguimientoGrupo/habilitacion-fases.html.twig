@@ -54,6 +54,12 @@
     
     
     <br>
+	<pre>
+		{% for item in query %}    
+			{{item.id}}
+		{% endfor %}
+	</pre>    
+    <br>
 
     <div class="section">
       <div class="container">        
@@ -109,18 +115,33 @@
 
 	                <tr class="active text-muted">
 	                  	<td>Acta de interés</td>
-					  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                	{% if validacion[3] == true %}
+		                	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+		                	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+		                	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+		                	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+	                	{% else %}
+		                	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  		<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                	{% endif %}
+					  	
 	                </tr>
 
 	                <tr class="active text-muted">
 	                  	<td>Formato registro de beneficiarios</td>
-					  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+					  	{% if validacion[4] == true %}
+		                	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+		                	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+		                	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+		                	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+	                	{% else %}
+		                	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  		<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                	{% endif %}
 	                </tr>
 
         	        <tr>
@@ -129,80 +150,112 @@
 
 	                <tr class="active text-muted">
 	                  	<td>Certificación bancaria</td>
-					  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+					  	{% if validacion[5] == true %}
+		                	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+		                	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+		                	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+		                	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+	                	{% else %}
+		                	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  		<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                	{% endif %}
         	        </tr>
 
 	                <tr class="active text-muted">
 	                  	<td>Certificado de Existencia (Camara de Comercio)</td>
-					  	<td class="text-center"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td class="text-center"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+	                  	{% if validacion[6] == true %}
+						  	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+		                  	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+		                {% else %}
+		                	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+		                  	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+		                 {% endif %}
         	        </tr>
 
 	                <tr class="active text-muted">
 	                  	<td>Registro Único Tributario (RUT)</td>
-					  	<td class="text-center"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td class="text-center"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+						{% if validacion[7] == true %}
+						  	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+		                  	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+		                {% else %}
+		                	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+		                  	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+		                 {% endif %}
         	        </tr>
 
 	                <tr class="active text-muted">
 	                  	<td>Declaración de renta (Año anterior)</td>
-					  	<td class="text-center"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td class="text-center"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+					  	{% if validacion[8] == true %}
+						  	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+		                  	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+		                {% else %}
+		                	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+		                  	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+		                 {% endif %}
         	        </tr>
 
 	                <tr class="active text-muted">
 	                  	<td>Balance general y estado de resultados</td>
-					  	<td class="text-center"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td class="text-center"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+					  	{% if validacion[9] == true %}
+						  	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+		                  	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+		                {% else %}
+		                	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+		                  	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+		                 {% endif %}
         	        </tr>
 
 	                <tr class="active text-muted">
 	                  	<td>Antecedentes disciplinarios (Procuraduría)</td>
-					  	<td class="text-center"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td class="text-center"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+					  	{% if validacion[10] == true %}
+						  	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+		                  	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+		                {% else %}
+		                	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+		                  	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+		                 {% endif %}
         	        </tr>
 
 	                <tr class="active text-muted">
 	                  	<td>Antecedentes fiscales (Contraloría)</td>
-					  	<td class="text-center"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td class="text-center"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+					  	{% if validacion[11] == true %}
+						  	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+		                  	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
+		                {% else %}
+		                	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+		                  	<td class="text-center"></td>
+		                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
+		                 {% endif %}
         	        </tr>
 
         	        <tr>
 	                  	<th colspan="6" class="text-center bg-primary">Requisitos del representante legal</th>
 	                </tr>
-
-	                <tr class="active text-muted">
-	                  	<td>Registro Único Tributario (RUT)</td>
-					  	<td class="text-center"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td class="text-center"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-        	        </tr>
-
-	                <tr class="active text-muted">
-	                  	<td>Formato de no RUT</td>
-					  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td class="text-center"></td>
-	                  	<td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
-	                  	<td class="text-center"></td>
-        	        </tr>
-
 	                <tr class="active text-muted">
 	                  	<td>Antecedentes disciplinarios (Procuraduría)</td>
 					  	<td class="text-center"></td>
