@@ -24,20 +24,90 @@
   </div>
 
   <br />
-  <div class="section">
+   <div class="section" ng-controller="FiltrosActividadCtrl">
       <div class="container">
-        <div class="row">
+        <div class="row" >
+          
           <div class="col-md-6">
             <div class="btn-group">
               <a href="{{ path('concursoGestion') }}" class="btn btn-warning">Volver</a>
-              <a href="{{ path('actividadConcurso')}}" class="btn btn-success">Nuevo</a>
+              <a href="{{ path('actividadConcurso') }}" class="btn btn-success">Nuevo</a>              
             </div>
-
-          
           </div>
+
+          <div class="col-md-4">
+          </div>
+
+          <div class="col-md-2">
+            <div class="btn-group [[styleBuscarHerramientas]]">              
+                
+                <button class="btn btn-info" ng-click="buttonBuscarHerramientasActividad(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
+              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaActividad();">Limpiar</button>                            
+            </div>
+          </div>
+
         </div>
       </div>
-    </div>  
+    <br />
+
+      <div class="container well" ng-show="CountBuscarHerramientas === 1">
+
+        <form method="get" action="{{ path('actividadGestion')}}">               
+                  
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+        {{ form_errors(form) }}
+
+        <div class="row">          
+
+            
+
+                  <div class="col-md-3">
+                  
+                    {{ form_label(form.actividad) }}
+                    {{ form_errors(form.actividad) }}
+                    {{ form_widget(form.actividad, { 'attr': {'class': 'form-control', 'placeholder': 'Actividad'} }) }}
+
+                  </div>
+
+                  <div class="col-md-3">
+
+                    {{ form_label(form.mejoras) }}
+                    {{ form_errors(form.mejoras) }}
+                    {{ form_widget(form.mejoras, { 'attr': {'class': 'form-control', 'placeholder': 'Mejoras'} }) }}
+
+                  </div>
+
+                  <div class="col-md-3">
+
+                    {{ form_label(form.duracion) }}
+                    {{ form_errors(form.duracion) }}
+                    {{ form_widget(form.duracion, { 'attr': {'class': 'form-control', 'placeholder': 'Duración'} }) }}
+
+                  </div>
+
+                 
+
+        </div>
+
+        <br />        
+
+        <div class="row">    
+
+                  <div class="col-md-12 text-right">
+
+                  <button class="btn btn-default" style="color:white; background-color:#ccc;"  type="submit" name="submit-filter" value="filter"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+
+                  </div>                  
+        </div>
+
+        {{ form_end(form) }}
+
+        </form>
+
+      </div>
+
+    </div>
 
 
     <div class="container">
@@ -110,37 +180,97 @@
       </div>
     </div>  
 
-	{% for actividad in actividad %}
+	{% for actividad in pagination %}
     <!-- Modal -->
-    <div class="modal fade" id="myModal{{ actividad.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+
+     <div class="modal fade" id="myModal{{  actividad.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content col-md-12 table-responsive">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ actividad.id }} | {{ actividad.actividad}}</h4>
+            <tr class="col-md-12 table-responsive">
+              <td><h4 class="modal-title text-center" id="myModalLabel">{{ actividad.id }} | {{ actividad.actividad}}</h4><td>
+                            
+            </tr>
           </div>
-          <div class="modal-body">
-            <b>Actividad:{{ actividad.actividad}}</b>
-            <br>
-            <b>Mejoras: {{ actividad.mejoras}}</b>
-            <br>
-            <b>Recursos: {{ actividad.recursos }}</b>
-            <br>
-            <b>Duracion: {{ actividad.duracion }}</b>
-            <br>
-            <b>Semana de inicio : {{ actividad.semanainicio}}</b>
-			<br>
-            <b>Semana de Finalización: {{ actividad.semanafinalizacion }}</b>
-          </div>
+        </br>
+          <div class="col-md-12 table-responsive">
+          <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos de la actividad</th>                    
+                </tr>
+              </thead>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
+              <tbody>    
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Actividad:
+                  </td>         
+                  <td class="text-center">
+                    {{ actividad.actividad}}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Mejoras
+                  </td>
+                  <td class="text-center">
+                    {{ actividad.mejoras}}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Recursos
+                  </td>
+                  <td class="text-center">
+                     {{ actividad.recursos }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                   Duración
+                  </td>
+                  <td class="text-center">
+                   {{ actividad.duracion }}                  
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Semana de Inicio
+                  </td>
+                  <td class="text-center">
+                   {{ actividad.semanainicio}}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Semana de Finalización
+                  </td>
+                  <td class="text-center">
+                   {{ actividad.semanafinalizacion }}
+                  </td>
+              </tr>
+            </tbody>  
+          </table>  
+           <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>  
+          </div>      
       </div>
     </div>
+  </div>
+
     {% endfor %}  
        
 {% endblock %}

@@ -184,43 +184,122 @@
     </div>  
 
 
-    {% for article in pagination %}
+    {% for feria in pagination %}
     <!-- Modal -->
-    <div class="modal fade" id="myModal{{ article.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+
+     <div class="modal fade" id="myModal{{  feria.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content col-md-12 table-responsive">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ article.id }} | {{ article.tipo }}</h4>
+            <tr class="col-md-12 table-responsive">
+              <td><h4 class="modal-title text-center" id="myModalLabel">{{ feria.id }} | {{ feria.tipo}}</h4><td>
+                            
+            </tr>
           </div>
-          <div class="modal-body">
-            <b>Tipo de Concurso: {{ article.tipo }}</b>
-            <br>
-            <b>Fecha de Inscripción: {{ article.fechaPropuesta |  date('d - m - Y') }}</b>
-            <br>
-            <b>Municipio: {{article.municipio}}</b>
-            <br>
-            <b>Lugar: {{article.lugar}}</b>
-            <br>
-            <b>Nombre: {{article.nombre}}</b>
-            <br>
-            <b>Entidades: {{article.entidades}}</b>
-            <br>
-            <b>Presentación Feria: {{article.presentacion}}</b>
-            <br>
-            <b>Objetivo Feria: {{article.objetivo}}</b>
-            <br>
-            <b>Objetivos Especificos Feria: {{article.objetivosEspecificos}}</b>   
-          </div>
+        </br>
+          <div class="col-md-12 table-responsive">
+          <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos de la Feria</th>                    
+                </tr>
+              </thead>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
+              <tbody>    
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Tipo de Feria:
+                  </td>         
+                  <td class="text-center">
+                    {{ feria.tipo }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                   Fecha de Inscripción
+                  </td>
+                  <td class="text-center">
+                    {{ feria.fechaPropuesta |  date('d - m - Y') }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Municipio
+                  </td>
+                  <td class="text-center">
+                     {{feria.municipio}}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                   Lugar
+                  </td>
+                  <td class="text-center">
+                   {{feria.lugar}}                  
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Nombre
+                  </td>
+                  <td class="text-center">
+                   {{ feria.nombre}}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                   Entidades
+                  </td>
+                  <td class="text-center">
+                   {{feria.entidades}}
+                  </td>
+              </tr>
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                   Presentación Feria:
+                  </td>
+                  <td class="text-center">
+                   {{feria.presentacion}}
+                  </td>
+              </tr>
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                   Objetivo Feria
+                  </td>
+                  <td class="text-center">
+                   {{feria.objetivo}}
+                  </td>
+              </tr>
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                   Objetivos Especificos Feria
+                  </td>
+                  <td class="text-center">
+                   {{feria.objetivosEspecificos}}
+                  </td>
+              </tr>
+            </tbody>  
+          </table>  
+           <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>  
+          </div>      
       </div>
     </div>
+  </div>
+
+    
     {% endfor %}           
 
 
