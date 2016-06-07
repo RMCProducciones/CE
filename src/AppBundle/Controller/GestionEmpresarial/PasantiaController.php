@@ -359,40 +359,14 @@ class PasantiaController extends Controller
             $territorioAsignado = null;
         }       
 
+        $form = $this->get('form.factory')->create(new PasantiaTerritorioFilterType());        
+
         if($pasantia->getTerritorioAprendizaje() == null){            
-            $query = $em->createQuery('
-                SELECT 
-                    t 
-                FROM 
-                    AppBundle:TerritorioAprendizaje t 
-                WHERE 
-                    t.id NOT IN (
-                        SELECT 
-                            territorioAprendizaje.id 
-                        FROM 
-                            AppBundle:TerritorioAprendizaje territorioAprendizaje 
-                            JOIN AppBundle:Pasantia pasantia 
-                        WHERE 
-                            territorioAprendizaje = pasantia.territorio_aprendizaje 
-                            AND pasantia.territorio_aprendizaje = :territorio_aprendizaje
-                            AND pasantia.id = :idPasantia
-                    ) 
-                    AND t.active = 1
-            ');
-
-            $query->setParameter('territorio_aprendizaje', $pasantia);
-            $query->setParameter('idPasantia', $idPasantia);
-            $territorios = $query->getResult();
-
-        }else{
-            $territorios = array(); 
-        }
-
-        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            $filterBuilder = $this->get('doctrine.orm.entity_manager')
             ->getRepository('AppBundle:TerritorioAprendizaje')
             ->createQueryBuilder('q');
 
-        $form = $this->get('form.factory')->create(new PasantiaTerritorioFilterType());
+        
 
         if ($request->query->has($form->getName())) {
             
@@ -416,6 +390,11 @@ class PasantiaController extends Controller
         ->setParameter('idPasantia', $idPasantia);
 
         $query = $filterBuilder->getQuery();
+
+        }else{
+            $query = array(); 
+        }
+        
 
         $paginator1  = $this->get('knp_paginator');
 
