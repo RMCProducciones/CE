@@ -114,7 +114,7 @@
 	                   <th class="text-center">{{ knp_pagination_sortable(pagination, 'Nombre', 'a.nombre') }}</th>
 	                   <th class="text-center">{{ knp_pagination_sortable(pagination, 'Tipo', 'a.tipo') }}</th>
 	                   <th class="text-center">{{ knp_pagination_sortable(pagination, 'Modalidad', 'a.modalidad') }}</th>
-	                   <th class="text-left">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.acciones') }}</th>
+	                   <th class="text-center">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.acciones') }}</th>
 	                </tr>
 	           </thead>
 	           <tbody>
@@ -132,7 +132,7 @@
                     <td class="text-center">{{article.modalidad}}</td>
 	         
 	                  
-	                  <td>
+	                  <td class="text-center">
 	                   
 					    
               <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ article.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
@@ -169,41 +169,122 @@
       </div>
     </div>  
 
-	{% for beca in becas %}
+	{% for beca in pagination %}
     <!-- Modal -->
-    <div class="modal fade" id="myModal{{ beca.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal fade" id="myModal{{  beca.id  }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content col-md-12 table-responsive">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel"> {{ beca.id }} | {{ beca.nombre }}</h4>
+            <tr class="col-md-12 table-responsive">
+              <td><h4 class="modal-title text-center" id="myModalLabel">{{ beca.id }} | {{ beca.nombre }}
+                            
+            </tr>
           </div>
-          <div class="modal-body">            
-            <b>Fecha de la publicacion: {{ beca.fechaPublicacion |  date('d - m - Y') }}</b>
-            <br>
-            <b>Fecha de inicio de la beca: {{ beca.fechaInicio |  date('d - m - Y') }}</b>
-            <br>
-            <b>Fecha de finalizacion de la beca: {{ beca.fechaFinalizacion |  date('d - m - Y') }}</b>
-            <br>
-			<b>Tipo de beca: {{ beca.tipo }}</b>
-            <br>
-			<b>Entidad: {{ beca.entidad }}</b>
-            <br>
-            <b>Nombre de la beca: {{ beca.nombre }}</b>
-            <br>            
-            <b>Municipio: {{ beca.municipio }}</b>
-            <br>
-            <b>Modalidad: {{ beca.modalidad }}</b>        
-          </div>
+        </br>
+          <div class="col-md-12 table-responsive">
+          <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos de la Beca</th>                    
+                </tr>
+              </thead>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
+              <tbody>            
+
+
+            <tr class="active text-muted">            
+                    
+                  <td class="text-center">                    
+                    Fecha de la Publicación
+                  </td>         
+                  <td class="text-center">
+                    {{ beca.fechaPublicacion |  date('d - m - Y') }}
+                  </td>
+              </tr>
+
+            <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Fecha de Inicio de la Beca
+                  </td>         
+                  <td class="text-center">
+                    {{ beca.fechaInicio |  date('d - m - Y') }}
+                  </td>
+              </tr>
+
+           <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                   Fecha de Finalización de la Beca
+                  </td>         
+                  <td class="text-center">
+                    {{ beca.fechaFinalizacion |  date('d - m - Y') }}
+                  </td>
+              </tr>
+
+          <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Tipo de Beca
+                  </td>         
+                  <td class="text-center">
+                    {{ beca.tipo }}
+                  </td>
+              </tr>
+
+          <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                   Entidad
+                  </td>         
+                  <td class="text-center">
+                    {{ beca.entidad }}
+                  </td>
+              </tr>
+
+          <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                   Nombre de la Beca
+                  </td>         
+                  <td class="text-center">
+                    {{ beca.nombre }}
+                  </td>
+              </tr> 
+
+          <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Municipio
+                  </td>         
+                  <td class="text-center">
+                    {{ beca.municipio }}
+                  </td>
+              </tr>
+
+
+            <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                   Modalidad
+                  </td>         
+                  <td class="text-center">
+                    {{ beca.modalidad }}
+                  </td>
+              </tr> 
+              </tbody>  
+          </table>  
+           <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>  
+          </div>      
       </div>
     </div>
+  </div>
     {% endfor %}           
 {% endblock %}
 

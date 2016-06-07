@@ -345,7 +345,7 @@
  {% for asignacionGrupoPasantia in asignacionesGrupoPasantia %}
     <!-- Modal -->
     
-     <div class="modal fade" id="myModal{{ asignacionesGrupoPasantia.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+     <div class="modal fade" id="myModal{{ asignacionGrupoPasantia.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content col-md-12 table-responsive">
           <div class="modal-header">
@@ -353,7 +353,7 @@
               <span aria-hidden="true">×</span>
             </button>
             <tr class="col-md-12 table-responsive">
-              <td><h4 class="modal-title text-center" id="myModalLabel">{{ asignacionesGrupoPasantia.grupo.codigo }} {{ asignacionesGrupoPasantia.grupo.nombre }}</h4>        
+              <td><h4 class="modal-title text-center" id="myModalLabel">{{ asignacionGrupoPasantia.codigo }} {{ asignacionGrupoPasantia.nombre }}</h4>        
               
             </tr>
           </div>
@@ -374,7 +374,7 @@
                     Departamento:
                   </td>         
                   <td class="text-center">
-                    {{ asignacionesGrupoPasantia.grupo.municipio.departamento.nombre }}
+                    {{ asignacionGrupoPasantia.municipio.departamento.nombre }}
                   </td>
               </tr>
 
@@ -383,7 +383,7 @@
                     Municipio:
                   </td>
                   <td class="text-center">
-                    {{ asignacionesGrupoPasantia.grupo.municipio }}
+                    {{ asignacionGrupoPasantia.municipio }}
                   </td>
               </tr>
 
@@ -392,7 +392,7 @@
                     Zona:
                   </td>
                   <td class="text-center">
-                    {{ asignacionesGrupoPasantia.grupo.municipio.zona.nombre }}
+                    {{ asignacionGrupoPasantia.municipio.zona.nombre }}
                   </td>
               </tr>
             <tr class="active text-muted">             
@@ -400,7 +400,7 @@
                     Tipo de grupo:
                   </td>
                   <td class="text-center">
-                    {{ asignacionesGrupoPasantia.grupo.tipo }}
+                    {{ asignacionGrupoPasantia.tipo }}
                   </td>
               </tr>
             <tr class="active text-muted">             
@@ -408,8 +408,8 @@
                     Codigo de grupo:
                   </td>
                   <td class="text-center">
-                    {% if asignacionesGrupoPasantia.grupo.codigo != null %}
-                      {{ asignacionesGrupoPasantia.grupo.codigo }}
+                    {% if asignacionGrupoPasantia.codigo != null %}
+                      {{ asignacionGrupoPasantia.codigo }}
                     {% else %}
                       No habilitado
                     {% endif %}
@@ -421,7 +421,7 @@
                     Nombre grupo:
                   </td>
                   <td class="text-center">
-                    {{ asignacionesGrupoPasantia.grupo.nombre }}
+                    {{ asignacionGrupoPasantia.nombre }}
                   </td>
               </tr>
 
@@ -430,18 +430,18 @@
                    Dirección:
                   </td>
                   <td class="text-center">
-                    {{ asignacionesGrupoPasantia.grupo.direccion }}
+                    {{ asignacionGrupoPasantia.direccion }}
                   </td>
               </tr>
            
             
-            {% if asignacionesGrupoPasantia.grupo.fechaConstitucionLegal != null %}
+            {% if asignacionGrupoPasantia.fechaConstitucionLegal != null %}
               <tr class="active text-muted">             
                   <td class="text-center">
                     NIT:
                   </td>
                   <td class="text-center">
-                    {{ asignacionesGrupoPasantia.grupo.numeroIdentificacionTributaria }}
+                    {{ asignacionGrupoPasantia.numeroIdentificacionTributaria }}
                   </td>
               </tr>
               {% endif %}
@@ -451,7 +451,7 @@
                     Telefono Movil:
                   </td>
                   <td class="text-center">
-                    {{ asignacionesGrupoPasantia.grupo.telefonoCelular }}
+                    {{ asignacionGrupoPasantia.telefonoCelular }}
                   </td>
               </tr>
 
@@ -460,40 +460,40 @@
                     Telefono Fijo:
                   </td>
                   <td class="text-center">
-                    {{ asignacionesGrupoPasantia.grupo.telefonoFijo }}
+                    {{ asignacionGrupoPasantia.telefonoFijo }}
                   </td>
               </tr> 
 
-            {% if asignacionesGrupoPasantia.grupo.entidadFinancieraCuenta != null %} 
+            {% if asignacionGrupoPasantia.entidadFinancieraCuenta != null %} 
               <tr class="active text-muted">             
                   <td class="text-center">
                     Cuenta Bancaria:
                   </td>
                   <td class="text-center">
-                    {{ asignacionesGrupoPasantia.grupo.entidadFinancieraCuenta }}
+                    {{ asignacionGrupoPasantia.entidadFinancieraCuenta }}
                   </td>
               </tr> 
               {% endif %}
               
-             {% if asignacionesGrupoPasantia.grupo.tipoCuenta != null %} 
+             {% if asignacionGrupoPasantia.tipoCuenta != null %} 
               <tr class="active text-muted">             
                   <td class="text-center">
                     Tipo de cuenta:
                   </td>
                   <td class="text-center">
-                    {{ asignacionesGrupoPasantia.grupo.tipoCuenta }}
+                    {{ asignacionGrupoPasantia.tipoCuenta }}
                   </td>
               </tr>              
               {% endif %}  
 
 
-              {% if asignacionesGrupoPasantia.grupo.numeroCuenta != null %} 
+              {% if asignacionGrupoPasantia.numeroCuenta != null %} 
               <tr class="active text-muted">             
                   <td class="text-center">
                     Numero de cuenta:
                   </td>
                   <td class="text-center">
-                    {{ asignacionesGrupoPasantia.grupo.numeroCuenta }}
+                    {{ asignacionGrupoPasantia.numeroCuenta }}
                   </td>
               </tr>  
               {% endif %}              
