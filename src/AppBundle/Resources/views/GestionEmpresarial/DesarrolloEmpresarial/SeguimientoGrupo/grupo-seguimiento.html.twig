@@ -700,6 +700,7 @@
             <br>
 
             {% set ultimoEstado = 0 %}
+            {% set siguienteNodo = 0 %}
 
             {% for nodoCamino in camino %}
               {% if nodoCamino.nodo.id == 10 %}
@@ -707,12 +708,23 @@
                   {% set ultimoEstado = nodoCamino.estado %}
 
               {% endif %}
+
+              {% if nodoCamino.nodo.id == 11 %}
+                
+                  {% set siguienteNodo = nodoCamino.estado %}
+
+              {% endif %}
+
             {% endfor %}
           
             {% if ultimoEstado == 1 %}
               <span class="alert alert-info">Se podrá registrar la fecha de inicio del MOT una vez halla finalizado el CLEAR</span>     
             {% else %}
-              <b><a href="{{ path('seguimientoMotInicio', {'idGrupo': grupo.id, 'idNodo' : 10}) }}">Nuevo Inicio de MOT</a></b>        
+              {% if siguienteNodo == 1 %}
+                <b><a href="{{ path('seguimientoMotInicio', {'idGrupo': grupo.id, 'idNodo' : 10}) }}">Nuevo Inicio de MOT</a></b>
+              {% else %}
+                <b><a href="{{ path('seguimientoMotVisualizar', {'idGrupo': grupo.id, 'idNodo' : 10}) }}">Visualizar Inicio de MOT</a></b>
+              {% endif %}
             {% endif %}
 
             <br>
@@ -801,7 +813,23 @@
             <b>Grupo No Formal</b>
             <br>
             <br>
-            <b><a href="{{ path('seguimientoMotCierre', {'idGrupo': grupo.id, 'idNodo' : 12}) }}">Nuevo Cierre de MOT</a></b>
+
+            {% set ultimoEstado = 0 %}            
+
+            {% for nodoCamino in camino %}
+              {% if nodoCamino.nodo.id == 10 %}
+                
+                  {% set ultimoEstado = nodoCamino.estado %}
+
+              {% endif %}
+
+            {% endfor %}
+            
+            {% if ultimoEstado == 1 %}
+                <b><a href="{{ path('seguimientoMotCierre', {'idGrupo': grupo.id, 'idNodo' : 12}) }}">Nuevo Cierre de MOT</a></b>
+              {% else %}
+                <b><a href="{{ path('seguimientoMotVisualizar', {'idGrupo': grupo.id, 'idNodo' : 12}) }}">Visualizar Cierre de MOT</a></b>
+              {% endif %}
             <br>           
           </div>
 
@@ -828,12 +856,12 @@
             <br>
             <br>
 
-            {% set ultimoEstado = 0 %}
+            {% set ultimoEstado = 0 %}            
 
             {% for nodoCamino in camino %}
               {% if nodoCamino.nodo.id == 14 %}
                 
-                  {% set ultimoEstado = nodoCamino.estado %}
+                  {% set ultimoEstado = nodoCamino.estado %}                  
 
               {% endif %}
             {% endfor %}
