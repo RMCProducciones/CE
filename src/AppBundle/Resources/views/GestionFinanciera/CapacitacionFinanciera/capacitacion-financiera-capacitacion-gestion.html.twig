@@ -53,7 +53,7 @@
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Modulo', 'a.modulo') }}</th>
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Estado', 'a.estado') }}</th>
 	                 
-                    <th class="text-left">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.acciones') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.acciones') }}</th>
 	                </tr>
 	           </thead>
 	           <tbody>
@@ -69,7 +69,7 @@
                     <td class="text-center">{{article.modulo }}</td>
                     <td class="text-center">{{article.estado}}</td>      
                     
-	                  <td>
+	                  <td class="text-center">
 
 	                   <a href="{{ path('capacitacionFinancieraSoporte', {'idCapacitacionFinanciera': article.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> 
 

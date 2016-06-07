@@ -123,7 +123,7 @@
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Fecha Registro', 'a.fechaRegistro') }}</th>
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Fecha Inicio', 'a.fechainicio') }}</th>
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Estado', 'a.estado') }}</th>
-	                  <th class="text-left">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.acciones') }}</th>
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.acciones') }}</th>
 	                </tr>
 	           </thead>
 	           <tbody>
@@ -140,7 +140,7 @@
 
                        	                                
 	         	                  
-	                  <td>
+	                  <td class="text-center">
 
                      <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ article.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
                 
@@ -183,34 +183,88 @@
 
 	{% for ahorro in pagination %}
     <!-- Modal -->
-    <div class="modal fade" id="myModal{{ ahorro.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+     <div class="modal fade" id="myModal{{ ahorro.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content col-md-12 table-responsive">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ ahorro.id }} | {{ ahorro.grupo }}</h4>
+            <tr class="col-md-12 table-responsive">
+              <td><h4 class="modal-title text-center" id="myModalLabel">{{ ahorro.id }} | {{ ahorro.grupo }}</h4></td>
+             </tr>
           </div>
-          <div class="modal-body">
-            <b>Grupo: {{ ahorro.grupo }}</b>
-            <br>
-            <b>Fecha de registro: {{ ahorro.fechaRegistro |  date('d - m - Y') }}</b>
-            <br>
-            <b>Fecha de inicio: {{ ahorro.fechaInicio |  date('d - m - Y') }}</b>
-            <br>
-            <b>Estado: {{ ahorro.estado }}</b>
-            <br>
-            <b>Incentivo ahorro colectivo: {{ ahorro.incentivoAhorroColectivo }}</b>
-            <br>            
-          </div>
+        </br>
+          <div class="col-md-12 table-responsive">
+          <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos del ahorro</th>                    
+                </tr>
+              </thead>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
+              <tbody>
+
+                 <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Grupo:
+                  </td>         
+                  <td class="text-center">
+                    {{ ahorro.grupo }}
+                  </td>
+              </tr>
+
+               <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Fecha de Registro:
+                  </td>         
+                  <td class="text-center">
+                     {{ ahorro.fechaRegistro |  date('d - m - Y') }}
+                  </td>
+              </tr>
+
+               <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Fecha de Inicio:
+                  </td>         
+                  <td class="text-center">
+                     {{ ahorro.fechaInicio |  date('d - m - Y') }}
+                  </td>
+              </tr>
+
+               <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Estado
+                  </td>         
+                  <td class="text-center">
+                     {{ ahorro.estado }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Incentivo Ahorro Colectivo
+                  </td>         
+                  <td class="text-center">
+                     {{ ahorro.incentivoAhorroColectivo }}
+                  </td>
+              </tr>
+              </tbody>  
+          </table>  
+           <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>  
+          </div>      
       </div>
     </div>
+  </div>
+
     {% endfor %}           
 {% endblock %}
 

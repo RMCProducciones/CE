@@ -134,7 +134,7 @@
                   {{ form_label(form.joven_rural) }}<br/>
 				  {{ form_errors(form.joven_rural) }}
 				    <switch id="swJovenRural" name="swJovenRural" ng-model="swJovenRural" class="green" on="Si" off="No"></switch>
-					{{ form_widget(form.joven_rural, { 'attr': {'style':'visibility:visible'} }) }}   				  
+					{{ form_widget(form.joven_rural, { 'attr': {'style':'visibility:hidden'} }) }}   				  
                 </div>
                 <div class="col-md-4">
                   {{ form_label(form.pertenencia_etnica) }}
@@ -234,13 +234,13 @@
                   <label>Talento Ministerio Agricultura y Desarrollo Rural</label><br/>
 				  {{ form_errors(form.talento_madr) }}
                   <switch id="swTalento" name="swTalento" ng-model="swTalento" class="green" on="Si" off="No"></switch>
-				  {{ form_widget(form.talento_madr, { 'attr': {'style':'visibility:visible'} }) }}
+				  {{ form_widget(form.talento_madr, { 'attr': {'style':'visibility:hidden'} }) }}
                 </div>
                 <div class="col-md-4">
                   {{ form_label(form.talento_otros_lugares) }}<br/>
 				  {{ form_errors(form.talento_otros_lugares) }}
                   <switch id="swlugares" name="swlugares" ng-model="swlugares" class="green" on="Si" off="No"></switch>
-				  {{ form_widget(form.talento_otros_lugares, { 'attr': {'style':'visibility:visible'} }) }}
+				  {{ form_widget(form.talento_otros_lugares, { 'attr': {'style':'visibility:hidden'} }) }}
                 </div> 
                 <div class="col-md-4">
                   {{ form_label(form.actividad_participado) }}

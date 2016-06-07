@@ -122,7 +122,7 @@
 
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Nombre Capacitador', 'a.capacitador') }}</th>
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Tipo Capacitacion', 'a.tipo') }}</th>
-	                  <th class="text-left">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.Acciones') }}</th>
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.Acciones') }}</th>
 	                </tr>
 	           </thead>
 	           <tbody>
@@ -140,7 +140,7 @@
                     <td class="text-center">{{article.tipo}}</td>
 	         
 	                  
-	                  <td>
+	                  <td class="text-center">
 
 	                   <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ article.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
                    
@@ -177,41 +177,128 @@
       </div>
     </div>  
 
-	{% for capacitacion in capacitaciones %}
+	{% for capacitacion in pagination %}
     <!-- Modal -->
-    <div class="modal fade" id="myModal{{ capacitacion.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+
+    <div class="modal fade" id="myModal{{  capacitacion.id  }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content col-md-12 table-responsive">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ capacitacion.id }} | {{ capacitacion.nombre }}</h4>
+            <tr class="col-md-12 table-responsive">
+              <td><h4 class="modal-title text-center" id="myModalLabel">{{ capacitacion.id }} | {{ capacitacion.nombre }}
+                            
+            </tr>
           </div>
-          <div class="modal-body">
-            <b>Capacitador: {{ capacitacion.capacitador }}</b>
-            <br>
-            <b>Nombre de la capacitacion: {{ capacitacion.nombre }}</b>
-            <br>
-            <b>Fecha de la publicacion: {{ capacitacion.fechaPublicacion |  date('d - m - Y') }}</b>
-            <br>
-            <b>Fecha de inicio de la capacitacion: {{ capacitacion.fechaInicio |  date('d - m - Y') }}</b>
-            <br>
-            <b>Fecha de finalizacion de la capacitacion: {{ capacitacion.fechaFinalizacion |  date('d - m - Y') }}</b>
-            <br>
-            <b>Tipo de capacitacion: {{ capacitacion.tipo }}</b>
-            <br>
-            <b>Municipio: {{ capacitacion.municipio }}</b>
-            <br>
-            <b>Modalidad: {{ capacitacion.modalidad }}</b>           
-          </div>
+        </br>
+          <div class="col-md-12 table-responsive">
+          <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos de la Capacitación</th>                    
+                </tr>
+              </thead>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
+              <tbody>            
+
+
+
+          <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                   Nombre de la Capacitación
+                  </td>         
+                  <td class="text-center">
+                    {{ capacitacion.nombre }}
+                  </td>
+              </tr> 
+
+              .
+
+          <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                   Nombre del Capacitador
+                  </td>         
+                  <td class="text-center">
+                    {{ capacitacion.capacitador }}
+                  </td>
+              </tr> 
+
+
+            <tr class="active text-muted">            
+                    
+                  <td class="text-center">                    
+                    Fecha de la Publicación
+                  </td>         
+                  <td class="text-center">
+                    {{ capacitacion.fechaPublicacion |  date('d - m - Y') }}
+                  </td>
+              </tr>
+
+            <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Fecha de Inicio de la Capacitación
+                  </td>         
+                  <td class="text-center">
+                    {{ capacitacion.fechaInicio |  date('d - m - Y') }}
+                  </td>
+              </tr>
+
+           <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                   Fecha de Finalización de la Capacitación
+                  </td>         
+                  <td class="text-center">
+                    {{ capacitacion.fechaFinalizacion |  date('d - m - Y') }}
+                  </td>
+              </tr>
+
+          <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Tipo de Capacitación
+                  </td>         
+                  <td class="text-center">
+                    {{ capacitacion.tipo }}
+                  </td>
+              </tr>
+
+
+          <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Municipio
+                  </td>         
+                  <td class="text-center">
+                    {{ capacitacion.municipio }}
+                  </td>
+              </tr>
+
+
+            <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                   Modalidad
+                  </td>         
+                  <td class="text-center">
+                    {{ capacitacion.modalidad }}
+                  </td>
+              </tr> 
+              </tbody>  
+          </table>  
+           <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>  
+          </div>      
       </div>
     </div>
+  </div>
    {% endfor %}             
 {% endblock %}
 

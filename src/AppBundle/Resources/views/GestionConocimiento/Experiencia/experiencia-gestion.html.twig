@@ -109,7 +109,7 @@
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Fecha de Registro Experiencia', 'a.fecharegistro') }}</th>
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Grupo', 'a.grupo') }}</th>
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Calificacion', 'a.calificacion') }}</th>
-	                  <th class="text-left">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.acciones') }}</th>
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.acciones') }}</th>
 	                </tr>
 	           </thead>
 	           <tbody>
@@ -130,7 +130,7 @@
 	                  </td>
 	         
 	                  
-	                  <td>  
+	                  <td class="text-center">  
                       
                      <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ article.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
 	            
@@ -170,51 +170,167 @@
       </div>
     </div>  
 
-	{% for experienciaexitosa in experienciaexitosas %}
+	{% for experienciaexitosa in pagination %}
     <!-- Modal -->
-    <div class="modal fade" id="myModal{{ experienciaexitosa.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+     <div class="modal fade" id="myModal{{ experienciaexitosa.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content col-md-12 table-responsive">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ experienciaexitosa.id }} | {{ experienciaexitosa.fechaRegistro |  date('d - m - Y') }}</h4>
+            <tr class="col-md-12 table-responsive">
+              <td><h4 class="modal-title text-center" id="myModalLabel">{{ experienciaexitosa.id }} | {{ experienciaexitosa.fechaRegistro |  date('d - m - Y') }}</h4></td>
+             </tr>
           </div>
-          <div class="modal-body">
-            <b>Fecha de registro: {{ experienciaexitosa.fechaRegistro |  date('d - m - Y') }}</b>
-            <br>
-            <b>Numero de empleos: {{ experienciaexitosa.numeroEmpleos }}</b>
-            <br>
-            <b>Ventas mes: {{ experienciaexitosa.ventasMes }}</b>
-            <br>
-			<b>Produccion Mensual: {{ experienciaexitosa.produccionMensual }}</b>
-            <br>
-			<b>Fuentes de Financiacion: {{ experienciaexitosa.fuentesFinanciacion }}</b>
-            <br>
-            <b>Valor de recursos de la financiacion: {{ experienciaexitosa.valorRecursosFinanciacion }}</b>
-            <br>            
-            <b>Tipo de poblacion: {{ experienciaexitosa.tipoPoblacion }}</b>
-            <br>
-            <b>Proceso productivo: {{ experienciaexitosa.procesoProductivo }}</b>    
-			<br>
-            <b>Testimonio de poblacion: {{ experienciaexitosa.testimonioPoblacion }}</b>     
-			<br>
-            <b>Acciones de minimización del impacto ambiental: {{ experienciaexitosa.accionesMinimizacionImpactoAmbiental }}</b>     
-			<br>
-            <b>Impacto en la comunidad: {{ experienciaexitosa.impactoComunidad }}</b>     
-			<br>
-            <b>Innovacion: {{ experienciaexitosa.innovacion }}</b>     
-			<br>
-            <b>Observaciones: {{ experienciaexitosa.observaciones }}</b> 			
-          </div>
+        </br>
+          <div class="col-md-12 table-responsive">
+          <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos de la Experiencia</th>                    
+                </tr>
+              </thead>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
+              <tbody>
+    
+            <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Fecha de Registro:
+                  </td>         
+                  <td class="text-center">
+                     {{ experienciaexitosa.fechaRegistro |  date('d - m - Y') }}
+                  </td>
+              </tr>
+            
+            <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Número de Empleos
+                  </td>         
+                  <td class="text-center">
+                     {{ experienciaexitosa.numeroEmpleos }}
+                  </td>
+              </tr>
+           
+           <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Ventas Mes
+                  </td>         
+                  <td class="text-center">
+                     {{ experienciaexitosa.ventasMes }}
+                  </td>
+              </tr>
+           <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                   Producción Mensual
+                  </td>         
+                  <td class="text-center">
+                     {{ experienciaexitosa.produccionMensual }}
+                  </td>
+          </tr>
+          <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Fuentes de Financiación
+                  </td>         
+                  <td class="text-center">
+                     {{ experienciaexitosa.fuentesFinanciacion }}
+                  </td>
+          </tr>
+            
+          <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Valor de Recursos de la Financiación
+                  </td>         
+                  <td class="text-center">
+                     {{ experienciaexitosa.valorRecursosFinanciacion }}
+                  </td>
+              </tr>
+           
+            <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Tipo de Población
+                  </td>         
+                  <td class="text-center">
+                     {{ experienciaexitosa.tipoPoblacion }}
+                  </td>
+              </tr>
+            
+            <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Proceso Productivo
+                  </td>         
+                  <td class="text-center">
+                     {{ experienciaexitosa.procesoProductivo }}
+                  </td>
+              </tr>    
+
+            <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Testimonio de Población
+                  </td>         
+                  <td class="text-center">
+                    {{ experienciaexitosa.testimonioPoblacion }}
+                  </td>
+            </tr>  
+
+            <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Acciones de Minimización del Imnpacto Ambiental
+                  </td>         
+                  <td class="text-center">
+                     {{ experienciaexitosa.accionesMinimizacionImpactoAmbiental }}
+                  </td>
+              </tr>
+
+            <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Impacto en la comunidad
+                  </td>         
+                  <td class="text-center">
+                     {{ experienciaexitosa.impactoComunidad }}
+                  </td>
+            </tr>  
+
+            <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Innovación
+                  </td>         
+                  <td class="text-center">
+                     {{ experienciaexitosa.innovacion }}
+                  </td>
+              </tr>
+
+            <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Observaciones
+                  </td>         
+                  <td class="text-center">
+                     {{ experienciaexitosa.observaciones }}
+                  </td>
+            </tr>			
+          </tbody>  
+          </table>  
+           <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>  
+          </div>      
       </div>
     </div>
+  </div>
     {% endfor %}           
 {% endblock %}
 
