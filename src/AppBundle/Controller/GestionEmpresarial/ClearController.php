@@ -248,6 +248,8 @@ class ClearController extends Controller
         
         if ($this->getRequest()->isMethod('POST')) {
             $form->bind($this->getRequest());
+            echo $this->getRequest()->isMethod('POST');
+            jksdfhjkdfdasf;
             if ($form->isValid()) {
 
                 $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
