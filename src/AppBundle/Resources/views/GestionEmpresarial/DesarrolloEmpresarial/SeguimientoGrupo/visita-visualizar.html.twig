@@ -1,0 +1,426 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+{% block title %}Visita{% endblock %}
+
+{% block breadcrumb_ul %}
+
+    <ul class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Parametrizacion</li>
+      <li>Territorios de Aprendizaje</li>
+      <li><a href="{{ path('rutaGestion') }}">Visita</a></li>
+      
+    </ul>
+
+{% endblock %}
+
+
+{% block section %}
+<div class="container">
+    <h1>Visitas</h1>
+    <hr>
+    <h3> Visualizar Visita</h3>
+    <br />
+    <br />
+  </div>
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="btn-group">
+  
+              <a href="#" class="btn btn-success">Editar</a>
+              
+              <a href="{{ path('seguimientoGrupo' , {'idGrupo':idGrupo}) }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <br>
+        
+
+
+    <div class="section">
+      <div class="container">
+        
+		
+			<div class="row">
+				<div class="col-md-12">
+					<fieldset>
+						<legend>Datos básicos de la Visita</legend>
+					</fieldset>            
+				</div>
+			</div>	
+
+<div class="row">
+	<div class="col-md-4">
+
+          Fecha de la Visita:
+          <br />
+          {{visita.fecha |  date('d - m - Y') }}
+
+  </div>
+                
+  <div class="col-md-4">
+
+          Objetivo de la Visita:
+          <br />
+          {{visita.objetivo}}
+          
+  </div>
+  <div class="col-md-4">
+
+          Agenda de la Visita:
+          <br />
+          {{visita.agenda}}
+
+  </div>         
+</div>
+<br>
+
+<div class="row">
+  <div class="col-md-4">
+
+          Lugar de la Visita:
+          <br />
+          {{visita.lugar}}
+
+  </div>
+                
+  <div class="col-md-4">
+
+          Numero asistentes de la Visita:
+          <br />
+          {{visita.asistentes}}
+
+  </div>
+           
+</div>
+
+</br>
+</br>
+
+<div class="row">
+        <div class="col-md-12">
+          <fieldset>
+            <legend>Comite de Compras</legend>
+          </fieldset>            
+        </div>
+      </div>
+
+<div class="row">
+  <div class="col-md-4">                                  
+          </br>
+          {% if visita.comiteCompras == 1 %}        
+              <center><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></center>
+            {% else %}
+              <center><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></center>
+          {% endif %} 
+                 
+  </div>
+  <div class="col-md-4">
+
+          {% if visita.comiteCompras == 1 %}  
+            Funcionamiento Comite de compras:
+            <br />
+            {{visita.funcionamientoComiteCompras}}
+          {% endif %}
+          
+  </div>
+  <div class="col-md-4">
+
+          {% if visita.comiteCompras == 1 %}  
+            Logros Compras:
+            <br />
+            {{visita.logrosCompras}}
+          {% endif %}
+
+  </div>
+</div>
+
+</br>
+  
+  <div class="row">
+        <div class="col-md-12">
+          <fieldset>
+            <legend>Comite Vamos Bien</legend>
+          </fieldset>            
+        </div>
+      </div>
+<div class="row">
+  {% set estadoComiteVamosBien = "" %}            
+  <div class="col-md-4">
+          </br>
+          {% if visita.comiteVamosBien == 1 %}        
+              <center><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></center>
+              {% set estadoComiteVamosBien = "enabled" %}
+            {% else %}
+              <center><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></center>
+              {% set estadoComiteVamosBien = "'disabled'" %}
+          {% endif %}                             
+  </div>  
+  <div class="col-md-4">
+
+          {% if visita.comiteVamosBien == 1 %}  
+            Funcionamiento Comite vamos bien:
+            <br />
+            {{visita.funcionamientoComiteVamosBien}}
+          {% endif %}
+
+  </div>  
+  <div class="col-md-4">
+
+          {% if visita.comiteVamosBien == 1 %}  
+            Logros comite vamos bien:
+            <br />
+            {{visita.logrosVamosBien}}
+          {% endif %}
+          
+  </div> 
+</div>  
+
+</br>    
+
+<div class="row">
+        <div class="col-md-12">
+          <fieldset>
+            <legend>Contador</legend>
+          </fieldset>            
+        </div>
+      </div>
+
+<div class="row">
+  {% set estadoContador = "" %} 
+  <div class="col-md-4">
+          </br>
+          {% if visita.contador == 1 %}
+            <center><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></center>
+            {% set estadoContador = "enabled" %}
+          {% else %}
+            <center><img class="text-center" width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></center>
+            {% set estadoContador = "disabled" %}
+          {% endif %}                        
+  </div> 
+  <div class="col-md-4">
+
+          {% if visita.contador == 1 %}  
+            Desempeño Contador:
+            <br />
+            {{visita.desempenoContador}}
+          {% endif %}
+          
+  </div> 
+  <div class="col-md-4">
+
+          {% if visita.contador == 1 %}  
+            Observaciones Contador:
+            <br />
+            {{visita.observacionesContador}}
+          {% endif %}
+
+  </div>
+
+</div>
+
+</br>
+
+<div class="row">
+        <div class="col-md-12">
+          <fieldset>
+            <legend>Presupuesto</legend>
+          </fieldset>            
+        </div>
+      </div>
+
+<div class="row">
+    <div class="col-md-4">
+
+          </br>
+          Cambios Presupuesto:
+          <br />
+          {% if visita.cambiosPresupuestoAsignado == 1 %}
+            <center><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></center>            
+          {% else %}
+            <center><img class="text-center" width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></center>            
+          {% endif %}                        
+
+  </div>
+<div class="col-md-4">
+  <div ng-show="swCambiosPresupuestoAsignado === true">
+
+          {% if visita.cambiosPresupuestoAsignado == 1 %}  
+            Observaciones Presupuesto Asignado:
+            <br />
+            {{visita.observacionesPresupuestoAsignado}}
+          {% endif %}
+
+  </div>
+  </div>  
+    <div class="col-md-4">
+      <div ng-show="swCambiosPresupuestoAsignado === true">
+
+          {% if visita.cambiosPresupuestoAsignado == 1 %}  
+            Cambios Presupuesto Asignado:
+            <br />
+            {{visita.cambiosRazonesPresupuestoAsignado}}
+          {% endif %}
+
+      </div>
+  </div>       
+</div>
+<br>
+<div class="row">
+        <div class="col-md-12">
+          <fieldset>
+            <legend>Desempeños</legend>
+          </fieldset>            
+        </div>
+      </div>
+<div class="row">
+  <div class="col-md-4">
+
+          Desempeño Organizacional:
+          <br />
+          {{visita.desempenoOrganizacional}}
+
+  </div>    
+  <div class="col-md-4">
+
+          Desempeño Productivo:
+          <br />
+          {{visita.desempenoProductivo}}
+
+  </div>  
+   <div class="col-md-4">
+
+          Desempeño Comercial:
+          <br />
+          {{visita.desempenoComercial}}
+
+  </div>
+</div>
+ <br>
+<div class="row">
+  <div class="col-md-4">
+
+          Desempeño Administrativo:
+          <br />
+          {{visita.desempenoAdministrativo}}
+
+  </div> 
+    <div class="col-md-4">
+
+          Desempeño Financiero:
+          <br />
+          {{visita.desempenoFinanciero}}
+
+  </div>   
+</div>
+<br>
+<div class="row">
+        <div class="col-md-12">
+          <fieldset>
+            <legend>Cambio de Integrantes</legend>
+          </fieldset>            
+        </div>
+      </div>
+
+
+<div class="row" ng-controller="CampoCambioIntegranteCtrl">
+             
+  <div class="col-md-4">
+
+          </br>
+          Cambios Integrante Grupo:
+          <br />
+          {% if visita.cambiosIntegrantesGrupo == 1 %}
+            <center><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></center>            
+          {% else %}
+            <center><img class="text-center" width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></center>            
+          {% endif %}  
+  </div>
+  <div class="col-md-4">
+    <div ng-show="swCambiosIntegrantesGrupo === true">
+
+          {% if visita.cambiosIntegrantesGrupo == 1 %}  
+            Razones cambio Integrantes:
+            <br />
+            {{visita.cambiosRazonesIntegrantesGrupo}}
+          {% endif %}
+
+    </div>
+  </div>         
+</div>
+<br>
+<div class="row">
+        <div class="col-md-12">
+          <fieldset>
+            <legend>Interventoria</legend>
+          </fieldset>            
+        </div>
+      </div>
+
+
+<div class="row" ng-controller="CampoInterventoriaCtrl">
+{% set dato = 0 %}             
+ <div class="col-md-4">
+
+          </br>
+          Interventoria:
+          <br />
+          {% if visita.interventoria == 1 %}
+            <center><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></center>            
+          {% else %}
+            <center><img class="text-center" width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></center>            
+          {% endif %}  
+
+  </div>
+   <div class="col-md-4">
+    <div ng-show="swInterventoria === true">
+
+          {% if visita.interventoria == 1 %}  
+            Razones Interventoria:
+            <br />
+            {{visita.razonesInterventoria}}
+          {% endif %}
+
+    </div>
+  </div>      
+</div>
+
+<br />
+
+<div class="row">
+        <div class="col-md-12">
+          <fieldset>
+            <legend>Finalizacón de la Visita</legend>
+          </fieldset>            
+        </div>
+      </div>
+
+<div class="row">
+  <div class="col-md-4">
+    
+          Observaciones:
+          <br />
+          {{visita.observaciones}}
+
+  </div>
+                
+  <div class="col-md-4">
+
+          Compromisos:
+          <br />
+          {{visita.compromisos}}
+
+  </div>
+</div>
+<br>
+    </div>
+             
+{% endblock %}
+

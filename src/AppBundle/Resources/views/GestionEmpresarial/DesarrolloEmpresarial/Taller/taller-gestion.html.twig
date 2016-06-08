@@ -35,7 +35,9 @@
           <div class="col-md-6">
             <div class="btn-group">
               <a href="{{ path('seguimientoGrupo', {'idGrupo': idGrupo}) }}" class="btn btn-warning">Volver</a>
+              {% if acceso == 1 %}
               <a href="{{ path('tallerNuevo', {'idGrupo': idGrupo, 'acceso': acceso}) }}" class="btn btn-success">Nuevo</a>              
+              {% endif %}
             </div>
           </div>
 
