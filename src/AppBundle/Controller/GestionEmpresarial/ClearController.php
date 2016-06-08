@@ -247,51 +247,119 @@ class ClearController extends Controller
         );
         
         if ($this->getRequest()->isMethod('POST')) {
-            $form->bind($this->getRequest());
-            echo $this->getRequest()->isMethod('POST');
-            jksdfhjkdfdasf;
-            if ($form->isValid()) {
-
-                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
-                    array(
-                        'descripcion' => $clearSoporte->getTipoSoporte()->getDescripcion(), 
-                        'dominio' => 'clear_tipo_soporte'
-                    )
-                );
+            $form->bind($this->getRequest());            
+            $tipoDocumento = $_POST['clearSoporte']['tipoSoporte'];
+            $documentoClear = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+            array('id' => $tipoDocumento)
+            );
+            echo $documentoClear->getDescripcion();            
+            if($documentoClear->getDescripcion() == "Acta Inducción e instalación"){
+                if ($form->isValid()) {
+                    $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                        array(
+                            'descripcion' => $clearSoporte->getTipoSoporte()->getDescripcion(), 
+                            'dominio' => 'clear_tipo_soporte'
+                        )
+                    );
+                    
+                    $actualizarClearSoportes = $em->getRepository('AppBundle:ClearSoporte')->findBy(
+                        array(
+                            'active' => '1' , 
+                            'tipo_soporte' => $tipoSoporte->getId(), 
+                            'clear' => $idCLEAR
+                        )
+                    );  
                 
-                $actualizarClearSoportes = $em->getRepository('AppBundle:ClearSoporte')->findBy(
-                    array(
-                        'active' => '1' , 
-                        'tipo_soporte' => $tipoSoporte->getId(), 
-                        'clear' => $idCLEAR
-                    )
-                );  
-            
-                foreach ($actualizarClearSoportes as $actualizarClearSoporte){
-                    //echo $actualizarClearSoporte->getId()." ".$actualizarClearSoporte->getTipoSoporte()."<br />";
-                    $actualizarClearSoporte->setFechaModificacion(new \DateTime());
-                    $actualizarClearSoporte->setActive(0);
+                    foreach ($actualizarClearSoportes as $actualizarClearSoporte){
+                        //echo $actualizarClearSoporte->getId()." ".$actualizarClearSoporte->getTipoSoporte()."<br />";
+                        $actualizarClearSoporte->setFechaModificacion(new \DateTime());
+                        $actualizarClearSoporte->setActive(0);
+                        $em->flush();
+                    }
+                    
+                    $clearSoporte->setClear($clear);
+                    $clearSoporte->setActive(true);
+                    $clearSoporte->setFechaCreacion(new \DateTime());
+
+                    if($clearSoporte->getTipoSoporte()->getDescripcion()=="Documento de legalización del Clear"){ 
+                        //Despúes de subir el Acta final del CLEAR toma lo que esté almacenado en habilitacionFases de cada grupo 
+                        //para asignar un nodo Ejecutado o un nodo Rechazado
+
+                        self::operacionesLegalizacionClear($clear);
+
+                    }
+                    //$grupoSoporte->setUsuarioCreacion(1);
+
+                    $em->persist($clearSoporte);
                     $em->flush();
+                    
+                    return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR) );
                 }
-                
-                $clearSoporte->setClear($clear);
-                $clearSoporte->setActive(true);
-                $clearSoporte->setFechaCreacion(new \DateTime());
+            }else{
 
-                if($clearSoporte->getTipoSoporte()->getDescripcion()=="Documento de legalización del Clear"){ 
-                    //Despúes de subir el Acta final del CLEAR toma lo que esté almacenado en habilitacionFases de cada grupo 
-                    //para asignar un nodo Ejecutado o un nodo Rechazado
+                $documentoLegalizacion = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                        array(
+                            'active' => '1' , 
+                            'descripcion' => "Acta Inducción e instalación"
+                        )
+                );  
 
-                    self::operacionesLegalizacionClear($clear);
+                $validacionClearSoporte = $em->getRepository('AppBundle:ClearSoporte')->findBy(
+                        array(
+                            'active' => '1' , 
+                            'tipo_soporte' => $documentoLegalizacion->getId(), 
+                            'clear' => $idCLEAR
+                        )
+                );  
 
-                }
-                //$grupoSoporte->setUsuarioCreacion(1);
+                if(sizeof($validacionClearSoporte) == 1){
+                    if ($form->isValid()) {
+                        $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+                            array(
+                                'descripcion' => $clearSoporte->getTipoSoporte()->getDescripcion(), 
+                                'dominio' => 'clear_tipo_soporte'
+                            )
+                        );
+                        
+                        $actualizarClearSoportes = $em->getRepository('AppBundle:ClearSoporte')->findBy(
+                            array(
+                                'active' => '1' , 
+                                'tipo_soporte' => $tipoSoporte->getId(), 
+                                'clear' => $idCLEAR
+                            )
+                        );  
+                    
+                        foreach ($actualizarClearSoportes as $actualizarClearSoporte){
+                            //echo $actualizarClearSoporte->getId()." ".$actualizarClearSoporte->getTipoSoporte()."<br />";
+                            $actualizarClearSoporte->setFechaModificacion(new \DateTime());
+                            $actualizarClearSoporte->setActive(0);
+                            $em->flush();
+                        }
+                        
+                        $clearSoporte->setClear($clear);
+                        $clearSoporte->setActive(true);
+                        $clearSoporte->setFechaCreacion(new \DateTime());
 
-                $em->persist($clearSoporte);
-                $em->flush();
-                
-                return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR) );
+                        if($clearSoporte->getTipoSoporte()->getDescripcion()=="Documento de legalización del Clear"){ 
+                            //Despúes de subir el Acta final del CLEAR toma lo que esté almacenado en habilitacionFases de cada grupo 
+                            //para asignar un nodo Ejecutado o un nodo Rechazado
+
+                            self::operacionesLegalizacionClear($clear);
+
+                        }
+                        //$grupoSoporte->setUsuarioCreacion(1);
+
+                        $em->persist($clearSoporte);
+                        $em->flush();
+                        
+                        return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR) );
+                    }
+                }else{
+                    $this->addFlash('danger', 'No existe documento de "Acta Inducción e instalación" activo');
+                    return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR) );
+                }                
             }
+            
         }   
             
 

@@ -1,0 +1,177 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+{% block title %}Seguimiento MOT{% endblock %}
+
+{% block breadcrumb_ul %}
+
+    <ul class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Empresarial</li>
+      <li>Ferias</li>
+      <li class="active">Nuevo</li>
+    </ul>
+
+{% endblock %}
+
+
+{% block section %}
+<div class="container">
+    <h1> Gestión de Seguimiento </h1>
+    <hr>
+    <h3> Registro</h3>
+    <br />
+    <br />
+  </div>
+     
+
+  {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+    {{ form_errors(form) }}
+    
+    <br>
+    <div class="section">
+      <div class="container">     
+        <div class="row">
+              <div class="col-md-6">
+                <div class="btn-group">
+      
+                  <a href="#" class="btn btn-success">Editar</a>
+                  
+                  <a href="{{ path('seguimientoGrupo' , {'idGrupo':idGrupo}) }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+                  
+                </div>
+              </div>
+            </div>   
+      </div>
+    </div> 
+        
+
+
+       
+        </br>   
+{% set activar = idNodo %}
+
+{% set valorInicial = 1 %}
+
+{% if activar == 8 or activar == 12 %}
+  {% set valorInicial = 0 %}
+{% endif %}
+
+<br>
+
+<div class="section" ng-controller="CierreMotCtrl" ng-init="camposRequeridosMot({{valorInicial}})">
+  <div class="container">    
+
+    {% if valorInicial == 1 %}
+
+      <div class="row">
+        <div class="col-md-12">
+          <fieldset>
+            <legend>Inicio Fase</legend>
+          </fieldset>            
+        </div>
+      </div> 
+
+      <br />
+
+      <div class="row">
+       
+        <div class="col-md-4 text-center">
+              Fecha de Inicio : {{seguimientoMot.fechaInicio |  date('d - m - Y') }}
+        </div>                
+         
+      </div>
+
+      {{ form_widget(form.fecha_inicio, { 'attr': {'style': 'visibility:hidden'} }) }}
+      {{ form_widget(form.indentificacion_recursos_tangibles, { 'attr': {'style': 'opacity:0'} }) }}
+      {{ form_widget(form.indentificacion_recursos_financieros, { 'attr': {'style': 'opacity:0'} }) }}
+      {{ form_widget(form.indentificacion_recursos_intangibles, { 'attr': {'style': 'opacity:0'} }) }}
+      {{ form_widget(form.indentificacion_opciones_viables, { 'attr': {'style': 'opacity:0'} }) }}
+      {{ form_widget(form.viabilidad_negocio, { 'attr': {'style': 'opacity:0'} }) }}
+      {{ form_widget(form.observaciones, { 'attr': {'style': 'opacity:0'} }) }}
+      {{ form_widget(form.fecha_finalizacion, { 'attr': {'style': 'opacity:0'} }) }}      
+
+     {% else %}    
+    
+      <div class="row">
+        <div class="col-md-12">
+          <fieldset>
+            <legend>Cierre Fase</legend>
+          </fieldset>            
+        </div>
+      </div>  
+
+      <br />
+
+      <div class="row">
+        
+        <div class="col-md-4">
+              Identificacion Recuros Tangibles:
+              <br />
+              {{seguimientoMot.indentificacionRecursosTangibles}}
+        </div>
+        <div class="col-md-4">
+              Identificacion Recursos Financieros:
+              <br />
+              {{seguimientoMot.indentificacionRecursosFinancieros}}
+        </div>
+        <div class="col-md-4">
+              Identificacion Recursos Intangibles:
+              <br />
+              {{seguimientoMot.indentificacionRecursosIntangibles}}
+        </div>           
+        <br/>       
+        <br/>  
+      </div>
+
+      <br/> 
+
+      <div class="row">
+        <div class="col-md-4">
+              Identificacion Opciones Viables:
+              <br />
+              {{seguimientoMot.indentificacionOpcionesViables}}
+        </div>
+        <div class="col-md-4">
+              Viabilidad de Negocio:
+              <br />
+              {{seguimientoMot.viabilidadNegocio}}
+        </div>
+        <div class="col-md-4">
+              Observaciones:
+              <br />
+              {{seguimientoMot.observaciones}}
+        </div>
+                      
+        <br/>       
+       
+      </div>
+
+        <br/>       
+
+      <div class="row">
+        <div class="col-md-4">
+              Fecha de Finalizacion: 
+              <br />
+              {{seguimientoMot.fechaFinalizacion |  date('d - m - Y') }}
+        </div>       
+      </div>
+
+      {{ form_widget(form.fecha_inicio, { 'attr': {'style': 'visibility:hidden'} }) }}
+      {{ form_widget(form.indentificacion_recursos_tangibles, { 'attr': {'style': 'opacity:0'} }) }}
+      {{ form_widget(form.indentificacion_recursos_financieros, { 'attr': {'style': 'opacity:0'} }) }}
+      {{ form_widget(form.indentificacion_recursos_intangibles, { 'attr': {'style': 'opacity:0'} }) }}
+      {{ form_widget(form.indentificacion_opciones_viables, { 'attr': {'style': 'opacity:0'} }) }}
+      {{ form_widget(form.viabilidad_negocio, { 'attr': {'style': 'opacity:0'} }) }}
+      {{ form_widget(form.observaciones, { 'attr': {'style': 'opacity:0'} }) }}
+      {{ form_widget(form.fecha_finalizacion, { 'attr': {'style': 'opacity:0'} }) }}
+
+    {% endif %}
+
+
+  </div>
+</div>
+
+  {{ form_end(form) }}
+               
+{% endblock %}
