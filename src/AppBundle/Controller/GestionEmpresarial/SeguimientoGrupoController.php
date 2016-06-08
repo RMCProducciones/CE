@@ -645,6 +645,29 @@ class SeguimientoGrupoController extends Controller
     }
 
     /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/inicio-mot/visualizar", name="seguimientoMotVisualizar")
+     */
+    public function seguimientoMotVisualizarAction(Request $request, $idGrupo, $idNodo)
+    {
+        $em = $this->getDoctrine()->getManager();        
+
+        $seguimientoMot = $em->getRepository('AppBundle:SeguimientoMOT')->findOneBy(
+            array('grupo'=> $idGrupo)
+        );
+        
+        $form = $this->createForm(new SeguimientoMOTType(), $seguimientoMot);
+              
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:seguimiento-mot-visualizar.html.twig',
+            array('form' => $form->createView(),
+                   'seguimientoMot' => $seguimientoMot,
+                   'idNodo' => $idNodo,
+                   'idGrupo' => $idGrupo
+            )
+        );
+    }
+
+
+    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/cierre-mot/nuevo", name="seguimientoMotCierre")
      */
     public function seguimientoMotCierreAction(Request $request, $idGrupo, $idNodo)
@@ -776,6 +799,7 @@ class SeguimientoGrupoController extends Controller
             )
         );
     }
+
 
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/cierre-fase/nuevo", name="seguimientofaseCierre")
