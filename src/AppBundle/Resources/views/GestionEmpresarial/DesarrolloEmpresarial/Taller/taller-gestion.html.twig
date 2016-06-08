@@ -121,9 +121,9 @@
               <thead>
                 	<tr>
                     <th class="text-center">{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
-                    <th class="text-left">{{ knp_pagination_sortable(pagination, 'Objetivos', 'a.Objetivo') }}</th>
-                    <th class="text-left">{{ knp_pagination_sortable(pagination, 'Lugar', 'a.lugar') }}</th>
-                    <th class="text-left">{{ knp_pagination_sortable(pagination, 'Numero de Asistentes', 'a.asistentes') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Objetivos', 'a.Objetivo') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Lugar', 'a.lugar') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Numero de Asistentes', 'a.asistentes') }}</th>
                     <th class="text-center">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.acciones') }}</th>
 	                </tr>
 	           </thead>
@@ -133,15 +133,17 @@
           {% for taller in pagination  %}
                   
                   <tr id="filaTaller{{ consecutivo }}">
-                    <td class="text-center">{{ consecutivo }}</td>
+                    <td class="text-center">
+                      {{taller.id}}
+                    </td>
                   
-                     <td class="text-left">
+                     <td class="text-center">
                       {{taller.objetivo}}
                     </td>
-                    <td class="text-left">
+                    <td class="text-center">
                       {{taller.lugar}}
                     </td>  
-                    <td class="text-left">
+                    <td class="text-center">
                       {{taller.asistentes}}
                     </td>
 
@@ -149,6 +151,8 @@
 
                       {% if acceso == 0 %}
 
+                         <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ taller.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> 
+                         |
                         <a href="{{ path('beneficiarioTaller', {'idGrupo': idGrupo, 'idTaller': taller.id, 'acceso': acceso}) }}" alt="Beneficiarios" title="Beneficiarios"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a> 
 
                         |
@@ -157,6 +161,8 @@
 
                       {% else %}
 
+                        <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ taller.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> 
+                         |
                         <a href="{{ path('beneficiarioTaller', {'idGrupo': idGrupo, 'idTaller': taller.id, 'acceso': acceso}) }}" alt="Beneficiarios" title="Beneficiarios"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a> 
 
                         |
@@ -204,7 +210,104 @@
     </div>  
 
 
-    
+{% for taller in pagination %}
+    <!-- Modal -->
+
+     <div class="modal fade" id="myModal{{  taller.id  }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content col-md-12 table-responsive">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <tr class="col-md-12 table-responsive">
+              <td><h4 class="modal-title text-center" id="myModalLabel">{{ taller.id }} | {{ taller.objetivo }}
+                            
+            </tr>
+          </div>
+        </br>
+          <div class="col-md-12 table-responsive">
+          <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos del Taller</th>                    
+                </tr>
+              </thead>
+
+              <tbody>    
+
+                <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                   Fecha del Taller
+                  </td>         
+                  <td class="text-center">
+                    {{ taller.fecha |  date('d - m - Y') }}
+                  </td>
+              </tr> 
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                   Objetivo del Taller
+                  </td>         
+                  <td class="text-center">
+                    {{ taller.objetivo }}
+                  </td>
+              </tr> 
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                   Agenda del Taller
+                  </td>         
+                  <td class="text-center">
+                    {{ taller.agenda }}
+                  </td>
+              </tr> 
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                   Lugar del Taller
+                  </td>         
+                  <td class="text-center">
+                    {{ taller.lugar }}
+                  </td>
+              </tr> 
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                   Observaciones del Taller
+                  </td>         
+                  <td class="text-center">
+                    {{ taller.observaciones }}
+                  </td>
+              </tr> 
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                   Compromisos del Taller
+                  </td>         
+                  <td class="text-center">
+                    {{ taller.compromisos }}
+                  </td>
+              </tr> 
+
+
+               </tbody>  
+          </table>  
+           <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>  
+          </div>      
+      </div>
+    </div>
+  </div>
+   {% endfor %}       
                
 {% endblock %}
 
