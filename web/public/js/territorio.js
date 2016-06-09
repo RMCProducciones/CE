@@ -73,33 +73,5 @@ app.controller('FiltrosTerritorioAprendizajeCtrl', ['$scope', '$http', 'styleBus
 }]);
 
 
-app.controller('FiltrosPasantiaTerritorioCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
 
-	$scope.CountBuscarHerramientas = -1;
-	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
-	
-	$scope.buttonBuscarHerramientasPasantiaTerritorio = function(CountBuscarHerramientas){
-		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
-		if($scope.CountBuscarHerramientas== -1)
-		{
-			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
-		}
-		else
-		{
-			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
-		}
-		
-    }	
-	
-    $scope.limpiarCamposFiltroBusquedaPasantiaTerritorio = function(){
-       
-		
-		$("#pasantiaTerritorioFilter_nombre_territorio").val("");
-		
-
-       
-    }
-      
-		
-}]);
 
