@@ -654,12 +654,9 @@ class SeguimientoGrupoController extends Controller
         $seguimientoMot = $em->getRepository('AppBundle:SeguimientoMOT')->findOneBy(
             array('grupo'=> $idGrupo)
         );
-        
-        $form = $this->createForm(new SeguimientoMOTType(), $seguimientoMot);
               
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:seguimiento-mot-visualizar.html.twig',
-            array('form' => $form->createView(),
-                   'seguimientoMot' => $seguimientoMot,
+            array('seguimientoMot' => $seguimientoMot,
                    'idNodo' => $idNodo,
                    'idGrupo' => $idGrupo
             )
@@ -1123,6 +1120,39 @@ class SeguimientoGrupoController extends Controller
                     )
                 )
             );  
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/visita/visualizar", name="visitaVisualizar")
+     */
+    public function visualizarVisitaAction(Request $request, $idGrupo, $idNodo)
+    {
+        $em = $this->getDoctrine()->getManager();        
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo));
+
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id' => $idNodo));
+
+        $fase = $nodo->getFase();
+
+        $seguimientoFase = $em->getRepository('AppBundle:SeguimientoFase')->findOneBy(
+            array('grupo' => $idGrupo,
+                  'fase' => $fase
+                 )
+        );       
+
+        $visita = $em->getRepository('AppBundle:Visita')->findOneBy(
+            array('grupo' => $idGrupo,
+                  'nodo' => $idNodo)
+        );
+        
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:visita-visualizar.html.twig',
+                                array('idGrupo' => $idGrupo,
+                                      'visita' => $visita
+                                    )
+                            );
     }
 
     /**
