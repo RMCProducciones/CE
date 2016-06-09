@@ -117,6 +117,66 @@ app.controller('FiltrosPasantiaCtrl', ['$scope', '$http', 'styleBuscarHerramient
 		
 }]);
 
+app.controller('FiltrosPasantiaTerritorioCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasPasantiaTerritorio = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaPasantiaTerritorio = function(){
+       
+		
+		$("#pasantiaTerritorioFilter_nombre_territorio").val("");
+		
+
+       
+    }
+      
+		
+}]);
+
+app.controller('FiltrosPasantiaGrupoCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasPasantiaGrupo = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaPasantiaGrupo = function(){
+       
+		
+		$("#pasantiaGrupoFilter_nombre").val("");
+		
+
+       
+    }
+      
+		
+}]);
+
 app.controller('CampoAprobacionPasantiaCtrl', ['$scope', '$http', function($scope, $http) {
 	
 		

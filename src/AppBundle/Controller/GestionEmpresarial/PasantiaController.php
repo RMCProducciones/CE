@@ -32,6 +32,7 @@ use AppBundle\Form\GestionEmpresarial\PasantiaFilterType;
 use AppBundle\Form\GestionEmpresarial\PasantiaType;
 use AppBundle\Form\GestionEmpresarial\PasantiaSoporteType;
 use AppBundle\Form\GestionEmpresarial\PasantiaTerritorioFilterType;
+use AppBundle\Form\GestionEmpresarial\PasantiaGrupoFilterType;
 
 
 
@@ -619,17 +620,26 @@ class PasantiaController extends Controller
         }else{
 
             $grupoAsignado = null;
-        }       
+        }      
 
-        if($pasantia->getGrupo() == null){ 
+         $form = $this->get('form.factory')->create(new PasantiaGrupoFilterType());        
 
-            $query = $em->createQuery('
-                SELECT 
-                    g 
-                FROM 
-                    AppBundle:Grupo g 
-                WHERE 
-                    g.id NOT IN (
+        if($pasantia->getGrupo() == null){             
+            $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Grupo')
+            ->createQueryBuilder('q');
+
+        
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder
+        ->andWhere('q.active = 1')
+        ->andWhere('q.id NOT IN  (
                         SELECT 
                             grupo.id 
                         FROM 
@@ -640,32 +650,32 @@ class PasantiaController extends Controller
                             AND pasantia.grupo = :grupo_pasantia
                             AND pasantia.id = :idPasantia                            
                     ) 
-                    AND g.active = 1
-                    AND g.codigo IS NOT NULL
-            ');
+                    AND q.codigo IS NOT NULL')
 
-            $query->setParameter('grupo_pasantia', $pasantia); //Se compara el grupo que tiene la pasantia
-            $query->setParameter('idPasantia', $idPasantia);
+        ->setParameter('grupo_pasantia', $pasantia)
+        ->setParameter('idPasantia', $idPasantia);
 
-            $grupos = $query->getResult();      
-
+        $query = $filterBuilder->getQuery();
+        
         }else{
 
-            $grupos = array(); 
+            $query = array(); 
 
         }
+             //AND g.codigo IS NOT NULL ----> va arribita
 
         $paginator1  = $this->get('knp_paginator');
 
         $pagination1 = $paginator1->paginate(
-            $grupos, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Pasantia:grupo-pasantia-gestion-asignacion.html.twig', 
             array(
-                'grupos' => $grupos,
+                'form' => $form->createView(),
+                'grupos' => $query,
                 'asignacionesGrupoPasantia' => $grupoAsignado,
                 'idPasantia' => $idPasantia,
                 'pagination1' => $pagination1
