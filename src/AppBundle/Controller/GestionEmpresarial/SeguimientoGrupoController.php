@@ -797,6 +797,32 @@ class SeguimientoGrupoController extends Controller
         );
     }
 
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/inicio-fase/visualizar", name="seguimientofaseVisualizar")
+     */
+    public function seguimientofaseVisualizarAction(Request $request, $idGrupo, $idNodo)
+    {
+        $em = $this->getDoctrine()->getManager();        
+
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id'=>$idNodo)
+        );        
+
+        $fase = $nodo->getFase();
+
+        $seguimientoFase = $em->getRepository('AppBundle:SeguimientoFase')->findOneBy(
+            array('grupo'=> $idGrupo,
+                  'fase' => $fase)
+        );
+              
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:seguimiento-fase-visualizar.html.twig',
+            array('seguimientoFase' => $seguimientoFase,
+                   'idNodo' => $idNodo,
+                   'idGrupo' => $idGrupo
+            )
+        );
+    }
+
 
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/cierre-fase/nuevo", name="seguimientofaseCierre")
@@ -1899,6 +1925,15 @@ class SeguimientoGrupoController extends Controller
 
         $grupoSoporte = new SeguimientoGrupoSoporte();
 
+        $evaluacionFaseGrupo = $em->getRepository('AppBundle:EvaluacionFases')->findOneBy(
+            array('grupo' => $idGrupo)
+        );
+
+        $caminos = $em->getRepository('AppBundle:Camino')->findBy(
+                array('grupo' => $idGrupo,
+                      'nodo' => $idNodo)
+            );
+
         $form = $this->createForm(new SeguimientoGrupoSoporteType(), $grupoSoporte);
 
         $form->add(
@@ -1983,7 +2018,9 @@ class SeguimientoGrupoController extends Controller
                 'histotialSoportes' => $histotialSoportes,
                 'grupo' => $grupo,
                 'idGrupo' => $idGrupo,
-                'idNodo' => $idNodo
+                'idNodo' => $idNodo,
+                'evaluacionFaseGrupo' => $evaluacionFaseGrupo,
+                'caminos' => $caminos
             )
         );
         

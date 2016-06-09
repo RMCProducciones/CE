@@ -59,7 +59,7 @@
 <div class="row">
 	<div class="col-md-4">
 
-          Fecha de la Visita:
+          <b>Fecha de la Visita:</b>
           <br />
           {{visita.fecha |  date('d - m - Y') }}
 
@@ -67,14 +67,14 @@
                 
   <div class="col-md-4">
 
-          Objetivo de la Visita:
+          <b>Objetivo de la Visita:</b>
           <br />
           {{visita.objetivo}}
           
   </div>
   <div class="col-md-4">
 
-          Agenda de la Visita:
+          <b>Agenda de la Visita:</b>
           <br />
           {{visita.agenda}}
 
@@ -85,7 +85,7 @@
 <div class="row">
   <div class="col-md-4">
 
-          Lugar de la Visita:
+          <b>Lugar de la Visita:</b>
           <br />
           {{visita.lugar}}
 
@@ -93,7 +93,7 @@
                 
   <div class="col-md-4">
 
-          Numero asistentes de la Visita:
+          <b>Numero asistentes de la Visita:</b>
           <br />
           {{visita.asistentes}}
 
@@ -125,7 +125,7 @@
   <div class="col-md-4">
 
           {% if visita.comiteCompras == 1 %}  
-            Funcionamiento Comite de compras:
+            <b>Funcionamiento Comite de compras:</b>
             <br />
             {{visita.funcionamientoComiteCompras}}
           {% endif %}
@@ -134,7 +134,7 @@
   <div class="col-md-4">
 
           {% if visita.comiteCompras == 1 %}  
-            Logros Compras:
+            <b>Logros Compras:</b>
             <br />
             {{visita.logrosCompras}}
           {% endif %}
@@ -166,7 +166,7 @@
   <div class="col-md-4">
 
           {% if visita.comiteVamosBien == 1 %}  
-            Funcionamiento Comite vamos bien:
+            <b>Funcionamiento Comite vamos bien:</b>
             <br />
             {{visita.funcionamientoComiteVamosBien}}
           {% endif %}
@@ -175,7 +175,7 @@
   <div class="col-md-4">
 
           {% if visita.comiteVamosBien == 1 %}  
-            Logros comite vamos bien:
+            <b>Logros comite vamos bien:</b>
             <br />
             {{visita.logrosVamosBien}}
           {% endif %}
@@ -208,7 +208,7 @@
   <div class="col-md-4">
 
           {% if visita.contador == 1 %}  
-            Desempeño Contador:
+            <b>Desempeño Contador:</b>
             <br />
             {{visita.desempenoContador}}
           {% endif %}
@@ -217,7 +217,7 @@
   <div class="col-md-4">
 
           {% if visita.contador == 1 %}  
-            Observaciones Contador:
+            <b>Observaciones Contador:</b>
             <br />
             {{visita.observacionesContador}}
           {% endif %}
@@ -239,8 +239,7 @@
 <div class="row">
     <div class="col-md-4">
 
-          </br>
-          Cambios Presupuesto:
+          <b>Cambios Presupuesto:</b>
           <br />
           {% if visita.cambiosPresupuestoAsignado == 1 %}
             <center><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></center>            
@@ -250,10 +249,10 @@
 
   </div>
 <div class="col-md-4">
-  <div ng-show="swCambiosPresupuestoAsignado === true">
+  <div>
 
           {% if visita.cambiosPresupuestoAsignado == 1 %}  
-            Observaciones Presupuesto Asignado:
+            <b>Observaciones Presupuesto Asignado:</b>
             <br />
             {{visita.observacionesPresupuestoAsignado}}
           {% endif %}
@@ -264,7 +263,7 @@
       <div ng-show="swCambiosPresupuestoAsignado === true">
 
           {% if visita.cambiosPresupuestoAsignado == 1 %}  
-            Cambios Presupuesto Asignado:
+            <b>Cambios Presupuesto Asignado:</b>
             <br />
             {{visita.cambiosRazonesPresupuestoAsignado}}
           {% endif %}
@@ -283,21 +282,21 @@
 <div class="row">
   <div class="col-md-4">
 
-          Desempeño Organizacional:
+          <b>Desempeño Organizacional:</b>
           <br />
           {{visita.desempenoOrganizacional}}
 
   </div>    
   <div class="col-md-4">
 
-          Desempeño Productivo:
+          <b>Desempeño Productivo:</b>
           <br />
           {{visita.desempenoProductivo}}
 
   </div>  
    <div class="col-md-4">
 
-          Desempeño Comercial:
+          <b>Desempeño Comercial:</b>
           <br />
           {{visita.desempenoComercial}}
 
@@ -307,14 +306,14 @@
 <div class="row">
   <div class="col-md-4">
 
-          Desempeño Administrativo:
+          <b>Desempeño Administrativo:</b>
           <br />
           {{visita.desempenoAdministrativo}}
 
   </div> 
     <div class="col-md-4">
 
-          Desempeño Financiero:
+          <b>Desempeño Financiero:</b>
           <br />
           {{visita.desempenoFinanciero}}
 
@@ -333,9 +332,8 @@
 <div class="row" ng-controller="CampoCambioIntegranteCtrl">
              
   <div class="col-md-4">
-
-          </br>
-          Cambios Integrante Grupo:
+          
+          <b>Cambios Integrante Grupo:</b>
           <br />
           {% if visita.cambiosIntegrantesGrupo == 1 %}
             <center><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></center>            
@@ -347,7 +345,7 @@
     <div ng-show="swCambiosIntegrantesGrupo === true">
 
           {% if visita.cambiosIntegrantesGrupo == 1 %}  
-            Razones cambio Integrantes:
+            <b>Razones cambio Integrantes:</b>
             <br />
             {{visita.cambiosRazonesIntegrantesGrupo}}
           {% endif %}
@@ -370,7 +368,7 @@
  <div class="col-md-4">
 
           </br>
-          Interventoria:
+          <b>Interventoria:</b>
           <br />
           {% if visita.interventoria == 1 %}
             <center><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></center>            
@@ -383,7 +381,7 @@
     <div ng-show="swInterventoria === true">
 
           {% if visita.interventoria == 1 %}  
-            Razones Interventoria:
+            <b>Razones Interventoria:</b>
             <br />
             {{visita.razonesInterventoria}}
           {% endif %}
@@ -405,7 +403,7 @@
 <div class="row">
   <div class="col-md-4">
     
-          Observaciones:
+          <b>Observaciones:</b>
           <br />
           {{visita.observaciones}}
 
@@ -413,7 +411,7 @@
                 
   <div class="col-md-4">
 
-          Compromisos:
+          <b>Compromisos:</b>
           <br />
           {{visita.compromisos}}
 

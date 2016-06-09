@@ -587,7 +587,7 @@
 
               {% endif %}
 
-              {% if nodoCamino.nodo.id == 11 %}
+              {% if nodoCamino.nodo.id == 7 %}
                 
                   {% set siguienteNodo = nodoCamino.estado %}
 
@@ -598,7 +598,7 @@
             {% if ultimoEstado == 1 %}
               <span class="alert alert-info">Se podrá registrar la fecha de inicio del MOT una vez halla finalizado el CLEAR</span>     
             {% else %}              
-              {% if siguienteNodo == 1 %}
+              {% if siguienteNodo == null %}
                 <b><a href="{{ path('seguimientoMotInicio', {'idGrupo': grupo.id, 'idNodo' : 6}) }}">Nuevo Inicio de MOT</a></b>
               {% else %}
                 <b><a href="{{ path('seguimientoMotVisualizar', {'idGrupo': grupo.id, 'idNodo' : 6}) }}">Visualizar Inicio de MOT</a></b>
@@ -686,7 +686,7 @@
             {% set ultimoEstado = 0 %}            
 
             {% for nodoCamino in camino %}
-              {% if nodoCamino.nodo.id == 10 %}
+              {% if nodoCamino.nodo.id == 8 %}
                 
                   {% set ultimoEstado = nodoCamino.estado %}
 
@@ -747,7 +747,7 @@
             {% if ultimoEstado == 1 %}
               <span class="alert alert-info">Se podrá registrar la fecha de inicio del MOT una vez halla finalizado el CLEAR</span>     
             {% else %}
-              {% if siguienteNodo == 1 %}
+              {% if siguienteNodo == null %}
                 <b><a href="{{ path('seguimientoMotInicio', {'idGrupo': grupo.id, 'idNodo' : 10}) }}">Nuevo Inicio de MOT</a></b>
               {% else %}
                 <b><a href="{{ path('seguimientoMotVisualizar', {'idGrupo': grupo.id, 'idNodo' : 10}) }}">Visualizar Inicio de MOT</a></b>
@@ -844,7 +844,7 @@
             {% set ultimoEstado = 0 %}            
 
             {% for nodoCamino in camino %}
-              {% if nodoCamino.nodo.id == 10 %}
+              {% if nodoCamino.nodo.id == 12 %}
                 
                   {% set ultimoEstado = nodoCamino.estado %}
 
@@ -884,6 +884,7 @@
             <br>
 
             {% set ultimoEstado = 0 %}            
+            {% set siguienteNodo = 0 %} 
 
             {% for nodoCamino in camino %}
               {% if nodoCamino.nodo.id == 14 %}
@@ -891,6 +892,13 @@
                   {% set ultimoEstado = nodoCamino.estado %}                  
 
               {% endif %}
+
+              {% if nodoCamino.nodo.id == 15 %}
+                
+                  {% set siguienteNodo = nodoCamino.estado %}
+
+              {% endif %}
+
             {% endfor %}
           
             {% if ultimoEstado == 1 %}
@@ -900,7 +908,13 @@
               {% if ultimoEstado != 3 %} 
                 <br>
                 <br>
-                <b><a href="{{ path('seguimientofaseInicio', {'idGrupo': grupo.id, 'idNodo': 14}) }}">Nuevo inicio de Fase</a></b>       
+                {% if siguienteNodo == null %}
+                  <b><a href="{{ path('seguimientofaseInicio', {'idGrupo': grupo.id, 'idNodo': 14}) }}">Nuevo inicio de Fase</a></b>
+                {% else %}
+                  <b><a href="{{ path('seguimientofaseVisualizar', {'idGrupo': grupo.id, 'idNodo' : 14 
+                  }) }}">Visualizar Inicio de Fase</a></b>
+              {% endif %}
+                
               {% endif %}
             {% endif %}
 
@@ -941,7 +955,7 @@
             {% set ultimoEstado = 0 %}            
 
             {% for nodoCamino in camino %}
-              {% if nodoCamino.nodo.id == 14 %}
+              {% if nodoCamino.nodo.id == 15 %}
                 
                   {% set ultimoEstado = nodoCamino.estado %}                  
 
@@ -983,7 +997,7 @@
             {% set ultimoEstado = 0 %}            
 
             {% for nodoCamino in camino %}
-              {% if nodoCamino.nodo.id == 14 %}
+              {% if nodoCamino.nodo.id == 16 %}
                 
                   {% set ultimoEstado = nodoCamino.estado %}                  
 
@@ -1025,7 +1039,7 @@
             {% set ultimoEstado = 0 %}            
 
             {% for nodoCamino in camino %}
-              {% if nodoCamino.nodo.id == 14 %}
+              {% if nodoCamino.nodo.id == 17 %}
                 
                   {% set ultimoEstado = nodoCamino.estado %}                  
 
@@ -1062,7 +1076,21 @@
             <b>Cierre de Fase</b>
             <br>
             <br>
-            <b><a href="{{ path('seguimientofaseCierre', {'idGrupo': grupo.id, 'idNodo' : 18}) }}">Nuevo Cierre de Fase</a></b>
+            {% set ultimoEstado = 0 %}
+
+            {% for nodoCamino in camino %}
+              {% if nodoCamino.nodo.id == 18 %}
+                
+                  {% set ultimoEstado = nodoCamino.estado %}
+
+              {% endif %}
+            {% endfor %}
+          
+            {% if ultimoEstado == 1 %}            
+              <b><a href="{{ path('seguimientofaseCierre', {'idGrupo': grupo.id, 'idNodo' : 18}) }}">Nuevo Cierre de Fase</a></b>
+            {% else %}
+              <b><a href="{{ path('seguimientofaseVisualizar', {'idGrupo': grupo.id, 'idNodo' : 18}) }}">Visualizar Cierre de Fase</a></b>
+            {% endif %}            
             <br>           
           </div>
 
@@ -1089,6 +1117,7 @@
             <br>
 
             {% set ultimoEstado = 0 %}
+            {% set siguienteNodo = 0 %}
 
             {% for nodoCamino in camino %}
               {% if nodoCamino.nodo.id == 20 %}
@@ -1096,6 +1125,13 @@
                   {% set ultimoEstado = nodoCamino.estado %}
 
               {% endif %}
+
+              {% if nodoCamino.nodo.id == 21 %}
+                
+                  {% set siguienteNodo = nodoCamino.estado %}
+
+              {% endif %}
+
             {% endfor %}
           
             {% if ultimoEstado == 1 %}
@@ -1105,7 +1141,12 @@
               {% if ultimoEstado != 3 %} 
                 <br>
                 <br>
-                <b><a href="{{ path('seguimientofaseInicio', {'idGrupo': grupo.id, 'idNodo': 20}) }}">Nuevo inicio de Fase</a></b>
+                {% if siguienteNodo == null %}
+                  <b><a href="{{ path('seguimientofaseInicio', {'idGrupo': grupo.id, 'idNodo': 20}) }}">Nuevo inicio de Fase</a></b>
+                {% else %}
+                  <b><a href="{{ path('seguimientofaseVisualizar', {'idGrupo': grupo.id, 'idNodo' : 20 
+                  }) }}">Visualizar Inicio de Fase</a></b>
+                {% endif %}                
               {% endif %}
             {% endif %}
 
@@ -1142,11 +1183,26 @@
           <div class="modal-body">
             <b>Visita 1</b>
             <br>
-            <br>
+            <br>            
             <b><a href="{{ path('beneficiarioVisitasNuevo', {'idGrupo': grupo.id, 'idNodo' : 21}) }}">Asignar Beneficiarios</a></b>
             <br>
+            {% set ultimoEstado = 0 %}            
+
+            {% for nodoCamino in camino %}
+              {% if nodoCamino.nodo.id == 21 %}
+                
+                  {% set ultimoEstado = nodoCamino.estado %}                  
+
+              {% endif %}
+            {% endfor %}
+
             <br>
-            <b><a href="{{ path('comprobarVisita', {'idGrupo': grupo.id, 'idNodo' : 21}) }}">Nueva Visita 1</a></b>
+            {% if ultimoEstado == 1 %}
+              <b><a href="{{ path('comprobarVisita', {'idGrupo': grupo.id, 'idNodo' : 21}) }}">Nueva Visita 1</a></b>
+            {% else %}
+              <b><a href="{{ path('visitaVisualizar', {'idGrupo': grupo.id, 'idNodo' : 21}) }}">Visualizar Visita 1</a></b>
+            {% endif %} 
+            
             <br>           
           </div>
 
@@ -1173,8 +1229,23 @@
             <br>
             <b><a href="{{ path('beneficiarioVisitasNuevo', {'idGrupo': grupo.id, 'idNodo' : 22}) }}">Asignar Beneficiarios</a></b>
             <br>
+            {% set ultimoEstado = 0 %}            
+
+            {% for nodoCamino in camino %}
+              {% if nodoCamino.nodo.id == 22 %}
+                
+                  {% set ultimoEstado = nodoCamino.estado %}                  
+
+              {% endif %}
+            {% endfor %}
+
             <br>
-            <b><a href="{{ path('comprobarVisita', {'idGrupo': grupo.id, 'idNodo' : 22}) }}">Nueva Visita 2</a></b>
+            {% if ultimoEstado == 1 %}
+              <b><a href="{{ path('comprobarVisita', {'idGrupo': grupo.id, 'idNodo' : 22}) }}">Nueva Visita 2</a></b>
+            {% else %}
+              <b><a href="{{ path('visitaVisualizar', {'idGrupo': grupo.id, 'idNodo' : 22}) }}">Visualizar Visita 2</a></b>
+            {% endif %} 
+            
             <br>           
           </div>
 
@@ -1201,8 +1272,23 @@
             <br>
             <b><a href="{{ path('beneficiarioVisitasNuevo', {'idGrupo': grupo.id, 'idNodo' : 23}) }}">Asignar Beneficiarios</a></b>
             <br>
+            {% set ultimoEstado = 0 %}            
+
+            {% for nodoCamino in camino %}
+              {% if nodoCamino.nodo.id == 23 %}
+                
+                  {% set ultimoEstado = nodoCamino.estado %}                  
+
+              {% endif %}
+            {% endfor %}
+
             <br>
-            <b><a href="{{ path('comprobarVisita', {'idGrupo': grupo.id, 'idNodo' : 23}) }}">Nueva Visita 3</a></b>
+            {% if ultimoEstado == 1 %}
+              <b><a href="{{ path('comprobarVisita', {'idGrupo': grupo.id, 'idNodo' : 23}) }}">Nueva Visita 3</a></b>
+            {% else %}
+              <b><a href="{{ path('visitaVisualizar', {'idGrupo': grupo.id, 'idNodo' : 23}) }}">Visualizar Visita 3</a></b>
+            {% endif %} 
+            
             <br>           
           </div>
 
@@ -1227,7 +1313,21 @@
             <b>Cierre de Fase</b>
             <br>
             <br>
-            <b><a href="{{ path('seguimientofaseCierre', {'idGrupo': grupo.id, 'idNodo' : 24}) }}">Nuevo Cierre de Fase</a></b>
+            {% set ultimoEstado = 0 %}
+
+            {% for nodoCamino in camino %}
+              {% if nodoCamino.nodo.id == 24 %}
+                
+                  {% set ultimoEstado = nodoCamino.estado %}
+
+              {% endif %}
+            {% endfor %}
+          
+            {% if ultimoEstado == 1 %}            
+              <b><a href="{{ path('seguimientofaseCierre', {'idGrupo': grupo.id, 'idNodo' : 24}) }}">Nuevo Cierre de Fase</a></b>
+            {% else %}
+              <b><a href="{{ path('seguimientofaseVisualizar', {'idGrupo': grupo.id, 'idNodo' : 24}) }}">Visualizar Cierre de Fase</a></b>
+            {% endif %}
             <br>           
           </div>
 
@@ -1254,6 +1354,7 @@
             <br>
             
             {% set ultimoEstado = 0 %}
+            {% set siguienteNodo = 0 %}
 
             {% for nodoCamino in camino %}
               {% if nodoCamino.nodo.id == 26 %}
@@ -1261,6 +1362,13 @@
                   {% set ultimoEstado = nodoCamino.estado %}
 
               {% endif %}
+
+              {% if nodoCamino.nodo.id == 27 %}
+                
+                  {% set siguienteNodo = nodoCamino.estado %}
+
+              {% endif %}
+
             {% endfor %}
           
             {% if ultimoEstado == 1 %}
@@ -1270,7 +1378,13 @@
               {% if ultimoEstado != 3 %} 
                 <br>
                 <br>
-                <b><a href="{{ path('seguimientofaseInicio', {'idGrupo': grupo.id, 'idNodo': 26}) }}">Nuevo inicio de Fase</a></b>
+                {% if siguienteNodo == null %}
+                  <b><a href="{{ path('seguimientofaseInicio', {'idGrupo': grupo.id, 'idNodo': 26}) }}">Nuevo inicio de Fase</a></b>
+                {% else %}
+                  <b><a href="{{ path('seguimientofaseVisualizar', {'idGrupo': grupo.id, 'idNodo' : 26 
+                  }) }}">Visualizar Inicio de Fase</a></b>
+              {% endif %}
+                
               {% endif %}       
             {% endif %}
 
@@ -1311,8 +1425,23 @@
             <br>
             <b><a href="{{ path('beneficiarioVisitasNuevo', {'idGrupo': grupo.id, 'idNodo' : 27}) }}">Asignar Beneficiarios</a></b>
             <br>
+            {% set ultimoEstado = 0 %}            
+
+            {% for nodoCamino in camino %}
+              {% if nodoCamino.nodo.id == 27 %}
+                
+                  {% set ultimoEstado = nodoCamino.estado %}                  
+
+              {% endif %}
+            {% endfor %}
+
             <br>
-            <b><a href="{{ path('comprobarVisita', {'idGrupo': grupo.id, 'idNodo' : 27}) }}">Nueva Visita 1</a></b>
+            {% if ultimoEstado == 1 %}
+              <b><a href="{{ path('comprobarVisita', {'idGrupo': grupo.id, 'idNodo' : 27}) }}">Nueva Visita 1</a></b>
+            {% else %}
+              <b><a href="{{ path('visitaVisualizar', {'idGrupo': grupo.id, 'idNodo' : 27}) }}">Visualizar Visita 1</a></b>
+            {% endif %} 
+            
             <br>           
           </div>
 
@@ -1339,8 +1468,23 @@
             <br>
             <b><a href="{{ path('beneficiarioVisitasNuevo', {'idGrupo': grupo.id, 'idNodo' : 28}) }}">Asignar Beneficiarios</a></b>
             <br>
+            {% set ultimoEstado = 0 %}            
+
+            {% for nodoCamino in camino %}
+              {% if nodoCamino.nodo.id == 28 %}
+                
+                  {% set ultimoEstado = nodoCamino.estado %}                  
+
+              {% endif %}
+            {% endfor %}
+
             <br>
-            <b><a href="{{ path('comprobarVisita', {'idGrupo': grupo.id, 'idNodo' : 28}) }}">Nueva Visita 2</a></b>
+            {% if ultimoEstado == 1 %}
+              <b><a href="{{ path('comprobarVisita', {'idGrupo': grupo.id, 'idNodo' : 28}) }}">Nueva Visita 2</a></b>
+            {% else %}
+              <b><a href="{{ path('visitaVisualizar', {'idGrupo': grupo.id, 'idNodo' : 28}) }}">Visualizar Visita 2</a></b>
+            {% endif %} 
+            
             <br>           
           </div>
 
@@ -1367,8 +1511,23 @@
             <br>
             <b><a href="{{ path('beneficiarioVisitasNuevo', {'idGrupo': grupo.id, 'idNodo' : 29}) }}">Asignar Beneficiarios</a></b>
             <br>
+            {% set ultimoEstado = 0 %}            
+
+            {% for nodoCamino in camino %}
+              {% if nodoCamino.nodo.id == 29 %}
+                
+                  {% set ultimoEstado = nodoCamino.estado %}                  
+
+              {% endif %}
+            {% endfor %}
+
             <br>
-            <b><a href="{{ path('comprobarVisita', {'idGrupo': grupo.id, 'idNodo' : 29}) }}">Nueva Visita 3</a></b>
+            {% if ultimoEstado == 1 %}
+              <b><a href="{{ path('comprobarVisita', {'idGrupo': grupo.id, 'idNodo' : 29}) }}">Nueva Visita 3</a></b>
+            {% else %}
+              <b><a href="{{ path('visitaVisualizar', {'idGrupo': grupo.id, 'idNodo' : 29}) }}">Visualizar Visita 3</a></b>
+            {% endif %} 
+            
             <br>           
           </div>
 
@@ -1393,7 +1552,22 @@
             <b>Cierre de Fase</b>
             <br>
             <br>
-            <b><a href="{{ path('seguimientofaseCierre', {'idGrupo': grupo.id, 'idNodo' : 30}) }}">Nuevo Cierre de Fase</a></b>
+            {% set ultimoEstado = 0 %}
+
+            {% for nodoCamino in camino %}
+              {% if nodoCamino.nodo.id == 30 %}
+                
+                  {% set ultimoEstado = nodoCamino.estado %}
+
+              {% endif %}
+            {% endfor %}
+          
+            {% if ultimoEstado == 1 %}            
+              <b><a href="{{ path('seguimientofaseCierre', {'idGrupo': grupo.id, 'idNodo' : 30}) }}">Nuevo Cierre de Fase</a></b>
+            {% else %}
+              <b><a href="{{ path('seguimientofaseVisualizar', {'idGrupo': grupo.id, 'idNodo' : 30}) }}">Visualizar Cierre de Fase</a></b>
+            {% endif %}
+            
             <br>           
           </div>
 
