@@ -31,6 +31,7 @@ use AppBundle\Entity\AsignacionBeneficiarioEstructuraOrganizacional;
 use AppBundle\Entity\AsignacionContadorGrupo;
 use AppBundle\Entity\AsignacionBeneficiarioVisitas;
 use AppBundle\Entity\SeguimientoGrupoSoporte;
+use AppBundle\Entity\VisitaSoporte;
 
 use AppBundle\Form\GestionEmpresarial\HabilitacionFasesType;
 use AppBundle\Form\GestionEmpresarial\SeguimientoMOTType;
@@ -40,6 +41,7 @@ use AppBundle\Form\GestionEmpresarial\DiagnosticoOrganizacionalType;
 use AppBundle\Form\GestionEmpresarial\EvaluacionFasesSoporteType;
 use AppBundle\Form\GestionEmpresarial\EvaluacionFasesType;
 use AppBundle\Form\GestionEmpresarial\VisitaFilterType;
+use AppBundle\Form\GestionEmpresarial\VisitaSoporteType;
 use AppBundle\Form\GestionEmpresarial\SeguimientoGrupoSoporteType;
 
 
@@ -2056,6 +2058,165 @@ class SeguimientoGrupoController extends Controller
 
         $path = $em->getRepository('AppBundle:SeguimientoGrupoSoporte')->findOneBy(
             array('id' => $idGrupoSoporte, 'nodo' => $idNodo));
+
+        $link = '..\uploads\documents\\'.$path->getPath();
+
+        header("Content-Disposition: attachment; filename=".$path->getPath()."");
+        header ("Content-Type: application/octet-stream");
+        header ("Content-Length: ".filesize($link));
+        readfile($link);           
+
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/visita/documento-soporte", name="visitaSoporte")
+     */
+    public function visitaSoporteAction(Request $request, $idGrupo, $idNodo)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $visitaSoporte = new VisitaSoporte();
+
+        $visita = $em->getRepository('AppBundle:Visita')->findOneBy(
+            array('grupo' => $idGrupo)
+        );
+
+        $caminos = $em->getRepository('AppBundle:Camino')->findBy(
+                array('grupo' => $idGrupo,
+                      'nodo' => $idNodo)
+            );
+
+        $form = $this->createForm(new VisitaSoporteType(), $visitaSoporte);
+
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $soportesActivos = $em->getRepository('AppBundle:VisitaSoporte')->findBy(
+            array('active' => '1', 'grupo' => $idGrupo, 'nodo' => $idNodo),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $histotialSoportes = $em->getRepository('AppBundle:VisitaSoporte')->findBy(
+            array('active' => '0', 'grupo' => $idGrupo, 'nodo' => $idNodo),
+            array('fecha_creacion' => 'ASC')
+        );
+
+        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
+            array('id' => $idGrupo)
+        );
+
+        $nodo = $em->getRepository('AppBundle:Nodo')->findOneBy(
+            array('id' => $idNodo)
+        );
+
+        
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+
+
+                $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
+
+                    array(
+                        'descripcion' => $visitaSoporte->getTipoSoporte()->getDescripcion(), 
+                        'dominio' => 'visita_tipo_soporte'
+                    )
+                );
+
+            
+                $actualizarGrupoSoportes = $em->getRepository('AppBundle:VisitaSoporte')->findBy(
+                    array(
+                        'active' => '1' , 
+                        'tipo_soporte' => $tipoSoporte->getId(), 
+                        'grupo' => $idGrupo,
+                        'nodo' => $idNodo
+                    )
+                );  
+            
+                foreach ($actualizarGrupoSoportes as $actualizarGrupoSoporte){
+                    echo $actualizarGrupoSoporte->getId()." ".$actualizarGrupoSoporte->getTipoSoporte()."<br />";
+                    $actualizarGrupoSoporte->setFechaModificacion(new \DateTime());
+                    $actualizarGrupoSoporte->setActive(0);
+                    $em->flush();
+                }
+
+                $visitaSoporte->setGrupo($grupo);
+                $visitaSoporte->setNodo($nodo);
+                $visitaSoporte->setActive(true);
+                $visitaSoporte->setFechaCreacion(new \DateTime());
+
+                if($visitaSoporte->getTipoSoporte()->getDescripcion()=="Documento de aprobación de interventoria"){ 
+                        self::nodoCamino($idGrupo, $idNodo, 2);
+                        self::nodoCamino($idGrupo, $idNodo+1, 1);
+                }
+
+                if($visitaSoporte->getTipoSoporte()->getDescripcion()=="Documento de rechazo de interventoria"){ 
+                        self::nodoCamino($idGrupo, $idNodo, 3);                        
+                }
+
+                $em->persist($visitaSoporte);
+
+                $em->flush();
+
+                return $this->redirectToRoute('visitaSoporte', array( 'idGrupo' => $idGrupo, 'idNodo' => $idNodo));
+            }
+        }   
+        
+        return $this->render(
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/SeguimientoGrupo:visita-soporte.html.twig', 
+            array(
+                'form' => $form->createView(), 
+                'soportesActivos' => $soportesActivos, 
+                'histotialSoportes' => $histotialSoportes,
+                'grupo' => $grupo,
+                'idGrupo' => $idGrupo,
+                'idNodo' => $idNodo,
+                'visita' => $visita,
+                'caminos' => $caminos
+            )
+        );
+        
+    }
+    
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/visita/documento-soporte/{idVisitaSoporte}/borrar", name="visitaSoporteBorrar")
+     */
+    public function visitaSoporteBorrarAction(Request $request, $idGrupo, $idNodo, $idVisitaSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $visitaSoporte = new VisitaSoporte();
+        echo "asklñjdaljkñasdkjñdas";
+        $visitaSoporte = $em->getRepository('AppBundle:VisitaSoporte')->findOneBy(
+            array('id' => $idVisitaSoporte)
+        );
+        
+        $visitaSoporte->setFechaModificacion(new \DateTime());
+        $visitaSoporte->setActive(0);
+        $em->flush();
+
+        return $this->redirectToRoute('visitaSoporte', array( 'idGrupo' => $idGrupo, 'idNodo' => $idNodo));
+        
+    }
+
+    /**
+     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/seguimiento/{idNodo}/visita/{idVisitaSoporte}/documento-soporte/descargar", name="visitaSoporteDescargar")
+     */
+    public function visitaSoporteDescargarAction(Request $request, $idGrupo, $idNodo, $idVisitaSoporte)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $path = $em->getRepository('AppBundle:VisitaSoporte')->findOneBy(
+            array('id' => $idVisitaSoporte, 'nodo' => $idNodo));
 
         $link = '..\uploads\documents\\'.$path->getPath();
 
