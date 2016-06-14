@@ -29,6 +29,7 @@ use AppBundle\Form\GestionEmpresarial\TerritorioAprendizajeType;
 use AppBundle\Form\GestionEmpresarial\RutaSoporteType;
 use AppBundle\Form\GestionEmpresarial\RutaFilterType;
 use AppBundle\Form\GestionEmpresarial\TerritorioAprendizajeFilterType;
+use AppBundle\Form\GestionEmpresarial\TerritorioOrganizacionFilterType;
 
 
 
@@ -231,17 +232,43 @@ class TerritorioController extends Controller
         $query->setParameter('territorio_aprendizaje', $territorioAprendizaje);
         $organizaciones = $query->getResult();      
 
+
+
+
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Organizacion')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new TerritorioOrganizacionFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder
+        ->andWhere('q.active = 1')
+        ->andWhere('q.id NOT IN (SELECT organizacion.id FROM AppBundle:Organizacion organizacion JOIN AppBundle:AsignacionOrganizacionTerritorioAprendizaje atc WHERE organizacion = atc.organizacion AND atc.territorio_aprendizaje = :territorio_aprendizaje)')
+        ->setParameter('territorio_aprendizaje', $territorioAprendizaje);
+
+        $query = $filterBuilder->getQuery();
+
+
+
+
         $paginator1  = $this->get('knp_paginator');
 
         $pagination1 = $paginator1->paginate(
-            $organizaciones, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Territorio:organizacion-territorio-gestion-asignacion.html.twig', 
             array(
-                'organizaciones' => $organizaciones,
+                'form' => $form->createView(),
+                'organizaciones' => $query,
                 'asignacionesTerritoriosOrganizacion' => $asignacionesTerritoriosOrganizacion,
                 'idTerritorioAprendizaje' => $idTerritorioAprendizaje,
                 'pagination1' => $pagination1

@@ -1,7 +1,7 @@
 {% extends 'AppBundle::frontend.html.twig' %}
 
 
-{% block title %}Territorios{% endblock %}
+{% block title %}Territorios Organización asignar{% endblock %}
 
 {% block breadcrumb_ul %}
 
@@ -49,6 +49,88 @@
         <div class="row">
           <div class="col-md-5 well">            
             <br>
+
+            <div class="row well" ng-controller="FiltrosTerritorioOrganizacionCtrl">
+
+              <div class="row">
+              <div class="col-md-12 text-right">
+            <div class="btn-group [[styleBuscarHerramientas]]">              
+                
+                <button class="btn btn-info" ng-click="buttonBuscarHerramientasTerritorioOrganizacion(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
+              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaTerritorioOrganizacion();">Limpiar</button>                            
+            </div>
+          </div>
+        </div>
+
+        <br />
+
+        <div ng-show="CountBuscarHerramientas === 1">
+
+        <form method="get" action="{{ path('territorioAprendizajeOrganizacion', {'idTerritorioAprendizaje': idTerritorioAprendizaje}) }}">               
+                  
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+        {{ form_errors(form) }}
+
+        <div class="row">       
+
+                  <div class="col-md-6">
+
+                    {{ form_label(form.nombre_organizacion) }}
+                    {{ form_errors(form.nombre_organizacion) }}
+                    {{ form_widget(form.nombre_organizacion, { 'attr': {'class': 'form-control', 'placeholder': 'Nombre Organización'} }) }}
+
+                    
+                  </div>
+
+                  <div class="col-md-6">
+
+                    {{ form_label(form.linea_productiva) }}
+                    {{ form_errors(form.linea_productiva) }}
+                    {{ form_widget(form.linea_productiva, { 'attr': {'class': 'form-control', 'placeholder': 'Linea Productiva'} }) }}
+
+                  </div>
+
+        </div>
+
+        <br />
+
+        <div class="row">
+                  <div class="col-md-3">
+                  </div> 
+                  <div class="col-md-6">
+
+                    {{ form_label(form.tipo_producto) }}
+                    {{ form_errors(form.tipo_producto) }}
+                    {{ form_widget(form.tipo_producto, { 'attr': {'class': 'form-control', 'placeholder': 'Tipo Producto'} }) }}
+   
+                  </div>
+
+        </div>
+
+        
+
+        <br />        
+
+        <div class="row">    
+
+                  <div class="col-md-12 text-right">
+
+                  <button class="btn btn-default" style="color:white; background-color:#ccc;"  type="submit" name="submit-filter" value="filter"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+
+                  </div>                  
+        </div>
+
+        {{ form_end(form) }}
+
+        </form>
+
+      </div>
+
+
+        </div>
+
+
             
             <hr>            
             <table class="table table-striped table-hover">
@@ -162,120 +244,392 @@
       </div>
     </div>
 
-   {% for organizacion in organizaciones %}
+   {% for organizacion in pagination1 %}
     <!-- Modal -->
-    <div class="modal fade" id="myModal{{ organizacion.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+   <div class="modal fade" id="myModal{{  organizacion.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content col-md-12 table-responsive">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ organizacion.id }} | {{ organizacion.nombreorganizacion }}</h4>
+            <tr class="col-md-12 table-responsive">
+              <td><h4 class="modal-title text-center" id="myModalLabel">{{ organizacion.id }} {{ organizacion.nombreorganizacion }}</h4><td>
+                            
+            </tr>
           </div>
-          <div class="modal-body">
-            <b>Nombre de la Organización:{{ organizacion.nombreorganizacion }}</b>
-            <br>
-            <b>Linea Productiva: {{organizacion.lineaproductiva}}</b>
-            <br>
-            <b>Tipo de Producto: Oriente {{organizacion.tipoproducto}}</b>
-            <br>            
-            <b>Dirección: {{organizacion.direccion}}</b>
-            <br>            
-            <b>Descripcion: {{organizacion.descripcion}}</b>
-            <br>
-            <b>Municipio: {{organizacion.municipio}}</b>  
-            <br>
-            <b>Numero Documento Contacto: {{organizacion.numerodocumentocontacto}}</b>
-            <br>
-            <b>Primer Apellido Contacto: {{organizacion.primerapellidocontacto}}</b>
-            <br>
-            <b>Segundo Apellido Contacto: {{organizacion.segundoapellidocontacto}}</b>
-            <br>
-            <b>Primer Nombre Contacto: {{organizacion.primernombrecontacto}}</b>
-            <br>
-            <b>Segundo Nombre Contacto: {{organizacion.segundonombrecontacto}}</b>
-            <br>
-            <b>Telefono Fijo Contacto: {{organizacion.telefonofijocontacto}}</b>  
-            <br>
-            <b>Telefono celular Contacto: {{organizacion.telefonocelularcontacto}}</b>
-            <br>
-            <b>Correo electronico Contacto: {{organizacion.correoelectronicocontacto}}</b>
-            <br>
-            <b>Ruta: {{organizacion.ruta}}</b>
-            <br>
-            <b>Pasantia: {{organizacion.pasantia}}</b>
-            <br>
-            <b>Observaciones: {{organizacion.observaciones}}</b> 
+        </br>
+          <div class="col-md-12 table-responsive">
+          <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos de la Organización</th>                    
+                </tr>
+              </thead>   
+
+              <tbody>    
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Nombre de la Organización
+                  </td>         
+                  <td class="text-center">
+                    {{ organizacion.nombreorganizacion }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Linea Productiva
+                  </td>
+                  <td class="text-center">
+                    {{organizacion.lineaproductiva}}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Tipo de Producto
+                  </td>
+                  <td class="text-center">
+                   {{organizacion.tipoproducto}}
+                  </td>
+              </tr>
+
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Dirección
+                  </td>
+                  <td class="text-center">
+                   {{organizacion.direccion}}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Descripción
+                  </td>
+                  <td class="text-center">
+                    {{organizacion.descripcion}}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Municipio
+                  </td>
+                  <td class="text-center">
+                   {{organizacion.municipio}}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Número de Documento Contacto
+                  </td>
+                  <td class="text-center">
+                    {{organizacion.numerodocumentocontacto}}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                   Apellidos Contacto
+                  </td>
+                  <td class="text-center">
+                    {{organizacion.primerapellidocontacto}} {{organizacion.segundoapellidocontacto}}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                   Nombres Contacto
+                  </td>
+                  <td class="text-center">
+                    {{organizacion.primernombrecontacto}} {{organizacion.segundonombrecontacto}}
+                  </td>
+              </tr> 
+
+             
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Fijo
+                  </td>
+                  <td class="text-center">
+                    {{organizacion.telefonofijocontacto}}
+                  </td>
+              </tr> 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Celular
+                  </td>
+                  <td class="text-center">
+                    {{organizacion.telefonocelularcontacto}}
+                  </td>
+              </tr> 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Correo Electronico
+                  </td>
+                  <td class="text-center">
+                    {{organizacion.correoelectronicocontacto}}
+                  </td>
+              </tr> 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Ruta
+                  </td>
+                  {% if organizacion.ruta == null %}
+                  <td class="text-center">
+                    Deshabilitado
+                  </td>
+                  {% else %}
+                  <td class="text-center">
+                    Hablilitado
+                  </td>
+              </tr>
+              {% endif %} 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Pasantia
+                  </td>
+                  {% if organizacion.pasantia == null %}
+                  <td class="text-center">
+                    Deshabilitado
+                  </td>
+                  {% else %}
+                  <td class="text-center">
+                    Hablilitado
+                  </td>
+              </tr>
+              {% endif %} 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Observaciones
+                  </td>
+                  <td class="text-center">
+                    {{organizacion.observaciones}}
+                  </td>
+              </tr> 
 
 
-          </div>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
+
+
+            </div>
+          </tbody>  
+          </table>  
+           <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>  
+          </div>      
       </div>
     </div>
+  </div>
+
 
     {% endfor %}
 
 
 {% for asignacionTerritorioOrganizacion in asignacionesTerritoriosOrganizacion %}
     <!-- Modal -->
-    <div class="modal fade" id="myModal{{ asignacionTerritorioOrganizacion.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+
+    <div class="modal fade" id="myModal{{  asignacionTerritorioOrganizacion.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
+        <div class="modal-content col-md-12 table-responsive">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">{{ asignacionTerritorioOrganizacion.organizacion.id }} | {{ asignacionTerritorioOrganizacion.organizacion.nombreorganizacion }}</h4>
+            <tr class="col-md-12 table-responsive">
+              <td><h4 class="modal-title text-center" id="myModalLabel">{{ asignacionTerritorioOrganizacion.Organizacion.id }} {{ asignacionTerritorioOrganizacion.Organizacion.nombreorganizacion }}</h4><td>
+                            
+            </tr>
           </div>
-          <div class="modal-body">
-            <b>Nombre de la Organización:{{ asignacionTerritorioOrganizacion.organizacion.nombreorganizacion }}</b>
-            <br>
-            <b>Linea Productiva: {{asignacionTerritorioOrganizacion.organizacion.lineaproductiva}}</b>
-            <br>
-            <b>Tipo de Producto: Oriente {{asignacionTerritorioOrganizacion.organizacion.tipoproducto}}</b>
-            <br>            
-            <b>Dirección: {{asignacionTerritorioOrganizacion.organizacion.direccion}}</b>
-            <br>
-            <b>Descripcion: {{asignacionTerritorioOrganizacion.organizacion.descripcion}}</b>            
-            <br>
-            <b>Municipio: {{asignacionTerritorioOrganizacion.organizacion.municipio}}</b>  
-            <br>
-            <b>Numero Documento Contacto: {{asignacionTerritorioOrganizacion.organizacion.numerodocumentocontacto}}</b>
-            <br>
-            <b>Primer Apellido Contacto: {{asignacionTerritorioOrganizacion.organizacion.primerapellidocontacto}}</b>
-            <br>
-            <b>Segundo Apellido Contacto: {{asignacionTerritorioOrganizacion.organizacion.segundoapellidocontacto}}</b>
-            <br>
-            <b>Primer Nombre Contacto: {{asignacionTerritorioOrganizacion.organizacion.primernombrecontacto}}</b>
-            <br>
-            <b>Segundo Nombre Contacto: {{asignacionTerritorioOrganizacion.organizacion.segundonombrecontacto}}</b>
-            <br>
-            <b>Telefono Fijo Contacto: {{asignacionTerritorioOrganizacion.organizacion.telefonofijocontacto}}</b>  
-            <br>
-            <b>Telefono celular Contacto: {{asignacionTerritorioOrganizacion.organizacion.telefonocelularcontacto}}</b>
-            <br>
-            <b>Correo electronico Contacto: {{asignacionTerritorioOrganizacion.organizacion.correoelectronicocontacto}}</b>
-            <br>
-            <b>Ruta: {{asignacionTerritorioOrganizacion.organizacion.ruta}}</b>
-            <br>
-            <b>Pasantia: {{asignacionTerritorioOrganizacion.organizacion.pasantia}}</b>
-            <br>
-            <b>Observaciones: {{asignacionTerritorioOrganizacion.organizacion.observaciones}}</b> 
+        </br>
+          <div class="col-md-12 table-responsive">
+          <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos de la Organización</th>                    
+                </tr>
+              </thead>   
+
+              <tbody>    
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Nombre de la Organización
+                  </td>         
+                  <td class="text-center">
+                    {{ asignacionTerritorioOrganizacion.Organizacion.nombreorganizacion }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Linea Productiva
+                  </td>
+                  <td class="text-center">
+                    {{asignacionTerritorioOrganizacion.Organizacion.lineaproductiva}}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Tipo de Producto
+                  </td>
+                  <td class="text-center">
+                   {{asignacionTerritorioOrganizacion.Organizacion.tipoproducto}}
+                  </td>
+              </tr>
+
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Dirección
+                  </td>
+                  <td class="text-center">
+                   {{asignacionTerritorioOrganizacion.Organizacion.direccion}}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Descripción
+                  </td>
+                  <td class="text-center">
+                    {{asignacionTerritorioOrganizacion.Organizacion.descripcion}}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Municipio
+                  </td>
+                  <td class="text-center">
+                   {{asignacionTerritorioOrganizacion.Organizacion.municipio}}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Número de Documento Contacto
+                  </td>
+                  <td class="text-center">
+                    {{asignacionTerritorioOrganizacion.Organizacion.numerodocumentocontacto}}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                   Apellidos Contacto
+                  </td>
+                  <td class="text-center">
+                    {{asignacionTerritorioOrganizacion.Organizacion.primerapellidocontacto}} {{asignacionTerritorioOrganizacion.Organizacion.segundoapellidocontacto}}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                   Nombres Contacto
+                  </td>
+                  <td class="text-center">
+                    {{asignacionTerritorioOrganizacion.Organizacion.primernombrecontacto}} {{asignacionTerritorioOrganizacion.Organizacion.segundonombrecontacto}}
+                  </td>
+              </tr> 
+
+             
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Fijo
+                  </td>
+                  <td class="text-center">
+                    {{asignacionTerritorioOrganizacion.Organizacion.telefonofijocontacto}}
+                  </td>
+              </tr> 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Celular
+                  </td>
+                  <td class="text-center">
+                    {{asignacionTerritorioOrganizacion.Organizacion.telefonocelularcontacto}}
+                  </td>
+              </tr> 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Correo Electronico
+                  </td>
+                  <td class="text-center">
+                    {{asignacionTerritorioOrganizacion.Organizacion.correoelectronicocontacto}}
+                  </td>
+              </tr> 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Ruta
+                  </td>
+                  {% if asignacionTerritorioOrganizacion.Organizacion.ruta == null %}
+                  <td class="text-center">
+                    Deshabilitado
+                  </td>
+                  {% else %}
+                  <td class="text-center">
+                    Hablilitado
+                  </td>
+              </tr>
+              {% endif %} 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Pasantia
+                  </td>
+                  {% if asignacionTerritorioOrganizacion.Organizacion.pasantia == null %}
+                  <td class="text-center">
+                    Deshabilitado
+                  </td>
+                  {% else %}
+                  <td class="text-center">
+                    Hablilitado
+                  </td>
+              </tr>
+              {% endif %} 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Observaciones
+                  </td>
+                  <td class="text-center">
+                    {{asignacionTerritorioOrganizacion.Organizacion.observaciones}}
+                  </td>
+              </tr> 
 
 
-          </div>
 
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
+
+
+            </div>
+          </tbody>  
+          </table>  
+           <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>  
+          </div>      
       </div>
     </div>
+  </div>
 
     {% endfor %}
 

@@ -22,12 +22,16 @@ use AppBundle\Entity\AsignacionGrupoConcurso;
 use AppBundle\Entity\AsignacionIntegranteComite;
 use AppBundle\Entity\Comite;
 use AppBundle\Entity\Integrante;
+use AppBundle\Entity\Listas;
 
 
 
 use AppBundle\Form\GestionEmpresarial\ConcursoSoporteType;
 use AppBundle\Form\GestionEmpresarial\ConcursoType;
 use AppBundle\Form\GestionEmpresarial\ListaRolType;
+use AppBundle\Form\GestionEmpresarial\ConcursoFilterType;
+use AppBundle\Form\GestionEmpresarial\ConcursoGrupoFilterType;
+use AppBundle\Form\GestionEmpresarial\ConcursoIntegranteFilterType;
 
 
 
@@ -36,7 +40,9 @@ use AppBundle\Form\GestionEmpresarial\ListaRolType;
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-use AppBundle\Form\GestionEmpresarial\ConcursoFilterType;
+
+
+
 
 
 class ConcursoController extends Controller
@@ -336,17 +342,57 @@ class ConcursoController extends Controller
 
         $grupos = $query->getResult(); 
 
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Grupo')
+            ->createQueryBuilder('q')
+            ->innerJoin("q.municipio", "m")
+            ->innerJoin("m.departamento", "d")
+            ->innerJoin("m.zona", "z");
+
+        $form = $this->get('form.factory')->create(new ConcursoGrupoFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder
+        ->andWhere('q.active = 1')
+        ->andWhere('q.id NOT IN (SELECT grupo.id FROM AppBundle:Grupo grupo JOIN AppBundle:AsignacionGrupoConcurso agc WHERE grupo = agc.grupo AND agc.concurso = :concurso)')
+        ->setParameter('concurso', $concurso);
+
+
+        if (isset($_GET['selMunicipio']) && $_GET['selMunicipio'] != "?") {
+             $filterBuilder->andWhere('m.id = :idMunicipio')
+            ->setParameter('idMunicipio', $_GET['selMunicipio']);
+        }
+        else{
+            if (isset($_GET['selDepartamento']) && $_GET['selDepartamento'] != "?") {
+                $filterBuilder->andWhere('d.id = :idDepartamento')
+                ->setParameter('idDepartamento', $_GET['selDepartamento']);
+            }
+            if (isset($_GET['selZona']) && $_GET['selZona'] != "?") {
+                $filterBuilder->andWhere('z.id = :idZona')
+                ->setParameter('idZona', $_GET['selZona']);
+            }      
+        }
+
+        $query = $filterBuilder->getQuery();
+
+
         $paginator1  = $this->get('knp_paginator');
 
         $pagination1 = $paginator1->paginate(
-            $grupos, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
         );
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Concurso:grupo-concurso-gestion-asignacion.html.twig', 
             array(
-                'grupos' => $grupos,
+                'form' => $form->createView(),
+                'grupos' => $query,
                 'asignacionesGrupoConcurso' => $asignacionesGrupoConcurso,
                 'idConcurso' => $idConcurso,
                 'pagination1' => $pagination1
@@ -478,13 +524,45 @@ class ConcursoController extends Controller
         $query = $em->createQuery('SELECT i FROM AppBundle:Integrante i WHERE i.id NOT IN (SELECT integrante.id FROM AppBundle:Integrante integrante JOIN AppBundle:AsignacionIntegranteComite aic WHERE integrante = aic.integrante AND aic.comite = :comite) AND i.active = 1');
         $query->setParameter('comite', $comite);
 
-        $integrantes = $query->getResult();         
+        $integrantes = $query->getResult();      
+
+
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Integrante')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new ConcursoIntegranteFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder
+        ->andWhere('q.active = 1')
+        ->andWhere('q.id NOT IN (SELECT integrante.id FROM AppBundle:Integrante integrante JOIN AppBundle:AsignacionIntegranteComite aic WHERE integrante = aic.integrante AND aic.comite = :comite)')
+        ->setParameter(':comite', $comite);
+
+        $query = $filterBuilder->getQuery();
+
+
+
+        $paginator1  = $this->get('knp_paginator');
+
+        $pagination1 = $paginator1->paginate(
+            $query, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            5/*límite de resultados por página*/
+        );   
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Concurso:jurados-comite-gestion-asignacion.html.twig', 
             array(
-                'integrantes' => $integrantes,
+                'form' => $form->createView(),
+                'integrantes' => $query,
                 'asignacionesIntegranteComite' => $asignacionesIntegranteComite,
-                'idComite' => $idComite
+                'idComite' => $idComite,
+                'pagination1' => $pagination1
             ));        
         
     }

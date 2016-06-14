@@ -24,6 +24,7 @@ use AppBundle\Entity\Organizacion;
 use AppBundle\Entity\Grupo;
 use AppBundle\Entity\Beneficiario;
 use AppBundle\Entity\AsignacionGrupoBeneficiarioPasantia;
+use AppBundle\Entity\Listas;
 
 
 
@@ -622,12 +623,17 @@ class PasantiaController extends Controller
             $grupoAsignado = null;
         }      
 
+
+
          $form = $this->get('form.factory')->create(new PasantiaGrupoFilterType());        
 
         if($pasantia->getGrupo() == null){             
             $filterBuilder = $this->get('doctrine.orm.entity_manager')
             ->getRepository('AppBundle:Grupo')
-            ->createQueryBuilder('q');
+            ->createQueryBuilder('q')
+            ->innerJoin("q.municipio", "m")
+            ->innerJoin("m.departamento", "d")
+            ->innerJoin("m.zona", "z");
 
         
 
@@ -651,9 +657,24 @@ class PasantiaController extends Controller
                             AND pasantia.id = :idPasantia                            
                     ) 
                     AND q.codigo IS NOT NULL')
-
+             //AND g.codigo IS NOT NULL ----> Mostrar solo los de codigo grupo
         ->setParameter('grupo_pasantia', $pasantia)
         ->setParameter('idPasantia', $idPasantia);
+
+        if (isset($_GET['selMunicipio']) && $_GET['selMunicipio'] != "?") {
+             $filterBuilder->andWhere('m.id = :idMunicipio')
+            ->setParameter('idMunicipio', $_GET['selMunicipio']);
+        }
+        else{
+            if (isset($_GET['selDepartamento']) && $_GET['selDepartamento'] != "?") {
+                $filterBuilder->andWhere('d.id = :idDepartamento')
+                ->setParameter('idDepartamento', $_GET['selDepartamento']);
+            }
+            if (isset($_GET['selZona']) && $_GET['selZona'] != "?") {
+                $filterBuilder->andWhere('z.id = :idZona')
+                ->setParameter('idZona', $_GET['selZona']);
+            }      
+        }
 
         $query = $filterBuilder->getQuery();
         
@@ -662,7 +683,9 @@ class PasantiaController extends Controller
             $query = array(); 
 
         }
-             //AND g.codigo IS NOT NULL ----> va arribita
+
+
+            
 
         $paginator1  = $this->get('knp_paginator');
 

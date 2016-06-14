@@ -130,6 +130,66 @@ app.controller('FiltrosRutaCtrl', ['$scope', '$http', 'styleBuscarHerramientas',
 		
 }]);
 
+app.controller('FiltrosRutaTerritorioCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasRutaTerritorio = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaRutaTerritorio = function(){
+       
+		
+		$("#rutaTerritorioFilter_nombre_territorio").val("");
+		
+
+       
+    }
+      
+		
+}]);
+
+app.controller('FiltrosRutaGrupoCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasRutaGrupo = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaRutaGrupo = function(){
+       
+		
+		$("#rutaGrupoFilter_nombre").val("");
+		
+
+       
+    }
+      
+		
+}]);
+
 app.controller('CampoAprobacionRutaCtrl', ['$scope', '$http', function($scope, $http) {
 	
 		

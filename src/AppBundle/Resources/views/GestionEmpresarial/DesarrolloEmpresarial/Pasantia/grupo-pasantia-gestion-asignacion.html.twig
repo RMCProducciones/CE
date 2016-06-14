@@ -1,7 +1,7 @@
 {% extends 'AppBundle::frontend.html.twig' %}
 
 
-{% block title %}Integrantes CLEAR{% endblock %}
+{% block title %}Pasantias grupo asignar{% endblock %}
 
 {% block breadcrumb_ul %}
 
@@ -64,7 +64,7 @@
 
         <br />
 
-        <div ng-show="CountBuscarHerramientas === 1">
+        <div ng-controller="ListasLocalizacionCtrl" ng-show="CountBuscarHerramientas === 1">
 
         <form method="get" action="{{ path('pasantiaGrupo', {'idPasantia' : idPasantia}) }}">               
                   
@@ -251,7 +251,7 @@
       </div>
     </div>
 
-   {% for grupo in grupos %}
+   {% for grupo in pagination1 %}
     <!-- Modal -->
     
     <div class="modal fade" id="myModal{{ grupo.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">

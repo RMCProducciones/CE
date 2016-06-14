@@ -61,11 +61,34 @@ app.controller('FiltrosTerritorioAprendizajeCtrl', ['$scope', '$http', 'styleBus
        
 		$("#territorioFilter_nombre_territorio").val("");
 		$("#territorioFilter_observaciones").val("");
-	
-
-
+       
+    }
+      
 		
+}]);
 
+app.controller('FiltrosTerritorioOrganizacionCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasTerritorioOrganizacion = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaTerritorioOrganizacion = function(){
+       
+		$("#territorioOrganizacionFilter_nombre_organizacion").val("");
+		$("#territorioOrganizacionFilter_tipo_producto").val("");
        
     }
       
