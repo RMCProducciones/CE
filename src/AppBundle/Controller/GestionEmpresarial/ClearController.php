@@ -1093,7 +1093,7 @@ class ClearController extends Controller
                 array('grupo' => $asignacionGrupoClear->getGrupo())
             );
 
-            $ultimoNodo = $camino[count($camino)-1];
+            $ultimoNodo = $camino[count($camino)-1];            
             $idUltimoNodo = $ultimoNodo->getNodo()->getId();
             $estado = $ultimoNodo->getEstado();
 
@@ -1143,11 +1143,12 @@ class ClearController extends Controller
                 $evaluacionFases = $em->getRepository('AppBundle:EvaluacionFases')->findBy(
                     array('grupo' => $asignacionGrupoClear->getGrupo()                                                    
                 ));
-
                 if($evaluacionFases != null){
-                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 14, 2);//Ejecutada(2) Clear de Asignacion
-                }else{
-                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 14, 3);//Rechazado(3) Clear de Asignacion   
+                    if($evaluacionFases->getAptoIea != 0){
+                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 14, 2);//Ejecutada(2) Clear de Asignacion
+                    }else{
+                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 14, 3);//Rechazado(3) Clear de Asignacion   
+                    }
                 }
             }
             elseif($idUltimoNodo == 20){
@@ -1155,7 +1156,7 @@ class ClearController extends Controller
                     array('grupo' => $asignacionGrupoClear->getGrupo()                          
                 ));
 
-                if($evaluacionFases->getCalificacionPi() != null){
+                if($evaluacionFases->getAptoPi() != 0){
                     self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 20, 2);//Ejecutada(2) Clear de Asignacion
                 }else{
                     self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 20, 3);//Rechazado(3) Clear de Asignacion   
@@ -1167,7 +1168,7 @@ class ClearController extends Controller
                 ));
 
                 if($evaluacionFases != null){
-                    if($evaluacionFases->getCalificacionPn() != null){
+                    if($evaluacionFases->getAptoPn() != 0){
                         self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 26, 2);//Ejecutada(2) Clear de Asignacion
                     }else{
                         self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 26, 3);//Rechazado(3) Clear de Asignacion   

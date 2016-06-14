@@ -9,7 +9,7 @@
       <li>Gestión Empresarial</li>
       <li>Formacion de capital social asociativo y desarrollo empresarial</li>
       <li>Grupos</li>
-      <li><a href="{{ path('seguimientoGrupo', {'idGrupo': idGrupo}) }}">Seguimiento</a></li>
+      <li><a href="{{ path('seguimientoGrupo', {'idGrupo': idGrupo}) }}">Visita</a></li>
       <li class="active">documento-soporte</li>
     </ul>
 
@@ -36,14 +36,8 @@
           <div class="col-md-6">
             <div class="btn-group">
 
-                      
+              <button name="grupoSoporte[Guardar]" id="grupoSoporte_Guardar" type="submit" class="btn btn-success">Guardar</button>
 
-                        {% if estado == 1 %}
-                          
-                        <button name="grupoSoporte[Guardar]" id="grupoSoporte_Guardar" type="submit" class="btn btn-success">Guardar</button>                                      
-
-                        {% endif %}
-  
               <a href="{{ path('seguimientoGrupo', {'idGrupo': idGrupo}) }}" class="btn btn-danger" title="" alt="Cancelar" >Cancelar</a>
             
             </div>
@@ -63,7 +57,6 @@
       <h2>  Grupo: {{ grupos.nombre }} </h2>
       {% endfor %}
 
-    {% if estado == 1 %}
       <br>
       <h2>Gestión de documentos soportes del Grupo</h2>
       <hr>
@@ -96,8 +89,7 @@
               </div>
 
           </div>
-        </div>
-      {% endif %}
+        </div>      
       </div>
     </div>
 
@@ -116,7 +108,7 @@
 		<h2 class="page-header">Documentos soportes activos</h2>
         <div class="row">
           <div class="col-md-12">
-            <table class="table" ng-controller="gestionDocumentoSoporteSeguimientoGrupoCtrl">
+            <table class="table" ng-controller="gestionDocumentoSoporteVisitaCtrl">
               <thead>
                 	<tr>
 	                  <th>#</th>
@@ -142,17 +134,12 @@
 	                  <td>{% if soporteActivo.active %}Activo{% else %}Inactivo{% endif %}</td>
 	                  <td>{{ soporteActivo.fechacreacion | date ('d/m/Y h:i:s', 'America/Bogota')}}</td>
 	                  <td>
-	                    <a href="{{ path('seguimientoGrupoSoporteRecuperarArchivo', {'idGrupo': idGrupo, 'idNodo' : idNodo,'idGrupoSoporte': soporteActivo.id}) }}" target="_blank" alt="Descargar" title="Descargar"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a> 
-
-                      
-                        {% if estado == 1 %}
+	                    <a href="{{ path('visitaSoporteDescargar', {'idGrupo': idGrupo, 'idNodo' : idNodo,'idVisitaSoporte': soporteActivo.id}) }}" target="_blank" alt="Descargar" title="Descargar"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a> 
 
                         | 	
                           
-                        <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="anularSoporteSeguimientoGrupo();" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true" ng-click="idGrupo = {{soporteActivo.grupo.id}}; idNodo = {{idNodo}}; idGrupoSoporteActivo = {{soporteActivo.id}}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>                                      
-
-                        {% endif %}
-
+                        <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="anularSoporteVisita();" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true" ng-click="idGrupo = {{soporteActivo.grupo.id}}; idNodo = {{idNodo}}; idVisitaSoporteActivo = {{soporteActivo.id}}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>                                      
+                        
 	                  </td>
 	                </tr>
 	                {% set consecutivo = consecutivo + 1 %}
@@ -202,7 +189,7 @@
 	                  <td>{{ soporte.fechacreacion | date ('d/m/Y h:i:s', 'America/Bogota')}}</td>
 	                  <td>{{ soporte.fechamodificacion | date ('d/m/Y h:i:s', 'America/Bogota')}}</td>
 	                  <td>
-	                    <a href="{{ path('seguimientoGrupoSoporteRecuperarArchivo', {'idGrupo': idGrupo, 'idNodo' : idNodo,'idGrupoSoporte': soporte.id}) }}" target="_blank" alt="Descargar" title="Descargar"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a>                  
+	                    <a href="{{ path('visitaSoporteDescargar', {'idGrupo': idGrupo, 'idNodo' : idNodo,'idVisitaSoporte': soporte.id}) }}" target="_blank" alt="Descargar" title="Descargar"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a>                  
 	                  </td>
 	                </tr>
 	                {% set consecutivo = consecutivo + 1 %}
