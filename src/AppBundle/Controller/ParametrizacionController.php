@@ -40,32 +40,83 @@ class ParametrizacionController extends Controller
         
         $em = $this->getDoctrine()->getManager();
 
-        $userAdmin = $em->getRepository('AppBundle:Usuario')->findOneBy(
+        $promotor = 1;
+        $coordinador = 2;
+        $admin = 3;
+
+        /*$userAdmin = $em->getRepository('AppBundle:Usuario')->findOneBy(
             array('username' => 'admin')
         );
 
         $userAdmin->addRole(3);
         
         $em->persist($userAdmin);
-        $em->flush();
+        $em->flush();*/
 
         $userCoordinador = $em->getRepository('AppBundle:Usuario')->findOneBy(
             array('username' => 'coordinador')
         );
 
-        $userCoordinador->addRole(2);
+
+        $userCoordinador->addRole($coordinador);
         
         $em->persist($userCoordinador);
         $em->flush();
 
-        $userPromotor = $em->getRepository('AppBundle:Usuario')->findOneBy(
+        /*$userPromotor = $em->getRepository('AppBundle:Usuario')->findOneBy(
             array('username' => 'promotor')
         );
 
         $userPromotor->addRole(1);
         
         $em->persist($userPromotor);
+        $em->flush();*/
+        
+
+        return new Response("Hola..");
+
+    }   
+
+
+     /**
+     * @Route("/eliminar/rol/", name="eliminarRol")
+     */
+    public function eliminarRolAction()
+    {
+        
+        
+        $em = $this->getDoctrine()->getManager();
+
+        $promotor = 1;
+        $coordinador = 2;
+        $admin = 3;
+
+       /* $userAdmin = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('username' => 'admin')
+        );
+
+        $userAdmin->deleteRole(3);
+        
+        $em->persist($userAdmin);
+        $em->flush();*/
+
+        $userCoordinador = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('username' => 'coordinador')
+        );
+
+        $userCoordinador->deleteRole($coordinador);
+        
+        $em->persist($userCoordinador);
         $em->flush();
+
+        /*$userPromotor = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('username' => 'promotor')
+        );
+
+        $userPromotor->deleteRole(1);
+        
+        $em->persist($userPromotor);
+        $em->flush();*/
         
 
         return new Response("Hola..");

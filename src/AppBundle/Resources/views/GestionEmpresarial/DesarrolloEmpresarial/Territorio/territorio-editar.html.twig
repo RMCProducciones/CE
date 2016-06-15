@@ -1,6 +1,6 @@
 {% extends 'AppBundle::frontend.html.twig' %}
 
-{% block title %}Territorios de Aprendizaje{% endblock %}
+{% block title %}Territorios de Aprendizaje editar{% endblock %}
 
 {% block breadcrumb_ul %}
 
@@ -19,7 +19,7 @@
 <div class="container">
     <h1> Gestión Territorios Aprendizaje </h1>
     <hr>
-    <h3> Nuevo Registro</h3>
+    <h3> Editar Registro</h3>
     <br />
     <br />
   </div>
@@ -52,32 +52,32 @@
     <div class="section">
       <div class="container">
         
-		
-			<div class="row">
-				<div class="col-md-12">
-					<fieldset>
-						<legend>Datos básicos de la ruta </legend>
-					</fieldset>            
-				</div>
-			</div>	
+    
+      <div class="row">
+        <div class="col-md-12">
+          <fieldset>
+            <legend>Datos básicos de la ruta </legend>
+          </fieldset>            
+        </div>
+      </div>  
 
-				<div class="row">
-				<div class="col-md-6">
-                  {{ form_label(form.nombreTerritorio) }}
-				  {{ form_errors(form.nombreTerritorio) }}
-                  {{ form_widget(form.nombreTerritorio, { 'attr': {'class': 'form-control', 'placeholder': 'Nomnre territorio aprendizaje'} }) }}
+        <div class="row">
+        <div class="col-md-6">
+                  {{ form_label(form.nombre_territorio) }}
+          {{ form_errors(form.nombre_territorio) }}
+                  {{ form_widget(form.nombre_territorio, { 'attr': {'class': 'form-control', 'placeholder': 'Nombre territorio aprendizaje'} }) }}
                 </div>
                 <div class="col-md-6">
                   {{ form_label(form.observaciones) }}
-				  {{ form_errors(form.observaciones) }}
-                  {{ form_widget(form.observaciones, { 'attr': {'class': 'form-control', 'placeholder': 'primer nombre '} }) }}
+          {{ form_errors(form.observaciones) }}
+                  {{ form_widget(form.observaciones, { 'attr': {'class': 'form-control', 'placeholder': 'Observaciones'} }) }}
                 </div>
           
-		</div>
+    </div>
 
-			
+      
 
-			<br/>				
+      <br/>       
        
       </div>
     </div>
