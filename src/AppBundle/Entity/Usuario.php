@@ -133,18 +133,7 @@ class Usuario extends BaseUser
      */
     public function addRole( $rol )
     {
-/*        
-        if($rol == 1) {
-          array_push($this->roles, 'ROLE_PROMOTOR');
-        }       
-        
-       else if($rol == 2) {
-          array_push($this->roles, 'ROLE_COORDINADOR');
-        }
-        else if($rol == 3) {
-          array_push($this->roles, 'ROLE_ADMIN');
-        }
-*/
+
        $promotor = 1;
        $coordinador = 2;
        $admin = 3;
@@ -158,8 +147,6 @@ class Usuario extends BaseUser
         elseif ($rol == $admin) {
             $this->roles['admin']='ROLE_ADMIN';
         }
-
-
 
     }
 
@@ -179,18 +166,18 @@ class Usuario extends BaseUser
 
 
         if($rol == $promotor){
-             unset($this->roles['promotor']);        }
+             unset($this->roles['promotor']);        
+        }
         else if ($rol == $coordinador) {
             unset($this->roles['coordinador']);
         }
         elseif ($rol == $admin) {
             unset($this->roles['admin']);
         }
-
-        //$this->roles = array_values($this->roles);
+        $this->roles = array_values($this->roles);
 
         //var_dump($this->roles);
-        
+        //print_r(array_keys($this->roles));
         
 
     }
