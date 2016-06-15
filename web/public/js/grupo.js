@@ -180,7 +180,7 @@ app.controller('FormalCtrl', ['$scope', function($scope) {
 app.controller('FiltrosGrupoCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
 
 	$scope.CountBuscarHerramientas = -1;
-	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;	
 	
 	$scope.buttonBuscarHerramientasGrupo = function(CountBuscarHerramientas){
 		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
@@ -194,17 +194,37 @@ app.controller('FiltrosGrupoCtrl', ['$scope', '$http', 'styleBuscarHerramientas'
 		}
 		
     }	
+
+    $scope.tipoUsuario = 0;
 	
-    $scope.limpiarCamposFiltroBusquedaGrupo = function(){
+    $scope.limpiarCamposFiltroBusquedaGrupo = function(tipoUsuario){
+
+    	$scope.tipoUsuario = tipoUsuario;
+
+    	if($scope.tipoUsuario == 1){
+    		$("#grupoFilter_tipo").val("");
+			$("#grupoFilter_codigo").val("");
+			$("#grupoFilter_nombre").val("");
+			$("#grupoFilter_numero_identificacion_tributaria").val("");
+			$("#grupoFilter_figura_legal_constitucion").val("");
+    	}
+    	if($scope.tipoUsuario == 2){
+    		$("#selMunicipio").val("");
+			$("#grupoFilter_tipo").val("");
+			$("#grupoFilter_codigo").val("");
+			$("#grupoFilter_nombre").val("");
+			$("#grupoFilter_numero_identificacion_tributaria").val("");
+			$("#grupoFilter_figura_legal_constitucion").val("");
+    	}
        
-		$("#selDepartamento").val("");
+		/*$("#selDepartamento").val("");
 		$("#selZona").val("");
 		$("#selMunicipio").val("");
 		$("#grupoFilter_tipo").val("");
 		$("#grupoFilter_codigo").val("");
 		$("#grupoFilter_nombre").val("");
 		$("#grupoFilter_numero_identificacion_tributaria").val("");
-		$("#grupoFilter_figura_legal_constitucion").val("");
+		$("#grupoFilter_figura_legal_constitucion").val("");*/
 
        
     }
