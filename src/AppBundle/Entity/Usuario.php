@@ -84,6 +84,11 @@ class Usuario extends BaseUser
     protected $correo_electronico;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Municipio")
+     */
+    protected $municipio;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="active", type="boolean", nullable=true)
@@ -382,6 +387,30 @@ class Usuario extends BaseUser
     public function getCorreoElectronico()
     {
         return $this->correo_electronico;
+    }
+
+    /**
+     * Set municipio
+     *
+     * @param AppBundle\Entity\Municipio $municipio
+     *
+     * @return Usuario
+     */
+    public function setMunicipio(\AppBundle\Entity\Municipio $municipio)
+    {
+        $this->municipio = $municipio;
+
+        return $this;
+    }
+
+    /**
+     * Get municipio
+     *
+     * @return AppBundle\Entity\Municipio
+     */
+    public function getMunicipio()
+    {
+        return $this->municipio;
     }
 
     /**

@@ -43,7 +43,7 @@
             <div class="btn-group [[styleBuscarHerramientas]]">              
                 
                 <button class="btn btn-info" ng-click="buttonBuscarHerramientasGrupo(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
-              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaGrupo();">Limpiar</button>                            
+              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaGrupo({{tipoUsuario}});">Limpiar</button>                            
             </div>
           </div>
 
@@ -52,7 +52,7 @@
 
       <br />
 
-      <div class="container well" ng-controller="ListasLocalizacionCtrl" ng-show="CountBuscarHerramientas === 1">
+      <div class="container well" ng-controller="ListasLocalizacionCtrl" ng-show="CountBuscarHerramientas === 1" ng-init="valoresInicialesLocalizacion(false, {{departamento}}, {{zona}}, {{municipio}})">
         
         <form method="get" action="{{ path('grupoGestion') }}">               
                   
@@ -63,17 +63,22 @@
         <div class="row" >
           <div class="col-md-3">
             <label>Departamento</label>
-              <select ng-model="selDepartamento" class="form-control" id="selDepartamento" name="selDepartamento" ng-change="cargarZonas()" ng-options="departamento.nombre for departamento in JSONDepartamento track by departamento.id">     
-             </select>
+             <select id="selDepartamento" ng-model="selDepartamento" name="selDepartamento" class="form-control" ng-change="cargarZonas()" {{campoDeshabilitadoDepartamento}}>
+            <option ng-repeat="departamento in JSONDepartamento track by departamento.id" ng-selected="[[departamento.id == idDepartamento]]" value="[[departamento.id]]">[[departamento.nombre]]</option>
+          </select> 
           </div>
           <div class="col-md-3">
-            <label>Zona</label>
-             <select ng-model="selZona" class="form-control" id="selZona" name="selZona" ng-change="cargarMunicipios()" ng-options="zona.nombre for zona in JSONZona track by zona.id"></select>
+            <label>Zona</label>             
+            <select id="selZona" name="selZona" ng-model="selZona" class="form-control" ng-change="cargarMunicipios()" {{campoDeshabilitadoZona}}>
+            <option ng-repeat="zona in JSONZona track by zona.id" ng-selected="[[zona.id == idZona]]" value="[[zona.id]]">[[zona.nombre]]</option>
+          </select>
           </div>
           <div class="col-md-3">
-            <label>Municipio</label>
-             <select ng-model="selMunicipio" class="form-control" id="selMunicipio" name="selMunicipio" ng-options="municipio.nombre for municipio in JSONMunicipio track by municipio.id"></select>           
-          </div>
+            <label>Municipio</label>                       
+             <select id="selMunicipio" name="selMunicipio" ng-model="selMunicipio" class="form-control" {{campoDeshabilitadoMunicipio}}>
+            <option ng-repeat="municipio in JSONMunicipio track by municipio.id" ng-selected="[[municipio.id == idMunicipio]]" value="[[municipio.id]]">[[municipio.nombre]]</option>
+          </select>         
+        </div>
           <div class="col-md-3">
             {{ form_label(form.tipo) }}
             {{ form_errors(form.tipo) }}

@@ -42,6 +42,8 @@ use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
+    
 
 class GrupoController extends Controller
 {
@@ -61,52 +63,24 @@ class GrupoController extends Controller
             array('active' => '1'),
             array('fecha_creacion' => 'ASC')
         );*/
-       
+
+        $municipioUsuario = $this->get('security.context')->getToken()->getUser()->getMunicipio();
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+        
         $caminos = $em->getRepository('AppBundle:Camino')->findBy(
             array('active' => '1'),
             array('fecha_creacion' => 'ASC')
         );
-        
-        $filterBuilder = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('AppBundle:Grupo')
-            ->createQueryBuilder('q')
-            ->innerJoin("q.municipio", "m")
-            ->innerJoin("m.departamento", "d")
-            ->innerJoin("m.zona", "z");
 
         $form = $this->get('form.factory')->create(new GrupoFilterType());
-
-    
-        if ($request->query->has($form->getName())) {
-
-            $form->submit($request->query->get($form->getName()));
-            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);           
-        }
-
-        $filterBuilder->andWhere('q.active = 1');
         
-        if (isset($_GET['selMunicipio']) && $_GET['selMunicipio'] != "?") {
-             $filterBuilder->andWhere('m.id = :idMunicipio')
-            ->setParameter('idMunicipio', $_GET['selMunicipio']);
-        }
-        else{
-            if (isset($_GET['selDepartamento']) && $_GET['selDepartamento'] != "?") {
-                $filterBuilder->andWhere('d.id = :idDepartamento')
-                ->setParameter('idDepartamento', $_GET['selDepartamento']);
-            }
-            if (isset($_GET['selZona']) && $_GET['selZona'] != "?") {
-                $filterBuilder->andWhere('z.id = :idZona')
-                ->setParameter('idZona', $_GET['selZona']);
-            }      
-        }
+        $obj = new FilterLocation();
 
-        //var_dump($filterBuilder->getDql());
-        //die("");
+        $query = $obj->queryFilter($request, $this, $form, $rolUsuario, $municipioUsuario, 'AppBundle:Grupo');                
+        
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
 
-        $query = $filterBuilder->getQuery();
-
-
-         $paginator  = $this->get('knp_paginator');
+        $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
             $query, /* fuente de los datos*/
@@ -118,7 +92,14 @@ class GrupoController extends Controller
             array( 'form' => $form->createView(),
                    'grupos' => $query,
                    'caminos' => $caminos,
-                   'pagination' => $pagination)
+                   'pagination' => $pagination,
+                   'departamento' => $_GET['selDepartamento'],
+                   'zona' => $_GET['selZona'],
+                   'municipio' => $_GET['selMunicipio'],
+                   'campoDeshabilitadoDepartamento' => $valuesFieldBlock[0],
+                   'campoDeshabilitadoZona' => $valuesFieldBlock[1],
+                   'campoDeshabilitadoMunicipio' => $valuesFieldBlock[2],
+                   'tipoUsuario' => $valuesFieldBlock[3])    
         );
     }
 
