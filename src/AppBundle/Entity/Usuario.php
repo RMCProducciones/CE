@@ -145,15 +145,17 @@ class Usuario extends BaseUser
           array_push($this->roles, 'ROLE_ADMIN');
         }
 */
-       
+       $promotor = 1;
+       $coordinador = 2;
+       $admin = 3;
 
-        if($rol == 1){
+        if($rol == $promotor){
              $this->roles ['promotor']='ROLE_PROMOTOR';
         }
-        else if ($rol == 2) {
+        else if ($rol == $coordinador) {
             $this->roles ['coordinador']='ROLE_COORDINADOR';
         }
-        elseif ($rol == 3) {
+        elseif ($rol == $admin) {
             $this->roles['admin']='ROLE_ADMIN';
         }
 
@@ -169,9 +171,23 @@ class Usuario extends BaseUser
      * @param Rol $rol 
      */
     public function deleteRole( $rol )
-    {
-        unset($this->roles['promotor']);
-        $this->roles = array_values($this->roles);
+    {   
+
+        $promotor = 1;
+        $coordinador = 2;
+        $admin = 3;
+
+
+        if($rol == $promotor){
+             unset($this->roles['promotor']);        }
+        else if ($rol == $coordinador) {
+            unset($this->roles['coordinador']);
+        }
+        elseif ($rol == $admin) {
+            unset($this->roles['admin']);
+        }
+
+        //$this->roles = array_values($this->roles);
 
         //var_dump($this->roles);
         

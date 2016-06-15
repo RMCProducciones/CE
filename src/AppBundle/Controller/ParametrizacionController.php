@@ -40,6 +40,10 @@ class ParametrizacionController extends Controller
         
         $em = $this->getDoctrine()->getManager();
 
+        $promotor = 1;
+        $coordinador = 2;
+        $admin = 3;
+
         /*$userAdmin = $em->getRepository('AppBundle:Usuario')->findOneBy(
             array('username' => 'admin')
         );
@@ -53,7 +57,8 @@ class ParametrizacionController extends Controller
             array('username' => 'coordinador')
         );
 
-        $userCoordinador->addRole(3);
+
+        $userCoordinador->addRole($coordinador);
         
         $em->persist($userCoordinador);
         $em->flush();
@@ -82,6 +87,10 @@ class ParametrizacionController extends Controller
         
         $em = $this->getDoctrine()->getManager();
 
+        $promotor = 1;
+        $coordinador = 2;
+        $admin = 3;
+
        /* $userAdmin = $em->getRepository('AppBundle:Usuario')->findOneBy(
             array('username' => 'admin')
         );
@@ -95,7 +104,7 @@ class ParametrizacionController extends Controller
             array('username' => 'coordinador')
         );
 
-        $userCoordinador->deleteRole(1);
+        $userCoordinador->deleteRole($coordinador);
         
         $em->persist($userCoordinador);
         $em->flush();
