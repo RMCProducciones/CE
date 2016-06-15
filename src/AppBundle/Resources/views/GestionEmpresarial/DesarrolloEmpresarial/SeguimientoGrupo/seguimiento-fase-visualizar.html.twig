@@ -1,0 +1,178 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+{% block title %}Seguimiento Fase{% endblock %}
+
+{% block breadcrumb_ul %}
+
+    <ul class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Empresarial</li>
+      <li>Ferias</li>
+      <li class="active">Nuevo</li>
+    </ul>
+
+{% endblock %}
+
+
+{% block section %}
+<div class="container">
+    <h1> Gestión de Seguimiento </h1>
+    <hr>
+    <h3> Visualizar Registro</h3>
+    <br />
+    <br />
+  </div>
+    
+    <br>
+    <div class="section">
+      <div class="container">     
+        <div class="row">
+              <div class="col-md-6">
+                <div class="btn-group">
+      
+                  <a href="#" class="btn btn-success">Editar</a>
+                  
+                  <a href="{{ path('seguimientoGrupo' , {'idGrupo':idGrupo}) }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+                  
+                </div>
+              </div>
+            </div>   
+      </div>
+    </div> 
+        
+
+
+       
+        </br>   
+{% set activar = idNodo %}
+
+{% set valorInicial = 1 %}
+
+{% if activar == 8 or activar == 12 or activar == 18 or activar == 24 or activar == 30 %}
+  {% set valorInicial = 0 %}
+{% endif %}
+
+<br>
+<div class="section" ng-controller="CierreMotCtrl" ng-init="camposRequeridosMot({{valorInicial}})">
+  <div class="container">    
+
+    {% if valorInicial == 1 %}
+
+      <div class="row">
+        <div class="col-md-12">
+          <fieldset>
+            <legend>Inicio Fase</legend>
+          </fieldset>            
+        </div>
+      </div> 
+
+      <br />
+
+      <div class="row">
+       
+        <div class="col-md-4">
+              <b>Fecha de Inicio:</b> 
+              <br />
+              {{seguimientoFase.fechaInicio |  date('d - m - Y') }}
+        </div>
+
+        <div class="col-md-4">
+              <b>Actividad Productiva:</b>
+              <br />
+              {{seguimientoFase.actividadProductiva}}
+        </div>   
+
+        <div class="col-md-4">
+              <b>Descripción Actividad:</b>
+              <br />
+              {{seguimientoFase.descripcionActividadProductiva}}
+        </div>                             
+         
+      </div>
+
+        
+
+     {% else %}    
+    
+      <div class="row">
+        <div class="col-md-12">
+          <fieldset>
+            <legend>Cierre Fase</legend>
+          </fieldset>            
+        </div>
+      </div>  
+
+      <br />
+
+      <div class="row">
+        
+        <div class="col-md-4">
+              <b>Resultado Componente Organizacional:</b>
+              <br />
+              {{seguimientoFase.resultadoComponenteOrganizacional}}
+        </div>
+        <div class="col-md-4">
+              <b>Resultado Componente Productivo:</b>
+              <br />
+              {{seguimientoFase.resultadoComponenteProductivo}}
+        </div>
+        <div class="col-md-4">
+              <b>Resultado Componente Comercial:</b>
+              <br />
+              {{seguimientoFase.resultadoComponenteComercial}}
+        </div>           
+        <br/>       
+        <br/>  
+      </div>
+
+      <br/> 
+
+      <div class="row">
+        <div class="col-md-4">
+              <b>Resultado Componente Administrativo:</b>
+              <br />
+              {{seguimientoFase.resultadoComponenteAdministrativo}}
+        </div>
+        <div class="col-md-4">
+              <b>Resultado Componente Financiero:</b>
+              <br />
+              {{seguimientoFase.resultadoComponenteFinanciero}}
+        </div>
+        <div class="col-md-4">
+              <b>Observaciones:</b>
+              <br />
+              {{seguimientoFase.observaciones}}
+        </div>
+                      
+        <br/>       
+       
+      </div>
+
+        <br/>       
+
+      <div class="row">
+
+        <div class="col-md-4">
+              <b>Logros:</b>
+              <br />
+              {{seguimientoFase.logros}}
+        </div>
+
+        <div class="col-md-4">
+              <b>Fecha de Finalizacion:</b>
+              <br />
+              {{seguimientoFase.fechaFinalizacion |  date('d - m - Y') }}
+        </div>       
+      </div>
+
+    {% endif %}
+
+    <br />
+    <br />
+
+  </div>
+</div>
+
+
+               
+{% endblock %}

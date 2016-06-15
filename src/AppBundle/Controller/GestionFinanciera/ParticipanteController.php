@@ -106,5 +106,54 @@ class ParticipanteController extends Controller
         
         return $this->render('AppBundle:GestionFinanciera/Participante:participante-nuevo.html.twig', array('form' => $form->createView()));
     } 
-}
 
+
+     /**
+     * @Route("/gestion-financiera/participante/{idParticipante}/editar", name="participanteEditar")
+     */
+    public function participanteEditarAction(Request $request, $idParticipante)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $participante = new Participante();
+
+        $participante = $em->getRepository('AppBundle:Participante')->findOneBy(
+            array('id' => $idParticipante)
+        );
+
+        $form = $this->createForm(new ParticipanteType(), $participante);
+        
+        $form->add(
+            'Guardar', 
+            'submit', 
+            array(
+                'attr' => array(
+                    'style' => 'visibility:hidden'
+                ),
+            )
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+
+            $participante = $form->getData();
+
+            $participante->setFechaModificacion(new \DateTime());
+
+
+            $em->flush();
+
+            return $this->redirectToRoute('participanteGestion');
+        }
+
+        return $this->render(
+            'AppBundle:GestionFinanciera/Participante:participante-editar.html.twig', 
+            array(
+                    'form' => $form->createView(),
+                    'idParticipante' => $idParticipante,
+                    'participante' => $participante,
+            )
+        );
+
+    }
+}

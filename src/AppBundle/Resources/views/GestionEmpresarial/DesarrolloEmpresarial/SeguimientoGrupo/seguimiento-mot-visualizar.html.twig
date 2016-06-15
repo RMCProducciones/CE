@@ -23,11 +23,7 @@
     <br />
   </div>
      
-
-  {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
-
-    {{ form_errors(form) }}
-    
+   
     <br>
     <div class="section">
       <div class="container">     
@@ -82,14 +78,7 @@
          
       </div>
 
-      {{ form_widget(form.fecha_inicio, { 'attr': {'style': 'visibility:hidden'} }) }}
-      {{ form_widget(form.indentificacion_recursos_tangibles, { 'attr': {'style': 'opacity:0'} }) }}
-      {{ form_widget(form.indentificacion_recursos_financieros, { 'attr': {'style': 'opacity:0'} }) }}
-      {{ form_widget(form.indentificacion_recursos_intangibles, { 'attr': {'style': 'opacity:0'} }) }}
-      {{ form_widget(form.indentificacion_opciones_viables, { 'attr': {'style': 'opacity:0'} }) }}
-      {{ form_widget(form.viabilidad_negocio, { 'attr': {'style': 'opacity:0'} }) }}
-      {{ form_widget(form.observaciones, { 'attr': {'style': 'opacity:0'} }) }}
-      {{ form_widget(form.fecha_finalizacion, { 'attr': {'style': 'opacity:0'} }) }}      
+        
 
      {% else %}    
     
@@ -157,21 +146,14 @@
         </div>       
       </div>
 
-      {{ form_widget(form.fecha_inicio, { 'attr': {'style': 'visibility:hidden'} }) }}
-      {{ form_widget(form.indentificacion_recursos_tangibles, { 'attr': {'style': 'opacity:0'} }) }}
-      {{ form_widget(form.indentificacion_recursos_financieros, { 'attr': {'style': 'opacity:0'} }) }}
-      {{ form_widget(form.indentificacion_recursos_intangibles, { 'attr': {'style': 'opacity:0'} }) }}
-      {{ form_widget(form.indentificacion_opciones_viables, { 'attr': {'style': 'opacity:0'} }) }}
-      {{ form_widget(form.viabilidad_negocio, { 'attr': {'style': 'opacity:0'} }) }}
-      {{ form_widget(form.observaciones, { 'attr': {'style': 'opacity:0'} }) }}
-      {{ form_widget(form.fecha_finalizacion, { 'attr': {'style': 'opacity:0'} }) }}
-
     {% endif %}
 
+    <br />
+    <br />
 
   </div>
 </div>
 
-  {{ form_end(form) }}
+
                
 {% endblock %}

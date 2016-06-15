@@ -61,24 +61,18 @@ app.controller('FiltrosTerritorioAprendizajeCtrl', ['$scope', '$http', 'styleBus
        
 		$("#territorioFilter_nombre_territorio").val("");
 		$("#territorioFilter_observaciones").val("");
-	
-
-
-		
-
        
     }
       
 		
 }]);
 
-
-app.controller('FiltrosPasantiaTerritorioCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+app.controller('FiltrosTerritorioOrganizacionCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
 
 	$scope.CountBuscarHerramientas = -1;
 	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
 	
-	$scope.buttonBuscarHerramientasPasantiaTerritorio = function(CountBuscarHerramientas){
+	$scope.buttonBuscarHerramientasTerritorioOrganizacion = function(CountBuscarHerramientas){
 		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
 		if($scope.CountBuscarHerramientas== -1)
 		{
@@ -91,15 +85,16 @@ app.controller('FiltrosPasantiaTerritorioCtrl', ['$scope', '$http', 'styleBuscar
 		
     }	
 	
-    $scope.limpiarCamposFiltroBusquedaPasantiaTerritorio = function(){
+    $scope.limpiarCamposFiltroBusquedaTerritorioOrganizacion = function(){
        
-		
-		$("#pasantiaTerritorioFilter_nombre_territorio").val("");
-		
-
+		$("#territorioOrganizacionFilter_nombre_organizacion").val("");
+		$("#territorioOrganizacionFilter_tipo_producto").val("");
        
     }
       
 		
 }]);
+
+
+
 

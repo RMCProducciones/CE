@@ -28,6 +28,9 @@ use AppBundle\Entity\AsignacionGrupoBeneficiarioRuta;
 use AppBundle\Form\GestionEmpresarial\RutaType;
 use AppBundle\Form\GestionEmpresarial\RutaSoporteType;
 use AppBundle\Form\GestionEmpresarial\RutaFilterType;
+use AppBundle\Form\GestionEmpresarial\RutaTerritorioFilterType;
+use AppBundle\Form\GestionEmpresarial\RutaGrupoFilterType;
+
 
 
 
@@ -347,25 +350,46 @@ class RutaController extends Controller
             $territorioAsignado = null;
         }       
 
+         $form = $this->get('form.factory')->create(new RutaTerritorioFilterType());        
+
         if($ruta->getTerritorioAprendizaje() == null){            
-            $query = $em->createQuery('SELECT t FROM AppBundle:TerritorioAprendizaje t WHERE t.id NOT IN (SELECT territorioAprendizaje.id FROM AppBundle:TerritorioAprendizaje territorioAprendizaje JOIN AppBundle:Ruta arc WHERE territorioAprendizaje = arc.territorio_aprendizaje AND arc.territorio_aprendizaje = :territorio_aprendizaje) AND t.active = 1');
-            $query->setParameter('territorio_aprendizaje', $ruta);
-            $territorios = $query->getResult();
-        }else{
-            $territorios = array(); 
+            $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:TerritorioAprendizaje')
+            ->createQueryBuilder('q');
+
+        
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
         }
+
+        $filterBuilder
+        ->andWhere('q.active = 1')
+        ->andWhere('q.id NOT IN (                        
+                        SELECT territorioAprendizaje.id FROM AppBundle:TerritorioAprendizaje territorioAprendizaje JOIN AppBundle:Ruta arc WHERE territorioAprendizaje = arc.territorio_aprendizaje AND arc.territorio_aprendizaje = :territorio_aprendizaje) ')
+        ->setParameter('territorio_aprendizaje', $ruta);
+
+        $query = $filterBuilder->getQuery();
+
+        }else{
+            $query = array(); 
+        }
+
 
         $paginator1  = $this->get('knp_paginator');
 
         $pagination1 = $paginator1->paginate(
-            $territorios, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Ruta:territorio-ruta-gestion-asignacion.html.twig', 
             array(
-                'territorios' => $territorios,
+                'form' => $form->createView(),
+                'territorios' => $query,
                 'asignacionesTerritorioRuta' => $territorioAsignado,
                 'idRuta' => $idRuta,
                 'pagination1' => $pagination1
@@ -578,25 +602,74 @@ class RutaController extends Controller
             $grupoAsignado = null;
         }       
 
-        if($ruta->getGrupo() == null){            
-            $query = $em->createQuery('SELECT g FROM AppBundle:Grupo g WHERE g.id NOT IN (SELECT grupo.id FROM AppBundle:Grupo grupo JOIN AppBundle:Ruta arc WHERE grupo = arc.grupo AND arc.grupo = :grupo) AND g.active = 1');
-            $query->setParameter('grupo', $ruta);
-            $grupos = $query->getResult();      
-        }else{
-            $grupos = array(); 
+        $form = $this->get('form.factory')->create(new RutaGrupoFilterType());        
+
+        if($ruta->getGrupo() == null){             
+            $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Grupo')
+            ->createQueryBuilder('q')
+            ->innerJoin("q.municipio", "m")
+            ->innerJoin("m.departamento", "d")
+            ->innerJoin("m.zona", "z");
+
+        
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
         }
 
+        $filterBuilder
+        ->andWhere('q.active = 1')
+        ->andWhere('q.id NOT IN  (
+                       SELECT 
+                            grupo.id 
+                       FROM 
+                            AppBundle:Grupo grupo 
+                       JOIN 
+                            AppBundle:Ruta arc 
+                       WHERE 
+                            grupo = arc.grupo 
+                            AND arc.grupo = :grupo                            
+                    )')
+             //AND g.codigo IS NOT NULL ----> Mostrar solo los de codigo grupo
+        ->setParameter('grupo', $ruta);
+
+        if (isset($_GET['selMunicipio']) && $_GET['selMunicipio'] != "?") {
+             $filterBuilder->andWhere('m.id = :idMunicipio')
+            ->setParameter('idMunicipio', $_GET['selMunicipio']);
+        }
+        else{
+            if (isset($_GET['selDepartamento']) && $_GET['selDepartamento'] != "?") {
+                $filterBuilder->andWhere('d.id = :idDepartamento')
+                ->setParameter('idDepartamento', $_GET['selDepartamento']);
+            }
+            if (isset($_GET['selZona']) && $_GET['selZona'] != "?") {
+                $filterBuilder->andWhere('z.id = :idZona')
+                ->setParameter('idZona', $_GET['selZona']);
+            }      
+        }
+        
+
+        $query = $filterBuilder->getQuery();
+        
+        }else{
+
+            $query = array(); 
+        }
         $paginator1  = $this->get('knp_paginator');
 
         $pagination1 = $paginator1->paginate(
-            $grupos, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Ruta:grupo-ruta-gestion-asignacion.html.twig', 
             array(
-                'grupos' => $grupos,
+                'form' => $form->createView(),
+                'grupos' => $query,
                 'asignacionesGrupoRuta' => $grupoAsignado,
                 'idRuta' => $idRuta,
                 'pagination1' => $pagination1

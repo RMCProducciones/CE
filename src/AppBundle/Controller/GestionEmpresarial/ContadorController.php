@@ -346,9 +346,9 @@ class ContadorController extends Controller
             $query->setParameter(':grupo', $grupo);
             $contadores = $query->getResult(); 
 
-            $filterBuilder = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('AppBundle:Contador')
-            ->createQueryBuilder('q');
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+        ->getRepository('AppBundle:Contador')
+        ->createQueryBuilder('q');
 
         $form = $this->get('form.factory')->create(new ContadorAsignacionFilterType());
 

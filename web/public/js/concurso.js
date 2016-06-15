@@ -101,6 +101,74 @@ app.controller('FiltrosConcursoCtrl', ['$scope', '$http', 'styleBuscarHerramient
 		
 }]);
 
+app.controller('FiltrosConcursoGrupoCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasConcursoGrupo = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaConcursoGrupo = function(){
+       
+		
+		$("#concursoGrupoFilter_nombre").val("");
+		$("#selDepartamento").val("");
+		$("#selMunicipio").val("");
+		$("#selZona").val("");
+
+
+       
+    }
+      
+		
+}]);
+
+app.controller('FiltrosConcursoIntegranteCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasConcursoIntegrante = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaConcursoIntegrante = function(){
+       
+		
+		$("#concursoIntegranteFilter_primer_nombre").val("");
+		$("#concursoIntegranteFilter_primer_apellido").val("");
+		$("#concursoIntegranteFilter_numero_documento").val("");
+
+
+		
+
+
+       
+    }
+      
+		
+}]);
+
 app.controller('CampoAprobacionConcursoCtrl', ['$scope', '$http', function($scope, $http) {
 	
 		

@@ -114,3 +114,20 @@ app.controller('FiltrosVisitaCtrl', ['$scope', '$http', 'styleBuscarHerramientas
       
 		
 }]);
+
+app.controller('gestionDocumentoSoporteVisitaCtrl', ['$scope', '$location', function($scope, $location) {
+
+	$scope.idGrupo = 0;
+	$scope.idNodo = 0;
+	$scope.idVisitaSoporteActivo = 0;
+
+	$scope.anularSoporteVisita = function() { 
+	
+		window.location.replace($scope.rutaServidor  + "gestion-empresarial/desarrollo-empresarial/grupo/" + $scope.idGrupo + "/seguimiento/" + $scope.idNodo + "/visita/documento-soporte/" + $scope.idVisitaSoporteActivo + "/borrar");
+		
+	};	
+
+
+
+}]);
+
