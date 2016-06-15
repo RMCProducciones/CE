@@ -27,6 +27,7 @@ use AppBundle\Entity\Camino;
 use AppBundle\Form\GestionEmpresarial\TallerSoporteType;
 use AppBundle\Form\GestionEmpresarial\TallerType;
 use AppBundle\Form\GestionEmpresarial\TallerFilterType;
+use AppBundle\Form\GestionEmpresarial\TallerBeneficiarioFilterType;
 
 
 /*Para autenticación por código*/
@@ -365,10 +366,31 @@ class TallerController extends Controller
             array('id' => $beneficiarios, 'grupo' => $grupo)
         );
 
+
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Beneficiario')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new TallerBeneficiarioFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder->andwhere('q.grupo = :idGrupo')
+        ->setParameter('idGrupo', $idGrupo)
+        ->andWhere('q.active = 1')
+        ->andWhere('q.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioTaller abt WHERE beneficiario = abt.beneficiario AND abt.taller = :taller)')
+        ->setParameter(':taller', $taller);
+
+        $query = $filterBuilder->getQuery();
+
         $paginator1  = $this->get('knp_paginator');
 
         $pagination1 = $paginator1->paginate(
-            $mostrarBeneficiarios, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
         );
@@ -376,7 +398,8 @@ class TallerController extends Controller
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Taller:taller-beneficiario-asignacion.html.twig', 
             array(
-                'beneficiarios' => $mostrarBeneficiarios,
+                'form' => $form->createView(),
+                'beneficiarios' => $query,
                 'asignacionesBeneficiariosTaller' => $asignacionBeneficiarioTaller,
                 'idGrupo' => $idGrupo,
                 'grupo' => $grupo,

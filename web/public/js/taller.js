@@ -110,3 +110,34 @@ app.controller('FiltrosTallerCtrl', ['$scope', '$http', 'styleBuscarHerramientas
       
 		
 }]);
+
+app.controller('FiltrosTallerBeneficiarioCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasTallerBeneficiario = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaTallerBeneficiario = function(){
+
+       
+		$("#tallerBeneficiarioFilter_primer_nombre").val("");
+		$("#tallerBeneficiarioFilter_primer_apellido").val("");
+		$("#tallerBeneficiarioFilter_numero_documento").val("");
+		$("#tallerBeneficiarioFilter_genero").val("");
+       
+    }
+      
+		
+}]);
