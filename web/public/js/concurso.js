@@ -117,15 +117,26 @@ app.controller('FiltrosConcursoGrupoCtrl', ['$scope', '$http', 'styleBuscarHerra
 			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
 		}
 		
-    }	
+    }
+
+    $scope.tipoUsuario = 0;	
 	
-    $scope.limpiarCamposFiltroBusquedaConcursoGrupo = function(){
+    $scope.limpiarCamposFiltroBusquedaConcursoGrupo = function(tipoUsuario){
        
-		
-		$("#concursoGrupoFilter_nombre").val("");
+		$scope.tipoUsuario = tipoUsuario;
+
+    	if($scope.tipoUsuario == 1){
+    		$("#concursoGrupoFilter_nombre").val("");
+    	}
+    	if($scope.tipoUsuario == 2){
+    		$("#selMunicipio").val("");
+			$("#concursoGrupoFilter_nombre").val("");
+    	}
+
+		/*$("#concursoGrupoFilter_nombre").val("");
 		$("#selDepartamento").val("");
 		$("#selMunicipio").val("");
-		$("#selZona").val("");
+		$("#selZona").val("");*/
 
 
        

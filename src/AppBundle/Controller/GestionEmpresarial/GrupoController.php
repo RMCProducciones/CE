@@ -34,15 +34,14 @@ use AppBundle\Form\GestionEmpresarial\ComiteVamosBienFilterType;
 use AppBundle\Form\GestionEmpresarial\EstructuraOrganizacionalFilterType;
 use AppBundle\Form\GestionEmpresarial\ComiteComprasFilterType;
 
-
-
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-use AppBundle\Utilities\Acceso;
-use AppBundle\Utilities\FilterLocation;
+
     
 
 class GrupoController extends Controller
@@ -76,7 +75,9 @@ class GrupoController extends Controller
         
         $obj = new FilterLocation();
 
-        $query = $obj->queryFilter($request, $this, $form, $rolUsuario, $municipioUsuario, 'AppBundle:Grupo');                
+        $filterBuilder = $obj->queryFilter($request, $this, $form, $rolUsuario, $municipioUsuario, 'AppBundle:Grupo');
+                        
+        $query = $filterBuilder->getQuery();
         
         $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
 
@@ -108,8 +109,11 @@ class GrupoController extends Controller
      */
     public function grupoNuevoAction(Request $request)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
         $grupo = new Grupo();
+        $obj = new FilterLocation();
         
         $form = $this->createForm(new GrupoType(), $grupo);
         
@@ -164,8 +168,22 @@ class GrupoController extends Controller
             return $this->redirectToRoute('grupoGestion', 
                 array('idGrupo' => $idGrupo));
         }
+
+        $municipioUsuario = $this->get('security.context')->getToken()->getUser()->getMunicipio();
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+        $valuesFieldDMZ = $obj->valuesFormDMZ($rolUsuario, $municipioUsuario);
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:grupo-nuevo.html.twig', array('form' => $form->createView()));
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:grupo-nuevo.html.twig', 
+            array('form' => $form->createView(),
+                  'departamento' => $valuesFieldDMZ[0],
+                  'zona' => $valuesFieldDMZ[1],
+                  'municipio' => $valuesFieldDMZ[2],
+                  'campoDeshabilitadoDepartamento' => $valuesFieldBlock[0],
+                  'campoDeshabilitadoZona' => $valuesFieldBlock[1],
+                  'campoDeshabilitadoMunicipio' => $valuesFieldBlock[2])
+            );
     }    
 
     /**
@@ -173,8 +191,11 @@ class GrupoController extends Controller
      */
     public function grupoEditarAction(Request $request, $idGrupo)
     {
+
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
         $em = $this->getDoctrine()->getManager();
         $grupo = new Grupo();
+        $obj = new FilterLocation();
 
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id' => $idGrupo)
@@ -267,6 +288,10 @@ class GrupoController extends Controller
             return $this->redirectToRoute('grupoGestion');
         }
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render(
             'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:grupo-editar.html.twig', 
             array(
@@ -275,7 +300,9 @@ class GrupoController extends Controller
                     'grupo' => $grupo,
                     'numeroIdentificacionGrupo' => $nit[0],
                     'digitoVerificacionGrupo' => $nit[1],
-
+                    'campoDeshabilitadoDepartamento' => $valuesFieldBlock[0],
+                    'campoDeshabilitadoZona' => $valuesFieldBlock[1],
+                    'campoDeshabilitadoMunicipio' => $valuesFieldBlock[2]
             )
         );
 

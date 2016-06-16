@@ -87,14 +87,28 @@ app.controller('FiltrosClearCtrl', ['$scope', '$http', 'styleBuscarHerramientas'
 		}
 		
     }	
+
+    $scope.tipoUsuario = 0;
 	
-    $scope.limpiarCamposFiltroBusquedaClear = function(){
+    $scope.limpiarCamposFiltroBusquedaClear = function(tipoUsuario){
+
+    	$scope.tipoUsuario = tipoUsuario;
+
+    	if($scope.tipoUsuario == 1){
+    		$("#clearFilter_fecha_inicio").val("");
+			$("#clearFilter_fecha_finalizacion").val("");
+    	}
+    	if($scope.tipoUsuario == 2){
+    		$("#selMunicipio").val("");
+			$("#clearFilter_fecha_inicio").val("");
+			$("#clearFilter_fecha_finalizacion").val("");
+    	}
        
-		$("#selDepartamento").val("");
+		/*$("#selDepartamento").val("");
 		$("#selZona").val("");
 		$("#selMunicipio").val("");
 		$("#clearFilter_fecha_inicio").val("");
-		$("#clearFilter_fecha_finalizacion").val("");
+		$("#clearFilter_fecha_finalizacion").val("");*/
 		
 
        
@@ -151,16 +165,25 @@ app.controller('FiltrosClearGrupoCtrl', ['$scope', '$http', 'styleBuscarHerramie
 		}
 		
     }	
+
+    $scope.tipoUsuario = 0;
 	
-    $scope.limpiarCamposFiltroBusquedaClearGrupo = function(){
-       
-		
-		$("#clearGrupoFilter_nombre").val("");
+    $scope.limpiarCamposFiltroBusquedaClearGrupo = function(tipoUsuario){
+	       
+		$scope.tipoUsuario = tipoUsuario;
+
+    	if($scope.tipoUsuario == 1){
+    		$("#clearGrupoFilter_nombre").val("");
+    	}
+    	if($scope.tipoUsuario == 2){
+    		$("#selMunicipio").val("");
+			$("#clearGrupoFilter_nombre").val("");
+    	}
+
+		/*$("#clearGrupoFilter_nombre").val("");
 		$("#selDepartamento").val("");
 		$("#selMunicipio").val("");
-		$("#selZona").val("");
-
-
+		$("#selZona").val("");*/
        
     }
       
