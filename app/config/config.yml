@@ -117,6 +117,6 @@ knp_snappy:
         options: []
     image:
         enabled: true
-        #binary: /var/www/vhosts/siscap.co/httpdocs/pdf/wkhtmltox/bin/wkhtmltoimage
-        binary: ..\pdf\wkhtmltopdf\bin\wkhtmltoimage.exe
+        binary: /var/www/vhosts/siscap.co/httpdocs/pdf/wkhtmltox/bin/wkhtmltoimage
+        #binary: ..\pdf\wkhtmltopdf\bin\wkhtmltoimage.exe
         options: []
