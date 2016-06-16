@@ -466,10 +466,6 @@ class GrupoController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
-            array('id' => $idGrupo)
-        );
-
         $beneficiarios = new Beneficiario();
 
         $grupo=$em->getRepository('AppBundle:Grupo')->findOneBy(

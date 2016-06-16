@@ -65,11 +65,13 @@ class ParametrizacionController extends Controller
         $em->persist($userCoordinador);
         $em->flush();*/
 
-        /*$userPromotor = $em->getRepository('AppBundle:Usuario')->findOneBy(
+        /*
+
+        $userPromotor = $em->getRepository('AppBundle:Usuario')->findOneBy(
             array('username' => 'promotor')
         );
 
-        $userPromotor->addRole(1);
+        $userPromotor->addRole($promotor);
         
         $em->persist($userPromotor);
         $em->flush();*/
@@ -93,38 +95,59 @@ class ParametrizacionController extends Controller
         $coordinador = 2;
         $admin = 3;
 
-        /*
-       $userAdmin = $em->getRepository('AppBundle:Usuario')->findOneBy(
+        
+        $userAdmin = $em->getRepository('AppBundle:Usuario')->findOneBy(
             array('username' => 'admin')
         );
 
-        $userAdmin->deleteRole($admin);
+        //$userAdmin->deleteRole($admin);
         
-        $em->persist($userAdmin);
-        $em->flush();*/
+        //$em->persist($userAdmin);
+        //$em->flush();
 
-
-        /*
         $userCoordinador = $em->getRepository('AppBundle:Usuario')->findOneBy(
             array('username' => 'coordinador')
         );
 
-        $userCoordinador->deleteRole($coordinador);
+        //$userCoordinador->deleteRole($coordinador);
         
-        $em->persist($userCoordinador);
-        $em->flush();*/
+        //$em->persist($userCoordinador);
+        //$em->flush();
 
-        /*$userPromotor = $em->getRepository('AppBundle:Usuario')->findOneBy(
+        $userPromotor = $em->getRepository('AppBundle:Usuario')->findOneBy(
             array('username' => 'promotor')
         );
 
-        $userPromotor->deleteRole(1);
+        //print_r(array_keys($userPromotor->getRoles()));
+
+        $rolesExistentes    = array("ROLE_ADMIN", "ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_FINANCIERO");
+        $arrayVacio    = array();
+        $resultado = array_diff($rolesExistentes, $userPromotor->getRoles());
+
+        print_r($resultado);
+        echo "-----------------";
+        print_r($userPromotor->getRoles());
+
+
+        $userPromotor->addRole($admin);
         
         $em->persist($userPromotor);
-        $em->flush();*/
+        $em->flush();
+
+        echo "<br />";
+        $resultado = array_diff($rolesExistentes, $userPromotor->getRoles());
+
+        print_r($resultado);
+        echo "-----------------";
+        print_r($userPromotor->getRoles());
+
+        //$userPromotor->deleteRole($promotor);
+        
+        //$em->persist($userPromotor);
+        //$em->flush();
         
 
-        return new Response("Hola..");
+        return new Response(".");
 
     }   
 
@@ -341,84 +364,17 @@ class ParametrizacionController extends Controller
 
     }
 
-      /**
-     * @Route("/probar/rol/", name="probarRol")
-     */
-    public function probarRolAction()
-    {
-        
-        
-        $em = $this->getDoctrine()->getManager();
-
-        $promotor = 1;
-        $coordinador = 2;
-        $admin = 3;
-
-        
-        $userAdmin = $em->getRepository('AppBundle:Usuario')->findOneBy(
-            array('username' => 'admin')
-        );
-
-        //$userAdmin->deleteRole($admin);
-        
-        //$em->persist($userAdmin);
-        //$em->flush();
-
-        $userCoordinador = $em->getRepository('AppBundle:Usuario')->findOneBy(
-            array('username' => 'coordinador')
-        );
-
-        //$userCoordinador->deleteRole($coordinador);
-        
-        //$em->persist($userCoordinador);
-        //$em->flush();
-
-        $userPromotor = $em->getRepository('AppBundle:Usuario')->findOneBy(
-            array('username' => 'promotor')
-        );
-
-        //print_r(array_keys($userPromotor->getRoles()));
-
-        $rolesExistentes    = array("ROLE_ADMIN", "ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_FINANCIERO");
-        $arrayVacio    = array();
-        $resultado = array_diff($rolesExistentes, $userPromotor->getRoles());
-
-        print_r($resultado);
-        echo "-----------------";
-        print_r($userPromotor->getRoles());
-
-
-        $userPromotor->addRole($admin);
-        
-        $em->persist($userPromotor);
-        $em->flush();
-
-        echo "<br />";
-        $resultado = array_diff($rolesExistentes, $userPromotor->getRoles());
-
-        print_r($resultado);
-        echo "-----------------";
-        print_r($userPromotor->getRoles());
-
-        //$userPromotor->deleteRole($promotor);
-        
-        //$em->persist($userPromotor);
-        //$em->flush();
-        
-
-        return new Response(".");
-
-    }
-
 
     /**
      * @Route("/parametrizacion/usuario/{idUsuario}/asignacion-rol", name="usuarioRol")
      */
     public function usuarioRolAction(Request $request, $idUsuario)
     {
-        $rolesExistentes = array("ROLE_ADMIN", "ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_FINANCIERO");
+        $em = $this->getDoctrine()->getManager();
 
-         $em = $this->getDoctrine()->getManager();
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario)
+        );
 
         $roles = new Usuario();
 
@@ -426,14 +382,9 @@ class ParametrizacionController extends Controller
             array('id'=> $idUsuario)
         );
 
-        $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
-            array('grupo' => $grupo)
+        $roles = $em->getRepository('AppBundle:Usuario')->findBy(
+            array('usuario' => $usuario)
         );     
-
-        $asignacionesBeneficiariosCVB = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteVamosBien')->findBy(
-            array('grupo' => $grupo)
-        ); 
-
 
 
 
