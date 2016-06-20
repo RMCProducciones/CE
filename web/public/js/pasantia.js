@@ -164,11 +164,22 @@ app.controller('FiltrosPasantiaGrupoCtrl', ['$scope', '$http', 'styleBuscarHerra
 		}
 		
     }	
+
+    $scope.tipoUsuario = 0;
 	
-    $scope.limpiarCamposFiltroBusquedaPasantiaGrupo = function(){
+    $scope.limpiarCamposFiltroBusquedaPasantiaGrupo = function(tipoUsuario){
        
-		
-		$("#pasantiaGrupoFilter_nombre").val("");
+		$scope.tipoUsuario = tipoUsuario;
+
+    	if($scope.tipoUsuario == 1){
+    		$("#pasantiaGrupoFilter_nombre").val("");
+    	}
+    	if($scope.tipoUsuario == 2){
+    		$("#selMunicipio").val("");
+			$("#pasantiaGrupoFilter_nombre").val("");
+    	}
+
+		//$("#pasantiaGrupoFilter_nombre").val("");
 		
 
        

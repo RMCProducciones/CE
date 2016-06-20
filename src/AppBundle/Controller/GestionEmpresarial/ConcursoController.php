@@ -34,6 +34,8 @@ use AppBundle\Form\GestionEmpresarial\ConcursoGrupoFilterType;
 use AppBundle\Form\GestionEmpresarial\ConcursoIntegranteFilterType;
 
 
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 
 /*Para autenticación por código*/
@@ -327,7 +329,12 @@ class ConcursoController extends Controller
      */
     public function concursoGrupoAction(Request $request, $idConcurso)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $municipioUsuario = $this->get('security.context')->getToken()->getUser()->getMunicipio();
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
 
         $concurso = $em->getRepository('AppBundle:Concurso')->findOneBy(
             array('id' => $idConcurso)
@@ -342,44 +349,19 @@ class ConcursoController extends Controller
 
         $grupos = $query->getResult(); 
 
-        $filterBuilder = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('AppBundle:Grupo')
-            ->createQueryBuilder('q')
-            ->innerJoin("q.municipio", "m")
-            ->innerJoin("m.departamento", "d")
-            ->innerJoin("m.zona", "z");
-
         $form = $this->get('form.factory')->create(new ConcursoGrupoFilterType());
 
-        if ($request->query->has($form->getName())) {
-            
-            $form->submit($request->query->get($form->getName()));
-            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
-        }
+        $obj = new FilterLocation();
 
-        $filterBuilder
-        ->andWhere('q.active = 1')
+        $filterBuilder = $obj->queryFilter($request, $this, $form, $rolUsuario, $municipioUsuario, 'AppBundle:Grupo');
+
+        $filterBuilder        
         ->andWhere('q.id NOT IN (SELECT grupo.id FROM AppBundle:Grupo grupo JOIN AppBundle:AsignacionGrupoConcurso agc WHERE grupo = agc.grupo AND agc.concurso = :concurso)')
         ->setParameter('concurso', $concurso);
 
-
-        if (isset($_GET['selMunicipio']) && $_GET['selMunicipio'] != "?") {
-             $filterBuilder->andWhere('m.id = :idMunicipio')
-            ->setParameter('idMunicipio', $_GET['selMunicipio']);
-        }
-        else{
-            if (isset($_GET['selDepartamento']) && $_GET['selDepartamento'] != "?") {
-                $filterBuilder->andWhere('d.id = :idDepartamento')
-                ->setParameter('idDepartamento', $_GET['selDepartamento']);
-            }
-            if (isset($_GET['selZona']) && $_GET['selZona'] != "?") {
-                $filterBuilder->andWhere('z.id = :idZona')
-                ->setParameter('idZona', $_GET['selZona']);
-            }      
-        }
-
         $query = $filterBuilder->getQuery();
 
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
 
         $paginator1  = $this->get('knp_paginator');
 
@@ -395,7 +377,14 @@ class ConcursoController extends Controller
                 'grupos' => $query,
                 'asignacionesGrupoConcurso' => $asignacionesGrupoConcurso,
                 'idConcurso' => $idConcurso,
-                'pagination1' => $pagination1
+                'pagination1' => $pagination1,
+                'departamento' => $_GET['selDepartamento'],
+                'zona' => $_GET['selZona'],
+                'municipio' => $_GET['selMunicipio'],
+                'campoDeshabilitadoDepartamento' => $valuesFieldBlock[0],
+                'campoDeshabilitadoZona' => $valuesFieldBlock[1],
+                'campoDeshabilitadoMunicipio' => $valuesFieldBlock[2],
+                'tipoUsuario' => $valuesFieldBlock[3]
             ));        
         
     }

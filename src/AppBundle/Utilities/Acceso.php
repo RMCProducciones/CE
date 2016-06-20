@@ -5,9 +5,9 @@ namespace AppBundle\Utilities;
 use Symfony\Component\HttpFoundation\Request;
 
 use AppBundle\GestionEmpresarial\GrupoController;
+use AppBundle\GestionEmpresarial\ClearController;
 
 use AppBundle\Entity\Grupo;
-use AppBundle\Form\GestionEmpresarial\GrupoFilterType;
 
 class Acceso
 {
@@ -42,7 +42,7 @@ class FilterLocation{
             $grupoThis->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);           
         }
 
-        $filterBuilder->andWhere('q.active = 1');
+      	$filterBuilder->andWhere('q.active = 1');
 
         if(in_array("ROLE_PROMOTOR", $rolUsuario)){
             $_GET['selDepartamento'] = $municipioUsuario->getDepartamento()->getId();
@@ -69,7 +69,7 @@ class FilterLocation{
             }    
         }
 
-		return $filterBuilder->getQuery();
+		return $filterBuilder;
 	}
 
 	public function fieldBlock($rolUsuario){
@@ -92,5 +92,21 @@ class FilterLocation{
         return $valuesFieldBlock;
 	}
 
+	public function valuesFormDMZ($rolUsuario, $municipioUsuario){
+		$valuesFieldDMZ = array(3);
+		if(in_array("ROLE_PROMOTOR", $rolUsuario)){            
+            $valuesFieldDMZ[0] = $municipioUsuario->getDepartamento()->getId();
+            $valuesFieldDMZ[1] = $municipioUsuario->getZona()->getId();
+            $valuesFieldDMZ[2] = $municipioUsuario->getId();            
+        }
+
+        if(in_array("ROLE_COORDINADOR", $rolUsuario)){                        
+            $valuesFieldDMZ[0] = $municipioUsuario->getDepartamento()->getId();
+            $valuesFieldDMZ[1] = $municipioUsuario->getZona()->getId();
+            $valuesFieldDMZ[2] = 0;            
+        }
+
+        return $valuesFieldDMZ;
+	}
 
 }

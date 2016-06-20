@@ -36,6 +36,8 @@ use AppBundle\Form\GestionEmpresarial\PasantiaTerritorioFilterType;
 use AppBundle\Form\GestionEmpresarial\PasantiaGrupoFilterType;
 
 
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 
 /*Para autenticación por código*/
@@ -605,7 +607,12 @@ class PasantiaController extends Controller
      */
     public function pasantiaGrupoAction(Request $request, $idPasantia)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $municipioUsuario = $this->get('security.context')->getToken()->getUser()->getMunicipio();
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
 
         $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
             array('id' => $idPasantia)
@@ -625,58 +632,32 @@ class PasantiaController extends Controller
 
 
 
-         $form = $this->get('form.factory')->create(new PasantiaGrupoFilterType());        
+        $form = $this->get('form.factory')->create(new PasantiaGrupoFilterType());        
 
-        if($pasantia->getGrupo() == null){             
-            $filterBuilder = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('AppBundle:Grupo')
-            ->createQueryBuilder('q')
-            ->innerJoin("q.municipio", "m")
-            ->innerJoin("m.departamento", "d")
-            ->innerJoin("m.zona", "z");
+        $obj = new FilterLocation();
 
-        
+        $filterBuilder = $obj->queryFilter($request, $this, $form, $rolUsuario, $municipioUsuario, 'AppBundle:Grupo');
 
-        if ($request->query->has($form->getName())) {
-            
-            $form->submit($request->query->get($form->getName()));
-            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
-        }
+        if($pasantia->getGrupo() == null){
 
-        $filterBuilder
-        ->andWhere('q.active = 1')
-        ->andWhere('q.id NOT IN  (
-                        SELECT 
-                            grupo.id 
-                        FROM 
-                            AppBundle:Grupo grupo 
-                            JOIN AppBundle:Pasantia pasantia 
-                        WHERE 
-                            grupo = pasantia.grupo 
-                            AND pasantia.grupo = :grupo_pasantia
-                            AND pasantia.id = :idPasantia                            
-                    ) 
-                    AND q.codigo IS NOT NULL')
-             //AND g.codigo IS NOT NULL ----> Mostrar solo los de codigo grupo
-        ->setParameter('grupo_pasantia', $pasantia)
-        ->setParameter('idPasantia', $idPasantia);
+            $filterBuilder        
+            ->andWhere('q.id NOT IN  (
+                            SELECT 
+                                grupo.id 
+                            FROM 
+                                AppBundle:Grupo grupo 
+                                JOIN AppBundle:Pasantia pasantia 
+                            WHERE 
+                                grupo = pasantia.grupo 
+                                AND pasantia.grupo = :grupo_pasantia
+                                AND pasantia.id = :idPasantia                            
+                        ) 
+                        AND q.codigo IS NOT NULL')
+                 //AND g.codigo IS NOT NULL ----> Mostrar solo los de codigo grupo
+            ->setParameter('grupo_pasantia', $pasantia)
+            ->setParameter('idPasantia', $idPasantia);
 
-        if (isset($_GET['selMunicipio']) && $_GET['selMunicipio'] != "?") {
-             $filterBuilder->andWhere('m.id = :idMunicipio')
-            ->setParameter('idMunicipio', $_GET['selMunicipio']);
-        }
-        else{
-            if (isset($_GET['selDepartamento']) && $_GET['selDepartamento'] != "?") {
-                $filterBuilder->andWhere('d.id = :idDepartamento')
-                ->setParameter('idDepartamento', $_GET['selDepartamento']);
-            }
-            if (isset($_GET['selZona']) && $_GET['selZona'] != "?") {
-                $filterBuilder->andWhere('z.id = :idZona')
-                ->setParameter('idZona', $_GET['selZona']);
-            }      
-        }
-
-        $query = $filterBuilder->getQuery();
+            $query = $filterBuilder->getQuery();
         
         }else{
 
@@ -684,7 +665,7 @@ class PasantiaController extends Controller
 
         }
 
-
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
             
 
         $paginator1  = $this->get('knp_paginator');
@@ -701,7 +682,14 @@ class PasantiaController extends Controller
                 'grupos' => $query,
                 'asignacionesGrupoPasantia' => $grupoAsignado,
                 'idPasantia' => $idPasantia,
-                'pagination1' => $pagination1
+                'pagination1' => $pagination1,
+                'departamento' => $_GET['selDepartamento'],
+                'zona' => $_GET['selZona'],
+                'municipio' => $_GET['selMunicipio'],
+                'campoDeshabilitadoDepartamento' => $valuesFieldBlock[0],
+                'campoDeshabilitadoZona' => $valuesFieldBlock[1],
+                'campoDeshabilitadoMunicipio' => $valuesFieldBlock[2],
+                'tipoUsuario' => $valuesFieldBlock[3]
             ));        
         
     }

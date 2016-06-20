@@ -37,7 +37,8 @@ use AppBundle\Form\GestionEmpresarial\ClearIntegranteFilterType;
 use AppBundle\Form\GestionEmpresarial\ClearGrupoFilterType;
 
 
-
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 
 /*Para autenticación por código*/
@@ -51,52 +52,32 @@ class ClearController extends Controller
     */
     public function clearGestionAction(Request $request)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
 
         $soportesClear = $em->getRepository('AppBundle:ClearSoporte')->findBy(
             array('active' => 1),
             array('fecha_creacion' => 'ASC')
         );
-        
-         $filterBuilder = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('AppBundle:CLEAR')
-            ->createQueryBuilder('q')
-            ->innerJoin("q.municipio", "m")
-            ->innerJoin("m.departamento", "d")
-            ->innerJoin("m.zona", "z");
+
+        $municipioUsuario = $this->get('security.context')->getToken()->getUser()->getMunicipio();
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
 
         $form = $this->get('form.factory')->create(new ClearFilterType());
 
-    
-        if ($request->query->has($form->getName())) {
+        $obj = new FilterLocation();
 
-            $form->submit($request->query->get($form->getName()));
-            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);           
-        }
+        $filterBuilder = $obj->queryFilter($request, $this, $form, $rolUsuario, $municipioUsuario, 'AppBundle:CLEAR');                
 
-        $filterBuilder->andWhere('q.active = 1');
+        $query = $filterBuilder->getQuery();
         
-        if (isset($_GET['selMunicipio']) && $_GET['selMunicipio'] != "?") {
-             $filterBuilder->andWhere('m.id = :idMunicipio')
-            ->setParameter('idMunicipio', $_GET['selMunicipio']);
-        }
-        else{
-            if (isset($_GET['selDepartamento']) && $_GET['selDepartamento'] != "?") {
-                $filterBuilder->andWhere('d.id = :idDepartamento')
-                ->setParameter('idDepartamento', $_GET['selDepartamento']);
-            }
-            if (isset($_GET['selZona']) && $_GET['selZona'] != "?") {
-                $filterBuilder->andWhere('z.id = :idZona')
-                ->setParameter('idZona', $_GET['selZona']);
-            }      
-        }
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
 
         //var_dump($filterBuilder->getDql());
         //die("");
-
-        $query = $filterBuilder->getQuery();
     
-         $paginator  = $this->get('knp_paginator');
+        $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
             $query, /* fuente de los datos*/
@@ -105,7 +86,17 @@ class ClearController extends Controller
         );
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Clear:clear-gestion.html.twig', 
-            array( 'form' => $form->createView(),'cleares' => $query, 'pagination' => $pagination, 'soportesClear' => $soportesClear)
+            array( 'form' => $form->createView(),
+                   'cleares' => $query, 
+                   'pagination' => $pagination, 
+                   'soportesClear' => $soportesClear,
+                   'departamento' => $_GET['selDepartamento'],
+                   'zona' => $_GET['selZona'],
+                   'municipio' => $_GET['selMunicipio'],
+                   'campoDeshabilitadoDepartamento' => $valuesFieldBlock[0],
+                   'campoDeshabilitadoZona' => $valuesFieldBlock[1],
+                   'campoDeshabilitadoMunicipio' => $valuesFieldBlock[2],
+                   'tipoUsuario' => $valuesFieldBlock[3])
         );
     }
 
@@ -114,8 +105,10 @@ class ClearController extends Controller
      */
     public function clearNuevoAction(Request $request)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
         $em = $this->getDoctrine()->getManager();
         $clear = new Clear();
+        $obj = new FilterLocation();
         
         $form = $this->createForm(new CLEARType(), $clear);
 
@@ -135,9 +128,21 @@ class ClearController extends Controller
 
             return $this->redirectToRoute('clearGestion');
         }
+
+        $municipioUsuario = $this->get('security.context')->getToken()->getUser()->getMunicipio();
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+        $valuesFieldDMZ = $obj->valuesFormDMZ($rolUsuario, $municipioUsuario);
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Clear:clear-nuevo.html.twig',
-            array('form' => $form->createView())
+            array('form' => $form->createView(),
+                  'departamento' => $valuesFieldDMZ[0],
+                  'zona' => $valuesFieldDMZ[1],
+                  'municipio' => $valuesFieldDMZ[2],
+                  'campoDeshabilitadoDepartamento' => $valuesFieldBlock[0],
+                  'campoDeshabilitadoZona' => $valuesFieldBlock[1],
+                  'campoDeshabilitadoMunicipio' => $valuesFieldBlock[2])
         );
     }
 
@@ -164,8 +169,10 @@ class ClearController extends Controller
     public function clearEditarAction(Request $request, $idCLEAR)
     {
         
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
 		$em = $this->getDoctrine()->getManager();
         $clear = new Clear();
+        $obj = new FilterLocation();
 
         $clear = $em->getRepository('AppBundle:Clear')->findOneBy(
             array('id' => $idCLEAR)
@@ -198,13 +205,19 @@ class ClearController extends Controller
             return $this->redirectToRoute('clearGestion');
         }
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
 
 		return $this->render(
             'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Clear:clear-editar.html.twig', 
             array(
                     'form' => $form->createView(),
                     'idCLEAR' => $idCLEAR,
-                    'clear' => $clear
+                    'clear' => $clear,
+                    'campoDeshabilitadoDepartamento' => $valuesFieldBlock[0],
+                    'campoDeshabilitadoZona' => $valuesFieldBlock[1],
+                    'campoDeshabilitadoMunicipio' => $valuesFieldBlock[2]
             )
         );
 		
@@ -751,7 +764,13 @@ class ClearController extends Controller
      */
     public function clearGrupoAction(Request $request, $idCLEAR)
     {
+
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $municipioUsuario = $this->get('security.context')->getToken()->getUser()->getMunicipio();
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
 
         $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
             array('id' => $idCLEAR)
@@ -771,42 +790,19 @@ class ClearController extends Controller
 
         $grupos = $query->getResult();
 
-        $filterBuilder = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('AppBundle:Grupo')
-            ->createQueryBuilder('q')
-            ->innerJoin("q.municipio", "m")
-            ->innerJoin("m.departamento", "d")
-            ->innerJoin("m.zona", "z");
-
         $form = $this->get('form.factory')->create(new ClearGrupoFilterType());
 
-        if ($request->query->has($form->getName())) {
-            
-            $form->submit($request->query->get($form->getName()));
-            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
-        }
+        $obj = new FilterLocation();
+
+        $filterBuilder = $obj->queryFilter($request, $this, $form, $rolUsuario, $municipioUsuario, 'AppBundle:Grupo');
 
         $filterBuilder
-        ->andWhere('q.active = 1')
         ->andWhere('q.id NOT IN (SELECT grupo.id FROM AppBundle:Grupo grupo JOIN AppBundle:AsignacionGrupoCLEAR agc WHERE grupo = agc.grupo AND agc.clear = :clear)')
         ->setParameter('clear', $clear);
 
-        if (isset($_GET['selMunicipio']) && $_GET['selMunicipio'] != "?") {
-             $filterBuilder->andWhere('m.id = :idMunicipio')
-            ->setParameter('idMunicipio', $_GET['selMunicipio']);
-        }
-        else{
-            if (isset($_GET['selDepartamento']) && $_GET['selDepartamento'] != "?") {
-                $filterBuilder->andWhere('d.id = :idDepartamento')
-                ->setParameter('idDepartamento', $_GET['selDepartamento']);
-            }
-            if (isset($_GET['selZona']) && $_GET['selZona'] != "?") {
-                $filterBuilder->andWhere('z.id = :idZona')
-                ->setParameter('idZona', $_GET['selZona']);
-            }      
-        }
-
         $query = $filterBuilder->getQuery();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
 
         $paginator1  = $this->get('knp_paginator');
 
@@ -823,7 +819,14 @@ class ClearController extends Controller
                 'asignacionesGrupoCLEAR' => $asignacionesGrupoCLEAR,
                 'idCLEAR' => $idCLEAR,
                 'pagination1' => $pagination1,
-                'soportesClear' => $soportesClear
+                'soportesClear' => $soportesClear,
+                'departamento' => $_GET['selDepartamento'],
+                'zona' => $_GET['selZona'],
+                'municipio' => $_GET['selMunicipio'],
+                'campoDeshabilitadoDepartamento' => $valuesFieldBlock[0],
+                'campoDeshabilitadoZona' => $valuesFieldBlock[1],
+                'campoDeshabilitadoMunicipio' => $valuesFieldBlock[2],
+                'tipoUsuario' => $valuesFieldBlock[3]
             ));        
         
     }
