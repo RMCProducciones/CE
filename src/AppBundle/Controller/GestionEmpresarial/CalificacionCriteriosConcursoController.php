@@ -60,12 +60,11 @@ class CalificacionCriteriosConcursoController extends Controller
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idAsignacionGrupoConcurso}/{idCriterio}/nuevo-calificacion", name="calificacionNuevo")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/{idAsignacionGrupoConcurso}/{idCriterio}/nuevo-calificacion", name="calificacionNuevo")
      */
-    public function calificacionNuevoAction(Request $request ,$idAsignacionGrupoConcurso, $idCriterio)
+    public function calificacionNuevoAction(Request $request, $idConcurso, $idAsignacionGrupoConcurso, $idCriterio)
     {
         $em = $this->getDoctrine()->getManager();
-        $calificacion = new CalificacionCriterioGrupoConcurso();
 
         $asignacionCalificacion = $em->getRepository('AppBundle:AsignacionGrupoConcurso')->findOneBy(
             array('id' => $idAsignacionGrupoConcurso)          
@@ -77,6 +76,23 @@ class CalificacionCriteriosConcursoController extends Controller
 
         $concurso = $asignacionCalificacion->getConcurso();
         $grupo = $asignacionCalificacion->getGrupo();
+
+        /*echo $grupo->getId();
+        echo $idCriterio;
+        ajshlñaskdas;*/
+
+        $calificacion = $em->getRepository('AppBundle:CalificacionCriterioGrupoConcurso')->findOneBy(
+            array('grupo' => $grupo->getId(),
+                  'criterioCalificacion' => $idCriterio)          
+        );
+
+        if($calificacion == null){
+            $calificacion = new CalificacionCriterioGrupoConcurso();            
+        }
+
+        
+
+        
 
         $form = $this->createForm(new CalificacionCriterioConcursosType(), $calificacion);
         
@@ -107,13 +123,15 @@ class CalificacionCriteriosConcursoController extends Controller
             $em->flush();
 
             return $this->redirectToRoute('calificacionGestion', array(
-               'idAsignacionGrupoConcurso'=> $idAsignacionGrupoConcurso ));
+               'idAsignacionGrupoConcurso'=> $idAsignacionGrupoConcurso,
+               'idConcurso' => $idConcurso ));
         }
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/CalificacionCriterio:calificacion-nuevo.html.twig', 
             array(
                 'form' => $form->createView(),
-                'idAsignacionGrupoConcurso'=>$idAsignacionGrupoConcurso                
+                'idAsignacionGrupoConcurso'=>$idAsignacionGrupoConcurso,
+                'idConcurso' => $idConcurso                
             )
         );
     }
