@@ -22,7 +22,7 @@
 
           <ul class="nav navbar-nav">
 
-            {% if is_granted('ROLE_PROMOTOR') or is_granted('ROLE_COORDINADOR') %}
+            {% if is_granted('ROLE_PROMOTOR') or is_granted('ROLE_COORDINADOR') or is_granted('ROLE_ESPECIALISTA_EMPRESARIAL') or is_granted('ROLE_ADMIN') %}
             <!-- Menu GE-->
             <li class="dropdown">
 
@@ -35,7 +35,7 @@
                     <li>
                       <a href="{{ path('grupoGestion') }}">Gestión de Grupos </a>
                     </li>
-                    {% if is_granted('ROLE_COORDINADOR') %}
+                    {% if is_granted('ROLE_COORDINADOR') or is_granted('ROLE_ESPECIALISTA_EMPRESARIAL') or is_granted('ROLE_ADMIN')%}
                     <li>
                       <a href="{{ path('clearGestion') }}">Gestión de CLEAR </a>
                     </li>
@@ -83,7 +83,7 @@
             </li>
             {% endif %}
 
-            {% if is_granted('ROLE_ADMIN') %}
+            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ESPECIALISTA_ADMINISTRATIVO') %}
             <!-- Menu GA-->
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gestión Administrativa<strong class="caret"></strong></a>
@@ -108,7 +108,7 @@
             </li>
             {% endif %}
 
-            {% if is_granted('ROLE_PROMOTOR') or is_granted('ROLE_COORDINADOR') %}
+            {% if is_granted('ROLE_PROMOTOR') or is_granted('ROLE_COORDINADOR') or is_granted('ROLE_ESPECIALISTA_FINANCIERO') or is_granted('ROLE_ADMIN') %}
             <!-- Menu GF-->
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gestión Financiera<strong class="caret"></strong></a>
@@ -151,7 +151,7 @@
             </li>
             {% endif %}
 
-            {% if is_granted('ROLE_PROMOTOR') or is_granted('ROLE_COORDINADOR') %}
+            {% if is_granted('ROLE_PROMOTOR') or is_granted('ROLE_COORDINADOR') or is_granted('ROLE_ESPECIALISTA_CONOCIMIENTO') or is_granted('ROLE_ADMIN')%}
             <!-- Menu GC-->
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gestión Conocimiento<strong class="caret"></strong></a>
