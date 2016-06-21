@@ -65,13 +65,11 @@ class ParametrizacionController extends Controller
         $em->persist($userCoordinador);
         $em->flush();*/
 
-        /*
-
-        $userPromotor = $em->getRepository('AppBundle:Usuario')->findOneBy(
+        /*$userPromotor = $em->getRepository('AppBundle:Usuario')->findOneBy(
             array('username' => 'promotor')
         );
 
-        $userPromotor->addRole($promotor);
+        $userPromotor->addRole(1);
         
         $em->persist($userPromotor);
         $em->flush();*/
@@ -95,59 +93,38 @@ class ParametrizacionController extends Controller
         $coordinador = 2;
         $admin = 3;
 
-        
-        $userAdmin = $em->getRepository('AppBundle:Usuario')->findOneBy(
+        /*
+       $userAdmin = $em->getRepository('AppBundle:Usuario')->findOneBy(
             array('username' => 'admin')
         );
 
-        //$userAdmin->deleteRole($admin);
+        $userAdmin->deleteRole($admin);
         
-        //$em->persist($userAdmin);
-        //$em->flush();
+        $em->persist($userAdmin);
+        $em->flush();*/
 
+
+        /*
         $userCoordinador = $em->getRepository('AppBundle:Usuario')->findOneBy(
             array('username' => 'coordinador')
         );
 
-        //$userCoordinador->deleteRole($coordinador);
+        $userCoordinador->deleteRole($coordinador);
         
-        //$em->persist($userCoordinador);
-        //$em->flush();
+        $em->persist($userCoordinador);
+        $em->flush();*/
 
-        $userPromotor = $em->getRepository('AppBundle:Usuario')->findOneBy(
+        /*$userPromotor = $em->getRepository('AppBundle:Usuario')->findOneBy(
             array('username' => 'promotor')
         );
 
-        //print_r(array_keys($userPromotor->getRoles()));
-
-        $rolesExistentes    = array("ROLE_ADMIN", "ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_FINANCIERO");
-        $arrayVacio    = array();
-        $resultado = array_diff($rolesExistentes, $userPromotor->getRoles());
-
-        print_r($resultado);
-        echo "-----------------";
-        print_r($userPromotor->getRoles());
-
-
-        $userPromotor->addRole($admin);
+        $userPromotor->deleteRole(1);
         
         $em->persist($userPromotor);
-        $em->flush();
-
-        echo "<br />";
-        $resultado = array_diff($rolesExistentes, $userPromotor->getRoles());
-
-        print_r($resultado);
-        echo "-----------------";
-        print_r($userPromotor->getRoles());
-
-        //$userPromotor->deleteRole($promotor);
-        
-        //$em->persist($userPromotor);
-        //$em->flush();
+        $em->flush();*/
         
 
-        return new Response(".");
+        return new Response("Hola..");
 
     }   
 
@@ -364,134 +341,248 @@ class ParametrizacionController extends Controller
 
     }
 
+ 
 
     /**
      * @Route("/parametrizacion/usuario/{idUsuario}/asignacion-rol", name="usuarioRol")
      */
     public function usuarioRolAction(Request $request, $idUsuario)
     {
-        $em = $this->getDoctrine()->getManager();
 
-        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+
+         $em = $this->getDoctrine()->getManager();
+
+          $user = $em->getRepository('AppBundle:Usuario')->findOneBy(
             array('id' => $idUsuario)
         );
 
-        $roles = new Usuario();
+        $rolesExistentes    = array('admin'=>"ROLE_ADMIN", 'promotor'=>"ROLE_PROMOTOR", 'coordinador'=>"ROLE_COORDINADOR", 'administrativo'=>"ROLE_ESPECIALISTA_ADMINISTRATIVO", 'conocimiento' =>"ROLE_ESPECIALISTA_CONOCIMIENTO", 'financiero' =>"ROLE_ESPECIALISTA_FINANCIERO", 'empresarial' =>"ROLE_ESPECIALISTA_EMPRESARIAL");
+        $arrayVacio    = array();
+        $rolAsignar = array_diff($rolesExistentes, $user->getRoles());
 
-        $usuario=$em->getRepository('AppBundle:Usuario')->findOneBy(
-            array('id'=> $idUsuario)
-        );
-
-        $roles = $em->getRepository('AppBundle:Usuario')->findBy(
-            array('usuario' => $usuario)
-        );     
-
-
-
-        
-
-
-
-        $query = $em->createQuery('SELECT u FROM AppBundle:Usuario u WHERE u.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioComiteVamosBien abc WHERE beneficiario = abc.beneficiario AND abc.grupo = :grupo) AND b.active = 1');
-        $query->setParameter(':grupo', $grupo);
-        $beneficiarios = $query->getResult();
-
-        $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
-            array('id' => $beneficiarios, 'grupo' => $grupo )
-        );   
-
-        
+        if($user->getRoles() != null){
+            $rolUser = $user->getRoles();
+        }     
+       
+        $usuarios = $em->getRepository('AppBundle:Usuario')->findBY(
+            array('active' => 1)         
+        );                
 
         return $this->render('AppBundle:GestionParametro:usuario-rol-asignar-gestion.html.twig', 
             array(                
-                'beneficiarios' => $mostrarBeneficiarios,
-                'asignacionesBeneficiariosCVB' => $asignacionesBeneficiariosCVB,
-                'idGrupo' => $idGrupo,
-                'grupo' => $grupo
+               'idUsuario' => $idUsuario,
+               'rolAsignar' => $rolAsignar,
+               'rolUser' => $rolUser
+
             ));        
     }
 
-    /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/comite-vamos-bien/{idBeneficiario}/nueva-asignacion", name="grupoBeneficiarioCVBAsignacion")
+        /**
+     * @Route("/parametrizacion/usuario/{idUsuario}/asignacion-rol/{idRol}/asignar", name="usuarioAsignarRol")
      */
-    public function comiteVamosBienAsignarGrupoBeneficiarioAction($idGrupo, $idBeneficiario)
-    {
+    public function usuarioAsignarRolAction(Request $request, $idUsuario, $idRol)
+    {       
+
+
+        $promotor = 1;
+        $coordinador = 2;
+        $admin = 3;
+        $administrativo = 4;
+        $conocimiento = 5;
+        $financiero = 6;
+        $empresarial = 7;
+
 
         $em = $this->getDoctrine()->getManager();
 
-        $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
-            array('id' => $idBeneficiario)
-        );      
+        $user = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario)
+        );    
+       
+        $usuarios = $em->getRepository('AppBundle:Usuario')->findBY(
+            array('active' => 1)         
+        );   
 
-        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
-            array('id' => $idGrupo)
-        );        
+        
+        if($idRol == $promotor){
+            $user->addRole($promotor);    
+        }
+
+        else if($idRol == $coordinador){
+            $user->addRole($coordinador);    
+        }
+
+        else if($idRol == $admin){            
+           $user->addRole($admin);    
+        }
+
+        else if($idRol == $administrativo){            
+           $user->addRole($administrativo);    
+        }
+
+        else if($idRol == $conocimiento){            
+           $user->addRole($conocimiento);    
+        }
+
+        else if($idRol == $financiero){            
+           $user->addRole($financiero);    
+        }
+        
+        else if($idRol == $empresarial){            
+           $user->addRole($empresarial);    
+        }
+        
+        $em->persist($user);
+        $em->flush();
            
-        $asignacionBeneficiarioComiteVamosBien = new AsignacionBeneficiarioComiteVamosBien();
-
-        $asignacionBeneficiarioComiteVamosBien->setGrupo($grupo);        
-        $asignacionBeneficiarioComiteVamosBien->setBeneficiario($beneficiario);
-        $asignacionBeneficiarioComiteVamosBien->setActive(true);
-        $asignacionBeneficiarioComiteVamosBien->setFechaCreacion(new \DateTime());
-
-        $em->persist($asignacionBeneficiarioComiteVamosBien);
-        $em->flush();
 
 
 
-        return $this->redirectToRoute('grupoBeneficiarioCVB', 
-            array(
-                'beneficiario' => $beneficiario,          
-                'asignacionesBeneficiarioComiteVamosBien' => $asignacionBeneficiarioComiteVamosBien,                
-                'idGrupo' => $idGrupo
-            ));        
-        
+        return $this->redirectToRoute('usuarioRol',
+            array(                
+               'idUsuario' => $idUsuario
+
+            ));    
+
+
     }
 
-    /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/grupo/{idGrupo}/asignacion-beneficiarios/comite-vamos-bien/{idAsignacionBeneficiariosCVB}/eliminar", name="grupoBeneficiarioCVBEliminar")
+        /**
+     * @Route("/parametrizacion/usuario/{idUsuario}/asignacion-rol/{idRol}/eliminar", name="usuarioEliminarRol")
      */
-    public function comiteVamosBienEliminarGrupoBeneficiarioAction($idGrupo, $idAsignacionBeneficiariosCVB)
-    {
+    public function usuarioEliminarRolAction(Request $request, $idUsuario, $idRol)
+    {       
+
+
+        $promotor = 1;
+        $coordinador = 2;
+        $admin = 3;
+        $administrativo = 4;
+        $conocimiento = 5;
+        $financiero = 6;
+        $empresarial = 7;
+
+
         $em = $this->getDoctrine()->getManager();
 
-        $asignacionBeneficiarioComiteVamosBien = new AsignacionBeneficiarioComiteVamosBien();
+        $user = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario)
+        );    
+       
+               
+        if($idRol == $promotor){
+            $user->deleteRole($promotor);    
+        }
 
-        $asignacionBeneficiarioComiteVamosBien = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteVamosBien')->find($idAsignacionBeneficiariosCVB); 
+        else if($idRol == $coordinador){
+            $user->deleteRole($coordinador);    
+        }
 
-        $em->remove($asignacionBeneficiarioComiteVamosBien);
-        $em->flush();
+        else if($idRol == $admin){            
+           $user->deleteRole($admin);    
+        }
 
-        $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
-            array('id' => $idGrupo)
-        );
+        else if($idRol == $administrativo){            
+           $user->deleteRole($administrativo);    
+        }
 
-        $beneficiarios = new Beneficiario();
+        else if($idRol == $conocimiento){            
+           $user->deleteRole($conocimiento);    
+        }
 
-        $beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
-            array('grupo' => $grupo)
-        );     
+        else if($idRol == $financiero){            
+           $user->deleteRole($financiero);    
+        }
 
-        $asignacionesBeneficiariosCVB = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteVamosBien')->findBy(
-            array('grupo' => $grupo)
-        ); 
-
-        $query = $em->createQuery('SELECT b FROM AppBundle:Beneficiario b WHERE b.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioComiteVamosBien abc WHERE beneficiario = abc.beneficiario AND abc.grupo = :grupo) AND b.active = 1');
-        $query->setParameter(':grupo', $grupo);
-        $beneficiarios = $query->getResult();
-
-        $mostrarBeneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
-            array('id' => $beneficiarios, 'grupo' => $grupo )
-        );
-
-        return $this->redirectToRoute('grupoBeneficiarioCVB',
-            array(
-                'beneficiarios' => $mostrarBeneficiarios,
-                'asignacionesBeneficiariosCVB' => $asignacionesBeneficiariosCVB,
-                'idGrupo' => $idGrupo
-            ));      
+        else if($idRol == $empresarial){            
+           $user->deleteRole($empresarial);    
+        }
         
+        $em->persist($user);
+        $em->flush();       
+
+        return $this->redirectToRoute('usuarioRol',
+            array(                
+               'idUsuario' => $idUsuario
+
+            ));        
     }
+
+
+
+
+         /**
+     * @Route("/probar/rol/", name="probarRol")
+     */
+    public function probarRolAction()
+    {
+        
+        
+        $em = $this->getDoctrine()->getManager();
+
+        $promotor = 1;
+        $coordinador = 2;
+        $admin = 3;
+
+        
+        $userAdmin = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('username' => 'admin')
+        );
+
+        //$userAdmin->deleteRole($admin);
+        
+        //$em->persist($userAdmin);
+        //$em->flush();
+
+        $userCoordinador = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('username' => 'coordinador')
+        );
+
+        //$userCoordinador->deleteRole($coordinador);
+        
+        //$em->persist($userCoordinador);
+        //$em->flush();
+
+        $userPromotor = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('username' => 'promotor')
+        );
+
+        //print_r(array_keys($userPromotor->getRoles()));
+
+        $rolesExistentes    = array('admin'=>"ROLE_ADMIN", 'promotor'=>"ROLE_PROMOTOR", 'coordinador'=>"ROLE_COORDINADOR", 'financiero' =>"ROLE_FINANCIERO");
+        $arrayVacio    = array();
+        $resultado = array_diff($rolesExistentes, $userPromotor->getRoles());
+
+        print_r($resultado);
+        echo "-----------------";
+        print_r($userPromotor->getRoles());
+
+        //Despues de Asignar Rol
+
+        $userPromotor->addRole($promotor);
+        
+        //$em->persist($userPromotor);
+        //$em->flush();
+
+        echo "<br />";
+        $resultado = array_diff($rolesExistentes, $userPromotor->getRoles());
+
+        print_r($resultado);
+        echo "-----------------";
+        print_r($userPromotor->getRoles());
+
+
+
+        //$userPromotor->deleteRole($promotor);
+        
+        //$em->persist($userPromotor);
+        //$em->flush();
+        
+
+        return new Response(".");
+
+    }
+
 
 
 
