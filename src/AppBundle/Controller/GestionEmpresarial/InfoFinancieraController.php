@@ -19,7 +19,8 @@ use AppBundle\Entity\Grupo;
 
 use AppBundle\Form\GestionEmpresarial\InfoFinancieraType;
 
-
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -34,6 +35,9 @@ class InfoFinancieraController extends Controller
      */
    public function infoGestionAction(Request $request, $idGrupo)
     {
+        
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
         
         $info=$em->getRepository('AppBundle:Grupo')->findBy(
@@ -48,10 +52,17 @@ class InfoFinancieraController extends Controller
             10/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/InfoFinanciera:info-gestion.html.twig',
          array( 'info' => $info,
         'idGrupo' => $idGrupo,
-        'pagination' => $pagination
+        'pagination' => $pagination,
+        'tipoUsuario' => $valuesFieldBlock[3]
         )
          );
     }

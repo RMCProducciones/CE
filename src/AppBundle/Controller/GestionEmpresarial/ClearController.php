@@ -579,6 +579,9 @@ class ClearController extends Controller
      */
     public function clearIntegranteAction(Request $request, $idCLEAR)
     {
+        
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
 
         $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
@@ -663,6 +666,12 @@ class ClearController extends Controller
             5/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Clear:integrantes-clear-gestion-asignacion.html.twig', 
             array(
                 'form' => $form->createView(),
@@ -670,7 +679,8 @@ class ClearController extends Controller
                 'asignacionesIntegranteCLEAR' => $asignacionesIntegranteCLEAR,
                 'idCLEAR' => $idCLEAR,
                 'pagination1' => $pagination1,
-                'soportesClear' => $soportesClear
+                'soportesClear' => $soportesClear,
+                'tipoUsuario' => $valuesFieldBlock[3]
             ));        
         
     }

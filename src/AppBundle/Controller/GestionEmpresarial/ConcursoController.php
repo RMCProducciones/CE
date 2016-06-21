@@ -54,6 +54,9 @@ class ConcursoController extends Controller
      */
     public function concursoGestionAction(Request $request)
     {
+
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
 
         /*$concursos = $em->getRepository('AppBundle:Concurso')->findBY(
@@ -89,11 +92,18 @@ class ConcursoController extends Controller
             10/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Concurso:concurso-gestion.html.twig', 
             array( 
                 'form' => $form->createView(), 
                 'concursos' => $query,
-                'pagination' => $pagination
+                'pagination' => $pagination,
+                'tipoUsuario' => $valuesFieldBlock[3]
                 )
             );
     }
@@ -467,11 +477,16 @@ class ConcursoController extends Controller
      */
     public function comiteIntegranteAction(Request $request, $idComite)
     {
+
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
 
         $comite = $em->getRepository('AppBundle:Comite')->findOneBy(
             array('id' => $idComite)
         );
+
+        echo $idComite;
 
         if ($request->getMethod() == 'POST') {
 
@@ -543,7 +558,13 @@ class ConcursoController extends Controller
             $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
-        );   
+        );
+
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);   
         
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Concurso:jurados-comite-gestion-asignacion.html.twig', 
             array(
@@ -551,7 +572,8 @@ class ConcursoController extends Controller
                 'integrantes' => $query,
                 'asignacionesIntegranteComite' => $asignacionesIntegranteComite,
                 'idComite' => $idComite,
-                'pagination1' => $pagination1
+                'pagination1' => $pagination1,
+                'tipoUsuario' => $valuesFieldBlock[3]
             ));        
         
     }

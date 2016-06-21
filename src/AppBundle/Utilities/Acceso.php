@@ -89,6 +89,41 @@ class FilterLocation{
             $valuesFieldBlock[3] = 2;
         }
 
+        if(in_array("ROLE_ADMINISTRADOR", $rolUsuario)){                        
+            $valuesFieldBlock[0] = 'enabled';
+            $valuesFieldBlock[1] = 'enabled';
+            $valuesFieldBlock[2] = 'enabled';
+            $valuesFieldBlock[3] = 3;
+        }
+
+        if(in_array("ROLE_ESPECIALISTA_EMPRESARIAL", $rolUsuario)){                        
+            $valuesFieldBlock[0] = 'enabled';
+            $valuesFieldBlock[1] = 'enabled';
+            $valuesFieldBlock[2] = 'enabled';
+            $valuesFieldBlock[3] = 4;
+        }
+
+        if(in_array("ROLE_ESPECIALISTA_FINANCIERO", $rolUsuario)){                        
+            $valuesFieldBlock[0] = 'enabled';
+            $valuesFieldBlock[1] = 'enabled';
+            $valuesFieldBlock[2] = 'enabled';
+            $valuesFieldBlock[3] = 5;
+        }
+
+        if(in_array("ROLE_ESPECIALISTA_CONOCIMIENTO", $rolUsuario)){                        
+            $valuesFieldBlock[0] = 'enabled';
+            $valuesFieldBlock[1] = 'enabled';
+            $valuesFieldBlock[2] = 'enabled';
+            $valuesFieldBlock[3] = 6;
+        }
+
+        if(in_array("ROLE_ESPECIALISTA_ADMINISTRATIVO", $rolUsuario)){                        
+            $valuesFieldBlock[0] = 'enabled';
+            $valuesFieldBlock[1] = 'enabled';
+            $valuesFieldBlock[2] = 'enabled';
+            $valuesFieldBlock[3] = 7;
+        }
+
         return $valuesFieldBlock;
 	}
 

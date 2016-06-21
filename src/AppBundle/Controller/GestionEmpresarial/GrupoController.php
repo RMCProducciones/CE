@@ -464,6 +464,9 @@ class GrupoController extends Controller
      */
     public function comiteVamosBienGrupoBeneficiarioAction(Request $request, $idGrupo)
     {
+        
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
 
         $beneficiarios = new Beneficiario();
@@ -518,6 +521,12 @@ class GrupoController extends Controller
             5/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:beneficiario-grupo-cvb-gestion-asignacion.html.twig', 
             array(
                 'form' => $form->createView(),
@@ -525,7 +534,8 @@ class GrupoController extends Controller
                 'asignacionesBeneficiariosCVB' => $asignacionesBeneficiariosCVB,
                 'idGrupo' => $idGrupo,
                 'grupo' => $grupo,
-                'pagination1' => $pagination1                
+                'pagination1' => $pagination1,
+                'tipoUsuario' => $valuesFieldBlock[3]                
             ));        
     }
 
@@ -616,6 +626,9 @@ class GrupoController extends Controller
      */
     public function comiteComprasGrupoBeneficiarioAction(Request $request, $idGrupo)
     {
+
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
 
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
@@ -668,6 +681,12 @@ class GrupoController extends Controller
             5/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:beneficiario-grupo-cc-gestion-asignacion.html.twig', 
             array(
                 'form' => $form->createView(),
@@ -675,7 +694,8 @@ class GrupoController extends Controller
                 'asignacionesBeneficiariosCC' => $asignacionesBeneficiariosCC,
                 'idGrupo' => $idGrupo,
                 'grupo' => $grupo,
-                'pagination1' => $pagination1                
+                'pagination1' => $pagination1,
+                'tipoUsuario' => $valuesFieldBlock[3]                
             ));        
     }
 
@@ -766,6 +786,9 @@ class GrupoController extends Controller
      */
     public function estructuraOrganizacionalGrupoBeneficiarioAction(Request $request, $idGrupo)
     {
+
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
 
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
@@ -868,6 +891,11 @@ class GrupoController extends Controller
             5/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Grupo:beneficiario-grupo-eo-gestion-asignacion.html.twig', 
             array(
@@ -876,7 +904,8 @@ class GrupoController extends Controller
                 'asignacionesBeneficiariosEO' => $asignacionesBeneficiariosEO,
                 'idGrupo' => $idGrupo,
                 'grupo' => $grupo,
-                'pagination1' => $pagination1
+                'pagination1' => $pagination1,
+                'tipoUsuario' => $valuesFieldBlock[3]
             ));        
     }
 

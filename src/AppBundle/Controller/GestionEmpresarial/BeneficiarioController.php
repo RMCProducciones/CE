@@ -31,6 +31,9 @@ use AppBundle\Form\GestionEmpresarial\GrupoSoporteType;
 
 use AppBundle\Form\GestionEmpresarial\BeneficiarioFilterType;
 
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
+
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -45,6 +48,9 @@ class BeneficiarioController extends Controller
      */
     public function beneficiarioGestionAction(Request $request, $idGrupo)
     {
+        
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
         
         /*$beneficiarios = $em->getRepository('AppBundle:Beneficiario')->findBy(
@@ -86,8 +92,19 @@ class BeneficiarioController extends Controller
             10/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Beneficiario:beneficiario-gestion.html.twig', 
-        array( 'form' => $form->createView(), 'idGrupo' => $idGrupo, 'beneficiarios' => $query, 'grupo'=>$grupo, 'pagination'=> $pagination));
+        array( 'form' => $form->createView(), 
+               'idGrupo' => $idGrupo, 
+               'beneficiarios' => $query, 
+               'grupo'=>$grupo, 
+               'pagination'=> $pagination, 
+               'tipoUsuario' => $valuesFieldBlock[3]));
 
     }
 

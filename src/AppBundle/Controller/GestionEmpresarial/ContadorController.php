@@ -27,7 +27,8 @@ use AppBundle\Form\GestionEmpresarial\ContadorType;
 use AppBundle\Form\GestionEmpresarial\ContadorFilterType;
 use AppBundle\Form\GestionEmpresarial\ContadorAsignacionFilterType;
 
-
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -42,6 +43,9 @@ class ContadorController extends Controller
      */
     public function contadorGestionAction(Request $request)
     {
+
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
 
         /*$contador = $em->getRepository('AppBundle:Contador')->findBy(
@@ -76,11 +80,18 @@ class ContadorController extends Controller
             10/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Contador:contador-gestion.html.twig', 
             array(
                 'form' => $form->createView(), 
                 'contador' => $query,
-                'pagination' => $pagination
+                'pagination' => $pagination,
+                'tipoUsuario' => $valuesFieldBlock[3]
             )
         );
     }
