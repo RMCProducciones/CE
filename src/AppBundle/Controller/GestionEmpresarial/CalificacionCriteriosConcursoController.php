@@ -31,9 +31,9 @@ class CalificacionCriteriosConcursoController extends Controller
 {
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idAsignacionGrupoConcurso}/gestion-calificacion", name="calificacionGestion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/{idAsignacionGrupoConcurso}/gestion-calificacion", name="calificacionGestion")
      */
-   public function calificacionGestionAction($idAsignacionGrupoConcurso)
+   public function calificacionGestionAction($idConcurso, $idAsignacionGrupoConcurso)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -55,7 +55,8 @@ class CalificacionCriteriosConcursoController extends Controller
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/CalificacionCriterio:calificacion-gestion.html.twig', 
             array( 'criterios' => $criterios,                    
                    'calificaciones' => $calificacionCriterio,                                                 
-                   'idAsignacionGrupoConcurso' => $idAsignacionGrupoConcurso));
+                   'idAsignacionGrupoConcurso' => $idAsignacionGrupoConcurso,
+                   'idConcurso' => $idConcurso));
     }
 
     /**
