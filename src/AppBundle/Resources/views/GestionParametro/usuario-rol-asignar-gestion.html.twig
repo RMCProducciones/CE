@@ -86,6 +86,26 @@
                     <a href="{{ path('usuarioAsignarRol', {'idUsuario': idUsuario, 'idRol': 3}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
                     </a>
                   {% endif %}
+
+                  {% if rolesAsignar == "ROLE_ESPECIALISTA_ADMINISTRATIVO" %}                                     
+                    <a href="{{ path('usuarioAsignarRol', {'idUsuario': idUsuario, 'idRol': 4}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                    </a>
+                  {% endif %}
+
+                  {% if rolesAsignar == "ROLE_ESPECIALISTA_CONOCIMIENTO" %}                                     
+                    <a href="{{ path('usuarioAsignarRol', {'idUsuario': idUsuario, 'idRol': 5}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                    </a>
+                  {% endif %}
+
+                  {% if rolesAsignar == "ROLE_ESPECIALISTA_FINANCIERO" %}                                     
+                    <a href="{{ path('usuarioAsignarRol', {'idUsuario': idUsuario, 'idRol': 6}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                    </a>
+                  {% endif %}
+
+                  {% if rolesAsignar == "ROLE_ESPECIALISTA_EMPRESARIAL" %}                                     
+                    <a href="{{ path('usuarioAsignarRol', {'idUsuario': idUsuario, 'idRol': 7}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                    </a>
+                  {% endif %}
                     <br>                      
                   </td>
                 </tr>
@@ -117,10 +137,50 @@
          
         
                 <tr >
-                  <td class="text-center">{{rolesUser}}</td>
+                  <td class="text-center">
+
+                    {% if rolesUser != "ROLE_USER" %}
+                      {{rolesUser}}
+                    {% endif %}
+                    </td>
                                                        
                   <td class="text-center">                                     
-                    <a title="Desasignar" alt="Desasignar"> <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></a>
+                    {% if rolesUser == "ROLE_PROMOTOR" %}                                     
+                    <a href="{{ path('usuarioEliminarRol', {'idUsuario': idUsuario, 'idRol': 1}) }}" title="Desasignar" alt="Desasignar"> <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    </a>
+                  {% endif %}    
+                    
+                  {% if rolesUser == "ROLE_COORDINADOR" %}                                     
+                    <a href="{{ path('usuarioEliminarRol', {'idUsuario': idUsuario, 'idRol': 2}) }}" title="Desasignar" alt="Desasignar"> <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    </a>
+                  {% endif %}
+
+                  {% if rolesUser == "ROLE_ADMIN" %}                                     
+                    <a href="{{ path('usuarioEliminarRol', {'idUsuario': idUsuario, 'idRol': 3}) }}" title="Desasignar" alt="Desasignar"> <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    </a>
+                  {% endif %}
+
+                  {% if rolesUser == "ROLE_ESPECIALISTA_ADMINISTRATIVO" %}                                     
+                    <a href="{{ path('usuarioEliminarRol', {'idUsuario': idUsuario, 'idRol': 4}) }}" title="Desasignar" alt="Desasignar"> <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    </a>
+                  {% endif %}
+
+                  {% if rolesUser == "ROLE_ESPECIALISTA_CONOCIMIENTO" %}                                     
+                    <a href="{{ path('usuarioEliminarRol', {'idUsuario': idUsuario, 'idRol': 5}) }}" title="Desasignar" alt="Desasignar"> <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    </a>
+                  {% endif %}
+
+                  {% if rolesUser == "ROLE_ESPECIALISTA_FINANCIERO" %}                                     
+                    <a href="{{ path('usuarioEliminarRol', {'idUsuario': idUsuario, 'idRol': 6}) }}" title="Desasignar" alt="Desasignar"> <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    </a>
+                  {% endif %}
+
+                  {% if rolesUser == "ROLE_ESPECIALISTA_EMPRESARIAL" %}                                     
+                    <a href="{{ path('usuarioEliminarRol', {'idUsuario': idUsuario, 'idRol': 7}) }}" title="Desasignar" alt="Desasignar"> <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    </a>
+                  {% endif %}
+
+
                     <br>                      
                   </td>
                 </tr>

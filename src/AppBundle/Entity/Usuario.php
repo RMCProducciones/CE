@@ -142,6 +142,10 @@ class Usuario extends BaseUser
        $promotor = 1;
        $coordinador = 2;
        $admin = 3;
+       $administrativo = 4;
+       $conocimiento = 5;
+       $financiero = 6;
+       $empresarial = 7;
 
         if($rol == $promotor){
              $this->roles ['promotor']='ROLE_PROMOTOR';
@@ -151,6 +155,18 @@ class Usuario extends BaseUser
         }
         elseif ($rol == $admin) {
             $this->roles['admin']='ROLE_ADMIN';
+        }
+        elseif ($rol == $administrativo) {
+            $this->roles['administrativo']='ROLE_ESPECIALISTA_ADMINISTRATIVO';
+        }
+        elseif ($rol == $conocimiento) {
+            $this->roles['conocimiento']='ROLE_ESPECIALISTA_CONOCIMIENTO';
+        }
+        elseif ($rol == $financiero) {
+            $this->roles['financiero']='ROLE_ESPECIALISTA_FINANCIERO';
+        }
+        elseif ($rol == $empresarial) {
+            $this->roles['empresarial']='ROLE_ESPECIALISTA_EMPRESARIAL';
         }
 
     }
@@ -165,9 +181,13 @@ class Usuario extends BaseUser
     public function deleteRole( $rol )
     {   
 
-        $promotor = 1;
-        $coordinador = 2;
-        $admin = 3;
+       $promotor = 1;
+       $coordinador = 2;
+       $admin = 3;
+       $administrativo = 4;
+       $conocimiento = 5;
+       $financiero = 6;
+       $empresarial = 7;
 
 
         if($rol == $promotor){
@@ -179,7 +199,18 @@ class Usuario extends BaseUser
         elseif ($rol == $admin) {
             unset($this->roles['admin']);
         }
-        $this->roles = array_values($this->roles);
+        elseif ($rol == $administrativo) {
+            unset($this->roles['administrativo']);
+        }
+        elseif ($rol == $conocimiento) {
+            unset($this->roles['conocimiento']);
+        }
+        elseif ($rol == $financiero) {
+            unset($this->roles['financiero']);
+        }
+        elseif ($rol == $empresarial) {
+            unset($this->roles['empresarial']);
+        }
 
         //var_dump($this->roles);
         //print_r(array_keys($this->roles));

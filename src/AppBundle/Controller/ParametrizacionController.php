@@ -356,7 +356,7 @@ class ParametrizacionController extends Controller
             array('id' => $idUsuario)
         );
 
-        $rolesExistentes    = array('admin'=>"ROLE_ADMIN", 'promotor'=>"ROLE_PROMOTOR", 'coordinador'=>"ROLE_COORDINADOR");
+        $rolesExistentes    = array('admin'=>"ROLE_ADMIN", 'promotor'=>"ROLE_PROMOTOR", 'coordinador'=>"ROLE_COORDINADOR", 'administrativo'=>"ROLE_ESPECIALISTA_ADMINISTRATIVO", 'conocimiento' =>"ROLE_ESPECIALISTA_CONOCIMIENTO", 'financiero' =>"ROLE_ESPECIALISTA_FINANCIERO", 'empresarial' =>"ROLE_ESPECIALISTA_EMPRESARIAL");
         $arrayVacio    = array();
         $rolAsignar = array_diff($rolesExistentes, $user->getRoles());
 
@@ -381,12 +381,17 @@ class ParametrizacionController extends Controller
      * @Route("/parametrizacion/usuario/{idUsuario}/asignacion-rol/{idRol}/asignar", name="usuarioAsignarRol")
      */
     public function usuarioAsignarRolAction(Request $request, $idUsuario, $idRol)
-    {
+    {       
 
 
         $promotor = 1;
         $coordinador = 2;
         $admin = 3;
+        $administrativo = 4;
+        $conocimiento = 5;
+        $financiero = 6;
+        $empresarial = 7;
+
 
         $em = $this->getDoctrine()->getManager();
 
@@ -396,29 +401,109 @@ class ParametrizacionController extends Controller
        
         $usuarios = $em->getRepository('AppBundle:Usuario')->findBY(
             array('active' => 1)         
-        );          
+        );   
 
+        
         if($idRol == $promotor){
-            $agregarPromotor->addRole($promotor);    
+            $user->addRole($promotor);    
         }
 
         else if($idRol == $coordinador){
-            $agregarCoordinador->addRole($coordinador);    
+            $user->addRole($coordinador);    
         }
 
-        else if($idRol == $admin){
-            $agregarAdmin->addRole($admin);    
+        else if($idRol == $admin){            
+           $user->addRole($admin);    
+        }
+
+        else if($idRol == $administrativo){            
+           $user->addRole($administrativo);    
+        }
+
+        else if($idRol == $conocimiento){            
+           $user->addRole($conocimiento);    
+        }
+
+        else if($idRol == $financiero){            
+           $user->addRole($financiero);    
         }
         
+        else if($idRol == $empresarial){            
+           $user->addRole($empresarial);    
+        }
+        
+        $em->persist($user);
+        $em->flush();
            
 
 
 
         return $this->redirectToRoute('usuarioRol',
             array(                
-               'idUsuario' => $idUsuario,
-               'rolAsignar' => $rolAsignar,
-               'rolUser' => $rolUser
+               'idUsuario' => $idUsuario
+
+            ));    
+
+
+    }
+
+        /**
+     * @Route("/parametrizacion/usuario/{idUsuario}/asignacion-rol/{idRol}/eliminar", name="usuarioEliminarRol")
+     */
+    public function usuarioEliminarRolAction(Request $request, $idUsuario, $idRol)
+    {       
+
+
+        $promotor = 1;
+        $coordinador = 2;
+        $admin = 3;
+        $administrativo = 4;
+        $conocimiento = 5;
+        $financiero = 6;
+        $empresarial = 7;
+
+
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario)
+        );    
+       
+               
+        if($idRol == $promotor){
+            $user->deleteRole($promotor);    
+        }
+
+        else if($idRol == $coordinador){
+            $user->deleteRole($coordinador);    
+        }
+
+        else if($idRol == $admin){            
+           $user->deleteRole($admin);    
+        }
+
+        else if($idRol == $administrativo){            
+           $user->deleteRole($administrativo);    
+        }
+
+        else if($idRol == $conocimiento){            
+           $user->deleteRole($conocimiento);    
+        }
+
+        else if($idRol == $financiero){            
+           $user->deleteRole($financiero);    
+        }
+
+        else if($idRol == $empresarial){            
+           $user->deleteRole($empresarial);    
+        }
+        
+        $em->persist($user);
+        $em->flush();       
+
+        return $this->redirectToRoute('usuarioRol',
+            array(                
+               'idUsuario' => $idUsuario
 
             ));        
     }
@@ -474,7 +559,7 @@ class ParametrizacionController extends Controller
 
         //Despues de Asignar Rol
 
-        $userPromotor->addRole($coordinador);
+        $userPromotor->addRole($promotor);
         
         //$em->persist($userPromotor);
         //$em->flush();
