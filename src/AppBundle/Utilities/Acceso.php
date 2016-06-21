@@ -48,11 +48,14 @@ class FilterLocation{
             $_GET['selDepartamento'] = $municipioUsuario->getDepartamento()->getId();
             $_GET['selZona'] = $municipioUsuario->getZona()->getId();            
             $_GET['selMunicipio'] = $municipioUsuario->getId();
-        }
-        if(in_array("ROLE_COORDINADOR", $rolUsuario)){
+        }else if(in_array("ROLE_COORDINADOR", $rolUsuario)){
             $_GET['selDepartamento'] = $municipioUsuario->getDepartamento()->getId();
             $_GET['selZona'] = $municipioUsuario->getZona()->getId();                        
-        }
+        }else{
+            $_GET['selDepartamento'] = 0;
+            $_GET['selZona'] = 0;                        
+            $_GET['selMunicipio'] = 0;
+        }        
             
         if (isset($_GET['selMunicipio']) && $_GET['selMunicipio'][0] != "?") {
          $filterBuilder->andWhere('m.id = :idMunicipio')
