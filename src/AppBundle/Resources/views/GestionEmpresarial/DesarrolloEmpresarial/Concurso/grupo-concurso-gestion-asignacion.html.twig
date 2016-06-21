@@ -227,7 +227,7 @@
                   </td>
           
                   <td  class="text-center">
-                    <a href="{{ path('calificacionGestion', {'idAsignacionGrupoConcurso': asignacionGrupoConcurso.id}) }}" title="Calificacion" alt="Calificacion"> <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span></a>
+                    <a href="{{ path('calificacionGestion', {'idConcurso': idConcurso,'idAsignacionGrupoConcurso': asignacionGrupoConcurso.id}) }}" title="Calificacion" alt="Calificacion"> <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span></a>
                     <br/ >
 
                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ asignacionGrupoConcurso.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 

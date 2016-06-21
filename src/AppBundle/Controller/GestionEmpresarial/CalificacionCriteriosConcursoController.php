@@ -31,9 +31,11 @@ class CalificacionCriteriosConcursoController extends Controller
 {
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idAsignacionGrupoConcurso}/gestion-calificacion", name="calificacionGestion")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/{idAsignacionGrupoConcurso}/gestion-calificacion", name="calificacionGestion")
      */
-   public function calificacionGestionAction(Request $request, $idAsignacionGrupoConcurso)
+
+   public function calificacionGestionAction(Request $request, $idConcurso, $idAsignacionGrupoConcurso)
+
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -64,7 +66,11 @@ class CalificacionCriteriosConcursoController extends Controller
             array( 'criterios' => $criterios,                    
                    'calificaciones' => $calificacionCriterio,                                                 
                    'idAsignacionGrupoConcurso' => $idAsignacionGrupoConcurso,
-                   'pagination'=> $pagination));
+                   'pagination'=> $pagination,
+                   'idConcurso' => $idConcurso
+                   )
+            );
+
     }
 
     /**
