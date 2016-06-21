@@ -89,7 +89,7 @@ class FilterLocation{
             $valuesFieldBlock[3] = 2;
         }
 
-        if(in_array("ROLE_ADMINISTRADOR", $rolUsuario)){                        
+        if(in_array("ROLE_ADMIN", $rolUsuario)){                        
             $valuesFieldBlock[0] = 'enabled';
             $valuesFieldBlock[1] = 'enabled';
             $valuesFieldBlock[2] = 'enabled';

@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AsignacionIntegranteComite
+ * AsignacionIntegranteConcurso
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\AsignacionIntegranteComiteRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\AsignacionIntegranteConcursoRepository")
  */
-class AsignacionIntegranteComite
+class AsignacionIntegranteConcurso
 {
     /**
      * @var integer
@@ -22,9 +22,9 @@ class AsignacionIntegranteComite
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Comite")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Concurso")
      */
-    private $comite;
+    private $concurso;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Integrante")
@@ -79,15 +79,15 @@ class AsignacionIntegranteComite
     }
 
     /**
-     * Set comite
+     * Set concurso
      *
-     * @param AppBundle\Entity\Comite $comite
+     * @param AppBundle\Entity\Concurso $Concurso
      *
-     * @return AsignacionIntegranteComite
+     * @return AsignacionIntegranteConcurso
      */
-    public function setComite(\AppBundle\Entity\Comite $comite)
+    public function setConcurso(\AppBundle\Entity\Concurso $concurso)
     {
-        $this->comite = $comite;
+        $this->concurso = $concurso;
 
         return $this;
     }
@@ -95,11 +95,11 @@ class AsignacionIntegranteComite
     /**
      * Get clear
      *
-     * @return AppBundle\Entity\Comite
+     * @return AppBundle\Entity\Concurso
      */
-    public function getComite()
+    public function getConcurso()
     {
-        return $this->comite;
+        return $this->concurso;
     }
 
     /**
@@ -107,7 +107,7 @@ class AsignacionIntegranteComite
      *
      * @param AppBundle\Entity\Integrante $integrante
      *
-     * @return AsignacionIntegranteComite
+     * @return AsignacionIntegranteConcurso
      */
     public function setIntegrante(\AppBundle\Entity\Integrante $integrante)
     {
@@ -131,7 +131,7 @@ class AsignacionIntegranteComite
      *
      * @param AppBundle\Entity\Listas $rol
      *
-     * @return AsignacionIntegranteComite
+     * @return AsignacionIntegranteConcurso
      */
     public function setRol(\AppBundle\Entity\Listas $rol)
     {
@@ -155,7 +155,7 @@ class AsignacionIntegranteComite
      *
      * @param boolean $active
      *
-     * @return AsignacionIntegranteComite
+     * @return AsignacionIntegranteConcurso
      */
     public function setActive($active)
     {
@@ -179,7 +179,7 @@ class AsignacionIntegranteComite
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return AsignacionIntegranteComite
+     * @return AsignacionIntegranteConcurso
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
@@ -203,7 +203,7 @@ class AsignacionIntegranteComite
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return AsignacionIntegranteComite
+     * @return AsignacionIntegranteConcurso
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -227,7 +227,7 @@ class AsignacionIntegranteComite
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return AsignacionIntegranteComite
+     * @return AsignacionIntegranteConcurso
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
@@ -251,7 +251,7 @@ class AsignacionIntegranteComite
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return AsignacionIntegranteComite
+     * @return AsignacionIntegranteConcurso
      */
     public function setFechaCreacion($fechaCreacion)
     {

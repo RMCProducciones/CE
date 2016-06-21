@@ -312,15 +312,17 @@ class ComiteController extends Controller
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/asignacion-integrante", name="comiteIntegrante")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/asignacion-integrante/revisar", name="comiteIntegranteRevisar")
      */
-    public function comiteIntegranteAction(Request $request, $idComite)
+    public function comiteIntegranteRevisarAction(Request $request, $idComite)
     {
         $em = $this->getDoctrine()->getManager();
 
         $comite = $em->getRepository('AppBundle:Comite')->findOneBy(
             array('id' => $idComite)
         );
+
+        //echo $idComite;
 
         if ($request->getMethod() == 'POST') {
 
@@ -374,9 +376,9 @@ class ComiteController extends Controller
     }
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/asignacion-integrante/{idIntegrante}/formulario", name="formularioRolIntegranteComite")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/asignacion-integrante/{idIntegrante}/formulario/revisar", name="formularioRolIntegranteComiteRevisar")
      */
-    public function formularioRolIntegranteComiteAction(Request $request, $idComite, $idIntegrante)
+    public function formularioRolIntegranteComiteRevisarAction(Request $request, $idComite, $idIntegrante)
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -421,9 +423,9 @@ class ComiteController extends Controller
 
 
     /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/asignacion-integrante/{idIntegrante}/nueva-asignacion", name="comiteAsignarIntegrante")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/asignacion-integrante/{idIntegrante}/nueva-asignacion/Revisar", name="comiteAsignarIntegranteRevisar")
      */
-    public function comiteAsignarIntegranteAction($idComite, $idIntegrante)
+    public function comiteAsignarIntegranteRevisarAction($idComite, $idIntegrante)
     {
 
         $em = $this->getDoctrine()->getManager();
@@ -458,9 +460,9 @@ class ComiteController extends Controller
     }
 
      /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/asignacion-integrante/{idAsignacionIntegranteComite}/eliminar", name="comiteEliminarIntegrante")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/asignacion-integrante/{idAsignacionIntegranteComite}/eliminar/Revisar", name="comiteEliminarIntegranteRevisar")
      */
-    public function comiteEliminarIntegranteAction(Request $request, $idComite, $idAsignacionIntegranteComite)
+    public function comiteEliminarIntegranteRevisarAction(Request $request, $idComite, $idAsignacionIntegranteComite)
     {
         $em = $this->getDoctrine()->getManager();
 

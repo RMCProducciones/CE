@@ -19,7 +19,7 @@ use AppBundle\Entity\Concurso;
 use AppBundle\Entity\Grupo;
 use AppBundle\Entity\ConcursoSoporte;
 use AppBundle\Entity\AsignacionGrupoConcurso;
-use AppBundle\Entity\AsignacionIntegranteComite;
+use AppBundle\Entity\AsignacionIntegranteConcurso;
 use AppBundle\Entity\Comite;
 use AppBundle\Entity\Integrante;
 use AppBundle\Entity\Listas;
@@ -334,7 +334,7 @@ class ConcursoController extends Controller
         return $this->redirectToRoute('concursoSoporte', array( 'idConcurso' => $idConcurso));
         
     }
-/**
+    /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/asignacion-grupo", name="concursoGrupo")
      */
     public function concursoGrupoAction(Request $request, $idConcurso)
@@ -473,20 +473,18 @@ class ConcursoController extends Controller
     }
 
      /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/asignacion-integrante", name="comiteIntegrante")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/comite-concursos/{idComite}/asignacion-integrante", name="comiteConcursoIntegrante")
      */
-    public function comiteIntegranteAction(Request $request, $idComite)
+    public function comiteConcursoIntegranteAction(Request $request, $idComite)
     {
 
         new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
 
         $em = $this->getDoctrine()->getManager();
 
-        $comite = $em->getRepository('AppBundle:Comite')->findOneBy(
+        $concurso = $em->getRepository('AppBundle:Concurso')->findOneBy(
             array('id' => $idComite)
         );
-
-        echo $idComite;
 
         if ($request->getMethod() == 'POST') {
 
@@ -494,7 +492,7 @@ class ConcursoController extends Controller
             if(isset($_POST["idRolIntegrante"])){
 
 
-                $asignacionIntegranteComite = new AsignacionIntegranteComite();
+                $asignacionIntegranteComite = new AsignacionIntegranteConcurso();
 
                 $rolIntegrante = $em->getRepository('AppBundle:Listas')->findOneBy(
                     array('id' => $_POST["idRolIntegrante"]["rol"])
@@ -505,7 +503,7 @@ class ConcursoController extends Controller
                 );  
 
                 $asignacionIntegranteComite->setRol($rolIntegrante);
-                $asignacionIntegranteComite->setComite($comite);
+                $asignacionIntegranteComite->setConcurso($concurso);
                 $asignacionIntegranteComite->setIntegrante($integrante);
 
                 $asignacionIntegranteComite->setFechaCreacion(new \DateTime());
@@ -519,14 +517,14 @@ class ConcursoController extends Controller
 
         }       
 
-        $asignacionesIntegranteComite = new AsignacionIntegranteComite();
+        $asignacionesIntegranteComite = new AsignacionIntegranteConcurso();
 
-        $asignacionesIntegranteComite = $em->getRepository('AppBundle:AsignacionIntegranteComite')->findBy(
-            array('comite' => $comite)
+        $asignacionesIntegranteComite = $em->getRepository('AppBundle:AsignacionIntegranteConcurso')->findBy(
+            array('concurso' => $concurso)
         );  
 
-        $query = $em->createQuery('SELECT i FROM AppBundle:Integrante i WHERE i.id NOT IN (SELECT integrante.id FROM AppBundle:Integrante integrante JOIN AppBundle:AsignacionIntegranteComite aic WHERE integrante = aic.integrante AND aic.comite = :comite) AND i.active = 1');
-        $query->setParameter('comite', $comite);
+        $query = $em->createQuery('SELECT i FROM AppBundle:Integrante i WHERE i.id NOT IN (SELECT integrante.id FROM AppBundle:Integrante integrante JOIN AppBundle:AsignacionIntegranteConcurso aic WHERE integrante = aic.integrante AND aic.concurso = :concurso) AND i.active = 1');
+        $query->setParameter('concurso', $concurso);
 
         $integrantes = $query->getResult();      
 
@@ -545,8 +543,8 @@ class ConcursoController extends Controller
 
         $filterBuilder
         ->andWhere('q.active = 1')
-        ->andWhere('q.id NOT IN (SELECT integrante.id FROM AppBundle:Integrante integrante JOIN AppBundle:AsignacionIntegranteComite aic WHERE integrante = aic.integrante AND aic.comite = :comite)')
-        ->setParameter(':comite', $comite);
+        ->andWhere('q.id NOT IN (SELECT integrante.id FROM AppBundle:Integrante integrante JOIN AppBundle:AsignacionIntegranteConcurso aic WHERE integrante = aic.integrante AND aic.concurso = :concurso)')
+        ->setParameter(':concurso', $concurso);
 
         $query = $filterBuilder->getQuery();
 
@@ -566,7 +564,7 @@ class ConcursoController extends Controller
 
         $valuesFieldBlock = $obj->fieldBlock($rolUsuario);   
         
-        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Concurso:jurados-comite-gestion-asignacion.html.twig', 
+        return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Concurso:jurados-comite-concurso-gestion-asignacion.html.twig', 
             array(
                 'form' => $form->createView(),
                 'integrantes' => $query,
@@ -586,9 +584,9 @@ class ConcursoController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $asignacionesIntegranteComite = new AsignacionIntegranteComite();
+        $asignacionesIntegranteConcurso = new AsignacionIntegranteConcurso();
 
-        $form = $this->createForm(new ListaRolType(), $asignacionesIntegranteComite);
+        $form = $this->createForm(new ListaRolType(), $asignacionesIntegranteConcurso);
 
         $form->add(
                 'idIntegrante', 
@@ -615,7 +613,7 @@ class ConcursoController extends Controller
         $form->handleRequest($request);
 
         return $this->render(
-            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Concurso:asignarRolIntegranteComite.html.twig',
+            'AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Concurso:asignarRolIntegranteComiteConcurso.html.twig',
             array(
                 'form' => $form->createView(),
                 'idIntegrante' => $idIntegrante,
@@ -637,14 +635,14 @@ class ConcursoController extends Controller
             array('id' => $idIntegrante)
         );  
 
-        $comite = $em->getRepository('AppBundle:Comite')->findOneBy(
+        $concurso = $em->getRepository('AppBundle:Concurso')->findOneBy(
             array('id' => $idComite)
         );  
            
-        $asignacionesIntegranteComite = new AsignacionIntegranteComite();
+        $asignacionesIntegranteComite = new AsignacionIntegranteConcurso();
 
         $asignacionesIntegranteComite->setIntegrante($integrantes);
-        $asignacionesIntegranteComite->setComite($comite);           
+        $asignacionesIntegranteComite->setConcurso($concurso);           
         $asignacionesIntegranteComite->setActive(true);
         $asignacionesIntegranteComite->setFechaCreacion(new \DateTime());
 
@@ -653,7 +651,7 @@ class ConcursoController extends Controller
 
 
 
-        return $this->redirectToRoute('comiteIntegrante', 
+        return $this->redirectToRoute('comiteConcursoIntegrante', 
             array(
                 'integrantes' => $integrantes, 
                 'asignacionesIntegranteComite' => $asignacionesIntegranteComite,
@@ -669,9 +667,9 @@ class ConcursoController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $asignacionIntegranteComite = new AsignacionIntegranteComite();
+        $asignacionIntegranteComite = new AsignacionIntegranteConcurso();
 
-        $asignacionIntegranteComite = $em->getRepository('AppBundle:AsignacionIntegranteComite')->find($idAsignacionIntegranteComite); 
+        $asignacionIntegranteComite = $em->getRepository('AppBundle:AsignacionIntegranteConcurso')->find($idAsignacionIntegranteComite); 
 
         $integrantes = $em->getRepository('AppBundle:Integrante')->findBy(
             array('active' => '1'),
@@ -681,15 +679,15 @@ class ConcursoController extends Controller
         $em->remove($asignacionIntegranteComite);
         $em->flush();
 
-        $comite = $em->getRepository('AppBundle:Comite')->findOneBy(
+        $concurso = $em->getRepository('AppBundle:Concurso')->findOneBy(
             array('id' => $idComite)
         );
 
-        $asignacionesIntegranteComite = $em->getRepository('AppBundle:AsignacionIntegranteComite')->findBy(
-            array('comite' => $comite)
+        $asignacionesIntegranteComite = $em->getRepository('AppBundle:AsignacionIntegranteConcurso')->findBy(
+            array('concurso' => $concurso)
         );  
 
-        return $this->redirectToRoute('comiteIntegrante',
+        return $this->redirectToRoute('comiteConcursoIntegrante',
              array(
                 'integrantes' => $integrantes,
                 'asignacionesIntegranteComite' => $asignacionIntegranteComite,

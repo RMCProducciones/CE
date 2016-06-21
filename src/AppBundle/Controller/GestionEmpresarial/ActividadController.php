@@ -22,7 +22,8 @@ use AppBundle\Form\GestionEmpresarial\ActividadConcursoType;
 use AppBundle\Form\GestionEmpresarial\ActividadSoporteType;
 use AppBundle\Form\GestionEmpresarial\ActividadFilterType;
 
-
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -37,6 +38,9 @@ class ActividadController extends Controller
      */
    public function actividadGestionAction(Request $request)
     {
+        
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
         $actividad = $em->getRepository('AppBundle:ActividadConcurso')->findBY(
             array('active' => 1)          
@@ -67,10 +71,17 @@ class ActividadController extends Controller
             10/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Actividad:actividad-gestion.html.twig', 
             array(  'form' => $form->createView(), 
                     'actividad' => $query,
-                    'pagination' => $pagination
+                    'pagination' => $pagination,
+                    'tipoUsuario' => $valuesFieldBlock[3]
                 )
             );
     }
