@@ -33,7 +33,9 @@ class CalificacionCriteriosConcursoController extends Controller
     /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/{idConcurso}/{idAsignacionGrupoConcurso}/gestion-calificacion", name="calificacionGestion")
      */
-   public function calificacionGestionAction($idConcurso, $idAsignacionGrupoConcurso)
+
+   public function calificacionGestionAction(Request $request, $idConcurso, $idAsignacionGrupoConcurso)
+
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -52,11 +54,23 @@ class CalificacionCriteriosConcursoController extends Controller
                 array('concurso' => $asignacionCalificacion->getConcurso())          
         );     
 
+        $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $criterios, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            10/*límite de resultados por página*/
+        );
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/CalificacionCriterio:calificacion-gestion.html.twig', 
             array( 'criterios' => $criterios,                    
                    'calificaciones' => $calificacionCriterio,                                                 
                    'idAsignacionGrupoConcurso' => $idAsignacionGrupoConcurso,
-                   'idConcurso' => $idConcurso));
+                   'pagination'=> $pagination,
+                   'idConcurso' => $idConcurso
+                   )
+            );
+
     }
 
     /**
