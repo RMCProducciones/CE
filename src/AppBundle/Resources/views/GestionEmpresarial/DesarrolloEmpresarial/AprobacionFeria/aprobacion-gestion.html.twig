@@ -30,7 +30,9 @@
           <div class="col-md-6">
             <div class="btn-group">
               <a href="{{ path('feriaGestion', {'idFeria': idFeria}) }}" class="btn btn-warning">Volver</a>
-              <a href="{{ path('aprobacionferiaEditar', {'idFeria': idFeria}) }}" class="btn btn-success">Editar</a>
+              {% if tipoUsuario == 2 or tipoUsuario == 3 %}
+                <a href="{{ path('aprobacionferiaEditar', {'idFeria': idFeria}) }}" class="btn btn-success">Editar</a>
+              {% endif %}
             </div>
 
           

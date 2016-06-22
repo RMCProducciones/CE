@@ -14,7 +14,7 @@ class AprobacionFeriaType extends AbstractType
 		
 			->add('aprobacion')
 			->add('aprobador')
-			->add('observacion')
+			->add('observacion', 'textarea')
 			->add('fecha_inicio', 'date', array('label' => 'Fecha de Inicio de la Feria', 'widget' => 'single_text'))
 			->add('fecha_finalizacion', 'date', array('label' => 'Fecha de finalizacion de la feria', 'widget' => 'single_text'))
 			->add('fecha_inicio_propuesta', 'date', array('label' => 'Fecha de Inicio de la feria Propuesta', 'widget' => 'single_text'))

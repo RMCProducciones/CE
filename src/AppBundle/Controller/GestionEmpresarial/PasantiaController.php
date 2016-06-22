@@ -56,6 +56,9 @@ class PasantiaController extends Controller
      */
     public function pasantiaGestionAction(Request $request)
     {
+        
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
         
         /*$pasantias = $em->getRepository('AppBundle:Pasantia')->findBy(
@@ -91,10 +94,17 @@ class PasantiaController extends Controller
             10/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Pasantia:pasantia-gestion.html.twig', 
             array( 'form' => $form->createView(), 
                 'pasantias' => $query,
-                'pagination' => $pagination
+                'pagination' => $pagination,
+                'tipoUsuario' => $valuesFieldBlock[3]
                 )
             );
     }
@@ -345,6 +355,9 @@ class PasantiaController extends Controller
      */
     public function pasantiaTerritorioAction(Request $request, $idPasantia)
     {
+        
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
 
         $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
@@ -408,13 +421,20 @@ class PasantiaController extends Controller
             5/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Pasantia:territorio-pasantia-gestion-asignacion.html.twig', 
             array(
                 'form' => $form->createView(),
                 'territorios' => $query,
                 'asignacionesTerritorioPasantia' => $territorioAsignado,
                 'idPasantia' => $idPasantia,
-                'pagination1' => $pagination1
+                'pagination1' => $pagination1,
+                'tipoUsuario' => $valuesFieldBlock[3]
             ));        
         
         
@@ -490,6 +510,9 @@ class PasantiaController extends Controller
      */
     public function pasantiaOrganizacionAction(Request $request, $idPasantia)
     {
+        
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
 
         $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
@@ -517,13 +540,20 @@ class PasantiaController extends Controller
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
         );
+
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
        
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Pasantia:organizacion-pasantia-gestion-asignacion.html.twig', 
             array(
                 'organizaciones' => $mostrarOrganizacion, 
                 'asignacionesOrganizacionPasantia' => $organizacionPasantia,
                 'idPasantia' => $idPasantia,            
-                'pagination1' => $pagination1                  
+                'pagination1' => $pagination1,
+                'tipoUsuario' => $valuesFieldBlock[3]                  
             ));        
         
     }
@@ -768,6 +798,9 @@ class PasantiaController extends Controller
      */
     public function pasantiaGrupoBeneficiarioAction(Request $request, $idPasantia, $idGrupo)
     {
+        
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();    
 
         $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
@@ -807,6 +840,12 @@ class PasantiaController extends Controller
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
         );
+
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
        
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Pasantia:beneficiario-grupo-pasantia-gestion-asignacion.html.twig', 
             array(
@@ -814,7 +853,8 @@ class PasantiaController extends Controller
                 'beneficiariosPasantia' => $beneficiariosPasantia,
                 'idPasantia' => $idPasantia, 
                 'idGrupo' => $idGrupo,
-                'pagination1' => $pagination1               
+                'pagination1' => $pagination1,
+                'tipoUsuario' => $valuesFieldBlock[3]               
             ));        
         
     }

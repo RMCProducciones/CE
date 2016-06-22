@@ -19,7 +19,8 @@ use AppBundle\Entity\Feria;
 
 use AppBundle\Form\GestionEmpresarial\AprobacionFeriaType;
 
-
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -34,6 +35,9 @@ class AprobacionFeriaController extends Controller
      */
    public function aprobacionferiaGestionAction(Request $request, $idFeria)
     {
+        
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
         
         $aprobacion=$em->getRepository('AppBundle:Feria')->findBy(
@@ -47,11 +51,18 @@ class AprobacionFeriaController extends Controller
             10/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/AprobacionFeria:aprobacion-gestion.html.twig',
          array( 'aprobacion' => $aprobacion,
         'idFeria' => $idFeria,
-        'pagination' => $pagination)
-         );
+        'pagination' => $pagination,
+        'tipoUsuario' => $valuesFieldBlock[3])
+         ); 
     }
 
 

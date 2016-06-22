@@ -19,7 +19,8 @@ use AppBundle\Entity\Concurso;
 
 use AppBundle\Form\GestionEmpresarial\AprobacionConcursoType;
 
-
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -34,6 +35,9 @@ class AprobacionConcursoController extends Controller
      */
    public function aprobacionGestionAction(Request $request, $idConcurso)
     {
+        
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
         
         $aprobacion=$em->getRepository('AppBundle:Concurso')->findBy(
@@ -47,10 +51,17 @@ class AprobacionConcursoController extends Controller
             10/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/AprobacionConcurso:aprobacion-gestion.html.twig',
          array( 'aprobacion' => $aprobacion,
         'idConcurso' => $idConcurso,
-        'pagination' => $pagination)
+        'pagination' => $pagination,
+        'tipoUsuario' => $valuesFieldBlock[3])
          );
     }
 
