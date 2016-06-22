@@ -26,7 +26,8 @@ use AppBundle\Form\GestionEmpresarial\FeriaSoporteType;
 use AppBundle\Form\GestionEmpresarial\FeriaType;
 use AppBundle\Form\GestionEmpresarial\FeriaFilterType;
 
-
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -39,6 +40,9 @@ class FeriaController extends Controller
      */
     public function feriaGestionAction(Request $request)
     {
+        
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
         /*$ferias = $em->getRepository('AppBundle:Feria')->findBy(
             array('active' => '1'),
@@ -91,10 +95,17 @@ class FeriaController extends Controller
             10/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render('AppBundle:GestionEmpresarial/ServicioComplementario/Feria:feria-gestion.html.twig', 
             array( 'form' => $form->createView(),
                     'ferias' => $query,
-                    'pagination' => $pagination
+                    'pagination' => $pagination,
+                    'tipoUsuario' => $valuesFieldBlock[3]
                 )
             );
     }

@@ -19,7 +19,8 @@ use AppBundle\Entity\CriterioCalificacion;
 
 use AppBundle\Form\GestionEmpresarial\CriterioCalificacionType;
 
-
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -35,6 +36,9 @@ class CriterioCalificacionController extends Controller
 
    public function criterioGestionAction(Request $request, $idConcurso)
     {
+
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
         $criterio = $em->getRepository('AppBundle:CriterioCalificacion')->findBY(
             array('concurso' => $idConcurso)          
@@ -48,10 +52,17 @@ class CriterioCalificacionController extends Controller
             10/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/CriterioCalificacion:criterio-gestion.html.twig', 
             array( 'criterio' => $criterio, 
                 'pagination' => $pagination,
-                'idConcurso'=>$idConcurso
+                'idConcurso'=>$idConcurso,
+                'tipoUsuario' => $valuesFieldBlock[3]
                 )
             );
 

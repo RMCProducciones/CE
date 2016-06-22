@@ -60,7 +60,9 @@
                     <th class="text-center">{{ knp_pagination_sortable(pagination, 'Maxima Calificación', 'a.maximopuntaje') }}</th>
 
                     <th class="text-center">{{ knp_pagination_sortable(pagination, 'Puntaje', 'a.puntaje') }}</th>
-                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.acciones') }}</th>
+                    {% if tipoUsuario == 1 or tipoUsuario == 3 %}
+                      <th class="text-center">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.acciones') }}</th>
+                    {% endif %}
 
                    
                   </tr>
@@ -83,10 +85,13 @@
                         {% endif %}
                       {% endif %}
                     {% endfor %}
-                     </td>                     
-                     <td class="text-center">
-                    <a href="{{ path('calificacionNuevo',{'idConcurso': idConcurso,'idAsignacionGrupoConcurso':idAsignacionGrupoConcurso, 'idCriterio' : criterio.id}) }}" title="calificacion" alt="calificacion"> <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span></a> 
-                  </td>   
+                     </td>
+
+                    {% if tipoUsuario == 1 or tipoUsuario == 3 %}                     
+                      <td class="text-center">
+                      <a href="{{ path('calificacionNuevo',{'idConcurso': idConcurso,'idAsignacionGrupoConcurso':idAsignacionGrupoConcurso, 'idCriterio' : criterio.id}) }}" title="calificacion" alt="calificacion"> <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span></a> 
+                      </td>   
+                    {% endif %}
                   </tr>
                   {% set consecutivo = consecutivo + 1 %}
                   {% else %}

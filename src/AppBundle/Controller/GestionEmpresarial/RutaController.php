@@ -32,7 +32,8 @@ use AppBundle\Form\GestionEmpresarial\RutaTerritorioFilterType;
 use AppBundle\Form\GestionEmpresarial\RutaGrupoFilterType;
 
 
-
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 
 /*Para autenticación por código*/
@@ -48,6 +49,9 @@ class RutaController extends Controller
      */
     public function rutaGestionAction(Request $request)
     {
+        
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
 
        /* $rutas = $em->getRepository('AppBundle:Ruta')->findBy(
@@ -83,10 +87,17 @@ class RutaController extends Controller
             10/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Ruta:ruta-gestion.html.twig', 
             array( 'form' => $form->createView(),
                 'rutas' => $query,
-                'pagination' => $pagination
+                'pagination' => $pagination,
+                'tipoUsuario' => $valuesFieldBlock[3]
                 )
             );
     }
@@ -332,6 +343,9 @@ class RutaController extends Controller
      */
     public function rutaTerritorioAction(Request $request, $idRuta)
     {
+        
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
 
         $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
@@ -386,13 +400,20 @@ class RutaController extends Controller
             5/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Ruta:territorio-ruta-gestion-asignacion.html.twig', 
             array(
                 'form' => $form->createView(),
                 'territorios' => $query,
                 'asignacionesTerritorioRuta' => $territorioAsignado,
                 'idRuta' => $idRuta,
-                'pagination1' => $pagination1
+                'pagination1' => $pagination1,
+                'tipoUsuario' => $valuesFieldBlock[3]
             ));        
         
         
@@ -468,6 +489,9 @@ class RutaController extends Controller
      */
     public function rutaOrganizacionAction(Request $request, $idRuta)
     {
+        
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
 
         $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
@@ -495,13 +519,20 @@ class RutaController extends Controller
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
         );
+
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
        
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Ruta:organizacion-ruta-gestion-asignacion.html.twig', 
             array(
                 'organizaciones' => $mostrarOrganizacion, 
                 'asignacionesOrganizacionRuta' => $organizacionRuta,
                 'idRuta' => $idRuta,
-                'pagination1' => $pagination1                              
+                'pagination1' => $pagination1,
+                'tipoUsuario' => $valuesFieldBlock[3]                              
             ));        
         
     }    
@@ -584,7 +615,10 @@ class RutaController extends Controller
      */
     public function rutaGrupoAction(Request $request, $idRuta)
     {
-         $em = $this->getDoctrine()->getManager();
+
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
+        $em = $this->getDoctrine()->getManager();
 
         $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
             array('id' => $idRuta)
@@ -666,13 +700,20 @@ class RutaController extends Controller
             5/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Ruta:grupo-ruta-gestion-asignacion.html.twig', 
             array(
                 'form' => $form->createView(),
                 'grupos' => $query,
                 'asignacionesGrupoRuta' => $grupoAsignado,
                 'idRuta' => $idRuta,
-                'pagination1' => $pagination1
+                'pagination1' => $pagination1,
+                'tipoUsuario' => $valuesFieldBlock[3]
             ));        
         
         

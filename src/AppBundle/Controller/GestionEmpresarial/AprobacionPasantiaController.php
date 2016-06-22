@@ -19,7 +19,8 @@ use AppBundle\Entity\Pasantia;
 
 use AppBundle\Form\GestionEmpresarial\AprobacionPasantiaType;
 
-
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -34,6 +35,9 @@ class AprobacionPasantiaController extends Controller
      */
    public function aprobacionpasantiaGestionAction(Request $request, $idPasantia)
     {
+
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
         
         $aprobacion=$em->getRepository('AppBundle:Pasantia')->findBy(
@@ -47,10 +51,17 @@ class AprobacionPasantiaController extends Controller
             10/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/AprobacionPasantia:aprobacion-gestion.html.twig',
          array( 'aprobacion' => $aprobacion,
         'idPasantia' => $idPasantia,
-        'pagination' => $pagination)
+        'pagination' => $pagination,
+        'tipoUsuario' => $valuesFieldBlock[3])
          );
     }
 

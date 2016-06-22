@@ -108,8 +108,10 @@
                 <tr>
                     <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Id', 'a.id') }}</th>
                     <th></th>
-                    <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Territorios', 'a.territorios') }}</th>
-                    <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Acciones', 'a.acciones') }}</th>
+                    <th class="text-left">{{ knp_pagination_sortable(pagination1, 'Territorios', 'a.territorios') }}</th>
+                    {% if tipoUsuario == 1 or tipoUsuario == 3 %}
+                      <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Acciones', 'a.acciones') }}</th>
+                    {% endif %}
                 </tr>
                 
               </thead>
@@ -131,11 +133,12 @@
                     <br />                    
           <br>
 
-                    
-                  <td>                                   
-                    <a href="{{ path('pasantiaAsignarTerritorio', {'idPasantia': idPasantia, 'idTerritorio': territorio.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
-                    <br>                    
-                  </td>
+                  {% if tipoUsuario == 1 or tipoUsuario == 3 %}
+                    <td class="text-center">                                   
+                      <a href="{{ path('pasantiaAsignarTerritorio', {'idPasantia': idPasantia, 'idTerritorio': territorio.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
+                      <br>                    
+                    </td>
+                  {% endif %}
                 </tr>
         
             {% set consecutivo = consecutivo + 1 %}
@@ -160,6 +163,22 @@
 
           <div class="col-md-6 col-md-offset-1 well">            
             <table class="table table-striped table-hover" ng-controller="gestionTerritorioPasantiaCtrl">
+
+              <thead>           
+                <tr>
+                  <th>#</th>
+                  <th>
+                    
+                  </th>
+                  <th>Territorio asignado</th>
+                  <th></th>
+                  <th>Obserivaciones</th>
+                  {% if tipoUsuario == 1 or tipoUsuario == 3 %}
+                    <th>Acciones</th>
+                  {% endif %}
+                </tr>
+        
+              </thead>
               
               <tbody>
         {% set consecutivo = 1 %}
@@ -182,12 +201,16 @@
                     <br />
                   </td>
 
-          
-                  <td class="text-center">
-                    
-                    <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarTerritorioPasantia('{{ path('pasantiaEliminarTerritorio', {'idPasantia': idPasantia, 'idTerritorio': asignacionTerritorioPasantia.id}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>                                   
-                    
-                  </td>
+                  {% if tipoUsuario == 1 or tipoUsuario == 3 %}
+
+                    <td class="text-center">
+                      
+                      <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarTerritorioPasantia('{{ path('pasantiaEliminarTerritorio', {'idPasantia': idPasantia, 'idTerritorio': asignacionTerritorioPasantia.id}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>                                   
+                      
+                    </td>
+
+                  {% endif %}
+
                 </tr>
         
          {% set consecutivo = consecutivo + 1 %}
