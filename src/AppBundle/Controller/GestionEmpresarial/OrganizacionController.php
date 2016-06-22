@@ -24,7 +24,8 @@ use AppBundle\Form\GestionEmpresarial\OrganizacionType;
 use AppBundle\Form\GestionEmpresarial\OrganizacionSoporteType;
 use AppBundle\Form\GestionEmpresarial\OrganizacionFilterType;
 
-
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -38,6 +39,9 @@ class OrganizacionController extends Controller
      */
     public function organizacionGestionAction(Request $request)
     {
+
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
         /*$organizaciones = $em->getRepository('AppBundle:Organizacion')->findBy(
             array('active' => '1'),
@@ -91,10 +95,17 @@ class OrganizacionController extends Controller
             10/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Organizacion:organizacion-gestion.html.twig', 
             array(  'form' => $form->createView(),
                     'organizaciones' => $query,
-                    'pagination' => $pagination ));
+                    'pagination' => $pagination,
+                    'tipoUsuario' => $valuesFieldBlock[3] ));
     }
 /**
      * @Route("/gestion-empresarial/desarrollo-empresarial/organizacion/nuevo", name="organizacionNuevo")

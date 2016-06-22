@@ -772,6 +772,9 @@ class RutaController extends Controller
      */
     public function rutaGrupoBeneficiarioAction(Request $request, $idRuta, $idGrupo)
     {
+
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
 
         $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
@@ -811,6 +814,12 @@ class RutaController extends Controller
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
         );
+
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
        
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Ruta:beneficiario-grupo-ruta-gestion-asignacion.html.twig', 
             array(
@@ -818,7 +827,8 @@ class RutaController extends Controller
                 'beneficiariosRuta' => $beneficiariosRuta,
                 'idRuta' => $idRuta, 
                 'idGrupo' => $idGrupo,
-                'pagination1' => $pagination1                               
+                'pagination1' => $pagination1,
+                'tipoUsuario' => $valuesFieldBlock[3]                               
             ));        
         
     }

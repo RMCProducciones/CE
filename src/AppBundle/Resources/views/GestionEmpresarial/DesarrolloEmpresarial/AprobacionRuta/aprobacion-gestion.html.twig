@@ -30,7 +30,9 @@
           <div class="col-md-6">
             <div class="btn-group">
               <a href="{{ path('rutaGestion', {'idRuta': idRuta}) }}" class="btn btn-warning">Volver</a>
-              <a href="{{ path('aprobacionrutaEditar', {'idRuta': idRuta}) }}" class="btn btn-success">Editar</a>
+              {% if tipoUsuario == 2 or tipoUsuario == 3 %}
+                <a href="{{ path('aprobacionrutaEditar', {'idRuta': idRuta}) }}" class="btn btn-success">Editar</a>
+              {% endif %}
             </div>
 
           
