@@ -620,6 +620,9 @@ class RutaController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        $municipioUsuario = $this->get('security.context')->getToken()->getUser()->getMunicipio();
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
         $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
             array('id' => $idRuta)
         );
@@ -638,55 +641,29 @@ class RutaController extends Controller
 
         $form = $this->get('form.factory')->create(new RutaGrupoFilterType());        
 
+        $obj = new FilterLocation();
+
+        $filterBuilder = $obj->queryFilter($request, $this, $form, $rolUsuario, $municipioUsuario, 'AppBundle:Grupo');
+
         if($ruta->getGrupo() == null){             
-            $filterBuilder = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('AppBundle:Grupo')
-            ->createQueryBuilder('q')
-            ->innerJoin("q.municipio", "m")
-            ->innerJoin("m.departamento", "d")
-            ->innerJoin("m.zona", "z");
+            $filterBuilder
+            ->andWhere('q.active = 1')
+            ->andWhere('q.id NOT IN  (
+                           SELECT 
+                                grupo.id 
+                           FROM 
+                                AppBundle:Grupo grupo 
+                           JOIN 
+                                AppBundle:Ruta arc 
+                           WHERE 
+                                grupo = arc.grupo 
+                                AND arc.grupo = :grupo                            
+                        )   
+                            AND q.codigo IS NOT NULL')
+                 //AND g.codigo IS NOT NULL //----> Mostrar solo los de codigo grupo
+            ->setParameter('grupo', $ruta);
 
-        
-
-        if ($request->query->has($form->getName())) {
-            
-            $form->submit($request->query->get($form->getName()));
-            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
-        }
-
-        $filterBuilder
-        ->andWhere('q.active = 1')
-        ->andWhere('q.id NOT IN  (
-                       SELECT 
-                            grupo.id 
-                       FROM 
-                            AppBundle:Grupo grupo 
-                       JOIN 
-                            AppBundle:Ruta arc 
-                       WHERE 
-                            grupo = arc.grupo 
-                            AND arc.grupo = :grupo                            
-                    )')
-             //AND g.codigo IS NOT NULL ----> Mostrar solo los de codigo grupo
-        ->setParameter('grupo', $ruta);
-
-        if (isset($_GET['selMunicipio']) && $_GET['selMunicipio'] != "?") {
-             $filterBuilder->andWhere('m.id = :idMunicipio')
-            ->setParameter('idMunicipio', $_GET['selMunicipio']);
-        }
-        else{
-            if (isset($_GET['selDepartamento']) && $_GET['selDepartamento'] != "?") {
-                $filterBuilder->andWhere('d.id = :idDepartamento')
-                ->setParameter('idDepartamento', $_GET['selDepartamento']);
-            }
-            if (isset($_GET['selZona']) && $_GET['selZona'] != "?") {
-                $filterBuilder->andWhere('z.id = :idZona')
-                ->setParameter('idZona', $_GET['selZona']);
-            }      
-        }
-        
-
-        $query = $filterBuilder->getQuery();
+            $query = $filterBuilder->getQuery();
         
         }else{
 
@@ -700,10 +677,6 @@ class RutaController extends Controller
             5/*límite de resultados por página*/
         );
 
-        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
-
-        $obj = new FilterLocation();
-
         $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
 
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Ruta:grupo-ruta-gestion-asignacion.html.twig', 
@@ -713,6 +686,12 @@ class RutaController extends Controller
                 'asignacionesGrupoRuta' => $grupoAsignado,
                 'idRuta' => $idRuta,
                 'pagination1' => $pagination1,
+                'departamento' => $_GET['selDepartamento'],
+                'zona' => $_GET['selZona'],
+                'municipio' => $_GET['selMunicipio'],
+                'campoDeshabilitadoDepartamento' => $valuesFieldBlock[0],
+                'campoDeshabilitadoZona' => $valuesFieldBlock[1],
+                'campoDeshabilitadoMunicipio' => $valuesFieldBlock[2],
                 'tipoUsuario' => $valuesFieldBlock[3]
             ));        
         

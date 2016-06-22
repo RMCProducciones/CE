@@ -173,8 +173,12 @@ app.controller('FiltrosPasantiaGrupoCtrl', ['$scope', '$http', 'styleBuscarHerra
 
     	if($scope.tipoUsuario == 1){
     		$("#pasantiaGrupoFilter_nombre").val("");
-    	}
-    	if($scope.tipoUsuario == 2){
+    	}else if($scope.tipoUsuario == 2){
+    		$("#selMunicipio").val("");
+			$("#pasantiaGrupoFilter_nombre").val("");
+    	}else{
+    		$("#selZona").val("");
+    		$("#selDepartamento").val("");
     		$("#selMunicipio").val("");
 			$("#pasantiaGrupoFilter_nombre").val("");
     	}
