@@ -177,11 +177,27 @@ app.controller('FiltrosRutaGrupoCtrl', ['$scope', '$http', 'styleBuscarHerramien
 		}
 		
     }	
+
+    $scope.tipoUsuario = 0;
 	
-    $scope.limpiarCamposFiltroBusquedaRutaGrupo = function(){
-       
+    $scope.limpiarCamposFiltroBusquedaRutaGrupo = function(tipoUsuario){
+
+    	$scope.tipoUsuario = tipoUsuario;
+
+    	if($scope.tipoUsuario == 1){
+    		$("#rutaGrupoFilter_nombre").val("");
+    	}else if($scope.tipoUsuario == 2){
+    		$("#selMunicipio").val("");
+			$("#rutaGrupoFilter_nombre").val("");
+    	}else{
+    		$("#selZona").val("");
+    		$("#selDepartamento").val("");    		
+    		$("#selMunicipio").val("");
+    		$("#rutaGrupoFilter_nombre").val("");
+    	}
+    	   
 		
-		$("#rutaGrupoFilter_nombre").val("");
+		//$("#rutaGrupoFilter_nombre").val("");
 		
 
        
