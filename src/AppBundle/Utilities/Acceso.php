@@ -98,7 +98,7 @@ class FilterLocation{
             $_GET['selZona'] = 0;                        
             $_GET['selMunicipio'] = 0;
         }
-        
+
 
 		return $filterBuilder;
 	}
@@ -169,6 +169,36 @@ class FilterLocation{
         if(in_array("ROLE_COORDINADOR", $rolUsuario)){                        
             $valuesFieldDMZ[0] = $municipioUsuario->getDepartamento()->getId();
             $valuesFieldDMZ[1] = $municipioUsuario->getZona()->getId();
+            $valuesFieldDMZ[2] = 0;            
+        }
+
+        if(in_array("ROLE_ADMIN", $rolUsuario)){                        
+            $valuesFieldDMZ[0] = 0;
+            $valuesFieldDMZ[1] = 0;
+            $valuesFieldDMZ[2] = 0;            
+        }
+
+        if(in_array("ROLE_ESPECIALISTA_EMPRESARIAL", $rolUsuario)){                        
+            $valuesFieldDMZ[0] = 0;
+            $valuesFieldDMZ[1] = 0;
+            $valuesFieldDMZ[2] = 0;            
+        }
+
+        if(in_array("ROLE_ESPECIALISTA_FINANCIERO", $rolUsuario)){                        
+            $valuesFieldDMZ[0] = 0;
+            $valuesFieldDMZ[1] = 0;
+            $valuesFieldDMZ[2] = 0;            
+        }
+
+        if(in_array("ROLE_ESPECIALISTA_CONOCIMIENTO", $rolUsuario)){                        
+            $valuesFieldDMZ[0] = 0;
+            $valuesFieldDMZ[1] = 0;
+            $valuesFieldDMZ[2] = 0;            
+        }
+
+        if(in_array("ROLE_ESPECIALISTA_ADMINISTRATIVO", $rolUsuario)){                        
+            $valuesFieldDMZ[0] = 0;
+            $valuesFieldDMZ[1] = 0;
             $valuesFieldDMZ[2] = 0;            
         }
 
