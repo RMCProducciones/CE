@@ -62,8 +62,8 @@
                 <tr>
                     <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Id', 'a.id') }}</th>
                     <th></th>
-                    <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Grupo', 'a.grupo') }}</th>
-                    <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Datos del Beneficiario', 'a.datosDelBeneficiario') }}</th>
+                    <th class="text-left">{{ knp_pagination_sortable(pagination1, 'Grupo', 'a.grupo') }}</th>
+                    <th class="text-left">{{ knp_pagination_sortable(pagination1, 'Datos del Beneficiario', 'a.datosDelBeneficiario') }}</th>
                     <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Acciones', 'a.acciones') }}</th>
                 </tr>                
               </thead>
@@ -90,10 +90,12 @@
                     <br>
                     Segundo Nombre: {{ beneficiario.segundoNombre }}
                   </td>                                      
-                  <td>
+                  <td class="text-center">
                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ beneficiario.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-                    <br>                    
-                    <a href="{{ path('rutaAsignarGrupoBeneficiario', {'idRuta': idRuta, 'idGrupo': idGrupo, 'idBeneficiario': beneficiario.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
+                    {% if tipoUsuario == 1 or tipoUsuario == 3 %}
+                      <br>                    
+                      <a href="{{ path('rutaAsignarGrupoBeneficiario', {'idRuta': idRuta, 'idGrupo': idGrupo, 'idBeneficiario': beneficiario.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
+                    {% endif %}
                     <br>                      
                   </td>
                 </tr>
@@ -156,8 +158,14 @@
                   </td>
           
                   <td>
-                    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ beneficiarioRuta.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> | 
-                    <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarGrupoBeneficiarioRuta('{{ path('rutaEliminarGrupoBeneficiario', {'idRuta': idRuta, 'idGrupo': idGrupo, 'idBeneficiario': beneficiarioRuta.beneficiario.id, 'idBeneficiarioRuta': beneficiarioRuta.id}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
+                    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ beneficiarioRuta.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+
+                    {% if tipoUsuario == 1 or tipoUsuario == 3 %}
+
+                      | 
+                      <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarGrupoBeneficiarioRuta('{{ path('rutaEliminarGrupoBeneficiario', {'idRuta': idRuta, 'idGrupo': idGrupo, 'idBeneficiario': beneficiarioRuta.beneficiario.id, 'idBeneficiarioRuta': beneficiarioRuta.id}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
+                      
+                    {% endif %}
                                    
                   </td>
                 </tr>

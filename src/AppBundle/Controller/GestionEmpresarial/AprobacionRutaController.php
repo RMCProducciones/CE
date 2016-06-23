@@ -19,7 +19,8 @@ use AppBundle\Entity\Ruta;
 
 use AppBundle\Form\GestionEmpresarial\AprobacionRutaType;
 
-
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -34,6 +35,9 @@ class AprobacionRutaController extends Controller
      */
    public function aprobacionrutaGestionAction(Request $request, $idRuta)
     {
+        
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
         
         $aprobacion=$em->getRepository('AppBundle:Ruta')->findBy(
@@ -47,10 +51,17 @@ class AprobacionRutaController extends Controller
             10/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/AprobacionRuta:aprobacion-gestion.html.twig',
          array( 'aprobacion' => $aprobacion,
         'idRuta' => $idRuta,
-        'pagination' => $pagination)
+        'pagination' => $pagination,
+        'tipoUsuario' => $valuesFieldBlock[3])
          );
     }
 

@@ -32,7 +32,8 @@ use AppBundle\Form\GestionEmpresarial\TerritorioAprendizajeFilterType;
 use AppBundle\Form\GestionEmpresarial\TerritorioOrganizacionFilterType;
 
 
-
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 
 /*Para autenticación por código*/
@@ -47,6 +48,9 @@ class TerritorioController extends Controller
      */
     public function territorioaprendizajeGestionAction(Request $request)
     {
+
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
         /*$territorios = $em->getRepository('AppBundle:TerritorioAprendizaje')->findBy(
             array('active' => '1')
@@ -80,10 +84,17 @@ class TerritorioController extends Controller
             10/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Territorio:territorio-gestion.html.twig', 
         	array(  'form' => $form->createView(),
                     'territorios' => $query,
-        		    'pagination' => $pagination));
+        		    'pagination' => $pagination,
+                    'tipoUsuario' => $valuesFieldBlock[3]));
     }
 
 
@@ -218,6 +229,9 @@ class TerritorioController extends Controller
      */
     public function territorioAprendizajeOrganizacionAction(Request $request, $idTerritorioAprendizaje)
     {
+
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
 
         $territorioAprendizaje = $em->getRepository('AppBundle:TerritorioAprendizaje')->findOneBy(
@@ -265,13 +279,20 @@ class TerritorioController extends Controller
             5/*límite de resultados por página*/
         );
 
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Territorio:organizacion-territorio-gestion-asignacion.html.twig', 
             array(
                 'form' => $form->createView(),
                 'organizaciones' => $query,
                 'asignacionesTerritoriosOrganizacion' => $asignacionesTerritoriosOrganizacion,
                 'idTerritorioAprendizaje' => $idTerritorioAprendizaje,
-                'pagination1' => $pagination1
+                'pagination1' => $pagination1,
+                'tipoUsuario' => $valuesFieldBlock[3]
             ));        
     }
 
