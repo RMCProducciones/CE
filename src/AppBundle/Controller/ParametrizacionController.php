@@ -36,7 +36,7 @@ class ParametrizacionController extends Controller
     public function usuarioGestionAction(Request $request)
     {
 
-        new Acceso($this->getUser(), ["ROLE_ADMIN"]);
+        new Acceso($this->getUser(), ["ROLE_ADMIN", "ROLE_USER"]);
         $em = $this->getDoctrine()->getManager();
 
        
