@@ -97,11 +97,16 @@ app.controller('FiltrosClearCtrl', ['$scope', '$http', 'styleBuscarHerramientas'
     	if($scope.tipoUsuario == 1){
     		$("#clearFilter_fecha_inicio").val("");
 			$("#clearFilter_fecha_finalizacion").val("");
-    	}
-    	if($scope.tipoUsuario == 2){
+    	}else if($scope.tipoUsuario == 2){
     		$("#selMunicipio").val("");
 			$("#clearFilter_fecha_inicio").val("");
 			$("#clearFilter_fecha_finalizacion").val("");
+    	} else {
+    		$("#selDepartamento").val("");
+			$("#selZona").val("");
+			$("#selMunicipio").val("");
+			$("#clearFilter_fecha_inicio").val("");
+			$("#clearFilter_fecha_finalizacion").val("");	
     	}
        
 		/*$("#selDepartamento").val("");
@@ -174,10 +179,14 @@ app.controller('FiltrosClearGrupoCtrl', ['$scope', '$http', 'styleBuscarHerramie
 
     	if($scope.tipoUsuario == 1){
     		$("#clearGrupoFilter_nombre").val("");
-    	}
-    	if($scope.tipoUsuario == 2){
+    	}else if($scope.tipoUsuario == 2){
     		$("#selMunicipio").val("");
 			$("#clearGrupoFilter_nombre").val("");
+    	} else {
+ 			$("#clearGrupoFilter_nombre").val("");
+			$("#selDepartamento").val("");
+			$("#selMunicipio").val("");
+			$("#selZona").val("");   		
     	}
 
 		/*$("#clearGrupoFilter_nombre").val("");
