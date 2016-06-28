@@ -452,11 +452,11 @@ class GrupoController extends Controller
 
         $link = '..\uploads\documents\\'.$path->getPath();
 
-        header("Content-Disposition: attachment; filename=".$path->getPath()."");
+        /*header("Content-Disposition: attachment; filename=".$path->getPath()."");
         header ("Content-Type: application/octet-stream");
         header ("Content-Length: ".filesize($link));
-        readfile($link);           
-
+        readfile($link);*/
+        return new BinaryFileResponse($link); 
     }
 
     /**
@@ -553,19 +553,29 @@ class GrupoController extends Controller
 
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id' => $idGrupo)
-        );        
-           
-        $asignacionBeneficiarioComiteVamosBien = new AsignacionBeneficiarioComiteVamosBien();
+        ); 
 
-        $asignacionBeneficiarioComiteVamosBien->setGrupo($grupo);        
-        $asignacionBeneficiarioComiteVamosBien->setBeneficiario($beneficiario);
-        $asignacionBeneficiarioComiteVamosBien->setActive(true);
-        $asignacionBeneficiarioComiteVamosBien->setFechaCreacion(new \DateTime());
+        $comiteVamosBien = $em->getRepository('AppBundle:AsignacionBeneficiarioComiteVamosBien')->findBy(
+            array('grupo' => $idGrupo)
+        );  
 
-        $em->persist($asignacionBeneficiarioComiteVamosBien);
-        $em->flush();
+        $asignacionBeneficiarioComiteVamosBien = new AsignacionBeneficiarioComiteVamosBien();      
 
+        if(sizeof($comiteVamosBien) < 5){            
 
+            $asignacionBeneficiarioComiteVamosBien->setGrupo($grupo);        
+            $asignacionBeneficiarioComiteVamosBien->setBeneficiario($beneficiario);
+            $asignacionBeneficiarioComiteVamosBien->setActive(true);
+            $asignacionBeneficiarioComiteVamosBien->setFechaCreacion(new \DateTime());
+
+            $em->persist($asignacionBeneficiarioComiteVamosBien);
+            $em->flush();
+
+            $this->addFlash('success', 'Beneficiario asignado');            
+
+        }else{
+            $this->addFlash('danger', 'Ya tiene el máximo de beneficiarios asignados');            
+        }
 
         return $this->redirectToRoute('grupoBeneficiarioCVB', 
             array(
