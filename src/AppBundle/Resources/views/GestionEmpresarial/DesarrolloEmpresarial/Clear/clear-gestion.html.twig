@@ -33,7 +33,7 @@
           <div class="col-md-6">
             <div class="btn-group">
               <a href="{{ path('homepage') }}" class="btn btn-warning">Volver</a>
-              {% if tipoUsuario == 1 or tipoUsuario == 3 %}
+              {% if tipoUsuario == 2 or tipoUsuario == 3 %}
                 <a href="{{ path('clearNuevo') }}" class="btn btn-success">Nuevo</a>              
               {% endif %}
             </div>
