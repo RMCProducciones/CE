@@ -34,6 +34,7 @@ use AppBundle\Form\GestionEmpresarial\PasantiaType;
 use AppBundle\Form\GestionEmpresarial\PasantiaSoporteType;
 use AppBundle\Form\GestionEmpresarial\PasantiaTerritorioFilterType;
 use AppBundle\Form\GestionEmpresarial\PasantiaGrupoFilterType;
+use AppBundle\Form\GestionEmpresarial\PasantiaOrganizacionFilterType;
 
 
 use AppBundle\Utilities\Acceso;
@@ -533,10 +534,32 @@ class PasantiaController extends Controller
         $mostrarOrganizacion = $em->getRepository('AppBundle:AsignacionOrganizacionTerritorioAprendizaje')->findBy(
             array('organizacion' => $organizaciones, 'territorio_aprendizaje' => $territorioAprendizaje));
 
+
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Organizacion')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new PasantiaOrganizacionFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder
+        ->andWhere('q.active = 1')
+        ->andWhere('q.id NOT IN (SELECT organizacion.id FROM AppBundle:Organizacion organizacion JOIN AppBundle:AsignacionOrganizacionPasantia aoc WHERE organizacion = aoc.organizacion AND aoc.pasantia = :pasantia) AND q.pasantia = 1')
+        ->setParameter('pasantia', $pasantia);
+
+        $query = $filterBuilder->getQuery();
+
+
+
         $paginator1  = $this->get('knp_paginator');
 
         $pagination1 = $paginator1->paginate(
-            $mostrarOrganizacion, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
         );
@@ -549,7 +572,8 @@ class PasantiaController extends Controller
        
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Pasantia:organizacion-pasantia-gestion-asignacion.html.twig', 
             array(
-                'organizaciones' => $mostrarOrganizacion, 
+                'form' => $form->createView(),
+                'organizaciones' => $query, 
                 'asignacionesOrganizacionPasantia' => $organizacionPasantia,
                 'idPasantia' => $idPasantia,            
                 'pagination1' => $pagination1,
