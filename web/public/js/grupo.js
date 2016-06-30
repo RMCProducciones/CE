@@ -207,9 +207,17 @@ app.controller('FiltrosGrupoCtrl', ['$scope', '$http', 'styleBuscarHerramientas'
 			$("#grupoFilter_nombre").val("");
 			$("#grupoFilter_numero_identificacion_tributaria").val("");
 			$("#grupoFilter_figura_legal_constitucion").val("");
-    	}
-    	if($scope.tipoUsuario == 2){
+    	}else if($scope.tipoUsuario == 2){
     		$("#selMunicipio").val("");
+			$("#grupoFilter_tipo").val("");
+			$("#grupoFilter_codigo").val("");
+			$("#grupoFilter_nombre").val("");
+			$("#grupoFilter_numero_identificacion_tributaria").val("");
+			$("#grupoFilter_figura_legal_constitucion").val("");
+    	} else {
+    		$("#selDepartamento").val("");
+			$("#selZona").val("");
+			$("#selMunicipio").val("");
 			$("#grupoFilter_tipo").val("");
 			$("#grupoFilter_codigo").val("");
 			$("#grupoFilter_nombre").val("");

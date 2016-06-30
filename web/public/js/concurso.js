@@ -127,10 +127,14 @@ app.controller('FiltrosConcursoGrupoCtrl', ['$scope', '$http', 'styleBuscarHerra
 
     	if($scope.tipoUsuario == 1){
     		$("#concursoGrupoFilter_nombre").val("");
-    	}
-    	if($scope.tipoUsuario == 2){
+    	} else if($scope.tipoUsuario == 2){
     		$("#selMunicipio").val("");
 			$("#concursoGrupoFilter_nombre").val("");
+    	} else {
+			$("#concursoGrupoFilter_nombre").val("");
+			$("#selDepartamento").val("");
+			$("#selMunicipio").val("");
+			$("#selZona").val("");    		
     	}
 
 		/*$("#concursoGrupoFilter_nombre").val("");

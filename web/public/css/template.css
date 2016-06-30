@@ -37,6 +37,13 @@ hr{
   margin-bottom: 0px;
 }
 
+.col-md-4 ul, .col-md-6 ul
+{
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
+
 .estado-programado{
   color: #999;
 }
