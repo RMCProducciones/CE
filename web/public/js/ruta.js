@@ -226,3 +226,33 @@ app.controller('CampoAprobacionRutaCtrl', ['$scope', '$http', function($scope, $
 		
 	});
 }]);
+
+app.controller('FiltrosRutaOrganizacionCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasRutaOrganizacion = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaRutaOrganizacion = function(){
+       
+		$("#rutaOrganizacionFilter_nombre_organizacion").val("");
+		$("#rutaOrganizacionFilter_tipo_producto").val("");
+       
+    }
+      
+		
+}]);
+
+

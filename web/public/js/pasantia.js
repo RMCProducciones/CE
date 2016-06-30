@@ -213,3 +213,36 @@ app.controller('CampoAprobacionPasantiaCtrl', ['$scope', '$http', function($scop
 	});
 }]);
 
+
+app.controller('FiltrosPasantiaOrganizacionCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasPasantiaOrganizacion = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaPasantiaOrganizacion = function(){
+       
+		$("#pasantiaOrganizacionFilter_nombre_organizacion").val("");
+		$("#pasantiaOrganizacionFilter_tipo_producto").val("");
+       
+    }
+      
+		
+}]);
+
+
+
+
+
