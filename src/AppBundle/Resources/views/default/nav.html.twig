@@ -35,9 +35,9 @@
                     <li>
                       <a href="{{ path('grupoGestion') }}">Gestión de Grupos </a>
                     </li>
-                    {% if is_granted('ROLE_COORDINADOR') or is_granted('ROLE_ESPECIALISTA_EMPRESARIAL') or is_granted('ROLE_ADMIN')%}
+                    {% if is_granted('ROLE_PROMOTOR') or is_granted('ROLE_COORDINADOR') or is_granted('ROLE_ESPECIALISTA_EMPRESARIAL') or is_granted('ROLE_ADMIN')%}
                     <li>
-                      <a href="{{ path('clearGestion') }}">Gestión de CLEAR </a>
+                      <a href="{{ path('clearGestion') }}">Gestión de Comite </a>
                     </li>
                     {% endif %}
 

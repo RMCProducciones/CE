@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-06-2016 a las 20:36:39
+-- Tiempo de generación: 05-07-2016 a las 15:51:53
 -- Versión del servidor: 5.6.20
 -- Versión de PHP: 5.5.15
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `documento_soporte` (
   `active` tinyint(1) NOT NULL,
   `fecha_modificacion` datetime DEFAULT NULL,
   `fecha_creacion` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=35 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=38 ;
 
 --
 -- Volcado de datos para la tabla `documento_soporte`
@@ -62,7 +62,7 @@ INSERT INTO `documento_soporte` (`id`, `usuario_modificacion_id`, `usuario_creac
 (16, NULL, NULL, 'clear_tipo_soporte', 'Documento de legalización del Clear', '', '0', 0, 1, NULL, '2016-01-12 00:00:00'),
 (17, NULL, NULL, 'clear_tipo_soporte', 'Listado Asistentes', '', '0', 0, 1, NULL, '2016-01-12 00:00:00'),
 (18, NULL, NULL, 'clear_tipo_soporte', 'Acta Inducción e instalación', '', '0', 0, 1, NULL, '2016-01-12 00:00:00'),
-(19, NULL, NULL, 'clear_tipo_soporte', 'Acta Habilitación Asignación', '', '0', 0, 1, NULL, '2016-01-12 00:00:00'),
+(19, NULL, NULL, 'clear_tipo_soporte', 'Acta Habilitación Asignación', '', '0', 0, 0, NULL, '2016-01-12 00:00:00'),
 (20, NULL, NULL, 'contador_tipo_soporte', 'Documento Identidad', 'DI', '0', 0, 1, NULL, '2016-01-06 00:00:00'),
 (21, NULL, NULL, 'contador_tipo_soporte', 'Tarjeta Profesional', 'TP', '0', 0, 1, NULL, '2016-01-06 00:00:00'),
 (23, NULL, NULL, 'grupo_tipo_soporte', 'Formato registro de beneficiarios', 'FRB', '0', 0, 1, '2016-05-24 00:00:00', '0000-00-00 00:00:00'),
@@ -76,7 +76,10 @@ INSERT INTO `documento_soporte` (`id`, `usuario_modificacion_id`, `usuario_creac
 (31, NULL, NULL, 'seguimiento_grupo_tipo_soporte', 'Formato de evaluacion', 'FE', '0', 0, 1, '2016-05-31 00:00:00', '0000-00-00 00:00:00'),
 (32, NULL, NULL, 'seguimiento_grupo_tipo_soporte', 'Certificación aportes de contrapartida', 'CAC', '0', 0, 1, '2016-05-31 00:00:00', '0000-00-00 00:00:00'),
 (33, NULL, NULL, 'seguimiento_grupo_tipo_soporte', 'Contrato de adhesión', 'CA', '0', 0, 1, '2016-05-31 00:00:00', '0000-00-00 00:00:00'),
-(34, NULL, NULL, 'seguimiento_grupo_tipo_soporte', 'Póliza de cumplimiento', 'PC', '0', 0, 1, '2016-05-31 00:00:00', '0000-00-00 00:00:00');
+(34, NULL, NULL, 'seguimiento_grupo_tipo_soporte', 'Póliza de cumplimiento', 'PC', '0', 0, 1, '2016-05-31 00:00:00', '0000-00-00 00:00:00'),
+(35, NULL, NULL, 'visita_tipo_soporte', 'Evidencia de imágenes de la visita', 'EIV', '0', 0, 1, '2016-06-13 00:00:00', '0000-00-00 00:00:00'),
+(36, NULL, NULL, 'visita_tipo_soporte', 'Documento de aprobación de interventoria', 'DAI', '0', 0, 1, '2016-06-13 00:00:00', '0000-00-00 00:00:00'),
+(37, NULL, NULL, 'visita_tipo_soporte', 'Documento de rechazo de interventoria', 'DRI', '0', 0, 1, '2016-06-13 00:00:00', '0000-00-00 00:00:00');
 
 --
 -- Índices para tablas volcadas
@@ -96,7 +99,7 @@ ALTER TABLE `documento_soporte`
 -- AUTO_INCREMENT de la tabla `documento_soporte`
 --
 ALTER TABLE `documento_soporte`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=38;
 --
 -- Restricciones para tablas volcadas
 --

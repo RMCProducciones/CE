@@ -183,16 +183,6 @@ class OrganizacionController extends Controller
 
             $organizacion = $form->getData();
 
-            if($organizacion->getRural() == true){             
-                $organizacion->setBarrio(null);
-            }
-            else
-            {
-                $organizacion->setCorregimiento(null);
-                $organizacion->setVereda(null);
-                $organizacion->setCacerio(null);
-            }
-
             $organizacion->setActive(true);
             $organizacion->setFechaCreacion(new \DateTime());
 

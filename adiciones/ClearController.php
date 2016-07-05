@@ -1129,11 +1129,7 @@ class ClearController extends Controller
 
                     if($idUltimoNodo == 2)
                         self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 2);//Ejecutada(2) Clear de Habilitación
-
-                    if($habilitacionFases->getMotFormal())
-                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 6, 2);
-                    if($habilitacionFases->getMotNoFormal())
-                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 10, 2);
+                    
                     if($habilitacionFases->getIea())
                         self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 5, 1);//Programación(1) a Visita previa IEA
                     if($habilitacionFases->getPn())
@@ -1223,9 +1219,7 @@ class ClearController extends Controller
                 $consecutivo = "";
             }          
 
-            $tipoGrupo = $traerGrupo->getTipo(); 
-
-
+            $tipoGrupo = $traerGrupo->getTipo();       
 
             if($tipoGrupo == "No Formal Sin Negocio"){
                 $tipo = "1";                
@@ -1239,7 +1233,7 @@ class ClearController extends Controller
                 $tipo = "3";                
             }
 
-            if($tipoGrupo == "Formal Con Negocio"){
+            if($tipoGrupo == "Formal con negocio"){
                 $tipo = "4";                
             }
 

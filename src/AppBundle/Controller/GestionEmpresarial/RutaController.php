@@ -30,6 +30,7 @@ use AppBundle\Form\GestionEmpresarial\RutaSoporteType;
 use AppBundle\Form\GestionEmpresarial\RutaFilterType;
 use AppBundle\Form\GestionEmpresarial\RutaTerritorioFilterType;
 use AppBundle\Form\GestionEmpresarial\RutaGrupoFilterType;
+use AppBundle\Form\GestionEmpresarial\RutaOrganizacionFilterType;
 
 
 use AppBundle\Utilities\Acceso;
@@ -512,10 +513,33 @@ class RutaController extends Controller
         $mostrarOrganizacion = $em->getRepository('AppBundle:AsignacionOrganizacionTerritorioAprendizaje')->findBy(
             array('organizacion' => $organizaciones, 'territorio_aprendizaje' => $territorioAprendizaje));
 
+
+
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Organizacion')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new RutaOrganizacionFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        $filterBuilder
+        ->andWhere('q.active = 1')
+        ->andWhere('q.id NOT IN (SELECT organizacion.id FROM AppBundle:Organizacion organizacion JOIN AppBundle:AsignacionOrganizacionRuta aoc WHERE organizacion = aoc.organizacion AND aoc.ruta = :ruta) AND q.ruta = 1')
+        ->setParameter('ruta', $ruta);
+
+        $query = $filterBuilder->getQuery();
+
+
+
         $paginator1  = $this->get('knp_paginator');
 
         $pagination1 = $paginator1->paginate(
-            $mostrarOrganizacion, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
         );
@@ -528,7 +552,8 @@ class RutaController extends Controller
        
         return $this->render('AppBundle:GestionEmpresarial/DesarrolloEmpresarial/Ruta:organizacion-ruta-gestion-asignacion.html.twig', 
             array(
-                'organizaciones' => $mostrarOrganizacion, 
+                'form' => $form->createView(),
+                'organizaciones' => $query, 
                 'asignacionesOrganizacionRuta' => $organizacionRuta,
                 'idRuta' => $idRuta,
                 'pagination1' => $pagination1,
