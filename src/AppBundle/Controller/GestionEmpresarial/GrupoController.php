@@ -276,7 +276,7 @@ class GrupoController extends Controller
                 $tipo = "3";                
             }
 
-            if($tipoGrupo == "Formal con negocio"){
+            if($tipoGrupo == "Formal Con Negocio"){
                 $tipo = "4";                
             }
 
