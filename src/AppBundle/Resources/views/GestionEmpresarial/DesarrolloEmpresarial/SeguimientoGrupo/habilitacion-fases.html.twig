@@ -69,10 +69,10 @@
               	<thead>
                 	<tr class="bg-primary">
 	                   	<th class="text-center">Requisitos Habilitantes</th>
-					   	<th class="text-center">MOT <br />No Formal</th>
-	                   	<th class="text-center">MOT <br />Formal</th>
-	                   	<th class="text-center">IEA <br />No Formal</th>
-	                   	<th class="text-center">PN <br />Formal</th>
+					   	<th class="text-center">No Formal Sin<br />Negocio en Marcha</th>
+	                   	<th class="text-center">Formal Sin<br />Negocio en Marcha</th>
+	                   	<th class="text-center">No Formal Con<br />Negocio</th>
+	                   	<th class="text-center">Formal Con<br />Negocio</th>
 	                </tr>
 	           	</thead>
 	           	<tbody>
@@ -280,22 +280,22 @@
                   		<th>Seleccione la fase(s) a habilitar:</td>
                   	
 					  	<th class="text-center">
-					  		MOT <br />No Formal <br />
+					  		No Formal Sin<br />Negocio en Marcha<br />
 							{{ form_errors(form.mot_no_formal) }}
 							{{ form_widget(form.mot_no_formal) }}
 						</th>
 	                  	<th class="text-center">
-	                  		MOT <br />Formal <br />
+	                  		Formal Sin<br />Negocio en Marcha<br />
 							{{ form_errors(form.mot_formal) }}
 							{{ form_widget(form.mot_formal) }}
 						</th>
 	                  	<th class="text-center">
-	                  		IEA <br />Formal <br />
+	                  		No Formal Con<br />Negocio<br />
 			                {{ form_errors(form.iea) }}
 			                {{ form_widget(form.iea) }}
 	                  	</th>
 	                  	<th class="text-center">
-	                  		PN <br />Formal <br />
+	                  		Formal Con<br />Negocio<br />
 			                {{ form_errors(form.pn) }}
 			                {{ form_widget(form.pn) }}
 	                  	</th>
@@ -305,7 +305,7 @@
                   			La fase habilitada se marcará con un icono en color verde como "<img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}">"
                   		</td>
                   		<th class="text-center">
-				  			MOT <br />No Formal <br />
+				  			No Formal Sin<br />Negocio en Marcha<br />
 							{% if habilitacionFases.motNoFormal %}
 								<img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}">
 							{% else %}
@@ -313,7 +313,7 @@
 							{% endif %}
 						</th>
 	                  	<th class="text-center">
-	                  		MOT <br />Formal <br />
+	                  		Formal Sin<br />Negocio en Marcha<br />
 							{% if habilitacionFases.motFormal %}
 								<img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}">
 							{% else %}
@@ -321,7 +321,7 @@
 							{% endif %}
 						</th>
 	                  	<th class="text-center">
-	                  		IEA <br />Formal <br />
+	                  		No Formal Con<br />Negocio<br />
 			                {% if habilitacionFases.iea %}
 			                	<img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}">
 							{% else %}
@@ -329,7 +329,7 @@
 			                {% endif %}
 	                  	</th>
 	                  	<th class="text-center">
-	                  		PN <br />Formal <br />
+	                  		Formal Con<br />Negocio<br />
 			                {% if habilitacionFases.pn %}
 			                	<img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}">
 							{% else %}
