@@ -149,6 +149,11 @@ class BeneficiarioController extends Controller
             $beneficiarios->setActive(true);
             $beneficiarios->setFechaCreacion(new \DateTime());
 
+             $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $beneficiarios->setUsuarioCreacion($usuario);
+
             $em->persist($beneficiarios);
             $em->flush();
 
@@ -228,6 +233,13 @@ class BeneficiarioController extends Controller
                 $beneficiarioSoporte->setActive(true);
                 $beneficiarioSoporte->setFechaCreacion(new \DateTime());
                 //$grupoSoporte->setUsuarioCreacion(1);
+
+
+                /*
+                $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+                $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                    array('id' => $idUsuario));
+                $grupo->setUsuarioModificacion($usuario);*/
 
                 $em->persist($beneficiarioSoporte);
                 $em->flush();
@@ -338,6 +350,13 @@ class BeneficiarioController extends Controller
             $beneficiarios = $form->getData();
             
             $beneficiarios->setFechaModificacion(new \DateTime());
+
+            
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $beneficiarios->setUsuarioModificacion($usuario);
+            
 
             $em->persist($beneficiarios);
             $em->flush();

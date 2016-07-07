@@ -152,6 +152,10 @@ class GrupoController extends Controller
             $grupo->setActive(true);
             $grupo->setFechaCreacion(new \DateTime());
 
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $grupo->setUsuarioCreacion($usuario);
 
             //SEGUIMIENTO, Entidad Camino
 
@@ -236,6 +240,10 @@ class GrupoController extends Controller
             }  
             
             $grupo->setFechaModificacion(new \DateTime());
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $grupo->setUsuarioModificacion($usuario);
 
             $em->persist($grupo);
             $em->flush();
