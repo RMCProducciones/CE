@@ -271,7 +271,7 @@ class OrganizacionController extends Controller
                 $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
                     array(
                         'descripcion' => $organizacionSoporte->getTipoSoporte()->getDescripcion(), 
-                        'dominio' => 'organizacion_tipo_soporte'
+                        'dominio' => 'grupo_tipo_soporte'
                     )
                 );
                 
@@ -290,7 +290,7 @@ class OrganizacionController extends Controller
                     $em->flush();
                 }
                 
-                $organizacionSoporte->setOrganizacion($pasantia);
+                $organizacionSoporte->setOrganizacion($organizacion);
                 $organizacionSoporte->setActive(true);
                 $organizacionSoporte->setFechaCreacion(new \DateTime());
                 //$grupoSoporte->setUsuarioCreacion(1);
