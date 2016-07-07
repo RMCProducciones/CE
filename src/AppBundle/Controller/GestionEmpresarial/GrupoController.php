@@ -331,7 +331,10 @@ class GrupoController extends Controller
     public function grupoSoporteAction(Request $request, $idGrupo)
     {
 
-
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+        $usuario = $em->getRepository('AppBundle:Usuario')->findBy(
+            array('id' => $idUsuario));
         $em = $this->getDoctrine()->getManager();
 
         $grupoSoporte = new GrupoSoporte();
@@ -390,12 +393,14 @@ class GrupoController extends Controller
                     echo $actualizarGrupoSoporte->getId()." ".$actualizarGrupoSoporte->getTipoSoporte()."<br />";
                     $actualizarGrupoSoporte->setFechaModificacion(new \DateTime());
                     $actualizarGrupoSoporte->setActive(0);
+                    $actualizarGrupoSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
 
                 $grupoSoporte->setGrupo($grupo);
                 $grupoSoporte->setActive(true);
                 $grupoSoporte->setFechaCreacion(new \DateTime());
+                $grupoSoporte->setUsuarioCreacion($usuario);
 
 
                 $em->persist($grupoSoporte);
@@ -424,6 +429,12 @@ class GrupoController extends Controller
      */
     public function grupoSoporteBorrarAction(Request $request, $idGrupo, $idGrupoSoporte)
     {
+
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+        $usuario = $em->getRepository('AppBundle:Usuario')->findBy(
+            array('id' => $idUsuario));
+        $em = $this->getDoctrine()->getManager();
         $em = $this->getDoctrine()->getManager();
 
         $grupoSoporte = new GrupoSoporte();
@@ -434,6 +445,7 @@ class GrupoController extends Controller
         
         $grupoSoporte->setFechaModificacion(new \DateTime());
         $grupoSoporte->setActive(0);
+        $grupoSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('grupoSoporte', array( 'idGrupo' => $idGrupo));
