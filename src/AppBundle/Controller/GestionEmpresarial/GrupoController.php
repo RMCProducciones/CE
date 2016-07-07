@@ -439,7 +439,7 @@ class GrupoController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
-        
+
         $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
             array('id' => $idUsuario));
         
@@ -565,7 +565,14 @@ class GrupoController extends Controller
     public function comiteVamosBienAsignarGrupoBeneficiarioAction($idGrupo, $idBeneficiario)
     {
 
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
             array('id' => $idBeneficiario)
@@ -587,6 +594,7 @@ class GrupoController extends Controller
             $asignacionBeneficiarioComiteVamosBien->setBeneficiario($beneficiario);
             $asignacionBeneficiarioComiteVamosBien->setActive(true);
             $asignacionBeneficiarioComiteVamosBien->setFechaCreacion(new \DateTime());
+            $asignacionBeneficiarioComiteVamosBien->setUsuarioCreacion($usuario);
 
             $em->persist($asignacionBeneficiarioComiteVamosBien);
             $em->flush();
