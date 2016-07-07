@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-05-2016 a las 15:17:57
+-- Tiempo de generación: 07-07-2016 a las 15:37:28
 -- Versión del servidor: 5.6.16
 -- Versión de PHP: 5.5.11
 
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `actividad_concurso` (
 --
 
 INSERT INTO `actividad_concurso` (`id`, `concurso_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `actividad`, `mejoras`, `recursos`, `duracion`, `semana_inicio`, `semana_finalizacion`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
-(1, NULL, NULL, NULL, 'adsdsa', 'saddsa', 'sdadsa', 1, -1, -1, 1, NULL, '2016-05-05 18:44:49');
+(1, NULL, NULL, NULL, 'Carreras de marranos', 'Hcerlos mas rapidos', '5000000', 3, 3, 3, 1, NULL, '2016-06-14 18:01:35');
 
 -- --------------------------------------------------------
 
@@ -200,7 +200,21 @@ CREATE TABLE IF NOT EXISTS `asignacion_beneficiario_comite_compras` (
   KEY `IDX_66EBC8D14B64ABC7` (`beneficiario_id`),
   KEY `IDX_66EBC8D1DADD026` (`usuario_modificacion_id`),
   KEY `IDX_66EBC8D1AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
+
+--
+-- Volcado de datos para la tabla `asignacion_beneficiario_comite_compras`
+--
+
+INSERT INTO `asignacion_beneficiario_comite_compras` (`id`, `grupo_id`, `beneficiario_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `habilitacion`, `asignacion`, `contraloria_social`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, 1, 4, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-05-24 23:11:41'),
+(2, 3, 6, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-07 16:59:33'),
+(3, 3, 8, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-07 16:59:39'),
+(4, 3, 7, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-07 16:59:43'),
+(5, 3, 11, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-07 16:59:47'),
+(6, 4, 20, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-28 18:32:57'),
+(7, 4, 21, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-28 18:33:00'),
+(8, 4, 24, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-28 18:33:03');
 
 -- --------------------------------------------------------
 
@@ -225,7 +239,24 @@ CREATE TABLE IF NOT EXISTS `asignacion_beneficiario_comite_vamos_bien` (
   KEY `IDX_174C5B764B64ABC7` (`beneficiario_id`),
   KEY `IDX_174C5B76DADD026` (`usuario_modificacion_id`),
   KEY `IDX_174C5B76AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=15 ;
+
+--
+-- Volcado de datos para la tabla `asignacion_beneficiario_comite_vamos_bien`
+--
+
+INSERT INTO `asignacion_beneficiario_comite_vamos_bien` (`id`, `grupo_id`, `beneficiario_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `habilitacion`, `asignacion`, `contraloria_social`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, 3, 5, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-07 16:58:27'),
+(2, 3, 7, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-07 16:58:31'),
+(3, 3, 8, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-07 16:58:35'),
+(4, 3, 11, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-07 16:58:39'),
+(5, 3, 13, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-07 16:58:43'),
+(6, 3, 9, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-07 16:58:46'),
+(7, 3, 12, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-07 16:58:50'),
+(8, 4, 20, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-28 18:11:30'),
+(11, 4, 22, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-28 18:12:16'),
+(13, 4, 24, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-28 18:14:27'),
+(14, 1, 4, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-07-07 00:02:40');
 
 -- --------------------------------------------------------
 
@@ -252,7 +283,21 @@ CREATE TABLE IF NOT EXISTS `asignacion_beneficiario_estructura_organizacional` (
   KEY `IDX_DF11E8084BAB96C` (`rol_id`),
   KEY `IDX_DF11E808DADD026` (`usuario_modificacion_id`),
   KEY `IDX_DF11E808AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
+
+--
+-- Volcado de datos para la tabla `asignacion_beneficiario_estructura_organizacional`
+--
+
+INSERT INTO `asignacion_beneficiario_estructura_organizacional` (`id`, `grupo_id`, `beneficiario_id`, `rol_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `habilitacion`, `asignacion`, `contraloria_social`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, 1, 3, 227, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2016-05-24 22:45:49'),
+(2, 3, 5, 227, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2016-06-07 16:59:10'),
+(3, 3, 6, 228, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2016-06-07 16:59:16'),
+(4, 3, 8, 230, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2016-06-07 16:59:22'),
+(5, 4, 20, 230, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2016-06-28 18:16:18'),
+(6, 4, 22, 227, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2016-06-28 18:16:23'),
+(7, 4, 23, 232, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2016-06-28 18:16:30'),
+(8, 4, 25, 233, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2016-06-28 18:16:38');
 
 -- --------------------------------------------------------
 
@@ -326,7 +371,17 @@ CREATE TABLE IF NOT EXISTS `asignacion_beneficiario_taller` (
   KEY `IDX_D5437214B64ABC7` (`beneficiario_id`),
   KEY `IDX_D543721DADD026` (`usuario_modificacion_id`),
   KEY `IDX_D543721AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+
+--
+-- Volcado de datos para la tabla `asignacion_beneficiario_taller`
+--
+
+INSERT INTO `asignacion_beneficiario_taller` (`id`, `taller_id`, `grupo_id`, `beneficiario_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, 1, 4, 22, NULL, NULL, 1, NULL, '2016-06-28 21:41:16'),
+(2, 1, 4, 23, NULL, NULL, 1, NULL, '2016-06-28 21:41:19'),
+(3, 1, 4, 25, NULL, NULL, 1, NULL, '2016-06-28 21:41:23'),
+(4, 1, 4, 27, NULL, NULL, 1, NULL, '2016-06-28 21:41:28');
 
 -- --------------------------------------------------------
 
@@ -396,7 +451,16 @@ CREATE TABLE IF NOT EXISTS `asignacion_contador_grupo` (
   KEY `IDX_F432D033C31645C0` (`contador_id`),
   KEY `IDX_F432D033DADD026` (`usuario_modificacion_id`),
   KEY `IDX_F432D033AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+
+--
+-- Volcado de datos para la tabla `asignacion_contador_grupo`
+--
+
+INSERT INTO `asignacion_contador_grupo` (`id`, `grupo_id`, `contador_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `habilitacion`, `asignacion`, `contraloria_social`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, 2, 1, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-05-24 21:33:55'),
+(2, 3, 1, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-07 16:59:59'),
+(4, 4, 1, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-28 16:48:04');
 
 -- --------------------------------------------------------
 
@@ -471,7 +535,20 @@ CREATE TABLE IF NOT EXISTS `asignacion_grupo_clear` (
   KEY `IDX_2858D49CD30DEA81` (`clear_id`),
   KEY `IDX_2858D49CDADD026` (`usuario_modificacion_id`),
   KEY `IDX_2858D49CAEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=15 ;
+
+--
+-- Volcado de datos para la tabla `asignacion_grupo_clear`
+--
+
+INSERT INTO `asignacion_grupo_clear` (`id`, `grupo_id`, `clear_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `habilitacion`, `asignacion`, `contraloria_social`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(8, 3, 3, NULL, NULL, 1, NULL, NULL, 1, NULL, '2016-06-08 17:00:21'),
+(9, 3, 4, NULL, NULL, NULL, 1, NULL, 1, NULL, '2016-06-28 19:01:50'),
+(10, 4, 7, NULL, NULL, 1, NULL, NULL, 1, NULL, '2016-06-28 19:30:53'),
+(11, 4, 8, NULL, NULL, NULL, 1, NULL, 1, NULL, '2016-06-28 21:22:59'),
+(12, 4, 9, NULL, NULL, NULL, NULL, 1, 1, NULL, '2016-06-28 21:49:50'),
+(13, 4, 10, NULL, NULL, NULL, 1, NULL, 1, NULL, '2016-06-28 22:02:12'),
+(14, 4, 11, NULL, NULL, NULL, NULL, 1, 1, NULL, '2016-06-28 22:22:36');
 
 -- --------------------------------------------------------
 
@@ -521,7 +598,14 @@ CREATE TABLE IF NOT EXISTS `asignacion_grupo_concurso` (
   KEY `IDX_B9FE2A36F415D168` (`concurso_id`),
   KEY `IDX_B9FE2A36DADD026` (`usuario_modificacion_id`),
   KEY `IDX_B9FE2A36AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `asignacion_grupo_concurso`
+--
+
+INSERT INTO `asignacion_grupo_concurso` (`id`, `grupo_id`, `concurso_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `habilitacion`, `asignacion`, `contraloria_social`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, 1, 2, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-14 18:41:29');
 
 -- --------------------------------------------------------
 
@@ -595,7 +679,14 @@ CREATE TABLE IF NOT EXISTS `asignacion_integrante_clear` (
   KEY `IDX_ECDABF1F4BAB96C` (`rol_id`),
   KEY `IDX_ECDABF1FDADD026` (`usuario_modificacion_id`),
   KEY `IDX_ECDABF1FAEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+
+--
+-- Volcado de datos para la tabla `asignacion_integrante_clear`
+--
+
+INSERT INTO `asignacion_integrante_clear` (`id`, `clear_id`, `integrante_id`, `rol_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(2, 7, 1, 227, NULL, NULL, 0, NULL, '2016-06-28 19:28:39');
 
 -- --------------------------------------------------------
 
@@ -619,6 +710,30 @@ CREATE TABLE IF NOT EXISTS `asignacion_integrante_comite` (
   KEY `IDX_B86309114BAB96C` (`rol_id`),
   KEY `IDX_B8630911DADD026` (`usuario_modificacion_id`),
   KEY `IDX_B8630911AEADF654` (`usuario_creacion_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `asignacion_integrante_concurso`
+--
+
+CREATE TABLE IF NOT EXISTS `asignacion_integrante_concurso` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `concurso_id` int(11) DEFAULT NULL,
+  `integrante_id` int(11) DEFAULT NULL,
+  `rol_id` int(11) DEFAULT NULL,
+  `usuario_modificacion_id` int(11) DEFAULT NULL,
+  `usuario_creacion_id` int(11) DEFAULT NULL,
+  `active` tinyint(1) NOT NULL,
+  `fecha_modificacion` datetime DEFAULT NULL,
+  `fecha_creacion` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_DF32DF4BF415D168` (`concurso_id`),
+  KEY `IDX_DF32DF4B6EA6C980` (`integrante_id`),
+  KEY `IDX_DF32DF4B4BAB96C` (`rol_id`),
+  KEY `IDX_DF32DF4BDADD026` (`usuario_modificacion_id`),
+  KEY `IDX_DF32DF4BAEADF654` (`usuario_creacion_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -821,7 +936,15 @@ CREATE TABLE IF NOT EXISTS `beca` (
   KEY `IDX_8A1280F558BC1BE0` (`municipio_id`),
   KEY `IDX_8A1280F5DADD026` (`usuario_modificacion_id`),
   KEY `IDX_8A1280F5AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+
+--
+-- Volcado de datos para la tabla `beca`
+--
+
+INSERT INTO `beca` (`id`, `tipo_id`, `modalidad_id`, `municipio_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `entidad`, `nombre`, `fecha_publicacion`, `fecha_inicio`, `fecha_finalizacion`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, 153, 157, 1, NULL, NULL, 'CAR', 'cAR', '2016-07-16 00:00:00', '2016-07-15 00:00:00', '2016-07-21 00:00:00', 1, NULL, '2016-07-06 20:34:38'),
+(2, 153, 157, 1, NULL, NULL, 'CAR', 'cAR', '2016-07-16 00:00:00', '2016-07-15 00:00:00', '2016-07-21 00:00:00', 1, NULL, '2016-07-06 20:34:41');
 
 -- --------------------------------------------------------
 
@@ -920,7 +1043,46 @@ CREATE TABLE IF NOT EXISTS `beneficiario` (
   KEY `IDX_E8D0B617906677C2` (`tipo_documento_conyugue_id`),
   KEY `IDX_E8D0B617DADD026` (`usuario_modificacion_id`),
   KEY `IDX_E8D0B617AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=36 ;
+
+--
+-- Volcado de datos para la tabla `beneficiario`
+--
+
+INSERT INTO `beneficiario` (`id`, `grupo_id`, `tipo_documento_id`, `genero_id`, `pertenencia_etnica_id`, `grupo_indigena_id`, `discapacidad_id`, `estado_civil_id`, `rol_grupo_familiar_id`, `hijos_menores_5_id`, `miembros_nucleo_familiar_id`, `nivel_estudios_id`, `ocupacion_id`, `tipo_vivienda_id`, `tipo_documento_conyugue_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `numero_documento`, `primer_apellido`, `segundo_apellido`, `primer_nombre`, `segundo_nombre`, `fecha_nacimiento`, `edad_inscripcion`, `joven_rural`, `corte_sisben`, `puntaje_sisben`, `desplazado`, `red_unidos`, `sabe_leer`, `sabe_escribir`, `direccion`, `rural`, `descripcion`, `corregimiento`, `vereda`, `cacerio`, `telefono_fijo`, `telefono_celular`, `correo_electronico`, `numero_documento_conyugue`, `primer_apellido_conyugue`, `segundo_apellido_conyugue`, `primer_nombre_conyugue`, `segundo_nombre_conyugue`, `telefono_fijo_conyugue`, `telefono_celular_conyugue`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(2, 2, 1, 6, 46, NULL, 215, 8, 221, 219, 220, 28, 34, 37, NULL, NULL, NULL, '1022376577', 'Cantor', 'Forero', 'Juan', 'Sebastian', '2016-05-12 00:00:00', 23, NULL, '3', '61', 0, 1, 0, 0, 'vereda la casita', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-05-20 19:23:37'),
+(3, 1, 1, 6, 49, NULL, 213, 8, 221, 219, 220, 28, 34, 37, NULL, NULL, NULL, '123456789', 'Morales', NULL, 'Juan', 'Alberto', '2016-05-19 00:00:00', 23, NULL, '3', '12', 1, 1, 1, 1, 'vereda la casita', 0, 'Al lado del palo de Mango', NULL, NULL, NULL, '1234578', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-05-24 21:42:00'),
+(4, 1, 1, 6, 46, NULL, 213, 8, 221, 219, 220, 28, 34, 37, NULL, NULL, NULL, '13457894651', 'Perez', NULL, 'Diana', 'Maria', '2016-05-18 00:00:00', 21, NULL, NULL, NULL, 0, 0, 0, 0, 'vereda la casona', 0, 'Al Lado del Manzano', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-05-24 21:44:11'),
+(5, 3, 1, 6, 47, NULL, 213, 8, 221, 219, 220, 28, 34, 37, NULL, NULL, NULL, '1022376577', 'Ruiz', NULL, 'Alonso', NULL, '2016-06-10 00:00:00', 23, NULL, '3', '14', 0, 0, 0, 0, 'vereda la casita', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-01 16:19:26'),
+(6, 3, 1, 6, 48, NULL, 213, 8, 221, 219, 220, 28, 34, 37, NULL, NULL, NULL, '13457894651', 'Perez', NULL, 'Luis', NULL, '2016-06-18 00:00:00', 32, NULL, '3', '52', 0, 0, 0, 0, 'vereda la casona', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-01 16:20:15'),
+(7, 3, 1, 7, 46, NULL, 213, 8, 225, 219, 220, 28, 34, 37, NULL, NULL, NULL, '321465789', 'Casas', NULL, 'Armando', NULL, '2016-06-17 00:00:00', 32, NULL, '4', '65', 0, 0, 0, 0, 'vereda la casona', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-01 16:22:44'),
+(8, 3, 1, 6, 48, NULL, 214, 8, 223, 219, 220, 28, 34, 37, NULL, NULL, NULL, '45678945645', 'Almada', NULL, 'Pedro', NULL, '2016-06-17 00:00:00', 65, NULL, '4', '54', 0, 0, 0, 0, 'vereda la casona', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-01 16:25:43'),
+(9, 3, 1, 6, 47, NULL, 213, 8, 223, 219, 220, 32, 34, 37, NULL, NULL, NULL, '4578945612', 'Alboran', NULL, 'Juan', NULL, '2016-06-10 00:00:00', 78, NULL, '4', '65', 1, 1, 1, 1, 'vereda la casona', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-01 16:30:11'),
+(10, 3, 1, 6, 47, NULL, 213, 8, 224, 219, 220, 31, 34, 38, NULL, NULL, NULL, '9645741654', 'Aponte', NULL, 'Julian', NULL, '2016-06-15 00:00:00', 45, NULL, '4', '65', 1, 1, 0, 1, 'vereda la casona', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-01 16:31:11'),
+(11, 3, 1, 6, 45, 57, 213, 8, 222, 219, 220, 33, 35, 37, NULL, NULL, NULL, '6457134567', 'bora', NULL, 'Sofia', NULL, '2016-06-17 00:00:00', 23, NULL, '5', '12', 1, 1, 0, 0, 'vereda la casona', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-01 16:32:08'),
+(12, 3, 1, 6, 47, NULL, 213, 8, 222, 17, 26, 31, 36, 38, NULL, NULL, NULL, '45678945641', 'Pacheco', NULL, 'Ludys', NULL, '2016-06-17 00:00:00', 23, NULL, '1', '23', 0, 0, 0, 0, 'vereda la casita', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-01 16:33:15'),
+(13, 3, 1, 6, 46, NULL, 215, 8, 223, 16, 24, 28, 36, 39, NULL, NULL, NULL, '6457894512', 'Olmer', NULL, 'Vviiiana', NULL, '2016-06-16 00:00:00', 69, NULL, '1', '35', 1, 1, 0, 0, 'vereda la casita', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-01 16:34:03'),
+(14, 3, 1, 6, 46, NULL, 213, 8, 221, 219, 23, 30, 36, 39, NULL, NULL, NULL, '7845612456', 'Arellano', NULL, 'Itzzele', NULL, '2016-06-11 00:00:00', 35, NULL, '3', '45', 1, 0, 1, 1, 'vereda la casona', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-01 16:38:58'),
+(15, 3, 1, 6, 46, NULL, 213, 8, 224, 219, 220, 28, 34, 37, NULL, NULL, NULL, '4578945612434', 'Malo', NULL, 'Julian', NULL, '2016-06-08 00:00:00', 32, NULL, '1', '65', 0, 0, 1, 0, 'vereda la casita', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-01 16:43:43'),
+(16, 3, 1, 6, 46, NULL, 213, 8, 221, 219, 220, 28, 34, 37, NULL, NULL, NULL, '452342341233', 'Garnica', NULL, 'Fernanda', NULL, '2016-06-22 00:00:00', 12, NULL, '3', '56', 1, 1, 1, 1, 'vereda la casita', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-01 16:46:02'),
+(17, 3, 1, 6, 49, NULL, 213, 8, 221, 219, 220, 32, 34, 37, NULL, NULL, NULL, '364578945123', 'Gonzalez', NULL, 'Mauricio', NULL, '2016-06-25 00:00:00', 13, NULL, '3', '1232', 0, 0, 0, 0, 'casa 3', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-01 16:47:08'),
+(18, 3, 1, 6, 47, NULL, 213, 8, 224, 219, 220, 28, 34, 37, NULL, NULL, NULL, '45651234654', 'Manosalva', NULL, 'reikon', NULL, '2016-06-18 00:00:00', 46, NULL, '3', '41', 0, 0, 0, 0, 'asdasd', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-01 16:50:04'),
+(19, 3, 1, 6, 47, NULL, 216, 8, 225, 219, 220, 30, 35, 39, NULL, NULL, NULL, '124789456455', 'Rocha', NULL, 'POh', NULL, '2016-06-26 00:00:00', 221, NULL, '1', '231', 0, 0, 0, 0, 'casa 3', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-01 16:51:12'),
+(20, 4, 1, 7, 46, NULL, 214, 8, 221, 16, 220, 32, 35, 39, NULL, NULL, NULL, '1022376577', 'Cantor EDITADO', 'Forero', 'Juan', 'Sebastian', '2016-06-22 00:00:00', 23, NULL, '3', '14', 1, 1, 1, 1, 'vereda la casona', 1, 'Al Lado del Manzano', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2016-06-28 17:42:54', '2016-06-28 16:58:25'),
+(21, 4, 1, 6, 45, NULL, 215, 8, 221, 17, 25, 31, 35, 39, NULL, NULL, NULL, '1247894561', 'Bastidas eDITADO', NULL, 'Daniel', NULL, '2016-06-18 00:00:00', 45, NULL, '4', '65', 1, 1, 1, 1, 'casa 3', 1, 'vereda la piña', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2016-06-28 17:43:26', '2016-06-28 17:03:51'),
+(22, 4, 1, 6, 49, NULL, 215, 8, 224, 16, 24, 28, 36, 39, NULL, NULL, NULL, '4578945', 'Fernandez', NULL, 'Jhnonny', NULL, '2016-06-11 00:00:00', 45, NULL, '3', '41', 0, 1, 0, 0, 'vereda la casita', 1, 'Al lado del palo de Mango', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-28 17:04:58'),
+(23, 4, 1, 6, 45, 56, 216, 8, 225, 17, 24, 28, 34, 37, NULL, NULL, NULL, '45678945641', 'Paramo', NULL, 'Pedro', NULL, '2016-06-16 00:00:00', 36, NULL, '4', '63', 1, 1, 0, 0, 'casa 4', 1, 'vereda la piña', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-28 17:06:31'),
+(24, 4, 1, 6, 47, NULL, 217, 8, 223, 17, 22, 31, 34, 37, NULL, NULL, NULL, '7894641246', 'marrugo', NULL, 'Gabriel', NULL, '2016-06-08 00:00:00', 43, NULL, '3', '13', 0, 1, 0, 0, 'vereda la casita', 0, 'vereda la piña', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-28 17:08:09'),
+(25, 4, 1, 6, 47, NULL, 215, 8, 223, 18, 24, 31, 35, 39, NULL, NULL, NULL, '3214578945', 'Alvis', NULL, 'Andres', NULL, '2016-06-17 00:00:00', 53, NULL, '6', '32', 0, 1, 1, 1, 'vereda la casita', 0, 'vereda la piña', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-28 17:09:00'),
+(26, 4, 4, 7, 46, NULL, 216, 8, 222, 16, 25, 32, 35, 39, NULL, NULL, NULL, '777445452', 'Garnica', NULL, 'Fernanda', NULL, '2016-06-16 00:00:00', 45, NULL, '3', '12', 1, 0, 1, 1, 'vereda la casona', 0, 'vereda la piña', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-28 17:09:50'),
+(27, 4, 1, 7, 47, NULL, 215, 8, 222, 18, 23, 28, 35, 39, NULL, NULL, NULL, '1234579542', 'Perez', NULL, 'Maria', NULL, '2016-06-16 00:00:00', 32, NULL, '4', '32', 0, 1, 1, 1, 'vereda la casita', 0, 'vereda la piña', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-28 17:10:36'),
+(28, 4, 1, 6, 46, NULL, 217, 8, 222, 17, 24, 32, 35, 39, NULL, NULL, NULL, '9645123456', 'Aldemar', NULL, 'Sofia', NULL, '2016-06-10 00:00:00', 32, NULL, '4', '32', 1, 1, 0, 0, 'vereda la casita', 0, 'vereda la piña', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-28 17:18:13'),
+(30, 4, 1, 7, 48, NULL, 215, 8, 13, 15, 22, 28, 34, 37, NULL, NULL, NULL, '2314657842', 'Artunduaga', NULL, 'Nasly', NULL, '2016-06-10 00:00:00', 32, NULL, '1', '32', 0, 0, 0, 0, 'vereda la casita', 0, 'vereda la piña', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-28 17:26:32'),
+(31, 4, 2, 6, 46, NULL, 214, 8, 223, 16, 23, 31, 34, 39, NULL, NULL, NULL, '1245789456', 'Rocha', NULL, 'Alonso', NULL, '2016-06-08 00:00:00', 65, NULL, '3', '42', 0, 1, 1, 1, 'vereda la casita', 1, 'vereda la piña', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-28 17:30:38'),
+(32, 4, 1, 6, 46, NULL, 214, 8, 224, 16, 23, 30, 35, 218, NULL, NULL, NULL, '4561278456', 'Almada', NULL, 'Andres', NULL, '2016-06-08 00:00:00', 32, NULL, '3', '21', 0, 0, 1, 0, 'vereda la casita', 1, 'vereda la piña', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-28 17:31:23'),
+(33, 4, 1, 6, 46, NULL, 216, 8, 224, 17, 24, 28, 35, 39, NULL, NULL, NULL, '3214578465', 'Casas', NULL, 'Armando', NULL, '2016-06-25 00:00:00', 63, NULL, '3', '35', 0, 1, 0, 0, 'vereda la casita', 0, 'vereda la piña', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-28 17:32:33'),
+(34, 4, 1, 6, 45, 51, 217, 8, 223, 16, 22, 31, 35, 39, NULL, NULL, NULL, '3214567845', 'Arellano', NULL, 'Daniel', NULL, '2016-06-12 00:00:00', 29, NULL, '3', '56', 1, 1, 1, 1, 'vereda la casita', 0, 'vereda la piña', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-28 17:34:32'),
+(35, 4, 1, 6, 48, NULL, 214, 8, 225, 16, 22, 31, 35, 218, NULL, NULL, NULL, '1345678452', 'Casas', NULL, 'Andres', NULL, '2016-06-23 00:00:00', 35, NULL, '3', '42', 1, 1, 1, 0, 'vereda la casita', 1, 'vereda la piña', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-06-28 17:51:43');
 
 -- --------------------------------------------------------
 
@@ -979,7 +1141,17 @@ CREATE TABLE IF NOT EXISTS `beneficiario_soporte` (
   KEY `IDX_492E0922E24646FA` (`tipo_soporte_id`),
   KEY `IDX_492E0922DADD026` (`usuario_modificacion_id`),
   KEY `IDX_492E0922AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+
+--
+-- Volcado de datos para la tabla `beneficiario_soporte`
+--
+
+INSERT INTO `beneficiario_soporte` (`id`, `beneficiario_id`, `tipo_soporte_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `path`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, 2, 4, NULL, NULL, '30291e422c1a618a3a278fb2b599265d95fdc1fc.jpeg', 0, '2016-05-20 19:33:30', '2016-05-20 19:23:54'),
+(2, 3, 4, NULL, NULL, '2611726d23c170a123b53e3004954c41047854de.png', 0, '2016-05-26 16:42:58', '2016-05-25 22:40:41'),
+(3, 34, 12, NULL, NULL, '0c5edc99d42771f568797e8cb5753e103f90b87c.png', 1, NULL, '2016-06-28 18:03:48'),
+(4, 20, 4, NULL, NULL, '86c73e48ac4ce59530453f7fe1ed55d1237c7d8c.png', 0, '2016-06-28 18:08:28', '2016-06-28 18:07:49');
 
 -- --------------------------------------------------------
 
@@ -1002,7 +1174,15 @@ CREATE TABLE IF NOT EXISTS `calificacion_criterio_grupo_concurso` (
   KEY `IDX_FA6CB6BDB9595895` (`criterio_calificacion_id`),
   KEY `IDX_FA6CB6BD9C833003` (`grupo_id`),
   KEY `IDX_FA6CB6BDF415D168` (`concurso_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+
+--
+-- Volcado de datos para la tabla `calificacion_criterio_grupo_concurso`
+--
+
+INSERT INTO `calificacion_criterio_grupo_concurso` (`id`, `criterio_calificacion_id`, `grupo_id`, `concurso_id`, `puntaje`, `active`, `usuario_modificacion`, `fecha_modificacion`, `usuario_creacion`, `fecha_creacion`) VALUES
+(1, 1, 1, 2, 50, 1, NULL, NULL, NULL, '2016-06-21 21:45:51'),
+(2, 1, 1, 2, 100, 1, NULL, NULL, NULL, '2016-06-21 21:45:59');
 
 -- --------------------------------------------------------
 
@@ -1047,14 +1227,66 @@ CREATE TABLE IF NOT EXISTS `camino` (
   KEY `IDX_33C9673B29B07FB3` (`nodo_id`),
   KEY `IDX_33C9673BDADD026` (`usuario_modificacion_id`),
   KEY `IDX_33C9673BAEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=81 ;
 
 --
 -- Volcado de datos para la tabla `camino`
 --
 
 INSERT INTO `camino` (`id`, `grupo_id`, `nodo_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `estado`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
-(1, 5, 1, NULL, NULL, 2, 1, NULL, '2016-05-05 23:24:35');
+(1, 5, 1, NULL, NULL, 2, 1, NULL, '2016-05-05 23:24:35'),
+(2, 6, 1, NULL, NULL, 2, 1, NULL, '2016-05-06 14:36:41'),
+(3, 7, 1, NULL, NULL, 2, 1, NULL, '2016-05-06 14:48:25'),
+(4, 8, 1, NULL, NULL, 2, 1, NULL, '2016-05-06 17:26:46'),
+(5, 9, 1, NULL, NULL, 2, 1, NULL, '2016-05-07 13:52:40'),
+(6, 10, 1, NULL, NULL, 2, 1, NULL, '2016-05-07 13:54:01'),
+(7, 11, 1, NULL, NULL, 2, 1, NULL, '2016-05-07 13:54:39'),
+(8, 12, 1, NULL, NULL, 2, 1, NULL, '2016-05-07 13:55:57'),
+(9, 13, 1, NULL, NULL, 2, 1, NULL, '2016-05-07 14:03:27'),
+(10, 17, 1, NULL, NULL, 2, 1, NULL, '2016-05-07 14:05:03'),
+(11, 18, 1, NULL, NULL, 2, 1, NULL, '2016-05-07 14:06:20'),
+(12, 19, 1, NULL, NULL, 2, 1, NULL, '2016-05-07 14:21:15'),
+(13, 20, 1, NULL, NULL, 2, 1, NULL, '2016-05-07 14:21:16'),
+(14, 21, 1, NULL, NULL, 2, 1, NULL, '2016-05-07 14:21:18'),
+(15, 22, 1, NULL, NULL, 2, 1, NULL, '2016-05-07 14:21:30'),
+(16, 23, 1, NULL, NULL, 2, 1, NULL, '2016-05-07 14:21:34'),
+(17, 26, 1, NULL, NULL, 2, 1, NULL, '2016-05-07 14:24:09'),
+(20, 28, 1, NULL, NULL, 2, 1, NULL, '2016-05-07 14:25:45'),
+(21, 19, 2, NULL, NULL, 1, 1, NULL, '2016-05-07 15:10:17'),
+(22, 19, 2, NULL, NULL, 2, 1, NULL, '2016-05-07 18:29:56'),
+(23, 1, 1, NULL, NULL, 2, 1, NULL, '2016-05-18 21:22:24'),
+(24, 2, 1, NULL, NULL, 2, 1, NULL, '2016-05-18 22:15:45'),
+(27, 1, 2, NULL, NULL, 3, 1, NULL, '2016-05-31 19:16:18'),
+(28, 2, 2, NULL, NULL, 3, 1, NULL, '2016-05-31 19:16:18'),
+(29, 3, 1, NULL, NULL, 2, 1, NULL, '2016-05-31 20:47:25'),
+(53, 3, 2, NULL, NULL, 1, 1, NULL, '2016-06-08 17:00:21'),
+(54, 3, 2, NULL, NULL, 2, 1, NULL, '2016-06-08 17:04:48'),
+(55, 3, 3, NULL, NULL, 1, 1, NULL, '2016-06-08 17:04:48'),
+(56, 3, 3, NULL, NULL, 2, 1, NULL, '2016-06-08 18:24:15'),
+(57, 4, 1, NULL, NULL, 2, 1, NULL, '2016-06-28 16:23:19'),
+(58, 3, 26, NULL, NULL, 1, 1, NULL, '2016-06-28 19:01:50'),
+(59, 4, 2, NULL, NULL, 1, 1, NULL, '2016-06-28 19:30:53'),
+(60, 4, 2, NULL, NULL, 2, 1, NULL, '2016-06-28 21:17:59'),
+(61, 4, 6, NULL, NULL, 1, 1, NULL, '2016-06-28 21:23:00'),
+(62, 4, 6, NULL, NULL, 2, 1, NULL, '2016-06-28 21:24:51'),
+(63, 4, 7, NULL, NULL, 1, 1, NULL, '2016-06-28 21:33:56'),
+(64, 4, 7, NULL, NULL, 2, 1, NULL, '2016-06-28 21:42:11'),
+(65, 4, 8, NULL, NULL, 1, 1, NULL, '2016-06-28 21:42:11'),
+(66, 4, 8, NULL, NULL, 2, 1, NULL, '2016-06-28 21:44:15'),
+(67, 4, 9, NULL, NULL, 1, 1, NULL, '2016-06-28 21:49:50'),
+(68, 4, 9, NULL, NULL, 2, 1, NULL, '2016-06-28 21:50:45'),
+(69, 4, 26, NULL, NULL, 1, 1, NULL, '2016-06-28 22:02:12'),
+(70, 4, 26, NULL, NULL, 2, 1, NULL, '2016-06-28 22:12:50'),
+(71, 4, 27, NULL, NULL, 1, 1, NULL, '2016-06-28 22:14:04'),
+(72, 4, 27, NULL, NULL, 2, 1, NULL, '2016-06-28 22:16:38'),
+(73, 4, 28, NULL, NULL, 1, 1, NULL, '2016-06-28 22:16:38'),
+(74, 4, 28, NULL, NULL, 2, 1, NULL, '2016-06-28 22:17:14'),
+(75, 4, 29, NULL, NULL, 1, 1, NULL, '2016-06-28 22:17:14'),
+(76, 4, 29, NULL, NULL, 2, 1, NULL, '2016-06-28 22:18:30'),
+(77, 4, 30, NULL, NULL, 1, 1, NULL, '2016-06-28 22:18:30'),
+(78, 4, 30, NULL, NULL, 2, 1, NULL, '2016-06-28 22:18:50'),
+(79, 4, 31, NULL, NULL, 1, 1, NULL, '2016-06-28 22:22:36'),
+(80, 4, 31, NULL, NULL, 2, 1, NULL, '2016-06-28 22:23:09');
 
 -- --------------------------------------------------------
 
@@ -1176,7 +1408,20 @@ CREATE TABLE IF NOT EXISTS `clear` (
   KEY `IDX_E5B1F10658BC1BE0` (`municipio_id`),
   KEY `IDX_E5B1F106DADD026` (`usuario_modificacion_id`),
   KEY `IDX_E5B1F106AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=12 ;
+
+--
+-- Volcado de datos para la tabla `clear`
+--
+
+INSERT INTO `clear` (`id`, `municipio_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `fecha_inicio`, `fecha_finalizacion`, `lugar_realizacion_CLEAR`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(3, 91, NULL, NULL, '2016-05-14 00:00:00', '2016-05-28 00:00:00', 'La escuela', 1, NULL, '2016-05-27 16:58:20'),
+(4, 91, NULL, NULL, '2016-05-14 00:00:00', '2016-05-21 00:00:00', 'La escuela editada', 1, NULL, '2016-06-30 16:21:29'),
+(7, 3, NULL, NULL, '2016-06-01 00:00:00', '2016-06-05 00:00:00', 'RMC Producciones', 1, NULL, '2016-06-28 19:03:56'),
+(8, 85, NULL, NULL, '2016-06-10 00:00:00', '2016-06-12 00:00:00', 'RMC Producciones 2', 1, NULL, '2016-06-28 21:22:47'),
+(9, 69, NULL, NULL, '2016-06-17 00:00:00', '2016-06-26 00:00:00', 'RMC Producciones 3', 1, NULL, '2016-06-28 21:49:38'),
+(10, 96, NULL, NULL, '2016-06-26 00:00:00', '2016-06-30 00:00:00', 'RMC Producciones 4', 1, NULL, '2016-06-28 22:01:13'),
+(11, 66, NULL, NULL, '2016-06-26 00:00:00', '2016-06-29 00:00:00', 'Iglesia', 1, NULL, '2016-06-28 22:22:27');
 
 -- --------------------------------------------------------
 
@@ -1199,7 +1444,33 @@ CREATE TABLE IF NOT EXISTS `clear_soporte` (
   KEY `IDX_43AB6B2EE24646FA` (`tipo_soporte_id`),
   KEY `IDX_43AB6B2EDADD026` (`usuario_modificacion_id`),
   KEY `IDX_43AB6B2EAEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=21 ;
+
+--
+-- Volcado de datos para la tabla `clear_soporte`
+--
+
+INSERT INTO `clear_soporte` (`id`, `clear_id`, `tipo_soporte_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `path`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, 3, 16, NULL, NULL, 'a60616839333d409a6edf6eb5f08fa52d2279049.png', 0, '2016-05-27 18:16:45', '2016-05-27 17:54:37'),
+(2, 3, 16, NULL, NULL, '0539f006a0a83e73ba0bb8dcf8e6f7025c91f7f0.png', 0, '2016-06-01 17:40:00', '2016-05-31 19:16:17'),
+(3, 4, 16, NULL, NULL, '029b94046a9191de12c356b7f67e158248e37d5b.png', 1, NULL, '2016-05-31 21:19:49'),
+(4, 3, 16, NULL, NULL, '9bd5f690c078b52c8f8b649a8193e413c4f56611.png', 0, '2016-06-02 18:10:42', '2016-06-01 17:40:00'),
+(5, 3, 16, NULL, NULL, 'aca5d4cea2b996eb61064faed87fcaef4209e202.png', 0, '2016-06-02 18:58:20', '2016-06-02 18:10:42'),
+(6, 3, 16, NULL, NULL, 'd000282a06139e6ea7efe8e5c9624732f80650e5.png', 0, '2016-06-03 22:20:15', '2016-06-02 18:58:20'),
+(7, 3, 16, NULL, NULL, 'e9bf78747f53c18e19eb1da334097781714f353d.png', 0, '2016-06-07 18:15:15', '2016-06-03 22:20:15'),
+(8, 3, 16, NULL, NULL, '88885e07f93008456abb8343d194bc495eaae040.png', 0, '2016-06-08 17:04:47', '2016-06-07 18:15:15'),
+(9, 3, 18, NULL, NULL, '166efd9ac24bd8cad9e32140f26fbc58256974f9.png', 1, NULL, '2016-06-08 17:04:40'),
+(10, 3, 16, NULL, NULL, '1ed98172f0f02d533f51b46af2b2ea2c1ef167a1.png', 1, NULL, '2016-06-08 17:04:48'),
+(11, 7, 18, NULL, NULL, 'f2425b09375381f8cc1fc083aace53cdd45e2d18.png', 1, NULL, '2016-06-28 19:24:28'),
+(12, 7, 16, NULL, NULL, '350c3837ba9ff74c937a17bbbda1ff182c6b7704.pdf', 1, NULL, '2016-06-28 21:17:59'),
+(13, 8, 18, NULL, NULL, '85948ad63d64de1009876fe62ad16e1351f97f5d.pdf', 1, NULL, '2016-06-28 21:24:36'),
+(14, 8, 16, NULL, NULL, '21129f74f0efcd9b304f58159296a8e3431e3503.pdf', 1, NULL, '2016-06-28 21:24:51'),
+(15, 9, 18, NULL, NULL, '9e22290053bdafdb66e474745f9b64d4169030f8.pdf', 1, NULL, '2016-06-28 21:50:28'),
+(16, 9, 16, NULL, NULL, '44c33a79914a16cf1e59fbb5bb85d87745f9df4c.pdf', 1, NULL, '2016-06-28 21:50:44'),
+(17, 10, 18, NULL, NULL, '9bc3c2ef3b32da1b2f4be091a1941274b7c8f595.pdf', 1, NULL, '2016-06-28 22:01:54'),
+(18, 10, 16, NULL, NULL, '2ce73b57b3204210e9b63b468ad9f9f0511ba8ef.pdf', 1, NULL, '2016-06-28 22:12:50'),
+(19, 11, 18, NULL, NULL, 'c14810a80073fdb452f51871f02413389b7c7fd7.pdf', 1, NULL, '2016-06-28 22:23:02'),
+(20, 11, 16, NULL, NULL, 'fce58f3c286d389763508dcc7fc7194e2228c271.pdf', 1, NULL, '2016-06-28 22:23:08');
 
 -- --------------------------------------------------------
 
@@ -1283,14 +1554,14 @@ CREATE TABLE IF NOT EXISTS `concurso` (
   KEY `IDX_785F9DE61E092B9F` (`modalidad_id`),
   KEY `IDX_785F9DE6DADD026` (`usuario_modificacion_id`),
   KEY `IDX_785F9DE6AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
 -- Volcado de datos para la tabla `concurso`
 --
 
 INSERT INTO `concurso` (`id`, `tipo_id`, `modalidad_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `fecha_bases`, `tematica`, `ambito`, `problematica`, `actividades`, `resultados`, `valor`, `distribucion`, `criterios`, `aprobacion`, `fecha_inicio`, `fecha_finalizacion`, `fecha_inicio_propuesta`, `fecha_finalizacion_propuesta`, `aprobador`, `observaciones`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
-(1, 144, 143, NULL, NULL, '2016-05-12 00:00:00', 'asddsa', 'asdsad', 'asdasd', 'saddsa', 'sdaads', NULL, NULL, NULL, NULL, NULL, NULL, '2016-05-13 00:00:00', '2016-05-12 00:00:00', NULL, NULL, 1, NULL, '2016-05-05 18:30:14');
+(2, 144, 143, NULL, NULL, '2016-06-10 00:00:00', 'Marranos', 'Marranos', 'Marranos', 'Marranos', 'Marranos', NULL, NULL, NULL, NULL, NULL, NULL, '2016-06-10 00:00:00', '2016-06-18 00:00:00', NULL, NULL, 1, NULL, '2016-06-13 18:21:21');
 
 -- --------------------------------------------------------
 
@@ -1352,7 +1623,7 @@ CREATE TABLE IF NOT EXISTS `contador` (
 --
 
 INSERT INTO `contador` (`id`, `tipo_documento_id`, `genero_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `numero_documento`, `numero_tarjeta`, `primer_apellido`, `segundo_apellido`, `primer_nombre`, `segundo_nombre`, `fecha_nacimiento`, `telefono_fijo`, `telefono_celular`, `correo_electronico`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
-(1, 1, 6, NULL, NULL, '484884', '849848484', 'perez', NULL, 'pepe', NULL, '2016-05-05 00:00:00', '48484848', '48556486', 'correo@prueba.com', 1, NULL, '2016-05-05 18:29:45');
+(1, 1, 6, NULL, NULL, '1022376577', '64564654', 'Cantor', 'Forero', 'Juan', 'Sebastian', '2016-05-19 00:00:00', '4034567', '3012345789', 'juancddd@hotma.com', 1, NULL, '2016-05-24 21:29:34');
 
 -- --------------------------------------------------------
 
@@ -1405,7 +1676,7 @@ CREATE TABLE IF NOT EXISTS `convocatoria` (
 --
 
 INSERT INTO `convocatoria` (`id`, `poa_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `numero`, `fecha_inicio`, `fecha_cierre`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
-(1, NULL, NULL, NULL, 15, '2016-05-18 00:00:00', '2016-05-17 00:00:00', 1, NULL, '2016-05-05 19:02:56');
+(1, NULL, NULL, NULL, 2, '2016-05-13 00:00:00', '2016-05-12 00:00:00', 1, '2016-05-25 18:47:25', '2016-05-25 15:50:14');
 
 -- --------------------------------------------------------
 
@@ -1448,7 +1719,14 @@ CREATE TABLE IF NOT EXISTS `criterio_calificacion` (
   `fecha_creacion` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_C5ADD4C2F415D168` (`concurso_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `criterio_calificacion`
+--
+
+INSERT INTO `criterio_calificacion` (`id`, `concurso_id`, `criterio`, `maximo_puntaje`, `active`, `usuario_modificacion`, `fecha_modificacion`, `usuario_creacion`, `fecha_creacion`) VALUES
+(1, 2, 'este criterio', 432, 1, NULL, NULL, NULL, '2016-06-14 21:00:15');
 
 -- --------------------------------------------------------
 
@@ -1547,7 +1825,14 @@ CREATE TABLE IF NOT EXISTS `diagnostico_organizacional` (
   UNIQUE KEY `UNIQ_80B0ADF49C833003` (`grupo_id`),
   KEY `IDX_80B0ADF4DADD026` (`usuario_modificacion_id`),
   KEY `IDX_80B0ADF4AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `diagnostico_organizacional`
+--
+
+INSERT INTO `diagnostico_organizacional` (`id`, `grupo_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `fecha_visita`, `promotor`, `productivaA`, `productivaB`, `productivaC`, `productivaD`, `productivaE`, `productivaF`, `comercialA`, `comercialB`, `comercialC`, `comercialD`, `comercialE`, `financieraA`, `financieraB`, `financieraC`, `financieraD`, `financieraE`, `financieraF`, `administrativaA`, `administrativaB`, `administrativaC`, `administrativaD`, `administrativaE`, `organizacionalA`, `organizacionalB`, `organizacionalC`, `organizacionalD`, `organizacionalE`, `organizacionalF`, `totalProductiva`, `totalComercial`, `totalFinanciera`, `totalAdministrativa`, `totalOrganizacional`, `total`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, 3, NULL, NULL, '2016-06-09 00:00:00', NULL, 1, 2, 2, 3, 1, 1, 2, 3, 2, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 10, 9, 16, 15, 18, 86, 1, NULL, '2016-06-08 18:24:15');
 
 -- --------------------------------------------------------
 
@@ -1569,14 +1854,15 @@ CREATE TABLE IF NOT EXISTS `distribucion_premio` (
   PRIMARY KEY (`id`),
   KEY `IDX_FF5D91EAF415D168` (`concurso_id`),
   KEY `IDX_FF5D91EA9C833003` (`grupo_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
 -- Volcado de datos para la tabla `distribucion_premio`
 --
 
 INSERT INTO `distribucion_premio` (`id`, `concurso_id`, `grupo_id`, `posicion`, `valor`, `active`, `usuario_modificacion`, `fecha_modificacion`, `usuario_creacion`, `fecha_creacion`) VALUES
-(1, NULL, NULL, 1, '55', 1, NULL, NULL, NULL, '2016-05-05 18:45:54');
+(1, NULL, NULL, 3, '5000000', 1, NULL, NULL, NULL, '2016-06-15 22:49:36'),
+(2, NULL, NULL, 3, '5000000', 1, NULL, NULL, NULL, '2016-06-15 22:49:41');
 
 -- --------------------------------------------------------
 
@@ -1599,7 +1885,7 @@ CREATE TABLE IF NOT EXISTS `documento_soporte` (
   PRIMARY KEY (`id`),
   KEY `IDX_D79FEA30DADD026` (`usuario_modificacion_id`),
   KEY `IDX_D79FEA30AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=38 ;
 
 --
 -- Volcado de datos para la tabla `documento_soporte`
@@ -1607,7 +1893,7 @@ CREATE TABLE IF NOT EXISTS `documento_soporte` (
 
 INSERT INTO `documento_soporte` (`id`, `usuario_modificacion_id`, `usuario_creacion_id`, `dominio`, `descripcion`, `abreviatura`, `obligatorio`, `orden`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
 (1, NULL, NULL, 'grupo_tipo_soporte', 'Acta de interés', 'AI', '0', 0, 1, NULL, '2016-01-06 00:00:00'),
-(3, NULL, NULL, 'grupo_tipo_soporte', 'Formato de propuesta ', 'AI', '0', 0, 1, NULL, '2016-01-06 00:00:00'),
+(3, NULL, NULL, 'grupo_tipo_soporte', 'Formato de propuesta ', 'FP', '0', 0, 1, NULL, '2016-01-06 00:00:00'),
 (4, NULL, NULL, 'beneficiario_tipo_soporte', 'Documento Identidad', '', '0', 0, 1, NULL, '2016-01-12 00:00:00'),
 (5, NULL, NULL, 'beneficiario_tipo_soporte', 'Certificación pertenencia Étnica', '', '0', 0, 1, NULL, '2016-01-12 00:00:00'),
 (6, NULL, NULL, 'beneficiario_tipo_soporte', 'Certificación Puntaje SISBEN', '', '0', 0, 1, NULL, '2016-01-12 00:00:00'),
@@ -1623,17 +1909,24 @@ INSERT INTO `documento_soporte` (`id`, `usuario_modificacion_id`, `usuario_creac
 (16, NULL, NULL, 'clear_tipo_soporte', 'Documento de legalización del Clear', '', '0', 0, 1, NULL, '2016-01-12 00:00:00'),
 (17, NULL, NULL, 'clear_tipo_soporte', 'Listado Asistentes', '', '0', 0, 1, NULL, '2016-01-12 00:00:00'),
 (18, NULL, NULL, 'clear_tipo_soporte', 'Acta Inducción e instalación', '', '0', 0, 1, NULL, '2016-01-12 00:00:00'),
-(19, NULL, NULL, 'clear_tipo_soporte', 'Acta Habilitación Asignación', '', '0', 0, 1, NULL, '2016-01-12 00:00:00'),
+(19, NULL, NULL, 'clear_tipo_soporte', 'Acta Habilitación Asignación', '', '0', 0, 0, NULL, '2016-01-12 00:00:00'),
 (20, NULL, NULL, 'contador_tipo_soporte', 'Documento Identidad', 'DI', '0', 0, 1, NULL, '2016-01-06 00:00:00'),
 (21, NULL, NULL, 'contador_tipo_soporte', 'Tarjeta Profesional', 'TP', '0', 0, 1, NULL, '2016-01-06 00:00:00'),
-(22, NULL, NULL, 'evento_tipo_soporte', 'Prueba Evento', 'AI', '0', 0, 1, NULL, '2016-01-06 00:00:00'),
-(23, NULL, NULL, 'experiencia_tipo_soporte', 'Prueba Experiencia', 'AI', '0', 0, 1, NULL, '2016-01-06 00:00:00'),
-(24, NULL, NULL, 'beca_tipo_soporte', 'Prueba Beca', 'AI', '0', 0, 1, NULL, '2016-01-06 00:00:00'),
-(25, NULL, NULL, 'capacitacion_tipo_soporte', 'Prueba Capacitacion', 'AI', '0', 0, 1, NULL, '2016-01-06 00:00:00'),
-(26, NULL, NULL, 'evento_tipo_soporte', 'ESTE es LA prueba FINAL', '', '1', 1, 1, NULL, '2016-04-11 20:03:09'),
-(27, NULL, NULL, 'ahorro_tipo_soporte', 'Prueba Ahorro', 'AI', '0', 0, 1, NULL, '2016-01-06 00:00:00'),
-(28, NULL, NULL, 'poliza_tipo_soporte', 'Prueba Poliza', 'AI', '0', 0, 1, NULL, '2016-01-06 00:00:00'),
-(29, NULL, NULL, 'talento_tipo_soporte', 'Talento Prueba', 'AI', '0', 0, 1, NULL, '2016-01-06 00:00:00');
+(23, NULL, NULL, 'grupo_tipo_soporte', 'Formato registro de beneficiarios', 'FRB', '0', 0, 1, '2016-05-24 00:00:00', '0000-00-00 00:00:00'),
+(24, NULL, NULL, 'grupo_tipo_soporte', 'Certificación bancaria', 'CB', '0', 0, 1, '2016-05-24 00:00:00', '0000-00-00 00:00:00'),
+(25, NULL, NULL, 'grupo_tipo_soporte', 'Certificación de existencia (Camara de Comercio)', 'CC', '0', 0, 1, '2016-05-26 00:00:00', '0000-00-00 00:00:00'),
+(26, NULL, NULL, 'grupo_tipo_soporte', 'Registro único tributario del Grupo', 'RUTG', '0', 0, 1, '2016-05-26 00:00:00', '0000-00-00 00:00:00'),
+(27, NULL, NULL, 'grupo_tipo_soporte', 'Declaración de renta (Año anterior)', 'DRAA', '0', 0, 1, '2016-05-26 00:00:00', '0000-00-00 00:00:00'),
+(28, NULL, NULL, 'grupo_tipo_soporte', 'Balance general y estado de resultados', 'BGER', '0', 0, 1, '2016-05-26 00:00:00', '0000-00-00 00:00:00'),
+(29, NULL, NULL, 'grupo_tipo_soporte', 'Antecedentes disciplinarios del Grupo (Procuraduria)', 'ADGP', '0', 0, 1, '2016-05-26 00:00:00', '0000-00-00 00:00:00'),
+(30, NULL, NULL, 'grupo_tipo_soporte', 'Antecedentes fiscales del Grupo (Contraloría)', 'AFGC', '0', 0, 1, '2016-05-26 00:00:00', '0000-00-00 00:00:00'),
+(31, NULL, NULL, 'seguimiento_grupo_tipo_soporte', 'Formato de evaluacion', 'FE', '0', 0, 1, '2016-05-31 00:00:00', '0000-00-00 00:00:00'),
+(32, NULL, NULL, 'seguimiento_grupo_tipo_soporte', 'Certificación aportes de contrapartida', 'CAC', '0', 0, 1, '2016-05-31 00:00:00', '0000-00-00 00:00:00'),
+(33, NULL, NULL, 'seguimiento_grupo_tipo_soporte', 'Contrato de adhesión', 'CA', '0', 0, 1, '2016-05-31 00:00:00', '0000-00-00 00:00:00'),
+(34, NULL, NULL, 'seguimiento_grupo_tipo_soporte', 'Póliza de cumplimiento', 'PC', '0', 0, 1, '2016-05-31 00:00:00', '0000-00-00 00:00:00'),
+(35, NULL, NULL, 'visita_tipo_soporte', 'Evidencia de imágenes de la visita', 'EIV', '0', 0, 1, '2016-06-13 00:00:00', '0000-00-00 00:00:00'),
+(36, NULL, NULL, 'visita_tipo_soporte', 'Documento de aprobación de interventoria', 'DAI', '0', 0, 1, '2016-06-13 00:00:00', '0000-00-00 00:00:00'),
+(37, NULL, NULL, 'visita_tipo_soporte', 'Documento de rechazo de interventoria', 'DRI', '0', 0, 1, '2016-06-13 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -1710,7 +2003,15 @@ CREATE TABLE IF NOT EXISTS `evaluacion_fases` (
   KEY `IDX_D47E6B9B9C833003` (`grupo_id`),
   KEY `IDX_D47E6B9BDADD026` (`usuario_modificacion_id`),
   KEY `IDX_D47E6B9BAEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+
+--
+-- Volcado de datos para la tabla `evaluacion_fases`
+--
+
+INSERT INTO `evaluacion_fases` (`id`, `grupo_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `calificacion_iea`, `apto_iea`, `calificacion_pi`, `apto_pi`, `calificacion_pn`, `apto_pn`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, 3, NULL, NULL, NULL, 0, NULL, 0, '80', 1, 1, NULL, '2016-06-03 22:19:49'),
+(2, 4, NULL, NULL, NULL, 0, NULL, 0, '-70', 1, 1, NULL, '2016-06-28 22:12:08');
 
 -- --------------------------------------------------------
 
@@ -1817,7 +2118,14 @@ CREATE TABLE IF NOT EXISTS `experiencia_exitosa` (
   KEY `IDX_380325B19C833003` (`grupo_id`),
   KEY `IDX_380325B1DADD026` (`usuario_modificacion_id`),
   KEY `IDX_380325B1AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `experiencia_exitosa`
+--
+
+INSERT INTO `experiencia_exitosa` (`id`, `grupo_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `fecha_registro`, `numero_empleos`, `ventas_mes`, `produccion_mensual`, `fuentes_financiacion`, `valor_recursos_financiacion`, `tipo_poblacion`, `proceso_productivo`, `testimonio_poblacion`, `acciones_minimizacion_impacto_ambiental`, `impacto_comunidad`, `innovacion`, `observaciones`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, NULL, NULL, NULL, '2016-07-20 00:00:00', 3, 50000, '600000', '451345', '5421345', 'dd', 'ddd', 'ddd', 'ddd', 'ddd', 'ddd', 'dddd', 1, '2016-07-06 17:45:50', '2016-07-06 17:04:08');
 
 -- --------------------------------------------------------
 
@@ -1897,7 +2205,7 @@ CREATE TABLE IF NOT EXISTS `feria` (
 --
 
 INSERT INTO `feria` (`id`, `tipo_id`, `municipio_id`, `fecha_propuesta`, `lugar`, `nombre`, `entidades`, `presentacion`, `objetivo`, `objetivos_especificos`, `fecha_aprobacion`, `fecha_aprobada`, `aprobacion`, `coordinador`, `numero_proyectos_produccion_agropecuaria`, `numero_proyectos_agroindustria`, `numero_proyectos_turismo_rural`, `numero_proyectos_artesanias`, `numero_proyectos_otros_servicios`, `valor_ventas_produccion_agropecuaria`, `valor_ventas_agroindustria`, `valor_ventas_turismo_rural`, `valor_ventas_artesanias`, `valor_ventas_otros_servicios`, `personas_atendidas`, `representantes_instituciones`, `comentarios`, `fecha_inicio`, `fecha_finalizacion`, `fecha_inicio_propuesta`, `fecha_finalizacion_propuesta`, `aprobador`, `observacion`, `active`, `usuario_modificacion`, `fecha_modificacion`, `usuario_creacion`, `fecha_creacion`) VALUES
-(1, NULL, 1, '2016-05-14 00:00:00', 'afds', 'sadf', 'asfd', 'afsd', 'asdf', 'asfd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, '2016-05-05 18:47:53');
+(1, NULL, 1, '2016-06-09 00:00:00', 'La iglesia', 'Feria de emprendimiento', 'LaCAR', 'P', 'Presentar Emprendimientos', 'sad', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, '2016-06-14 22:03:56');
 
 -- --------------------------------------------------------
 
@@ -1944,9 +2252,6 @@ CREATE TABLE IF NOT EXISTS `grupo` (
   `direccion` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `rural` tinyint(1) DEFAULT NULL,
   `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `corregimiento` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `vereda` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `cacerio` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `numero_identificacion_tributaria` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `fecha_constitucion_legal` datetime DEFAULT NULL,
   `telefono_fijo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -1967,14 +2272,17 @@ CREATE TABLE IF NOT EXISTS `grupo` (
   KEY `IDX_8C0E9BD378814E56` (`tipo_cuenta_id`),
   KEY `IDX_8C0E9BD3DADD026` (`usuario_modificacion_id`),
   KEY `IDX_8C0E9BD3AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
 -- Volcado de datos para la tabla `grupo`
 --
 
-INSERT INTO `grupo` (`id`, `convocatoria_id`, `municipio_id`, `tipo_id`, `figura_legal_constitucion_id`, `entidad_financiera_cuenta_id`, `tipo_cuenta_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `fecha_inscripcion`, `codigo`, `nombre`, `direccion`, `rural`, `descripcion`, `corregimiento`, `vereda`, `cacerio`, `numero_identificacion_tributaria`, `fecha_constitucion_legal`, `telefono_fijo`, `telefono_celular`, `correo_electronico`, `numero_cuenta`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
-(5, NULL, 22, 174, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Grupo ahi', 'calle 5', 0, 'caassad', NULL, NULL, NULL, '0-0', NULL, '213213', '4124124141', 'correo@prueba.com', NULL, 1, NULL, '2016-05-05 23:24:35');
+INSERT INTO `grupo` (`id`, `convocatoria_id`, `municipio_id`, `tipo_id`, `figura_legal_constitucion_id`, `entidad_financiera_cuenta_id`, `tipo_cuenta_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `fecha_inscripcion`, `codigo`, `nombre`, `direccion`, `rural`, `descripcion`, `numero_identificacion_tributaria`, `fecha_constitucion_legal`, `telefono_fijo`, `telefono_celular`, `correo_electronico`, `numero_cuenta`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, NULL, 91, 173, NULL, 180, 175, NULL, NULL, NULL, NULL, 'Los Fundadores', 'Vereda la Palma', 1, 'Por la segunda subida después del acerico', NULL, NULL, NULL, NULL, NULL, '1231231', 1, '2016-05-18 22:14:06', '2016-05-18 21:22:23'),
+(2, 1, 87, 174, 204, NULL, NULL, NULL, NULL, NULL, NULL, 'La zapateria', 'Vereda el Vino', 0, NULL, '190547237-7', '2016-05-04 00:00:00', '7031447', NULL, NULL, NULL, 1, '2016-07-06 23:26:29', '2016-05-18 22:15:45'),
+(3, 1, 8, 173, NULL, NULL, NULL, NULL, NULL, '2016-05-31 21:19:49', 'CA-CAL-1-2016/05-003', 'Seguimiento', 'Vereda el Vino', 1, 'Cerca a la carretera principal', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '2016-05-31 20:47:25'),
+(4, 1, 47, 171, 207, 178, 175, NULL, NULL, '2016-06-28 21:17:59', 'MA-PRI-4-2016/06-004', 'Aviatur Editado para poo', 'Vereda el Vino', 1, 'Pasando la escuela a 10 minutos de la tienda de doña Pepa', '0-0', NULL, NULL, NULL, NULL, '345784513754-9', 1, '2016-07-06 23:25:18', '2016-06-28 16:23:19');
 
 -- --------------------------------------------------------
 
@@ -1997,7 +2305,18 @@ CREATE TABLE IF NOT EXISTS `grupo_soporte` (
   KEY `IDX_5D2EB461E24646FA` (`tipo_soporte_id`),
   KEY `IDX_5D2EB461DADD026` (`usuario_modificacion_id`),
   KEY `IDX_5D2EB461AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
+
+--
+-- Volcado de datos para la tabla `grupo_soporte`
+--
+
+INSERT INTO `grupo_soporte` (`id`, `grupo_id`, `tipo_soporte_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `path`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, 2, 1, NULL, NULL, 'e605b166758b8b82fb973c8bab3e013d50b2cd42.png', 0, '2016-05-24 20:55:29', '2016-05-24 19:03:51'),
+(2, 2, 1, NULL, NULL, 'daefe75c3ff7b94a2e4d6d90dd24adb1ebbeeb19.png', 1, NULL, '2016-05-24 20:57:05'),
+(3, 4, 1, NULL, NULL, '1ed0ec07493ea2f95564e0ed8d74bacbaeb768cc.png', 0, '2016-06-28 16:41:56', '2016-06-28 16:38:44'),
+(4, 4, 3, NULL, NULL, 'da521bd6b1d4c717873d5cfb6542c5e731036369.pdf', 1, NULL, '2016-06-28 16:39:03'),
+(5, 4, 24, NULL, NULL, '9348dbb8ad3e13f9f6d9ec6a68b35394c2233367.pdf', 1, NULL, '2016-06-28 21:46:23');
 
 -- --------------------------------------------------------
 
@@ -2022,7 +2341,15 @@ CREATE TABLE IF NOT EXISTS `habilitacion_fases` (
   UNIQUE KEY `UNIQ_87643E129C833003` (`grupo_id`),
   KEY `IDX_87643E12DADD026` (`usuario_modificacion_id`),
   KEY `IDX_87643E12AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+
+--
+-- Volcado de datos para la tabla `habilitacion_fases`
+--
+
+INSERT INTO `habilitacion_fases` (`id`, `grupo_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `mot_formal`, `mot_no_formal`, `iea`, `pi`, `pn`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, 3, NULL, NULL, 0, 0, 0, NULL, 1, 1, NULL, '2016-06-08 17:01:15'),
+(2, 4, NULL, NULL, 1, 0, 0, NULL, 0, 1, NULL, '2016-06-28 21:12:54');
 
 -- --------------------------------------------------------
 
@@ -2062,7 +2389,14 @@ CREATE TABLE IF NOT EXISTS `integrante` (
   KEY `IDX_8AF632F6DA995DEC` (`pertenencia_etnica_id`),
   KEY `IDX_8AF632F6DADD026` (`usuario_modificacion_id`),
   KEY `IDX_8AF632F6AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `integrante`
+--
+
+INSERT INTO `integrante` (`id`, `tipo_documento_id`, `genero_id`, `nivel_estudios_id`, `pertenencia_etnica_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `numero_documento`, `primer_apellido`, `segundo_apellido`, `primer_nombre`, `segundo_nombre`, `fecha_nacimiento`, `entidad`, `cargo`, `direccion`, `telefono_fijo`, `telefono_celular`, `telefono_celular2`, `correo_electronico`, `foto`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, 2, 6, 32, NULL, NULL, NULL, '123456789', 'Cantor', 'Contreras', 'Juan', 'Alberto', '2016-06-24 00:00:00', 'Promotor Rural', 'Veedor', 'calle 67# 76 -48', '3456789412', '3054678945', NULL, 'juanec888@hotmail.caaaa', NULL, 1, NULL, '2016-06-14 16:06:57');
 
 -- --------------------------------------------------------
 
@@ -2606,7 +2940,7 @@ CREATE TABLE IF NOT EXISTS `organizacion` (
 --
 
 INSERT INTO `organizacion` (`id`, `linea_productiva_id`, `municipio_id`, `tipo_documento_contacto_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `nombre_organizacion`, `tipo_producto`, `fecha_inscripcion`, `codigo`, `nombre`, `direccion`, `rural`, `descripcion`, `numero_documento_contacto`, `primer_apellido_contacto`, `segundo_apellido_contacto`, `primer_nombre_contacto`, `segundo_nombre_contacto`, `telefono_fijo_contacto`, `telefono_celular_contacto`, `correo_electronico_contacto`, `ruta`, `pasantia`, `observaciones`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
-(1, 226, 91, 1, NULL, NULL, 'afsdfdas', 'asdfadfs', '2016-05-13 00:00:00', NULL, NULL, 'dafsadf', 0, 'adfsfads', '748181', 'fdsdsf', NULL, 'fdsafa', NULL, '484848', '4816188185', 'correo@prueba.com', 0, 0, 'fadfasdfas', 1, NULL, '2016-05-05 19:00:49');
+(1, 226, 91, 4, NULL, NULL, 'Doria', 'Pasta', '2016-06-05 00:00:00', NULL, NULL, 'calle la victoria', 0, 'Esta es para la victorai', '10976537634', 'Forero', 'Villamizar', 'Juan', 'Doria', '2232312', '87627123123', 'Judaaa@hotr.com', 0, 0, 'esta es una empresa seria', 1, NULL, '2016-06-15 18:54:36');
 
 -- --------------------------------------------------------
 
@@ -2792,7 +3126,7 @@ CREATE TABLE IF NOT EXISTS `pasantia` (
 --
 
 INSERT INTO `pasantia` (`id`, `territorio_aprendizaje_id`, `organizacion_id`, `grupo_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `nombre_pasantia`, `observaciones`, `aprobacion`, `fecha_inicio`, `fecha_finalizacion`, `fecha_inicio_propuesta`, `fecha_finalizacion_propuesta`, `aprobador`, `observacion`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
-(1, NULL, NULL, NULL, NULL, NULL, 'afsdfsda', 'asfdafsd', NULL, NULL, NULL, '2016-05-14 00:00:00', '2016-05-12 00:00:00', NULL, NULL, 1, NULL, '2016-05-05 18:48:38');
+(1, 1, NULL, NULL, NULL, NULL, 'Pasantia de EJEMPLO', 'Esta pasantia es un inicio', NULL, NULL, NULL, '2016-06-09 00:00:00', '2016-06-03 00:00:00', NULL, NULL, 1, NULL, '2016-06-15 17:06:24');
 
 -- --------------------------------------------------------
 
@@ -2893,14 +3227,7 @@ CREATE TABLE IF NOT EXISTS `poa` (
   UNIQUE KEY `UNIQ_736097E489A50577` (`anio`),
   KEY `IDX_736097E4DADD026` (`usuario_modificacion_id`),
   KEY `IDX_736097E4AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
-
---
--- Volcado de datos para la tabla `poa`
---
-
-INSERT INTO `poa` (`id`, `usuario_modificacion_id`, `usuario_creacion_id`, `anio`, `presupuesto`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
-(1, NULL, NULL, 1818, '18158', 1, NULL, '2016-05-05 19:03:25');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -3065,14 +3392,7 @@ CREATE TABLE IF NOT EXISTS `rol` (
   PRIMARY KEY (`id`),
   KEY `IDX_E553F37DADD026` (`usuario_modificacion_id`),
   KEY `IDX_E553F37AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
-
---
--- Volcado de datos para la tabla `rol`
---
-
-INSERT INTO `rol` (`id`, `usuario_modificacion_id`, `usuario_creacion_id`, `rol`, `permiso`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
-(1, NULL, 1, 'ROLE_USER', '{"component":[{"id":1,"code":"1","path":"#","title":"Gestion Empresarial","checked":true,"module":[{"id":1,"code":"1","path":"#","title":"Formacion de capital social asociativo y desarrollo empresarial","checked":true,"subModule":[{"id":1,"code":"1","path":"gruposGestion","title":"Gestión de Grupos","checked":true,"action":[{"id":1,"checked":true},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":2,"code":"2","path":"CLEARGestion","title":"Gestión de CLEAR","checked":true,"action":[{"id":1,"checked":true},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":3,"code":"3","path":"#","title":"Gestión de seguimiento y monitoreo","checked":true,"action":[{"id":1,"checked":true},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]}]},{"id":2,"code":"2","path":"#","title":"Concursos de mejoramiento","checked":false,"subModule":[{"id":1,"code":"1","path":"concursoGestion","title":"Gestion de Concursos","checked":false,"action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":2,"code":"2","path":"#","title":"Gestion de Jurados","checked":false,"action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":3,"code":"3","path":"#","title":"Gestion de seguimiento y monitoreo","checked":false,"action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]}]},{"id":3,"code":"3","path":"#","title":"Servicios complementarios","checked":false,"subModule":[{"id":1,"code":"1","path":"#","title":"Participación rutas y pasantias","checked":false,"action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":2,"code":"2","path":"#","title":"Participación en talleres","checked":false,"action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":3,"code":"3","path":"#","title":"Participación en Ferias","checked":false,"action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":4,"code":"4","path":"#","title":"Participación en ferias de difusión del proyecto","checked":false,"action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]},{"id":5,"code":"5","path":"#","title":"Desarrollo de ferias de difusión del proyecto","checked":false,"action":[{"id":1,"checked":false},{"id":2,"checked":false},{"id":3,"checked":false},{"id":4,"checked":false}]}]}]}]}', 1, '2016-01-26 16:15:04', '2016-01-18 00:00:00');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -3110,7 +3430,7 @@ CREATE TABLE IF NOT EXISTS `ruta` (
 --
 
 INSERT INTO `ruta` (`id`, `territorio_aprendizaje_id`, `grupo_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `nombre_ruta`, `observaciones`, `aprobacion`, `fecha_inicio`, `fecha_finalizacion`, `fecha_inicio_propuesta`, `fecha_finalizacion_propuesta`, `aprobador`, `observacion`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
-(1, NULL, NULL, NULL, NULL, 'afdadfs', 'adsffads', NULL, NULL, NULL, '2016-05-15 00:00:00', '2016-05-27 00:00:00', NULL, NULL, 1, NULL, '2016-05-05 18:50:56');
+(1, NULL, NULL, NULL, NULL, 'Ruta de EJEMPLO', 'A', NULL, NULL, NULL, '2016-06-10 00:00:00', '2016-06-15 00:00:00', NULL, NULL, 1, NULL, '2016-06-15 18:20:27');
 
 -- --------------------------------------------------------
 
@@ -3198,7 +3518,53 @@ CREATE TABLE IF NOT EXISTS `seguimiento_fase` (
   KEY `IDX_C0EF2E519C833003` (`grupo_id`),
   KEY `IDX_C0EF2E51DADD026` (`usuario_modificacion_id`),
   KEY `IDX_C0EF2E51AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `seguimiento_fase`
+--
+
+INSERT INTO `seguimiento_fase` (`id`, `grupo_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `fase`, `fecha_inicio`, `fecha_finalizacion`, `actividad_productiva`, `descripcion_actividad_productiva`, `logros`, `resultado_componente_organizacional`, `resultado_componente_productivo`, `resultado_componente_comercial`, `resultado_componente_administrativo`, `resultado_componente_financiero`, `observaciones`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, 4, NULL, NULL, 3, '2016-06-10 00:00:00', '2016-06-29 00:00:00', 'Gallinas de pelea', 'Pelea de Gallinas', 'La Cochera de los amrranos', 'La Cochera de los amrranos', 'La Cochera de los amrranos', 'La Cochera de los amrranos', 'La Cochera de los amrranos', 'La Cochera de los amrranos', 'La Cochera de los amrranos', 1, '2016-06-28 22:18:50', '2016-06-28 22:14:04');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `seguimiento_grupo_soporte`
+--
+
+CREATE TABLE IF NOT EXISTS `seguimiento_grupo_soporte` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `grupo_id` int(11) DEFAULT NULL,
+  `nodo_id` int(11) DEFAULT NULL,
+  `tipo_soporte_id` int(11) DEFAULT NULL,
+  `usuario_modificacion_id` int(11) DEFAULT NULL,
+  `usuario_creacion_id` int(11) DEFAULT NULL,
+  `path` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `active` tinyint(1) NOT NULL,
+  `fecha_modificacion` datetime DEFAULT NULL,
+  `fecha_creacion` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_9469D5749C833003` (`grupo_id`),
+  KEY `IDX_9469D57429B07FB3` (`nodo_id`),
+  KEY `IDX_9469D574E24646FA` (`tipo_soporte_id`),
+  KEY `IDX_9469D574DADD026` (`usuario_modificacion_id`),
+  KEY `IDX_9469D574AEADF654` (`usuario_creacion_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
+
+--
+-- Volcado de datos para la tabla `seguimiento_grupo_soporte`
+--
+
+INSERT INTO `seguimiento_grupo_soporte` (`id`, `grupo_id`, `nodo_id`, `tipo_soporte_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `path`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, 3, 26, 31, NULL, NULL, '7b3883a07205bc4c0cac839b37a4549296e1898c.png', 1, NULL, '2016-06-03 22:14:27'),
+(2, 3, 26, 32, NULL, NULL, '9fe2955b98277fe90c11023c08ce2c2e7295bdf4.png', 1, NULL, '2016-06-03 22:14:40'),
+(3, 3, 26, 33, NULL, NULL, '9023dfb8bb59c38f20cc937847feb674c67003cd.png', 1, NULL, '2016-06-03 22:14:48'),
+(4, 3, 26, 34, NULL, NULL, '5c28a231b66c9f9fa7ec177841a2c3cdbcad1f9d.png', 1, NULL, '2016-06-03 22:14:57'),
+(5, 4, 26, 31, NULL, NULL, '8c109c20fac18fd88492dfc17803d71fa6a627ca.pdf', 1, NULL, '2016-06-28 22:05:57'),
+(6, 4, 26, 32, NULL, NULL, 'e36ca26481cd2259151ea80163f2da6a5cf2d101.pdf', 1, NULL, '2016-06-28 22:11:00'),
+(7, 4, 26, 33, NULL, NULL, 'fee4cf1429dd1969bf12bcef2571a3c0ac71f4e0.pdf', 1, NULL, '2016-06-28 22:11:09'),
+(8, 4, 26, 34, NULL, NULL, 'be800c61701e88906f4c9c95cb2de791a12f260d.pdf', 1, NULL, '2016-06-28 22:11:18');
 
 -- --------------------------------------------------------
 
@@ -3227,7 +3593,14 @@ CREATE TABLE IF NOT EXISTS `seguimiento_mot` (
   KEY `IDX_569ADBF09C833003` (`grupo_id`),
   KEY `IDX_569ADBF0DADD026` (`usuario_modificacion_id`),
   KEY `IDX_569ADBF0AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `seguimiento_mot`
+--
+
+INSERT INTO `seguimiento_mot` (`id`, `grupo_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `fase`, `fecha_inicio`, `fecha_finalizacion`, `indentificacion_recursos_tangibles`, `indentificacion_recursos_financieros`, `indentificacion_recursos_intangibles`, `indentificacion_opciones_viables`, `viabilidad_negocio`, `observaciones`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, 4, NULL, NULL, 0, '2016-06-10 00:00:00', '2016-06-10 00:00:00', '500000', '500000', '5000000', '5000000', '5000000', 'El marranito quedo bien', 1, '2016-06-28 21:44:15', '2016-06-28 21:33:56');
 
 -- --------------------------------------------------------
 
@@ -3288,7 +3661,14 @@ CREATE TABLE IF NOT EXISTS `talento` (
   KEY `IDX_C2CE4CD5378258DA` (`nivel_estudios_id`),
   KEY `IDX_C2CE4CD5DADD026` (`usuario_modificacion_id`),
   KEY `IDX_C2CE4CD5AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `talento`
+--
+
+INSERT INTO `talento` (`id`, `tipo_id`, `tipo_documento_id`, `genero_id`, `pertenencia_etnica_id`, `grupo_indigena_id`, `rol_grupo_familiar_id`, `municipio_id`, `estado_civil_id`, `nivel_estudios_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `numero_documento`, `primer_apellido`, `segundo_apellido`, `primer_nombre`, `segundo_nombre`, `fecha_nacimiento`, `edad_inscripcion`, `joven_rural`, `direccion`, `rural`, `descripcion`, `corregimiento`, `vereda`, `cacerio`, `telefono_fijo`, `telefono_celular`, `correo_electronico`, `organizacion`, `fecha_inicio_talento`, `talento_madr`, `talento_otros_lugares`, `actividad_participado`, `area_desempeno_principal`, `area_desempeno_secundario`, `area_desempeno_terciario`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, 151, 1, 6, 47, 65, 224, 17, NULL, 32, NULL, NULL, '102234512111', 'cantor', 'forero', 'sebastian', 'pedro', '2016-07-19 00:00:00', 23, 1, 'calle', NULL, 'vereda la', NULL, NULL, NULL, '6547897', '3045789451', 'asdasd@hotmailcom', 'unidos', '2016-07-20 00:00:00', 1, 1, 'todas', 'todas', 'todas', 'rtodas', 1, NULL, '2016-07-06 19:02:52');
 
 -- --------------------------------------------------------
 
@@ -3339,7 +3719,14 @@ CREATE TABLE IF NOT EXISTS `taller` (
   KEY `IDX_139F45849C833003` (`grupo_id`),
   KEY `IDX_139F4584DADD026` (`usuario_modificacion_id`),
   KEY `IDX_139F4584AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `taller`
+--
+
+INSERT INTO `taller` (`id`, `grupo_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `fecha`, `objetivo`, `agenda`, `lugar`, `asistentes`, `observaciones`, `compromisos`, `talento`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, 4, NULL, NULL, '2016-06-10 00:00:00', 'El marranito mas Gordito', 'Bañar al marranito \r\nMaquillar el marranito', 'Granja la aurora', 4, 'Gana el mas gordito', 'Que no se vea Palanca', NULL, 1, '2016-06-28 21:39:48', '2016-06-28 21:38:24');
 
 -- --------------------------------------------------------
 
@@ -3362,7 +3749,14 @@ CREATE TABLE IF NOT EXISTS `taller_soporte` (
   KEY `IDX_7C5D4381E24646FA` (`tipo_soporte_id`),
   KEY `IDX_7C5D4381DADD026` (`usuario_modificacion_id`),
   KEY `IDX_7C5D4381AEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Volcado de datos para la tabla `taller_soporte`
+--
+
+INSERT INTO `taller_soporte` (`id`, `taller_id`, `tipo_soporte_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `path`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, 1, 24, NULL, NULL, 'e5f8f8e9fed02e73d5e3574725b5cae2afeff1d0.pdf', 1, NULL, '2016-06-28 21:38:59');
 
 -- --------------------------------------------------------
 
@@ -3389,7 +3783,7 @@ CREATE TABLE IF NOT EXISTS `territorio_aprendizaje` (
 --
 
 INSERT INTO `territorio_aprendizaje` (`id`, `usuario_modificacion_id`, `usuario_creacion_id`, `nombre_territorio`, `observaciones`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
-(1, NULL, NULL, 'fdfsfsfd', 'sff', 1, NULL, '2016-05-05 19:01:34');
+(1, NULL, NULL, 'Territorio Aprendizaje 1', 'Buen territorio para el aprendizaje', 1, NULL, '2016-06-15 17:05:26');
 
 -- --------------------------------------------------------
 
@@ -3429,25 +3823,31 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `segundo_apellido` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `primer_nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `segundo_nombre` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `municipio_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_2265B05D92FC23A8` (`username_canonical`),
   UNIQUE KEY `UNIQ_2265B05DA0D96FBF` (`email_canonical`),
   KEY `IDX_2265B05DF6939175` (`tipo_documento_id`),
   KEY `IDX_2265B05DDADD026` (`usuario_modificacion_id`),
-  KEY `IDX_2265B05DAEADF654` (`usuario_creacion_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
+  KEY `IDX_2265B05DAEADF654` (`usuario_creacion_id`),
+  KEY `IDX_2265B05D58BC1BE0` (`municipio_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=11 ;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `password`, `salt`, `telefono_fijo`, `telefono_celular`, `correo_electronico`, `active`, `fecha_modificacion`, `fecha_creacion`, `tipo_documento_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `last_login`, `locked`, `expired`, `expires_at`, `confirmation_token`, `password_requested_at`, `roles`, `credentials_expired`, `credentials_expire_at`, `numero_documento`, `primer_apellido`, `segundo_apellido`, `primer_nombre`, `segundo_nombre`) VALUES
-(1, '111111', '', '', '', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, '', '', '', '', 0, NULL, 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, '', '', NULL, '', NULL),
-(2, '$2y$13$nug00bsypis8kgwsw0440euZuIkfQpFju5ZOdG7zPn/11McKD4rCm', 'nug00bsypis8kgwsw0440o0o0swgw04', '7031447', '3057129065', 's.cantor@rmcproducciones.com', 1, NULL, '2016-01-12 14:40:51', 1, NULL, NULL, 's.cantor', 's.cantor', 's.cantor@rmcproducciones.com', 's.cantor@rmcproducciones.com', 1, '2016-05-05 23:48:10', 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, '1022376577', 'cantor', 'forero', 'juan', 'sebastian'),
-(3, '$2y$13$mqri4n4dscg4s8wowoswgetXw8mtQ9h7rz94DZ.ew2lrvlQHtoqzW', 'mqri4n4dscg4s8wowoswgk004cgwogc', '1111111', '1234567897', 'juanc@hotmail.com', 1, NULL, '2016-01-29 17:29:49', 1, NULL, NULL, 'daniel', 'daniel', 'juanc@hotmail.com', 'juanc@hotmail.com', 1, '2016-01-29 18:06:10', 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, '1022376577', 'perez', 'bastidas', 'daniel', 'ricardo'),
-(4, '$2y$13$fd8601sw4vco0cw8gk0gsu5YDCNEro073Zr6GJ7M9zPfN2ctMGbIu', 'fd8601sw4vco0cw8gk0gs8o8k4s8k8g', '10001001', '10001001', 'marcela.cortes.fonseca@gmail.com', 1, NULL, '2016-02-22 20:18:36', 1, NULL, NULL, 'marcela', 'marcela', 'marcela.cortes.fonseca@gmail.com', 'marcela.cortes.fonseca@gmail.com', 1, '2016-02-23 15:36:35', 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, '52814557', 'Cortes', NULL, 'Marcela', NULL),
-(5, '$2y$13$67yodttax68s0ows80o44eg0oU2e6D3QstOiOFuYA4k2fzJAaNN5G', '67yodttax68s0ows80o44skko0ccw44', '1000100', '1000100', 'jarocha53@ucatolica.edu.com', 1, NULL, '2016-02-22 21:05:36', 1, NULL, NULL, 'j.rocha', 'j.rocha', 'jarocha53@ucatolica.edu.com', 'jarocha53@ucatolica.edu.com', 1, '2016-02-22 21:05:37', 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, '79884089', 'Rocha', NULL, 'Jhony', NULL),
-(6, '$2y$13$2zo4pz4ola2ow0o80s0kceANQhTO0Nw4QjMLpv4yUyPF8ecqHTG7C', '2zo4pz4ola2ow0o80s0kco00osk888o', '342342', '34234234', 'asdasd@asdasd.com', 1, NULL, '2016-03-15 15:09:53', 1, NULL, NULL, 'armandocasas', 'armandocasas', 'asdasd@asdasd.com', 'asdasd@asdasd.com', 1, '2016-03-15 15:48:34', 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, '123123', 'casas', 'armando', 'armando', 'armando');
+INSERT INTO `usuario` (`id`, `password`, `salt`, `telefono_fijo`, `telefono_celular`, `correo_electronico`, `active`, `fecha_modificacion`, `fecha_creacion`, `tipo_documento_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `username`, `username_canonical`, `email`, `email_canonical`, `enabled`, `last_login`, `locked`, `expired`, `expires_at`, `confirmation_token`, `password_requested_at`, `roles`, `credentials_expired`, `credentials_expire_at`, `numero_documento`, `primer_apellido`, `segundo_apellido`, `primer_nombre`, `segundo_nombre`, `municipio_id`) VALUES
+(1, '111111', '', '', '', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, NULL, '', '', '', '', 0, NULL, 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, '', '', NULL, '', NULL, NULL),
+(2, '$2y$13$nug00bsypis8kgwsw0440euZuIkfQpFju5ZOdG7zPn/11McKD4rCm', 'nug00bsypis8kgwsw0440o0o0swgw04', '7031447', '3057129065', 's.cantor@rmcproducciones.com', 1, NULL, '2016-01-12 14:40:51', 1, NULL, NULL, 's.cantor', 's.cantor', 's.cantor@rmcproducciones.com', 's.cantor@rmcproducciones.com', 1, '2016-05-17 22:45:36', 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, '1022376577', 'cantor', 'forero', 'juan', 'sebastian', NULL),
+(3, '$2y$13$mqri4n4dscg4s8wowoswgetXw8mtQ9h7rz94DZ.ew2lrvlQHtoqzW', 'mqri4n4dscg4s8wowoswgk004cgwogc', '1111111', '1234567897', 'juanc@hotmail.com', 1, NULL, '2016-01-29 17:29:49', 1, NULL, NULL, 'daniel', 'daniel', 'juanc@hotmail.com', 'juanc@hotmail.com', 1, '2016-01-29 18:06:10', 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, '1022376577', 'perez', 'bastidas', 'daniel', 'ricardo', NULL),
+(4, '$2y$13$fd8601sw4vco0cw8gk0gsu5YDCNEro073Zr6GJ7M9zPfN2ctMGbIu', 'fd8601sw4vco0cw8gk0gs8o8k4s8k8g', '10001001', '10001001', 'marcela.cortes.fonseca@gmail.com', 1, NULL, '2016-02-22 20:18:36', 1, NULL, NULL, 'marcela', 'marcela', 'marcela.cortes.fonseca@gmail.com', 'marcela.cortes.fonseca@gmail.com', 1, '2016-02-23 15:36:35', 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, '52814557', 'Cortes', NULL, 'Marcela', NULL, NULL),
+(5, '$2y$13$67yodttax68s0ows80o44eg0oU2e6D3QstOiOFuYA4k2fzJAaNN5G', '67yodttax68s0ows80o44skko0ccw44', '1000100', '1000100', 'jarocha53@ucatolica.edu.com', 1, NULL, '2016-02-22 21:05:36', 1, NULL, NULL, 'j.rocha', 'j.rocha', 'jarocha53@ucatolica.edu.com', 'jarocha53@ucatolica.edu.com', 1, '2016-02-22 21:05:37', 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, '79884089', 'Rocha', NULL, 'Jhony', NULL, NULL),
+(6, '$2y$13$2zo4pz4ola2ow0o80s0kceANQhTO0Nw4QjMLpv4yUyPF8ecqHTG7C', '2zo4pz4ola2ow0o80s0kco00osk888o', '342342', '34234234', 'asdasd@asdasd.com', 1, NULL, '2016-03-15 15:09:53', 1, NULL, NULL, 'armandocasas', 'armandocasas', 'asdasd@asdasd.com', 'asdasd@asdasd.com', 1, '2016-03-15 15:48:34', 0, 0, NULL, NULL, NULL, 'a:0:{}', 0, NULL, '123123', 'casas', 'armando', 'armando', 'armando', NULL),
+(7, '$2y$13$7i5guui0my8sg8g04c4cseaBzpGoGFu2n/uGRv6LtJOOmHqeBRDlm', '7i5guui0my8sg8g04c4cso00g48480c', '3432423', '45345325', 'admin@correo.com', 1, NULL, '2016-05-06 13:47:08', 1, NULL, NULL, 'admin', 'admin', 'admin@correo.com', 'admin@correo.com', 1, '2016-05-25 18:47:15', 0, 0, NULL, NULL, NULL, 'a:2:{i:0;s:10:"ROLE_ADMIN";i:1;s:10:"ROLE_ADMIN";}', 0, NULL, '77777', 'admin', 'admin', 'admin', 'admin', NULL),
+(8, '$2y$13$896qxybdoaskck80kk44oetX8FUhdHfNiOo3IRIdyAXR65FzuAEZG', '896qxybdoaskck80kk44ogowg44g400', '654364634', '5464564', 'coordinador@correo.com', 1, NULL, '2016-05-06 13:51:46', 1, NULL, NULL, 'coordinador', 'coordinador', 'coordinador@correo.com', 'coordinador@correo.com', 1, '2016-06-27 16:04:49', 0, 0, NULL, NULL, NULL, 'a:2:{i:0;s:16:"ROLE_COORDINADOR";i:1;s:16:"ROLE_COORDINADOR";}', 0, NULL, '435452', 'coordinador', 'coordinador', 'coordinador', 'coordinador', NULL),
+(9, '$2y$13$hta12a098pkcsw0sgck4kuqV2HDXiQ0IMx.XzcQHMplVc1dXfv26m', 'hta12a098pkcsw0sgck4k40ww44sgsw', '4353535', '4535345', 'promotor@correo.com', 1, NULL, '2016-05-06 13:57:18', 1, NULL, NULL, 'promotor', 'promotor', 'promotor@correo.com', 'promotor@correo.com', 1, '2016-05-07 14:54:55', 0, 0, NULL, NULL, NULL, 'a:2:{i:0;s:13:"ROLE_PROMOTOR";i:1;s:13:"ROLE_PROMOTOR";}', 0, NULL, '3242424', 'promotor', 'promotor', 'promotor', 'promotor', NULL),
+(10, '$2y$13$hbfo6c715wgg0k8gkwscoeG5f/ohVcDPEmjVhXfPg7iwew9dy81w6', 'hbfo6c715wgg0k8gkwscog8kg0kwo8c', '7031447', '3015794684', 's.cantor@rmcproducciones.om', 1, NULL, '2016-06-28 16:09:46', 1, NULL, NULL, 'administrador', 'administrador', 's.cantor@rmcproducciones.om', 's.cantor@rmcproducciones.om', 1, '2016-07-05 15:45:47', 0, 0, NULL, NULL, NULL, 'a:1:{s:5:"admin";s:10:"ROLE_ADMIN";}', 0, NULL, '1022376577', 'Cantor', NULL, 'Sebastian', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -3530,6 +3930,40 @@ CREATE TABLE IF NOT EXISTS `visita` (
   KEY `IDX_B7F148A229B07FB3` (`nodo_id`),
   KEY `IDX_B7F148A2DADD026` (`usuario_modificacion_id`),
   KEY `IDX_B7F148A2AEADF654` (`usuario_creacion_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+
+--
+-- Volcado de datos para la tabla `visita`
+--
+
+INSERT INTO `visita` (`id`, `grupo_id`, `seguimiento_fase_id`, `nodo_id`, `usuario_modificacion_id`, `usuario_creacion_id`, `fecha`, `objetivo`, `agenda`, `lugar`, `asistentes`, `comite_compras`, `funcionamiento_comite_compras`, `comite_vamos_bien`, `funcionamiento_comite_vamos_bien`, `logros_compras`, `logros_vamos_bien`, `contador`, `desempeno_contador`, `observaciones_contador`, `observaciones_presupuesto_asignado`, `cambios_presupuesto_asignado`, `cambios_razones_presupuesto_asignado`, `desempeno_organizacional`, `desempeno_productivo`, `desempeno_comercial`, `desempeno_administrativo`, `desempeno_financiero`, `cambios_integrantes_grupo`, `cambios_razones_integrantes_grupo`, `observaciones`, `compromisos`, `interventoria`, `razones_interventoria`, `active`, `fecha_modificacion`, `fecha_creacion`) VALUES
+(1, 4, 1, 27, NULL, 1, '2016-06-23 00:00:00', 'Visualziar las gallinas', 'Visualziar las gallinas', 'Visualziar las gallinas', 23, 1, NULL, 1, NULL, 'Visualziar las gallinas', 'Visualziar las gallinas', 1, NULL, 'Visualziar las gallinas', NULL, 0, NULL, 'Visualziar las gallinas', 'Visualziar las gallinas', 'Visualziar las gallinas', 'Visualziar las gallinas', 'Visualziar las gallinas', 0, NULL, 'Visualziar las gallinas', 'Visualziar las gallinas', 0, NULL, 1, NULL, '2016-06-28 22:16:38'),
+(2, 4, 1, 28, NULL, 1, '2016-06-11 00:00:00', 'Visualziar las gallinas', 'Visualziar las gallinas', 'Visualziar las gallinas', 0, 1, NULL, 1, NULL, 'Visualziar las gallinas', 'Visualziar las gallinas', 1, NULL, 'Visualziar las gallinas', NULL, 0, NULL, 'Visualziar las gallinas', 'Visualziar las gallinas', 'Visualziar las gallinas', 'Visualziar las gallinas', 'Visualziar las gallinas', 0, NULL, 'Visualziar las gallinas', 'Visualziar las gallinas', 0, NULL, 1, NULL, '2016-06-28 22:17:14'),
+(3, 4, 1, 29, NULL, 1, '2016-06-24 00:00:00', 'La Cochera de los amrranos', 'La Cochera de los amrranos', 'La Cochera de los amrranos', 23, 1, NULL, 1, NULL, 'La Cochera de los amrranos', 'La Cochera de los amrranos', 1, NULL, 'La Cochera de los amrranos', NULL, 0, NULL, 'La Cochera de los amrranos', 'La Cochera de los amrranos', 'La Cochera de los amrranos', 'La Cochera de los amrranos', 'La Cochera de los amrranos', 0, NULL, 'La Cochera de los amrranos', 'La Cochera de los amrranos', 0, NULL, 1, NULL, '2016-06-28 22:18:30');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `visita_soporte`
+--
+
+CREATE TABLE IF NOT EXISTS `visita_soporte` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `grupo_id` int(11) DEFAULT NULL,
+  `nodo_id` int(11) DEFAULT NULL,
+  `tipo_soporte_id` int(11) DEFAULT NULL,
+  `usuario_modificacion_id` int(11) DEFAULT NULL,
+  `usuario_creacion_id` int(11) DEFAULT NULL,
+  `path` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `active` tinyint(1) NOT NULL,
+  `fecha_modificacion` datetime DEFAULT NULL,
+  `fecha_creacion` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_95CA1EEC9C833003` (`grupo_id`),
+  KEY `IDX_95CA1EEC29B07FB3` (`nodo_id`),
+  KEY `IDX_95CA1EECE24646FA` (`tipo_soporte_id`),
+  KEY `IDX_95CA1EECDADD026` (`usuario_modificacion_id`),
+  KEY `IDX_95CA1EECAEADF654` (`usuario_creacion_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -3788,6 +4222,16 @@ ALTER TABLE `asignacion_integrante_comite`
   ADD CONSTRAINT `FK_B8630911AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_B8630911D61C3573` FOREIGN KEY (`comite_id`) REFERENCES `comite` (`id`),
   ADD CONSTRAINT `FK_B8630911DADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`);
+
+--
+-- Filtros para la tabla `asignacion_integrante_concurso`
+--
+ALTER TABLE `asignacion_integrante_concurso`
+  ADD CONSTRAINT `FK_DF32DF4BAEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `FK_DF32DF4B4BAB96C` FOREIGN KEY (`rol_id`) REFERENCES `listas` (`id`),
+  ADD CONSTRAINT `FK_DF32DF4B6EA6C980` FOREIGN KEY (`integrante_id`) REFERENCES `integrante` (`id`),
+  ADD CONSTRAINT `FK_DF32DF4BDADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `FK_DF32DF4BF415D168` FOREIGN KEY (`concurso_id`) REFERENCES `concurso` (`id`);
 
 --
 -- Filtros para la tabla `asignacion_organizacion_pasantia`
@@ -4424,6 +4868,16 @@ ALTER TABLE `seguimiento_fase`
   ADD CONSTRAINT `FK_C0EF2E51DADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`);
 
 --
+-- Filtros para la tabla `seguimiento_grupo_soporte`
+--
+ALTER TABLE `seguimiento_grupo_soporte`
+  ADD CONSTRAINT `FK_9469D57429B07FB3` FOREIGN KEY (`nodo_id`) REFERENCES `nodo` (`id`),
+  ADD CONSTRAINT `FK_9469D5749C833003` FOREIGN KEY (`grupo_id`) REFERENCES `grupo` (`id`),
+  ADD CONSTRAINT `FK_9469D574AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `FK_9469D574DADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `FK_9469D574E24646FA` FOREIGN KEY (`tipo_soporte_id`) REFERENCES `documento_soporte` (`id`);
+
+--
 -- Filtros para la tabla `seguimiento_mot`
 --
 ALTER TABLE `seguimiento_mot`
@@ -4484,6 +4938,7 @@ ALTER TABLE `territorio_aprendizaje`
 -- Filtros para la tabla `usuario`
 --
 ALTER TABLE `usuario`
+  ADD CONSTRAINT `FK_2265B05D58BC1BE0` FOREIGN KEY (`municipio_id`) REFERENCES `municipio` (`id`),
   ADD CONSTRAINT `FK_2265B05DAEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_2265B05DDADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_2265B05DF6939175` FOREIGN KEY (`tipo_documento_id`) REFERENCES `listas` (`id`);
@@ -4505,6 +4960,16 @@ ALTER TABLE `visita`
   ADD CONSTRAINT `FK_B7F148A29C833003` FOREIGN KEY (`grupo_id`) REFERENCES `grupo` (`id`),
   ADD CONSTRAINT `FK_B7F148A2AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_B7F148A2DADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`);
+
+--
+-- Filtros para la tabla `visita_soporte`
+--
+ALTER TABLE `visita_soporte`
+  ADD CONSTRAINT `FK_95CA1EECAEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `FK_95CA1EEC29B07FB3` FOREIGN KEY (`nodo_id`) REFERENCES `nodo` (`id`),
+  ADD CONSTRAINT `FK_95CA1EEC9C833003` FOREIGN KEY (`grupo_id`) REFERENCES `grupo` (`id`),
+  ADD CONSTRAINT `FK_95CA1EECDADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `FK_95CA1EECE24646FA` FOREIGN KEY (`tipo_soporte_id`) REFERENCES `documento_soporte` (`id`);
 
 --
 -- Filtros para la tabla `zona`
