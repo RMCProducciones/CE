@@ -332,10 +332,14 @@ class GrupoController extends Controller
     {
 
         new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
-        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
-        $usuario = $em->getRepository('AppBundle:Usuario')->findBy(
-            array('id' => $idUsuario));
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
+        
 
         $grupoSoporte = new GrupoSoporte();
 
@@ -431,11 +435,15 @@ class GrupoController extends Controller
     {
 
         new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
+        $em = $this->getDoctrine()->getManager();
+
         $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
-        $usuario = $em->getRepository('AppBundle:Usuario')->findBy(
+        
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
             array('id' => $idUsuario));
-        $em = $this->getDoctrine()->getManager();
-        $em = $this->getDoctrine()->getManager();
+        
+        
 
         $grupoSoporte = new GrupoSoporte();
         
