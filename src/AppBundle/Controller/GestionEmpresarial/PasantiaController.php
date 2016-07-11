@@ -231,7 +231,15 @@ class PasantiaController extends Controller
      */
     public function pasantiaSoporteAction(Request $request, $idPasantia)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
+
 
         $pasantiaSoporte = new PasantiaSoporte();
         
@@ -284,13 +292,14 @@ class PasantiaController extends Controller
                     echo $actualizarPasantiaSoporte->getId()." ".$actualizarPasantiaSoporte->getTipoSoporte()."<br />";
                     $actualizarPasantiaSoporte->setFechaModificacion(new \DateTime());
                     $actualizarPasantiaSoporte->setActive(0);
+                    $actualizarPasantiaSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
                 
                 $pasantiaSoporte->setPasantia($pasantia);
                 $pasantiaSoporte->setActive(true);
                 $pasantiaSoporte->setFechaCreacion(new \DateTime());
-                //$grupoSoporte->setUsuarioCreacion(1);
+                $pasantiaSoporte->setUsuarioCreacion($usuario);
 
                 $em->persist($pasantiaSoporte);
                 $em->flush();
@@ -335,7 +344,14 @@ class PasantiaController extends Controller
      */
     public function pasantiaSoporteBorrarAction(Request $request, $idPasantia, $idPasantiaSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $PasantiaSoporte = new PasantiaSoporte();
         
@@ -345,6 +361,7 @@ class PasantiaController extends Controller
         
         $pasantiaSoporte->setFechaModificacion(new \DateTime());
         $pasantiaSoporte->setActive(0);
+        $pasantiaSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('pasantiaSoporte', array( 'idPasantia' => $idPasantia));

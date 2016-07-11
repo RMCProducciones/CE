@@ -234,7 +234,14 @@ class OrganizacionController extends Controller
      */
     public function organizacionSoporteAction(Request $request, $idOrganizacion)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $organizacionSoporte = new OrganizacionSoporte();
         
@@ -287,13 +294,14 @@ class OrganizacionController extends Controller
                     echo $actualizarOrganizacionSoporte->getId()." ".$actualizarOrganizacionSoporte->getTipoSoporte()."<br />";
                     $actualizarOrganizacionSoporte->setFechaModificacion(new \DateTime());
                     $actualizarOrganizacionSoporte->setActive(0);
+                    $actualizarOrganizacionSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
                 
                 $organizacionSoporte->setOrganizacion($organizacion);
                 $organizacionSoporte->setActive(true);
                 $organizacionSoporte->setFechaCreacion(new \DateTime());
-                //$grupoSoporte->setUsuarioCreacion(1);
+                $organizacionSoporte->setUsuarioCreacion($usuario);
 
                 $em->persist($organizacionSoporte);
                 $em->flush();
@@ -338,7 +346,14 @@ class OrganizacionController extends Controller
      */
     public function organizacionSoporteBorrarAction(Request $request, $idOrganizacion, $idOrganizacionSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $OrganizacionSoporte = new OrganizacionSoporte();
         
@@ -348,6 +363,7 @@ class OrganizacionController extends Controller
         
         $organizacionSoporte->setFechaModificacion(new \DateTime());
         $organizacionSoporte->setActive(0);
+        $organizacionSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('organizacionSoporte', array( 'idOrganizacion' => $idOrganizacion));

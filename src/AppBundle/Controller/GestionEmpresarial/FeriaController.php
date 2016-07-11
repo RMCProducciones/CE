@@ -270,7 +270,15 @@ class FeriaController extends Controller
      */
     public function feriaSoporteBorrarAction(Request $request, $idFeria, $idFeriaSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
+
 
         $FeriaSoporte = new FeriaSoporte();
         
@@ -280,6 +288,7 @@ class FeriaController extends Controller
         
         $feriaSoporte->setFechaModificacion(new \DateTime());
         $feriaSoporte->setActive(0);
+        $feriaSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('feriaSoporte', array( 'idFeria' => $idFeria));

@@ -29,6 +29,9 @@ use AppBundle\Form\GestionEmpresarial\TallerType;
 use AppBundle\Form\GestionEmpresarial\TallerFilterType;
 use AppBundle\Form\GestionEmpresarial\TallerBeneficiarioFilterType;
 
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
+
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -232,7 +235,14 @@ class TallerController extends Controller
      */
     public function tallerGrupoSoporteAction(Request $request, $idGrupo, $idTaller, $acceso)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $tallerSoporte = new TallerSoporte();
         
@@ -285,13 +295,14 @@ class TallerController extends Controller
                     echo $actualizarTallerSoporte->getId()." ".$actualizarTallerSoporte->getTipoSoporte()."<br />";
                     $actualizarTallerSoporte->setFechaModificacion(new \DateTime());
                     $actualizarTallerSoporte->setActive(0);
+                    $actualizarTallerSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
                 
                 $tallerSoporte->setTaller($taller);
                 $tallerSoporte->setActive(true);
                 $tallerSoporte->setFechaCreacion(new \DateTime());
-                //$grupoSoporte->setUsuarioCreacion(1);
+                $tallerSoporte->setUsuarioCreacion($usuario);
 
                 $em->persist($tallerSoporte);
                 $em->flush();
@@ -318,7 +329,14 @@ class TallerController extends Controller
      */
     public function tallerGrupoSoporteBorrarAction(Request $request, $idGrupo, $idTaller, $acceso, $idTallerSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $tallerSoporte = new TallerSoporte();
         
@@ -328,6 +346,7 @@ class TallerController extends Controller
         
         $tallerSoporte->setFechaModificacion(new \DateTime());
         $tallerSoporte->setActive(0);
+        $tallerSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('tallerSoporte', array( 'idTaller' => $idTaller, 'idGrupo' => $idGrupo, 'acceso' => $acceso));
