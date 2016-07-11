@@ -177,7 +177,14 @@ class FeriaController extends Controller
      */
     public function feriaSoporteAction(Request $request, $idFeria)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $feriaSoporte = new FeriaSoporte();
         
@@ -230,13 +237,14 @@ class FeriaController extends Controller
                     echo $actualizarFeriaSoporte->getId()." ".$actualizarFeriaSoporte->getTipoSoporte()."<br />";
                     $actualizarFeriaSoporte->setFechaModificacion(new \DateTime());
                     $actualizarFeriaSoporte->setActive(0);
+                    $actualizarFeriaSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
                 
                 $feriaSoporte->setFeria($feria);
                 $feriaSoporte->setActive(true);
                 $feriaSoporte->setFechaCreacion(new \DateTime());
-                //$grupoSoporte->setUsuarioCreacion(1);
+                $feriaSoporte->setUsuarioCreacion($usuario);
 
                 $em->persist($feriaSoporte);
                 $em->flush();

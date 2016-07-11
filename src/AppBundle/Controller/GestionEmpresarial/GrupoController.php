@@ -751,7 +751,14 @@ class GrupoController extends Controller
     public function comiteComprasAsignarGrupoBeneficiarioAction($idGrupo, $idBeneficiario)
     {
 
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
             array('id' => $idBeneficiario)
@@ -767,6 +774,7 @@ class GrupoController extends Controller
         $asignacionBeneficiarioComiteCompras->setBeneficiario($beneficiario);
         $asignacionBeneficiarioComiteCompras->setActive(true);
         $asignacionBeneficiarioComiteCompras->setFechaCreacion(new \DateTime());
+        $asignacionBeneficiarioComiteCompras->setUsuarioCreacion($usuario);
 
         $em->persist($asignacionBeneficiarioComiteCompras);
         $em->flush();

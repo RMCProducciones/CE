@@ -229,7 +229,14 @@ class ClearController extends Controller
      */
     public function clearSoporteAction(Request $request, $idCLEAR)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $clearSoporte = new ClearSoporte();
         
@@ -287,12 +294,14 @@ class ClearController extends Controller
                         //echo $actualizarClearSoporte->getId()." ".$actualizarClearSoporte->getTipoSoporte()."<br />";
                         $actualizarClearSoporte->setFechaModificacion(new \DateTime());
                         $actualizarClearSoporte->setActive(0);
+                        $actualizarClearSoporte->setUsuarioModificacion($usuario);
                         $em->flush();
                     }
                     
                     $clearSoporte->setClear($clear);
                     $clearSoporte->setActive(true);
                     $clearSoporte->setFechaCreacion(new \DateTime());
+                    $clearSoporte->setUsuarioCreacion($usuario);
 
                     if($clearSoporte->getTipoSoporte()->getDescripcion()=="Documento de legalización del Clear"){ 
                         //Despúes de subir el Acta final del CLEAR toma lo que esté almacenado en habilitacionFases de cada grupo 
@@ -346,12 +355,14 @@ class ClearController extends Controller
                             //echo $actualizarClearSoporte->getId()." ".$actualizarClearSoporte->getTipoSoporte()."<br />";
                             $actualizarClearSoporte->setFechaModificacion(new \DateTime());
                             $actualizarClearSoporte->setActive(0);
+                            $actualizarClearSoporte->setUsuarioModificacion($usuario);
                             $em->flush();
                         }
                         
                         $clearSoporte->setClear($clear);
                         $clearSoporte->setActive(true);
                         $clearSoporte->setFechaCreacion(new \DateTime());
+                        $clearSoporte->setUsuarioCreacion($usuario);
 
                         if($clearSoporte->getTipoSoporte()->getDescripcion()=="Documento de legalización del Clear"){ 
                             //Despúes de subir el Acta final del CLEAR toma lo que esté almacenado en habilitacionFases de cada grupo 
@@ -394,7 +405,14 @@ class ClearController extends Controller
      */
     public function clearSoporteBorrarAction(Request $request, $idCLEAR, $idClearSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $clearSoporte = new ClearSoporte();
         
@@ -404,6 +422,7 @@ class ClearController extends Controller
         
         $clearSoporte->setFechaModificacion(new \DateTime());
         $clearSoporte->setActive(0);
+        $clearSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR));

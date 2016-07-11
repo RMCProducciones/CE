@@ -215,7 +215,14 @@ class ConcursoController extends Controller
      */
     public function concursoSoporteAction(Request $request, $idConcurso)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $concursoSoporte = new ConcursoSoporte();
         
@@ -268,13 +275,14 @@ class ConcursoController extends Controller
                     echo $actualizarConcursoSoporte->getId()." ".$actualizarConcursoSoporte->getTipoSoporte()."<br />";
                     $actualizarConcursoSoporte->setFechaModificacion(new \DateTime());
                     $actualizarConcursoSoporte->setActive(0);
+                    $actualizarConcursoSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
                 
                 $concursoSoporte->setConcurso($concurso);
                 $concursoSoporte->setActive(true);
                 $concursoSoporte->setFechaCreacion(new \DateTime());
-                //$grupoSoporte->setUsuarioCreacion(1);
+                $concursoSoporte->setUsuarioCreacion($usuario);
 
                 $em->persist($concursoSoporte);
                 $em->flush();
@@ -319,7 +327,14 @@ class ConcursoController extends Controller
      */
     public function concursoSoporteBorrarAction(Request $request, $idConcurso, $idConcursoSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $ConcursoSoporte = new ConcursoSoporte();
         
@@ -329,6 +344,7 @@ class ConcursoController extends Controller
         
         $concursoSoporte->setFechaModificacion(new \DateTime());
         $concursoSoporte->setActive(0);
+        $concursoSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('concursoSoporte', array( 'idConcurso' => $idConcurso));
