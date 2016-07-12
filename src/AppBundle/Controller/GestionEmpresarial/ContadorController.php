@@ -123,6 +123,11 @@ class ContadorController extends Controller
             $contador->setActive(true);
             $contador->setFechaCreacion(new \DateTime());
 
+             $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $contador->setUsuarioCreacion($usuario);
+
 
             $em->persist($contador);
             $em->flush();
@@ -168,7 +173,12 @@ class ContadorController extends Controller
             $contador = $form->getData();
 
             $contador->setActive(true);
-            $contador->setFechaCreacion(new \DateTime());
+            $contador->setFechaModificacion(new \DateTime());
+
+             $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $contador->setUsuarioModificacion($usuario);
 
             $em->flush();
 
@@ -209,7 +219,14 @@ class ContadorController extends Controller
      */
     public function contadorSoporteAction(Request $request, $idContador)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $contadorSoporte = new ContadorSoporte();
         
@@ -263,13 +280,14 @@ class ContadorController extends Controller
                     echo $actualizarContadorSoporte->getId()." ".$actualizarContadorSoporte->getTipoSoporte()."<br />";
                     $actualizarContadorSoporte->setFechaModificacion(new \DateTime());
                     $actualizarContadorSoporte->setActive(0);
+                    $actualizarContadorSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
                 
                 $contadorSoporte->setContador($contador);
                 $contadorSoporte->setActive(true);
                 $contadorSoporte->setFechaCreacion(new \DateTime());
-                //$grupoSoporte->setUsuarioCreacion(1);
+                $contadorSoporte->setUsuarioCreacion($usuario);
 
                 $em->persist($contadorSoporte);
                 $em->flush();
@@ -296,7 +314,14 @@ class ContadorController extends Controller
      */
     public function contadorSoporteBorrarAction(Request $request, $idContador, $idContadorSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $ContadorSoporte = new ContadorSoporte();
         
@@ -306,6 +331,7 @@ class ContadorController extends Controller
         
         $contadorSoporte->setFechaModificacion(new \DateTime());
         $contadorSoporte->setActive(0);
+        $contadorSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('contadorSoporte', array( 'idContador' => $idContador));

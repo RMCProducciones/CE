@@ -26,31 +26,8 @@
           </div>
 
           <div class="col-md-4">
-            <div class="input-group">
-              <form method="get" action="{{ path('listasValorGestion') }}">
-                  {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
-
-                    {{ form_errors(form) }}
-                  
-                    {{ form_label(form.dominio) }}
-                    {{ form_errors(form.dominio) }}
-                    {{ form_widget(form.dominio, { 'attr': {'class': 'form-control', 'placeholder': 'Dominio'} }) }}
-
-                    {{ form_label(form.descripcion) }}
-                    {{ form_errors(form.descripcion) }}
-                    {{ form_widget(form.descripcion, { 'attr': {'class': 'form-control', 'placeholder': 'Descripcion '} }) }}
-                    <input type="submit" name="submit-filter" value="filter" />
-
-                  {{ form_end(form) }}
-                  
-              </form>
-                           
-              <span class="input-group-btn">
-                <a class="btn btn-default" href="javascript:buscar();" style="color:white; background-color:#ccc;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
-              </span>    
-            </div>
           </div>
-
+                    
           <script>
           function buscar(){
             var valor = document.getElementById("txtBuscar").value;
@@ -74,31 +51,46 @@
 
       <br />
 
-      <div class="container well" ng-controller="ListasLocalizacionCtrl" ng-show="CountBuscarHerramientas === 1">
-        <div class="row" >
-          <div class="col-md-3">
-            <label>Departamento</label>
-              <select ng-model="selDepartamento" class="form-control" id="selDepartamento" ng-change="cargarZonas()" ng-options="departamento.nombre for departamento in JSONDepartamento track by departamento.id">     
-             </select>
-          </div>
-          <div class="col-md-3">
-            <label>Zona</label>
-             <select ng-model="selZona" class="form-control" id="selZona" ng-change="cargarMunicipios()" ng-options="zona.nombre for zona in JSONZona track by zona.id"></select>
-          </div>
-          <div class="col-md-3">
-            <label>Municipio</label>
-             <select ng-model="selMunicipio" class="form-control" id="selMunicipio" ng-options="municipio.nombre for municipio in JSONMunicipio track by municipio.id"></select>           
-          </div>
-          <div class="col-md-3">
-            <label>Estado</label>
-            <input list="estado" id="lstEstado" placeholder="Estado..." class="form-control" />
-            <datalist id="estado">
-              <option value="Activo"></option>
-              <option value="Inactivo"></option>
-            </datalist>
-          </div>
+
+      <div class="container well input-group" ng-show="CountBuscarHerramientas === 1">
+        
+        
+          <form method="get" action="{{ path('listasValorGestion') }}">
+            {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+            {{ form_errors(form) }}
+
+            <div class="row"> 
+              <div class="col-md-6">
+                {{ form_label(form.dominio) }}
+                {{ form_errors(form.dominio) }}
+                {{ form_widget(form.dominio, { 'attr': {'class': 'form-control', 'placeholder': 'Dominio'} }) }}
+              </div>
+              <div class="col-md-6">
+                {{ form_label(form.descripcion) }}
+                {{ form_errors(form.descripcion) }}
+                {{ form_widget(form.descripcion, { 'attr': {'class': 'form-control', 'placeholder': 'Descripcion '} }) }}
+              </div>
+            </div>
+
+            <div class="row">    
+
+          <div class="col-md-12 text-right">
+
+          <button class="btn btn-default" style="color:white; background-color:#ccc;"  type="submit" name="submit-filter" value="filter"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+
+          </div>                  
         </div>
+         
+    </div> 
+
+        <br />
+
+        {{ form_end(form) }}
+
+        </form>
       </div>
+     
 
     </div>
 

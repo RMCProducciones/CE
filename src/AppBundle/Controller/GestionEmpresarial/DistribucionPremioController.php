@@ -74,6 +74,12 @@ class DistribucionPremioController extends Controller
             $distribucion->setFechaCreacion(new \DateTime());
 
 
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $distribucion->setUsuarioCreacion($usuario);
+
+
             
             $em->persist($distribucion);
             $em->flush();
@@ -115,6 +121,11 @@ class DistribucionPremioController extends Controller
             $distribucion = $form->getData();
 
             $distribucion->setFechaModificacion(new \DateTime());
+
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $grupo->setUsuarioModificacion($usuario);
 
             
 

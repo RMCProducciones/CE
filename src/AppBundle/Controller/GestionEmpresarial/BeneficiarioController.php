@@ -149,6 +149,11 @@ class BeneficiarioController extends Controller
             $beneficiarios->setActive(true);
             $beneficiarios->setFechaCreacion(new \DateTime());
 
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $beneficiarios->setUsuarioCreacion($usuario);
+
             $em->persist($beneficiarios);
             $em->flush();
 
@@ -168,7 +173,14 @@ class BeneficiarioController extends Controller
      */
     public function beneficiarioSoporteAction(Request $request, $idGrupo, $idBeneficiario)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $beneficiarioSoporte = new BeneficiarioSoporte();
         
@@ -221,13 +233,14 @@ class BeneficiarioController extends Controller
                     echo $actualizarBeneficiarioSoporte->getId()." ".$actualizarBeneficiarioSoporte->getTipoSoporte()."<br />";
                     $actualizarBeneficiarioSoporte->setFechaModificacion(new \DateTime());
                     $actualizarBeneficiarioSoporte->setActive(0);
+                    $actualizarBeneficiarioSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
                 
                 $beneficiarioSoporte->setBeneficiario($beneficiario);
                 $beneficiarioSoporte->setActive(true);
                 $beneficiarioSoporte->setFechaCreacion(new \DateTime());
-                //$grupoSoporte->setUsuarioCreacion(1);
+                $beneficiarioSoporte->setUsuarioCreacion($usuario  );
 
                 $em->persist($beneficiarioSoporte);
                 $em->flush();
@@ -260,7 +273,14 @@ class BeneficiarioController extends Controller
      */
     public function beneficiarioSoporteBorrarAction(Request $request, $idBeneficiario, $idBeneficiarioSoporte, $idGrupo )
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $beneficiarioSoporte = new BeneficiarioSoporte();
         
@@ -270,6 +290,7 @@ class BeneficiarioController extends Controller
         
         $beneficiarioSoporte->setFechaModificacion(new \DateTime());
         $beneficiarioSoporte->setActive(0);
+        $beneficiarioSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('beneficiarioSoporte', 
@@ -338,6 +359,13 @@ class BeneficiarioController extends Controller
             $beneficiarios = $form->getData();
             
             $beneficiarios->setFechaModificacion(new \DateTime());
+
+            
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $beneficiarios->setUsuarioModificacion($usuario);
+            
 
             $em->persist($beneficiarios);
             $em->flush();

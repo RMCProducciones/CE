@@ -96,6 +96,10 @@ class AprobacionRutaController extends Controller
 
             $aprobacion = $form->getData();
              //$aprobacion->setCoordinador($this->getUser());//$this->container->get('security.context')->getToken()->getUser();
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $aprobacion->setUsuarioModificacion($usuario);
 
 
             $em->persist($aprobacion);

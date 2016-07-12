@@ -24,6 +24,8 @@ use AppBundle\Form\GestionFinanciera\ProgramaCapacitacionFinancieraSoporteType;
 use AppBundle\Form\GestionFinanciera\ProgramaCapacitacionFinancieraFilterType;
 
 
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 
 /*Para autenticación por código*/
@@ -114,6 +116,11 @@ class ProgramaCapacitacionFinancieraController extends Controller
             $programaCapacitacionFinanciera->setActive(true);
             $programaCapacitacionFinanciera->setFechaCreacion(new \DateTime());
 
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $programaCapacitacionFinanciera->setUsuarioCreacion($usuario);
+
 
             
             $em->persist($programaCapacitacionFinanciera);
@@ -158,6 +165,11 @@ class ProgramaCapacitacionFinancieraController extends Controller
 
             $programaCapacitacionFinanciera->setFechaModificacion(new \DateTime());
 
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $programaCapacitacionFinanciera->setUsuarioModificacion($usuario);
+
 
             $em->flush();
 
@@ -198,7 +210,14 @@ class ProgramaCapacitacionFinancieraController extends Controller
      */
     public function programaCapacitacionFinancieraSoporteAction(Request $request, $idPCF)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_ADMIN", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $programaCapacitacionFinancieraSoporte = new ProgramaCapacitacionFinancieraSoporte();
         
@@ -251,13 +270,14 @@ class ProgramaCapacitacionFinancieraController extends Controller
                     echo $actualizarProgramaCapacitacionFinancieraSoporte->getId()." ".$actualizarProgramaCapacitacionFinancieraSoporte->getTipoSoporte()."<br />";
                     $actualizarProgramaCapacitacionFinancieraSoporte->setFechaModificacion(new \DateTime());
                     $actualizarProgramaCapacitacionFinancieraSoporte->setActive(0);
+                    $actualizarProgramaCapacitacionFinancieraSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
                 
                 $programaCapacitacionFinancieraSoporte->setProgramaCapacitacionFinanciera($programaCapacitacionFinanciera);
                 $programaCapacitacionFinancieraSoporte->setActive(true);
                 $programaCapacitacionFinancieraSoporte->setFechaCreacion(new \DateTime());
-                //$grupoSoporte->setUsuarioCreacion(1);
+                $programaCapacitacionFinancieraSoporte->setUsuarioCreacion($usuario);
 
                 $em->persist($programaCapacitacionFinancieraSoporte);
                 $em->flush();
@@ -302,7 +322,14 @@ class ProgramaCapacitacionFinancieraController extends Controller
      */
     public function programaCapacitacionFinancieraSoporteBorrarAction(Request $request, $idPCF, $idPCFSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_ADMIN", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $programaCapacitacionFinancieraSoporte = new ProgramaCapacitacionFinancieraSoporte();
         
@@ -312,6 +339,7 @@ class ProgramaCapacitacionFinancieraController extends Controller
         
         $programaCapacitacionFinancieraSoporte->setFechaModificacion(new \DateTime());
         $programaCapacitacionFinancieraSoporte->setActive(0);
+        $programaCapacitacionFinancieraSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('programaCapacitacionFinancieraSoporte', array( 'idPCF' => $idPCF));

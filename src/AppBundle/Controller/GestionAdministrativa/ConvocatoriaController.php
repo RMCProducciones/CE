@@ -26,6 +26,9 @@ use AppBundle\Form\GestionAdministrativa\ConvocatoriaSoporteType;
 use AppBundle\Form\GestionAdministrativa\ConvocatoriaFilterType;
 
 
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
+
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -176,7 +179,14 @@ class ConvocatoriaController extends Controller
      */
     public function convocatoriaSoporteAction(Request $request, $idConvocatoria)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_ADMIN", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $convocatoriaSoporte = new ConvocatoriaSoporte();
         
@@ -229,13 +239,14 @@ class ConvocatoriaController extends Controller
                     echo $actualizarConvocatoriaSoporte->getId()." ".$actualizarConvocatoriaSoporte->getTipoSoporte()."<br />";
                     $actualizarConvocatoriaSoporte->setFechaModificacion(new \DateTime());
                     $actualizarConvocatoriaSoporte->setActive(0);
+                    $actualizarConvocatoriaSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
                 
                 $convocatoriaSoporte->setConvocatoria($convocatoria);
                 $convocatoriaSoporte->setActive(true);
                 $convocatoriaSoporte->setFechaCreacion(new \DateTime());
-                //$grupoSoporte->setUsuarioCreacion(1);
+                $convocatoriaSoporte->setUsuarioCreacion($usuario);
 
                 $em->persist($convocatoriaSoporte);
                 $em->flush();
@@ -280,7 +291,14 @@ class ConvocatoriaController extends Controller
      */
     public function convocatoriaSoporteBorrarAction(Request $request, $idConvocatoria, $idConvocatoriaSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_ADMIN", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $convocatoriaSoporte = new ConvocatoriaSoporte();
         
@@ -290,6 +308,7 @@ class ConvocatoriaController extends Controller
         
         $convocatoriaSoporte->setFechaModificacion(new \DateTime());
         $convocatoriaSoporte->setActive(0);
+        $convocatoriaSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('ConvocatoriaSoporte', array( 'idConvocatoria' => $idConvocatoria));

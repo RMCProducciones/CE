@@ -152,6 +152,10 @@ class GrupoController extends Controller
             $grupo->setActive(true);
             $grupo->setFechaCreacion(new \DateTime());
 
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $grupo->setUsuarioCreacion($usuario);
 
             //SEGUIMIENTO, Entidad Camino
 
@@ -236,6 +240,10 @@ class GrupoController extends Controller
             }  
             
             $grupo->setFechaModificacion(new \DateTime());
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $grupo->setUsuarioModificacion($usuario);
 
             $em->persist($grupo);
             $em->flush();
@@ -332,9 +340,11 @@ class GrupoController extends Controller
     {
 
         new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
 
         $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
         $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
             array('id' => $idUsuario));
         
@@ -433,11 +443,15 @@ class GrupoController extends Controller
     {
 
         new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
+        $em = $this->getDoctrine()->getManager();
+
         $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
-        $usuario = $em->getRepository('AppBundle:Usuario')->findBy(
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
             array('id' => $idUsuario));
-        $em = $this->getDoctrine()->getManager();
-        $em = $this->getDoctrine()->getManager();
+        
+        
 
         $grupoSoporte = new GrupoSoporte();
         
@@ -559,7 +573,14 @@ class GrupoController extends Controller
     public function comiteVamosBienAsignarGrupoBeneficiarioAction($idGrupo, $idBeneficiario)
     {
 
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
             array('id' => $idBeneficiario)
@@ -581,6 +602,7 @@ class GrupoController extends Controller
             $asignacionBeneficiarioComiteVamosBien->setBeneficiario($beneficiario);
             $asignacionBeneficiarioComiteVamosBien->setActive(true);
             $asignacionBeneficiarioComiteVamosBien->setFechaCreacion(new \DateTime());
+            $asignacionBeneficiarioComiteVamosBien->setUsuarioCreacion($usuario);
 
             $em->persist($asignacionBeneficiarioComiteVamosBien);
             $em->flush();
@@ -729,7 +751,14 @@ class GrupoController extends Controller
     public function comiteComprasAsignarGrupoBeneficiarioAction($idGrupo, $idBeneficiario)
     {
 
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
             array('id' => $idBeneficiario)
@@ -745,6 +774,7 @@ class GrupoController extends Controller
         $asignacionBeneficiarioComiteCompras->setBeneficiario($beneficiario);
         $asignacionBeneficiarioComiteCompras->setActive(true);
         $asignacionBeneficiarioComiteCompras->setFechaCreacion(new \DateTime());
+        $asignacionBeneficiarioComiteCompras->setUsuarioCreacion($usuario);
 
         $em->persist($asignacionBeneficiarioComiteCompras);
         $em->flush();

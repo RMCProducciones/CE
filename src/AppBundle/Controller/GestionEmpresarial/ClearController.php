@@ -122,6 +122,11 @@ class ClearController extends Controller
             $clear->setFechaCreacion(new \DateTime());
 
 
+             $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $clear->setUsuarioCreacion($usuario);
+
             
             $em->persist($clear);
             $em->flush();
@@ -199,6 +204,12 @@ class ClearController extends Controller
             $clear->setActive(true);
             $clear->setFechaCreacion(new \DateTime());
 
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $clear->setUsuarioModificacion($usuario);
+
+
             $em->persist($clear);
             $em->flush();
 
@@ -229,7 +240,14 @@ class ClearController extends Controller
      */
     public function clearSoporteAction(Request $request, $idCLEAR)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $clearSoporte = new ClearSoporte();
         
@@ -287,12 +305,14 @@ class ClearController extends Controller
                         //echo $actualizarClearSoporte->getId()." ".$actualizarClearSoporte->getTipoSoporte()."<br />";
                         $actualizarClearSoporte->setFechaModificacion(new \DateTime());
                         $actualizarClearSoporte->setActive(0);
+                        $actualizarClearSoporte->setUsuarioModificacion($usuario);
                         $em->flush();
                     }
                     
                     $clearSoporte->setClear($clear);
                     $clearSoporte->setActive(true);
                     $clearSoporte->setFechaCreacion(new \DateTime());
+                    $clearSoporte->setUsuarioCreacion($usuario);
 
                     if($clearSoporte->getTipoSoporte()->getDescripcion()=="Documento de legalización del Clear"){ 
                         //Despúes de subir el Acta final del CLEAR toma lo que esté almacenado en habilitacionFases de cada grupo 
@@ -346,12 +366,14 @@ class ClearController extends Controller
                             //echo $actualizarClearSoporte->getId()." ".$actualizarClearSoporte->getTipoSoporte()."<br />";
                             $actualizarClearSoporte->setFechaModificacion(new \DateTime());
                             $actualizarClearSoporte->setActive(0);
+                            $actualizarClearSoporte->setUsuarioModificacion($usuario);
                             $em->flush();
                         }
                         
                         $clearSoporte->setClear($clear);
                         $clearSoporte->setActive(true);
                         $clearSoporte->setFechaCreacion(new \DateTime());
+                        $clearSoporte->setUsuarioCreacion($usuario);
 
                         if($clearSoporte->getTipoSoporte()->getDescripcion()=="Documento de legalización del Clear"){ 
                             //Despúes de subir el Acta final del CLEAR toma lo que esté almacenado en habilitacionFases de cada grupo 
@@ -394,7 +416,14 @@ class ClearController extends Controller
      */
     public function clearSoporteBorrarAction(Request $request, $idCLEAR, $idClearSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $clearSoporte = new ClearSoporte();
         
@@ -404,6 +433,7 @@ class ClearController extends Controller
         
         $clearSoporte->setFechaModificacion(new \DateTime());
         $clearSoporte->setActive(0);
+        $clearSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR));
@@ -584,6 +614,11 @@ class ClearController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
+
         $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
             array('id' => $idCLEAR)
         );
@@ -615,8 +650,13 @@ class ClearController extends Controller
                 $asignacionIntegranteCLEAR->setClear($clear);
                 $asignacionIntegranteCLEAR->setIntegrante($integrante);
 
+                $asignacionIntegranteCLEAR->setActive(true);
                 $asignacionIntegranteCLEAR->setFechaCreacion(new \DateTime());
-                $asignacionIntegranteCLEAR->setActive(0);
+                $asignacionIntegranteCLEAR->setUsuarioCreacion($usuario);
+
+
+
+
 
 
                 $em->persist($asignacionIntegranteCLEAR);
@@ -849,6 +889,11 @@ class ClearController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+         $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
+
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id' => $idGrupo)
         );  
@@ -869,6 +914,7 @@ class ClearController extends Controller
         $asignacionesGrupoCLEAR->setClear($clear);           
         $asignacionesGrupoCLEAR->setActive(true);
         $asignacionesGrupoCLEAR->setFechaCreacion(new \DateTime());
+        $asignacionesGrupoCLEAR->setUsuarioCreacion($usuario);
 
 
         $camino = $em->getRepository('AppBundle:Camino')->findBy(

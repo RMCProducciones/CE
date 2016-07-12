@@ -141,6 +141,12 @@ class PasantiaController extends Controller
 
             $pasantia->setActive(true);
             $pasantia->setFechaCreacion(new \DateTime());
+
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $pasantia->setUsuarioCreacion($usuario);
+
             $em->persist($pasantia);
             $em->flush();
 
@@ -190,6 +196,11 @@ class PasantiaController extends Controller
             
             $pasantia->setUsuarioModificacion($usuarioModificacion);
 
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $pasantia->setUsuarioModificacion($usuario);
+
             $em->flush();
 
             return $this->redirectToRoute('pasantiaGestion');
@@ -231,7 +242,15 @@ class PasantiaController extends Controller
      */
     public function pasantiaSoporteAction(Request $request, $idPasantia)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
+
 
         $pasantiaSoporte = new PasantiaSoporte();
         
@@ -284,13 +303,14 @@ class PasantiaController extends Controller
                     echo $actualizarPasantiaSoporte->getId()." ".$actualizarPasantiaSoporte->getTipoSoporte()."<br />";
                     $actualizarPasantiaSoporte->setFechaModificacion(new \DateTime());
                     $actualizarPasantiaSoporte->setActive(0);
+                    $actualizarPasantiaSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
                 
                 $pasantiaSoporte->setPasantia($pasantia);
                 $pasantiaSoporte->setActive(true);
                 $pasantiaSoporte->setFechaCreacion(new \DateTime());
-                //$grupoSoporte->setUsuarioCreacion(1);
+                $pasantiaSoporte->setUsuarioCreacion($usuario);
 
                 $em->persist($pasantiaSoporte);
                 $em->flush();
@@ -335,7 +355,14 @@ class PasantiaController extends Controller
      */
     public function pasantiaSoporteBorrarAction(Request $request, $idPasantia, $idPasantiaSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $PasantiaSoporte = new PasantiaSoporte();
         
@@ -345,6 +372,7 @@ class PasantiaController extends Controller
         
         $pasantiaSoporte->setFechaModificacion(new \DateTime());
         $pasantiaSoporte->setActive(0);
+        $pasantiaSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('pasantiaSoporte', array( 'idPasantia' => $idPasantia));
@@ -449,6 +477,11 @@ class PasantiaController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+         $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
+
         $territorios = $em->getRepository('AppBundle:TerritorioAprendizaje')->findOneBy(
             array('id' => $idTerritorio)
         );  
@@ -459,7 +492,9 @@ class PasantiaController extends Controller
 
         $pasantia->setTerritorioAprendizaje($territorios);
         $pasantia->setActive(true);
-        $pasantia->setFechaCreacion(new \DateTime());
+        $pasantia->setFechaModificacion(new \DateTime());
+        $pasantia->setUsuarioModificacion($usuario);
+
 
         $em->persist($pasantia);
         $em->flush();
@@ -478,7 +513,12 @@ class PasantiaController extends Controller
      */
     public function pasantiaEliminarTerritorioAction(Request $request, $idPasantia, $idTerritorio)
     {
-        $em = $this->getDoctrine()->getManager();                
+        $em = $this->getDoctrine()->getManager();    
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));            
 
         $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
             array('id' => $idPasantia)
@@ -495,6 +535,9 @@ class PasantiaController extends Controller
         }
 
         $pasantia->setNullTerritorioAprendizaje();
+
+        $pasantia->setFechaModificacion(new \DateTime());
+        $pasantia->setUsuarioModificacion($usuario);
         
         $em->persist($pasantia);
         $em->flush();
@@ -590,6 +633,11 @@ class PasantiaController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+         $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
+
         $organizaciones = $em->getRepository('AppBundle:Organizacion')->findOneBy(
             array('id' => $idOrganizacion)
         );  
@@ -604,6 +652,7 @@ class PasantiaController extends Controller
         $asignacionesOrganizacionPasantia->setPasantia($pasantia);           
         $asignacionesOrganizacionPasantia->setActive(true);
         $asignacionesOrganizacionPasantia->setFechaCreacion(new \DateTime());
+        $asignacionesOrganizacionPasantia->setUsuarioCreacion($usuario);
 
         $em->persist($asignacionesOrganizacionPasantia);
         $em->flush();
@@ -756,6 +805,11 @@ class PasantiaController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+         $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
+
         $grupos = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id' => $idGrupo)
         );  
@@ -768,7 +822,8 @@ class PasantiaController extends Controller
 
         $pasantia->setGrupo($grupos);        
         $pasantia->setActive(true);
-        $pasantia->setFechaCreacion(new \DateTime());
+        $pasantia->setFechaModificacion(new \DateTime());
+        $pasantia->setUsuarioModificacion($usuario);
 
         $em->persist($pasantia);
         $em->flush();
@@ -789,7 +844,12 @@ class PasantiaController extends Controller
      */
     public function pasantiaEliminarGrupoAction(Request $request, $idPasantia, $idGrupo)
     {
-        $em = $this->getDoctrine()->getManager();                
+        $em = $this->getDoctrine()->getManager();  
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));              
 
         $pasantia = $em->getRepository('AppBundle:Pasantia')->findOneBy(
             array('id' => $idPasantia)
@@ -806,6 +866,9 @@ class PasantiaController extends Controller
         }
 
         $pasantia->setNullGrupo();
+
+        $pasantia->setFechaModificacion(new \DateTime());
+        $pasantia->setUsuarioModificacion($usuario);
 
         $em->persist($pasantia);
         $em->flush();
@@ -891,6 +954,11 @@ class PasantiaController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario)); 
+
         $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
             array('id' => $idBeneficiario)
         );      
@@ -909,6 +977,7 @@ class PasantiaController extends Controller
         $asignacionesGrupoBeneficiarioPasantia->setPasantia($pasantia);           
         $asignacionesGrupoBeneficiarioPasantia->setActive(true);
         $asignacionesGrupoBeneficiarioPasantia->setFechaCreacion(new \DateTime());
+        $asignacionesGrupoBeneficiarioPasantia->setUsuarioCreacion($usuario);
 
         $em->persist($asignacionesGrupoBeneficiarioPasantia);
         $em->flush();

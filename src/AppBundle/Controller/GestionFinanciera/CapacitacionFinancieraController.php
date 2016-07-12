@@ -23,6 +23,9 @@ use AppBundle\Form\GestionFinanciera\CapacitacionFinancieraType;
 use AppBundle\Form\GestionFinanciera\CapacitacionFinancieraSoporteType;
 
 
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
+
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -74,6 +77,11 @@ class CapacitacionFinancieraController extends Controller
             $capacitacionFinanciera->setActive(true);
             $capacitacionFinanciera->setFechaCreacion(new \DateTime());
 
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $capacitacionFinanciera->setUsuarioCreacion($usuario);
+
 
             
             $em->persist($capacitacionFinanciera);
@@ -118,6 +126,11 @@ class CapacitacionFinancieraController extends Controller
 
             $capacitacionFinanciera->setFechaModificacion(new \DateTime());
 
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $capacitacionFinanciera->setUsuarioModificacion($usuario);
+
 
             $em->flush();
 
@@ -158,7 +171,14 @@ class CapacitacionFinancieraController extends Controller
      */
     public function capacitacionFinancieraSoporteAction(Request $request, $idCapacitacionFinanciera)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_ADMIN", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $capacitacionFinancieraSoporte = new CapacitacionFinancieraSoporte();
         
@@ -211,13 +231,14 @@ class CapacitacionFinancieraController extends Controller
                     echo $actualizarCapacitacionFinancieraSoporte->getId()." ".$actualizarCapacitacionFinancieraSoporte->getTipoSoporte()."<br />";
                     $actualizarCapacitacionFinancieraSoporte->setFechaModificacion(new \DateTime());
                     $actualizarCapacitacionFinancieraSoporte->setActive(0);
+                    $actualizarCapacitacionFinancieraSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
                 
                 $capacitacionFinancieraSoporte->setCapacitacionFinanciera($capacitacionFinanciera);
                 $capacitacionFinancieraSoporte->setActive(true);
                 $capacitacionFinancieraSoporte->setFechaCreacion(new \DateTime());
-                //$grupoSoporte->setUsuarioCreacion(1);
+                $capacitacionFinancieraSoporte->setUsuarioCreacion($usuario);
 
                 $em->persist($capacitacionFinancieraSoporte);
                 $em->flush();
@@ -242,7 +263,14 @@ class CapacitacionFinancieraController extends Controller
      */
     public function capacitacionFinancieraSoporteBorrarAction(Request $request, $idCapacitacionFinanciera, $idCapacitacionFinancieraSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_ADMIN", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $capacitacionFinancieraSoporte = new CapacitacionFinancieraSoporte();
         
@@ -252,6 +280,7 @@ class CapacitacionFinancieraController extends Controller
         
         $capacitacionFinancieraSoporte->setFechaModificacion(new \DateTime());
         $capacitacionFinancieraSoporte->setActive(0);
+        $capacitacionFinancieraSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('capacitacionFinancieraSoporte', array( 'idCapacitacionFinanciera' => $idCapacitacionFinanciera));

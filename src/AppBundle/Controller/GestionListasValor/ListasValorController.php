@@ -22,6 +22,7 @@ use AppBundle\Form\GestionListasValor\ListasValorType;
 use AppBundle\Form\GestionListasValor\ListasDocumentoSoporteType;
 
 use AppBundle\Form\GestionListasValor\ListasValorFilterType;
+use AppBundle\Form\GestionListasValor\ListasDocumentoSoporteFilterType;
 
 
 /*Para autenticación por código*/
@@ -217,22 +218,45 @@ class ListasValorController extends Controller
     {
         $em = $this->getDoctrine()->getManager();        
 
-        $documentoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findBy(
+        /*$documentoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findBy(
             array('active' => '1')            
-        );
+        );*/
+
+        // initialize a query builder
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:DocumentoSoporte')
+            ->createQueryBuilder('l');
+
+        $form = $this->get('form.factory')->create(new ListasDocumentoSoporteFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            // manually bind values from the request
+            $form->submit($request->query->get($form->getName()));
+
+            // build the query from the given form object
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+
+            // now look at the DQL =)
+            //var_dump($filterBuilder->getDql());
+            //die("");
+        }
+        $query = $filterBuilder->getQuery();
 
         $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
-            $documentoSoporte, /* fuente de los datos*/
+            $query, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             10/*límite de resultados por página*/
         );
  
         
         return $this->render('AppBundle:GestionListasValor:listas-documento-soporte-gestion.html.twig', 
-            array( 'listas' => $documentoSoporte,
-                   'pagination' => $pagination
+            array( 
+                    'form' => $form->createView(), 
+                    'listas' => $query,
+                    'pagination' => $pagination
             )
         );
     }

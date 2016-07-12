@@ -134,6 +134,12 @@ class RutaController extends Controller
 
             $ruta->setActive(true);
             $ruta->setFechaCreacion(new \DateTime());
+
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $ruta->setUsuarioCreacion($usuario);
+
             $em->persist($ruta);
             $em->flush();
 
@@ -175,6 +181,11 @@ class RutaController extends Controller
             $ruta = $form->getData();
 
             $ruta->setFechaModificacion(new \DateTime());
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $ruta->setUsuarioModificacion($usuario);
+
 
             $em->flush();
 
@@ -217,7 +228,14 @@ class RutaController extends Controller
      */
     public function rutaSoporteAction(Request $request, $idRuta)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $rutaSoporte = new RutaSoporte();
         
@@ -270,13 +288,14 @@ class RutaController extends Controller
                     echo $actualizarRutaSoporte->getId()." ".$actualizarRutaSoporte->getTipoSoporte()."<br />";
                     $actualizarRutaSoporte->setFechaModificacion(new \DateTime());
                     $actualizarRutaSoporte->setActive(0);
+                    $actualizarRutaSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
                 
                 $rutaSoporte->setRuta($ruta);
                 $rutaSoporte->setActive(true);
                 $rutaSoporte->setFechaCreacion(new \DateTime());
-                //$grupoSoporte->setUsuarioCreacion(1);
+                $rutaSoporte->setUsuarioCreacion($usuario);
 
                 $em->persist($rutaSoporte);
                 $em->flush();
@@ -321,7 +340,14 @@ class RutaController extends Controller
      */
     public function rutaSoporteBorrarAction(Request $request, $idRuta, $idRutaSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $RutaSoporte = new RutaSoporte();
         
@@ -331,6 +357,7 @@ class RutaController extends Controller
         
         $rutaSoporte->setFechaModificacion(new \DateTime());
         $rutaSoporte->setActive(0);
+        $rutaSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('rutaSoporte', array( 'idRuta' => $idRuta));
@@ -428,6 +455,11 @@ class RutaController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
+
         $territorios = $em->getRepository('AppBundle:TerritorioAprendizaje')->findOneBy(
             array('id' => $idTerritorio)
         );  
@@ -438,7 +470,9 @@ class RutaController extends Controller
 
         $ruta->setTerritorioAprendizaje($territorios);
         $ruta->setActive(true);
-        $ruta->setFechaCreacion(new \DateTime());
+        $ruta->setFechaModificacion(new \DateTime());
+        $ruta->setUsuarioModificacion($usuario);
+
 
         $em->persist($ruta);
         $em->flush();
@@ -457,7 +491,12 @@ class RutaController extends Controller
      */
     public function rutaEliminarTerritorioAction(Request $request, $idRuta, $idTerritorio)
     {
-        $em = $this->getDoctrine()->getManager();                
+        $em = $this->getDoctrine()->getManager();               
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario)); 
 
         $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
             array('id' => $idRuta)
@@ -474,6 +513,9 @@ class RutaController extends Controller
         }
         
         $ruta->setNullTerritorioAprendizaje();
+
+        $ruta->setFechaModificacion(new \DateTime());
+        $ruta->setUsuarioModificacion($usuario);
 
         $em->persist($ruta);
         $em->flush();
@@ -570,6 +612,11 @@ class RutaController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
+
         $organizaciones = $em->getRepository('AppBundle:Organizacion')->findOneBy(
             array('id' => $idOrganizacion)
         );  
@@ -584,6 +631,8 @@ class RutaController extends Controller
         $asignacionesOrganizacionRuta->setRuta($ruta);           
         $asignacionesOrganizacionRuta->setActive(true);
         $asignacionesOrganizacionRuta->setFechaCreacion(new \DateTime());
+        $asignacionesOrganizacionRuta->setUsuarioCreacion($usuario);
+
 
         $em->persist($asignacionesOrganizacionRuta);
         $em->flush();
@@ -731,6 +780,11 @@ class RutaController extends Controller
 
        $em = $this->getDoctrine()->getManager();
 
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
+
         $grupos = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id' => $idGrupo)
         );  
@@ -743,7 +797,8 @@ class RutaController extends Controller
 
         $ruta->setGrupo($grupos);        
         $ruta->setActive(true);
-        $ruta->setFechaCreacion(new \DateTime());
+        $ruta->setFechaModificacion(new \DateTime());
+        $ruta->setUsuarioModificacion($usuario);
 
         $em->persist($ruta);
         $em->flush();
@@ -764,7 +819,12 @@ class RutaController extends Controller
      */
     public function rutaEliminarGrupoAction(Request $request, $idRuta, $idGrupo)
     {
-        $em = $this->getDoctrine()->getManager();                
+        $em = $this->getDoctrine()->getManager();  
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));              
 
         $ruta = $em->getRepository('AppBundle:Ruta')->findOneBy(
             array('id' => $idRuta)
@@ -781,6 +841,8 @@ class RutaController extends Controller
         }
 
         $ruta->setNullGrupo();
+        $ruta->setFechaModificacion(new \DateTime());
+        $ruta->setUsuarioModificacion($usuario);
 
         $em->persist($ruta);
         $em->flush();
@@ -866,6 +928,11 @@ class RutaController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+         $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
+
         $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
             array('id' => $idBeneficiario)
         );      
@@ -884,6 +951,7 @@ class RutaController extends Controller
         $asignacionesGrupoBeneficiarioRuta->setRuta($ruta);           
         $asignacionesGrupoBeneficiarioRuta->setActive(true);
         $asignacionesGrupoBeneficiarioRuta->setFechaCreacion(new \DateTime());
+        $asignacionesGrupoBeneficiarioRuta->setUsuarioCreacion($usuario);
 
         $em->persist($asignacionesGrupoBeneficiarioRuta);
         $em->flush();

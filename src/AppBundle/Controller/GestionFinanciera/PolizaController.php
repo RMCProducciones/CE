@@ -24,6 +24,8 @@ use AppBundle\Form\GestionFinanciera\PolizaSoporteType;
 use AppBundle\Form\GestionFinanciera\PolizaFilterType;
 
 
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 
 /*Para autenticación por código*/
@@ -94,6 +96,10 @@ class PolizaController extends Controller
 
             $poliza->setActive(true);
             $poliza->setFechaCreacion(new \DateTime());
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $poliza->setUsuarioCreacion($usuario);
 
 
             
@@ -141,6 +147,11 @@ class PolizaController extends Controller
 
             $poliza->setFechaModificacion(new \DateTime());
 
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $poliza->setUsuarioModificacion($usuario);
+
 
             $em->flush();
 
@@ -181,7 +192,14 @@ class PolizaController extends Controller
      */
     public function polizaSoporteAction(Request $request, $idPoliza)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_ADMIN", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $polizaSoporte = new PolizaSoporte();
         
@@ -234,13 +252,14 @@ class PolizaController extends Controller
                     echo $actualizarPolizaSoporte->getId()." ".$actualizarPolizaSoporte->getTipoSoporte()."<br />";
                     $actualizarPolizaSoporte->setFechaModificacion(new \DateTime());
                     $actualizarPolizaSoporte->setActive(0);
+                    $actualizarPolizaSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
                 
                 $polizaSoporte->setPoliza($poliza);
                 $polizaSoporte->setActive(true);
                 $polizaSoporte->setFechaCreacion(new \DateTime());
-                //$grupoSoporte->setUsuarioCreacion(1);
+                $polizaSoporte->setUsuarioCreacion($usuario);
 
                 $em->persist($polizaSoporte);
                 $em->flush();
@@ -287,7 +306,14 @@ class PolizaController extends Controller
      */
     public function polizaSoporteBorrarAction(Request $request, $idPoliza, $idPolizaSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_ADMIN", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $poliza = new PolizaSoporte();
         
@@ -297,6 +323,7 @@ class PolizaController extends Controller
         
         $polizaSoporte->setFechaModificacion(new \DateTime());
         $polizaSoporte->setActive(0);
+        $polizaSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('polizaSoporte', array( 'idPoliza' => $idPoliza));

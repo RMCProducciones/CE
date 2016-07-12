@@ -20,6 +20,9 @@ use AppBundle\Form\GestionAdministrativa\POASoporteType;
 use AppBundle\Form\GestionAdministrativa\POAFilterType;
 
 
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
+
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -182,7 +185,14 @@ class PoaController extends Controller
      */
     public function POASoporteAction(Request $request, $idPOA)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_ADMIN", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $poaSoporte = new POASoporte();
         
@@ -235,13 +245,14 @@ class PoaController extends Controller
                     echo $actualizarPOASoporte->getId()." ".$actualizarPOASoporte->getTipoSoporte()."<br />";
                     $actualizarPOASoporte->setFechaModificacion(new \DateTime());
                     $actualizarPOASoporte->setActive(0);
+                    $actualizarPOASoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
                 
                 $poaSoporte->setPOA($poa);
                 $poaSoporte->setActive(true);
                 $poaSoporte->setFechaCreacion(new \DateTime());
-                //$grupoSoporte->setUsuarioCreacion(1);
+                $poaSoporte->setUsuarioCreacion($usuario);
 
                 $em->persist($poaSoporte);
                 $em->flush();
@@ -286,7 +297,14 @@ class PoaController extends Controller
      */
     public function POASoporteBorrarAction(Request $request, $idPOA, $idPOASoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $poaSoporte = new POASoporte();
         
@@ -296,6 +314,7 @@ class PoaController extends Controller
         
         $poaSoporte->setFechaModificacion(new \DateTime());
         $poaSoporte->setActive(0);
+        $poaSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('POASoporte', array( 'idPOA' => $idPOA));

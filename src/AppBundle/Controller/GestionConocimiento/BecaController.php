@@ -25,6 +25,8 @@ use AppBundle\Form\GestionConocimiento\BecaSoporteType;
 use AppBundle\Form\GestionConocimiento\BecaFilterType;
 
 
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 
 /*Para autenticación por código*/
@@ -118,6 +120,10 @@ class BecaController extends Controller
 
             $beca->setActive(true);
             $beca->setFechaCreacion(new \DateTime());
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $beca->setUsuarioCreacion($usuario);
 
 
             
@@ -164,6 +170,10 @@ class BecaController extends Controller
             
 
             $beca->setFechaModificacion(new \DateTime());
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $beca->setUsuarioModificacion($usuario);
 
   
 
@@ -207,7 +217,14 @@ class BecaController extends Controller
      */
     public function becaSoporteAction(Request $request, $idBeca)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_ADMIN", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $becaSoporte = new BecaSoporte();
         
@@ -260,13 +277,14 @@ class BecaController extends Controller
                     echo $actualizarBecaSoporte->getId()." ".$actualizarBecaSoporte->getTipoSoporte()."<br />";
                     $actualizarBecaSoporte->setFechaModificacion(new \DateTime());
                     $actualizarBecaSoporte->setActive(0);
+                    $actualizarBecaSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
                 
                 $becaSoporte->setBeca($beca);
                 $becaSoporte->setActive(true);
                 $becaSoporte->setFechaCreacion(new \DateTime());
-                //$grupoSoporte->setUsuarioCreacion(1);
+                $becaSoporte->setUsuarioCreacion($usuario);
 
                 $em->persist($becaSoporte);
                 $em->flush();
@@ -311,7 +329,14 @@ class BecaController extends Controller
      */
     public function becaSoporteBorrarAction(Request $request, $idBeca, $idBecaSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_ADMIN", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $becaSoporte = new BecaSoporte();
         
@@ -321,6 +346,7 @@ class BecaController extends Controller
         
         $becaSoporte->setFechaModificacion(new \DateTime());
         $becaSoporte->setActive(0);
+        $becaSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('becaSoporte', array( 'idBeca' => $idBeca));
