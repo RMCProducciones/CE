@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class ListasValorFilterType extends AbstractType
+class ListasDocumentoSoporteFilterType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -43,12 +43,12 @@ class ListasValorFilterType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'ListasValorFilter';
+        return 'ListasDocumentoSoporteFilter';
     }
 
      public function getName()
     {
-        return 'ListasValorFilter';
+        return 'ListasDocumentoSoporteFilter';
     }
     
 }

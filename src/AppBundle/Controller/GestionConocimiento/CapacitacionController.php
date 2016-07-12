@@ -27,6 +27,8 @@ use AppBundle\Form\GestionConocimiento\CapacitacionSoporteType;
 use AppBundle\Form\GestionConocimiento\CapacitacionFilterType;
 
 
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 
 /*Para autenticación por código*/
@@ -207,7 +209,14 @@ class CapacitacionController extends Controller
      */
     public function capacitacionSoporteAction(Request $request, $idCapacitacion)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_ADMIN", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $capacitacionSoporte = new CapacitacionSoporte();
         
@@ -260,13 +269,14 @@ class CapacitacionController extends Controller
                     echo $actualizarCapacitacionSoporte->getId()." ".$actualizarCapacitacionSoporte->getTipoSoporte()."<br />";
                     $actualizarCapacitacionSoporte->setFechaModificacion(new \DateTime());
                     $actualizarCapacitacionSoporte->setActive(0);
+                    $actualizarCapacitacionSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
                 
                 $capacitacionSoporte->setCapacitacion($capacitacion);
                 $capacitacionSoporte->setActive(true);
                 $capacitacionSoporte->setFechaCreacion(new \DateTime());
-                //$grupoSoporte->setUsuarioCreacion(1);
+                $capacitacionSoporte->setUsuarioCreacion($usuario);
 
                 $em->persist($capacitacionSoporte);
                 $em->flush();
@@ -311,7 +321,14 @@ class CapacitacionController extends Controller
      */
     public function capacitacionSoporteBorrarAction(Request $request, $idCapacitacion, $idCapacitacionSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_ADMIN", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $capacitacionSoporte = new CapacitacionSoporte();        
 
@@ -321,6 +338,7 @@ class CapacitacionController extends Controller
                 
         $capacitacionSoporte->setFechaModificacion(new \DateTime());
         $capacitacionSoporte->setActive(0);
+        $capacitacionSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('capacitacionSoporte', array( 'idCapacitacion' => $idCapacitacion));

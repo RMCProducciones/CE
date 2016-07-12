@@ -24,6 +24,8 @@ use AppBundle\Form\GestionFinanciera\AhorroSoporteType;
 use AppBundle\Form\GestionFinanciera\AhorroFilterType;
 
 
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 
 /*Para autenticación por código*/
@@ -233,13 +235,14 @@ class AhorroController extends Controller
                     echo $actualizarAhorroSoporte->getId()." ".$actualizarAhorroSoporte->getTipoSoporte()."<br />";
                     $actualizarAhorroSoporte->setFechaModificacion(new \DateTime());
                     $actualizarAhorroSoporte->setActive(0);
+                    $actualizarAhorroSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
                 
                 $ahorroSoporte->setAhorro($ahorro);
                 $ahorroSoporte->setActive(true);
                 $ahorroSoporte->setFechaCreacion(new \DateTime());
-                //$grupoSoporte->setUsuarioCreacion(1);
+                $ahorroSoporte->setUsuarioCreacion($usuario);
 
                 $em->persist($ahorroSoporte);
                 $em->flush();
@@ -285,7 +288,14 @@ class AhorroController extends Controller
      */
     public function ahorroSoporteBorrarAction(Request $request, $idAhorro, $idAhorroSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_ADMIN", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $ahorro = new AhorroSoporte();
         
@@ -295,6 +305,7 @@ class AhorroController extends Controller
         
         $ahorroSoporte->setFechaModificacion(new \DateTime());
         $ahorroSoporte->setActive(0);
+        $ahorroSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('ahorroSoporte', array( 'idAhorro' => $idAhorro));
