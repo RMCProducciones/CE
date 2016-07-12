@@ -98,6 +98,10 @@ class ExperienciaController extends Controller
 
             $experienciaexitosa->setActive(true);
             $experienciaexitosa->setFechaCreacion(new \DateTime());
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $experienciaexitosa->setUsuarioCreacion($usuario);
 
 
             
@@ -141,6 +145,11 @@ class ExperienciaController extends Controller
             $experienciaexitosa = $form->getData();
 
             $experienciaexitosa->setFechaModificacion(new \DateTime());
+
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $experienciaexitosa->setUsuarioModificacion($usuario);
 
             
 

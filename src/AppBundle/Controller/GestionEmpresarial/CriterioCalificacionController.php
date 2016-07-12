@@ -94,6 +94,11 @@ class CriterioCalificacionController extends Controller
             $criterio->setFechaCreacion(new \DateTime());
             $criterio->setConcurso($concurso);
 
+             $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $criterio->setUsuarioCreacion($usuario);
+
 
             
             $em->persist($criterio);
@@ -142,6 +147,11 @@ class CriterioCalificacionController extends Controller
             $criterio = $form->getData();
 
             $criterio->setFechaModificacion(new \DateTime());
+
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $criterio->setUsuarioModificacion($usuario);
 
             
 

@@ -106,6 +106,11 @@ class ActividadController extends Controller
             $actividadconcurso->setActive(true);
             $actividadconcurso->setFechaCreacion(new \DateTime());
 
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $actividad->setUsuarioCreacion($usuario);
+
 
             
             $em->persist($actividadconcurso);
@@ -148,6 +153,11 @@ class ActividadController extends Controller
             $actividad = $form->getData();
 
             $actividad->setFechaModificacion(new \DateTime());
+
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $actividad->setUsuarioModificacion($usuario);
 
             
 

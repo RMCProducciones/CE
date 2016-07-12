@@ -128,6 +128,10 @@ class TerritorioController extends Controller
 
             $territorio->setActive(true);
             $territorio->setFechaCreacion(new \DateTime());
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $territorio->setUsuarioCreacion($usuario);
 
             /*$usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
                 array(
@@ -180,14 +184,13 @@ class TerritorioController extends Controller
             $territorio = $form->getData();
 
             $territorio->setFechaModificacion(new \DateTime());
-
-            $usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
-                array(
-                    'id' => 1
-                )
-            );
-            
             $territorio->setUsuarioModificacion($usuarioModificacion);
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $territorio_aprendizaje->setUsuarioModificacion($usuario);                   
+
+
 
             $em->flush();
 
@@ -304,6 +307,11 @@ class TerritorioController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
+
         $organizaciones = $em->getRepository('AppBundle:Organizacion')->findOneBy(
             array('id' => $idOrganizacion)
         );  
@@ -318,6 +326,7 @@ class TerritorioController extends Controller
         $asignacionesTerritorioOrganizacion->setTerritorioAprendizaje($territorioAprendizaje);        
         $asignacionesTerritorioOrganizacion->setActive(true);
         $asignacionesTerritorioOrganizacion->setFechaCreacion(new \DateTime());
+        $asignacionesTerritorioOrganizacion->setUsuarioCreacion($usuario);
 
         $em->persist($asignacionesTerritorioOrganizacion);
         $em->flush();

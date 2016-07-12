@@ -122,6 +122,11 @@ class ClearController extends Controller
             $clear->setFechaCreacion(new \DateTime());
 
 
+             $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $clear->setUsuarioCreacion($usuario);
+
             
             $em->persist($clear);
             $em->flush();
@@ -198,6 +203,12 @@ class ClearController extends Controller
 
             $clear->setActive(true);
             $clear->setFechaCreacion(new \DateTime());
+
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $clear->setUsuarioModificacion($usuario);
+
 
             $em->persist($clear);
             $em->flush();
@@ -603,6 +614,11 @@ class ClearController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
+
         $clear = $em->getRepository('AppBundle:CLEAR')->findOneBy(
             array('id' => $idCLEAR)
         );
@@ -634,8 +650,13 @@ class ClearController extends Controller
                 $asignacionIntegranteCLEAR->setClear($clear);
                 $asignacionIntegranteCLEAR->setIntegrante($integrante);
 
+                $asignacionIntegranteCLEAR->setActive(true);
                 $asignacionIntegranteCLEAR->setFechaCreacion(new \DateTime());
-                $asignacionIntegranteCLEAR->setActive(0);
+                $asignacionIntegranteCLEAR->setUsuarioCreacion($usuario);
+
+
+
+
 
 
                 $em->persist($asignacionIntegranteCLEAR);
@@ -868,6 +889,11 @@ class ClearController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+         $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
+
         $grupo = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id' => $idGrupo)
         );  
@@ -888,6 +914,7 @@ class ClearController extends Controller
         $asignacionesGrupoCLEAR->setClear($clear);           
         $asignacionesGrupoCLEAR->setActive(true);
         $asignacionesGrupoCLEAR->setFechaCreacion(new \DateTime());
+        $asignacionesGrupoCLEAR->setUsuarioCreacion($usuario);
 
 
         $camino = $em->getRepository('AppBundle:Camino')->findBy(

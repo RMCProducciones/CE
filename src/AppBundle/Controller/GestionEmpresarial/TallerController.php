@@ -126,6 +126,10 @@ class TallerController extends Controller
             $taller->setGrupo($grupo);
             $taller->setActive(true);
             $taller->setFechaCreacion(new \DateTime());
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $taller->setUsuarioCreacion($usuario);
 
 
             $em->persist($taller);
@@ -178,6 +182,12 @@ class TallerController extends Controller
             $taller = $form->getData();
 
             $taller->setFechaModificacion(new \DateTime());
+
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $taller->setUsuarioModificacion($usuario);
+
 
             
 
@@ -417,6 +427,11 @@ class TallerController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
+
         $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
             array('id' => $idBeneficiario)
         );      
@@ -437,6 +452,8 @@ class TallerController extends Controller
         $asignacionBeneficiarioTaller->setTaller($taller);
         $asignacionBeneficiarioTaller->setActive(true);
         $asignacionBeneficiarioTaller->setFechaCreacion(new \DateTime());
+        $asignacionBeneficiarioTaller->setUsuarioCreacion($usuario);
+
         //$taller->setAsistentes($consecutivo);
 
         $em->persist($asignacionBeneficiarioTaller);                

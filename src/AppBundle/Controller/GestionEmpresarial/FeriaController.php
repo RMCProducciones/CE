@@ -140,6 +140,12 @@ class FeriaController extends Controller
 
             $feria->setActive(true);
             $feria->setFechaCreacion(new \DateTime());
+
+             $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $feria->setUsuarioCreacion($usuario);
+
             $em->persist($feria);
             $em->flush();
 
@@ -336,6 +342,11 @@ class FeriaController extends Controller
             $feria = $form->getData();
 
             $feria->setFechaModificacion(new \DateTime());
+
+             $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $feria->setUsuarioModificacion($usuario);
 
             
 

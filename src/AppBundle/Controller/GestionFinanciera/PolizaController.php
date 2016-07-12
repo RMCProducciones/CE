@@ -94,6 +94,10 @@ class PolizaController extends Controller
 
             $poliza->setActive(true);
             $poliza->setFechaCreacion(new \DateTime());
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $poliza->setUsuarioCreacion($usuario);
 
 
             
@@ -140,6 +144,11 @@ class PolizaController extends Controller
             $poliza = $form->getData();
 
             $poliza->setFechaModificacion(new \DateTime());
+
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $poliza->setUsuarioModificacion($usuario);
 
 
             $em->flush();

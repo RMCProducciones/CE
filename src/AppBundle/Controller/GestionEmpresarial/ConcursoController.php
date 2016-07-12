@@ -127,6 +127,11 @@ class ConcursoController extends Controller
             $concurso->setActive(true);
             $concurso->setFechaCreacion(new \DateTime());
 
+             $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $concurso->setUsuarioCreacion($usuario);
+
 
             
             $em->persist($concurso);
@@ -172,6 +177,10 @@ class ConcursoController extends Controller
 
            
             $concurso->setFechaModificacion(new \DateTime());
+             $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $concurso->setUsuarioModificacion($usuario);
 
             $em->flush();
 
@@ -423,6 +432,12 @@ class ConcursoController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
+
         $grupos = $em->getRepository('AppBundle:Grupo')->findOneBy(
             array('id' => $idGrupo)
         );  
@@ -436,7 +451,9 @@ class ConcursoController extends Controller
         $asignacionesGrupoConcurso->setGrupo($grupos);
         $asignacionesGrupoConcurso->setConcurso($concurso);           
         $asignacionesGrupoConcurso->setActive(true);
-        $asignacionesGrupoConcurso->setFechaCreacion(new \DateTime());
+        $asignacionesGrupoConcurso->setFechaCreacion(new \DateTime());  
+        $asignacionesGrupoConcurso->setUsuarioCreacion($usuario);
+
 
         $em->persist($asignacionesGrupoConcurso);
         $em->flush();
@@ -647,6 +664,12 @@ class ConcursoController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+
+         $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
+
         $integrantes = $em->getRepository('AppBundle:Integrante')->findOneBy(
             array('id' => $idIntegrante)
         );  
@@ -661,6 +684,8 @@ class ConcursoController extends Controller
         $asignacionesIntegranteComite->setConcurso($concurso);           
         $asignacionesIntegranteComite->setActive(true);
         $asignacionesIntegranteComite->setFechaCreacion(new \DateTime());
+        $asignacionesIntegranteComite->setUsuarioCreacion($usuario);
+
 
         $em->persist($asignacionesIntegranteComite);
         $em->flush();

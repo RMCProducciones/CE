@@ -118,6 +118,10 @@ class TalentoController extends Controller
 
             $talento->setActive(true);
             $talento->setFechaCreacion(new \DateTime());
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $talento->setUsuarioCreacion($usuario);
 
 
             
@@ -173,6 +177,10 @@ class TalentoController extends Controller
             }
 
             $talento->setFechaModificacion(new \DateTime());
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $talento->setUsuarioModificacion($usuario);
 
             /*$usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
                 array(

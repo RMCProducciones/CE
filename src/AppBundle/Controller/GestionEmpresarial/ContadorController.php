@@ -123,6 +123,11 @@ class ContadorController extends Controller
             $contador->setActive(true);
             $contador->setFechaCreacion(new \DateTime());
 
+             $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $contador->setUsuarioCreacion($usuario);
+
 
             $em->persist($contador);
             $em->flush();
@@ -168,7 +173,12 @@ class ContadorController extends Controller
             $contador = $form->getData();
 
             $contador->setActive(true);
-            $contador->setFechaCreacion(new \DateTime());
+            $contador->setFechaModificacion(new \DateTime());
+
+             $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $contador->setUsuarioModificacion($usuario);
 
             $em->flush();
 

@@ -116,6 +116,10 @@ class EventoController extends Controller
 
             $evento->setActive(true);
             $evento->setFechaCreacion(new \DateTime());
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $evento->setUsuarioCreacion($usuario);
 
 
             
@@ -161,6 +165,11 @@ class EventoController extends Controller
             
 
             $evento->setFechaModificacion(new \DateTime());
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $evento->setUsuarioModificacion($usuario);
+
 
   
 

@@ -975,7 +975,11 @@ class SeguimientoGrupoController extends Controller
             
             $visita = $form->getData();
             $visita->setActive(true);
-            $visita->setFechaCreacion(new \DateTime());           
+            $visita->setFechaCreacion(new \DateTime());      
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $visita->setUsuarioCreacion($usuario);     
             
             $em->persist($visita);
             $em->flush();
@@ -1266,6 +1270,11 @@ class SeguimientoGrupoController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
+
         $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
             array('id' => $idBeneficiario)
         );      
@@ -1285,6 +1294,8 @@ class SeguimientoGrupoController extends Controller
         $asignacionBeneficiarioVisitas->setNodo($nodo);
         $asignacionBeneficiarioVisitas->setActive(true);
         $asignacionBeneficiarioVisitas->setFechaCreacion(new \DateTime());
+        $asignacionBeneficiarioVisitas->setUsuarioCreacion($usuario);
+
 
         $em->persist($asignacionBeneficiarioVisitas);
         $em->flush();

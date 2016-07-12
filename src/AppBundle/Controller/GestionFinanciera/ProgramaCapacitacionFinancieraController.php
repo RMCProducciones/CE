@@ -114,6 +114,11 @@ class ProgramaCapacitacionFinancieraController extends Controller
             $programaCapacitacionFinanciera->setActive(true);
             $programaCapacitacionFinanciera->setFechaCreacion(new \DateTime());
 
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $programaCapacitacionFinanciera->setUsuarioCreacion($usuario);
+
 
             
             $em->persist($programaCapacitacionFinanciera);
@@ -157,6 +162,11 @@ class ProgramaCapacitacionFinancieraController extends Controller
             $programaCapacitacionFinanciera = $form->getData();
 
             $programaCapacitacionFinanciera->setFechaModificacion(new \DateTime());
+
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $programaCapacitacionFinanciera->setUsuarioModificacion($usuario);
 
 
             $em->flush();

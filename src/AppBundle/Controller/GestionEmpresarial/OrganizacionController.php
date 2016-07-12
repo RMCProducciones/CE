@@ -136,6 +136,11 @@ class OrganizacionController extends Controller
             $organizacion->setActive(true);
             $organizacion->setFechaCreacion(new \DateTime());
 
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $organizacion->setUsuarioCreacion($usuario);
+
             /*$usuarioCreacion = $em->getRepository('AppBundle:Usuario')->findOneBy(
                 array(
                     'id' => 1
@@ -184,7 +189,12 @@ class OrganizacionController extends Controller
             $organizacion = $form->getData();
 
             $organizacion->setActive(true);
-            $organizacion->setFechaCreacion(new \DateTime());
+            $organizacion->setFechaModificacion(new \DateTime());
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $organizacion->setUsuarioModificacion($usuario);
+
 
 
             /*$usuarioModificacion = $em->getRepository('AppBundle:Usuario')->findOneBy(

@@ -96,6 +96,11 @@ class ParticipanteController extends Controller
             $participante->setActive(true);
             $participante->setFechaCreacion(new \DateTime());
 
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $participante->setUsuarioCreacion($usuario);
+
 
             
             $em->persist($participante);
@@ -139,6 +144,11 @@ class ParticipanteController extends Controller
             $participante = $form->getData();
 
             $participante->setFechaModificacion(new \DateTime());
+
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $participante->setUsuarioModificacion($usuario);
 
 
             $em->flush();

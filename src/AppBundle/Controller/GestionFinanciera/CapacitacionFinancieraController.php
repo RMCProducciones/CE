@@ -74,6 +74,11 @@ class CapacitacionFinancieraController extends Controller
             $capacitacionFinanciera->setActive(true);
             $capacitacionFinanciera->setFechaCreacion(new \DateTime());
 
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $capacitacionFinanciera->setUsuarioCreacion($usuario);
+
 
             
             $em->persist($capacitacionFinanciera);
@@ -117,6 +122,11 @@ class CapacitacionFinancieraController extends Controller
             $capacitacionFinanciera = $form->getData();
 
             $capacitacionFinanciera->setFechaModificacion(new \DateTime());
+
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $capacitacionFinanciera->setUsuarioModificacion($usuario);
 
 
             $em->flush();

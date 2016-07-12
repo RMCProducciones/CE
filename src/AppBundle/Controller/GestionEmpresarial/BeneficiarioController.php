@@ -149,7 +149,7 @@ class BeneficiarioController extends Controller
             $beneficiarios->setActive(true);
             $beneficiarios->setFechaCreacion(new \DateTime());
 
-             $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
             $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
                 array('id' => $idUsuario));
             $beneficiarios->setUsuarioCreacion($usuario);

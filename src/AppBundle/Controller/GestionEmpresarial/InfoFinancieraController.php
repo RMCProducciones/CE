@@ -97,6 +97,15 @@ class InfoFinancieraController extends Controller
         if ($form->isValid()) {
 
             $info = $form->getData();
+            
+            $info->setFechaModificacion(new \DateTime());
+
+            
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $info->setUsuarioModificacion($usuario);
+
 
             $em->persist($info);
             $em->flush();

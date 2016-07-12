@@ -119,6 +119,11 @@ class CapacitacionController extends Controller
             $capacitacion->setActive(true);
             $capacitacion->setFechaCreacion(new \DateTime());
 
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $capacitacion->setUsuarioCreacion($usuario);
+
 
             
             $em->persist($capacitacion);
@@ -164,6 +169,10 @@ class CapacitacionController extends Controller
             
 
             $capacitacion->setFechaModificacion(new \DateTime());
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $capacitacion->setUsuarioModificacion($usuario);
 
   
 

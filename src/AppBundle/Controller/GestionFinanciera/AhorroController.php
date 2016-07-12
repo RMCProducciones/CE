@@ -96,6 +96,10 @@ class AhorroController extends Controller
 
             $ahorro->setActive(true);
             $ahorro->setFechaCreacion(new \DateTime());
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $ahorro->setUsuarioCreacion($usuario);
 
 
             
@@ -139,6 +143,10 @@ class AhorroController extends Controller
             $ahorro = $form->getData();
 
             $ahorro->setFechaModificacion(new \DateTime());
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $ahorro->setUsuarioModificacion($usuario);
 
 
             $em->flush();

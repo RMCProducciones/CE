@@ -96,7 +96,11 @@ class AprobacionPasantiaController extends Controller
 
             $aprobacion = $form->getData();
              //$aprobacion->setCoordinador($this->getUser());//$this->container->get('security.context')->getToken()->getUser();
-
+            $aprobacion->setFechaModificacion(new \DateTime());
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $aprobacion->setUsuarioModificacion($usuario);
 
             $em->persist($aprobacion);
             $em->flush();

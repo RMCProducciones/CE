@@ -38,6 +38,8 @@ class AprobacionConcursoController extends Controller
         
         new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
 
+        echo'Texto a imprimir';
+
         $em = $this->getDoctrine()->getManager();
         
         $aprobacion=$em->getRepository('AppBundle:Concurso')->findBy(
@@ -97,6 +99,10 @@ class AprobacionConcursoController extends Controller
             $aprobacion = $form->getData();
              //$aprobacion->setCoordinador($this->getUser());//$this->container->get('security.context')->getToken()->getUser();
 
+             $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $aprobacion->setUsuarioModificacion($usuario);
 
             $em->persist($aprobacion);
             $em->flush();
