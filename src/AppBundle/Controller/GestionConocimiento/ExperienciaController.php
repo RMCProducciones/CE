@@ -24,6 +24,8 @@ use AppBundle\Form\GestionConocimiento\ExperienciaExitosaSoporteType;
 use AppBundle\Form\GestionConocimiento\ExperienciaExitosaFilterType;
 
 
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 
 /*Para autenticación por código*/
@@ -193,7 +195,14 @@ class ExperienciaController extends Controller
      */
     public function experienciaSoporteAction(Request $request, $idExperienciaExitosa)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_ADMIN", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $experienciaexitosaSoporte = new ExperienciaExitosaSoporte();
         
@@ -246,13 +255,14 @@ class ExperienciaController extends Controller
                     echo $actualizarExperienciaExitosaSoporte->getId()." ".$actualizarExperienciaExitosaSoporte->getTipoSoporte()."<br />";
                     $actualizarExperienciaExitosaSoporte->setFechaModificacion(new \DateTime());
                     $actualizarExperienciaExitosaSoporte->setActive(0);
+                    $actualizarExperienciaExitosaSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
                 
                 $experienciaexitosaSoporte->setExperienciaExitosa($experienciaexitosa);
                 $experienciaexitosaSoporte->setActive(true);
                 $experienciaexitosaSoporte->setFechaCreacion(new \DateTime());
-                //$grupoSoporte->setUsuarioCreacion(1);
+                $experienciaexitosaSoporte->setUsuarioCreacion($usuario);
 
                 $em->persist($experienciaexitosaSoporte);
                 $em->flush();
@@ -297,7 +307,14 @@ class ExperienciaController extends Controller
      */
     public function experienciaSoporteBorrarAction(Request $request, $idExperienciaExitosa, $idExperienciaExitosaSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_ADMIN", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $experienciaexitosaSoporte = new ExperienciaExitosaSoporte();
         
@@ -307,6 +324,7 @@ class ExperienciaController extends Controller
         
         $experienciaexitosaSoporte->setFechaModificacion(new \DateTime());
         $experienciaexitosaSoporte->setActive(0);
+        $experienciaexitosaSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('experienciaSoporte', array( 'idExperienciaExitosa' => $idExperienciaExitosa));

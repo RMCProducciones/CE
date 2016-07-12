@@ -27,6 +27,8 @@ use AppBundle\Form\GestionConocimiento\TalentoSoporteType;
 use AppBundle\Form\GestionConocimiento\TalentoFilterType;
 
 
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 
 /*Para autenticación por código*/
@@ -231,7 +233,14 @@ class TalentoController extends Controller
      */
     public function talentoSoporteAction(Request $request, $idTalento)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_ADMIN", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $talentoSoporte = new TalentoSoporte();
         
@@ -284,13 +293,14 @@ class TalentoController extends Controller
                     echo $actualizarTalentoSoporte->getId()." ".$actualizarTalentoSoporte->getTipoSoporte()."<br />";
                     $actualizarTalentoSoporte->setFechaModificacion(new \DateTime());
                     $actualizarTalentoSoporte->setActive(0);
+                    $actualizarTalentoSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
                 
                 $talentoSoporte->setTalento($talento);
                 $talentoSoporte->setActive(true);
                 $talentoSoporte->setFechaCreacion(new \DateTime());
-                //$grupoSoporte->setUsuarioCreacion(1);
+                $talentoSoporte->setUsuarioCreacion($usuario);
 
                 $em->persist($talentoSoporte);
                 $em->flush();
@@ -335,7 +345,14 @@ class TalentoController extends Controller
      */
     public function talentoSoporteBorrarAction(Request $request, $idTalento, $idTalentoSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_ADMIN", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $TalentoSoporte = new TalentoSoporte();
         
@@ -345,6 +362,7 @@ class TalentoController extends Controller
         
         $talentoSoporte->setFechaModificacion(new \DateTime());
         $talentoSoporte->setActive(0);
+        $talentoSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('talentoSoporte', array( 'idTalento' => $idTalento));

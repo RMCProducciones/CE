@@ -45,6 +45,9 @@ use AppBundle\Form\GestionEmpresarial\VisitaSoporteType;
 use AppBundle\Form\GestionEmpresarial\SeguimientoGrupoSoporteType;
 
 
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
+
 
 /*Para autenticación por código*/
 use AppBundle\Entity\Usuario;
@@ -1825,7 +1828,14 @@ class SeguimientoGrupoController extends Controller
      */
     public function evaluacionFasesSoporteAction(Request $request, $idEvaluacionFases)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $evaluacionfasesSoporte = new EvaluacionFasesSoporte();
         
@@ -1881,13 +1891,14 @@ class SeguimientoGrupoController extends Controller
                     echo $actualizarEvaluacionFasesSoporte->getId()." ".$actualizarEvaluacionFasesSoporte->getTipoSoporte()."<br />";
                     $actualizarEvaluacionFasesSoporte->setFechaModificacion(new \DateTime());
                     $actualizarEvaluacionFasesSoporte->setActive(0);
+                    $actualizarEvaluacionFasesSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
                 
                 $evaluacionfasesSoporte->setEvaluacionFase($evaluacionfases);
                 $evaluacionfasesSoporte->setActive(true);
                 $evaluacionfasesSoporte->setFechaCreacion(new \DateTime());
-                //$grupoSoporte->setUsuarioCreacion(1);
+                $evaluacionfasesSoporte->setUsuarioCreacion($usuario);
 
                 $em->persist($evaluacionfasesSoporte);
                 $em->flush();
@@ -1912,7 +1923,14 @@ class SeguimientoGrupoController extends Controller
      */
     public function evaluacionfaseSoporteBorrarAction(Request $request, $idEvaluacionFase, $idEvaluacionFaseSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $evaluacionfaseSoporte = new EvaluacionFaseSoporte();
         
@@ -1922,6 +1940,7 @@ class SeguimientoGrupoController extends Controller
         
         $evaluacionfaseSoporte->setFechaModificacion(new \DateTime());
         $evaluacionfaseSoporte->setActive(0);
+        $evaluacionfaseSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('evaluacionfaseSoporte', array( 'idEvaluacionFase' => $idEvaluacionFase));
@@ -1934,7 +1953,14 @@ class SeguimientoGrupoController extends Controller
     public function seguimientoGrupoSoporteAction(Request $request, $idGrupo, $idNodo)
     {
 
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $grupoSoporte = new SeguimientoGrupoSoporte();
 
@@ -2006,6 +2032,7 @@ class SeguimientoGrupoController extends Controller
                     echo $actualizarGrupoSoporte->getId()." ".$actualizarGrupoSoporte->getTipoSoporte()."<br />";
                     $actualizarGrupoSoporte->setFechaModificacion(new \DateTime());
                     $actualizarGrupoSoporte->setActive(0);
+                    $actualizarGrupoSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
 
@@ -2013,6 +2040,7 @@ class SeguimientoGrupoController extends Controller
                 $grupoSoporte->setNodo($nodo);
                 $grupoSoporte->setActive(true);
                 $grupoSoporte->setFechaCreacion(new \DateTime());
+                $grupoSoporte->setUsuarioCreacion($usuario);
 
 
                 $em->persist($grupoSoporte);
@@ -2044,7 +2072,14 @@ class SeguimientoGrupoController extends Controller
      */
     public function seguimientoGrupoSoporteBorrarAction(Request $request, $idGrupo, $idNodo, $idGrupoSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $grupoSoporte = new SeguimientoGrupoSoporte();
         
@@ -2054,6 +2089,7 @@ class SeguimientoGrupoController extends Controller
         
         $grupoSoporte->setFechaModificacion(new \DateTime());
         $grupoSoporte->setActive(0);
+        $grupoSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('seguimientoGrupoSoporte', array( 'idGrupo' => $idGrupo, 'idNodo' => $idNodo));
@@ -2085,7 +2121,14 @@ class SeguimientoGrupoController extends Controller
     public function visitaSoporteAction(Request $request, $idGrupo, $idNodo)
     {
 
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $visitaSoporte = new VisitaSoporte();
 
@@ -2157,6 +2200,7 @@ class SeguimientoGrupoController extends Controller
                     echo $actualizarGrupoSoporte->getId()." ".$actualizarGrupoSoporte->getTipoSoporte()."<br />";
                     $actualizarGrupoSoporte->setFechaModificacion(new \DateTime());
                     $actualizarGrupoSoporte->setActive(0);
+                    $actualizarGrupoSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
 
@@ -2164,6 +2208,7 @@ class SeguimientoGrupoController extends Controller
                 $visitaSoporte->setNodo($nodo);
                 $visitaSoporte->setActive(true);
                 $visitaSoporte->setFechaCreacion(new \DateTime());
+                $visitaSoporte->setUsuarioCreacion($usuario);
 
                 if($visitaSoporte->getTipoSoporte()->getDescripcion()=="Documento de aprobación de interventoria"){ 
                         self::nodoCamino($idGrupo, $idNodo, 2);
@@ -2203,7 +2248,14 @@ class SeguimientoGrupoController extends Controller
      */
     public function visitaSoporteBorrarAction(Request $request, $idGrupo, $idNodo, $idVisitaSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $visitaSoporte = new VisitaSoporte();
         echo "asklñjdaljkñasdkjñdas";
@@ -2213,6 +2265,7 @@ class SeguimientoGrupoController extends Controller
         
         $visitaSoporte->setFechaModificacion(new \DateTime());
         $visitaSoporte->setActive(0);
+        $visitaSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('visitaSoporte', array( 'idGrupo' => $idGrupo, 'idNodo' => $idNodo));

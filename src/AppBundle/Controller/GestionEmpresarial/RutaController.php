@@ -228,7 +228,14 @@ class RutaController extends Controller
      */
     public function rutaSoporteAction(Request $request, $idRuta)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $rutaSoporte = new RutaSoporte();
         
@@ -281,13 +288,14 @@ class RutaController extends Controller
                     echo $actualizarRutaSoporte->getId()." ".$actualizarRutaSoporte->getTipoSoporte()."<br />";
                     $actualizarRutaSoporte->setFechaModificacion(new \DateTime());
                     $actualizarRutaSoporte->setActive(0);
+                    $actualizarRutaSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
                 
                 $rutaSoporte->setRuta($ruta);
                 $rutaSoporte->setActive(true);
                 $rutaSoporte->setFechaCreacion(new \DateTime());
-                //$grupoSoporte->setUsuarioCreacion(1);
+                $rutaSoporte->setUsuarioCreacion($usuario);
 
                 $em->persist($rutaSoporte);
                 $em->flush();
@@ -332,7 +340,14 @@ class RutaController extends Controller
      */
     public function rutaSoporteBorrarAction(Request $request, $idRuta, $idRutaSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $RutaSoporte = new RutaSoporte();
         
@@ -342,6 +357,7 @@ class RutaController extends Controller
         
         $rutaSoporte->setFechaModificacion(new \DateTime());
         $rutaSoporte->setActive(0);
+        $rutaSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('rutaSoporte', array( 'idRuta' => $idRuta));

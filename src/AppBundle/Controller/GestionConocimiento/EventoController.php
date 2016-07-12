@@ -26,6 +26,8 @@ use AppBundle\Form\GestionConocimiento\EventoSoporteType;
 use AppBundle\Form\GestionConocimiento\EventoFilterType;
 
 
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 
 /*Para autenticación por código*/
@@ -213,7 +215,14 @@ class EventoController extends Controller
      */
     public function eventoSoporteAction(Request $request, $idEvento)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_ADMIN", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $eventoSoporte = new EventoSoporte();
         
@@ -266,13 +275,14 @@ class EventoController extends Controller
                     echo $actualizarEventoSoporte->getId()." ".$actualizarEventoSoporte->getTipoSoporte()."<br />";
                     $actualizarEventoSoporte->setFechaModificacion(new \DateTime());
                     $actualizarEventoSoporte->setActive(0);
+                    $actualizarEventoSoporte->setUsuarioModificacion($usuario);
                     $em->flush();
                 }
                 
                 $eventoSoporte->setEvento($evento);
                 $eventoSoporte->setActive(true);
                 $eventoSoporte->setFechaCreacion(new \DateTime());
-                //$grupoSoporte->setUsuarioCreacion(1);
+                $eventoSoporte->setUsuarioCreacion($usuario);
 
                 $em->persist($eventoSoporte);
                 $em->flush();
@@ -316,7 +326,14 @@ class EventoController extends Controller
      */
     public function eventoSoporteBorrarAction(Request $request, $idEvento, $idEventoSoporte)
     {
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_ADMIN", "ROLE_USER"]);
+
         $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
 
         $eventoSoporte = new EventoSoporte();
         
@@ -326,6 +343,7 @@ class EventoController extends Controller
         
         $eventoSoporte->setFechaModificacion(new \DateTime());
         $eventoSoporte->setActive(0);
+        $eventoSoporte->setUsuarioModificacion($usuario);
         $em->flush();
 
         return $this->redirectToRoute('eventoSoporte', array( 'idEvento' => $idEvento));

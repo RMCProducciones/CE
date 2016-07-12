@@ -21,6 +21,8 @@ use AppBundle\Form\GestionFinanciera\ParticipanteType;
 use AppBundle\Form\GestionFinanciera\ParticipanteFilterType;
 
 
+use AppBundle\Utilities\Acceso;
+use AppBundle\Utilities\FilterLocation;
 
 
 /*Para autenticación por código*/
