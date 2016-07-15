@@ -98,6 +98,10 @@ class PoaController extends Controller
             //$poa->setUsuarioCreacion( $this->get('security.token_storage')->getToken()->getUser() );
             //$poa->setUsuarioCreacion($em->getRepository('AppBundle:Usuario')->findOneBy(array('id'=>'1')))
             $poa->setFechaCreacion(new \DateTime());
+              $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $poa->setUsuarioCreacion($usuario);
 
             
             $em->persist($poa);
@@ -143,8 +147,12 @@ class PoaController extends Controller
 
             $poa->setFechaModificacion(new \DateTime());
 
-  
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $convocatoria->setUsuarioModificacion($usuario);
 
+            $em->persist($convocatoria);
             $em->flush();
 
             return $this->redirectToRoute('POAGestion');

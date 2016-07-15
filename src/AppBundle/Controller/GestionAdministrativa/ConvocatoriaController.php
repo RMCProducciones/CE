@@ -98,6 +98,10 @@ class ConvocatoriaController extends Controller
 
             $convocatoria->setActive(true);
             $convocatoria->setFechaCreacion(new \DateTime());
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $convocatoria->setUsuarioCreacion($usuario);
 
             
             $em->persist($convocatoria);
@@ -140,7 +144,12 @@ class ConvocatoriaController extends Controller
             $convocatoria = $form->getData();          
 
             $convocatoria->setFechaModificacion(new \DateTime());
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $convocatoria->setUsuarioModificacion($usuario);
 
+            $em->persist($convocatoria);
             $em->flush();
 
             return $this->redirectToRoute('convocatoriaGestion');
