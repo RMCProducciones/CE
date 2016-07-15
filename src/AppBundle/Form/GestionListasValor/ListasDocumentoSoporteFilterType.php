@@ -17,7 +17,7 @@ class ListasDocumentoSoporteFilterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
       
-        /*$builder->add('dominio', 'filter_entity', array('label' => 'Dominio', 
+        $builder->add('dominio', 'filter_entity', array('label' => 'Dominio', 
                                             'class' => 'AppBundle:Listas',
                                             'property'=>'dominio',
                                             'query_builder' => function(EntityRepository $er) {
@@ -25,7 +25,7 @@ class ListasDocumentoSoporteFilterType extends AbstractType
                                                return $er->createQueryBuilder('l') 
                                                     ->groupBy('l.dominio')
                                                     ->orderBy('l.dominio');
-                                            },));*/
+                                            },));
 
         /*$builder->add('dominio', 'filter_choice', array('label' => 'Dominio', 
                                             'choices' => array( //Generar un arry con esta forma para que funcione
@@ -36,7 +36,7 @@ class ListasDocumentoSoporteFilterType extends AbstractType
                                             ));*/
 
 
-        $builder->add('dominio', 'filter_text');
+        //$builder->add('dominio', 'filter_text');
         $builder->add('descripcion', 'filter_text');
 
     }
