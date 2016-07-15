@@ -20,12 +20,19 @@ class ListasValorFilterType extends AbstractType
         /*$builder->add('dominio', 'filter_entity', array('label' => 'Dominio', 
                                             'class' => 'AppBundle:Listas',
                                             'property'=>'dominio',
-                                            'query_builder' => function(EntityRepository $er) {
-                                                
+                                            'query_builder' => function(EntityRepository $er) {                                                
                                                return $er->createQueryBuilder('l') 
                                                     ->groupBy('l.dominio')
                                                     ->orderBy('l.dominio');
                                             },));*/
+
+        /*$builder->add('dominio', 'filter_choice', array('label' => 'Dominio', 
+                                            'choices' => array( //Generar un arry con esta forma para que funcione
+                                                    'tipo_documento' => 'tipo_documento',
+                                                    'genero' => 'genero',
+                                                    'estado_civil'   => 'estado_civil'
+                                                    ),
+                                            ));*/
 
         /*$builder->add('dominio', 'filter_choice', array('label' => 'Dominio', 
                                             'choices' => array( //Generar un arry con esta forma para que funcione

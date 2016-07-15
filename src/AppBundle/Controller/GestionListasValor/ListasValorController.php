@@ -55,6 +55,10 @@ class ListasValorController extends Controller
             // manually bind values from the request
             $form->submit($request->query->get($form->getName()));
 
+            /*if ($request->getMethod() == 'GET') {
+                echo $_GET["ListasValorFilter"]["dominio"];
+                sdfasdfasd;
+            }*/
             // build the query from the given form object
             $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
 

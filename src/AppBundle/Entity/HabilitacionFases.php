@@ -64,6 +64,20 @@ class HabilitacionFases
     /**
      * @var boolean
      *
+     * @ORM\Column(name="no_aprobado", type="boolean", nullable = true)
+     */
+    private $no_aprobado;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observaciones", type="string")
+     */
+    private $observaciones;
+
+    /**
+     * @var boolean
+     *
      * @ORM\Column(name="active", type="boolean")
      */
     private $active;
@@ -245,6 +259,54 @@ class HabilitacionFases
     public function getPn()
     {
         return $this->pn;
+    }
+
+    /**
+     * Set no_aprobador
+     *
+     * @param boolean $no_aprobado
+     *
+     * @return HabilitacionFases
+     */
+    public function setNoAprobado($no_aprobado)
+    {
+        $this->no_aprobado = $no_aprobado;
+
+        return $this;
+    }
+
+    /**
+     * Get no_aprobado
+     *
+     * @return boolean
+     */
+    public function getNoAprobado()
+    {
+        return $this->no_aprobado;
+    }
+
+    /**
+     * Set observaciones
+     *
+     * @param string $observaciones
+     *
+     * @return HabilitacionFases
+     */
+    public function setObservaciones($observaciones)
+    {
+        $this->observaciones = $observaciones;
+
+        return $this;
+    }
+
+    /**
+     * Get observaciones
+     *
+     * @return string
+     */
+    public function getObservaciones()
+    {
+        return $this->observaciones;
     }
 
     /**
