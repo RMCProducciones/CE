@@ -71,7 +71,7 @@ class HabilitacionFases
     /**
      * @var string
      *
-     * @ORM\Column(name="observaciones", type="string")
+     * @ORM\Column(name="observaciones", type="string", nullable = true)
      */
     private $observaciones;
 
@@ -262,21 +262,21 @@ class HabilitacionFases
     }
 
     /**
-     * Set no_aprobador
+     * Set noAprobado
      *
-     * @param boolean $no_aprobado
+     * @param boolean $noAprobado
      *
      * @return HabilitacionFases
      */
-    public function setNoAprobado($no_aprobado)
+    public function setNoAprobado($noAprobado)
     {
-        $this->no_aprobado = $no_aprobado;
+        $this->no_aprobado = $noAprobado;
 
         return $this;
     }
 
     /**
-     * Get no_aprobado
+     * Get noAprobado
      *
      * @return boolean
      */

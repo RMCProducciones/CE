@@ -379,15 +379,20 @@ class ClearController extends Controller
                             //Despúes de subir el Acta final del CLEAR toma lo que esté almacenado en habilitacionFases de cada grupo 
                             //para asignar un nodo Ejecutado o un nodo Rechazado
 
-                            self::operacionesLegalizacionClear($clear);
+                            $cierreClear = self::operacionesLegalizacionClear($clear);
 
                         }
                         //$grupoSoporte->setUsuarioCreacion(1);
 
-                        $em->persist($clearSoporte);
-                        $em->flush();
-                        
-                        return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR) );
+                        if($cierreClear == "false"){
+                            $this->addFlash('danger', 'Faltan grupos por comprobar habilitación de fase');
+                            return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR) );    
+                        }else{
+                            $em->persist($clearSoporte);
+                            $em->flush();
+                            
+                            return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR) );                            
+                        }
                     }
                 }else{
                     $this->addFlash('danger', 'No existe documento de "Acta Inducción e instalación" activo');
@@ -1183,10 +1188,12 @@ class ClearController extends Controller
                     if($habilitacionFases->getIea())
                         self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 5, 1);//Programación(1) a Visita previa IEA
                     if($habilitacionFases->getPn())
-                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 3, 1);//Programación(1) a Visita previa PN                    
+                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 3, 1);//Programación(1) a Visita previa PN
+                    if($habilitacionFases->getNoAprobado())
+                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 3);//Rechazado(3) Clear de Habilitación                                            
                 }
                 else{
-                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 3);//Rechazado(3) Clear de Habilitación                    
+                    return "false";
                 }
                     
             }

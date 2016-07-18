@@ -298,8 +298,20 @@
 	                  		Formal Con<br />Negocio<br />
 			                {{ form_errors(form.pn) }}
 			                {{ form_widget(form.pn) }}
-	                  	</th>
+	                  	</th>	                  	
+
                   	</tr>
+                  	<tr class="active text-muted vertical-align" {% if clearFinalizado %}style="display:none;"{% endif %}>
+
+                  		<th colspan="6" class="text-center">                  		
+					  		No Aprobado<br />
+							{{ form_errors(form.no_aprobado) }}
+							{{ form_widget(form.no_aprobado) }}							
+						</th> 
+
+                  	</tr>
+                  	                	
+
                   	<tr class="active text-muted vertical-align" {% if not clearFinalizado %}style="display:none;"{% endif %}>
                   		<td><b>Fase habilitada: </b><br><br>
                   			La fase habilitada se marcará con un icono en color verde como "<img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}">"
@@ -336,11 +348,36 @@
 								<img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}">
 			                {% endif %}
 	                  	</th>    	
-	      			</tr>  
+	      			</tr>  	     
+
+	      			<tr class="active text-muted vertical-align" {% if not clearFinalizado %}style="display:none;"{% endif %}>
+
+                  		<th colspan="6" class="text-center">                  		
+					  		No Aprobado<br />
+							{% if habilitacionFases.noAprobado %}
+			                	<img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}">
+							{% else %}
+								<img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}">
+			                {% endif %}
+						</th> 
+						
+                  	</tr>
+
 	           </tbody>
             </table>
-          </div>
-        </div>
+          </div>          
+        </div>        
+		    <div class="row">
+		        <div class="col-md-12" {% if clearFinalizado %}style="display:none;"{% endif %}>
+					{{ form_label(form.observaciones) }}<br />
+					{{ form_errors(form.observaciones) }}
+					{{ form_widget(form.observaciones, { 'attr': {'class': 'form-control', 'placeholder': 'Observaciones...'} }) }}
+				</div>
+				<div class="col-md-12" {% if not clearFinalizado %}style="display:none;"{% endif %}>
+					{{ form_label(form.observaciones) }}<br />					
+					{{habilitacionFases.observaciones}}
+				</div>
+			</div>
       </div>
     </div>  
 
