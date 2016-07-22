@@ -19,6 +19,8 @@ class EvaluacionFasesType extends AbstractType
             ->add('apto_iea', 'checkbox', array('label' => 'IEA', 'required' => false))
             ->add('apto_pi', 'checkbox', array('label' => 'PI formal', 'required' => false))        
             ->add('apto_pn', 'checkbox', array('label' => 'PN', 'required' => false))
+            ->add('no_aprobado', 'checkbox', array('label' => 'No Aprobado', 'required' => false))
+            ->add('observaciones', 'textarea', array('required' => false))
             ;
 		}
     

@@ -142,9 +142,30 @@ class BeneficiarioController extends Controller
             if($beneficiarios->getPertenenciaEtnica()->getDescripcion() != 'Indígena'){
                 $beneficiarios->setNullGrupoIndigena();
             }  
-             if($beneficiarios->getEstadoCivil()->getDescripcion() != 'Casado'||$beneficiarios->getEstadoCivil()->getDescripcion() != 'Unión Libre'){
+            if($beneficiarios->getEstadoCivil()->getDescripcion() != 'Casado'||$beneficiarios->getEstadoCivil()->getDescripcion() != 'Unión Libre'){
                 $beneficiarios->setNullDocumentoConyugue();
-            }                    
+            }
+            /*if($beneficiarios->getCorteSisben() == '14 Ciudades'){
+                if($beneficiarios->getPuntajeSisben() > '57.21'){
+                    $this->addFlash('warning', 'El puntaje de SISBEN es mayor a puntaje máximo requerido para el area de sisben "14 Ciudades"');
+                    return $this->redirectToRoute('beneficiarioNuevo', array( 'idGrupo' => $idGrupo));
+                }
+
+            }
+            if($beneficiarios->getCorteSisben() == 'Otras Cabeceras'){
+                if($beneficiarios->getPuntajeSisben() > '56.32'){
+                    $this->addFlash('warning', 'El puntaje de SISBEN es mayor a puntaje máximo requerido para el area de sisben "Otras Cabeceras"');
+                    return $this->redirectToRoute('beneficiarioNuevo', array( 'idGrupo' => $idGrupo));
+                }                
+
+            }
+            if($beneficiarios->getCorteSisben() == 'Áreas Rurales'){
+                if($beneficiarios->getPuntajeSisben() > '40.75'){
+                    $this->addFlash('warning', 'El puntaje de SISBEN es mayor a puntaje máximo requerido para el area de sisben "Áreas Rurales"');
+                    return $this->redirectToRoute('beneficiarioNuevo', array( 'idGrupo' => $idGrupo));
+                }                
+
+            }*/
 
             $beneficiarios->setActive(true);
             $beneficiarios->setFechaCreacion(new \DateTime());
@@ -360,12 +381,42 @@ class BeneficiarioController extends Controller
             
             $beneficiarios->setFechaModificacion(new \DateTime());
 
+            if($beneficiarios->getPertenenciaEtnica()->getDescripcion() != 'Indígena'){
+                $beneficiarios->setNullGrupoIndigena();
+            }  
+            if($beneficiarios->getEstadoCivil()->getDescripcion() != 'Casado'||$beneficiarios->getEstadoCivil()->getDescripcion() != 'Unión Libre'){
+                $beneficiarios->setNullDocumentoConyugue();
+            }
+
+            /*if($beneficiarios->getCorteSisben() == '14 Ciudades'){
+                if($beneficiarios->getPuntajeSisben() > '57.21'){
+                    $this->addFlash('warning', 'El puntaje de SISBEN es mayor a puntaje máximo requerido para el area de sisben "14 Ciudades"');
+                    return $this->redirectToRoute('beneficiarioEditar', array( 'idGrupo' => $idGrupo, 'idBeneficiario' => $idBeneficiario));
+                }
+
+            }
+            if($beneficiarios->getCorteSisben() == 'Otras Cabeceras'){
+                if($beneficiarios->getPuntajeSisben() > '56.32'){
+                    $this->addFlash('warning', 'El puntaje de SISBEN es mayor a puntaje máximo requerido para el area de sisben "Otras Cabeceras"');
+                    return $this->redirectToRoute('beneficiarioEditar', array( 'idGrupo' => $idGrupo, 'idBeneficiario' => $idBeneficiario));
+                }                
+
+            }
+            if($beneficiarios->getCorteSisben() == 'Áreas Rurales'){
+                if($beneficiarios->getPuntajeSisben() > '40.75'){
+                    $this->addFlash('warning', 'El puntaje de SISBEN es mayor a puntaje máximo requerido para el area de sisben "Áreas Rurales"');
+                    return $this->redirectToRoute('beneficiarioEditar', array( 'idGrupo' => $idGrupo, 'idBeneficiario' => $idBeneficiario));
+                }                
+
+            }*/
+
             
             $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
             $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
                 array('id' => $idUsuario));
             $beneficiarios->setUsuarioModificacion($usuario);
-            
+
+            $beneficiarios->setFechaModificacion(new \DateTime());            
 
             $em->persist($beneficiarios);
             $em->flush();

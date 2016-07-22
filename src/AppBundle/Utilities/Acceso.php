@@ -34,7 +34,8 @@ class FilterLocation{
             ->createQueryBuilder('q')
             ->innerJoin("q.municipio", "m")
             ->innerJoin("m.departamento", "d")
-            ->innerJoin("m.zona", "z");
+            ->innerJoin("m.zona", "z")
+            ->orderBy("q.fecha_creacion", "DESC");
 
         if ($request->query->has($form->getName())) {
 
@@ -42,7 +43,7 @@ class FilterLocation{
             $grupoThis->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);           
         }
 
-      	$filterBuilder->andWhere('q.active = 1');
+      	$filterBuilder->andWhere('q.active = 1');        
 
         if(in_array("ROLE_PROMOTOR", $rolUsuario)){
             $_GET['selDepartamento'] = $municipioUsuario->getDepartamento()->getId();
