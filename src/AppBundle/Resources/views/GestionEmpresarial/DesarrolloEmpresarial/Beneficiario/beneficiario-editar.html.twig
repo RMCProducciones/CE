@@ -111,10 +111,11 @@
 				  {{ form_errors(form.genero) }}
                   {{ form_widget(form.genero, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-                <div class="col-md-4" ng-init="cargarFechaNacimiento()">
+                {{beneficiarios.fechaNacimiento |  date('Y-m-d')}}
+                <div class="col-md-4" ng-init="cargarFechaNacimiento({{beneficiarios.fechaCreacion |  date('Y')}}, {{beneficiarios.fechaCreacion |  date('m')}}, {{beneficiarios.fechaCreacion |  date('d')}})">
                   {{ form_label(form.fecha_nacimiento) }}
 				  {{ form_errors(form.fecha_nacimiento) }}                  
-                  {{ form_widget(form.fecha_nacimiento, { 'attr': {'class': 'form-control fecha_nacimiento', 'placeholder': 'Fecha de nacimiento', 'ng-model': 'fechaNacimiento', 'ng-change':'calcularEdadEditar()'} }) }}
+                  {{ form_widget(form.fecha_nacimiento, { 'attr': {'class': 'form-control fecha_nacimiento', 'placeholder': 'Fecha de nacimiento', 'ng-model' : 'fechaNacimiento', 'ng-change':'calcularEdadEditar()' } }) }}
                 </div>
                 <div class="col-md-4">
                   {{ form_label(form.edad_inscripcion) }}

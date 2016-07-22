@@ -188,7 +188,7 @@ class TerritorioController extends Controller
             $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
             $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
                 array('id' => $idUsuario));
-            $territorio_aprendizaje->setUsuarioModificacion($usuario);                   
+            $territorio->setUsuarioModificacion($usuario);                   
 
 
 
