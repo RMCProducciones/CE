@@ -5,12 +5,13 @@ app.controller('gestionCriterioCtrl', ['$scope', '$http', function($scope, $http
 
 	//console.log($scope.estadoMensaje);
 
-	$scope.eliminarCriterio = function(idCriterio, consecutivo){
+	$scope.eliminarCriterio = function(idCriterio, idConcurso, consecutivo){
 
 		$scope.idCriterio= idCriterio;
+		$scope.idConcurso= idConcurso;
 		$scope.consecutivoCriterio = consecutivo;
 
-		$http.get($scope.rutaServidor + "gestion-empresarial/desarrollo-empresarial/concurso/gestion-distribucion/" + $scope.idCriterio + "/eliminar")
+		$http.get($scope.rutaServidor + "gestion-empresarial/desarrollo-empresarial/concurso/gestion-criterio/" + $scope.idConcurso + "/" + $scope.idCriterio + "/eliminar")
 		.success(function(data, status, headers, config) {
 
   			$("#filaCriterio" + $scope.consecutivoCriterio).fadeOut("slow");
