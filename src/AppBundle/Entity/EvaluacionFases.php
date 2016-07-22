@@ -71,6 +71,20 @@ class EvaluacionFases
     /**
      * @var boolean
      *
+     * @ORM\Column(name="no_aprobado", type="boolean", nullable = true)
+     */
+    private $no_aprobado;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="observaciones", type="string", nullable = true)
+     */
+    private $observaciones;
+
+    /**
+     * @var boolean
+     *
      * @ORM\Column(name="active", type="boolean")
      */
     private $active;
@@ -277,6 +291,54 @@ class EvaluacionFases
     public function getAptoPn()
     {
         return $this->apto_pn;
+    }
+
+    /**
+     * Set noAprobado
+     *
+     * @param boolean $noAprobado
+     *
+     * @return EvaluacionFases
+     */
+    public function setNoAprobado($noAprobado)
+    {
+        $this->no_aprobado = $noAprobado;
+
+        return $this;
+    }
+
+    /**
+     * Get noAprobado
+     *
+     * @return boolean
+     */
+    public function getNoAprobado()
+    {
+        return $this->no_aprobado;
+    }
+
+    /**
+     * Set observaciones
+     *
+     * @param string $observaciones
+     *
+     * @return EvaluacionFases
+     */
+    public function setObservaciones($observaciones)
+    {
+        $this->observaciones = $observaciones;
+
+        return $this;
+    }
+
+    /**
+     * Get observaciones
+     *
+     * @return string
+     */
+    public function getObservaciones()
+    {
+        return $this->observaciones;
     }
 
     /**

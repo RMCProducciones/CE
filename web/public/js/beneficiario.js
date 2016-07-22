@@ -24,6 +24,76 @@ app.controller('PertenenciaEtnicaCtrl', ['$scope', function($scope) {
 
 }]);
 
+app.controller('EdadBeneficiarioCtrl', ['$scope', function($scope) {
+
+	$scope.calcularEdad = function() { 		
+		$scope.fecha = new Date().toJSON().slice(0,10);
+		$scope.añoIngresado = $('.fecha_nacimiento').val()[0]*1000 + $('.fecha_nacimiento').val()[1]*100 + $('.fecha_nacimiento').val()[2]*10 + $('.fecha_nacimiento').val()[3] * 1;
+		$scope.añoSistema = $scope.fecha[0]*1000 + $scope.fecha[1]*100 + $scope.fecha[2]*10 +$scope.fecha[3] * 1;		
+		$scope.mesIngresado = $('.fecha_nacimiento').val()[5]*10 + $('.fecha_nacimiento').val()[6]*1;
+		$scope.mesSistema = $scope.fecha[5]*10 + $scope.fecha[6]*1;		
+		$scope.diaIngresado = $('.fecha_nacimiento').val()[8]*10 + $('.fecha_nacimiento').val()[9]*1;
+		$scope.diaSistema = $scope.fecha[8]*10 + $scope.fecha[9]*1;		
+		if($scope.añoIngresado < $scope.añoSistema){			
+			if($scope.mesIngresado > $scope.mesSistema){				
+				$("#beneficiario_edad_inscripcion").val($scope.añoSistema - $scope.añoIngresado - 1);
+			}else if($scope.mesIngresado == $scope.mesSistema){
+				if($scope.diaIngresado > $scope.diaSistema){
+					$("#beneficiario_edad_inscripcion").val($scope.añoSistema - $scope.añoIngresado - 1);		
+				}else{
+					$("#beneficiario_edad_inscripcion").val($scope.añoSistema - $scope.añoIngresado);
+				}
+			}else{
+				$("#beneficiario_edad_inscripcion").val($scope.añoSistema - $scope.añoIngresado);
+			}			
+		}else{
+			$("#beneficiario_edad_inscripcion").val('Edad no permitida');
+		}		
+
+	};	
+
+}]);
+
+app.controller('EdadBeneficiarioEditarCtrl', ['$scope', function($scope) {
+
+	$scope.fechaCreacion = "";
+	$scope.cargarFechaNacimiento = function(año, mes, dia) { 			
+		//$scope.fechaCreacion = fecha;
+		$("#beneficiario_fecha_nacimiento").val(año,  mes, dia), 'yyyy-MM-dd';	
+		//console.log($('.fecha_nacimiento').val());
+		console.log("si es esto ?");
+		console.log(año);
+		console.log(mes);
+		console.log(dia);
+	}
+
+	$scope.calcularEdadEditar = function() { 		
+		$scope.fecha = new Date().toJSON().slice(0,10);
+		$scope.añoIngresado = $('.fecha_nacimiento').val()[0]*1000 + $('.fecha_nacimiento').val()[1]*100 + $('.fecha_nacimiento').val()[2]*10 + $('.fecha_nacimiento').val()[3] * 1;
+		$scope.añoSistema = $scope.fecha[0]*1000 + $scope.fecha[1]*100 + $scope.fecha[2]*10 +$scope.fecha[3] * 1;		
+		$scope.mesIngresado = $('.fecha_nacimiento').val()[5]*10 + $('.fecha_nacimiento').val()[6]*1;
+		$scope.mesSistema = $scope.fecha[5]*10 + $scope.fecha[6]*1;		
+		$scope.diaIngresado = $('.fecha_nacimiento').val()[8]*10 + $('.fecha_nacimiento').val()[9]*1;
+		$scope.diaSistema = $scope.fecha[8]*10 + $scope.fecha[9]*1;		
+		if($scope.añoIngresado < $scope.añoSistema){			
+			if($scope.mesIngresado > $scope.mesSistema){				
+				$("#beneficiario_edad_inscripcion").val($scope.añoSistema - $scope.añoIngresado - 1);
+			}else if($scope.mesIngresado == $scope.mesSistema){
+				if($scope.diaIngresado > $scope.diaSistema){
+					$("#beneficiario_edad_inscripcion").val($scope.añoSistema - $scope.añoIngresado - 1);		
+				}else{
+					$("#beneficiario_edad_inscripcion").val($scope.añoSistema - $scope.añoIngresado);
+				}
+			}else{
+				$("#beneficiario_edad_inscripcion").val($scope.añoSistema - $scope.añoIngresado);
+			}			
+		}else{
+			$("#beneficiario_edad_inscripcion").val('Edad no permitida');
+		}		
+
+	};	
+
+}]);
 
 
 app.controller('EstadoCivilCtrl', ['$scope', function($scope) {

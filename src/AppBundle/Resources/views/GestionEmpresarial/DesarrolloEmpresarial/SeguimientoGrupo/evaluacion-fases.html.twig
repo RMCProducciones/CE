@@ -119,7 +119,7 @@
                     {{ evaluacionFases.calificacionPn }}
                   {% endif %}
                   </input></td>
-                </tr>
+                </tr>                
 
                 <tr class="active text-muted" {% if not clearFinalizado %}style="display:none;"{% endif %}>
                   <td>Calificación</td>
@@ -140,19 +140,19 @@
                     </td>
                     {% if validacion[0] == true %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
-                      {% set contIEA = contIEA + 1 %}
+                      {% set contIEA = 1 %}
                     {% else %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
                     {% endif %}
                     {% if validacion[1] == true %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
-                      {% set contPI = contPI + 1 %}
+                      {% set contPI = 1 %}
                     {% else %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
                     {% endif %}
                     {% if validacion[2] == true %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
-                      {% set contPN = contPN + 1 %}
+                      {% set contPN = 1 %}
                     {% else %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
                     {% endif %}
@@ -164,19 +164,16 @@
                     </td>
                     {% if validacion[3] == true %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
-                      {% set contIEA = contIEA + 1 %}
                     {% else %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
                     {% endif %}
                     {% if validacion[4] == true %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
-                      {% set contPI = contPI + 1 %}
                     {% else %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
                     {% endif %}
                     {% if validacion[5] == true %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
-                      {% set contPN = contPN + 1 %}
                     {% else %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
                     {% endif %}
@@ -188,19 +185,16 @@
                     </td>
                     {% if validacion[6] == true %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
-                      {% set contIEA = contIEA + 1 %}
                     {% else %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
                     {% endif %}
                     {% if validacion[7] == true %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
-                      {% set contPI = contPI + 1 %}
                     {% else %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
                     {% endif %}
                     {% if validacion[8] == true %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
-                      {% set contPN = contPN + 1 %}
                     {% else %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
                     {% endif %}
@@ -212,19 +206,16 @@
                     </td>
                     {% if validacion[9] == true %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
-                      {% set contIEA = contIEA + 1 %}
                     {% else %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
                     {% endif %}
                     {% if validacion[10] == true %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
-                      {% set contPI = contPI + 1 %}
                     {% else %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
                     {% endif %}
                     {% if validacion[11] == true %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}"></td>
-                      {% set contPN = contPN + 1 %}
                     {% else %}
                       <td class="text-center"><img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}"></td>
                     {% endif %}
@@ -240,7 +231,7 @@
                   <th class="text-center">
                     IEA <br />No Formal <br />
                     {% if idNodo == 14 %}
-                      {% if contIEA == 4 %}
+                      {% if contIEA == 1 %}
                         {{ form_errors(form.apto_iea) }}
                         {{ form_widget(form.apto_iea) }}
                       {% else %}
@@ -258,7 +249,7 @@
                   <th class="text-center">
                     PI <br />No Formal <br />
                     {% if idNodo == 20 %}
-                      {% if contPI == 4 %}
+                      {% if contPI == 1 %}
                         {{ form_errors(form.apto_pi) }}
                         {{ form_widget(form.apto_pi) }}
                       {% else %}
@@ -276,7 +267,7 @@
                   <th class="text-center">
                     PN <br />Formal <br />
                     {% if idNodo == 26 %}
-                      {% if contPN == 4 %}
+                      {% if contPN == 1 %}
                         {{ form_errors(form.apto_pn) }}
                         {{ form_widget(form.apto_pn) }}
                       {% else %}
@@ -291,6 +282,13 @@
                         {% endif %}
                     {% endif %}
                   </th>
+                </tr>
+                <tr class="active text-muted" {% if clearFinalizado %}style="display:none;"{% endif %}>
+                  <th colspan="6" class="text-center">                      
+                    No Aprobado<br />
+                    {{ form_errors(form.no_aprobado) }}
+                    {{ form_widget(form.no_aprobado) }}             
+                  </th> 
                 </tr>
                 <tr class="active text-muted vertical-align" {% if not clearFinalizado %}style="display:none;"{% endif %}>
                   <td><b>Fase apta: </b><br><br>
@@ -322,11 +320,33 @@
                   </th>
                 </tr>
 
+                <tr class="active text-muted vertical-align" {% if not clearFinalizado %}style="display:none;"{% endif %}>
+                  <th colspan="6" class="text-center">                      
+                      No Aprobado<br />
+                      {% if evaluacionFases.noAprobado %}
+                        <img width="20px" src="{{ asset('public/images/visto-bueno-verde.png') }}">
+                      {% else %}
+                        <img width="20px" src="{{ asset('public/images/visto-bueno-gris.png') }}">
+                      {% endif %}
+                  </th>             
+                </tr>
+
                   
            </tbody>
             </table>
           </div>
         </div>
+        <div class="row">
+            <div class="col-md-12" {% if clearFinalizado %}style="display:none;"{% endif %}>
+          {{ form_label(form.observaciones) }}<br />
+          {{ form_errors(form.observaciones) }}
+          {{ form_widget(form.observaciones, { 'attr': {'class': 'form-control', 'placeholder': 'Observaciones...'} }) }}
+        </div>
+        <div class="col-md-12" {% if not clearFinalizado %}style="display:none;"{% endif %}>
+          {{ form_label(form.observaciones) }}<br />          
+          {{evaluacionFases.observaciones}}
+        </div>
+      </div>
       </div>
     </div>
     {{ form_widget(form.calificacion_iea, { 'attr': {'style': 'opacity:0'} }) }} 
@@ -335,6 +355,7 @@
     {{ form_widget(form.apto_iea, { 'attr': {'style': 'opacity:0'} }) }}
     {{ form_widget(form.apto_pi, { 'attr': {'style': 'opacity:0'} }) }}
     {{ form_widget(form.apto_pn, { 'attr': {'style': 'opacity:0'} }) }}
+    {{ form_widget(form.no_aprobado, { 'attr': {'style': 'opacity:0'} }) }}
 
   {{ form_end(form) }}
                

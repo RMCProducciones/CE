@@ -93,16 +93,14 @@ class Beneficiario
     private $joven_rural;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="corte_sisben", type="decimal", nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Listas")
      */
     private $corte_sisben;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="puntaje_sisben", type="decimal", nullable=true)
+     * @ORM\Column(name="puntaje_sisben", type="decimal", scale=2, nullable=true)
      */
     private $puntaje_sisben;
 
@@ -615,11 +613,11 @@ class Beneficiario
     /**
      * Set corteSisben
      *
-     * @param string $corteSisben
+     * @param AppBundle\Entity\Listas $corteSisben
      *
      * @return Beneficiario
      */
-    public function setCorteSisben($corteSisben)
+    public function setCorteSisben(\AppBundle\Entity\Listas $corteSisben)
     {
         $this->corte_sisben = $corteSisben;
 
@@ -629,7 +627,7 @@ class Beneficiario
     /**
      * Get corteSisben
      *
-     * @return string
+     * @return AppBundle\Entity\Listas
      */
     public function getCorteSisben()
     {

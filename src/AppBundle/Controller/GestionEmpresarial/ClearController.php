@@ -384,14 +384,17 @@ class ClearController extends Controller
                         }
                         //$grupoSoporte->setUsuarioCreacion(1);
 
-                        if($cierreClear == "false"){
+                        if($cierreClear == "false1"){
                             $this->addFlash('danger', 'Faltan grupos por comprobar habilitación de fase');
                             return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR) );    
+                        }elseif($cierreClear == "false2"){
+                            $this->addFlash('danger', 'Faltan grupos por comprobar evaluación de fase');
+                            return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR) );
                         }else{
                             $em->persist($clearSoporte);
                             $em->flush();
                             
-                            return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR) );                            
+                            return $this->redirectToRoute('clearSoporte', array( 'idCLEAR' => $idCLEAR) );
                         }
                     }
                 }else{
@@ -1177,23 +1180,27 @@ class ClearController extends Controller
                         self::creacionCodigoGrupo($asignacionGrupoClear->getGrupo()->getId());
                     }
                     
-
+                    sdasdas;
                     if($idUltimoNodo == 2)
                         self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 2);//Ejecutada(2) Clear de Habilitación
 
-                    if($habilitacionFases->getMotFormal())
+                    if($habilitacionFases->getMotFormal() != null)
                         self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 6, 2);
-                    if($habilitacionFases->getMotNoFormal())
+                    if($habilitacionFases->getMotNoFormal() != null)
                         self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 10, 2);
-                    if($habilitacionFases->getIea())
+                    if($habilitacionFases->getIea() != null)
                         self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 5, 1);//Programación(1) a Visita previa IEA
-                    if($habilitacionFases->getPn())
+                    if($habilitacionFases->getPn() != null)
                         self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 3, 1);//Programación(1) a Visita previa PN
-                    if($habilitacionFases->getNoAprobado())
-                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 3);//Rechazado(3) Clear de Habilitación                                            
-                }
+                    if($habilitacionFases->getNoAprobado() != null)
+                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 3);//Rechazado(3) Clear de Habilitación 
+
+                    //echo sizeof($habilitacionFases->getMotFormal());
+                    if($habilitacionFases->getMotFormal() == null && $habilitacionFases->getMotNoFormal() == null && $habilitacionFases->getIea() == null && $habilitacionFases->getPn() == null && $habilitacionFases->getNoAprobado() == null)
+                        return "false1";
+                }       
                 else{
-                    return "false";
+                    return "false1";
                 }
                     
             }
@@ -1214,23 +1221,31 @@ class ClearController extends Controller
                     array('grupo' => $asignacionGrupoClear->getGrupo()                                                    
                 ));
                 if($evaluacionFases != null){
-                    if($evaluacionFases->getAptoIea != 0){
+                    if($evaluacionFases->getAptoIea != 0 && $evaluacionFases->getCalificacionIea() >= 70){
                         self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 14, 2);//Ejecutada(2) Clear de Asignacion
                     }else{
                         self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 14, 3);//Rechazado(3) Clear de Asignacion   
                     }
                 }
+                if($evaluacionFases->getAptoIea() == null && $evaluacionFases->getNoAprobado() == null)
+                        return "false2";
+                if($evaluacionFases->getNoAprobado() != null)
+                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 14, 3);//Rechazado(3) Clear de Asignacion   
             }
             elseif($idUltimoNodo == 20){
                 $evaluacionFases = $em->getRepository('AppBundle:EvaluacionFases')->findOneBy(
                     array('grupo' => $asignacionGrupoClear->getGrupo()                          
                 ));
 
-                if($evaluacionFases->getAptoPi() != 0){
+                if($evaluacionFases->getAptoPi() != 0 && $evaluacionFases->getCalificacionPi() >= 70){
                     self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 20, 2);//Ejecutada(2) Clear de Asignacion
                 }else{
                     self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 20, 3);//Rechazado(3) Clear de Asignacion   
                 }
+                if($evaluacionFases->getAptoPi() == null && $evaluacionFases->getNoAprobado() == null)
+                    return "false2";
+                if($evaluacionFases->getNoAprobado() != null)
+                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 20, 3);//Rechazado(3) Clear de Asignacion   
             }  
             elseif($idUltimoNodo == 26){
                 $evaluacionFases = $em->getRepository('AppBundle:EvaluacionFases')->findOneBy(
@@ -1238,16 +1253,20 @@ class ClearController extends Controller
                 ));
 
                 if($evaluacionFases != null){
-                    if($evaluacionFases->getAptoPn() != 0){
+                    if($evaluacionFases->getAptoPn() != 0 && $evaluacionFases->getCalificacionPn() >= 70){
                         self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 26, 2);//Ejecutada(2) Clear de Asignacion
                     }else{
                         self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 26, 3);//Rechazado(3) Clear de Asignacion   
                     }
+                    if($evaluacionFases->getAptoPn() == null && $evaluacionFases->getNoAprobado() == null)
+                        return "false2";
+                    if($evaluacionFases->getNoAprobado() != null)
+                        self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 26, 3);//Rechazado(3) Clear de Asignacion   
                 }else{
-                    self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 26, 3);//Rechazado(3) Clear de Asignacion
+                    return "false2";
                 }
             }     
-            else{//PROGRAMACIÓN GENÉRICA DE CONTRALORÍA O ASIGNACIÓN
+            elseif($idUltimoNodo == 9 || $idUltimoNodo == 13 || $idUltimoNodo == 19 || $idUltimoNodo == 25 || $idUltimoNodo == 31 ){//PROGRAMACIÓN GENÉRICA DE CONTRALORÍA O ASIGNACIÓN
                 self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), $idUltimoNodo, 2);
             }
         }
