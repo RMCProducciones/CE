@@ -152,7 +152,7 @@ class PoaController extends Controller
                 array('id' => $idUsuario));
             $convocatoria->setUsuarioModificacion($usuario);
 
-            $em->persist($convocatoria);
+            $em->persist($convocatoria);                                            
             $em->flush();
 
             return $this->redirectToRoute('POAGestion');

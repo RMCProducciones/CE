@@ -114,7 +114,13 @@ class ListasValorController extends Controller
             $listas = $form->getData();            
                  
             $listas->setActive(true);
-            $listas->setFechaCreacion(new \DateTime());           
+            $listas->setFechaCreacion(new \DateTime());   
+             
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $listas->setUsuarioCreacion($usuario);       
+
             $em->persist($listas);
             $em->flush();
 
@@ -154,7 +160,14 @@ class ListasValorController extends Controller
             $listas = $form->getData();            
                  
             $listas->setActive(true);
-            $listas->setFechaCreacion(new \DateTime());           
+            $listas->setFechaCreacion(new \DateTime());        
+
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $listas->setUsuarioModificacion($usuario);
+
+
             $em->persist($listas);
             $em->flush();
 
