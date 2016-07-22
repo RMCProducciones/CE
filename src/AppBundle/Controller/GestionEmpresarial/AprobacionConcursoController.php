@@ -38,7 +38,7 @@ class AprobacionConcursoController extends Controller
         
         new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
 
-        echo'Texto a imprimir';
+   
 
         $em = $this->getDoctrine()->getManager();
         

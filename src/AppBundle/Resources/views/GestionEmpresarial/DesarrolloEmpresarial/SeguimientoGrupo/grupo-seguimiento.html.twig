@@ -306,20 +306,26 @@
 
                 
                 //circulo1(1950, 345);     // 32 interventoria
+                
                 ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Visita",2000*escX,390*escY); ctx.fillText("Adicional",2000*escX,410*escY);
-                circulo(2000, 345);     // 33 interventoria
+                circulo(2000, 345);     // 33 Visita Adicional
+
                 //circulo1(2050, 345);     // 34 interventoria
 
 
                 //circulo1(1500, 595);     // 35 interventoria
+
                 ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Visita",1550*escX,640*escY); ctx.fillText("Adicional",1550*escX,660*escY);
-                circulo(1550, 595);     // 36 interventoria
+                circulo(1550, 595);        // 36 Visita Adicional
+
                 //circulo1(1600, 595);     // 37 interventoria
 
 
                 //circulo1(1050, 595);     // 38 interventoria
+
                 ctx.fillStyle = "#999"; ctx.textAlign="center"; ctx.fillText("Visita",1100*escX,640*escY); ctx.fillText("Adicional",1100*escX,660*escY);
-                circulo(1100, 595);     // 39 interventoria
+                circulo(1100, 595);     // 39 Visita Adicional
+
                 //circulo1(1150, 595);     // 40 interventoria
 
                 
@@ -366,7 +372,7 @@
                 var circle = new Circle(x*escX, y*escY, radius);
                 circles.push(circle);
               }
-
+/*
               function circulo1(x, y){  //circulo interventoria
 
                 var radius = 45/2*(escX+escY)/2;
@@ -380,6 +386,7 @@
                 var circle = new Circle(x*escX, y*escY, radius);
                 circles.push(circle);
               }
+*/
 
               var vinculo = function(x, y, radius) {
                 this.left = x - radius;
