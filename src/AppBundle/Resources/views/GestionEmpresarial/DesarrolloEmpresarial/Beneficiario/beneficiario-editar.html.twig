@@ -105,16 +105,16 @@
         
 		<br/>
 		
-		<div class="row">
+		<div class="row" ng-controller="EdadBeneficiarioEditarCtrl">
 				<div class="col-md-4">
                   {{ form_label(form.genero) }}
 				  {{ form_errors(form.genero) }}
                   {{ form_widget(form.genero, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" ng-init="cargarFechaNacimiento()">
                   {{ form_label(form.fecha_nacimiento) }}
 				  {{ form_errors(form.fecha_nacimiento) }}                  
-                  {{ form_widget(form.fecha_nacimiento, { 'attr': {'class': 'form-control fecha_nacimiento', 'placeholder': 'Fecha de nacimiento', 'ng-model': 'fechaNacimiento', 'ng-change':'calcularEdad()', 'value' : '1995-05-05'} }) }}
+                  {{ form_widget(form.fecha_nacimiento, { 'attr': {'class': 'form-control fecha_nacimiento', 'placeholder': 'Fecha de nacimiento', 'ng-model': 'fechaNacimiento', 'ng-change':'calcularEdadEditar()'} }) }}
                 </div>
                 <div class="col-md-4">
                   {{ form_label(form.edad_inscripcion) }}
