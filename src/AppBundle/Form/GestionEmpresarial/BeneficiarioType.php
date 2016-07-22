@@ -40,8 +40,16 @@ class BeneficiarioType extends AbstractType
 			->add('rural', 'checkbox', array('required' => false))
 			->add('fecha_nacimiento', 'date', array('label' => 'Fecha de nacimiento', 'widget' => 'single_text'))
 			->add('edad_inscripcion', 'text', array('label' => 'Edad al momento de la inscripción'))
-			->add('corte_sisben', 'text', array('label' => 'Area SISBEN'))
-			->add('puntaje_sisben')
+			->add('corte_sisben', 'entity', array('class' => 'AppBundle:Listas',
+												  'label' => 'Area SISBEN',
+										    	  'query_builder' => function(EntityRepository $er) {
+										          return $er->createQueryBuilder('l')
+										        	->where('l.dominio = :dominio')
+										        	->andWhere('l.active = 1')
+										        	->setParameter('dominio', 'area_sisben')
+										            ->orderBy('l.orden', 'ASC');										            
+										    },))
+			->add('puntaje_sisben', 'number')
 			->add('grupo_indigena', 'entity', array('class' => 'AppBundle:Listas','required' => false,
 										    'query_builder' => function(EntityRepository $er) {
 										        return $er->createQueryBuilder('l')
@@ -51,7 +59,8 @@ class BeneficiarioType extends AbstractType
 										            ->orderBy('l.orden', 'ASC')
 										            ->addOrderBy('l.descripcion', 'ASC');
 										    },))
-			->add('pertenencia_etnica', 'entity', array('label' => 'Pertenencia étnica','class' => 'AppBundle:Listas',
+			->add('pertenencia_etnica', 'entity', array('label' => 'Pertenencia étnica',
+											'class' => 'AppBundle:Listas',
 										    'query_builder' => function(EntityRepository $er) {
 										        return $er->createQueryBuilder('l')
 										        	->where('l.dominio = :dominio')

@@ -17,7 +17,7 @@ class ListaRolType extends AbstractType
 					return $er->createQueryBuilder('l')
 						->where('l.dominio = :dominio')
 						->andWhere('l.active = 1')
-						->setParameter('dominio', 'rol')
+						->setParameter('dominio', 'rol_comite')
 						->orderBy('l.orden', 'ASC');
 				})
 			)

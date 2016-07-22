@@ -55,6 +55,10 @@ class ListasValorController extends Controller
             // manually bind values from the request
             $form->submit($request->query->get($form->getName()));
 
+            /*if ($request->getMethod() == 'GET') {
+                echo $_GET["ListasValorFilter"]["dominio"];
+                sdfasdfasd;
+            }*/
             // build the query from the given form object
             $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
 
@@ -110,7 +114,13 @@ class ListasValorController extends Controller
             $listas = $form->getData();            
                  
             $listas->setActive(true);
-            $listas->setFechaCreacion(new \DateTime());           
+            $listas->setFechaCreacion(new \DateTime());   
+             
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $listas->setUsuarioCreacion($usuario);       
+
             $em->persist($listas);
             $em->flush();
 
@@ -150,7 +160,14 @@ class ListasValorController extends Controller
             $listas = $form->getData();            
                  
             $listas->setActive(true);
-            $listas->setFechaCreacion(new \DateTime());           
+            $listas->setFechaCreacion(new \DateTime());        
+
+            $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+            $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+                array('id' => $idUsuario));
+            $listas->setUsuarioModificacion($usuario);
+
+
             $em->persist($listas);
             $em->flush();
 
