@@ -177,9 +177,9 @@ class CriterioCalificacionController extends Controller
 
 
 /**
-     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/gestion-criterio/{idCriterioCalificacion}/eliminar", name="criterioEliminar")
+     * @Route("/gestion-empresarial/desarrollo-empresarial/concurso/gestion-criterio/{idConcurso}/{idCriterioCalificacion}/eliminar", name="criterioEliminar")
      */
-    public function distribucionEliminarAction(Request $request, $idCriterioCalificacion)
+    public function distribucionEliminarAction(Request $request, $idConcurso, $idCriterioCalificacion)
     {
         $em = $this->getDoctrine()->getManager();
         $criterio = new CriterioCalificacion();
@@ -189,7 +189,8 @@ class CriterioCalificacionController extends Controller
         $em->remove($criterio);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('criterioGestion'));
+        return $this->redirect($this->generateUrl('criterioGestion', 
+            array('idConcurso' => $idConcurso)));
 
     }
 

@@ -125,7 +125,7 @@ class DistribucionPremioController extends Controller
             $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
             $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
                 array('id' => $idUsuario));
-            $grupo->setUsuarioModificacion($usuario);
+            $distribucion->setUsuarioModificacion($usuario);
 
             
 
