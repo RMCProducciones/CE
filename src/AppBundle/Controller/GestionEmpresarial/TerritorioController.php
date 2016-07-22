@@ -183,8 +183,7 @@ class TerritorioController extends Controller
 
             $territorio = $form->getData();
 
-            $territorio->setFechaModificacion(new \DateTime());
-            $territorio->setUsuarioModificacion($usuarioModificacion);
+            $territorio->setFechaModificacion(new \DateTime());            
             $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
             $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
                 array('id' => $idUsuario));
