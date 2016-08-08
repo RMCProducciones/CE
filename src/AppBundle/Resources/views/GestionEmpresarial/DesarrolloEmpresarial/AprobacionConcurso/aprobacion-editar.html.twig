@@ -7,9 +7,10 @@
     <ul class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
-      <li>Formacion de capital social asociativo y desarrollo empresarial</li>
-      <li><a href="{{ path('concursoGestion') }}">Concurso</a></li>
-      <li class="active">Aprobación Concurso</li>
+      <li>Concursos de Mejoramiento</li>
+      <li>Gestión de Concursos</li>
+      <li>Gestión Aprobación Concurso</a></li>
+      <li class="active">Aprobación Concurso Editar</li>
     </ul>
 
 {% endblock %}
@@ -18,10 +19,14 @@
 {% block section %}
 
      
-  	<br>
+   <div class="container">
+    <h1> Aprobación Concurso</h1>
+    <hr>
+    <h3> Editar Registro</h3>   
+  </div>
 
-
-
+  <br />
+  <br />
     
   {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
 

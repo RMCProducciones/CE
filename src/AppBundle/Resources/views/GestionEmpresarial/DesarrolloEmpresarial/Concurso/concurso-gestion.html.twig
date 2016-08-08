@@ -9,7 +9,7 @@
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
       <li>Concursos de Mejoramiento</li>
-      <li class="active">Concursos</li>
+      <li class="active">Gestión de Concursos</li>
     </ul>
 
 {% endblock %}
@@ -85,7 +85,7 @@
 
                     {{ form_label(form.tematica) }}
                     {{ form_errors(form.tematica) }}
-                    {{ form_widget(form.tematica, { 'attr': {'class': 'form-control', 'placeholder': 'Tematica'} }) }}
+                    {{ form_widget(form.tematica, { 'attr': {'class': 'form-control', 'placeholder': 'Temática'} }) }}
 
                   </div>
 
@@ -132,7 +132,7 @@
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>                 
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Fecha de las Bases Concursos', 'a.fecha') }}</th>
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Tipo', 'a.tipo') }}</th>
-	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Tematica', 'a.tematica') }}</th>
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Temática', 'a.tematica') }}</th>
 					          <th class="text-center">{{ knp_pagination_sortable(pagination, 'Modo Concursos', 'a.modalidad') }}</th>
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.acciones') }}</th>
 	                </tr>
