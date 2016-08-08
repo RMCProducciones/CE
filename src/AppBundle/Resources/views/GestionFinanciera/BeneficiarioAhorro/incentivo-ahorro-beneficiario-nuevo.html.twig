@@ -1,0 +1,105 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+{% block title %}Incentivo al ahorro{% endblock %}
+
+{% block breadcrumb_ul %}
+
+    <ul class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Financiera</li>
+      <li>Incentivos al ahorro</li>      
+      <li class="active"><a href="{{ path('beneficiarioAhorroGestion', {'idAhorro' : idAhorro, 'idGrupo' : idGrupo}) }}">Beneficiarios Ahorro</a></li>
+      <li class="active">Nuevo</li>
+    </ul>
+
+{% endblock %}
+
+
+{% block section %}
+
+     
+  	<br>
+
+    <hr>
+
+    
+  {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+    {{ form_errors(form) }}
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="btn-group">
+  
+              <button name="grupo[guardar]" id="grupo_guardar" type="submit" class="btn btn-success">Guardar</button>
+              
+              <a href="{{ path('beneficiarioAhorroGestion', {'idAhorro' : idAhorro, 'idGrupo' : idGrupo}) }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <br>
+        
+
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+			<div class="col-md-12">
+				<fieldset>
+					<legend>Datos del incentivo de ahorro</legend>
+				</fieldset>            
+			</div>
+		</div>
+            <!--form class="form-horizontal" role="form"-->
+		<br/>
+		
+		<div class="row">				                 
+                <div class="col-md-4">
+                  {{ form_label(form.fecha_inicio) }}
+				          {{ form_errors(form.fecha_inicio) }}
+                  {{ form_widget(form.fecha_inicio, { 'attr': {'class': 'form-control'} }) }}
+                </div>  		
+				        <div class="col-md-4">
+                  {{ form_label(form.meta_ahorro_activacion) }}
+				          {{ form_errors(form.meta_ahorro_activacion) }}
+                  {{ form_widget(form.meta_ahorro_activacion, { 'attr': {'class': 'form-control'} }) }}
+                </div> 
+                <div class="col-md-4">
+                  {{ form_label(form.meta_ahorro_mensual) }}
+				          {{ form_errors(form.meta_ahorro_mensual) }}
+                  {{ form_widget(form.meta_ahorro_mensual, { 'attr': {'class': 'form-control'} }) }} 
+                </div> 
+		</div>
+
+    <br />
+
+    <div class="row" ng-controller="BeneficiarioAhorroOtroProgramaCtrl">                        
+                <div class="col-md-4">
+                  {{ form_label(form.telefono_celular) }}
+                  {{ form_errors(form.telefono_celular) }}
+                  {{ form_widget(form.telefono_celular, { 'attr': {'class': 'form-control'} }) }}
+                </div>      
+                <div class="col-md-4">
+                  {{ form_label(form.beneficiario_ahorro_otro_programa) }}<br />
+                  {{ form_errors(form.beneficiario_ahorro_otro_programa) }}
+                  <switch id="swBeneficiarioAhorro" name="swBeneficiarioAhorro" ng-model="swBeneficiarioAhorro" class="green" on="Si" off="No"></switch>
+                    {{ form_widget(form.beneficiario_ahorro_otro_programa, { 'attr': {'style':'visibility:hidden'} }) }}
+                </div>                 
+    </div>
+
+		<br/>
+		<br/>
+		<!--/form-->          
+      </div>
+    </div>
+
+  {{ form_end(form) }}
+               
+{% endblock %}
+

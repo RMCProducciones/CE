@@ -1,0 +1,672 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+
+{% block title %}Beneficiarios Ahorro{% endblock %}
+
+{% block breadcrumb_ul %}
+
+    <ul class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Financiera</li>
+      <li><a href="{{ path('ahorroGestion') }}">Incentivos al ahorro</a></li>      
+      <li class="active">Beneficiarios Ahorro</li>
+    </ul>
+
+{% endblock %}
+
+
+{% block section %}
+
+
+<div class="container">
+    <h1>Gestión Beneficiarios - Ahorro</h1>
+    <br>
+    {% for grupos in grupo %}
+    <h2> Grupo: {{ grupos.nombre }}</h2>
+    {% endfor %}
+    <hr>
+  </div> 
+   
+ 
+ <br />
+  <br />
+
+    <div class="section" ng-controller="FiltrosBeneficiarioCtrl">
+      <div class="container">
+        <div class="row" >
+          
+          <div class="col-md-6">
+            <div class="btn-group">
+              <a href="{{ path('ahorroGestion') }}" class="btn btn-warning">Volver</a>              
+            </div>
+          </div>
+
+          <div class="col-md-4">
+          </div>
+
+          <div class="col-md-2">
+            <div class="btn-group [[styleBuscarHerramientas]]">              
+                
+                <button class="btn btn-info" ng-click="buttonBuscarHerramientasBeneficiario(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
+              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaBeneficiario();">Limpiar</button>                            
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <br />
+
+      <div class="container well" ng-show="CountBuscarHerramientas === 1">
+
+        <form method="get" action="{{ path('beneficiarioGestion', {'idGrupo': idGrupo}) }}">               
+                  
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+        {{ form_errors(form) }}
+
+        <div class="row">          
+
+            
+
+                  <div class="col-md-3">
+                  
+                    {{ form_label(form.numero_documento) }}
+                    {{ form_errors(form.numero_documento) }}
+                    {{ form_widget(form.numero_documento, { 'attr': {'class': 'form-control', 'placeholder': 'Número de documento'} }) }}
+
+                  </div>
+
+                  <div class="col-md-3">
+
+                    {{ form_label(form.primer_apellido) }}
+                    {{ form_errors(form.primer_apellido) }}
+                    {{ form_widget(form.primer_apellido, { 'attr': {'class': 'form-control', 'placeholder': 'Primer apellido'} }) }}
+
+                  </div>
+
+                  <div class="col-md-3">
+
+                    {{ form_label(form.primer_nombre) }}
+                    {{ form_errors(form.primer_nombre) }}
+                    {{ form_widget(form.primer_nombre, { 'attr': {'class': 'form-control', 'placeholder': 'Primer nombre'} }) }}
+
+                  </div>
+
+                  <div class="col-md-3">
+
+                    {{ form_label(form.genero) }}
+                    {{ form_errors(form.genero) }}
+                    {{ form_widget(form.genero, { 'attr': {'class': 'form-control', 'placeholder': 'Género'} }) }}
+
+                  </div>
+
+        </div>
+
+        <br />        
+
+        <div class="row">    
+
+                  <div class="col-md-12 text-right">
+
+                  <button class="btn btn-default" style="color:white; background-color:#ccc;"  type="submit" name="submit-filter" value="filter"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+
+                  </div>                  
+        </div>
+
+        {{ form_end(form) }}
+
+        </form>
+
+      </div>
+
+    </div>
+    <br />               
+
+    
+    <br>
+    <div class="container">
+    <div class="alert alert-[[estadoMensaje]] alert-dismissible" id="MensajeCtrl" ng-show="mostrarMensaje === true" role="alert">[[textoMensaje]]<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+    </div>
+    <div class="section">
+      <div class="container">        
+        <div class="row">
+          <div class="col-md-12 table-responsive">
+            <table class="table table-striped table-hover" ng-controller="gestionBeneficiariosCtrl">
+              <thead>
+                	<tr>
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Nombre', 'a.nombre') }}</th>
+                    <th></th>
+					          <th class="text-center">{{ knp_pagination_sortable(pagination, 'Meta Apertura', 'a.metaApertura') }}</th>	
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Meta Mensual', 'a.metaMensual') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Ahorro Real Acumulado', 'a.ahorroRealAcumulado') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Plan de Ahorro Individual', 'a.planAhorroIndividual') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.acciones') }}</th>
+	                </tr>
+	           </thead>
+	           <tbody>
+               
+                {% set consecutivo = 1 %}
+                {% set metaAhorroActivacion = "" %}
+                {% set metaAhorroMensual = "" %}
+                {% set planAhorroIndividual = "" %}
+                {% set beneficiarioAhorroOtroPrograma = "" %}                
+                {% set idBeneficiario = 0 %}
+	    	
+	    		{% for article in pagination %}
+	                <tr {% if loop.index is odd %}class="color"{% endif %}>
+                  <tr id="filaBeneficiario{{ consecutivo }}">
+
+                    <td class="text-center">{{article.id }}</td>                                   
+                    <td class="text-center">{{ article.primernombre}} {{ article.segundonombre}} {{ article.primerapellido}}</td>
+                    {% for ahorro in incentivoAhorro %}
+                      {% if ahorro.beneficiario.id == article.id %}                        
+                        {% set metaAhorroActivacion = ahorro.metaAhorroActivacion %}
+                        {% set metaAhorroMensual = ahorro.metaAhorroMensual %}
+                        {% set planAhorroIndividual = ahorro.planAhorroIndividual %}
+                        {% set beneficiarioAhorroOtroPrograma = ahorro.beneficiarioAhorroOtroPrograma %}
+                        {% set idBeneficiario = ahorro.beneficiario.id %}
+                      {% endif %}
+                    {% endfor %}
+
+                    {% if idBeneficiario == article.id %}                      
+                        {% if beneficiarioAhorroOtroPrograma == 1 %}
+                          <td></td>
+                          <td class="text-center">No Aprobado</td>
+                          <td class="text-center">No Aprobado</td>
+                          <td class="text-center">No Aprobado</td>
+                          <td class="text-center">No Aprobado</td>
+                        {% else %}
+                          <td></td>
+                          <td class="text-center">$ {{metaAhorroActivacion}}</td>
+                          <td class="text-center">$ {{metaAhorroMensual}}</td>
+                          <td class="text-center">$0</td>
+                          <td class="text-center">$ {{planAhorroIndividual}}</td> 
+                        {% endif %}                                         
+                    {% else %}
+                        <td></td>
+                        <td class="text-center">No Registrado</td>
+                        <td class="text-center">No Registrado</td>
+                        <td class="text-center">No Registrado</td>
+                        <td class="text-center">No Registrado</td>                      
+                    {% endif %}
+
+	                  <td class="text-center">
+
+                      <a href="{{ path('beneficiarioAhorroNuevo', {'idAhorro': idAhorro, 'idGrupo': article.grupo.id, 'idBeneficiario': article.id}) }}" alt="Datos Incentivo de Ahorro" title="Datos Incentivo de Ahorro"><span class="glyphicon glyphicon-indent-left" aria-hidden="true"></span></a> | 
+
+                      <a href="{{ path('beneficiarioAhorroCorteGestion', {'idAhorro': idAhorro, 'idGrupo': article.grupo.id, 'idBeneficiario': article.id}) }}" alt="Incentivo de Ahorro Apertura" title="Incentivo de Ahorro"><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span></a> | 
+
+	                    <a href="{{ path('beneficiarioSoporte', {'idGrupo': article.grupo.id, 'idBeneficiario': article.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> | 
+
+	                    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ article.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+	                  
+                    </td>
+	                </tr>
+					
+	                {% set consecutivo = consecutivo + 1 %}
+
+	                {% else %}
+	                
+	                <tr>
+	                  	<td colspan="7" class="info">No se encontraron registros.</td>
+	                </tr>
+	                
+	                {% endfor %}
+              
+               </tbody>
+            </table>
+            <div class="navigation text-center">
+              <nav>
+                <ul class="pagination">
+                  {{ knp_pagination_render(pagination) }}
+                </ul>
+              </nav>
+            </div>   
+          </div>
+        </div>
+      </div>
+    </div>  
+
+	{% for beneficiario in pagination %}
+    <!-- Modal -->
+      <div class="modal fade" id="myModal{{  beneficiario.id  }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content col-md-12 table-responsive">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <tr class="col-md-12 table-responsive">
+              <td><h4 class="modal-title text-center" id="myModalLabel">{{ beneficiario.grupo.nombre }}</h4><td>
+                            
+            </tr>
+          </div>
+        </br>
+          <div class="col-md-12 table-responsive">
+          <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos del Beneficiario</th>                    
+                </tr>
+              </thead>
+
+              <tbody>    
+
+              <tr class="active text-muted">            
+                    
+                  <td class="text-center">
+                    Tipo de Documento
+                  </td>         
+                  <td class="text-center">
+                    {{ beneficiario.tipoDocumento }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Numero de Documento
+                  </td>
+                  <td class="text-center">
+                    {{ beneficiario.numeroDocumento }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Primer Apellido
+                  </td>
+                  <td class="text-center">
+                     {{ beneficiario.primerApellido }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Segundo Apellido
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.segundoApellido }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Primer Nombre
+                  </td>
+                  <td class="text-center">
+                    {{ beneficiario.primerNombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Segundo Nombre
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.segundoNombre }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Genero
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.genero }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Fecha de Nacimiento
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.fechaNacimiento |  date('d - m - Y') }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Edad al Momento de la Inscripcion
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.edadInscripcion }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Desplazado por la Violencia
+                  </td>
+                  {% if beneficiario.desplazado == null %}
+                  <td class="text-center">
+                    No
+                  </td>
+                  {% else %}
+                  <td class="text-center">
+                    Si
+                  </td>
+              </tr>
+              {% endif %} 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Pertenencia Etnica
+                  </td>
+                  <td class="text-center">
+                  {{ beneficiario.pertenenciaEtnica }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Grupo Indigena
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.grupoIndigena }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Pertenece a la Red Unidos
+                  </td>
+                  {% if beneficiario.redUnidos == null %}
+                  <td class="text-center">
+                    No
+                  </td>
+                  {% else %}
+                  <td class="text-center">
+                    Si
+                  </td>
+              </tr>
+              {% endif %} 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Sabe Leer
+                  </td>
+                  {% if beneficiario.sabeLeer == null %}
+                  <td class="text-center">
+                    No
+                  </td>
+                  {% else %}
+                  <td class="text-center">
+                    Si
+                  </td>
+              </tr>
+              {% endif %} 
+
+               
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Sabe Escribir
+                  </td>
+             {% if beneficiario.sabeEscribir == null %}
+                  <td class="text-center">
+                    No
+                  </td>
+                  {% else %}
+                  <td class="text-center">
+                    Si
+                  </td>
+              </tr>
+              {% endif %} 
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Área Sisben
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.corteSisben }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Puntaje Sisben
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.puntajeSisben }}
+                  </td>
+              </tr>              
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Discapacidad
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.discapacidad }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Rol Grupo Familiar
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.rolGrupoFamiliar }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Miembros Grupo Familiar
+                  </td>
+                  <td class="text-center">
+                  {{ beneficiario.miembrosNucleoFamiliar }}
+                  </td>
+              </tr>
+
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Nivel de Estudios
+                  </td>
+                  <td class="text-center">
+                  {{ beneficiario.nivelEstudios }}
+                  </td>
+              </tr>
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Ocupacion
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.ocupacion }}
+                  </td>
+              </tr>
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Tipo de Vivienda
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.tipoVivienda }}
+                  </td>
+              </tr>
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Rural
+                  </td>
+                  {% if beneficiario.rural == null %}
+                  <td class="text-center">
+                    No
+                  </td>
+                  {% else %}
+                  <td class="text-center">
+                    Si
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Dirección
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.direccion }}
+                  </td>
+              </tr>
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                   Telefono Fijo
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.telefonoFijo }}
+                  </td>
+              </tr>
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Celular
+                  </td>
+                  <td class="text-center">
+                  {{ beneficiario.telefonoCelular }}
+                  </td>
+              </tr>
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Correo Electronico
+                  </td>
+                  <td class="text-center">                 
+                  {{ beneficiario.correoElectronico }}
+                  </td>
+              </tr>
+              
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Estado civil
+                  </td>
+                  <td class="text-center">
+                   {{ beneficiario.estadoCivil }}
+                  </td>
+              </tr>
+
+              <br>
+
+              {% if beneficiario.tipoDocumentoConyugue != null %} 
+
+
+              <div class="col-md-12 table-responsive">
+              <table class="table table-bordered">            
+              <thead>
+                <tr class="bg-primary">
+                    <th class="text-center col-md-5">Información</th>
+                    <th class="text-center col-md-7">Datos del Conyugue</th>                    
+                </tr>
+              </thead>
+
+              <tbody>
+             
+              {% if beneficiario.estadoCivil != "Soltero" or beneficiario.estadoCivil != "Viudo"  %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Tipo Documento Conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ beneficiario.tipoDocumentoConyugue }}
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              {% if beneficiario.numeroDocumentoConyugue != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Numero Documento Conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ beneficiario.numeroDocumentoConyugue }}
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              {% if beneficiario.primerApellidoConyugue != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Primer Apellido Conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ beneficiario.primerApellidoConyugue }}
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              {% if beneficiario.segundoApellidoConyugue != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Segundo Apellido Conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ beneficiario.segundoApellidoConyugue }}
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              {% if beneficiario.primerNombreConyugue != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Primer Nombre Conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ beneficiario.primerNombreConyugue }}
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              {% if beneficiario.segundoNombreConyugue != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Segundo Nombre conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ beneficiario.segundoNombreConyugue }}
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              {% if beneficiario.telefonoFijoConyugue != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Fijo Conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ beneficiario.telefonoFijoConyugue }}
+                  </td>
+              </tr>
+              {% endif %} 
+              
+              {% if beneficiario.telefonoCelularConyugue != null %} 
+              <tr class="active text-muted">             
+                  <td class="text-center">
+                    Telefono Celular Conyugue
+                  </td>
+                  <td class="text-center">
+                    {{ beneficiario.telefonoCelularConyugue }}
+                  </td>
+              </tr>
+              {% endif %}      
+
+              </tbody>  
+          </table>     
+
+          {% endif %}     
+
+              
+              </tbody>  
+          </table>  
+           <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>  
+          </div>      
+      </div>
+    </div>
+  </div>
+   {% endfor %}             
+{% endblock %}
+

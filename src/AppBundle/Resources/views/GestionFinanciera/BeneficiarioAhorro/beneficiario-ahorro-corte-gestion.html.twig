@@ -1,0 +1,196 @@
+{% extends 'AppBundle::frontend.html.twig' %}
+
+
+{% block title %}Cortes del Incentivo al Ahorro{% endblock %}
+
+{% block breadcrumb_ul %}
+
+    <ul class="breadcrumb">
+      <li><a href="{{ path('homepage') }}">Inicio</a></li>
+      <li>Gestión Financiera</li>
+      <li>Incentivos al ahorro</li>      
+      <li><a href="{{ path('beneficiarioAhorroGestion', {'idAhorro' : idAhorro, 'idGrupo': idGrupo}) }}">Beneficiarios Ahorro</a></li>
+      <li class="active">Cortes del Incentivo de Ahorro</li>
+    </ul>
+
+{% endblock %}
+
+	
+
+{% block section %}
+
+	<div class="container">
+    <h1>Gestión de Cortes del Incentivos al Ahorro</h1>
+    <hr>
+  </div>
+     
+  	<br>
+
+
+    <div class="section" ng-controller="FiltrosAhorroCtrl">
+      <div class="container">
+        <div class="row" >
+          
+          <div class="col-md-6">
+            <div class="btn-group">
+              <a href="{{ path('beneficiarioAhorroGestion', {'idAhorro' : idAhorro, 'idGrupo': idGrupo}) }}" class="btn btn-warning">Volver</a>
+              <a href="{{ path('beneficiarioAhorroCorteNuevo', {'idAhorro': idAhorro, 'idGrupo': idGrupo, 'idBeneficiario': idBeneficiario}) }}" class="btn btn-success">Nuevo</a>              
+            </div>
+          </div>
+
+          <div class="col-md-4">
+          </div>
+
+          <div class="col-md-2">
+            <div class="btn-group [[styleBuscarHerramientas]]">              
+                
+                <button class="btn btn-info" ng-click="buttonBuscarHerramientasAhorro(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
+              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaAhorro();">Limpiar</button>                            
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="container well" ng-show="CountBuscarHerramientas === 1">
+
+        <form method="get" action="{{ path('ahorroGestion') }}">               
+                  
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+        {{ form_errors(form) }}
+
+        <div class="row">                      
+
+                  <div class="col-md-3">
+                  
+                    {{ form_label(form.numero_documento) }}
+                    {{ form_errors(form.numero_documento) }}
+                    {{ form_widget(form.numero_documento, { 'attr': {'class': 'form-control', 'placeholder': 'Número de documento'} }) }}
+
+                  </div>
+
+                  <div class="col-md-3">
+
+                    {{ form_label(form.primer_apellido) }}
+                    {{ form_errors(form.primer_apellido) }}
+                    {{ form_widget(form.primer_apellido, { 'attr': {'class': 'form-control', 'placeholder': 'Primer apellido'} }) }}
+
+                  </div>
+
+                  <div class="col-md-3">
+
+                    {{ form_label(form.primer_nombre) }}
+                    {{ form_errors(form.primer_nombre) }}
+                    {{ form_widget(form.primer_nombre, { 'attr': {'class': 'form-control', 'placeholder': 'Primer nombre'} }) }}
+
+                  </div>
+
+                  <div class="col-md-3">
+
+                    {{ form_label(form.genero) }}
+                    {{ form_errors(form.genero) }}
+                    {{ form_widget(form.genero, { 'attr': {'class': 'form-control', 'placeholder': 'Género'} }) }}
+
+                  </div>
+                
+        </div>
+
+        <br />        
+
+        <div class="row">    
+
+                  <div class="col-md-12 text-right">
+
+                  <button class="btn btn-default" style="color:white; background-color:#ccc;"  type="submit" name="submit-filter" value="filter"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+
+                  </div>                  
+        </div>
+
+        {{ form_end(form) }}
+
+        </form>
+
+
+
+
+
+    </div>
+    
+    <br>
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 table-responsive">
+            <table class="table table-striped table-hover" ng-controller="gestionAhorroCtrl">
+              <thead>
+                	<tr>
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>	                 
+	                  
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Fecha Realizacion', 'a.fechaRealizacion') }}</th>
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Saldo Corte', 'a.saldoCorte') }}</th>
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Meta Ahorro Corte', 'a.metaAhorroCorte') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Cumplimiento Corte', 'a.cumplimientoCorte') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Ahorro Real Corte', 'a.ahorroRealCorte') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Incentivo', 'a.incentivo') }}</th>
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.acciones') }}</th>
+	                </tr>
+	           </thead>
+	           <tbody>
+                {% set consecutivo = 1 %}
+	    	
+	    		{% for article in pagination %}
+	    		
+	                 <tr {% if loop.index is odd %}class="color"{% endif %}> 
+                   <tr id="filaAhorro{{ consecutivo }}">
+                    <td class="text-center">{{article.id }}</td>               
+                    <td class="text-center">{{article.fechaRealizacion |  date('d - m - Y')  }}</td>               
+                    <td class="text-center">${{article.ahorroCorte}}</td>
+                    <td class="text-center">${{article.metaAhorroCorte}}</td>                    
+                    <td class="text-center">{{article.cumplimientoCorte}}%</td>
+                    <td class="text-center">${{article.ahorroRealCorte}}</td>
+                    <td class="text-center">${{article.incentivoCorte}}</td>
+                              
+	                  <td class="text-center">
+
+                     <a href="{{ path('ahorroSoporte', {'idAhorro': article.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> 
+
+                     | 
+
+                     <a title="Editar" alt="Editar" href="{{ path('ahorroEditar', {'idAhorro': article.id}) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> 
+
+                     |  
+                    
+                     <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarAhorro({{article.id}}, {{consecutivo}});" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true" ng-click="idAhorro = {{article.id}};"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                     
+                    </td>
+	                </tr>
+					{% set consecutivo = consecutivo + 1 %}
+	                {% else %}
+	                
+	                <tr>
+	                  	<td colspan="8" class="info">No se encontraron registros.</td>
+	                </tr>
+	                
+	                {% endfor %}
+              
+	             
+               </tbody>
+            </table>
+            <div class="navigation text-center">
+              <nav>
+                <ul class="pagination">
+                  {{ knp_pagination_render(pagination) }}
+                </ul>
+              </nav>
+            </div>    
+          </div>
+        </div>
+      </div>
+    </div>  
+
+	
+{% endblock %}
+
