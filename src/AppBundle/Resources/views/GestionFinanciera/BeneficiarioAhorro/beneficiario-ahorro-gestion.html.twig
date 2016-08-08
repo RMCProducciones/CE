@@ -152,9 +152,12 @@
                 {% set metaAhorroMensual = "" %}
                 {% set planAhorroIndividual = "" %}
                 {% set beneficiarioAhorroOtroPrograma = "" %}                
-                {% set idBeneficiario = 0 %}
+                {% set idBeneficiario = 0 %}                
 	    	
 	    		{% for article in pagination %}
+
+            {% set ahorroReal = 0 %}
+            
 	                <tr {% if loop.index is odd %}class="color"{% endif %}>
                   <tr id="filaBeneficiario{{ consecutivo }}">
 
@@ -181,7 +184,12 @@
                           <td></td>
                           <td class="text-center">$ {{metaAhorroActivacion}}</td>
                           <td class="text-center">$ {{metaAhorroMensual}}</td>
-                          <td class="text-center">$0</td>
+                          {% for ahorroRealBeneficiario in ahorroRealBeneficiarios %}
+                            {% if ahorroRealBeneficiario.beneficiario.id == article.id %}
+                              {% set ahorroReal = ahorroRealBeneficiario.ahorroRealCorte + ahorroReal %}
+                            {% endif %}                            
+                          {% endfor %}
+                          <td class="text-center">${{ahorroReal}}</td>
                           <td class="text-center">$ {{planAhorroIndividual}}</td> 
                         {% endif %}                                         
                     {% else %}

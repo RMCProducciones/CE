@@ -95,6 +95,9 @@ class BeneficiarioAhorroController extends Controller
         $incentivoAhorro = $em->getRepository('AppBundle:AsignacionBeneficiarioAhorro')->findBy(
             array('ahorro' => $ahorro));
 
+        $ahorroReal = $em->getRepository('AppBundle:BeneficiarioAhorroCorte')->findBy(
+            array('ahorro' => $ahorro));
+
         return $this->render('AppBundle:GestionFinanciera/BeneficiarioAhorro:beneficiario-ahorro-gestion.html.twig', 
         array( 'form' => $form->createView(), 
                'idGrupo' => $idGrupo, 
@@ -103,6 +106,7 @@ class BeneficiarioAhorroController extends Controller
                'pagination'=> $pagination, 
                'incentivoAhorro' => $incentivoAhorro,
                'idAhorro' => $idAhorro,
+               'ahorroRealBeneficiarios' => $ahorroReal,
                'tipoUsuario' => $valuesFieldBlock[3]));
 
     }
@@ -293,10 +297,15 @@ class BeneficiarioAhorroController extends Controller
             }else{
                 if($añoCorte == $añoInicio){
                     if($mesCorte == $mesInicio){
-                        $beneficiarioAhorroCorte->setMetaAhorroCorte($incentivoAhorro->getMetaAhorroMensual());
+                        if(sizeof($cantidadCortesAhorro) == 1){ 
+                            $metaAhorroCorte = $incentivoAhorro->getMetaAhorroMensual();
+                        }else{
+                            $metaAhorroCorte = $incentivoAhorro->getMetaAhorroMensual() - $cantidadCortesAhorro[sizeof($cantidadCortesAhorro) - 1]->getMetaAhorroCorte();
+                        }
+                        $beneficiarioAhorroCorte->setMetaAhorroCorte($metaAhorroCorte);
                         $ahorroReal = $beneficiarioAhorroCorte->getAhorroCorte() - $cantidadCortesAhorro[sizeof($cantidadCortesAhorro) - 1]->getAhorroCorte() - $cantidadCortesAhorro[sizeof($cantidadCortesAhorro) - 1]->getIncentivoCorte();
                         $beneficiarioAhorroCorte->setAhorroRealCorte($ahorroReal);
-                        $cumplimientoCorte = ($ahorroReal / $incentivoAhorro->getMetaAhorroMensual()) * 100;
+                        $cumplimientoCorte = ($ahorroReal / $metaAhorroCorte) * 100;
                         $beneficiarioAhorroCorte->setCumplimientoCorte($cumplimientoCorte);                        
                         
                         if($cumplimientoCorte >= 80 ){
@@ -311,10 +320,15 @@ class BeneficiarioAhorroController extends Controller
                     }else if($mesCorte > $mesInicio){
                         if($diaCorte <= $diaInicio){
                             $meses = $mesCorte - $mesInicio;
-                            $beneficiarioAhorroCorte->setMetaAhorroCorte($incentivoAhorro->getMetaAhorroMensual() * $meses);
+                            if(sizeof($cantidadCortesAhorro) == 1){ 
+                                $metaAhorroCorte = $incentivoAhorro->getMetaAhorroMensual() * $meses;
+                            }else{
+                                $metaAhorroCorte = ($incentivoAhorro->getMetaAhorroMensual() * $meses) - $cantidadCortesAhorro[sizeof($cantidadCortesAhorro) - 1]->getMetaAhorroCorte();
+                            }   
+                            $beneficiarioAhorroCorte->setMetaAhorroCorte($metaAhorroCorte);                         
                             $ahorroReal = $beneficiarioAhorroCorte->getAhorroCorte() - $cantidadCortesAhorro[sizeof($cantidadCortesAhorro) - 1]->getAhorroCorte() - $cantidadCortesAhorro[sizeof($cantidadCortesAhorro) - 1]->getIncentivoCorte();
                             $beneficiarioAhorroCorte->setAhorroRealCorte($ahorroReal);
-                            $cumplimientoCorte = ($ahorroReal / ($incentivoAhorro->getMetaAhorroMensual() * $meses)) * 100;
+                            $cumplimientoCorte = ($ahorroReal / $metaAhorroCorte) * 100;
                             $beneficiarioAhorroCorte->setCumplimientoCorte($cumplimientoCorte);                        
                             
                             if($cumplimientoCorte >= 80 ){
@@ -328,10 +342,15 @@ class BeneficiarioAhorroController extends Controller
                             }
                         }else{
                             $meses = $mesCorte - $mesInicio + 1;
-                            $beneficiarioAhorroCorte->setMetaAhorroCorte($incentivoAhorro->getMetaAhorroMensual() * $meses);
+                            if(sizeof($cantidadCortesAhorro) == 1){ 
+                                $metaAhorroCorte = $incentivoAhorro->getMetaAhorroMensual() * $meses;
+                            }else{
+                                $metaAhorroCorte = ($incentivoAhorro->getMetaAhorroMensual() * $meses) - $cantidadCortesAhorro[sizeof($cantidadCortesAhorro) - 1]->getMetaAhorroCorte();
+                            }   
+                            $beneficiarioAhorroCorte->setMetaAhorroCorte($metaAhorroCorte);                            
                             $ahorroReal = $beneficiarioAhorroCorte->getAhorroCorte() - $cantidadCortesAhorro[sizeof($cantidadCortesAhorro) - 1]->getAhorroCorte() - $cantidadCortesAhorro[sizeof($cantidadCortesAhorro) - 1]->getIncentivoCorte();
                             $beneficiarioAhorroCorte->setAhorroRealCorte($ahorroReal);
-                            $cumplimientoCorte = ($ahorroReal / ($incentivoAhorro->getMetaAhorroMensual() * $meses)) * 100;
+                            $cumplimientoCorte = ($ahorroReal / $metaAhorroCorte) * 100;
                             $beneficiarioAhorroCorte->setCumplimientoCorte($cumplimientoCorte);                        
                             
                             if($cumplimientoCorte >= 80 ){
@@ -349,10 +368,15 @@ class BeneficiarioAhorroController extends Controller
                 }else{
                     if($diaCorte <= $diaInicio){
                         $meses = 12 + ($mesCorte - $mesInicio);
-                        $beneficiarioAhorroCorte->setMetaAhorroCorte($incentivoAhorro->getMetaAhorroMensual() * $meses);
+                        if(sizeof($cantidadCortesAhorro) == 1){ 
+                            $metaAhorroCorte = $incentivoAhorro->getMetaAhorroMensual() * $meses;
+                        }else{
+                            $metaAhorroCorte = ($incentivoAhorro->getMetaAhorroMensual() * $meses) - $cantidadCortesAhorro[sizeof($cantidadCortesAhorro) - 1]->getMetaAhorroCorte();
+                        }   
+                        $beneficiarioAhorroCorte->setMetaAhorroCorte($metaAhorroCorte);                                 
                         $ahorroReal = $beneficiarioAhorroCorte->getAhorroCorte() - $cantidadCortesAhorro[sizeof($cantidadCortesAhorro) - 1]->getAhorroCorte() - $cantidadCortesAhorro[sizeof($cantidadCortesAhorro) - 1]->getIncentivoCorte();
                         $beneficiarioAhorroCorte->setAhorroRealCorte($ahorroReal);
-                        $cumplimientoCorte = ($ahorroReal / ($incentivoAhorro->getMetaAhorroMensual() * $meses)) * 100;
+                        $cumplimientoCorte = ($ahorroReal / $metaAhorroCorte) * 100;
                         $beneficiarioAhorroCorte->setCumplimientoCorte($cumplimientoCorte);                        
                         
                         if($cumplimientoCorte >= 80 ){
@@ -365,11 +389,16 @@ class BeneficiarioAhorroController extends Controller
                             $beneficiarioAhorroCorte->setIncentivoCorte(0);
                         }
                     }else{
-                        $meses = 13 + ($mesCorte - $mesInicio);                                                
-                        $beneficiarioAhorroCorte->setMetaAhorroCorte($incentivoAhorro->getMetaAhorroMensual() * $meses);
+                        $meses = 13 + ($mesCorte - $mesInicio);
+                        if(sizeof($cantidadCortesAhorro) == 1){ 
+                            $metaAhorroCorte = $incentivoAhorro->getMetaAhorroMensual() * $meses;
+                        }else{
+                            $metaAhorroCorte = ($incentivoAhorro->getMetaAhorroMensual() * $meses) - $cantidadCortesAhorro[sizeof($cantidadCortesAhorro) - 1]->getMetaAhorroCorte();
+                        }   
+                        $beneficiarioAhorroCorte->setMetaAhorroCorte($metaAhorroCorte);                                                                        
                         $ahorroReal = $beneficiarioAhorroCorte->getAhorroCorte() - $cantidadCortesAhorro[sizeof($cantidadCortesAhorro) - 1]->getAhorroCorte() - $cantidadCortesAhorro[sizeof($cantidadCortesAhorro) - 1]->getIncentivoCorte();
                         $beneficiarioAhorroCorte->setAhorroRealCorte($ahorroReal);
-                        $cumplimientoCorte = ($ahorroReal / ($incentivoAhorro->getMetaAhorroMensual() * $meses)) * 100;
+                        $cumplimientoCorte = ($ahorroReal / $metaAhorroCorte) * 100;
                         $beneficiarioAhorroCorte->setCumplimientoCorte($cumplimientoCorte);                        
                         
                         if($cumplimientoCorte >= 80 ){
