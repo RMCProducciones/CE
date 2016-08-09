@@ -15,9 +15,9 @@ class ActividadConcursoType extends AbstractType
 			->add('actividad','textarea')
 			->add('mejoras')
 			->add('recursos')
-			->add('duracion')
-			->add('semana_inicio')
-			->add('semana_finalizacion');
+			->add('duracion', 'integer', array('label' => 'Duración'))
+			->add('semana_inicio', 'integer', array('label' => 'Semana Inició'))
+			->add('semana_finalizacion', 'integer', array('label' => 'Semana Finalización'));
 	}		
 			
     
