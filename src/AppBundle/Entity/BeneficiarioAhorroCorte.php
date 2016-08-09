@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AsignacionBeneficiarioAhorro
+ * BeneficiarioAhorroCorte
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="AppBundle\Entity\AsignacionBeneficiarioAhorroRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\BeneficiarioAhorroCorteRepository")
  */
-class AsignacionBeneficiarioAhorro
+class BeneficiarioAhorroCorte
 {
     /**
      * @var integer
@@ -34,37 +34,30 @@ class AsignacionBeneficiarioAhorro
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_inicio", type="datetime")
+     * @ORM\Column(name="fecha_realizacion", type="datetime")
      */
-    private $fecha_inicio;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="beneficiario_ahorro_otro_programa", type="boolean")
-     */
-    private $beneficiario_ahorro_otro_programa;
+    private $fecha_realizacion;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="telefono_celular", type="string")
+     * @ORM\Column(name="telefono_celular", type="string", nullable=true)
      */
     private $telefono_celular;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="meta_ahorro_activacion", type="decimal")
+     * @ORM\Column(name="ahorro_corte", type="decimal")
      */
-    private $meta_ahorro_activacion;
+    private $ahorro_corte;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="meta_ahorro_mensual", type="decimal")
+     * @ORM\Column(name="meta_ahorro_corte", type="decimal", nullable=true)
      */
-    private $meta_ahorro_mensual;
+    private $meta_ahorro_corte;
 
     /**
      * @var string
@@ -72,16 +65,28 @@ class AsignacionBeneficiarioAhorro
      * @ORM\Column(name="plan_ahorro_individual", type="decimal", nullable=true)
      */
     private $plan_ahorro_individual;
-	
-	
+		
 	/**
      * @var string
      *
-     * @ORM\Column(name="observacion", type="string", nullable=true)
+     * @ORM\Column(name="cumplimiento_corte", type="decimal", nullable=true)
      */	 
-    private $observacion;
-	
-	
+    private $cumplimiento_corte;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ahorro_real_corte", type="decimal", nullable=true)
+     */  
+    private $ahorro_real_corte;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="incentivo_corte", type="decimal", nullable=true)
+     */  
+    private $incentivo_corte;
+		
     /**
      * @var boolean
      *
@@ -129,7 +134,7 @@ class AsignacionBeneficiarioAhorro
      *
      * @param AppBundle\Entity\Ahorro $ahorro
      *
-     * @return AsignacionBeneficiarioAhorro
+     * @return BeneficiarioAhorroCorte
      */
     public function setAhorro(\AppBundle\Entity\Ahorro $ahorro)
     {
@@ -153,7 +158,7 @@ class AsignacionBeneficiarioAhorro
      *
      * @param AppBundle\Entity\Beneficiario $beneficiario
      *
-     * @return AsignacionBeneficiarioAhorro
+     * @return BeneficiarioAhorroCorte
      */
     public function setBeneficiario(\AppBundle\Entity\Beneficiario $beneficiario)
     {
@@ -173,51 +178,27 @@ class AsignacionBeneficiarioAhorro
     }
 
     /**
-     * Set fechaInicio
+     * Set fechaRealizacion
      *
-     * @param \DateTime $fechaInicio
+     * @param \DateTime $fechaRealizacion
      *
-     * @return AsignacionBeneficiarioAhorro
+     * @return BeneficiarioAhorroCorte
      */
-    public function setFechaInicio($fechaInicio)
+    public function setFechaRealizacion($fechaRealizacion)
     {
-        $this->fecha_inicio = $fechaInicio;
+        $this->fecha_realizacion = $fechaRealizacion;
 
         return $this;
     }
 
     /**
-     * Get fechaInicio
+     * Get fechaRealizacion
      *
      * @return \DateTime
      */
-    public function getFechaInicio()
+    public function getFechaRealizacion()
     {
-        return $this->fecha_inicio;
-    }
-
-    /**
-     * Set beneficiarioAhorroOtroPrograma
-     *
-     * @param boolean $beneficiarioAhorroOtroPrograma
-     *
-     * @return AsignacionBeneficiarioAhorro
-     */
-    public function setBeneficiarioAhorroOtroPrograma($beneficiarioAhorroOtroPrograma)
-    {
-        $this->beneficiario_ahorro_otro_programa = $beneficiarioAhorroOtroPrograma;
-
-        return $this;
-    }
-
-    /**
-     * Get beneficiarioAhorroOtroPrograma
-     *
-     * @return boolean
-     */
-    public function getBeneficiarioAhorroOtroPrograma()
-    {
-        return $this->beneficiario_ahorro_otro_programa;
+        return $this->fecha_realizacion;
     }
 
     /**
@@ -225,7 +206,7 @@ class AsignacionBeneficiarioAhorro
      *
      * @param string $telefonoCelular
      *
-     * @return AsignacionBeneficiarioAhorro
+     * @return BeneficiarioAhorroCorte
      */
     public function setTelefonoCelular($telefonoCelular)
     {
@@ -245,51 +226,51 @@ class AsignacionBeneficiarioAhorro
     }
 
     /**
-     * Set metaAhorroActivacion
+     * Set ahorroCorte
      *
-     * @param string $metaAhorroActivacion
+     * @param string $ahorroCorte
      *
-     * @return AsignacionBeneficiarioAhorro
+     * @return BeneficiarioAhorroCorte
      */
-    public function setMetaAhorroActivacion($metaAhorroActivacion)
+    public function setAhorroCorte($ahorroCorte)
     {
-        $this->meta_ahorro_activacion = $metaAhorroActivacion;
+        $this->ahorro_corte = $ahorroCorte;
 
         return $this;
     }
 
     /**
-     * Get metaAhorroActivacion
+     * Get ahorroCorte
      *
      * @return string
      */
-    public function getMetaAhorroActivacion()
+    public function getAhorroCorte()
     {
-        return $this->meta_ahorro_activacion;
+        return $this->ahorro_corte;
     }
 
     /**
-     * Set metaAhorroMensual
+     * Set metaAhorroCorte
      *
-     * @param string $metaAhorroMensual
+     * @param string $metaAhorroCorte
      *
-     * @return AsignacionBeneficiarioAhorro
+     * @return BeneficiarioAhorroCorte
      */
-    public function setMetaAhorroMensual($metaAhorroMensual)
+    public function setMetaAhorroCorte($metaAhorroCorte)
     {
-        $this->meta_ahorro_mensual = $metaAhorroMensual;
+        $this->meta_ahorro_corte = $metaAhorroCorte;
 
         return $this;
     }
 
     /**
-     * Get metaAhorroMensual
+     * Get metaAhorroCorte
      *
      * @return string
      */
-    public function getMetaAhorroMensual()
+    public function getMetaAhorroCorte()
     {
-        return $this->meta_ahorro_mensual;
+        return $this->meta_ahorro_corte;
     }
 
     /**
@@ -297,7 +278,7 @@ class AsignacionBeneficiarioAhorro
      *
      * @param string $planAhorroIndividual
      *
-     * @return AsignacionBeneficiarioAhorro
+     * @return BeneficiarioAhorroCorte
      */
     public function setPlanAhorroIndividual($planAhorroIndividual)
     {
@@ -318,27 +299,75 @@ class AsignacionBeneficiarioAhorro
     }
 	
 	/**
-     * Set observacion
+     * Set cumplimientoCorte
      *
-     * @param string $observacion
+     * @param string $cumplimientoCorte
      *
-     * @return AsignacionBeneficiarioAhorro
+     * @return BeneficiarioAhorroCorte
      */
-public function setObservacion($observacion)
+    public function setCumplimientoCorte($cumplimientoCorte)
     {
-        $this->observacion = $observacion;
+        $this->cumplimiento_corte = $cumplimientoCorte;
 
         return $this;
     }
 
     /**
-     * Get observacion
+     * Get cumplimientoCorte
      *
      * @return string
      */
-    public function getObservacion()
+    public function getCumplimientoCorte()
     {
-        return $this->observacion;
+        return $this->cumplimiento_corte;
+    }
+
+    /**
+     * Set ahorroRealCorte
+     *
+     * @param string $ahorroRealCorte
+     *
+     * @return BeneficiarioAhorroCorte
+     */
+    public function setAhorroRealCorte($ahorroRealCorte)
+    {
+        $this->ahorro_real_corte = $ahorroRealCorte;
+
+        return $this;
+    }
+
+    /**
+     * Get ahorroRealCorte
+     *
+     * @return string
+     */
+    public function getAhorroRealCorte()
+    {
+        return $this->ahorro_real_corte;
+    }
+
+    /**
+     * Set incentivoCorte
+     *
+     * @param string $incentivoCorte
+     *
+     * @return BeneficiarioAhorroCorte
+     */
+    public function setIncentivoCorte($incentivoCorte)
+    {
+        $this->incentivo_corte = $incentivoCorte;
+
+        return $this;
+    }
+
+    /**
+     * Get incentivoCorte
+     *
+     * @return string
+     */
+    public function getIncentivoCorte()
+    {
+        return $this->incentivo_corte;
     }
 
     /**
@@ -346,7 +375,7 @@ public function setObservacion($observacion)
      *
      * @param boolean $active
      *
-     * @return AsignacionBeneficiarioAhorro
+     * @return BeneficiarioAhorroCorte
      */
     public function setActive($active)
     {
@@ -370,7 +399,7 @@ public function setObservacion($observacion)
      *
      * @param AppBundle\Entity\Usuario $usuarioModificacion
      *
-     * @return AsignacionBeneficiarioAhorro
+     * @return BeneficiarioAhorroCorte
      */
     public function setUsuarioModificacion(\AppBundle\Entity\Usuario $usuarioModificacion)
     {
@@ -394,7 +423,7 @@ public function setObservacion($observacion)
      *
      * @param \DateTime $fechaModificacion
      *
-     * @return AsignacionBeneficiarioAhorro
+     * @return BeneficiarioAhorroCorte
      */
     public function setFechaModificacion($fechaModificacion)
     {
@@ -418,7 +447,7 @@ public function setObservacion($observacion)
      *
      * @param AppBundle\Entity\Usuario $usuarioCreacion
      *
-     * @return AsignacionBeneficiarioAhorro
+     * @return BeneficiarioAhorroCorte
      */
     public function setUsuarioCreacion(\AppBundle\Entity\Usuario $usuarioCreacion)
     {
@@ -442,7 +471,7 @@ public function setObservacion($observacion)
      *
      * @param \DateTime $fechaCreacion
      *
-     * @return AsignacionBeneficiarioAhorro
+     * @return BeneficiarioAhorroCorte
      */
     public function setFechaCreacion($fechaCreacion)
     {

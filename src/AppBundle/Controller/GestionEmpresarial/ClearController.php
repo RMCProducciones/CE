@@ -1180,7 +1180,6 @@ class ClearController extends Controller
                         self::creacionCodigoGrupo($asignacionGrupoClear->getGrupo()->getId());
                     }
                     
-                    sdasdas;
                     if($idUltimoNodo == 2)
                         self::nodoCamino($asignacionGrupoClear->getGrupo()->getId(), 2, 2);//Ejecutada(2) Clear de Habilitación
 

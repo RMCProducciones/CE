@@ -80,11 +80,14 @@ class AhorroController extends Controller
             );
     }  
     
-     /**
+    /**
      * @Route("/gestion-financiera/ahorro/nuevo", name="ahorroNuevo")
      */
     public function ahorroNuevoAction(Request $request)
     {
+
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+        
         $em = $this->getDoctrine()->getManager();
         $ahorro = new Ahorro();
         
