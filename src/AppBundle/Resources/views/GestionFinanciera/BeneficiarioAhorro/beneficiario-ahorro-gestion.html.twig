@@ -148,14 +148,16 @@
 	           </thead>
 	           <tbody>
                
-                {% set consecutivo = 1 %}
-                {% set metaAhorroActivacion = "" %}
-                {% set metaAhorroMensual = "" %}
-                {% set planAhorroIndividual = "" %}
-                {% set beneficiarioAhorroOtroPrograma = "" %}                
-                {% set idBeneficiario = 0 %}                
+                                
 	    	
 	    		{% for article in pagination %}
+
+            {% set consecutivo = 1 %}
+            {% set metaAhorroActivacion = "" %}
+            {% set metaAhorroMensual = "" %}
+            {% set planAhorroIndividual = "" %}
+            {% set beneficiarioAhorroOtroPrograma = "" %}                
+            {% set idBeneficiario = 0 %}
 
             {% set ahorroReal = 0 %}
             {% set continuidadPrograma = 0 %}
@@ -217,8 +219,14 @@
 
                       <a href="{{ path('beneficiarioAhorroNuevo', {'idAhorro': idAhorro, 'idGrupo': article.grupo.id, 'idBeneficiario': article.id}) }}" alt="Datos Incentivo de Ahorro" title="Datos Incentivo de Ahorro"><span class="glyphicon glyphicon-indent-left" aria-hidden="true"></span></a> | 
 
-                      {% if continuidadPrograma < 3 %}
+                      {% if continuidadPrograma < 3 and metaAhorroActivacion != null %}
+
+                          {% if beneficiarioAhorroOtroPrograma != 1 %}
+
                             <a href="{{ path('beneficiarioAhorroCorteGestion', {'idAhorro': idAhorro, 'idGrupo': article.grupo.id, 'idBeneficiario': article.id}) }}" alt="Incentivo de Ahorro Apertura" title="Incentivo de Ahorro"><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span></a> | 
+
+                          {% endif %}
+
                       {% endif %}
 
 	                    <a href="{{ path('beneficiarioSoporte', {'idGrupo': article.grupo.id, 'idBeneficiario': article.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> | 
