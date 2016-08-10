@@ -8,8 +8,9 @@
     <ul class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
-      <li>Concursos</li>
-      <li class="active">Gestion Actividades</li>
+      <li>Concursos de Mejoramiento</li>
+      <li><a href="{{ path('concursoGestion') }}">Gestión de Concursos</a></li>
+      <li class="active">Gestión Actividades</li>
     </ul>
 {% endblock %}
 
@@ -127,7 +128,7 @@
 
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Actividad', 'a.actividad') }}</th>
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Mejoras', 'a.mejoras') }}</th>
-	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Duracion', 'a.duracion') }}</th>                   
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Duración', 'a.duracion') }}</th>                   
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.acciones') }}</th>
 	                </tr>
 	           </thead>

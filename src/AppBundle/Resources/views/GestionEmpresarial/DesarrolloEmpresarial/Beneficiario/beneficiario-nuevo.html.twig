@@ -1,6 +1,6 @@
 {% extends 'AppBundle::frontend.html.twig' %}
 
-{% block title %}Beneficiarios{% endblock %}
+{% block title %}Beneficiarios nuevo{% endblock %}
 
 {% block breadcrumb_ul %}
 
@@ -118,7 +118,7 @@
                 <div class="col-md-4">
                   {{ form_label(form.edad_inscripcion) }}
 				  {{ form_errors(form.edad_inscripcion) }}
-                  {{ form_widget(form.edad_inscripcion, { 'attr': {'class': 'form-control', 'disabled' : 'disabled'} }) }}
+                  {{ form_widget(form.edad_inscripcion, { 'attr': {'class': 'form-control'} }) }}
                 </div>
 		</div>
 		

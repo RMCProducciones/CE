@@ -36,7 +36,7 @@ class ConcursoFilterType extends AbstractType
                         ->orderBy('l.orden', 'ASC');
                 },
             ));
-        $builder->add('tematica', 'filter_text', array('label' => 'Tematica'));
+        $builder->add('tematica', 'filter_text', array('label' => 'Temática'));
         
 
     }

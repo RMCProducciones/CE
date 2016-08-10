@@ -1,15 +1,17 @@
 {% extends 'AppBundle::frontend.html.twig' %}
 
-{% block title %}Criterio Calificación{% endblock %}
+{% block title %}Criterio Calificación nuevo{% endblock %}
 
 {% block breadcrumb_ul %}
+
 
     <ul class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
-      <li>Formacion de capital social asociativo y desarrollo empresarial</li>
-      <li><a href="{{ path('concursoGestion') }}">Concursos</a></li>
-      <li class="active">Criterio Calificación</li>
+      <li>Concursos de Mejoramiento</li>
+      <li>Gestión de Concursos</li>
+      <li>Gestión Criterio Calificación</a></li>
+      <li class="active">Criterio Calificación Nuevo</li>
     </ul>
 
 {% endblock %}
@@ -18,9 +20,13 @@
 {% block section %}
 
      
-  	<br>
-
+   <div class="container">
+    <h1> Criterio Calificación</h1>
     <hr>
+    <h3> Nuevo Registro</h3>   
+  </div>
+    <br />
+  <br />
 
     
   {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
@@ -57,13 +63,13 @@
             <div class="col-md-4">
           {{ form_label(form.criterio) }}
           {{ form_errors(form.criterio) }}
-          {{ form_widget(form.criterio, { 'attr': {'class': 'form-control'} }) }}               
+          {{ form_widget(form.criterio, { 'attr': {'class': 'form-control', 'placeholder': 'Criterio'} }) }}               
            </div> 
 
            <div class="col-md-4">
           {{ form_label(form.maximo_puntaje) }}
           {{ form_errors(form.maximo_puntaje) }}
-          {{ form_widget(form.maximo_puntaje, { 'attr': {'class': 'form-control'} }) }}               
+          {{ form_widget(form.maximo_puntaje, { 'attr': {'class': 'form-control', 'placeholder': 'Maximo Puntaje'} }) }}               
            </div>
 
     </div> 

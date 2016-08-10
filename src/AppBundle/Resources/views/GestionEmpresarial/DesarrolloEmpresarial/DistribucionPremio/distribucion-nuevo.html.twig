@@ -1,15 +1,18 @@
 {% extends 'AppBundle::frontend.html.twig' %}
 
-{% block title %}Distribucion Premio{% endblock %}
+{% block title %}Distribución Premio nuevo{% endblock %}
 
 {% block breadcrumb_ul %}
 
     <ul class="breadcrumb">
+
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
-      <li>Formacion de capital social asociativo y desarrollo empresarial</li>
-      <li><a href="{{ path('concursoGestion') }}">Concursos</a></li>
-      <li class="active">Distribucion Premio</li>
+      <li>Concursos de Mejoramiento</li>
+      <li>Gestión de Concursos</li>
+      <li><a href="{{ path('distribucionGestion') }}">Gestion Distribución Premio</a></li>
+      <li class="active">Distribución Premio Nuevo</li>
+
     </ul>
 
 {% endblock %}
@@ -17,10 +20,15 @@
 
 {% block section %}
 
-     
-  	<br>
 
+     <div class="container">
+    <h1> Gestión de Distribución de Premios</h1>
     <hr>
+    <h3> Nuevo Registro</h3>   
+  </div>
+
+  <br />
+  <br />
 
     
   {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
@@ -57,13 +65,13 @@
             <div class="col-md-4">
           {{ form_label(form.posicion) }}
           {{ form_errors(form.posicion) }}
-          {{ form_widget(form.posicion, { 'attr': {'class': 'form-control'} }) }}               
+          {{ form_widget(form.posicion, { 'attr': {'class': 'form-control', 'placeholder': 'Posición'} }) }}               
            </div> 
 
            <div class="col-md-4">
           {{ form_label(form.valor) }}
           {{ form_errors(form.valor) }}
-          {{ form_widget(form.valor, { 'attr': {'class': 'form-control'} }) }}               
+          {{ form_widget(form.valor, { 'attr': {'class': 'form-control', 'placeholder': 'Valor'} }) }}               
            </div>
 
     </div> 

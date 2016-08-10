@@ -32,6 +32,13 @@ class AsignacionBeneficiarioAhorro
     private $beneficiario;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fecha_inicio", type="datetime")
+     */
+    private $fecha_inicio;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="beneficiario_ahorro_otro_programa", type="boolean")
@@ -62,7 +69,7 @@ class AsignacionBeneficiarioAhorro
     /**
      * @var string
      *
-     * @ORM\Column(name="plan_ahorro_individual", type="decimal")
+     * @ORM\Column(name="plan_ahorro_individual", type="decimal", nullable=true)
      */
     private $plan_ahorro_individual;
 	
@@ -70,7 +77,7 @@ class AsignacionBeneficiarioAhorro
 	/**
      * @var string
      *
-     * @ORM\Column(name="observacion", type="string")
+     * @ORM\Column(name="observacion", type="string", nullable=true)
      */	 
     private $observacion;
 	
@@ -90,7 +97,7 @@ class AsignacionBeneficiarioAhorro
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
      */
     private $fecha_modificacion;
 
@@ -163,6 +170,30 @@ class AsignacionBeneficiarioAhorro
     public function getBeneficiario()
     {
         return $this->beneficiario;
+    }
+
+    /**
+     * Set fechaInicio
+     *
+     * @param \DateTime $fechaInicio
+     *
+     * @return AsignacionBeneficiarioAhorro
+     */
+    public function setFechaInicio($fechaInicio)
+    {
+        $this->fecha_inicio = $fechaInicio;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaInicio
+     *
+     * @return \DateTime
+     */
+    public function getFechaInicio()
+    {
+        return $this->fecha_inicio;
     }
 
     /**

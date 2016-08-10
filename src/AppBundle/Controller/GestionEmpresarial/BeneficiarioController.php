@@ -379,8 +379,6 @@ class BeneficiarioController extends Controller
 
             $beneficiarios = $form->getData();
             
-            $beneficiarios->setFechaModificacion(new \DateTime());
-
             if($beneficiarios->getPertenenciaEtnica()->getDescripcion() != 'Indígena'){
                 $beneficiarios->setNullGrupoIndigena();
             }  

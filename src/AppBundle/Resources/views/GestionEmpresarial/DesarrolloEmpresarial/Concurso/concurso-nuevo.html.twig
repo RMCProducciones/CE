@@ -1,15 +1,15 @@
 {% extends 'AppBundle::frontend.html.twig' %}
 
-{% block title %}Concurso Nuevo{% endblock %}
+{% block title %}Concurso nuevo{% endblock %}
 
 {% block breadcrumb_ul %}
 
     <ul class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
-      <li>Formacion de capital social asociativo y desarrollo empresarial</li>
-      <li><a href="{{ path('concursoGestion') }}">Concursos</a></li>
-      <li class="active">Nuevo</li>
+      <li>Concursos de Mejoramiento</li>
+      <li><a href="{{ path('concursoGestion') }}">Gestión de Concursos</a></li>
+      <li class="active">Concurso Nuevo</li>
     </ul>
 
 {% endblock %}
@@ -91,17 +91,17 @@
 			<div class="col-md-4">
                   {{ form_label(form.tematica) }}
 				  {{ form_errors(form.tematica) }}
-				  {{ form_widget(form.tematica, { 'attr': {'class': 'form-control', 'placeholder': 'Tematica '} }) }}
+				  {{ form_widget(form.tematica, { 'attr': {'class': 'form-control', 'placeholder': 'Temática '} }) }}
                 </div>
 				<div class="col-md-4">
                   {{ form_label(form.ambito) }}
 				  {{ form_errors(form.ambito) }}
-				  {{ form_widget(form.ambito, { 'attr': {'class': 'form-control', 'placeholder': 'Ambito '} }) }}
+				  {{ form_widget(form.ambito, { 'attr': {'class': 'form-control', 'placeholder': 'Ámbito '} }) }}
                 </div>
 				<div class="col-md-4">
                   {{ form_label(form.problematica) }}
 				  {{ form_errors(form.problematica) }}
-				  {{ form_widget(form.problematica, { 'attr': {'class': 'form-control', 'placeholder': 'Problematicas '} }) }}
+				  {{ form_widget(form.problematica, { 'attr': {'class': 'form-control', 'placeholder': 'Problematicás '} }) }}
                 </div>
                 
 			</div>

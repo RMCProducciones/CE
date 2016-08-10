@@ -12,8 +12,8 @@ class DistribucionPremioType extends AbstractType
     {
         $builder
 		
-			->add('posicion')
-			->add('valor');
+			->add('posicion', 'text' , array('label' => 'Posición'))
+			->add('valor', 'text' , array('label' => 'Valor'));
 			
 	}		
 			
