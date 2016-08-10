@@ -142,6 +142,7 @@
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Meta Mensual', 'a.metaMensual') }}</th>
                     <th class="text-center">{{ knp_pagination_sortable(pagination, 'Ahorro Real Acumulado', 'a.ahorroRealAcumulado') }}</th>
                     <th class="text-center">{{ knp_pagination_sortable(pagination, 'Plan de Ahorro Individual', 'a.planAhorroIndividual') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Continuidad', 'a.continuidad') }}</th>
                     <th class="text-center">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.acciones') }}</th>
 	                </tr>
 	           </thead>
@@ -157,7 +158,8 @@
 	    		{% for article in pagination %}
 
             {% set ahorroReal = 0 %}
-            
+            {% set continuidadPrograma = 0 %}
+
 	                <tr {% if loop.index is odd %}class="color"{% endif %}>
                   <tr id="filaBeneficiario{{ consecutivo }}">
 
@@ -176,9 +178,10 @@
                     {% if idBeneficiario == article.id %}                      
                         {% if beneficiarioAhorroOtroPrograma == 1 %}
                           <td></td>
-                          <td class="text-center">No Aprobado</td>
-                          <td class="text-center">No Aprobado</td>
-                          <td class="text-center">No Aprobado</td>
+                          <td class="text-center">$0</td>
+                          <td class="text-center">$0</td>
+                          <td class="text-center">$0</td>
+                          <td class="text-center">$0</td>
                           <td class="text-center">No Aprobado</td>
                         {% else %}
                           <td></td>
@@ -187,24 +190,36 @@
                           {% for ahorroRealBeneficiario in ahorroRealBeneficiarios %}
                             {% if ahorroRealBeneficiario.beneficiario.id == article.id %}
                               {% set ahorroReal = ahorroRealBeneficiario.ahorroRealCorte + ahorroReal %}
+                              {% if ahorroRealBeneficiario.cumplimientoCorte < 80 %}
+                                {% set continuidadPrograma = continuidadPrograma + 1 %}
+                              {% endif %}  
                             {% endif %}                            
                           {% endfor %}
                           <td class="text-center">${{ahorroReal}}</td>
-                          <td class="text-center">$ {{planAhorroIndividual}}</td> 
+                          <td class="text-center">$ {{planAhorroIndividual}}</td>
+                          {% if continuidadPrograma < 3 %}
+                            <td class="text-center">Si</td>
+                          {% else %}
+                            <td class="text-center">No</td>
+                          {% endif %}
+                           
                         {% endif %}                                         
                     {% else %}
                         <td></td>
                         <td class="text-center">No Registrado</td>
                         <td class="text-center">No Registrado</td>
                         <td class="text-center">No Registrado</td>
-                        <td class="text-center">No Registrado</td>                      
+                        <td class="text-center">No Registrado</td>
+                        <td class="text-center">No Registrado</td>
                     {% endif %}
 
 	                  <td class="text-center">
 
                       <a href="{{ path('beneficiarioAhorroNuevo', {'idAhorro': idAhorro, 'idGrupo': article.grupo.id, 'idBeneficiario': article.id}) }}" alt="Datos Incentivo de Ahorro" title="Datos Incentivo de Ahorro"><span class="glyphicon glyphicon-indent-left" aria-hidden="true"></span></a> | 
 
-                      <a href="{{ path('beneficiarioAhorroCorteGestion', {'idAhorro': idAhorro, 'idGrupo': article.grupo.id, 'idBeneficiario': article.id}) }}" alt="Incentivo de Ahorro Apertura" title="Incentivo de Ahorro"><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span></a> | 
+                      {% if continuidadPrograma < 3 %}
+                            <a href="{{ path('beneficiarioAhorroCorteGestion', {'idAhorro': idAhorro, 'idGrupo': article.grupo.id, 'idBeneficiario': article.id}) }}" alt="Incentivo de Ahorro Apertura" title="Incentivo de Ahorro"><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span></a> | 
+                      {% endif %}
 
 	                    <a href="{{ path('beneficiarioSoporte', {'idGrupo': article.grupo.id, 'idBeneficiario': article.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> | 
 
