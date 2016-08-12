@@ -8,7 +8,7 @@
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Financiera</li>
       
-      <li><a href="{{ path('capacitacionFinancieraGestion') }}">Capacitacion Financiera</a></li>
+      <li><a href="{{ path('capacitacionFinancieraGestion', {'idPCF' : idPCF}) }}">Capacitacion Financiera</a></li>
 	  <li>Nuevo</li>
     </ul>
 
@@ -35,7 +35,7 @@
   
               <button name="grupo[Guardar]" id="grupo_Guardar" type="submit" class="btn btn-success">Guardar</button>
               
-              <a href="{{ path('capacitacionFinancieraGestion') }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
+              <a href="{{ path('capacitacionFinancieraGestion', {'idPCF' : idPCF}) }}" class="btn btn-danger" title="" alt="Borrar" aria-hidden="true" data-toggle="confirmation" data-btn-ok-label="" data-btn-ok-icon="glyphicon glyphicon-share-alt" data-btn-ok-class="btn-success" data-btn-cancel-label="" data-btn-cancel-icon="glyphicon glyphicon-ban-circle" data-btn-cancel-class="btn-danger" data-original-title="¿Eliminar registros?">Cancelar</a>
               
             </div>
           </div>

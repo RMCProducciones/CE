@@ -22,7 +22,7 @@ class AsignacionBeneficiarioProgramaCapacitacionFinanciera
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\ProgramaCapacitacionFinanciera")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CapacitacionFinanciera")
      */
     private $programaCapacitacionFinanciera;
 
@@ -39,14 +39,14 @@ class AsignacionBeneficiarioProgramaCapacitacionFinanciera
     /**
      * @var integer
      *
-     * @ORM\Column(name="valoracion_inicial", type="integer")
+     * @ORM\Column(name="valoracion_inicial", type="integer", nullable=true)
      */
     private $valoracion_inicial;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="valoracion_final", type="integer")
+     * @ORM\Column(name="valoracion_final", type="integer", nullable=true)
      */
     private $valoracion_final;
 
@@ -65,7 +65,7 @@ class AsignacionBeneficiarioProgramaCapacitacionFinanciera
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="fecha_modificacion", type="datetime")
+     * @ORM\Column(name="fecha_modificacion", type="datetime", nullable=true)
      */
     private $fecha_modificacion;
 
@@ -95,11 +95,11 @@ class AsignacionBeneficiarioProgramaCapacitacionFinanciera
     /**
      * Set programaCapacitacionFinanciera
      *
-     * @param AppBundle\Entity\ProgramaCapacitacionFinanciera $programaCapacitacionFinanciera
+     * @param AppBundle\Entity\CapacitacionFinanciera $programaCapacitacionFinanciera
      *
      * @return AsignacionBeneficiarioProgramaCapacitacionFinanciera
      */
-    public function setProgramaCapacitacionFinanciera(\AppBundle\Entity\ProgramaCapacitacionFinanciera $programaCapacitacionFinanciera)
+    public function setProgramaCapacitacionFinanciera(\AppBundle\Entity\CapacitacionFinanciera $programaCapacitacionFinanciera)
     {
         $this->programaCapacitacionFinanciera = $programaCapacitacionFinanciera;
 
@@ -109,7 +109,7 @@ class AsignacionBeneficiarioProgramaCapacitacionFinanciera
     /**
      * Get programaCapacitacionFinanciera
      *
-     * @return AppBundle\Entity\ProgramaCapacitacionFinanciera
+     * @return AppBundle\Entity\CapacitacionFinanciera
      */
     public function getProgramaCapacitacionFinanciera()
     {

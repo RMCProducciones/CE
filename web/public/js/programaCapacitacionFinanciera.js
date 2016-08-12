@@ -84,7 +84,10 @@ app.controller('FiltrosProgramaCapacitacionFinancieraCtrl', ['$scope', '$http', 
 		
 }]);
 
+app.controller('gestionBeneficiarioPCFCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.eliminarBeneficiarioPCF = function(ruta){		
+		window.location.replace(ruta);
 
-
-
-
+	};	
+}]);
