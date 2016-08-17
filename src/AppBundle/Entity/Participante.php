@@ -55,7 +55,7 @@ class Participante
     /**
      * @var string
      *
-     * @ORM\Column(name="segundo_apellido", type="string")
+     * @ORM\Column(name="segundo_apellido", type="string", nullable = true)
      */
     private $segundo_apellido;
 
@@ -69,7 +69,7 @@ class Participante
     /**
      * @var string
      *
-     * @ORM\Column(name="segundo_nombre", type="string")
+     * @ORM\Column(name="segundo_nombre", type="string", nullable = true)
      */
     private $segundo_nombre;
 
@@ -168,21 +168,21 @@ class Participante
     /**
      * @var string
      *
-     * @ORM\Column(name="telefono_fijo", type="string")
+     * @ORM\Column(name="telefono_fijo", type="string", nullable = true)
      */
     private $telefono_fijo;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="telefono_celular", type="string")
+     * @ORM\Column(name="telefono_celular", type="string", nullable = true)
      */
     private $telefono_celular;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="correo_electronico", type="string")
+     * @ORM\Column(name="correo_electronico", type="string", nullable = true)
      */
     private $correo_electronico;
 
