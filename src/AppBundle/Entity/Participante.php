@@ -29,7 +29,7 @@ class Participante
     /**
      * @var integer
      *
-     * @ORM\Column(name="relacion", type="integer")
+     * @ORM\Column(name="relacion", type="integer", nullable = true)
      */
     private $relacion;
 

@@ -9,7 +9,8 @@
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Financiera</li>
       <li>Capacitacion financiera</li>
-      <li class="active">Asignacion Beneficiarios - Capacitación Financiera</li>
+      <li>Asignacion Beneficiarios - Capacitación Financiera</li>
+      <li class="active">Asignacion Participante - Capacitación Financiera</li>
       
     </ul>
 
@@ -21,7 +22,8 @@
     <h1>Capacitación Financiera</h1>        
     <br>
     <hr>
-    <h3>Asignación Beneficiarios-Capactiación Financiera</h3>
+    <h3>Asignación Participante-Capactiación Financiera</h3>
+    <h3>Grupo: {{beneficiario.grupo.nombre}}</h3>
   </div>
 
   <br />
@@ -137,9 +139,9 @@
               <thead>                
                   <tr>
                     <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Id', 'a.id') }}</th>
+                    <th></th>                    
+                    <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Datos del Participante', 'a.datosDelParticipante') }}</th>
                     <th></th>
-                    <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Grupo', 'a.grupo') }}</th>
-                    <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Datos del Beneficiario', 'a.datosDelBeneficiario') }}</th>
                     <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Acciones', 'a.acciones') }}</th>
                 </tr>                
               </thead>
@@ -147,32 +149,29 @@
                 
               {% set consecutivo = 1 %}              
         
-            {% for beneficiario in pagination1 %}
+            {% for participante in pagination1 %}
         
               <tr {% if loop.index is odd %}class="color"{% endif %}>
-                  <td class="text-center">{{ beneficiario.id }}</td>
+                  <td class="text-center">{{ participante.id }}</td>
                   <td>  
                     
+                  </td>                  
+                  <td class="text-center">
+                    Primero Apellido: {{ participante.primerApellido }}
+                    <br>
+                    Segundo Apellido: {{ participante.segundoApellido }}
+                    <br>
+                    Primero Nombre: {{ participante.primerNombre }}
+                    <br>
+                    Segundo Nombre: {{ participante.segundoNombre }}
                   </td>
                   <td class="text-center">
-                    {{ beneficiario.grupo.nombre }}
-                  </td>
-                  <td class="text-center">
-                    Primero Apellido: {{ beneficiario.primerApellido }}
-                    <br>
-                    Segundo Apellido: {{ beneficiario.segundoApellido }}
-                    <br>
-                    Primero Nombre: {{ beneficiario.primerNombre }}
-                    <br>
-                    Segundo Nombre: {{ beneficiario.segundoNombre }}
+                      
                   </td>                                        
                   <td class="text-center">
-                    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ beneficiario.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>                    
+                    <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ participante.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>                    
                     <br>                    
-                    <a href="{{ path('beneficiarioCapacitacionFinancieraAsignar', {'idPCF': idPCF, 'idCapacitacion' : idCapacitacion, 'idBeneficiario': beneficiario.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>                    
-                    <br>
-                    <a href="{{ path('participanteCapacitacionFinancieraGestion', {'idPCF': idPCF, 'idCapacitacion' : idCapacitacion, 'idBeneficiario': beneficiario.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>                    
-                    <br>                      
+                    <a href="{{ path('participanteCapacitacionFinancieraAsignar', {'idPCF': idPCF, 'idCapacitacion' : idCapacitacion, 'idBeneficiario': idBeneficiario, 'idParticipante': participante.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>                                                              
                   </td>
                 </tr>
         
@@ -198,15 +197,15 @@
           </div>
 
           <div class="col-md-6 col-md-offset-1 well">            
-            <table class="table table-striped table-hover" ng-controller="gestionBeneficiarioPCFCtrl">
+            <table class="table table-striped table-hover" ng-controller="gestionParticipantePCFCtrl">
               <thead>           
                 <tr>
                   <th>#</th>
                   <th>
                     
                   </th>
-                  <th>Grupo</th>
                   <th>Datos del Beneficiario</th>
+                  <th></th>                  
                   <th>Acciones</th>
                 </tr>
         
@@ -215,14 +214,11 @@
         {% set consecutivo = 1 %}
         
           {% for asignacionBeneficiariosCC in asignacionesBeneficiariosPCF %}
-                <tr id="filaBeneficiarioPCF{{ consecutivo }}">
+                <tr id="filaParticipantePCF{{ consecutivo }}">
                   <td>{{ consecutivo }}</td>
                   <td>
                     
-                  </td>
-                  <td>
-                    {{ asignacionBeneficiariosCC.beneficiario.grupo.nombre }}
-                  </td>
+                  </td>                  
                   <td>
                     Primero Apellido: {{ asignacionBeneficiariosCC.beneficiario.primerApellido }}
                     <br>
@@ -232,12 +228,14 @@
                     <br>
                     Segundo Nombre: {{ asignacionBeneficiariosCC.beneficiario.segundoNombre }}
                   </td>
-          
+                  <td> 
+
+                  </td>          
                   <td>
                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ asignacionBeneficiariosCC.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
 
                       | 
-                      <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarBeneficiarioPCF('{{ path('beneficiarioCapacitacionFinancieraEliminar', {'idPCF': idPCF, 'idCapacitacion': idCapacitacion, 'idBeneficiarioPCF' : asignacionBeneficiariosCC.id}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
+                      <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarParticipantePCF('{{ path('participanteCapacitacionFinancieraEliminar', {'idPCF': idPCF, 'idCapacitacion': idCapacitacion, 'idBeneficiario' : idBeneficiario, 'idParticipantePCF': asignacionBeneficiariosCC.id}) }}')" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>
                     
                   </td>
                 </tr>
@@ -256,7 +254,7 @@
       </div>
     </div>
 
-  {% for beneficiario in pagination1 %}
+  {% for participante in pagination1 %}
     <!-- Modal -->
     <div class="modal fade" id="myModal{{  beneficiario.id  }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
@@ -288,7 +286,7 @@
                     Tipo de Documento
                   </td>         
                   <td class="text-center">
-                    {{ beneficiario.tipoDocumento }}
+                    {{ participante.tipoDocumento }}
                   </td>
               </tr>
 
@@ -297,7 +295,7 @@
                     Numero de Documento
                   </td>
                   <td class="text-center">
-                    {{ beneficiario.numeroDocumento }}
+                    {{ participante.numeroDocumento }}
                   </td>
               </tr>
 
@@ -306,7 +304,7 @@
                     Primer Apellido
                   </td>
                   <td class="text-center">
-                     {{ beneficiario.primerApellido }}
+                     {{ participante.primerApellido }}
                   </td>
               </tr>
 
@@ -315,7 +313,7 @@
                     Segundo Apellido
                   </td>
                   <td class="text-center">
-                   {{ beneficiario.segundoApellido }}
+                   {{ participante.segundoApellido }}
                   </td>
               </tr>
 
@@ -324,7 +322,7 @@
                     Primer Nombre
                   </td>
                   <td class="text-center">
-                    {{ beneficiario.primerNombre }}
+                    {{ participante.primerNombre }}
                   </td>
               </tr>
 
@@ -333,7 +331,7 @@
                     Segundo Nombre
                   </td>
                   <td class="text-center">
-                   {{ beneficiario.segundoNombre }}
+                   {{ participante.segundoNombre }}
                   </td>
               </tr>
 
@@ -342,7 +340,7 @@
                     Genero
                   </td>
                   <td class="text-center">
-                   {{ beneficiario.genero }}
+                   {{ participante.genero }}
                   </td>
               </tr>
 
@@ -351,7 +349,7 @@
                     Fecha de Nacimiento
                   </td>
                   <td class="text-center">
-                   {{ beneficiario.fechaNacimiento |  date('d - m - Y') }}
+                   {{ participante.fechaNacimiento |  date('d - m - Y') }}
                   </td>
               </tr>
 
@@ -360,7 +358,7 @@
                     Edad al Momento de la Inscripcion
                   </td>
                   <td class="text-center">
-                   {{ beneficiario.edadInscripcion }}
+                   {{ participante.edadInscripcion }}
                   </td>
               </tr>
 
@@ -368,7 +366,7 @@
                   <td class="text-center">
                     Desplazado por la Violencia
                   </td>
-                  {% if beneficiario.desplazado == null %}
+                  {% if participante.desplazado == null %}
                   <td class="text-center">
                     No
                   </td>
@@ -384,7 +382,7 @@
                     Pertenencia Etnica
                   </td>
                   <td class="text-center">
-                  {{ beneficiario.pertenenciaEtnica }}
+                  {{ participante.pertenenciaEtnica }}
                   </td>
               </tr>
 
@@ -393,30 +391,15 @@
                     Grupo Indigena
                   </td>
                   <td class="text-center">
-                   {{ beneficiario.grupoIndigena }}
+                   {{ participante.grupoIndigena }}
                   </td>
               </tr>
-
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Pertenece a la Red Unidos
-                  </td>
-                  {% if beneficiario.redUnidos == null %}
-                  <td class="text-center">
-                    No
-                  </td>
-                  {% else %}
-                  <td class="text-center">
-                    Si
-                  </td>
-              </tr>
-              {% endif %} 
 
               <tr class="active text-muted">             
                   <td class="text-center">
                     Sabe Leer
                   </td>
-                  {% if beneficiario.sabeLeer == null %}
+                  {% if participante.sabeLeer == null %}
                   <td class="text-center">
                     No
                   </td>
@@ -432,7 +415,7 @@
                   <td class="text-center">
                     Sabe Escribir
                   </td>
-             {% if beneficiario.sabeEscribir == null %}
+             {% if participante.sabeEscribir == null %}
                   <td class="text-center">
                     No
                   </td>
@@ -445,28 +428,10 @@
 
               <tr class="active text-muted">             
                   <td class="text-center">
-                    Puntaje Sisben
-                  </td>
-                  <td class="text-center">
-                   {{ beneficiario.puntajeSisben }}
-                  </td>
-              </tr>
-
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Corte Sisben
-                  </td>
-                  <td class="text-center">
-                   {{ beneficiario.corteSisben }}
-                  </td>
-              </tr>
-
-              <tr class="active text-muted">             
-                  <td class="text-center">
                     Discapacidad
                   </td>
                   <td class="text-center">
-                   {{ beneficiario.discapacidad }}
+                   {{ participante.discapacidad }}
                   </td>
               </tr>
 
@@ -475,16 +440,7 @@
                     Rol Grupo Familiar
                   </td>
                   <td class="text-center">
-                   {{ beneficiario.rolGrupoFamiliar }}
-                  </td>
-              </tr>
-
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Miembros Grupo Familiar
-                  </td>
-                  <td class="text-center">
-                  {{ beneficiario.miembrosNucleoFamiliar }}
+                   {{ participante.rolGrupoFamiliar }}
                   </td>
               </tr>
 
@@ -493,7 +449,7 @@
                     Nivel de Estudios
                   </td>
                   <td class="text-center">
-                  {{ beneficiario.nivelEstudios }}
+                  {{ participante.nivelEstudios }}
                   </td>
               </tr>
               
@@ -502,7 +458,7 @@
                     Ocupacion
                   </td>
                   <td class="text-center">
-                   {{ beneficiario.ocupacion }}
+                   {{ participante.ocupacion }}
                   </td>
               </tr>
               
@@ -511,31 +467,7 @@
                     Tipo de Vivienda
                   </td>
                   <td class="text-center">
-                   {{ beneficiario.tipoVivienda }}
-                  </td>
-              </tr>
-              
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Rural
-                  </td>
-                  {% if beneficiario.rural == null %}
-                  <td class="text-center">
-                    No
-                  </td>
-                  {% else %}
-                  <td class="text-center">
-                    Si
-                  </td>
-              </tr>
-              {% endif %} 
-              
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Dirección
-                  </td>
-                  <td class="text-center">
-                   {{ beneficiario.direccion }}
+                   {{ participante.tipoVivienda }}
                   </td>
               </tr>
               
@@ -544,7 +476,7 @@
                    Telefono Fijo
                   </td>
                   <td class="text-center">
-                   {{ beneficiario.telefonoFijo }}
+                   {{ participante.telefonoFijo }}
                   </td>
               </tr>
               
@@ -553,7 +485,7 @@
                     Telefono Celular
                   </td>
                   <td class="text-center">
-                  {{ beneficiario.telefonoCelular }}
+                  {{ participante.telefonoCelular }}
                   </td>
               </tr>
               
@@ -562,7 +494,7 @@
                     Correo Electronico
                   </td>
                   <td class="text-center">                 
-                  {{ beneficiario.correoElectronico }}
+                  {{ participante.correoElectronico }}
                   </td>
               </tr>
               
@@ -571,120 +503,12 @@
                     Estado civil
                   </td>
                   <td class="text-center">
-                   {{ beneficiario.estadoCivil }}
+                   {{ participante.estadoCivil }}
                   </td>
               </tr>
 
               <br>
 
-              {% if beneficiario.tipoDocumentoConyugue != null %} 
-
-
-              <div class="col-md-12 table-responsive">
-              <table class="table table-bordered">            
-              <thead>
-                <tr class="bg-primary">
-                    <th class="text-center col-md-5">Información</th>
-                    <th class="text-center col-md-7">Datos del Conyugue</th>                    
-                </tr>
-              </thead>
-
-              <tbody>
-             
-              {% if beneficiario.estadoCivil != "Soltero" or beneficiario.estadoCivil != "Viudo"  %} 
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Tipo Documento Conyugue
-                  </td>
-                  <td class="text-center">
-                    {{ beneficiario.tipoDocumentoConyugue }}
-                  </td>
-              </tr>
-              {% endif %} 
-              
-              {% if beneficiario.numeroDocumentoConyugue != null %} 
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Numero Documento Conyugue
-                  </td>
-                  <td class="text-center">
-                    {{ beneficiario.numeroDocumentoConyugue }}
-                  </td>
-              </tr>
-              {% endif %} 
-              
-              {% if beneficiario.primerApellidoConyugue != null %} 
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Primer Apellido Conyugue
-                  </td>
-                  <td class="text-center">
-                    {{ beneficiario.primerApellidoConyugue }}
-                  </td>
-              </tr>
-              {% endif %} 
-              
-              {% if beneficiario.segundoApellidoConyugue != null %} 
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Segundo Apellido Conyugue
-                  </td>
-                  <td class="text-center">
-                    {{ beneficiario.segundoApellidoConyugue }}
-                  </td>
-              </tr>
-              {% endif %} 
-              
-              {% if beneficiario.primerNombreConyugue != null %} 
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Primer Nombre Conyugue
-                  </td>
-                  <td class="text-center">
-                    {{ beneficiario.primerNombreConyugue }}
-                  </td>
-              </tr>
-              {% endif %} 
-              
-              {% if beneficiario.segundoNombreConyugue != null %} 
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Segundo Nombre conyugue
-                  </td>
-                  <td class="text-center">
-                    {{ beneficiario.segundoNombreConyugue }}
-                  </td>
-              </tr>
-              {% endif %} 
-              
-              {% if beneficiario.telefonoFijoConyugue != null %} 
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Telefono Fijo Conyugue
-                  </td>
-                  <td class="text-center">
-                    {{ beneficiario.telefonoFijoConyugue }}
-                  </td>
-              </tr>
-              {% endif %} 
-              
-              {% if beneficiario.telefonoCelularConyugue != null %} 
-              <tr class="active text-muted">             
-                  <td class="text-center">
-                    Telefono Celular Conyugue
-                  </td>
-                  <td class="text-center">
-                    {{ beneficiario.telefonoCelularConyugue }}
-                  </td>
-              </tr>
-              {% endif %}      
-
-              </tbody>  
-          </table>     
-
-          {% endif %}     
-
-              
               </tbody>  
           </table>  
            <div class="modal-footer">

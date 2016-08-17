@@ -441,7 +441,7 @@ class CapacitacionFinancieraController extends Controller
     /**
      * @Route("/gestion-financiera/programa-capacitacion-financiera/{idPCF}/capacitacion/{idCapacitacion}/asignacion-beneficiario/{idBeneficiario}/asignacion-participante", name="participanteCapacitacionFinancieraGestion")
      */
-    public function participanteCapacitacionFinancieraAction(Request $request, $idPCF, $idCapacitacion)
+    public function participanteCapacitacionFinancieraAction(Request $request, $idPCF, $idCapacitacion, $idBeneficiario)
     {
         
         new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
@@ -458,12 +458,16 @@ class CapacitacionFinancieraController extends Controller
         );
 
         $asignacionesBeneficiariosPCF = $em->getRepository('AppBundle:AsignacionBeneficiarioProgramaCapacitacionFinanciera')->findBy(
-            array('programaCapacitacionFinanciera' => $idCapacitacion)
+            array('programaCapacitacionFinanciera' => $idCapacitacion,
+                  'beneficiario' => $idBeneficiario)
         );
 
-        $query = $em->createQuery('SELECT p FROM AppBundle:Participante p WHERE p.id NOT IN (SELECT participante.id FROM AppBundle:Participante participante JOIN AppBundle:AsignacionBeneficiarioProgramaCapacitacionFinanciera apc WHERE particpante = apc.particpante AND apc.programaCapacitacionFinanciera = :programaCapacitacionFinanciera) AND p.active = 1');
+        $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
+            array('id' => $idBeneficiario));
+
+        $query = $em->createQuery('SELECT p FROM AppBundle:Participante p WHERE p.id NOT IN (SELECT participante.id FROM AppBundle:Participante participante JOIN AppBundle:AsignacionBeneficiarioProgramaCapacitacionFinanciera apc WHERE participante = apc.participante AND apc.programaCapacitacionFinanciera = :programaCapacitacionFinanciera) AND p.active = 1');
         $query->setParameter(':programaCapacitacionFinanciera', $capacitacionFinanciera);
-        $beneficiarios = $query->getResult();
+        $participantes = $query->getResult();
 
         $filterBuilder = $this->get('doctrine.orm.entity_manager')
             ->getRepository('AppBundle:Beneficiario')
@@ -488,7 +492,7 @@ class CapacitacionFinancieraController extends Controller
         $paginator1  = $this->get('knp_paginator');
 
         $pagination1 = $paginator1->paginate(
-            $beneficiarios, /* fuente de los datos*/
+            $participantes, /* fuente de los datos*/
             $request->query->get('page', 1)/*número de página*/,
             5/*límite de resultados por página*/
         );
@@ -499,12 +503,14 @@ class CapacitacionFinancieraController extends Controller
 
         $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
 
-        return $this->render('AppBundle:GestionFinanciera/CapacitacionFinanciera:asignacion-beneficiario-capacitacion-financiera-gestion.html.twig', 
+        return $this->render('AppBundle:GestionFinanciera/CapacitacionFinanciera:asignacion-participante-capacitacion-financiera-gestion.html.twig', 
             array(
                 'form' => $form->createView(),
-                'beneficiarios' => $query,
+                'participantes' => $query,
+                'beneficiario' => $beneficiario,
                 'asignacionesBeneficiariosPCF' => $asignacionesBeneficiariosPCF,
                 'idPCF' => $idPCF,
+                'idBeneficiario' => $idBeneficiario,
                 'idCapacitacion' => $idCapacitacion,
                 'pagination1' => $pagination1,
                 'tipoUsuario' => $valuesFieldBlock[3]                
@@ -514,7 +520,7 @@ class CapacitacionFinancieraController extends Controller
     /**
      * @Route("/gestion-financiera/programa-capacitacion-financiera/{idPCF}/capacitacion/{idCapacitacion}/asignacion-beneficiario/{idBeneficiario}/asignacion-participante/{idParticipante}/asignar", name="participanteCapacitacionFinancieraAsignar")
      */
-    public function participanteCapacitacionFinancieraAsignarAction(Request $request, $idPCF, $idCapacitacion, $idBeneficiario)
+    public function participanteCapacitacionFinancieraAsignarAction(Request $request, $idPCF, $idCapacitacion, $idBeneficiario, $idParticipante)
     {
 
         new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
@@ -530,28 +536,34 @@ class CapacitacionFinancieraController extends Controller
             array('id' => $idBeneficiario)
         );      
 
+        $participante = $em->getRepository('AppBundle:Participante')->findOneBy(
+            array('id' => $idParticipante)
+        );
+
         $capacitacionFinanciera = $em->getRepository('AppBundle:CapacitacionFinanciera')->findOneBy(
             array('id' => $idCapacitacion)
         );
 
-        $asignacionesBeneficiariosPCF = new AsignacionBeneficiarioProgramaCapacitacionFinanciera();      
+        $asignacionesParticipantesPCF = new AsignacionBeneficiarioProgramaCapacitacionFinanciera();      
 
-        $asignacionesBeneficiariosPCF->setProgramaCapacitacionFinanciera($capacitacionFinanciera);        
-        $asignacionesBeneficiariosPCF->setBeneficiario($beneficiario);
-        $asignacionesBeneficiariosPCF->setActive(true);
-        $asignacionesBeneficiariosPCF->setFechaCreacion(new \DateTime());
-        $asignacionesBeneficiariosPCF->setUsuarioCreacion($usuario);
+        $asignacionesParticipantesPCF->setProgramaCapacitacionFinanciera($capacitacionFinanciera);        
+        $asignacionesParticipantesPCF->setBeneficiario($beneficiario);
+        $asignacionesParticipantesPCF->setParticipante($participante);
+        $asignacionesParticipantesPCF->setActive(true);
+        $asignacionesParticipantesPCF->setFechaCreacion(new \DateTime());
+        $asignacionesParticipantesPCF->setUsuarioCreacion($usuario);
 
-        $em->persist($asignacionesBeneficiariosPCF);
+        $em->persist($asignacionesParticipantesPCF);
         $em->flush();
 
-        $this->addFlash('success', 'Beneficiario asignado');            
+        $this->addFlash('success', 'Participante asignado');            
 
-        return $this->redirectToRoute('beneficiarioCapacitacionFinancieraGestion', 
+        return $this->redirectToRoute('participanteCapacitacionFinancieraGestion', 
             array(
                 'idPCF' => $idPCF,          
-                'asignacionesBeneficiariosPCF' => $asignacionesBeneficiariosPCF,                
-                'idCapacitacion' => $idCapacitacion
+                'asignacionesBeneficiariosPCF' => $asignacionesParticipantesPCF,                
+                'idCapacitacion' => $idCapacitacion,
+                'idBeneficiario' => $idBeneficiario
             ));        
         
     }
@@ -559,20 +571,21 @@ class CapacitacionFinancieraController extends Controller
     /**
      * @Route("/gestion-financiera/programa-capacitacion-financiera/{idPCF}/capacitacion/{idCapacitacion}/asignacion-beneficiario/{idBeneficiario}/asignacion-participante/{idParticipantePCF}/eliminar", name="participanteCapacitacionFinancieraEliminar")
      */
-    public function participanteCapacitacionFinancieraEliminarAction(Request $request, $idPCF, $idCapacitacion, $idBeneficiarioPCF)
+    public function participanteCapacitacionFinancieraEliminarAction(Request $request, $idPCF, $idCapacitacion, $idBeneficiario, $idParticipantePCF)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $asignacionesBeneficiariosPCF = $em->getRepository('AppBundle:AsignacionBeneficiarioProgramaCapacitacionFinanciera')->find($idBeneficiarioPCF); 
+        $asignacionesBeneficiariosPCF = $em->getRepository('AppBundle:AsignacionBeneficiarioProgramaCapacitacionFinanciera')->find($idParticipantePCF); 
 
         $em->remove($asignacionesBeneficiariosPCF);
         $em->flush();
 
-        return $this->redirectToRoute('beneficiarioCapacitacionFinancieraGestion',
+        return $this->redirectToRoute('participanteCapacitacionFinancieraGestion',
             array(
                 'idPCF' => $idPCF,
                 'asignacionesBeneficiariosPCF' => $asignacionesBeneficiariosPCF,
-                'idCapacitacion' => $idCapacitacion
+                'idCapacitacion' => $idCapacitacion,
+                'idBeneficiario' => $idBeneficiario
             ));      
         
     }

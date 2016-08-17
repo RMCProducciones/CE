@@ -91,3 +91,12 @@ app.controller('gestionBeneficiarioPCFCtrl', ['$scope', '$http', function($scope
 
 	};	
 }]);
+
+
+app.controller('gestionParticipantePCFCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.eliminarParticipantePCF = function(ruta){		
+		window.location.replace(ruta);
+
+	};	
+}]);
