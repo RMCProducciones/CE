@@ -120,7 +120,14 @@ class BeneficiarioAhorroController extends Controller
         new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
 
         $em = $this->getDoctrine()->getManager();
-        $asignacionBeneficiarioAhorro = new AsignacionBeneficiarioAhorro();
+
+        $asignacionBeneficiarioAhorro = $em->getRepository('AppBundle:AsignacionBeneficiarioAhorro')->findOneBy(
+            array('ahorro' => $idAhorro,
+                  'beneficiario' => $idBeneficiario));
+        if($asignacionBeneficiarioAhorro == null){
+            $asignacionBeneficiarioAhorro = new AsignacionBeneficiarioAhorro();            
+        }
+        
         
         $form = $this->createForm(new AsignacionBeneficiarioAhorroType(), $asignacionBeneficiarioAhorro);
 

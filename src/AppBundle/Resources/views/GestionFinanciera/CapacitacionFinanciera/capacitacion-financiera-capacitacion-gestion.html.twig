@@ -7,9 +7,9 @@
 
     <ul class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
-      <li>Gestión Financiera</li>
-      <li>Gestión Capacitación financiera</li>
-      
+      <li><a href="{{ path('programaCapacitacionFinancieraGestion') }}">Gestión Financiera</a></li>
+      <li class="active">Capacitacion financiera</li>
+     
     </ul>
 
 {% endblock %}
@@ -24,8 +24,7 @@
   </div>
      
   	<br>
-
-    <hr>
+    <br>
 
     <div class="section">
       <div class="container">
@@ -33,7 +32,7 @@
           <div class="col-md-6">
             <div class="btn-group">
               <a href="{{ path('programaCapacitacionFinancieraGestion') }}" class="btn btn-warning">Volver</a>
-              <a href="{{ path('capacitacionFinancieraNuevo') }}" class="btn btn-success">Nuevo</a>
+              <a href="{{ path('capacitacionFinancieraNuevo', {'idPCF' : idPCF}) }}" class="btn btn-success">Nuevo</a>
             </div>
           </div>
         </div>
@@ -70,6 +69,8 @@
                     <td class="text-center">{{article.estado}}</td>      
                     
 	                  <td class="text-center">
+
+                     <a href="{{ path('beneficiarioCapacitacionFinancieraGestion', {'idPCF': idPCF, 'idCapacitacion': article.id}) }}" alt="Integrantes CLEAR" title="Integrantes CLEAR"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a> | 
 
 	                   <a href="{{ path('capacitacionFinancieraSoporte', {'idCapacitacionFinanciera': article.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> 
 
