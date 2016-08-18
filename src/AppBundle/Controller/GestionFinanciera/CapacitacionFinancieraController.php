@@ -215,7 +215,7 @@ class CapacitacionFinancieraController extends Controller
                 $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
                     array(
                         'descripcion' => $capacitacionFinancieraSoporte->getTipoSoporte()->getDescripcion(), 
-                        'dominio' => 'ruta_tipo_soporte'
+                        'dominio' => 'capacitacion_financiera_tipo_soporte'
                     )
                 );
                 

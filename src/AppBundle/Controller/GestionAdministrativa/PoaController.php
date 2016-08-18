@@ -237,7 +237,7 @@ class PoaController extends Controller
                 $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
                     array(
                         'descripcion' => $poaSoporte->getTipoSoporte()->getDescripcion(), 
-                        'dominio' => 'talento_tipo_soporte'
+                        'dominio' => 'poa_tipo_soporte'
                     )
                 );
                 

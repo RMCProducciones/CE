@@ -8,7 +8,7 @@
     <ul class="breadcrumb">
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
-      <li><a href="{{ path('feriaGestion') }}">Feria</a></li>
+      <li><a href="{{ path('feriaGestion') }}">Gestión Feria</a></li>
       <li class="active">Aprobación Feria</li>
     </ul>
 {% endblock %}
@@ -55,9 +55,9 @@
                 	<tr>                  	  
       
                     
-	                   <th class="text-center">{{ knp_pagination_sortable(pagination, 'Aprobacion', 'a.aprobacion') }}</th>
+	                   <th class="text-center">{{ knp_pagination_sortable(pagination, 'Aprobación', 'a.aprobacion') }}</th>
 	                   <th class="text-center">{{ knp_pagination_sortable(pagination, 'Fecha inicio', 'a.fechainicio') }}</th>
-                     <th class="text-center">{{ knp_pagination_sortable(pagination, 'Fecha Finalizacion', 'a.fechafinalizacion') }}</th>
+                     <th class="text-center">{{ knp_pagination_sortable(pagination, 'Fecha Finalización', 'a.fechafinalizacion') }}</th>
 	                                 
 	            
 	                </tr>

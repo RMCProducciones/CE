@@ -1,6 +1,6 @@
 {% extends 'AppBundle::frontend.html.twig' %}
 
-{% block title %}Informacion Financiera{% endblock %}
+{% block title %}Informacion Financiera nuevo{% endblock %}
 
 {% block breadcrumb_ul %}
 
@@ -10,17 +10,20 @@
       <li>Formacion de capital social asociativo y desarrollo empresarial</li>
       <li><a href="{{ path('grupoGestion') }}">Grupo</a></li>
       <li class="active">Informacion Financiera</li>
+      <li> Nuevo </li>
     </ul>
 
 {% endblock %}
 
 
 {% block section %}
-
-     
-  	<br>
-
+<div class="container">
+    <h1> Gestión Información Financiera </h1>
     <hr>
+    <h3> Nuevo Registro</h3>
+    <br />
+    <br />
+  </div>
 
     
   {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
