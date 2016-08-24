@@ -105,7 +105,7 @@
 			
     </br>
 
-	<div class="row">				
+	<div class="row" ng-controller="EdadParticipanteCtrl">				
                 <div class="col-md-4">
                   {{ form_label(form.genero) }}
 				  {{ form_errors(form.genero) }}
@@ -113,9 +113,9 @@
                 </div>
                 <div class="col-md-4">
                   {{ form_label(form.fecha_nacimiento) }}
-				  {{ form_errors(form.fecha_nacimiento) }}
-                  {{ form_widget(form.fecha_nacimiento, { 'attr': {'class': 'form-control'} }) }}
-                </div>  
+          {{ form_errors(form.fecha_nacimiento) }}
+                  {{ form_widget(form.fecha_nacimiento, { 'attr': {'class': 'form-control fecha_nacimiento', 'placeholder': 'Fecha de nacimiento', 'ng-model': 'fechaNacimiento', 'ng-change':'calcularEdad()'} }) }}
+                </div>
                 <div class="col-md-4">
                   {{ form_label(form.edad_inscripcion) }}
           {{ form_errors(form.edad_inscripcion) }}
@@ -125,7 +125,7 @@
 	
 	</br>
 	
-	<div class="row">
+	<div class="row" ng-controller="CampoDesplazadoParticipanteCtrl">
 				
                 <div class="col-md-4">
                   {{ form_label(form.pertenencia_etnica) }}
@@ -167,7 +167,7 @@
 	
 	</br>
 	
-	<div class="row">				
+	<div class="row" ng-controller="informacionParticipanteCtrl">				
                 <div class="col-md-4">
                   {{ form_label(form.hijos_menores_5) }}
 				  {{ form_errors(form.hijos_menores_5) }}

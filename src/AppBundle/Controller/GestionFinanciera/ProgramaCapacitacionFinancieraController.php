@@ -186,7 +186,8 @@ class ProgramaCapacitacionFinancieraController extends Controller
         );
 
     }
-/**
+    
+    /**
      * @Route("/gestion-financiera/programa-capacitacion-financiera/{idPCF}/eliminar", name="programaCapacitacionFinancieraEliminar")
      */
     public function programaCapacitacionFinancieraEliminarAction(Request $request, $idPCF)
@@ -345,8 +346,6 @@ class ProgramaCapacitacionFinancieraController extends Controller
         return $this->redirectToRoute('programaCapacitacionFinancieraSoporte', array( 'idPCF' => $idPCF));
         
     }
-
-
 
 }
 

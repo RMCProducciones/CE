@@ -25,9 +25,9 @@ class ParticipanteType extends AbstractType
 										    },))
 			->add('numero_documento', 'text', array('label' => 'Número de documento'))
 			->add('primer_apellido')
-			->add('segundo_apellido', 'text', array('required' => false))
+			->add('segundo_apellido')
 			->add('primer_nombre')
-			->add('segundo_nombre', 'text', array('required' => false))
+			->add('segundo_nombre')
 			->add('genero', 'entity', array(
 				'class' => 'AppBundle:Listas', 
 				
@@ -113,7 +113,7 @@ class ParticipanteType extends AbstractType
 										    },))
 			->add('telefono_fijo')
 			->add('telefono_celular')
-			->add('correo_electronico', 'email')
+			->add('correo_electronico', 'email',array('label' => 'Correo eléctronico','required' => false))
 			->add('estado_civil', 'entity', array('class' => 'AppBundle:Listas',
 										    'query_builder' => function(EntityRepository $er) {
 										        return $er->createQueryBuilder('l')

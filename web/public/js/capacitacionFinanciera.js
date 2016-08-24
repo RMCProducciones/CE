@@ -21,16 +21,18 @@ app.controller('gestionDocumentoSoporteCapacitacionFinancieraCtrl', ['$scope', '
 
 app.controller('gestionCapacitacionFinancieraCtrl', ['$scope', '$http', function($scope, $http) {
 
-	$scope.idCapacitacionFinanciera = 0;	
+	$scope.idCapacitacionFinanciera = 0;
+	$scope.idProgramaCapacitacionFinanciera = 0;	
 
 	console.log($scope.estadoMensaje);
 
-	$scope.eliminarCapacitacionFinanciera= function(idCapacitacionFinanciera, consecutivo){
+	$scope.eliminarCapacitacionFinanciera= function(idCapacitacionFinanciera, idPCF, consecutivo){
 
 		$scope.idCapacitacionFinanciera = idCapacitacionFinanciera;
+		$scope.idProgramaCapacitacionFinanciera = idPCF;
 		$scope.consecutivoCapacitacionFinanciera = consecutivo;
 
-		$http.get($scope.rutaServidor + "gestion-financiera/capacitacion-financiera/capacitacion/" + $scope.idCapacitacionFinanciera + "/eliminar")
+		$http.get($scope.rutaServidor + "gestion-financiera/programa-capacitacion-financiera/" + $scope.idProgramaCapacitacionFinanciera + "/capacitacion/" + $scope.idCapacitacionFinanciera + "/eliminar")
 		.success(function(data, status, headers, config) {
 
   			$("#filaCapacitacionFinanciera" + $scope.consecutivoCapacitacionFinanciera).fadeOut("slow");

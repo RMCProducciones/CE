@@ -1,7 +1,7 @@
 {% extends 'AppBundle::frontend.html.twig' %}
 
 
-{% block title %}Comite Compras{% endblock %}
+{% block title %}Capacitacin Financiera{% endblock %}
 
 {% block breadcrumb_ul %}
 
@@ -38,7 +38,7 @@
         <div class="row">
             <div class="col-md-6">
               <div class="btn-group">
-                <a href="{{ path('grupoGestion') }}" class="btn btn-warning">Volver</a>                             
+                <a href="{{ path('beneficiarioCapacitacionFinancieraGestion', {'idPCF': idPCF, 'idCapacitacion': idCapacitacion}) }}" class="btn btn-warning">Volver</a>                             
               </div>
             </div>
         </div>

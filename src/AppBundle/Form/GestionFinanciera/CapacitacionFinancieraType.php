@@ -12,7 +12,16 @@ class CapacitacionFinancieraType extends AbstractType
     {
         $builder
 		
-			 ->add('modulo')							
+			 ->add('modulo', 'entity', array('label' => 'Modulo', 
+											'class' => 'AppBundle:Listas',
+										    'query_builder' => function(EntityRepository $er) {
+										        return $er->createQueryBuilder('l')
+										        	->where('l.dominio = :dominio')
+										        	->andWhere('l.active = 1')
+										        	->setParameter('dominio', 'modulo_capacitacion_financiera')
+										            ->orderBy('l.orden', 'ASC');
+										    },))
+
 			 ->add('fecha', 'date', array(
 				'label' => 'Fecha de la Capacitacion Financiera', 
 				'widget' => 'single_text'

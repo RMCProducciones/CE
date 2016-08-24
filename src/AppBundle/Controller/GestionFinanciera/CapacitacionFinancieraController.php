@@ -107,9 +107,9 @@ class CapacitacionFinancieraController extends Controller
 
 
  /**
-     * @Route("/gestion-financiera/programa-capacitacion-financiera/capacitacion/{idCapacitacionFinanciera}/editar", name="capacitacionFinancieraEditar")
+     * @Route("/gestion-financiera/programa-capacitacion-financiera/{idPCF}/capacitacion/{idCapacitacionFinanciera}/editar", name="capacitacionFinancieraEditar")
      */
-    public function capacitacionFinancieraEditarAction(Request $request, $idCapacitacionFinanciera)
+    public function capacitacionFinancieraEditarAction(Request $request, $idPCF, $idCapacitacionFinanciera)
     {
         $em = $this->getDoctrine()->getManager();
         $capacitacionFinanciera = new CapacitacionFinanciera();
@@ -155,14 +155,15 @@ class CapacitacionFinancieraController extends Controller
                     'form' => $form->createView(),
                     'idCapacitacionFinanciera' => $idCapacitacionFinanciera,
                     'capacitacionFinanciera' => $capacitacionFinanciera,
+                    'idPCF' => $idPCF
             )
         );
 
     }
 /**
-     * @Route("/gestion-financiera/cprograma-capacitacion-financiera/apacitacion/{idCapacitacionFinanciera}/eliminar", name="capacitacionFinancieraEliminar")
+     * @Route("/gestion-financiera/programa-capacitacion-financiera/{idPCF}/capacitacion/{idCapacitacionFinanciera}/eliminar", name="capacitacionFinancieraEliminar")
      */
-    public function capacitacionFinancieraEliminarAction(Request $request, $idCapacitacionFinanciera)
+    public function capacitacionFinancieraEliminarAction(Request $request, $idPCF, $idCapacitacionFinanciera)
     {
         $em = $this->getDoctrine()->getManager();
         $capacitacionFinanciera = new CapacitacionFinanciera();
@@ -172,7 +173,7 @@ class CapacitacionFinancieraController extends Controller
         $em->remove($capacitacionFinanciera);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('capacitacionFinancieraGestion'));
+        return $this->redirect($this->generateUrl('capacitacionFinancieraGestion', array('idPCF' => $idPCF)));
 
     }
 
@@ -465,9 +466,18 @@ class CapacitacionFinancieraController extends Controller
         $beneficiario = $em->getRepository('AppBundle:Beneficiario')->findOneBy(
             array('id' => $idBeneficiario));
 
-        $query = $em->createQuery('SELECT p FROM AppBundle:Participante p WHERE p.id NOT IN (SELECT participante.id FROM AppBundle:Participante participante JOIN AppBundle:AsignacionBeneficiarioProgramaCapacitacionFinanciera apc WHERE participante = apc.participante AND apc.programaCapacitacionFinanciera = :programaCapacitacionFinanciera) AND p.active = 1');
-        $query->setParameter(':programaCapacitacionFinanciera', $capacitacionFinanciera);
-        $participantes = $query->getResult();
+        if($asignacionesBeneficiariosPCF == null){
+            
+
+            $query = $em->createQuery('SELECT p FROM AppBundle:Participante p WHERE p.id NOT IN (SELECT participante.id FROM AppBundle:Participante participante JOIN AppBundle:AsignacionBeneficiarioProgramaCapacitacionFinanciera apc WHERE participante = apc.participante AND apc.programaCapacitacionFinanciera = :programaCapacitacionFinanciera) AND p.active = 1');
+            $query->setParameter(':programaCapacitacionFinanciera', $capacitacionFinanciera);
+            $participantes = $query->getResult();
+        }else{
+            $participantes = array();
+            $query = array();
+        }
+
+        
 
         $filterBuilder = $this->get('doctrine.orm.entity_manager')
             ->getRepository('AppBundle:Beneficiario')

@@ -104,17 +104,17 @@
       
     </br>
 
-  <div class="row">       
+  <div class="row" ng-controller="EdadParticipanteEditarCtrl" ng-init="cargarFechaCreacion({{participante.fechaCreacion |  date('Y')}}, {{participante.fechaCreacion |  date('m')}}, {{participante.fechaCreacion |  date('d')}}, {{participante.edadInscripcion}})">       
                 <div class="col-md-4">
                   {{ form_label(form.genero) }}
           {{ form_errors(form.genero) }}
                   {{ form_widget(form.genero, { 'attr': {'class': 'form-control'} }) }}
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" ng-init="cargarFechaNacimiento({{participante.fechaNacimiento |  date('Y')}}, {{participante.fechaNacimiento |  date('m')}}, {{participante.fechaNacimiento |  date('d')}})">
                   {{ form_label(form.fecha_nacimiento) }}
-          {{ form_errors(form.fecha_nacimiento) }}
-                  {{ form_widget(form.fecha_nacimiento, { 'attr': {'class': 'form-control'} }) }}
-                </div>  
+          {{ form_errors(form.fecha_nacimiento) }}                  
+                  {{ form_widget(form.fecha_nacimiento, { 'attr': {'class': 'form-control fecha_nacimiento', 'placeholder': 'Fecha de nacimiento', 'ng-model' : 'fechaNacimientoEditar', 'ng-change':'calcularEdadEditar()'} }) }}
+                </div>
                 <div class="col-md-4">
                   {{ form_label(form.edad_inscripcion) }}
           {{ form_errors(form.edad_inscripcion) }}
@@ -124,7 +124,7 @@
   
   </br>
   
-  <div class="row">
+  <div class="row" ng-controller="CampoDesplazadoParticipanteCtrl">
         
                 <div class="col-md-4">
                   {{ form_label(form.pertenencia_etnica) }}
@@ -166,7 +166,7 @@
   
   </br>
   
-  <div class="row">       
+  <div class="row" ng-controller="informacionParticipanteCtrl">       
                 <div class="col-md-4">
                   {{ form_label(form.hijos_menores_5) }}
           {{ form_errors(form.hijos_menores_5) }}
