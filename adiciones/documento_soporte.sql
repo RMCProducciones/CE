@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.7.1
+-- version 4.5.1
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-07-2016 a las 15:51:53
--- Versión del servidor: 5.6.20
--- Versión de PHP: 5.5.15
+-- Tiempo de generación: 18-08-2016 a las 09:46:37
+-- Versión del servidor: 10.1.9-MariaDB
+-- Versión de PHP: 5.6.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de datos: `ce`
@@ -26,8 +26,8 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `documento_soporte`
 --
 
-CREATE TABLE IF NOT EXISTS `documento_soporte` (
-`id` int(11) NOT NULL,
+CREATE TABLE `documento_soporte` (
+  `id` int(11) NOT NULL,
   `usuario_modificacion_id` int(11) DEFAULT NULL,
   `usuario_creacion_id` int(11) DEFAULT NULL,
   `dominio` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `documento_soporte` (
   `active` tinyint(1) NOT NULL,
   `fecha_modificacion` datetime DEFAULT NULL,
   `fecha_creacion` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=38 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `documento_soporte`
@@ -79,7 +79,18 @@ INSERT INTO `documento_soporte` (`id`, `usuario_modificacion_id`, `usuario_creac
 (34, NULL, NULL, 'seguimiento_grupo_tipo_soporte', 'Póliza de cumplimiento', 'PC', '0', 0, 1, '2016-05-31 00:00:00', '0000-00-00 00:00:00'),
 (35, NULL, NULL, 'visita_tipo_soporte', 'Evidencia de imágenes de la visita', 'EIV', '0', 0, 1, '2016-06-13 00:00:00', '0000-00-00 00:00:00'),
 (36, NULL, NULL, 'visita_tipo_soporte', 'Documento de aprobación de interventoria', 'DAI', '0', 0, 1, '2016-06-13 00:00:00', '0000-00-00 00:00:00'),
-(37, NULL, NULL, 'visita_tipo_soporte', 'Documento de rechazo de interventoria', 'DRI', '0', 0, 1, '2016-06-13 00:00:00', '0000-00-00 00:00:00');
+(37, NULL, NULL, 'visita_tipo_soporte', 'Documento de rechazo de interventoria', 'DRI', '0', 0, 1, '2016-06-13 00:00:00', '0000-00-00 00:00:00'),
+(38, NULL, NULL, 'poa_tipo_soporte', 'Documento soporte poa', '', '1', 1, 1, NULL, '2016-08-17 15:01:58'),
+(39, NULL, NULL, 'convocatoria_tipo_soporte', 'Documento Soporte Convocatoria', '', '1', 1, 1, NULL, '2016-08-17 15:06:43'),
+(40, NULL, NULL, 'ahorro_tipo_soporte', 'Documento Soporte Ahorro', '', '1', 1, 1, NULL, '2016-08-17 15:10:17'),
+(41, NULL, NULL, 'poliza_tipo_soporte', 'Documento Soporte Poliza', '', '1', 1, 1, NULL, '2016-08-17 15:13:09'),
+(42, NULL, NULL, 'programaCapacitacionFinanciera_tipo_soporte', 'Documento Soporte Programa Capacitacion Financiera', '', '1', 1, 1, NULL, '2016-08-17 15:17:15'),
+(43, NULL, NULL, 'capacitacion_financiera_tipo_soporte', 'Documento Soporte Capacitación Financiera', '', '1', 1, 1, NULL, '2016-08-17 15:40:22'),
+(44, NULL, NULL, 'experiencia_tipo_soporte', 'Experiencia Exitosa Documento Soporte', '', '1', 1, 1, NULL, '2016-08-17 15:43:24'),
+(45, NULL, NULL, 'talento_tipo_soporte', 'Documento Soporte Talento', '', '1', 1, 1, NULL, '2016-08-17 15:45:18'),
+(46, NULL, NULL, 'beca_tipo_soporte', 'Documento Soporte Beca', '', '1', 1, 1, NULL, '2016-08-17 15:46:28'),
+(47, NULL, NULL, 'capacitacion_tipo_soporte', 'Documento Soporte Capacitacion', '', '1', 1, 1, NULL, '2016-08-17 15:50:10'),
+(48, NULL, NULL, 'evento_tipo_soporte', 'Documento Soporte Eventos', '', '1', 1, 1, NULL, '2016-08-17 15:51:17');
 
 --
 -- Índices para tablas volcadas
@@ -89,7 +100,9 @@ INSERT INTO `documento_soporte` (`id`, `usuario_modificacion_id`, `usuario_creac
 -- Indices de la tabla `documento_soporte`
 --
 ALTER TABLE `documento_soporte`
- ADD PRIMARY KEY (`id`), ADD KEY `IDX_D79FEA30DADD026` (`usuario_modificacion_id`), ADD KEY `IDX_D79FEA30AEADF654` (`usuario_creacion_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `IDX_D79FEA30DADD026` (`usuario_modificacion_id`),
+  ADD KEY `IDX_D79FEA30AEADF654` (`usuario_creacion_id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -99,7 +112,7 @@ ALTER TABLE `documento_soporte`
 -- AUTO_INCREMENT de la tabla `documento_soporte`
 --
 ALTER TABLE `documento_soporte`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 --
 -- Restricciones para tablas volcadas
 --
@@ -108,8 +121,8 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=38;
 -- Filtros para la tabla `documento_soporte`
 --
 ALTER TABLE `documento_soporte`
-ADD CONSTRAINT `FK_D79FEA30AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
-ADD CONSTRAINT `FK_D79FEA30DADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`);
+  ADD CONSTRAINT `FK_D79FEA30AEADF654` FOREIGN KEY (`usuario_creacion_id`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `FK_D79FEA30DADD026` FOREIGN KEY (`usuario_modificacion_id`) REFERENCES `usuario` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

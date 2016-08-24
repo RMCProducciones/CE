@@ -8,7 +8,7 @@
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Empresarial</li>
       <li>Formacion de capital social asociativo y desarrollo empresarial</li>
-      <li><a href="{{ path('feriaGestion') }}">Feria</a></li>
+      <li><a href="{{ path('feriaGestion') }}">Gestión Feria</a></li>
       <li class="active">Aprobación Feria</li>
     </ul>
 
@@ -16,10 +16,11 @@
 
 
 {% block section %}
-
-     
-  	<br>
-    
+    <div class="container">
+    <h1> Gestión Feria</h1>
+    <hr>
+    <h3> Editar Registro</h3>   
+  </div>    
 
     
   {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}

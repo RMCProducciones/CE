@@ -232,7 +232,7 @@ class ConvocatoriaController extends Controller
                 $tipoSoporte = $em->getRepository('AppBundle:DocumentoSoporte')->findOneBy(
                     array(
                         'descripcion' => $convocatoriaSoporte->getTipoSoporte()->getDescripcion(), 
-                        'dominio' => 'talento_tipo_soporte'
+                        'dominio' => 'convocatoria_tipo_soporte'
                     )
                 );
                 

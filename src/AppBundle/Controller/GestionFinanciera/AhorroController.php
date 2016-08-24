@@ -253,7 +253,6 @@ class AhorroController extends Controller
                 $ahorroSoporte->setAhorro($ahorro);
                 $ahorroSoporte->setActive(true);
                 $ahorroSoporte->setFechaCreacion(new \DateTime());
-                $ahorroSoporte->setUsuarioCreacion($usuario);
 
                 $em->persist($ahorroSoporte);
                 $em->flush();
