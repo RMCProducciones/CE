@@ -32,7 +32,7 @@ class GrupoType extends AbstractType
 			->add('nombre')
 			->add('direccion','text', array('label' => 'Dirección'))
 			
-			 ->add('descripcion', 'textarea', array('required' => false))
+			 ->add('descripcion', 'textarea', array('required' => false, 'label' => 'Descripción'))
 		
 			 ->add('numero_identificacion_tributaria', 'text', array('label' => 'Numero identificación tributaria','required' => false))
 			 ->add('fecha_constitucion_legal', 'date', array('label' => 'Fecha de constitución legal del grupo', 'widget' => 'single_text','required' => false))
