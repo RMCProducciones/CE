@@ -168,4 +168,21 @@ class ParticipanteController extends Controller
         );
 
     }
+
+    /**
+     * @Route("/gestion-financiera/participante/{idParticipante}/eliminar", name="participanteEliminar")
+     */
+    public function participanteEliminarAction(Request $request, $idParticipante)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $participante = new Participante();
+
+        $participante = $em->getRepository('AppBundle:Participante')->find($idParticipante);              
+
+        $em->remove($participante);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('participanteGestion'));
+
+    }
 }

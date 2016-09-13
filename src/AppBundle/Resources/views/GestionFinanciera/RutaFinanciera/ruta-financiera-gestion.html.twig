@@ -31,8 +31,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="btn-group">
-              <a href="{{ path('programaCapacitacionFinancieraGestion') }}" class="btn btn-warning">Volver</a>
-              <a href="{{ path('capacitacionFinancieraNuevo', {'idPCF' : idPCF}) }}" class="btn btn-success">Nuevo</a>
+              <a href="{{ path('programaCapacitacionFinancieraGestion') }}" class="btn btn-warning">Volver</a>              
             </div>
           </div>
         </div>
@@ -53,9 +52,9 @@
               <thead>
                 	<tr >
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
-	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Modulo', 'a.modulo') }}</th>
-	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Estado', 'a.estado') }}</th>
-	                 
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Departamento', 'a.departamento') }}</th>
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Municipio', 'a.municipio') }}</th>
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Vinculado a otro Municipio', 'a.vinculadoAOtroMunicipio') }}</th>
                     <th class="text-center">{{ knp_pagination_sortable(pagination, 'Acciones', 'a.acciones') }}</th>
 	                </tr>
 	           </thead>
@@ -69,22 +68,14 @@
                   <tr id="filaCapacitacionFinanciera{{ consecutivo }}">
 
                     <td class="text-center">{{article.id }}</td>               
-                    <td class="text-center">{{article.modulo }}</td>
-                    <td class="text-center">{{article.estado}}</td>      
-                    
+                    <td class="text-center">{{article.departamento }}</td>
+                    <td class="text-center">{{article.nombre}}</td>      
+                    <td class="text-center"></td>      
 	                  <td class="text-center">
 
-                     <a href="{{ path('beneficiarioCapacitacionFinancieraGestion', {'idPCF': idPCF, 'idCapacitacion': article.id}) }}" alt="Integrantes CLEAR" title="Integrantes CLEAR"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a> | 
+                     <a href="{{ path('rutaPCFBeneficiariosGestion', {'idPCF': idPCF, 'idMunicipio': article.id}) }}" alt="Beneficiarios" title="Beneficiarios"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a> | 
 
 	                   <a href="{{ path('capacitacionFinancieraSoporte', {'idCapacitacionFinanciera': article.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> 
-
-                     | 
-
-                     <a title="Editar" alt="Editar" href="{{ path('capacitacionFinancieraEditar', {'idCapacitacionFinanciera': article.id, 'idPCF': idPCF}) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> 
-
-                     |  
-                    
-                     <a class="ng-binding ng-isolate-scope" href="" mwl-confirm="" alt="Anular" title="Anular registro" message="¿Está seguro de anular este registro?" confirm-text="Si &lt;i class='glyphicon glyphicon-ok'&gt;&lt;/i&gt;" cancel-text="No &lt;i class='glyphicon glyphicon-remove'&gt;&lt;/i&gt;" on-confirm="eliminarCapacitacionFinanciera({{article.id}}, {{idPCF}}, {{consecutivo}});" on-cancel="" confirm-button-type="danger" cancel-button-type="default" handle-focus="true" ng-click="idCapacitacionFinanciera = {{article.id}};"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                      
                     </td>
 
@@ -113,31 +104,5 @@
       </div>
     </div>  
 
-	{% for capacitacionFinanciera in capacitacionFinancieras %}
-    <!-- Modal -->
-    <div class="modal fade" id="myModal{{ capacitacionFinanciera.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-            <h4 class="modal-title" id="myModalLabel">{{ capacitacionFinanciera.id }} </h4>
-          </div>
-          <div class="modal-body">
-            <br>
-            <b>Lugar: {{ capacitacionFinanciera.modulo }}</b>
-            <br>
-            <b>Estado: {{ capacitacionFinanciera.estado }}</b>
-                        
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    {% endfor %}           
 {% endblock %}
 

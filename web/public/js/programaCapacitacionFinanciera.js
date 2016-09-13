@@ -14,11 +14,6 @@ app.controller('gestionDocumentoSoporteProgramaCapacitacionFinancieraCtrl', ['$s
 }]);
 
 
-
-
-
-
-
 app.controller('gestionProgramaCapacitacionFinancieraCtrl', ['$scope', '$http', function($scope, $http) {
 
 	$scope.idProgramaCapacitacionFinanciera = 0;	
@@ -30,7 +25,7 @@ app.controller('gestionProgramaCapacitacionFinancieraCtrl', ['$scope', '$http', 
 		$scope.idProgramaCapacitacionFinanciera = idProgramaCapacitacionFinanciera;
 		$scope.consecutivoProgramaCapacitacionFinanciera = consecutivo;
 
-		$http.get($scope.rutaServidor + "gestion-financiera/capacitacion-financiera/" + $scope.idProgramaCapacitacionFinanciera + "/eliminar")
+		$http.get($scope.rutaServidor + "gestion-financiera/programa-capacitacion-financiera/" + $scope.idProgramaCapacitacionFinanciera + "/eliminar")
 		.success(function(data, status, headers, config) {
 
   			$("#filaProgramaCapacitacionFinanciera" + $scope.consecutivoProgramaCapacitacionFinanciera).fadeOut("slow");
@@ -100,3 +95,4 @@ app.controller('gestionParticipantePCFCtrl', ['$scope', '$http', function($scope
 
 	};	
 }]);
+
