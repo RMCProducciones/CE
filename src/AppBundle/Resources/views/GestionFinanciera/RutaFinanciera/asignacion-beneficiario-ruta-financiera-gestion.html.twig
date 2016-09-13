@@ -9,7 +9,7 @@
       <li><a href="{{ path('homepage') }}">Inicio</a></li>
       <li>Gestión Financiera</li>
       <li>Capacitacion financiera</li>
-      <li class="active">Asignacion Beneficiarios - Capacitación Financiera</li>
+      <li class="active">Asignacion Beneficiarios - Ruta Financiera</li>
       
     </ul>
 
@@ -66,7 +66,7 @@
 
         <div ng-show="CountBuscarHerramientas === 1">
 
-        <form method="get" action="{{ path('beneficiarioCapacitacionFinancieraGestion', {'idPCF': idPCF, 'idCapacitacion': idCapacitacion}) }}">               
+        <form method="get" action="{{ path('rutaPCFBeneficiariosGestion', {'idPCF': idPCF, 'idMunicipio': idMunicipio}) }}">               
                   
         {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
 
@@ -169,9 +169,9 @@
                   <td class="text-center">
                     <a href="#" alt="Detalle" title="Detalle" data-toggle="modal" data-target="#myModal{{ beneficiario.id }}"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>                    
                     <br>                    
-                    <a href="{{ path('beneficiarioCapacitacionFinancieraAsignar', {'idPCF': idPCF, 'idCapacitacion' : idCapacitacion, 'idBeneficiario': beneficiario.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>                    
+                                        
                     <br>
-                    <a href="{{ path('participanteCapacitacionFinancieraGestion', {'idPCF': idPCF, 'idCapacitacion' : idCapacitacion, 'idBeneficiario': beneficiario.id}) }}" title="Asignar" alt="Asignar"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>                    
+                                       
                     <br>                      
                   </td>
                 </tr>
@@ -273,7 +273,8 @@
       </div>
     </div>
 
-  {% for beneficiario in pagination1 %}
+
+{% for beneficiario in pagination1 %}
     <!-- Modal -->
     <div class="modal fade" id="myModal{{  beneficiario.id  }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
       <div class="modal-dialog modal-lg" role="document">
