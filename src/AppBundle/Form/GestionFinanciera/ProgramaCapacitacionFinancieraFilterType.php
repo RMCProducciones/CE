@@ -12,7 +12,7 @@ class ProgramaCapacitacionFinancieraFilterType extends AbstractType
     {
         $builder
 		
-			 ->add('talento_financiero', 'filter_text')							
+			 						
 			  ->add('lugar', 'filter_text')	
 			 ->add('estado', 'filter_entity', array('label' => 'Estado', 
 											'class' => 'AppBundle:Listas',

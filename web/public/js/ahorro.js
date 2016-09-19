@@ -74,6 +74,65 @@ app.controller('FiltrosAhorroCtrl', ['$scope', '$http', 'styleBuscarHerramientas
 		$("#ahorroFilter_fecha_registro").val("");
 		$("#ahorroFilter_fecha_inicio").val("");
 		$("#ahorroFilter_estado").val("");
+	}
+
+		
+       
+    }]);
+
+app.controller('FiltrosBeneficiarioAhorroCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasBeneficiarioAhorro = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaBeneficiarioAhorro = function(){
+       
+		$("#beneficiarioAhorroFilter_primer_apellido").val("");
+		$("#beneficiarioAhorroFilter_primer_nombre").val("");
+
+	}
+		
+
+		
+       
+   }]);
+
+app.controller('FiltrosBeneficiarioAhorroCorteCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
+
+	$scope.CountBuscarHerramientas = -1;
+	$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+	
+	$scope.buttonBuscarHerramientasBeneficiarioAhorroCorte = function(CountBuscarHerramientas){
+		$scope.CountBuscarHerramientas = CountBuscarHerramientas * (-1);
+		if($scope.CountBuscarHerramientas== -1)
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropdown;
+		}
+		else
+		{
+			$scope.styleBuscarHerramientas = styleBuscarHerramientas.dropup;
+		}
+		
+    }	
+	
+    $scope.limpiarCamposFiltroBusquedaBeneficiarioAhorroCorte = function(){
+       
+		$("#beneficiarioAhorroCorteFilter_fecha_realizacion").val("");
+		
+		
 
 		
        

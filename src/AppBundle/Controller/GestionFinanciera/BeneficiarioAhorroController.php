@@ -25,7 +25,8 @@ use AppBundle\Form\GestionEmpresarial\BeneficiarioSoporteType;
 use AppBundle\Form\GestionFinanciera\AsignacionBeneficiarioAhorroType;
 use AppBundle\Form\GestionFinanciera\BeneficiarioAhorroCorteType;
 
-use AppBundle\Form\GestionEmpresarial\BeneficiarioFilterType;
+use AppBundle\Form\GestionFinanciera\BeneficiarioAhorroFilterType;
+use AppBundle\Form\GestionFinanciera\BeneficiarioAhorroCorteFilterType;
 
 use AppBundle\Utilities\Acceso;
 use AppBundle\Utilities\FilterLocation;
@@ -53,7 +54,7 @@ class BeneficiarioAhorroController extends Controller
             ->getRepository('AppBundle:Beneficiario')
             ->createQueryBuilder('q');
                   
-        $form = $this->get('form.factory')->create(new BeneficiarioFilterType());
+        $form = $this->get('form.factory')->create(new BeneficiarioAhorroFilterType());
 
         if ($request->query->has($form->getName())) {
             
@@ -186,7 +187,7 @@ class BeneficiarioAhorroController extends Controller
             ->getRepository('AppBundle:BeneficiarioAhorroCorte')
             ->createQueryBuilder('q');
                   
-        $form = $this->get('form.factory')->create(new BeneficiarioFilterType());
+        $form = $this->get('form.factory')->create(new BeneficiarioAhorroCorteFilterType());
 
         if ($request->query->has($form->getName())) {
             
