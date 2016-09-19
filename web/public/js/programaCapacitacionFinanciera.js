@@ -96,3 +96,11 @@ app.controller('gestionParticipantePCFCtrl', ['$scope', '$http', function($scope
 	};	
 }]);
 
+app.controller('gestionBeneficiarioRutaCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.eliminarBeneficiarioRuta = function(ruta){		
+		window.location.replace(ruta);
+
+	};	
+}]);
+

@@ -416,7 +416,7 @@ class ProgramaCapacitacionFinancieraController extends Controller
     /**
      * @Route("/gestion-financiera/programa-capacitacion-financiera/{idPCF}/ruta-financiera-municipio/{idMunicipio}/asignacion-beneficiarios", name="rutaPCFBeneficiariosGestion")
      */
-    public function beneficiarioCapacitacionFinancieraAction(Request $request, $idPCF, $idMunicipio)
+    public function rutaBeneficiarioCapacitacionFinancieraAction(Request $request, $idPCF, $idMunicipio)
     {
         
         new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
@@ -496,9 +496,9 @@ class ProgramaCapacitacionFinancieraController extends Controller
     }
 
     /**
-     * @Route("/gestion-financiera/programa-capacitacion-financiera/{idPCF}/capacitacion/{idCapacitacion}/asignacion-beneficiario/{idBeneficiario}/asignar", name="beneficiarioCapacitacionFinancieraAsignar")
+     * @Route("/gestion-financiera/programa-capacitacion-financiera/{idPCF}/ruta-financiera-municipio/{idMunicipio}/asignacion-beneficiarios/{idBeneficiario}/asignar", name="rutaPCFBeneficiariosAsignarGestion")
      */
-    public function beneficiarioCapacitacionFinancieraAsignarAction(Request $request, $idPCF, $idCapacitacion, $idBeneficiario)
+    public function rutaBeneficiarioCapacitacionFinancieraAsignarAction(Request $request, $idPCF, $idMunicipio, $idBeneficiario)
     {
 
         new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
@@ -514,49 +514,53 @@ class ProgramaCapacitacionFinancieraController extends Controller
             array('id' => $idBeneficiario)
         );      
 
-        $capacitacionFinanciera = $em->getRepository('AppBundle:CapacitacionFinanciera')->findOneBy(
-            array('id' => $idCapacitacion)
+        $programaCapacitacionFinanciera = $em->getRepository('AppBundle:ProgramaCapacitacionFinanciera')->findOneBy(
+            array('id' => $idPCF)
         );
 
-        $asignacionesBeneficiariosPCF = new AsignacionBeneficiarioProgramaCapacitacionFinanciera();      
+        $municipio = $em->getRepository('AppBundle:Municipio')->findOneBy(
+            array('id' => $idMunicipio));
 
-        $asignacionesBeneficiariosPCF->setProgramaCapacitacionFinanciera($capacitacionFinanciera);        
-        $asignacionesBeneficiariosPCF->setBeneficiario($beneficiario);
-        $asignacionesBeneficiariosPCF->setActive(true);
-        $asignacionesBeneficiariosPCF->setFechaCreacion(new \DateTime());
-        $asignacionesBeneficiariosPCF->setUsuarioCreacion($usuario);
+        $asignacionesBeneficiariosRutaPCF = new AsignacionBeneficiarioRutaFinanciera();      
 
-        $em->persist($asignacionesBeneficiariosPCF);
+        $asignacionesBeneficiariosRutaPCF->setProgramaCapacitacionFinanciera($programaCapacitacionFinanciera);        
+        $asignacionesBeneficiariosRutaPCF->setBeneficiario($beneficiario);
+        $asignacionesBeneficiariosRutaPCF->setMunicipio($municipio);
+        $asignacionesBeneficiariosRutaPCF->setActive(true);
+        $asignacionesBeneficiariosRutaPCF->setFechaCreacion(new \DateTime());
+        $asignacionesBeneficiariosRutaPCF->setUsuarioCreacion($usuario);
+
+        $em->persist($asignacionesBeneficiariosRutaPCF);
         $em->flush();
 
         $this->addFlash('success', 'Beneficiario asignado');            
 
-        return $this->redirectToRoute('beneficiarioCapacitacionFinancieraGestion', 
+        return $this->redirectToRoute('rutaPCFBeneficiariosGestion', 
             array(
                 'idPCF' => $idPCF,          
-                'asignacionesBeneficiariosPCF' => $asignacionesBeneficiariosPCF,                
-                'idCapacitacion' => $idCapacitacion
+                'asignacionesBeneficiariosPCF' => $asignacionesBeneficiariosRutaPCF,                
+                'idMunicipio' => $idMunicipio
             ));        
         
     }
 
     /**
-     * @Route("/gestion-financiera/programa-capacitacion-financiera/{idPCF}/capacitacion/{idCapacitacion}/asignacion-beneficiario/{idBeneficiarioPCF}/eliminar", name="beneficiarioCapacitacionFinancieraEliminar")
+     * @Route("/gestion-financiera/programa-capacitacion-financiera/{idPCF}/ruta-financiera-municipio/{idMunicipio}/asignacion-beneficiarios/{idBeneficiarioRuta}/eliminar", name="rutaPCFBeneficiariosEliminarGestion")
      */
-    public function beneficiarioCapacitacionFinancieraEliminarAction(Request $request, $idPCF, $idCapacitacion, $idBeneficiarioPCF)
+    public function rutaBeneficiarioCapacitacionFinancieraEliminarAction(Request $request, $idPCF, $idMunicipio, $idBeneficiarioRuta)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $asignacionesBeneficiariosPCF = $em->getRepository('AppBundle:AsignacionBeneficiarioProgramaCapacitacionFinanciera')->find($idBeneficiarioPCF); 
+        $asignacionesBeneficiariosRutaPCF = $em->getRepository('AppBundle:AsignacionBeneficiarioRutaFinanciera')->find($idBeneficiarioRuta); 
 
-        $em->remove($asignacionesBeneficiariosPCF);
+        $em->remove($asignacionesBeneficiariosRutaPCF);
         $em->flush();
 
-        return $this->redirectToRoute('beneficiarioCapacitacionFinancieraGestion',
+        return $this->redirectToRoute('rutaPCFBeneficiariosGestion',
             array(
                 'idPCF' => $idPCF,
-                'asignacionesBeneficiariosPCF' => $asignacionesBeneficiariosPCF,
-                'idCapacitacion' => $idCapacitacion
+                'asignacionesBeneficiariosPCF' => $asignacionesBeneficiariosRutaPCF,
+                'idMunicipio' => $idMunicipio
             ));      
         
     }   
