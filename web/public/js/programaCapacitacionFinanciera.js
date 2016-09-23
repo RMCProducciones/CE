@@ -104,6 +104,7 @@ app.controller('gestionBeneficiarioRutaCtrl', ['$scope', '$http', function($scop
 	};	
 }]);
 
+
 app.controller('FiltrosRutaFinancieraCtrl', ['$scope', '$http', 'styleBuscarHerramientas', function($scope, $http, styleBuscarHerramientas) {
 
 	$scope.CountBuscarHerramientas = -1;
@@ -162,5 +163,14 @@ app.controller('FiltrosBeneficiarioPCFCtrl', ['$scope', '$http', 'styleBuscarHer
     }
       
 		
+}]);
+
+
+app.controller('gestionMunicipioRutaCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.eliminarMunicipioRuta = function(ruta){		
+		window.location.replace(ruta);
+
+	};	
 }]);
 

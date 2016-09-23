@@ -121,7 +121,7 @@
             <table class="table table-striped table-hover">
               <thead>
                 <tr>
-                    <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Id', 'a.id') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination1, '#', 'a.id') }}</th>
                     <th></th>
                     <th>{{ knp_pagination_sortable(pagination1, 'Opcionado', 'a.Opcionado') }}</th>
                     <th class="text-center">{{ knp_pagination_sortable(pagination1, 'Acciones', 'a.acciones') }}</th>
@@ -130,12 +130,14 @@
               <tbody>     
            
                 
-				 {% set consecutivo = 1 %}
+				 {% set pagina = pagination.getCurrentPageNumber %}
+                 
+          {% set consecutivo = 1 + ((pagina - 1) * 10) %}
 	    	
 	    		{% for integrante in pagination1 %}
 
           <tr>
-                  <td class="text-center">{{ integrante.id }}</td>
+                  <td class="text-center">{{ consecutivo }}</td>
                   <td>
 
                   </td>
