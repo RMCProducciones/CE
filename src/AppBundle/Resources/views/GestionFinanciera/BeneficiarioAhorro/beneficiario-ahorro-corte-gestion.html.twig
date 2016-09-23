@@ -27,7 +27,7 @@
   	<br>
 
 
-    <div class="section" ng-controller="FiltrosAhorroCtrl">
+    <div class="section" ng-controller="FiltrosBeneficiarioAhorroCorteCtrl">
       <div class="container">
         <div class="row" >
           
@@ -37,6 +37,7 @@
               <a href="{{ path('beneficiarioAhorroCorteNuevo', {'idAhorro': idAhorro, 'idGrupo': idGrupo, 'idBeneficiario': idBeneficiario}) }}" class="btn btn-success">Nuevo</a>              
             </div>
           </div>
+          <br />
 
           <div class="col-md-4">
           </div>
@@ -44,8 +45,8 @@
           <div class="col-md-2">
             <div class="btn-group [[styleBuscarHerramientas]]">              
                 
-                <button class="btn btn-info" ng-click="buttonBuscarHerramientasAhorro(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
-              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaAhorro();">Limpiar</button>                            
+                <button class="btn btn-info" ng-click="buttonBuscarHerramientasBeneficiarioAhorroCorte(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
+              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaBeneficiarioAhorroCorte();">Limpiar</button>                            
             </div>
           </div>
 
@@ -64,36 +65,15 @@
         <div class="row">                      
 
                   <div class="col-md-3">
+
+                    {{ form_label(form.fecha_realizacion) }}
+                    {{ form_errors(form.fecha_realizacion) }}
+                    {{ form_widget(form.fecha_realizacion, { 'attr': {'class': 'form-control', 'placeholder': 'Fecha realización'} }) }}
+
+                  </div>
+
                   
-                    {{ form_label(form.numero_documento) }}
-                    {{ form_errors(form.numero_documento) }}
-                    {{ form_widget(form.numero_documento, { 'attr': {'class': 'form-control', 'placeholder': 'Número de documento'} }) }}
 
-                  </div>
-
-                  <div class="col-md-3">
-
-                    {{ form_label(form.primer_apellido) }}
-                    {{ form_errors(form.primer_apellido) }}
-                    {{ form_widget(form.primer_apellido, { 'attr': {'class': 'form-control', 'placeholder': 'Primer apellido'} }) }}
-
-                  </div>
-
-                  <div class="col-md-3">
-
-                    {{ form_label(form.primer_nombre) }}
-                    {{ form_errors(form.primer_nombre) }}
-                    {{ form_widget(form.primer_nombre, { 'attr': {'class': 'form-control', 'placeholder': 'Primer nombre'} }) }}
-
-                  </div>
-
-                  <div class="col-md-3">
-
-                    {{ form_label(form.genero) }}
-                    {{ form_errors(form.genero) }}
-                    {{ form_widget(form.genero, { 'attr': {'class': 'form-control', 'placeholder': 'Género'} }) }}
-
-                  </div>
                 
         </div>
 

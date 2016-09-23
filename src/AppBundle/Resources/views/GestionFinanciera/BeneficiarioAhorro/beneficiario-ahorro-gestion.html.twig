@@ -31,7 +31,7 @@
  <br />
   <br />
 
-    <div class="section" ng-controller="FiltrosBeneficiarioCtrl">
+    <div class="section" ng-controller="FiltrosBeneficiarioAhorroCtrl">
       <div class="container">
         <div class="row" >
           
@@ -41,14 +41,16 @@
             </div>
           </div>
 
+          <br />
+
           <div class="col-md-4">
           </div>
 
           <div class="col-md-2">
             <div class="btn-group [[styleBuscarHerramientas]]">              
                 
-                <button class="btn btn-info" ng-click="buttonBuscarHerramientasBeneficiario(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
-              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaBeneficiario();">Limpiar</button>                            
+                <button class="btn btn-info" ng-click="buttonBuscarHerramientasBeneficiarioAhorro(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
+              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaBeneficiarioAhorro();">Limpiar</button>                            
             </div>
           </div>
 
@@ -59,7 +61,7 @@
 
       <div class="container well" ng-show="CountBuscarHerramientas === 1">
 
-        <form method="get" action="{{ path('beneficiarioGestion', {'idGrupo': idGrupo}) }}">               
+        <form method="get" action="{{ path('beneficiarioAhorroGestion', {'idGrupo': idGrupo,'idAhorro': idAhorro}) }}">               
                   
         {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
 
@@ -67,15 +69,7 @@
 
         <div class="row">          
 
-            
-
-                  <div class="col-md-3">
-                  
-                    {{ form_label(form.numero_documento) }}
-                    {{ form_errors(form.numero_documento) }}
-                    {{ form_widget(form.numero_documento, { 'attr': {'class': 'form-control', 'placeholder': 'Número de documento'} }) }}
-
-                  </div>
+                             
 
                   <div class="col-md-3">
 
@@ -92,14 +86,7 @@
                     {{ form_widget(form.primer_nombre, { 'attr': {'class': 'form-control', 'placeholder': 'Primer nombre'} }) }}
 
                   </div>
-
-                  <div class="col-md-3">
-
-                    {{ form_label(form.genero) }}
-                    {{ form_errors(form.genero) }}
-                    {{ form_widget(form.genero, { 'attr': {'class': 'form-control', 'placeholder': 'Género'} }) }}
-
-                  </div>
+                  
 
         </div>
 
@@ -127,7 +114,7 @@
     <br>
     <div class="container">
     <div class="alert alert-[[estadoMensaje]] alert-dismissible" id="MensajeCtrl" ng-show="mostrarMensaje === true" role="alert">[[textoMensaje]]<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
-    </div>
+  </div>
     <div class="section">
       <div class="container">        
         <div class="row">

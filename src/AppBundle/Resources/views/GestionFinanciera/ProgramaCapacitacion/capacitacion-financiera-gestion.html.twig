@@ -66,20 +66,13 @@
 
         <div class="row" >
           
-          <div class="col-md-3">
-            <label>Municipio</label>
-             <select ng-model="selMunicipio" class="form-control" id="selMunicipio" name="selMunicipio" ng-options="municipio.nombre for municipio in JSONMunicipio track by municipio.id"></select>           
-          </div>       
+         
           <div class="col-md-3">
             {{ form_label(form.lugar) }}
             {{ form_errors(form.lugar) }}
             {{ form_widget(form.lugar, { 'attr': {'class': 'form-control', 'placeholder': 'Lugar'} }) }}
           </div>
-          <div class="col-md-3">
-            {{ form_label(form.talento_financiero) }}
-            {{ form_errors(form.talento_financiero) }}
-            {{ form_widget(form.talento_financiero, { 'attr': {'class': 'form-control', 'placeholder': 'Talento Financiero'} }) }}
-          </div>
+          
           <div class="col-md-3">
             {{ form_label(form.estado) }}
             {{ form_errors(form.estado) }}
