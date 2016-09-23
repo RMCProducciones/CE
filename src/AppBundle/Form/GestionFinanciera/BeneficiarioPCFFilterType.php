@@ -31,7 +31,7 @@ class BeneficiarioPCFFilterType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'beneficiarioFilter';
+        return 'beneficiarioPCFFilter';
     }
 
      public function getName()

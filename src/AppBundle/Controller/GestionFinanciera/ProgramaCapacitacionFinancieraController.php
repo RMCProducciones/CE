@@ -25,6 +25,7 @@ use AppBundle\Entity\Grupo;
 use AppBundle\Form\GestionFinanciera\ProgramaCapacitacionFinancieraType;
 use AppBundle\Form\GestionFinanciera\ProgramaCapacitacionFinancieraSoporteType;
 use AppBundle\Form\GestionFinanciera\ProgramaCapacitacionFinancieraFilterType;
+use AppBundle\Form\GestionFinanciera\RutaProgramaCapacitacionFinancieraFilterType;
 use AppBundle\Form\GestionFinanciera\BeneficiarioPCFFilterType;
 
 
@@ -366,7 +367,7 @@ class ProgramaCapacitacionFinancieraController extends Controller
             ->innerJoin("q.departamento", "d")
             ->innerJoin("q.zona", "z");
 
-        $form = $this->get('form.factory')->create(new ProgramaCapacitacionFinancieraFilterType());
+        $form = $this->get('form.factory')->create(new RutaProgramaCapacitacionFinancieraFilterType());
 
     
         if ($request->query->has($form->getName())) {
@@ -414,6 +415,7 @@ class ProgramaCapacitacionFinancieraController extends Controller
                     'pagination' => $pagination,
                     'idPCF' => $idPCF,
                     'asignacionMunicipioMunicipio' => $asignacionMunicipioMunicipio
+
                 )
             );
     }
@@ -464,11 +466,11 @@ class ProgramaCapacitacionFinancieraController extends Controller
             $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
         }
 
-        /*$filterBuilder->andwhere('q.programaCapacitacionFinanciera = :idProgramaCapacitacionFinanciera')
-        ->setParameter('idProgramaCapacitacionFinanciera', $idGrupo)
+        /*$filterBuilder->andwhere('q.programaCapacitacionFinanciera = :idPCF')
+        ->setParameter('idPCF', $idPCF)
         ->andWhere('q.active = 1')
-        ->andWhere('q.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioComiteVamosBien abc WHERE beneficiario = abc.beneficiario AND abc.grupo = :grupo)')
-        ->setParameter(':grupo', $grupo);
+        ->andWhere('q.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioRutaFinanciera abc WHERE beneficiario = abc.beneficiario AND abc.programaCapacitacionFinanciera = :programaCapacitacionFinanciera) ')
+        ->setParameter(':programaCapacitacionFinanciera', $programaCapacitacion);
 
         $query = $filterBuilder->getQuery();*/
 

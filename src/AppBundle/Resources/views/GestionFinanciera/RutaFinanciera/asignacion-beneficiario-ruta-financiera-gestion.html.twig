@@ -50,14 +50,14 @@
         <div class="row">
           <div class="col-md-5 well">            
             <br>
-            <div class="row well" ng-controller="FiltrosCCCtrl">
+            <div class="row well" ng-controller="FiltrosBeneficiarioPCFCtrl">
 
               <div class="row">
               <div class="col-md-12 text-right">
             <div class="btn-group [[styleBuscarHerramientas]]">              
                 
-                <button class="btn btn-info" ng-click="buttonBuscarHerramientasCC(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
-              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaCC();">Limpiar</button>                            
+                <button class="btn btn-info" ng-click="buttonBuscarHerramientasBeneficiarioPCF(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
+              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaBeneficiarioPCF();">Limpiar</button>                            
             </div>
           </div>
         </div>
@@ -96,13 +96,20 @@
         <br />
 
         <div class="row">
-                  <div class="col-md-3">
-                  </div> 
+                  
                   <div class="col-md-6">
 
                     {{ form_label(form.numero_documento) }}
                     {{ form_errors(form.numero_documento) }}
                     {{ form_widget(form.numero_documento, { 'attr': {'class': 'form-control', 'placeholder': 'Número de documento'} }) }}
+   
+                  </div>
+
+                  <div class="col-md-6">
+
+                    {{ form_label(form.genero) }}
+                    {{ form_errors(form.genero) }}
+                    {{ form_widget(form.genero, { 'attr': {'class': 'form-control', 'placeholder': 'Genero'} }) }}
    
                   </div>
 

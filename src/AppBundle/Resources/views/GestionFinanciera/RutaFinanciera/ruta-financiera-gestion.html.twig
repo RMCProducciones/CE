@@ -27,21 +27,77 @@
   	<br>
     <br>
 
-    <div class="section">
+     <div class="section" ng-controller="FiltrosRutaFinancieraCtrl">
       <div class="container">
-        <div class="row">
+        <div class="row" >
+          
           <div class="col-md-6">
             <div class="btn-group">
               <a href="{{ path('programaCapacitacionFinancieraGestion') }}" class="btn btn-warning">Volver</a>              
             </div>
           </div>
+
+
+          <div class="col-md-4">
+          </div>
+
+          <div class="col-md-2">
+            <div class="btn-group [[styleBuscarHerramientas]]">              
+                
+                <button class="btn btn-info" ng-click="buttonBuscarHerramientasRutaFinanciera(CountBuscarHerramientas)">Filtros <span class="caret"></span></button>  
+              <button class="btn btn-primary" ng-click="limpiarCamposFiltroBusquedaRutaFinanciera();">Limpiar</button>                            
+            </div>
+          </div>
+
         </div>
       </div>
-    </div>
 
+      <br />
+      
+
+      <div class="container well" ng-show="CountBuscarHerramientas === 1">
+        
+
+        <form method="get" action="{{ path('rutaProgramaCapacitacionFinancieraGestion', {'idPCF': idPCF}) }}">               
+                  
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal', 'role': 'form'} }) }}
+
+        {{ form_errors(form) }}
+
+        <div class="row">          
+
+                             
+
+                  
+                  
+
+        </div>
+
+        <br />        
+
+        <div class="row">    
+
+                  <div class="col-md-12 text-right">
+
+                  <button class="btn btn-default" style="color:white; background-color:#ccc;"  type="submit" name="submit-filter" value="filter"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+
+                  </div>                  
+        </div>
+
+        {{ form_end(form) }}
+
+        </form>
+
+      </div>
+
+    </div>
+    <br />               
+
+    
+    <br>
     <div class="container">
     <div class="alert alert-[[estadoMensaje]] alert-dismissible" id="MensajeCtrl" ng-show="mostrarMensaje === true" role="alert">[[textoMensaje]]<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
-    </div>
+   </div>
     
     <br>
   
@@ -103,11 +159,15 @@
 
 	                  <td class="text-center">
 
-                     <a href="{{ path('rutaPCFBeneficiariosGestion', {'idPCF': idPCF, 'idMunicipio': article.id}) }}" alt="Beneficiarios" title="Beneficiarios"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a> | 
+                     <a href="{{ path('rutaPCFBeneficiariosGestion', {'idPCF': idPCF, 'idMunicipio': article.id}) }}" alt="Beneficiarios" title="Beneficiarios"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a> 
+
+
+	                   <!--a href="{{ path('capacitacionFinancieraSoporte', {'idCapacitacionFinanciera': article.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a--> 
 
                      <a href="{{ path('municipioRutaFinancieraMunicipioGestion', {'idPCF': idPCF, 'idMunicipio': article.id}) }}" alt="Beneficiarios" title="Beneficiarios"><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span></a> | 
 
 	                   <a href="{{ path('capacitacionFinancieraSoporte', {'idCapacitacionFinanciera': article.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> 
+
                      
                     </td>
 
