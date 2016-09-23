@@ -64,7 +64,7 @@
           
           {% set pagina = pagination.getCurrentPageNumber %}
                  
-          {% set consecutivo = 1 + ((pagina - 1) * 10) %}
+          {% set consecutivo = 1 + ((pagina - 1) * 10) %}          
           	    	
 	    		{% for article in pagination %}
 	    		 
@@ -76,13 +76,31 @@
                     <td class="text-center">{{article.departamento }}</td>
                     <td class="text-center">{{article.nombre}}</td>      
                     {% for asignacionesMunicipioMunicipio in asignacionMunicipioMunicipio %}
-                      {% if asignacionesMunicipioMunicipio.municipioSeleccionado.id == article.id %}
-                        <td class="text-center">{{asignacionesMunicipioMunicipio.municipioAsignado.nombre}}</td>                      
-                      {% else %}
-                        <td class="text-center">No está asignado a ningún otro municipio</td>
+
+                      {% set municipio = "" %}
+
+                      {% if asignacionesMunicipioMunicipio.municipioSeleccionado.id == article.id %}                        
+
+                        {% set municipio = asignacionesMunicipioMunicipio.municipioAsignado.nombre %}
+
                       {% endif %}
+
+                      {% if municipio != NULL %}                        
+
+                        <td class="text-center">{{asignacionesMunicipioMunicipio.municipioAsignado.nombre}}</td>
+
+                      {% else %}
+
+                        <td class="text-center">No está asignado a ningún otro municipio</td>
+
+                      {% endif %}
+
+                      
+
                     {% endfor %}
-                          
+
+                    
+
 	                  <td class="text-center">
 
                      <a href="{{ path('rutaPCFBeneficiariosGestion', {'idPCF': idPCF, 'idMunicipio': article.id}) }}" alt="Beneficiarios" title="Beneficiarios"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a> | 

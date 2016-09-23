@@ -43,7 +43,8 @@ class AprobacionFeriaController extends Controller
         $aprobacion=$em->getRepository('AppBundle:Feria')->findBy(
             array('id'=> $idFeria)
         ); 
-         $paginator  = $this->get('knp_paginator');
+        
+        $paginator  = $this->get('knp_paginator');
 
         $pagination = $paginator->paginate(
             $aprobacion, /* fuente de los datos*/
