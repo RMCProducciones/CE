@@ -104,3 +104,10 @@ app.controller('gestionBeneficiarioRutaCtrl', ['$scope', '$http', function($scop
 	};	
 }]);
 
+app.controller('gestionMunicipioRutaCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.eliminarMunicipioRuta = function(ruta){		
+		window.location.replace(ruta);
+
+	};	
+}]);

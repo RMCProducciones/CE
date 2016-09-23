@@ -64,7 +64,9 @@
 	           </thead>
 	           <tbody>
                
-                {% set consecutivo = 1 %}
+          {% set pagina = (pagination.getPaginationData.lastItemNumber / 10) %}
+                 
+          {% set consecutivo = 1 + ((pagina-1)*10) %}
 	    	
 	    		{% for article in pagination %}
 	                

@@ -54,7 +54,7 @@
               <thead>
                   <tr>
 
-                    <th class="text-center">{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
+                    <th class="text-center">{{ knp_pagination_sortable(pagination, '#', 'a.id') }}</th>
                     <th class="text-center">{{ knp_pagination_sortable(pagination, 'Criterio', 'a.criterio') }}</th>
                     
                     <th class="text-center">{{ knp_pagination_sortable(pagination, 'Maxima Calificación', 'a.maximopuntaje') }}</th>
@@ -68,7 +68,10 @@
                   </tr>
              </thead>
              <tbody>
-                {% set consecutivo = 1 %}
+             
+          {% set pagina = pagination.getCurrentPageNumber %}
+                 
+          {% set consecutivo = 1 + ((pagina - 1) * 10) %}
         
           {% for criterio in pagination %}
                   

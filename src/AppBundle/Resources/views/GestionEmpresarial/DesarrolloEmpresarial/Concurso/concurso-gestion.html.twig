@@ -129,7 +129,7 @@
             <table class="table table-striped table-hover" ng-controller="gestionConcursoCtrl">
               <thead>
                 	<tr>
-	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>                 
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, '#', 'a.id') }}</th>                 
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Fecha de las Bases Concursos', 'a.fecha') }}</th>
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Tipo', 'a.tipo') }}</th>
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Temática', 'a.tematica') }}</th>
@@ -138,15 +138,19 @@
 	                </tr>
 	           </thead>
 	           <tbody>
+
+          {% set pagina = pagination.getCurrentPageNumber %}
+                 
+          {% set consecutivo = 1 + ((pagina - 1) * 10) %}
                
-              {% set consecutivo = 1 %}
+          
 	    	
 	    		{% for article in pagination %}
 
                     <tr {% if loop.index is odd %}class="color"{% endif %}>
                     <tr id="filaConcurso{{ consecutivo }}">
 
-                    <td class="text-center">{{article.id }}</td>               
+                    <td class="text-center">{{ consecutivo }}</td>               
                     <td class="text-center"> <b>FB</b>  {{ article.fechaBases |  date('d - m - Y') }}
                       <br>
                       <b>FF</b>  {{ article.fechaFinalizacion |  date('d - m - Y') }}

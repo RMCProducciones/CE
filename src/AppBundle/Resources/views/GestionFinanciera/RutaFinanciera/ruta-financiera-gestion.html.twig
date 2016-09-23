@@ -14,9 +14,10 @@
 
 {% endblock %}
 
-	
 
 {% block section %}
+
+
 
 <div class="container">
     <h1>Gestión de Capacitaciones Financieras</h1>
@@ -43,15 +44,15 @@
     </div>
     
     <br>
-
-    <div class="section">
+  
+    <div class="section">      
       <div class="container">
         <div class="row">
           <div class="col-md-12 table-responsive">
             <table class="table table-striped table-hover" ng-controller="gestionCapacitacionFinancieraCtrl">
               <thead>
                 	<tr >
-	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Id', 'a.id') }}</th>
+	                  <th class="text-center">{{ knp_pagination_sortable(pagination, '#', 'a.id') }}</th>
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Departamento', 'a.departamento') }}</th>
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Municipio', 'a.municipio') }}</th>
 	                  <th class="text-center">{{ knp_pagination_sortable(pagination, 'Vinculado a otro Municipio', 'a.vinculadoAOtroMunicipio') }}</th>
@@ -59,21 +60,34 @@
 	                </tr>
 	           </thead>
 	           <tbody>
-                {% set consecutivo = 1 %}
-	    	
-	    		{% for article in pagination %}
-	    		
-	                
-	               <tr {% if loop.index is odd %}class="color"{% endif %}>
-                  <tr id="filaCapacitacionFinanciera{{ consecutivo }}">
 
-                    <td class="text-center">{{article.id }}</td>               
+          
+          {% set pagina = pagination.getCurrentPageNumber %}
+                 
+          {% set consecutivo = 1 + ((pagina - 1) * 10) %}
+          	    	
+	    		{% for article in pagination %}
+	    		 
+                 
+	               <tr {% if loop.index is odd %}class="color"{% endif %}>
+                  <tr id="filaCapacitacionFinanciera{{consecutivo}}">
+
+                    <td class="text-center">{{consecutivo}}</td>               
                     <td class="text-center">{{article.departamento }}</td>
                     <td class="text-center">{{article.nombre}}</td>      
-                    <td class="text-center"></td>      
+                    {% for asignacionesMunicipioMunicipio in asignacionMunicipioMunicipio %}
+                      {% if asignacionesMunicipioMunicipio.municipioSeleccionado.id == article.id %}
+                        <td class="text-center">{{asignacionesMunicipioMunicipio.municipioAsignado.nombre}}</td>                      
+                      {% else %}
+                        <td class="text-center">No está asignado a ningún otro municipio</td>
+                      {% endif %}
+                    {% endfor %}
+                          
 	                  <td class="text-center">
 
                      <a href="{{ path('rutaPCFBeneficiariosGestion', {'idPCF': idPCF, 'idMunicipio': article.id}) }}" alt="Beneficiarios" title="Beneficiarios"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a> | 
+
+                     <a href="{{ path('municipioRutaFinancieraMunicipioGestion', {'idPCF': idPCF, 'idMunicipio': article.id}) }}" alt="Beneficiarios" title="Beneficiarios"><span class="glyphicon glyphicon-transfer" aria-hidden="true"></span></a> | 
 
 	                   <a href="{{ path('capacitacionFinancieraSoporte', {'idCapacitacionFinanciera': article.id}) }}" alt="subir archivos" title="Subir archivos"><span class="glyphicon glyphicon-level-up" aria-hidden="true"></span></a> 
                      
@@ -96,6 +110,8 @@
               <nav>
                 <ul class="pagination">
                   {{ knp_pagination_render(pagination) }}
+                  <br />
+                  <span class="alert alert-info">Total registros: {{ pagination.getTotalItemCount }}</span>
                 </ul>
               </nav>
             </div>  

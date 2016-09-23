@@ -18,6 +18,7 @@ use AppBundle\Entity\ProgramaCapacitacionFinanciera;
 use AppBundle\Entity\ProgramaCapacitacionFinancieraSoporte;
 use AppBundle\Entity\DocumentoSoporte;
 use AppBundle\Entity\AsignacionBeneficiarioRutaFinanciera;
+use AppBundle\Entity\AsignacionMunicipioMunicipio;
 use AppBundle\Entity\Grupo;
 
 
@@ -404,11 +405,15 @@ class ProgramaCapacitacionFinancieraController extends Controller
             10/*límite de resultados por página*/
         );
 
+        $asignacionMunicipioMunicipio = $em->getRepository('AppBundle:AsignacionMunicipioMunicipio')->findBy(
+            array('programaCapacitacionFinanciera' => $idPCF));
+
         return $this->render('AppBundle:GestionFinanciera/RutaFinanciera:ruta-financiera-gestion.html.twig', 
             array(  'form' => $form->createView(),
                     'municipios' => $query,
                     'pagination' => $pagination,
-                    'idPCF' => $idPCF
+                    'idPCF' => $idPCF,
+                    'asignacionMunicipioMunicipio' => $asignacionMunicipioMunicipio
                 )
             );
     }
@@ -565,6 +570,155 @@ class ProgramaCapacitacionFinancieraController extends Controller
         
     }   
     
+
+    /**
+     * @Route("/gestion-financiera/programa-capacitacion-financiera/{idPCF}/ruta-financiera-municipio/{idMunicipio}/asignacion-municipio", name="municipioRutaFinancieraMunicipioGestion")
+     */
+    public function municipioRutaFinancieraMunicipioAction(Request $request, $idPCF, $idMunicipio)
+    {
+        
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $programaCapacitacion = $em->getRepository('AppBundle:ProgramaCapacitacionFinanciera')->findBy(
+            array('id' => $idPCF)
+        );                     
+
+        $municipio = $em->getRepository('AppBundle:Municipio')->findOneBy(
+            array('id' => $idMunicipio)
+        );
+
+        $asignacionesMunicipioMunicipio = $em->getRepository('AppBundle:AsignacionMunicipioMunicipio')->findBy(
+            array('programaCapacitacionFinanciera' => $idPCF,
+                  'municipioSeleccionado' => $idMunicipio)
+        );
+
+        $query = $em->createQuery('SELECT m FROM AppBundle:Municipio m WHERE m.id NOT IN (SELECT municipio.id FROM AppBundle:Municipio municipio JOIN AppBundle:AsignacionMunicipioMunicipio amc WHERE municipio = amc.municipioAsignado AND amc.programaCapacitacionFinanciera = :programaCapacitacionFinanciera) AND m.active = 1');
+        $query->setParameter(':programaCapacitacionFinanciera', $programaCapacitacion);        
+        $municipios = $query->getResult();
+
+        $filterBuilder = $this->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:Beneficiario')
+            ->createQueryBuilder('q');
+
+        $form = $this->get('form.factory')->create(new BeneficiarioPCFFilterType());
+
+        if ($request->query->has($form->getName())) {
+            
+            $form->submit($request->query1->get($form->getName()));
+            $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($form, $filterBuilder);
+        }
+
+        /*$filterBuilder->andwhere('q.programaCapacitacionFinanciera = :idProgramaCapacitacionFinanciera')
+        ->setParameter('idProgramaCapacitacionFinanciera', $idGrupo)
+        ->andWhere('q.active = 1')
+        ->andWhere('q.id NOT IN (SELECT beneficiario.id FROM AppBundle:Beneficiario beneficiario JOIN AppBundle:AsignacionBeneficiarioComiteVamosBien abc WHERE beneficiario = abc.beneficiario AND abc.grupo = :grupo)')
+        ->setParameter(':grupo', $grupo);
+
+        $query = $filterBuilder->getQuery();*/
+
+
+
+        $paginator1  = $this->get('knp_paginator');
+
+        $pagination1 = $paginator1->paginate(
+            $municipios, /* fuente de los datos*/
+            $request->query->get('page', 1)/*número de página*/,
+            5/*límite de resultados por página*/
+        );
+
+        $rolUsuario = $this->get('security.context')->getToken()->getUser()->getRoles();
+
+        $obj = new FilterLocation();
+
+        $valuesFieldBlock = $obj->fieldBlock($rolUsuario);
+
+        return $this->render('AppBundle:GestionFinanciera/RutaFinanciera:asignacion-municipio-ruta-municipio-gestion.html.twig', 
+            array(
+                'form' => $form->createView(),
+                'municipios' => $query,
+                'asignacionesMunicipioMunicipio' => $asignacionesMunicipioMunicipio,
+                'idPCF' => $idPCF,
+                'idMunicipio' => $idMunicipio,
+                'pagination1' => $pagination1,
+                'tipoUsuario' => $valuesFieldBlock[3]                
+            ));        
+    }
+
+    /**
+     * @Route("/gestion-financiera/programa-capacitacion-financiera/{idPCF}/ruta-financiera-municipio/{idMunicipio}/asignacion-municipio/{idMunicipioAsignado}/asignar", name="municipioRutaFinancieraMunicipioAsignar")
+     */
+    public function municipioRutaFinancieraMunicipioAsignarAction(Request $request, $idPCF, $idMunicipio, $idMunicipioAsignado)
+    {
+
+        new Acceso($this->getUser(), ["ROLE_PROMOTOR", "ROLE_COORDINADOR", "ROLE_USER"]);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $idUsuario = $this->get('security.context')->getToken()->getUser()->getId();
+
+        $usuario = $em->getRepository('AppBundle:Usuario')->findOneBy(
+            array('id' => $idUsuario));
+
+        $municipioSeleccionado = $em->getRepository('AppBundle:Municipio')->findOneBy(
+            array('id' => $idMunicipio)
+        );      
+
+        $municipioAsignado = $em->getRepository('AppBundle:Municipio')->findOneBy(
+            array('id' => $idMunicipioAsignado)
+        );      
+
+        $programaCapacitacionFinanciera = $em->getRepository('AppBundle:ProgramaCapacitacionFinanciera')->findOneBy(
+            array('id' => $idPCF)
+        );
+
+        $municipio = $em->getRepository('AppBundle:Municipio')->findOneBy(
+            array('id' => $idMunicipio));
+
+        $asignacionesMunicipioMunicipio = new AsignacionMunicipioMunicipio();      
+
+        $asignacionesMunicipioMunicipio->setProgramaCapacitacionFinanciera($programaCapacitacionFinanciera);        
+        $asignacionesMunicipioMunicipio->setMunicipioSeleccionado($municipioSeleccionado);
+        $asignacionesMunicipioMunicipio->setMunicipioAsignado($municipioAsignado);
+        $asignacionesMunicipioMunicipio->setActive(true);
+        $asignacionesMunicipioMunicipio->setFechaCreacion(new \DateTime());
+        $asignacionesMunicipioMunicipio->setUsuarioCreacion($usuario);
+
+        $em->persist($asignacionesMunicipioMunicipio);
+        $em->flush();
+
+        $this->addFlash('success', 'Municipio asignado');            
+
+        return $this->redirectToRoute('municipioRutaFinancieraMunicipioGestion', 
+            array(
+                'idPCF' => $idPCF,          
+                'asignacionesMunicipioMunicipio' => $asignacionesMunicipioMunicipio,                
+                'idMunicipio' => $idMunicipio
+            ));        
+        
+    }
+
+    /**
+     * @Route("/gestion-financiera/programa-capacitacion-financiera/{idPCF}/ruta-financiera-municipio/{idMunicipio}/asignacion-municipio/{idMunicipioAsignado}/eliminar", name="municipioRutaFinancieraMunicipioEliminar")
+     */
+    public function municipioRutaFinancieraMunicipioEliminarAction(Request $request, $idPCF, $idMunicipio, $idMunicipioAsignado)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $asignacionesMunicipioMunicipio = $em->getRepository('AppBundle:AsignacionMunicipioMunicipio')->find($idMunicipioAsignado); 
+
+        $em->remove($asignacionesMunicipioMunicipio);
+        $em->flush();
+
+        return $this->redirectToRoute('municipioRutaFinancieraMunicipioGestion',
+            array(
+                'idPCF' => $idPCF,
+                'asignacionesMunicipioMunicipio' => $asignacionesMunicipioMunicipio,
+                'idMunicipio' => $idMunicipio
+            ));      
+        
+    }
 
 }
 
