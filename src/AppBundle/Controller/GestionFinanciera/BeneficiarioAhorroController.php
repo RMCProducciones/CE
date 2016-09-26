@@ -379,8 +379,14 @@ class BeneficiarioAhorroController extends Controller
                         if(sizeof($cantidadCortesAhorro) == 1){ 
                             $metaAhorroCorte = $incentivoAhorro->getMetaAhorroMensual() * $meses;
                         }else{
-                            $metaAhorroCorte = ($incentivoAhorro->getMetaAhorroMensual() * $meses) - $cantidadCortesAhorro[sizeof($cantidadCortesAhorro) - 1]->getMetaAhorroCorte();
-                        }   
+
+                            $totalAhorroMeses = 0;
+                            $variablePrueba = $cantidadCortesAhorro;
+                            foreach($variablePrueba as $variablePrueba){
+                                $totalAhorroMeses = $variablePrueba->getMetaAhorroCorte() + $totalAhorroMeses;
+                            }                                                        
+                            $metaAhorroCorte = $totalAhorroMeses - ($incentivoAhorro->getMetaAhorroMensual() * $meses);                            
+                        }                           
                         $beneficiarioAhorroCorte->setMetaAhorroCorte($metaAhorroCorte);                                 
                         $ahorroReal = $beneficiarioAhorroCorte->getAhorroCorte() - $cantidadCortesAhorro[sizeof($cantidadCortesAhorro) - 1]->getAhorroCorte() - $cantidadCortesAhorro[sizeof($cantidadCortesAhorro) - 1]->getIncentivoCorte();
                         $beneficiarioAhorroCorte->setAhorroRealCorte($ahorroReal);
